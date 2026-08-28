@@ -1,0 +1,28 @@
+[project]
+name = "pycy-emt-lite"
+version = "0.1.0"
+description = "面向新型电力系统电磁暂态仿真的 Python 教学项目（精简易用版）"
+readme = "README.md"
+requires-python = ">=3.14,<3.15"
+authors = [
+  { name = "PyCy_EMT_Lite Contributors" }
+]
+dependencies = [
+  "numpy>=2.0",
+  "matplotlib>=3.9",
+  "scipy>=1.17",
+]
+
+[dependency-groups]
+dev = [
+  "pytest>=8.0",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+addopts = "-q"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
