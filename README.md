@@ -1,135 +1,162 @@
 # PyCy_EMT_Lite
 
-PyCy_EMT_Lite 是一个面向新型电力系统电磁暂态仿真的 **Python 教学项目**，是 PyCy_EMT
-的精简易用版。它只保留一条清晰的主线：
+English | [简体中文](README.zh-CN.md)
+
+PyCy_EMT_Lite is an **educational Python project for electromagnetic transient
+(EMT) simulation of modern power systems**. It is a streamlined, approachable
+edition of PyCy_EMT built around one clear workflow:
 
 ```text
-定义元件对象列表 -> 形成电路 -> 配置仿真 -> 运行 -> 绘图
+Define components -> Build a circuit -> Configure the simulation -> Run -> Plot
 ```
 
-没有 YAML 配置、没有多套并行接口、没有架构专项文档——把注意力集中在"电磁暂态
-仿真的原理与程序实现"本身。
+There is no YAML configuration, no collection of parallel APIs, and no
+architecture-specific documentation. The project keeps the focus on the
+principles of EMT simulation and how they are implemented in code.
 
-## 快速开始
+## Quick Start
 
 ```bash
-uv sync                      # 安装依赖（首次运行）
-uv run python examples/01_r_circuit.py          # 运行第一个算例
-uv run pytest                # 运行全部测试
+uv sync                                      # Install dependencies (first run)
+uv run python examples/01_r_circuit.py       # Run the first example
+uv run pytest                                # Run the full test suite
 ```
 
-也可以一次运行完整学习路径：
+You can also sample the complete learning path by running examples of increasing
+complexity:
 
 ```bash
-uv run python examples/04_rlc_transient.py      # RLC 二阶暂态
-uv run python examples/06_three_phase_short_circuit.py   # 三相短路
-uv run python examples/10_park_generator_avr_governor.py # 同步机
-uv run python examples/16_vsc_hvdc_average.py   # VSC-HVDC 平均模型
+uv run python examples/04_rlc_transient.py               # Second-order RLC transient
+uv run python examples/06_three_phase_short_circuit.py    # Three-phase short circuit
+uv run python examples/10_park_generator_avr_governor.py  # Synchronous generator
+uv run python examples/16_vsc_hvdc_average.py             # Average VSC-HVDC model
 ```
 
-## 一个算例长什么样
+## What an Example Looks Like
 
-以 `examples/01_r_circuit.py` 为例，一个算例就是"元件对象 -> 算例定义 -> 运行"三步：
+Using `examples/01_r_circuit.py` as a reference, an example has three parts:
+component objects, a case definition, and execution.
 
 ```python
 from pycy_emt_lite import Resistor, SimulationConfig, VoltageSource
 from pycy_emt_lite.cases import CaseDefinition, OutputOptions, PlotSpec, run_case
 
-SAVE_RESULT_DATA = 0   # 改为 1 才保存数据
-SAVE_RESULT_FIGURE = 0  # 改为 1 才保存图像
+SAVE_RESULT_DATA = 0    # Set to 1 to save result data
+SAVE_RESULT_FIGURE = 0  # Set to 1 to save figures
 SHOW_FIGURE = True
+
 
 def define_case() -> CaseDefinition:
     components = (
-        VoltageSource("V1", "n1", "0", 10.0),   # 10 V 直流源
-        Resistor("R1", "n1", "0", 5.0),         # 5 Ω 电阻
+        VoltageSource("V1", "n1", "0", 10.0),  # 10 V DC source
+        Resistor("R1", "n1", "0", 5.0),        # 5 ohm resistor
     )
-    config = SimulationConfig(time_step=1e-4, stop_time=1e-3, method="trapezoidal")
-    plots = (PlotSpec(columns=("v:n1", "i:R1"), title="R 电路电压与电流"),)
+    config = SimulationConfig(
+        time_step=1e-4,
+        stop_time=1e-3,
+        method="trapezoidal",
+    )
+    plots = (
+        PlotSpec(columns=("v:n1", "i:R1"), title="R-Circuit Voltage and Current"),
+    )
     output = OutputOptions(show_figure=SHOW_FIGURE)
     return CaseDefinition(
-        name="r_circuit", components=components, config=config,
-        plots=plots, output=output,
+        name="r_circuit",
+        components=components,
+        config=config,
+        plots=plots,
+        output=output,
     )
+
 
 def main() -> None:
     case = define_case()
-    run_case(case)   # 自动仿真、打印结果摘要、绘图
+    run_case(case)  # Simulate, summarize, and plot automatically
+
 
 if __name__ == "__main__":
     main()
 ```
 
-`run_case()` 自动完成：仿真 -> 打印完成信息与结果摘要（含解析解/理论值对比）-> 绘制波形。
-基础算例（01–05）都在摘要中把仿真结果与解析解对比，让"结果可验证"看得见。
+`run_case()` runs the simulation, prints completion information and a result
+summary (including analytical or theoretical comparisons), and plots the
+waveforms. The foundational examples (01-05) compare simulation results with
+analytical solutions in their summaries, making the results directly
+verifiable.
 
-## 学习路径（16 个示例）
+## Learning Path: 16 Examples
 
-| 编号 | 示例 | 主题 |
-|---|---|---|
-| 01 | `r_circuit` | 直流电阻电路，最基本的建模流程 |
-| 02 | `rc_transient` | RC 一阶充电暂态 |
-| 03 | `rl_transient` | RL 一阶电流建立 |
-| 04 | `rlc_transient` | RLC 二阶振荡 |
-| 05 | `three_phase_steady_state` | 三相稳态波形与 RMS 分析 |
-| 06 | `three_phase_short_circuit` | 三相短路故障与事件系统 |
-| 07 | `single_phase_ground_fault` | 单相接地不对称故障 |
-| 08 | `pi_line_transient` | π 型线路集中参数模型 |
-| 09 | `single_phase_transformer` | 单相变压器（变比/漏抗/励磁） |
-| 10 | `park_generator_avr_governor` | Park dq0 同步机与 AVR/调速器 |
-| 11 | `pll_dynamic_response` | SRF-PLL 锁相过程 |
-| 12 | `two_level_pwm_generator` | 两电平 PWM 逆变器（开关模型） |
-| 13 | `three_phase_grid_inverter_average` | 三相平均逆变器 dq 电流环 |
-| 14 | `pv_grid_following` | 光伏跟网系统（辐照度阶跃） |
-| 15 | `storage_grid_forming` | 储能构网 VSG 孤岛运行 |
-| 16 | `vsc_hvdc_average` | VSC-HVDC 平均模型功率阶跃 |
+| No. | Example | Topic |
+|---:|---|---|
+| 01 | `r_circuit` | DC resistive circuit and the basic modeling workflow |
+| 02 | `rc_transient` | First-order RC charging transient |
+| 03 | `rl_transient` | First-order RL current buildup |
+| 04 | `rlc_transient` | Second-order RLC oscillation |
+| 05 | `three_phase_steady_state` | Three-phase steady-state waveforms and RMS analysis |
+| 06 | `three_phase_short_circuit` | Three-phase short-circuit fault and the event system |
+| 07 | `single_phase_ground_fault` | Asymmetrical single-line-to-ground fault |
+| 08 | `pi_line_transient` | Lumped-parameter pi transmission-line model |
+| 09 | `single_phase_transformer` | Single-phase transformer (ratio, leakage reactance, and magnetization) |
+| 10 | `park_generator_avr_governor` | Park dq0 synchronous generator with AVR and governor |
+| 11 | `pll_dynamic_response` | SRF-PLL synchronization dynamics |
+| 12 | `two_level_pwm_generator` | Two-level PWM inverter (switching model) |
+| 13 | `three_phase_grid_inverter_average` | Three-phase average inverter with dq current control |
+| 14 | `pv_grid_following` | Grid-following PV system with an irradiance step |
+| 15 | `storage_grid_forming` | Islanded grid-forming battery system with VSG control |
+| 16 | `vsc_hvdc_average` | Average VSC-HVDC model with a power step |
 
-## 项目结构
+## Project Structure
 
 ```text
-pycy_emt_lite/     # 核心源码（单一路径：Circuit/Simulator 对象式接口）
-  core/            # 仿真内核：电路、配置、稠密求解器、仿真主循环
-  components/      # 元件：RLC、源、三相、线路、变压器、开关、电力电子
-  controls/        # 控制：PI、限幅、滤波、坐标变换、PLL、PWM
-  converters/      # 变流器：平均逆变器、MMC、VSC-HVDC、滤波器组合
-  machines/        # 同步机：经典二阶与 Park dq0 模型
-  renewables/      # 新能源：光伏、电池、DC-link、跟网/构网/LVRT 控制
-  events/          # 事件：故障投入/清除、断路器开合
-  io/              # 结果：SimulationResult、CSV/JSON/NPZ
-  visualization/   # 绘图与 Markdown 报告
-  analysis/        # 分析：RMS、峰值、功率、电压跌落
-  cases.py         # 统一算例接口：CaseDefinition / run_case
-examples/          # 16 个按学习路径编号的示例
-tests/             # 单元测试
-docs/              # 文档（理论、用户指南、算例流程）
+pycy_emt_lite/     # Core package with a single object-oriented Circuit/Simulator API
+  core/            # Simulation kernel: circuits, configuration, dense solver, main loop
+  components/      # RLC, sources, three-phase, lines, transformers, switches, power electronics
+  controls/        # PI, limiting, filtering, transforms, PLL, and PWM
+  converters/      # Average inverters, MMC, VSC-HVDC, and filter assemblies
+  machines/        # Classical second-order and Park dq0 synchronous-machine models
+  renewables/      # PV, battery, DC link, grid-following/grid-forming, and LVRT control
+  events/          # Fault application/clearing and breaker opening/closing
+  io/              # SimulationResult and CSV/JSON/NPZ output
+  visualization/   # Plotting and Markdown reports
+  analysis/        # RMS, peak, power, and voltage-sag analysis
+  cases.py         # Unified CaseDefinition / run_case interface
+examples/          # 16 examples ordered as a learning path
+tests/             # Unit tests
+docs/              # Theory, user guide, and example workflow documentation
 ```
 
-## 环境要求
+## Requirements
 
-- Python 3.14（使用 `uv` 管理）
-- 依赖：numpy、scipy、matplotlib
+- Python 3.14, managed with `uv`
+- Runtime dependencies: NumPy, SciPy, and Matplotlib
 
-## 理论阅读顺序
+## Recommended Theory Reading Order
 
-建议先运行示例、再按顺序读理论文档，把"程序行为"和"数学模型"对应起来：
+Run the examples first, then read the theory documents in the order below to
+connect the program behavior with the underlying mathematical models:
 
-1. [改进节点分析法 MNA](docs/theory/mna.md)：为什么用 MNA、方程形式、变量约定
-2. [基础元件建模](docs/theory/basic_components.md)：R、L、C、电源的离散化
-3. [元件 stamp 原理](docs/theory/stamp_principles.md)：每个元件如何写入矩阵（最详细）
-4. [三相系统](docs/theory/three_phase_systems.md)：三相电源/线路/负荷
-5. [控制系统](docs/theory/control_systems.md)：PI、PLL、坐标变换
-6. [电力电子](docs/theory/power_electronics.md)：开关与平均逆变器
-7. [线路与变压器](docs/theory/advanced_line_transformer_models.md)：π 型/Bergeron 线路、变压器
-8. [新能源模型](docs/theory/renewable_grid_models.md)：光伏、电池、跟网/构网控制
+1. [Modified Nodal Analysis (MNA)](docs/theory/mna.md): motivation, equation form, and variable conventions
+2. [Basic component modeling](docs/theory/basic_components.md): discretization of R, L, C, and sources
+3. [Component stamping principles](docs/theory/stamp_principles.md): how each component contributes to the system matrix
+4. [Three-phase systems](docs/theory/three_phase_systems.md): sources, lines, and loads
+5. [Control systems](docs/theory/control_systems.md): PI control, PLLs, and coordinate transforms
+6. [Power electronics](docs/theory/power_electronics.md): switching and average inverter models
+7. [Line and transformer models](docs/theory/advanced_line_transformer_models.md): pi-section/Bergeron lines and transformers
+8. [Renewable-energy models](docs/theory/renewable_grid_models.md): PV, batteries, and grid-following/grid-forming control
 
-## 文档入口
+> The detailed documentation is currently written in Chinese. The numbered
+> examples and Python APIs can still be followed directly from the source code.
 
-- [用户指南](docs/user_guide.md)：详细的安装、运行、结果对象与常见问题（比 README 更完整）。
-- [仿真程序详细说明](docs/simulation_program_guide.md)：MNA 组装、求解、状态更新在代码里怎么实现。
-- [新增算例流程](docs/new_simulation_workflow.md)：如何写一个新的仿真算例。
+## Documentation
 
-## 与 PyCy_EMT 的关系
+- [User guide](docs/user_guide.md): detailed installation, execution, result-object, and troubleshooting information
+- [Simulation program guide](docs/simulation_program_guide.md): how MNA assembly, solving, and state updates are implemented
+- [Adding a new simulation example](docs/new_simulation_workflow.md): the workflow for creating a new case
 
-PyCy_EMT_Lite 是从完整版 PyCy_EMT（v0.6 对象式接口）中整理出的精简易用版：
-保留全部对象式模型与仿真内核，去掉 YAML/CaseSpec 编译管线、架构专项代码与
-相关文档，代码包名改为 `pycy_emt_lite`，示例按教学路径重新编号。
+## Relationship to PyCy_EMT
+
+PyCy_EMT_Lite is a streamlined edition derived from the object-oriented API in
+PyCy_EMT v0.6. It retains the object-oriented models and simulation kernel while
+removing the YAML/CaseSpec compilation pipeline, architecture-specific code, and
+related documentation. The package is named `pycy_emt_lite`, and the examples
+have been renumbered into a progressive learning path.
