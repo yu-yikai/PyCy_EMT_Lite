@@ -1,5 +1,7 @@
 # 可视化与自动报告
 
+[English](visualization_reporting.en.md)
+
 当前版本在基础 `plot_series()` 和 `plot_three_phase()` 之外提供以下结果展示与报告工具。
 
 ## 1. 多结果对比

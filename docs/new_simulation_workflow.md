@@ -1,5 +1,7 @@
 # 新增仿真算例统一编写流程
 
+[English](new_simulation_workflow.en.md)
+
 PyCy_EMT_Lite 的所有算例都遵循同一条流程：
 
 ```text

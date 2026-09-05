@@ -1,5 +1,7 @@
 # PyCy_EMT_Lite 用户指南
 
+[English](user_guide.en.md)
+
 本文说明如何安装、运行示例、编写算例和运行测试。
 
 ## 1. 环境要求

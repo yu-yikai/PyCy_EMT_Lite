@@ -1,5 +1,7 @@
 # 基础元件建模说明
 
+[English](basic_components.en.md)
+
 本文档说明基础元件的物理模型和离散化公式。各元件如何具体写入 MNA 矩阵、右端项和支路变量，详见 `stamp_principles.md`。
 
 ## 1. 电阻

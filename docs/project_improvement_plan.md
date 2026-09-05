@@ -1,5 +1,7 @@
 # PyCy_EMT_Lite 精简改进计划
 
+[English](project_improvement_plan.en.md)
+
 ## 1. 改进目标与原则
 
 项目改进聚焦四项工作：

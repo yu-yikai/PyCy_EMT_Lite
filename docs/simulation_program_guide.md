@@ -1,5 +1,7 @@
 # PyCy_EMT_Lite 仿真程序详细说明
 
+[English](simulation_program_guide.en.md)
+
 > 本文说明 PyCy_EMT_Lite 的 `Circuit`/`Simulator` 仿真内核从元件建模、MNA 矩阵组装
 > 到求解和状态更新的完整流程。建议配合 [user_guide.md](user_guide.md) 与
 > [new_simulation_workflow.md](new_simulation_workflow.md) 阅读。

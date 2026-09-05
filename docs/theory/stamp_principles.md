@@ -1,5 +1,7 @@
 # 元件 stamp 原理说明
 
+[English](stamp_principles.en.md)
+
 本文档说明 PyCy_EMT_Lite 中各类元件如何把自身数学模型写入改进节点分析法 Modified Nodal Analysis，简称 MNA，的系统矩阵和右端项。后续每新增一种元件，都必须在本文档中补充其 stamp 原理、方向约定、矩阵写入规则和代码实现位置。
 
 ## 1. stamp 的作用
