@@ -2,161 +2,85 @@
 
 English | [简体中文](README.zh-CN.md)
 
-PyCy_EMT_Lite is an **educational Python project for electromagnetic transient
-(EMT) simulation of modern power systems**. It is a streamlined, approachable
-edition of PyCy_EMT built around one clear workflow:
+PyCy_EMT_Lite is a small, pure-Python teaching project for electromagnetic
+transient (EMT) simulation of modern power systems. Its recommended public
+workflow is:
 
 ```text
-Define components -> Build a circuit -> Configure the simulation -> Run -> Plot
+CaseDefinition -> Circuit -> Simulator -> SimulationResult
 ```
 
-There is no YAML configuration, no collection of parallel APIs, and no
-architecture-specific documentation. The project keeps the focus on the
-principles of EMT simulation and how they are implemented in code.
+> **Teaching scope:** version 0.1 is being reduced to a small trusted model set.
+> It is not a facility-grade EMT tool and must not be used for protection
+> settings, grid-code compliance, equipment design, or operational decisions.
 
 ## Quick Start
 
-```bash
-uv sync                                      # Install dependencies (first run)
-uv run python examples/01_r_circuit.py       # Run the first example
-uv run pytest                                # Run the full test suite
-```
-
-You can also sample the complete learning path by running examples of increasing
-complexity:
+Requires Python 3.14 and [uv](https://docs.astral.sh/uv/).
 
 ```bash
-uv run python examples/04_rlc_transient.py               # Second-order RLC transient
-uv run python examples/06_three_phase_short_circuit.py    # Three-phase short circuit
-uv run python examples/10_park_generator_avr_governor.py  # Synchronous generator
-uv run python examples/16_vsc_hvdc_average.py             # Average VSC-HVDC model
+uv sync --locked
+uv run python examples/01_r_circuit.py
+uv run pytest
 ```
 
-## What an Example Looks Like
+Example 01 is the trusted starting point. It exercises the complete object
+workflow and checks the simulated voltage against the analytical circuit value.
 
-Using `examples/01_r_circuit.py` as a reference, an example has three parts:
-component objects, a case definition, and execution.
+## Model Levels
 
-```python
-from pycy_emt_lite import Resistor, SimulationConfig, VoltageSource
-from pycy_emt_lite.cases import CaseDefinition, OutputOptions, PlotSpec, run_case
+The repository currently contains three different levels. They are not
+interchangeable:
 
-SAVE_RESULT_DATA = 0    # Set to 1 to save result data
-SAVE_RESULT_FIGURE = 0  # Set to 1 to save figures
-SHOW_FIGURE = True
+| Level | Meaning | Current use |
+|---|---|---|
+| Network EMT | MNA network solved at every time step | RLC, three-phase circuits, faults, pi line, transformer |
+| Switching EMT | Ideal switches driven on the discrete time grid | Two-level PWM teaching example |
+| Average control | Hand-written control/state updates without switching waveforms | Inverter, PV/storage, and HVDC candidates |
 
+The average-control examples are not results from the `Circuit/Simulator` EMT
+path. Examples 06–16 remain runnable, but several still need stronger physical
+checks, consolidation, or removal before they enter the default learning path.
+See the [Chinese README](README.zh-CN.md) for the per-example decision table.
 
-def define_case() -> CaseDefinition:
-    components = (
-        VoltageSource("V1", "n1", "0", 10.0),  # 10 V DC source
-        Resistor("R1", "n1", "0", 5.0),        # 5 ohm resistor
-    )
-    config = SimulationConfig(
-        time_step=1e-4,
-        stop_time=1e-3,
-        method="trapezoidal",
-    )
-    plots = (
-        PlotSpec(columns=("v:n1", "i:R1"), title="R-Circuit Voltage and Current"),
-    )
-    output = OutputOptions(show_figure=SHOW_FIGURE)
-    return CaseDefinition(
-        name="r_circuit",
-        components=components,
-        config=config,
-        plots=plots,
-        output=output,
-    )
+## Recommended Starting Path
 
+| Example | Learning objective | Current evidence |
+|---|---|---|
+| `01_r_circuit.py` | Object workflow and static MNA | Exact voltage/current unit test |
+| `02_rc_transient.py` | Capacitor companion model | Analytical end-point comparison; full-curve checks planned |
+| `03_rl_transient.py` | Inductor branch-current variable | Analytical end-point comparison; full-curve checks planned |
+| `04_rlc_transient.py` | Coupled second-order transient | Analytical end-point comparison; energy/convergence checks planned |
+| `05_three_phase_steady_state.py` | Balanced three-phase RMS | Balanced-RMS unit test; planned merge with the fault lesson |
 
-def main() -> None:
-    case = define_case()
-    run_case(case)  # Simulate, summarize, and plot automatically
-
-
-if __name__ == "__main__":
-    main()
-```
-
-`run_case()` runs the simulation, prints completion information and a result
-summary (including analytical or theoretical comparisons), and plots the
-waveforms. The foundational examples (01-05) compare simulation results with
-analytical solutions in their summaries, making the results directly
-verifiable.
-
-## Learning Path: 16 Examples
-
-| No. | Example | Topic |
-|---:|---|---|
-| 01 | `r_circuit` | DC resistive circuit and the basic modeling workflow |
-| 02 | `rc_transient` | First-order RC charging transient |
-| 03 | `rl_transient` | First-order RL current buildup |
-| 04 | `rlc_transient` | Second-order RLC oscillation |
-| 05 | `three_phase_steady_state` | Three-phase steady-state waveforms and RMS analysis |
-| 06 | `three_phase_short_circuit` | Three-phase short-circuit fault and the event system |
-| 07 | `single_phase_ground_fault` | Asymmetrical single-line-to-ground fault |
-| 08 | `pi_line_transient` | Lumped-parameter pi transmission-line model |
-| 09 | `single_phase_transformer` | Single-phase transformer (ratio, leakage reactance, and magnetization) |
-| 10 | `park_generator_avr_governor` | Park dq0 synchronous generator with AVR and governor |
-| 11 | `pll_dynamic_response` | SRF-PLL synchronization dynamics |
-| 12 | `two_level_pwm_generator` | Two-level PWM inverter (switching model) |
-| 13 | `three_phase_grid_inverter_average` | Three-phase average inverter with dq current control |
-| 14 | `pv_grid_following` | Grid-following PV system with an irradiance step |
-| 15 | `storage_grid_forming` | Islanded grid-forming battery system with VSG control |
-| 16 | `vsc_hvdc_average` | Average VSC-HVDC model with a power step |
-
-## Project Structure
+## Minimal Project Structure
 
 ```text
-pycy_emt_lite/     # Core package with a single object-oriented Circuit/Simulator API
-  core/            # Simulation kernel: circuits, configuration, dense solver, main loop
-  components/      # RLC, sources, three-phase, lines, transformers, switches, power electronics
-  controls/        # PI, limiting, filtering, transforms, PLL, and PWM
-  converters/      # Average inverters, MMC, VSC-HVDC, and filter assemblies
-  machines/        # Classical second-order and Park dq0 synchronous-machine models
-  renewables/      # PV, battery, DC link, grid-following/grid-forming, and LVRT control
-  events/          # Fault application/clearing and breaker opening/closing
-  io/              # SimulationResult and CSV/JSON/NPZ output
-  visualization/   # Plotting and Markdown reports
-  analysis/        # RMS, peak, power, and voltage-sag analysis
-  cases.py         # Unified CaseDefinition / run_case interface
-examples/          # 16 examples ordered as a learning path
-tests/             # Unit tests
-docs/              # Theory, user guide, and example workflow documentation
+pycy_emt_lite/   # simulation kernel and model implementations
+examples/        # runnable teaching cases
+tests/           # numerical and physical regression checks
+docs/            # documentation being consolidated
 ```
 
-## Requirements
-
-- Python 3.14, managed with `uv`
-- Runtime dependencies: NumPy, SciPy, and Matplotlib
-
-## Recommended Theory Reading Order
-
-Run the examples first, then read the theory documents in the order below to
-connect the program behavior with the underlying mathematical models:
-
-1. [Modified Nodal Analysis (MNA)](docs/theory/mna.md): motivation, equation form, and variable conventions
-2. [Basic component modeling](docs/theory/basic_components.md): discretization of R, L, C, and sources
-3. [Component stamping principles](docs/theory/stamp_principles.md): how each component contributes to the system matrix
-4. [Three-phase systems](docs/theory/three_phase_systems.md): sources, lines, and loads
-5. [Control systems](docs/theory/control_systems.md): PI control, PLLs, and coordinate transforms
-6. [Power electronics](docs/theory/power_electronics.md): switching and average inverter models
-7. [Line and transformer models](docs/theory/advanced_line_transformer_models.md): pi-section/Bergeron lines and transformers
-8. [Renewable-energy models](docs/theory/renewable_grid_models.md): PV, batteries, and grid-following/grid-forming control
-
-> The detailed documentation is currently written in Chinese. The numbered
-> examples and Python APIs can still be followed directly from the source code.
+Import the core teaching API from `pycy_emt_lite`. Advanced candidates are
+available only from their explicit subpackages while their scope is reviewed.
 
 ## Documentation
 
-- [User guide](docs/user_guide.md): detailed installation, execution, result-object, and troubleshooting information
-- [Simulation program guide](docs/simulation_program_guide.md): how MNA assembly, solving, and state updates are implemented
-- [Adding a new simulation example](docs/new_simulation_workflow.md): the workflow for creating a new case
+- [简体中文 README](README.zh-CN.md): complete project entry and example status
+- [Improvement plan](docs/project_improvement_plan.md): phased reduction and
+  correctness work
+
+The existing theory documents are being consolidated into one numerical
+conventions document and one model/validation document. Until that work is
+complete, source docstrings and tests define implemented behavior.
 
 ## Relationship to PyCy_EMT
 
-PyCy_EMT_Lite is a streamlined edition derived from the object-oriented API in
-PyCy_EMT v0.6. It retains the object-oriented models and simulation kernel while
-removing the YAML/CaseSpec compilation pipeline, architecture-specific code, and
-related documentation. The package is named `pycy_emt_lite`, and the examples
-have been renumbered into a progressive learning path.
+PyCy_EMT_Lite is a streamlined teaching edition derived from the object-oriented
+PyCy_EMT v0.6 workflow. It intentionally excludes the YAML/CaseSpec pipeline and
+other platform-level architecture.
+
+## License
+
+[MIT](LICENSE)

@@ -6,7 +6,8 @@
 
 import math
 
-from pycy_emt_lite import SimulationResult, SRFPLL
+from pycy_emt_lite.controls import SRFPLL
+from pycy_emt_lite.io.results import SimulationResult
 from pycy_emt_lite.visualization import plot_series
 
 FREQUENCY = 50.0

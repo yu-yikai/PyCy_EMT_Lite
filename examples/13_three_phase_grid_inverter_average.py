@@ -7,8 +7,9 @@ PI 调节、平均模型电压生成和 L 滤波器电流推进。
 
 import math
 
-from pycy_emt_lite import PIController, SimulationResult, ThreePhaseAverageInverter
-from pycy_emt_lite.controls import abc_to_dq, dq_to_abc
+from pycy_emt_lite.controls import PIController, abc_to_dq, dq_to_abc
+from pycy_emt_lite.converters import ThreePhaseAverageInverter
+from pycy_emt_lite.io.results import SimulationResult
 from pycy_emt_lite.visualization import plot_series
 
 FREQUENCY = 50.0

@@ -5,7 +5,9 @@
 阶跃下直流电压与有功输出的动态响应。
 """
 
-from pycy_emt_lite import DCLink, GridFollowingPowerController, PIController, PVArrayModel, SimulationResult
+from pycy_emt_lite.controls import PIController
+from pycy_emt_lite.io.results import SimulationResult
+from pycy_emt_lite.renewables import DCLink, GridFollowingPowerController, PVArrayModel
 from pycy_emt_lite.visualization import plot_series
 
 TIME_STEP = 2e-5

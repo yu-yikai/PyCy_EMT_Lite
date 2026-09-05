@@ -6,12 +6,12 @@
 from pycy_emt_lite import (
     Breaker,
     BreakerCloseEvent,
-    ParkSynchronousGenerator,
     Resistor,
     SimulationConfig,
 )
 from pycy_emt_lite.cases import CaseDefinition, OutputOptions, PlotSpec, run_case
 from pycy_emt_lite.io.results import SimulationResult
+from pycy_emt_lite.machines import ParkSynchronousGenerator
 
 SAVE_RESULT_DATA = 0
 SAVE_RESULT_FIGURE = 0

@@ -1,0 +1,67 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  ci:
+    name: ci
+    runs-on: ubuntu-latest
+    env:
+      MPLBACKEND: Agg
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Set up uv and Python
+        uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9 # v9.0.0
+        with:
+          version: "0.12.10"
+          python-version: "3.14"
+
+      - name: Sync locked environment
+        run: uv sync --locked
+
+      - name: Run tests
+        run: uv run pytest
+
+      - name: Run README Quick Start
+        run: uv run python examples/01_r_circuit.py
+
+      - name: Run all examples
+        shell: bash
+        run: |
+          set -euo pipefail
+          for example in examples/*.py; do
+            echo "Running ${example}"
+            uv run python "${example}"
+          done
+
+      - name: Build distributions
+        run: uv build --out-dir .tmp/dist
+
+      - name: Smoke-test installed wheel outside checkout
+        shell: bash
+        run: |
+          set -euo pipefail
+          wheel="$(realpath .tmp/dist/*.whl)"
+          smoke_dir="$(mktemp -d)"
+          cd "${smoke_dir}"
+          uv run --python 3.14 --isolated --no-project --with "${wheel}" python -c \
+            'from importlib.metadata import version; import pycy_emt_lite; assert version("pycy-emt-lite") == pycy_emt_lite.__version__'
+
+      - name: Check for generated files
+        shell: bash
+        run: |
+          if [[ -n "$(git status --porcelain)" ]]; then
+            git status --short
+            exit 1
+          fi

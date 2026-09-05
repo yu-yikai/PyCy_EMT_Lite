@@ -7,15 +7,13 @@ import math
 
 from pycy_emt_lite import (
     Circuit,
-    Diode,
     IdealSwitch,
-    IGBTSwitch,
-    LCLFilter,
     SimulationConfig,
     Simulator,
-    ThreePhaseAverageInverter,
     VoltageSource,
 )
+from pycy_emt_lite.components.power_electronics import Diode, IGBTSwitch
+from pycy_emt_lite.converters import LCLFilter, ThreePhaseAverageInverter
 
 
 def test_ideal_switch_conducts_when_closed() -> None:

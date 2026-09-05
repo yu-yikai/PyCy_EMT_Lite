@@ -3,8 +3,9 @@
 文件作用：验证带 AVR 和调速器的 Park dq0 同步发电机模型。
 """
 
-from pycy_emt_lite import Circuit, ParkSynchronousGenerator, Resistor, SimulationConfig, Simulator
+from pycy_emt_lite import Circuit, Resistor, SimulationConfig, Simulator
 from pycy_emt_lite.analysis import three_phase_rms
+from pycy_emt_lite.machines import ParkSynchronousGenerator
 
 
 def _base_generator(**overrides) -> ParkSynchronousGenerator:

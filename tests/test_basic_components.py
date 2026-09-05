@@ -5,7 +5,41 @@
 
 import math
 
-from pycy_emt_lite import Capacitor, Circuit, Inductor, Resistor, SimulationConfig, Simulator, VoltageSource
+import pycy_emt_lite
+from pycy_emt_lite import Capacitor, Circuit, CurrentSource, Inductor, Resistor, SimulationConfig, Simulator, VoltageSource
+
+
+def test_root_public_api_is_limited_to_the_teaching_workflow() -> None:
+    expected = {
+        "Breaker",
+        "BreakerCloseEvent",
+        "BreakerOpenEvent",
+        "Capacitor",
+        "CaseDefinition",
+        "Circuit",
+        "CurrentSource",
+        "Fault",
+        "FaultApplyEvent",
+        "FaultClearEvent",
+        "IdealSwitch",
+        "Inductor",
+        "OutputOptions",
+        "PiLine",
+        "PlotSpec",
+        "Resistor",
+        "SimulationConfig",
+        "SimulationResult",
+        "Simulator",
+        "SinglePhaseTransformer",
+        "ThreePhaseLine",
+        "ThreePhaseLoad",
+        "ThreePhaseSource",
+        "VoltageSource",
+        "run_case",
+    }
+
+    assert len(pycy_emt_lite.__all__) == len(expected)
+    assert set(pycy_emt_lite.__all__) == expected
 
 
 def test_resistor_voltage_source_solution() -> None:
@@ -31,6 +65,18 @@ def test_circuit_can_be_created_from_user_component_objects() -> None:
     config = SimulationConfig(time_step=1e-4, stop_time=1e-4)
     simulator = Simulator(circuit, config)
     result = simulator.run()
+
+    assert math.isclose(result.rows[-1]["v:n1"], 10.0, rel_tol=0.0, abs_tol=1e-12)
+    assert math.isclose(result.rows[-1]["i:R1"], 2.0, rel_tol=0.0, abs_tol=1e-12)
+
+
+def test_current_source_direction_satisfies_kcl() -> None:
+    circuit = Circuit("current_source_direction")
+    circuit.add(CurrentSource("I1", "0", "n1", 2.0))
+    circuit.add(Resistor("R1", "n1", "0", 5.0))
+
+    config = SimulationConfig(time_step=1e-4, stop_time=1e-4)
+    result = Simulator(circuit, config).run()
 
     assert math.isclose(result.rows[-1]["v:n1"], 10.0, rel_tol=0.0, abs_tol=1e-12)
     assert math.isclose(result.rows[-1]["i:R1"], 2.0, rel_tol=0.0, abs_tol=1e-12)

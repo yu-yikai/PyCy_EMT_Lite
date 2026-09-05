@@ -14,10 +14,10 @@ from pycy_emt_lite import (
     Simulator,
     SinglePhaseTransformer,
     ThreePhaseSource,
-    ThreePhaseTransformer,
     VoltageSource,
 )
 from pycy_emt_lite.analysis import three_phase_rms
+from pycy_emt_lite.components.transformers import ThreePhaseTransformer
 
 
 def test_single_phase_transformer_voltage_ratio() -> None:

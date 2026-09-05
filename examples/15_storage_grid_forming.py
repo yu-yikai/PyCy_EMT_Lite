@@ -5,7 +5,8 @@ VSG 控制器模拟同步发电机的惯性与阻尼，通过功率下垂建立�
 观察负荷阶跃下频率与直流电压的动态响应。
 """
 
-from pycy_emt_lite import BatteryModel, DCLink, SimulationResult, VSGController
+from pycy_emt_lite.io.results import SimulationResult
+from pycy_emt_lite.renewables import BatteryModel, DCLink, VSGController
 from pycy_emt_lite.visualization import plot_series
 
 TIME_STEP = 1e-4

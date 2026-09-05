@@ -7,17 +7,12 @@ import math
 
 import numpy as np
 
-from pycy_emt_lite import (
+from pycy_emt_lite import Circuit, PiLine, Resistor, SimulationConfig, Simulator, VoltageSource
+from pycy_emt_lite.components.lines import (
     BergeronLine,
-    Circuit,
-    PiLine,
-    Resistor,
     SegmentedLine,
-    SimulationConfig,
-    Simulator,
     ThreePhaseBergeronLine,
     ThreePhasePiLine,
-    VoltageSource,
 )
 
 

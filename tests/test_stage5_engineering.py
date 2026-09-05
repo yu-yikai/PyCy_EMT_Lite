@@ -7,7 +7,7 @@ from __future__ import annotations
 
 import math
 
-from pycy_emt_lite import ModularMultilevelConverterAverage, VSCHVDCLinkAverage
+from pycy_emt_lite.converters import ModularMultilevelConverterAverage, VSCHVDCLinkAverage
 
 
 def test_mmc_average_model_reports_voltage_and_energy() -> None:

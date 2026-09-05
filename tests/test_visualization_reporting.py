@@ -7,7 +7,8 @@ from __future__ import annotations
 
 import matplotlib
 
-from pycy_emt_lite import SimulationResult, plot_result_comparison, plot_zoom_window, write_markdown_report
+from pycy_emt_lite import SimulationResult
+from pycy_emt_lite.visualization import plot_result_comparison, plot_zoom_window, write_markdown_report
 
 matplotlib.use("Agg")
 

@@ -2,136 +2,122 @@
 
 [English](README.md) | 简体中文
 
-PyCy_EMT_Lite 是一个面向新型电力系统电磁暂态仿真的 **Python 教学项目**，是 PyCy_EMT
-的精简易用版。它只保留一条清晰的主线：
+PyCy_EMT_Lite 是一个面向新型电力系统电磁暂态仿真的小型纯 Python 教学项目。
+推荐的唯一公开流程是：
 
 ```text
-定义元件对象列表 -> 形成电路 -> 配置仿真 -> 运行 -> 绘图
+CaseDefinition -> Circuit -> Simulator -> SimulationResult
 ```
 
-没有 YAML 配置、没有多套并行接口、没有架构专项文档——把注意力集中在"电磁暂态
-仿真的原理与程序实现"本身。
+> **教学边界：** 当前 0.1 版本正在收缩为少量可信模型。项目不是厂站级 EMT
+> 工具，不应用于保护整定、并网合规、设备设计、工程定值或运行决策。
 
 ## 快速开始
 
-```bash
-uv sync                      # 安装依赖（首次运行）
-uv run python examples/01_r_circuit.py          # 运行第一个算例
-uv run pytest                # 运行全部测试
-```
-
-也可以一次运行完整学习路径：
+环境要求为 Python 3.14，并使用 [uv](https://docs.astral.sh/uv/) 管理依赖。
 
 ```bash
-uv run python examples/04_rlc_transient.py      # RLC 二阶暂态
-uv run python examples/06_three_phase_short_circuit.py   # 三相短路
-uv run python examples/10_park_generator_avr_governor.py # 同步机
-uv run python examples/16_vsc_hvdc_average.py   # VSC-HVDC 平均模型
+uv sync --locked
+uv run python examples/01_r_circuit.py
+uv run pytest
 ```
 
-## 一个算例长什么样
+示例 01 是当前可信起点：它走完整对象式流程，并把仿真电压与解析值对比。
 
-以 `examples/01_r_circuit.py` 为例，一个算例就是"元件对象 -> 算例定义 -> 运行"三步：
+## 三种模型层级
 
-```python
-from pycy_emt_lite import Resistor, SimulationConfig, VoltageSource
-from pycy_emt_lite.cases import CaseDefinition, OutputOptions, PlotSpec, run_case
+仓库目前同时存在三种模型层级，不能混为一谈：
 
-SAVE_RESULT_DATA = 0   # 改为 1 才保存数据
-SAVE_RESULT_FIGURE = 0  # 改为 1 才保存图像
-SHOW_FIGURE = True
-
-def define_case() -> CaseDefinition:
-    components = (
-        VoltageSource("V1", "n1", "0", 10.0),   # 10 V 直流源
-        Resistor("R1", "n1", "0", 5.0),         # 5 Ω 电阻
-    )
-    config = SimulationConfig(time_step=1e-4, stop_time=1e-3, method="trapezoidal")
-    plots = (PlotSpec(columns=("v:n1", "i:R1"), title="R 电路电压与电流"),)
-    output = OutputOptions(show_figure=SHOW_FIGURE)
-    return CaseDefinition(
-        name="r_circuit", components=components, config=config,
-        plots=plots, output=output,
-    )
-
-def main() -> None:
-    case = define_case()
-    run_case(case)   # 自动仿真、打印结果摘要、绘图
-
-if __name__ == "__main__":
-    main()
-```
-
-`run_case()` 自动完成：仿真 -> 打印完成信息与结果摘要（含解析解/理论值对比）-> 绘制波形。
-基础算例（01–05）都在摘要中把仿真结果与解析解对比，让"结果可验证"看得见。
-
-## 学习路径（16 个示例）
-
-| 编号 | 示例 | 主题 |
+| 层级 | 含义 | 当前用途 |
 |---|---|---|
-| 01 | `r_circuit` | 直流电阻电路，最基本的建模流程 |
-| 02 | `rc_transient` | RC 一阶充电暂态 |
-| 03 | `rl_transient` | RL 一阶电流建立 |
-| 04 | `rlc_transient` | RLC 二阶振荡 |
-| 05 | `three_phase_steady_state` | 三相稳态波形与 RMS 分析 |
-| 06 | `three_phase_short_circuit` | 三相短路故障与事件系统 |
-| 07 | `single_phase_ground_fault` | 单相接地不对称故障 |
-| 08 | `pi_line_transient` | π 型线路集中参数模型 |
-| 09 | `single_phase_transformer` | 单相变压器（变比/漏抗/励磁） |
-| 10 | `park_generator_avr_governor` | Park dq0 同步机与 AVR/调速器 |
-| 11 | `pll_dynamic_response` | SRF-PLL 锁相过程 |
-| 12 | `two_level_pwm_generator` | 两电平 PWM 逆变器（开关模型） |
-| 13 | `three_phase_grid_inverter_average` | 三相平均逆变器 dq 电流环 |
-| 14 | `pv_grid_following` | 光伏跟网系统（辐照度阶跃） |
-| 15 | `storage_grid_forming` | 储能构网 VSG 孤岛运行 |
-| 16 | `vsc_hvdc_average` | VSC-HVDC 平均模型功率阶跃 |
+| 网络 EMT | 每个时间步组装并求解 MNA 网络 | RLC、三相电路、故障、π 型线路、变压器 |
+| 开关 EMT | 理想开关在离散时间网格上改变网络 | 两电平 PWM 教学示例 |
+| 平均控制 | 手写控制/状态更新，不产生器件开关波形 | 并网逆变器、光储和 HVDC 候选示例 |
 
-## 项目结构
+平均控制示例不经过 `Circuit/Simulator` EMT 主流程，其结果不能标成同一种“梯形 EMT”。
+
+## 当前示例范围
+
+以下结论来自当前脚本、测试和实际无界面运行。Phase A 只明确去向，不提前实施
+Phase B/C 的数值修复和文件删除。
+
+| 编号 | 唯一教学目标 | 层级 | 当前证据与问题 | 决定 |
+|---:|---|---|---|---|
+| 01 | 对象式流程、静态 MNA、欧姆定律 | 网络 EMT | 精确电压/电流单元测试 | 保留为唯一 Quick Start |
+| 02 | RC companion 与一阶时间常数 | 网络 EMT | 仅末点解析对比，缺 `t=0`、整段误差和收敛检查 | 与 03/04 合并候选 |
+| 03 | RL 对偶与电感支路未知量 | 网络 EMT | 仅末点解析对比 | 与 02/04 合并候选 |
+| 04 | 欠阻尼 RLC 与双状态耦合 | 网络 EMT | 仅末点解析对比，未检查振荡段和能量 | 作为动态基础合并锚点 |
+| 05 | 平衡三相、相序和 RMS | 网络 EMT | 有平衡 RMS 测试，脚本仅打印 A 相近似分压 | 并入 06 候选 |
+| 06 | 同时事件、三相短路和清除 | 网络 EMT | 能检查事件日志和峰值，缺 pre/fault/post 窗口门 | 保留为三相/事件锚点 |
+| 07 | 单相接地不对称故障 | 网络 EMT | 摘要把全局有符号最小值当成电压跌落，当前结论错误 | 退出默认学习路径 |
+| 08 | π 型集中参数线路 | 网络 EMT | 只有 DC 分压测试，交流脚本没有定量摘要 | 保留，补 RMS/幅相或能量验证 |
+| 09 | 单相变压器变比、漏抗和励磁 | 网络 EMT | 只有理想变比测试，交流脚本没有定量摘要 | 保留，补 RMS 比和功率平衡 |
+| 10 | 同步机负荷阶跃、AVR 和调速器 | 网络 EMT 代理 | 只有宽范围趋势测试，模型名称与 dq 端口证据不充分 | 退出默认路径或改用简单代理 |
+| 11 | SRF-PLL 锁相 | 平均控制 | 有 q 轴和频率误差测试，但结果方法标签不准确 | 并入最终 GFL 单元候选 |
+| 12 | SPWM、理想开关和 RL 电流 | 开关 EMT | 只有元件/载波测试，完整桥仅打印末值 | 保留，补相电流和基波检查 |
+| 13 | 平均逆变器 dq 电流环 | 平均控制 | 只打印 id/iq，闭环无直接测试且方法标签不准确 | 最小 GFL 合并锚点候选 |
+| 14 | PV、DC-link 和跟网控制 | 平均控制 | 只有组件趋势测试，PV/DC 功率合同尚不自洽 | 并入 13 或删除 |
+| 15 | 储能 GFM/VSG 和负荷阶跃 | 平均控制 | 只有方向测试，当前 DC-link 功率差被人为抵消 | 修正能量合同后条件保留 |
+| 16 | VSC-HVDC 功率阶跃 | 平均控制 | 线路电流/损耗合同不可信，首末电压摘要无判别力 | 退出默认学习路径 |
+
+所有 16 个脚本目前都能在 `MPLBACKEND=Agg` 下退出 0，但“运行结束”不等于物理正确。
+物理阈值应由 pytest 维护，示例只负责输出带单位的关键观察量。
+
+### 目标学习顺序
+
+最终收敛为约 8 个单目标单元，不建设课程运行器：
+
+1. R 电路与对象式 Quick Start；
+2. RC/RL/RLC companion、初值和收敛；
+3. 平衡三相、RMS、故障事件与恢复；
+4. π 型集中参数线路；
+5. 单相变压器；
+6. PWM 开关模型；
+7. PLL 与一个平均值 GFL 案例；
+8. 通过能量检查后保留的 GFM 储能案例。
+
+## 公开入口
+
+顶层 `pycy_emt_lite` 只推荐导入：
+
+- `CaseDefinition`、`Circuit`、`Simulator`、`SimulationResult`；
+- R、L、C、独立源；
+- 理想开关、断路器、故障及其事件；
+- 三相电源、线路和负荷；
+- π 型线路和单相变压器。
+
+求解器协议、状态数据类、绘图报告、高阶线路、电机、变流器和新能源候选不再从顶层
+重复导出。现阶段如需审查这些实现，应从对应子包显式导入；这不表示它们已进入可信
+课程范围。
+
+## 文档收敛方向
+
+现有文档按下表收敛，不建立文档站或归档副本：
+
+| 当前文档 | 去向 |
+|---|---|
+| `user_guide.md`、`new_simulation_workflow.md` | 必要操作并入本 README，随后删除原文件 |
+| `simulation_program_guide.md`、`theory/mna.md`、`theory/basic_components.md`、`theory/stamp_principles.md` | 只保留全局 MNA、基础 stamp、时间/事件、单位和方向约定，合并为 `docs/numerical_conventions.md` |
+| `theory/three_phase_systems.md`、`theory/advanced_line_transformer_models.md`、`theory/control_systems.md`、`theory/power_electronics.md`、`theory/renewable_grid_models.md` | 只保留最终模型的层级、必要方程、限制和验证证据，合并为 `docs/models_and_validation.md` |
+| `visualization_reporting.md` | 内容重复且含过时接口，直接删除 |
+| `project_improvement_plan.md` | 仅在改进期间保留；全部阶段完成后删除，不作为产品文档 |
+
+合并完成前，以源码 docstring 和测试为实现依据。
+
+## 当前结构
 
 ```text
-pycy_emt_lite/     # 核心源码（单一路径：Circuit/Simulator 对象式接口）
-  core/            # 仿真内核：电路、配置、稠密求解器、仿真主循环
-  components/      # 元件：RLC、源、三相、线路、变压器、开关、电力电子
-  controls/        # 控制：PI、限幅、滤波、坐标变换、PLL、PWM
-  converters/      # 变流器：平均逆变器、MMC、VSC-HVDC、滤波器组合
-  machines/        # 同步机：经典二阶与 Park dq0 模型
-  renewables/      # 新能源：光伏、电池、DC-link、跟网/构网/LVRT 控制
-  events/          # 事件：故障投入/清除、断路器开合
-  io/              # 结果：SimulationResult、CSV/JSON/NPZ
-  visualization/   # 绘图与 Markdown 报告
-  analysis/        # 分析：RMS、峰值、功率、电压跌落
-  cases.py         # 统一算例接口：CaseDefinition / run_case
-examples/          # 16 个按学习路径编号的示例
-tests/             # 单元测试
-docs/              # 文档（理论、用户指南、算例流程）
+pycy_emt_lite/   # 仿真内核和模型实现
+examples/        # 可运行教学案例
+tests/           # 数值与物理回归检查
+docs/            # 正在收敛的说明文档
 ```
-
-## 环境要求
-
-- Python 3.14（使用 `uv` 管理）
-- 依赖：numpy、scipy、matplotlib
-
-## 理论阅读顺序
-
-建议先运行示例、再按顺序读理论文档，把"程序行为"和"数学模型"对应起来：
-
-1. [改进节点分析法 MNA](docs/theory/mna.md)：为什么用 MNA、方程形式、变量约定
-2. [基础元件建模](docs/theory/basic_components.md)：R、L、C、电源的离散化
-3. [元件 stamp 原理](docs/theory/stamp_principles.md)：每个元件如何写入矩阵（最详细）
-4. [三相系统](docs/theory/three_phase_systems.md)：三相电源/线路/负荷
-5. [控制系统](docs/theory/control_systems.md)：PI、PLL、坐标变换
-6. [电力电子](docs/theory/power_electronics.md)：开关与平均逆变器
-7. [线路与变压器](docs/theory/advanced_line_transformer_models.md)：π 型/Bergeron 线路、变压器
-8. [新能源模型](docs/theory/renewable_grid_models.md)：光伏、电池、跟网/构网控制
-
-## 文档入口
-
-- [用户指南](docs/user_guide.md)：详细的安装、运行、结果对象与常见问题（比 README 更完整）。
-- [仿真程序详细说明](docs/simulation_program_guide.md)：MNA 组装、求解、状态更新在代码里怎么实现。
-- [新增算例流程](docs/new_simulation_workflow.md)：如何写一个新的仿真算例。
 
 ## 与 PyCy_EMT 的关系
 
-PyCy_EMT_Lite 是从完整版 PyCy_EMT（v0.6 对象式接口）中整理出的精简易用版：
-保留全部对象式模型与仿真内核，去掉 YAML/CaseSpec 编译管线、架构专项代码与
-相关文档，代码包名改为 `pycy_emt_lite`，示例按教学路径重新编号。
+PyCy_EMT_Lite 源自 PyCy_EMT v0.6 的对象式工作流，主动去掉 YAML/CaseSpec 管线及
+其它平台级架构，把重点放在小规模教学模型、数值语义和可验证结果上。
+
+## 许可证
+
+[MIT](LICENSE)

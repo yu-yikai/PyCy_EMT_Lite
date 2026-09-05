@@ -3,6 +3,7 @@ name = "pycy-emt-lite"
 version = "0.1.0"
 description = "面向新型电力系统电磁暂态仿真的 Python 教学项目（精简易用版）"
 readme = "README.md"
+license = "MIT"
 requires-python = ">=3.14,<3.15"
 authors = [
   { name = "PyCy_EMT_Lite Contributors" }

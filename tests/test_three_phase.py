@@ -13,10 +13,10 @@ from pycy_emt_lite import (
     Simulator,
     ThreePhaseLine,
     ThreePhaseLoad,
-    ThreePhaseParallelRLCLoad,
     ThreePhaseSource,
 )
 from pycy_emt_lite.analysis import three_phase_rms
+from pycy_emt_lite.components.three_phase import ThreePhaseParallelRLCLoad
 
 
 def test_three_phase_source_load_has_balanced_rms() -> None:

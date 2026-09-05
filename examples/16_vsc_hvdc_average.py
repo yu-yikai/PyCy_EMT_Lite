@@ -7,7 +7,8 @@
 
 import math
 
-from pycy_emt_lite import SimulationResult, VSCHVDCLinkAverage
+from pycy_emt_lite.converters import VSCHVDCLinkAverage
+from pycy_emt_lite.io.results import SimulationResult
 from pycy_emt_lite.visualization import plot_series
 
 RATED_DC_VOLTAGE = 300e3

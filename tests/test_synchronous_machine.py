@@ -5,8 +5,9 @@
 
 import math
 
-from pycy_emt_lite import Circuit, Resistor, SimulationConfig, Simulator, SynchronousMachine
+from pycy_emt_lite import Circuit, Resistor, SimulationConfig, Simulator
 from pycy_emt_lite.analysis import three_phase_rms
+from pycy_emt_lite.machines import SynchronousMachine
 
 
 def test_synchronous_machine_terminal_voltage_with_resistive_load() -> None:
