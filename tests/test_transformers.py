@@ -6,6 +6,7 @@
 import math
 
 import numpy as np
+import pytest
 
 from pycy_emt_lite import (
     Circuit,
@@ -18,6 +19,34 @@ from pycy_emt_lite import (
 )
 from pycy_emt_lite.analysis import three_phase_rms
 from pycy_emt_lite.components.transformers import ThreePhaseTransformer
+
+
+@pytest.mark.parametrize(
+    ("parameter", "value"),
+    (
+        ("turns_ratio", math.nan),
+        ("leakage_resistance", math.nan),
+        ("leakage_inductance", math.nan),
+        ("magnetizing_inductance", math.nan),
+        ("core_loss_resistance", math.nan),
+        ("saturation_knee_flux", math.nan),
+        ("saturated_magnetizing_inductance", math.nan),
+    ),
+)
+def test_transformer_rejects_nonfinite_parameters(parameter: str, value: float) -> None:
+    values: dict[str, float | None] = {
+        "turns_ratio": 1.0,
+        "leakage_resistance": 0.0,
+        "leakage_inductance": 0.0,
+        "magnetizing_inductance": 1.0,
+        "core_loss_resistance": 1.0,
+        "saturation_knee_flux": 1.0,
+        "saturated_magnetizing_inductance": 0.5,
+    }
+    values[parameter] = value
+
+    with pytest.raises(ValueError, match="有限"):
+        SinglePhaseTransformer("T1", "primary", "0", "secondary", "0", **values)
 
 
 def test_single_phase_transformer_voltage_ratio() -> None:

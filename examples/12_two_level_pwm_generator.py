@@ -88,41 +88,14 @@ def create_components() -> tuple:
     return tuple(components)
 
 
-def transform_result(raw: SimulationResult) -> SimulationResult:
-    """把 MNA 原始列整理为教学使用的三相电压、电流列。"""
-
-    rows: list[dict[str, float]] = []
-    for row in raw.rows:
-        rows.append(
-            {
-                "time": row["time"],
-                "i_a": row["i:La"],
-                "i_b": row["i:Lb"],
-                "i_c": row["i:Lc"],
-                "v_a": row["v:phase_a"],
-                "v_b": row["v:phase_b"],
-                "v_c": row["v:phase_c"],
-            }
-        )
-
-    return SimulationResult(
-        "two_level_pwm_generator",
-        raw.method,
-        raw.time_step,
-        raw.stop_time,
-        rows,
-        event_log=list(raw.event_log),
-    )
-
-
 def print_summary(result: SimulationResult) -> None:
     """打印两电平 PWM 算例末值。"""
 
     print(
         "末值："
-        f" i_a={result.rows[-1]['i_a']:.6f} A,"
-        f" i_b={result.rows[-1]['i_b']:.6f} A,"
-        f" i_c={result.rows[-1]['i_c']:.6f} A"
+        f" i:La={result.rows[-1]['i:La']:.6f} A,"
+        f" i:Lb={result.rows[-1]['i:Lb']:.6f} A,"
+        f" i:Lc={result.rows[-1]['i:Lc']:.6f} A"
     )
 
 
@@ -142,7 +115,7 @@ def define_case() -> CaseDefinition:
 
     plots = (
         PlotSpec(
-            columns=("i_a", "i_b", "i_c"),
+            columns=("i:La", "i:Lb", "i:Lc"),
             kind="series",
             title="两电平 PWM 逆变器三相负载电流",
         ),
@@ -162,7 +135,6 @@ def define_case() -> CaseDefinition:
         plots=plots,
         output=output,
         summary=print_summary,
-        result_transform=transform_result,
     )
 
 

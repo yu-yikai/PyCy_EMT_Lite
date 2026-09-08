@@ -12,6 +12,8 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+import math
+from numbers import Integral
 from typing import Iterable
 
 import numpy as np
@@ -43,12 +45,12 @@ class _SeriesState:
 def _validate_pi_parameters(name: str, resistance: float, inductance: float, capacitance: float) -> None:
     """检查 π 型线路参数。"""
 
-    if resistance < 0:
-        raise ValueError(f"{name} 的串联电阻不能小于 0。")
-    if inductance < 0:
-        raise ValueError(f"{name} 的串联电感不能小于 0。")
-    if capacitance < 0:
-        raise ValueError(f"{name} 的并联电容不能小于 0。")
+    if not math.isfinite(resistance) or resistance < 0:
+        raise ValueError(f"{name} 的串联电阻必须为有限非负数。")
+    if not math.isfinite(inductance) or inductance < 0:
+        raise ValueError(f"{name} 的串联电感必须为有限非负数。")
+    if not math.isfinite(capacitance) or capacitance < 0:
+        raise ValueError(f"{name} 的并联电容必须为有限非负数。")
     if resistance == 0 and inductance == 0:
         raise ValueError(f"{name} 的串联电阻和串联电感不能同时为 0。")
 
@@ -385,8 +387,8 @@ class SegmentedLine(Component):
     receiving_cap_states: list[_CapacitorState] = field(default_factory=list, init=False)
 
     def __post_init__(self) -> None:
-        if self.sections <= 0:
-            raise ValueError(f"分段线路 {self.name} 的段数必须大于 0。")
+        if not isinstance(self.sections, Integral) or isinstance(self.sections, bool) or self.sections <= 0:
+            raise ValueError(f"分段线路 {self.name} 的段数必须为正整数。")
         _validate_pi_parameters(f"分段线路 {self.name}", self.resistance, self.inductance, self.capacitance)
         self.series_states = [_SeriesState() for _ in range(self.sections)]
         self.sending_cap_states = [_CapacitorState() for _ in range(self.sections)]
@@ -503,10 +505,10 @@ class BergeronLine(Component):
     last_receiving_current: float = 0.0
 
     def __post_init__(self) -> None:
-        if self.surge_impedance <= 0:
-            raise ValueError(f"Bergeron 线路 {self.name} 的特性阻抗必须大于 0。")
-        if self.travel_time <= 0:
-            raise ValueError(f"Bergeron 线路 {self.name} 的传播时延必须大于 0。")
+        if not math.isfinite(self.surge_impedance) or self.surge_impedance <= 0:
+            raise ValueError(f"Bergeron 线路 {self.name} 的特性阻抗必须为有限正数。")
+        if not math.isfinite(self.travel_time) or self.travel_time <= 0:
+            raise ValueError(f"Bergeron 线路 {self.name} 的传播时延必须为有限正数。")
         if not 0 < self.attenuation <= 1:
             raise ValueError(f"Bergeron 线路 {self.name} 的衰减系数必须位于 (0, 1]。")
 

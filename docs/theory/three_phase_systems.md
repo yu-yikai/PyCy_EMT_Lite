@@ -83,5 +83,14 @@ result = simulator.run()
 ```python
 from pycy_emt_lite.analysis import three_phase_rms
 
-rms_values = three_phase_rms(result, ("v:load:a", "v:load:b", "v:load:c"), start_time=0.06)
+rms_values = three_phase_rms(result, ("v:load:a", "v:load:b", "v:load:c"), start_time=0.05, end_time=0.07)
 ```
+
+均值和 RMS 按真实时间对分段线性信号积分；窗口端点可以落在采样点之间。时间列必须
+有限、严格递增，积分窗口须有正时长且位于数据范围内。不能跨事件或使用包含跳变的
+原始采样区间做插值；示例 07 分别使用 0.01–0.03、0.05–0.07、0.09–0.11 s 的完整
+50 Hz 周期。`peak_abs` 仍返回窗口内的采样峰值，允许单点窗口。
+
+三相瞬时总有功为 `va*ia + vb*ib + vc*ic`，包含零序功率；平均有功对线性重建的
+电压、电流乘积积分。无功采用 αβ 定义，由平均 P/Q 计算的 S/PF 仅用于平衡正弦场景，
+不能据此解释通用的不平衡或畸变功率质量。

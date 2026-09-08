@@ -36,6 +36,7 @@ class Component(ABC):
     """
 
     name: str
+    _circuit_owner: object | None = None
 
     @abstractmethod
     def nodes(self) -> Iterable[str]:

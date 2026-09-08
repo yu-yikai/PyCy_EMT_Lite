@@ -16,21 +16,28 @@ from pycy_emt_lite.core.circuit import Circuit
 from pycy_emt_lite.events.base import EventRecord, SimulationEvent
 
 
-def _find_component(circuit: Circuit, target: str) -> object:
+def _find_component(circuit: Circuit, target: str, scheduled_time: float) -> object:
     """按名称查找事件作用对象。"""
 
     for component in circuit.components:
         if getattr(component, "name", None) == target:
             return component
-    raise KeyError(f"事件目标 {target!r} 不存在。")
+    raise KeyError(f"事件目标 {target!r} 在设定时间 {scheduled_time:g} 不存在。")
 
 
-def _set_bool_state(circuit: Circuit, target: str, attribute: str, value: bool) -> bool:
+def _check_bool_state(circuit: Circuit, target: str, scheduled_time: float, attribute: str) -> object:
+    """检查目标存在且支持指定的布尔状态。"""
+
+    component = _find_component(circuit, target, scheduled_time)
+    if not hasattr(component, attribute):
+        raise TypeError(f"事件目标 {target!r} 在设定时间 {scheduled_time:g} 不支持状态 {attribute!r}。")
+    return component
+
+
+def _set_bool_state(circuit: Circuit, target: str, scheduled_time: float, attribute: str, value: bool) -> bool:
     """设置目标元件布尔状态，并返回事件前状态。"""
 
-    component = _find_component(circuit, target)
-    if not hasattr(component, attribute):
-        raise TypeError(f"事件目标 {target!r} 不支持状态 {attribute!r}。")
+    component = _check_bool_state(circuit, target, scheduled_time, attribute)
     before = bool(getattr(component, attribute))
     setattr(component, attribute, value)
     return before
@@ -40,8 +47,11 @@ def _set_bool_state(circuit: Circuit, target: str, attribute: str, value: bool) 
 class FaultApplyEvent(SimulationEvent):
     """故障投入事件。"""
 
+    def validate(self, circuit: Circuit) -> None:
+        _check_bool_state(circuit, self.target, self.time, "enabled")
+
     def apply(self, circuit: Circuit, applied_time: float) -> EventRecord:
-        before = _set_bool_state(circuit, self.target, "enabled", True)
+        before = _set_bool_state(circuit, self.target, self.time, "enabled", True)
         return {
             "time": applied_time,
             "scheduled_time": self.time,
@@ -57,8 +67,11 @@ class FaultApplyEvent(SimulationEvent):
 class FaultClearEvent(SimulationEvent):
     """故障清除事件。"""
 
+    def validate(self, circuit: Circuit) -> None:
+        _check_bool_state(circuit, self.target, self.time, "enabled")
+
     def apply(self, circuit: Circuit, applied_time: float) -> EventRecord:
-        before = _set_bool_state(circuit, self.target, "enabled", False)
+        before = _set_bool_state(circuit, self.target, self.time, "enabled", False)
         return {
             "time": applied_time,
             "scheduled_time": self.time,
@@ -74,8 +87,11 @@ class FaultClearEvent(SimulationEvent):
 class BreakerOpenEvent(SimulationEvent):
     """断路器断开事件。"""
 
+    def validate(self, circuit: Circuit) -> None:
+        _check_bool_state(circuit, self.target, self.time, "closed")
+
     def apply(self, circuit: Circuit, applied_time: float) -> EventRecord:
-        before = _set_bool_state(circuit, self.target, "closed", False)
+        before = _set_bool_state(circuit, self.target, self.time, "closed", False)
         return {
             "time": applied_time,
             "scheduled_time": self.time,
@@ -91,8 +107,11 @@ class BreakerOpenEvent(SimulationEvent):
 class BreakerCloseEvent(SimulationEvent):
     """断路器闭合事件。"""
 
+    def validate(self, circuit: Circuit) -> None:
+        _check_bool_state(circuit, self.target, self.time, "closed")
+
     def apply(self, circuit: Circuit, applied_time: float) -> EventRecord:
-        before = _set_bool_state(circuit, self.target, "closed", True)
+        before = _set_bool_state(circuit, self.target, self.time, "closed", True)
         return {
             "time": applied_time,
             "scheduled_time": self.time,

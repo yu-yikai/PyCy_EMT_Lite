@@ -72,7 +72,7 @@ def main() -> None:
 
     result = SimulationResult(
         circuit_name="storage_grid_forming",
-        method="trapezoidal",
+        method="explicit_control",
         time_step=TIME_STEP,
         stop_time=STOP_TIME,
         rows=rows,

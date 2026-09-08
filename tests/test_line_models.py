@@ -6,6 +6,7 @@
 import math
 
 import numpy as np
+import pytest
 
 from pycy_emt_lite import Circuit, PiLine, Resistor, SimulationConfig, Simulator, VoltageSource
 from pycy_emt_lite.components.lines import (
@@ -14,6 +15,41 @@ from pycy_emt_lite.components.lines import (
     ThreePhaseBergeronLine,
     ThreePhasePiLine,
 )
+
+
+@pytest.mark.parametrize(
+    ("parameter", "value"),
+    (("resistance", math.nan), ("inductance", math.inf), ("capacitance", math.nan)),
+)
+def test_pi_line_rejects_nonfinite_parameters(parameter: str, value: float) -> None:
+    values = {"resistance": 1.0, "inductance": 0.0, "capacitance": 1e-6}
+    values[parameter] = value
+
+    with pytest.raises(ValueError, match="有限"):
+        PiLine("LINE", "source", "load", **values)
+
+
+@pytest.mark.parametrize("sections", (0, 1.5, True))
+def test_segmented_line_requires_a_positive_integer_section_count(sections: int | float | bool) -> None:
+    with pytest.raises(ValueError, match="正整数"):
+        SegmentedLine("LINE", "source", "load", 1.0, 0.0, 1e-6, sections)
+
+
+def test_segmented_line_accepts_numpy_integer_section_count() -> None:
+    line = SegmentedLine("LINE", "source", "load", 1.0, 0.0, 1e-6, np.int64(1))
+
+    assert len(line.series_states) == 1
+
+
+@pytest.mark.parametrize(
+    ("surge_impedance", "travel_time"),
+    ((math.nan, 1e-3), (10.0, math.inf), (math.inf, 1e-3), (10.0, -math.inf)),
+)
+def test_bergeron_line_rejects_nonfinite_construction_parameters(
+    surge_impedance: float, travel_time: float
+) -> None:
+    with pytest.raises(ValueError):
+        BergeronLine("LINE", "source", "load", surge_impedance, travel_time)
 
 
 def test_pi_line_reaches_resistive_divider_at_steady_state() -> None:

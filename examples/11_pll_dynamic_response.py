@@ -56,7 +56,7 @@ def main() -> None:
 
     result = SimulationResult(
         circuit_name="pll_dynamic_response",
-        method="trapezoidal",
+        method="explicit_control",
         time_step=TIME_STEP,
         stop_time=STOP_TIME,
         rows=rows,

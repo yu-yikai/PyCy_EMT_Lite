@@ -10,6 +10,8 @@ The recommended flow is `CaseDefinition -> Circuit -> Simulator -> SimulationRes
 
 Keep each example focused on one physical question. Declare units, time step, stop time, integration method, plots, and output flags near the top. Call `run_case(case)` from the repository root.
 
+`SimulationConfig` currently supports only `start_time=0.0`. Create fresh simulator, circuit, and component instances for each run; full state restoration and checkpoint continuation are not implemented, so a nonzero `start_time` cannot continue a previous simulation.
+
 ## 3. Circuit preparation
 
 `Circuit` owns the component collection and node registry. `prepare()` collects non-reference nodes, allocates extra branch-current unknowns, and gives components their matrix indices. Reference nodes are excluded.

@@ -23,12 +23,17 @@ from pycy_emt_lite.core.variables import VariableManager
 
 TimeValue = float | Callable[[float], float]
 
-def _value_at(value: TimeValue, time: float) -> float:
+def _value_at(value: TimeValue, time: float, *, name: str | None = None) -> float:
     """返回常数或时间函数在当前时刻的数值。"""
 
     if callable(value):
-        return float(value(time))
-    return float(value)
+        result = float(value(time))
+    else:
+        result = float(value)
+    if not np.isfinite(result):
+        source_name = f" {name!r}" if name is not None else ""
+        raise ValueError(f"源{source_name} 在 time={time:g} 的值必须为有限数。")
+    return result
 
 @dataclass(slots=True)
 class Resistor(Component):
@@ -43,6 +48,8 @@ class Resistor(Component):
     resistance: float
 
     def __post_init__(self) -> None:
+        if not np.isfinite(self.resistance):
+            raise ValueError(f"电阻 {self.name} 的阻值必须为有限数。")
         if self.resistance <= 0:
             raise ValueError(f"电阻 {self.name} 的阻值必须大于 0。")
 
@@ -77,6 +84,10 @@ class CurrentSource(Component):
     negative: str
     current: TimeValue
 
+    def __post_init__(self) -> None:
+        if not callable(self.current) and not np.isfinite(float(self.current)):
+            raise ValueError(f"电流源 {self.name} 的常数电流必须为有限数。")
+
     def nodes(self) -> Iterable[str]:
         return (self.positive, self.negative)
 
@@ -87,7 +98,12 @@ class CurrentSource(Component):
         因此 positive 节点 KCL 中表现为流出，negative 节点表现为注入。
         """
 
-        add_current_source(rhs, context.node_index(self.positive), context.node_index(self.negative), _value_at(self.current, context.time))
+        add_current_source(
+            rhs,
+            context.node_index(self.positive),
+            context.node_index(self.negative),
+            _value_at(self.current, context.time, name=self.name),
+        )
 
 @dataclass(slots=True)
 class VoltageSource(Component):
@@ -102,6 +118,10 @@ class VoltageSource(Component):
     negative: str
     voltage: TimeValue
     branch_index: int | None = field(default=None, init=False)
+
+    def __post_init__(self) -> None:
+        if not callable(self.voltage) and not np.isfinite(float(self.voltage)):
+            raise ValueError(f"电压源 {self.name} 的常数电压必须为有限数。")
 
     def nodes(self) -> Iterable[str]:
         return (self.positive, self.negative)
@@ -135,7 +155,7 @@ class VoltageSource(Component):
         if n is not None:
             matrix[n, branch] -= 1.0
             matrix[branch, n] -= 1.0
-        rhs[branch] += _value_at(self.voltage, context.time)
+        rhs[branch] += _value_at(self.voltage, context.time, name=self.name)
 
     def outputs(self, context: StampContext, solution: np.ndarray) -> dict[str, float]:
         """记录电压源支路电流。"""
@@ -162,8 +182,12 @@ class Capacitor(Component):
     last_current: float = field(default=0.0, init=False)
 
     def __post_init__(self) -> None:
+        if not np.isfinite(self.capacitance):
+            raise ValueError(f"电容 {self.name} 的电容值必须为有限数。")
         if self.capacitance <= 0:
             raise ValueError(f"电容 {self.name} 的电容值必须大于 0。")
+        if not np.isfinite(self.initial_voltage):
+            raise ValueError(f"电容 {self.name} 的初始电压必须为有限数。")
         self.previous_voltage = float(self.initial_voltage)
 
     def nodes(self) -> Iterable[str]:
@@ -240,8 +264,12 @@ class Inductor(Component):
     last_voltage: float = field(default=0.0, init=False)
 
     def __post_init__(self) -> None:
+        if not np.isfinite(self.inductance):
+            raise ValueError(f"电感 {self.name} 的电感值必须为有限数。")
         if self.inductance <= 0:
             raise ValueError(f"电感 {self.name} 的电感值必须大于 0。")
+        if not np.isfinite(self.initial_current):
+            raise ValueError(f"电感 {self.name} 的初始电流必须为有限数。")
         self.previous_current = float(self.initial_current)
 
     def nodes(self) -> Iterable[str]:

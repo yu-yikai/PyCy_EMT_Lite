@@ -5,7 +5,6 @@
 主要内容：
 1. 定义算例绘图、输出和整体算例配置对象
 2. 统一执行 Circuit、Simulator、结果保存、事件日志和绘图流程
-3. 在统一运行后执行受约束的结果字段变换
 """
 
 from __future__ import annotations
@@ -23,7 +22,6 @@ from pycy_emt_lite.io.results import SimulationResult
 from pycy_emt_lite.visualization import plot_series, plot_three_phase
 
 PlotKind = Literal["series", "three_phase"]
-ResultTransform = Callable[[SimulationResult], SimulationResult]
 
 
 @dataclass(frozen=True, slots=True)
@@ -60,29 +58,6 @@ class CaseDefinition:
     plots: tuple[PlotSpec, ...] = ()
     output: OutputOptions = field(default_factory=OutputOptions)
     summary: Callable[[SimulationResult], None] | None = None
-    result_transform: ResultTransform | None = None
-
-
-def _apply_result_transform(case: CaseDefinition, raw: SimulationResult) -> SimulationResult:
-    """应用只改结果字段的变换，并守住时间与事件语义。"""
-
-    if case.result_transform is None:
-        return raw
-
-    transformed = case.result_transform(raw)
-    if not isinstance(transformed, SimulationResult):
-        raise TypeError("Result Transform 必须返回 SimulationResult。")
-    if transformed.method != raw.method:
-        raise ValueError("Result Transform 不得改变积分方法。")
-    if transformed.time_step != raw.time_step or transformed.stop_time != raw.stop_time:
-        raise ValueError("Result Transform 不得改变时间步长或终止时间。")
-    raw_time = [row.get("time") for row in raw.rows]
-    transformed_time = [row.get("time") for row in transformed.rows]
-    if transformed_time != raw_time:
-        raise ValueError("Result Transform 不得改变时间轴或结果行数。")
-    if transformed.event_log != raw.event_log:
-        raise ValueError("Result Transform 不得改变事件日志。")
-    return transformed
 
 
 def run_case(case: CaseDefinition) -> SimulationResult:
@@ -95,8 +70,6 @@ def run_case(case: CaseDefinition) -> SimulationResult:
     circuit = Circuit.from_components(case.name, case.components)
     simulator = Simulator(circuit, case.config, events=case.events)
     result = simulator.run()
-
-    result = _apply_result_transform(case, result)
 
     print(
         f"仿真完成：{result.circuit_name}，共 {len(result.rows)} 个采样点，"

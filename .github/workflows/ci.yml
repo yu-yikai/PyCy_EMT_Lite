@@ -55,12 +55,26 @@ jobs:
           wheel="$(realpath .tmp/dist/*.whl)"
           smoke_dir="$(mktemp -d)"
           cd "${smoke_dir}"
-          uv run --python 3.14 --isolated --no-project --with "${wheel}" python -c \
-            'from importlib.metadata import version; import pycy_emt_lite; assert version("pycy-emt-lite") == pycy_emt_lite.__version__'
+          uv run --python 3.14 --isolated --no-project --with "${wheel}" python - <<'PY'
+          from importlib.metadata import distribution
+          from pathlib import Path
+          import pycy_emt_lite as emt
+
+          installed = distribution("pycy-emt-lite")
+          assert installed.version == emt.__version__
+          assert Path(emt.__file__).resolve() == Path(installed.locate_file("pycy_emt_lite/__init__.py")).resolve()
+          circuit = emt.Circuit.from_components("wheel_smoke", (
+              emt.VoltageSource("V", "n", "0", 10.0),
+              emt.Resistor("R", "n", "0", 5.0),
+          ))
+          result = emt.Simulator(circuit, emt.SimulationConfig(1e-4, 1e-4)).run()
+          assert abs(result.rows[-1]["i:R"] - 2.0) < 1e-12
+          PY
 
       - name: Check for generated files
         shell: bash
         run: |
+          test ! -e outputs
           if [[ -n "$(git status --porcelain)" ]]; then
             git status --short
             exit 1

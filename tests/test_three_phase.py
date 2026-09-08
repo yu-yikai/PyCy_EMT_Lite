@@ -4,6 +4,8 @@
 """
 
 import math
+import runpy
+from pathlib import Path
 
 import pytest
 
@@ -17,6 +19,52 @@ from pycy_emt_lite import (
 )
 from pycy_emt_lite.analysis import three_phase_rms
 from pycy_emt_lite.components.three_phase import ThreePhaseParallelRLCLoad
+
+
+@pytest.mark.parametrize(
+    ("parameter", "value"),
+    (("phase_rms", math.nan), ("frequency", math.inf), ("initial_angle", -math.inf)),
+)
+def test_three_phase_source_rejects_nonfinite_parameters(parameter: str, value: float) -> None:
+    values = {"phase_rms": 230.0, "frequency": 50.0, "initial_angle": 0.0}
+    values[parameter] = value
+
+    with pytest.raises(ValueError):
+        ThreePhaseSource("VS", "source", **values)
+
+
+@pytest.mark.parametrize(("resistance", "inductance"), ((math.nan, 0.0), (1.0, math.inf)))
+def test_three_phase_line_rejects_nonfinite_series_parameters(resistance: float, inductance: float) -> None:
+    with pytest.raises(ValueError):
+        ThreePhaseLine("LINE", "source", "load", resistance, inductance)
+
+
+@pytest.mark.parametrize(
+    ("parameter", "value"),
+    (("nominal_line_voltage", math.nan), ("frequency", math.inf), ("active_power", math.nan),
+     ("inductive_power", math.nan), ("capacitive_power", math.nan)),
+)
+def test_parallel_rlc_load_rejects_nonfinite_parameters(parameter: str, value: float) -> None:
+    values = {"nominal_line_voltage": 400.0, "active_power": 1_000.0, "frequency": 50.0}
+    values[parameter] = value
+
+    with pytest.raises(ValueError, match="有限"):
+        ThreePhaseParallelRLCLoad("LOAD", "bus", **values)
+
+
+def test_single_phase_fault_example_matches_resistive_dividers() -> None:
+    example = runpy.run_path(str(Path(__file__).resolve().parents[1] / "examples/07_single_phase_ground_fault.py"))
+    case = example["define_case"]()
+    result = Simulator(Circuit.from_components(case.name, case.components), case.config, case.events).run()
+    normal_voltage = 230.0 * 50.0 / (0.8 + 50.0)
+    fault_resistance = 50.0 * 0.1 / (50.0 + 0.1)
+    fault_voltage = 230.0 * fault_resistance / (0.8 + fault_resistance)
+    for start, end, expected_a in ((0.01, 0.03, normal_voltage), (0.05, 0.07, fault_voltage), (0.09, 0.11, normal_voltage)):
+        values = three_phase_rms(result, ("v:load:a", "v:load:b", "v:load:c"), start_time=start, end_time=end)
+        # 50 Hz / 100 μs 分段线性重建的 RMS 相对误差小于 1e-4。
+        assert values["v:load:a"] == pytest.approx(expected_a, rel=1e-4)
+        assert values["v:load:b"] == pytest.approx(normal_voltage, rel=1e-4)
+        assert values["v:load:c"] == pytest.approx(normal_voltage, rel=1e-4)
 
 
 def test_three_phase_source_load_has_balanced_rms() -> None:

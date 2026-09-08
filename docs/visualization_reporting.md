@@ -7,7 +7,7 @@
 ## 1. 多结果对比
 
 ```python
-from pycy_emt.visualization import plot_result_comparison
+from pycy_emt_lite.visualization import plot_result_comparison
 
 plot_result_comparison([result_a, result_b], "v:out", labels=["A", "B"])
 ```
@@ -17,7 +17,7 @@ plot_result_comparison([result_a, result_b], "v:out", labels=["A", "B"])
 ## 2. 局部放大
 
 ```python
-from pycy_emt.visualization import plot_zoom_window
+from pycy_emt_lite.visualization import plot_zoom_window
 
 plot_zoom_window(result, ["v:load:a"], 0.08, 0.12)
 ```
@@ -31,7 +31,7 @@ plot_zoom_window(result, ["v:load:a"], 0.08, 0.12)
 ## 4. Markdown 报告
 
 ```python
-from pycy_emt.visualization import write_markdown_report
+from pycy_emt_lite.visualization import write_markdown_report
 
 write_markdown_report(
     result,

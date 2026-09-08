@@ -11,11 +11,27 @@ from __future__ import annotations
 
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
+from math import isfinite, ulp
 from typing import Iterable
 
 from pycy_emt_lite.core.circuit import Circuit
 
 EventRecord = dict[str, float | str]
+
+
+def _time_tolerance(*values: float) -> float:
+    """返回由参与比较的浮点时间量级决定的微小容差。"""
+
+    scale = max((abs(value) for value in values), default=0.0)
+    return 8.0 * ulp(scale)
+
+
+def _time_close(left: float, right: float) -> bool:
+    """判断两个时间是否只相差浮点舍入误差。"""
+
+    if left == 0.0 or right == 0.0:
+        return left == right
+    return abs(left - right) <= _time_tolerance(left, right)
 
 
 @dataclass(frozen=True, slots=True)
@@ -32,8 +48,13 @@ class SimulationEvent(ABC):
     name: str = ""
 
     def __post_init__(self) -> None:
+        if not isfinite(self.time):
+            raise ValueError("事件时间必须为有限数。")
         if self.time < 0:
             raise ValueError("事件时间不能小于 0。")
+
+    def validate(self, circuit: Circuit) -> None:
+        """在求解前检查事件；自定义事件默认无需标准状态约束。"""
 
     @abstractmethod
     def apply(self, circuit: Circuit, applied_time: float) -> EventRecord:
@@ -53,11 +74,19 @@ class EventQueue:
 
         return [event.time for event in self._events]
 
-    def pop_due(self, time: float, *, tolerance: float) -> list[SimulationEvent]:
+    def pop_due(self, time: float, *, tolerance: float | None = None) -> list[SimulationEvent]:
         """弹出所有应该在当前时间点执行的事件。"""
 
         due: list[SimulationEvent] = []
-        while self._next_index < len(self._events) and self._events[self._next_index].time <= time + tolerance:
+        while self._next_index < len(self._events):
+            event_time = self._events[self._next_index].time
+            if event_time > time:
+                if time == 0.0:
+                    break
+                pair_tolerance = _time_tolerance(event_time, time)
+                effective_tolerance = pair_tolerance if tolerance is None else min(tolerance, pair_tolerance)
+                if event_time - time > effective_tolerance:
+                    break
             due.append(self._events[self._next_index])
             self._next_index += 1
         return due

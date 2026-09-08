@@ -11,6 +11,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+import math
 from typing import Callable, Iterable
 
 import numpy as np
@@ -46,10 +47,10 @@ class IdealSwitch(Component):
     last_state: bool = False
 
     def __post_init__(self) -> None:
-        if self.closed_resistance <= 0.0:
-            raise ValueError(f"开关 {self.name} 的闭合电阻必须大于 0。")
-        if self.open_conductance < 0.0:
-            raise ValueError(f"开关 {self.name} 的断开电导不能小于 0。")
+        if not math.isfinite(self.closed_resistance) or self.closed_resistance <= 0.0:
+            raise ValueError(f"开关 {self.name} 的闭合电阻必须为有限正数。")
+        if not math.isfinite(self.open_conductance) or self.open_conductance < 0.0:
+            raise ValueError(f"开关 {self.name} 的断开电导必须为有限非负数。")
 
     def nodes(self) -> Iterable[str]:
         return (self.positive, self.negative)

@@ -31,4 +31,8 @@ events = [
 result = Simulator(circuit, config, events=events).run()
 ```
 
-The event log records event time, type, target, and state change. Use `three_phase_rms(result, ("v:load:a", "v:load:b", "v:load:c"), start_time=0.06)` for a window beginning after the fault is applied. Event boundaries should not be hidden inside one whole-window statistic.
+The event log records event time, type, target, and state change. Use `three_phase_rms(result, ("v:load:a", "v:load:b", "v:load:c"), start_time=0.05, end_time=0.07)` for a full 50 Hz period during the fault. Example 07 compares 0.01–0.03, 0.05–0.07 and 0.09–0.11 s windows.
+
+Mean and RMS integrate piecewise-linear signals over actual time, interpolating window endpoints when needed. Time must be finite and strictly increasing; integration windows need positive duration inside the data range. Do not integrate across events or interpolate within a raw sample interval containing a jump. `peak_abs` still returns the sampled peak and accepts a single-point window.
+
+Instantaneous total active power is `va*ia + vb*ib + vc*ic`, including zero sequence. Average active power integrates products of the linearly reconstructed voltage and current. Reactive power uses the alpha-beta definition; S/PF derived from mean P/Q apply to balanced sinusoidal conditions, not general distorted or unbalanced power quality.

@@ -28,6 +28,8 @@ class NodeManager:
     def add(self, node: str) -> None:
         """添加节点名称。参考节点会被忽略。"""
 
+        if not isinstance(node, str) or not node.strip():
+            raise ValueError(f"节点名称必须是非空字符串，收到 {node!r}。")
         if node in GROUND_NAMES:
             return
         if node not in self._indices:

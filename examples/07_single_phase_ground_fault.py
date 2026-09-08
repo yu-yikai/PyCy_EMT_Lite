@@ -1,6 +1,6 @@
 """演示三相系统中的单相接地故障。
 
-单相接地是不对称故障的典型代表，观察故障相电压跌落与非故障相电压抬升，
+单相接地是不对称故障的典型代表，对比故障相与非故障相的电压，
 并理解故障元件的分相接入方式。"""
 
 from pycy_emt_lite import (
@@ -13,6 +13,7 @@ from pycy_emt_lite import (
     ThreePhaseSource,
 )
 from pycy_emt_lite.cases import CaseDefinition, OutputOptions, PlotSpec, run_case
+from pycy_emt_lite.analysis import peak_abs, three_phase_rms
 from pycy_emt_lite.io.results import SimulationResult
 
 SAVE_RESULT_DATA = 0
@@ -21,12 +22,13 @@ SHOW_FIGURE = True
 
 
 def print_summary(result: SimulationResult) -> None:
-    """打印单相接地故障期间 A 相故障电流峰值与故障相电压跌落。"""
+    """用避开事件边界的完整 50 Hz 周期比较故障前、中、后三相 RMS。"""
 
-    fault_current = result.series("i:FA_G")
-    phase_voltage = result.series("v:load:a")
-    print(f"A 相故障电流峰值：{max(abs(fault_current)):.2f} A")
-    print(f"A 相电压最低值：{min(phase_voltage):.2f} V（故障前约 230 V 幅值）")
+    for label, start, end in (("故障前", 0.01, 0.03), ("故障中", 0.05, 0.07), ("故障后", 0.09, 0.11)):
+        values = three_phase_rms(result, ("v:load:a", "v:load:b", "v:load:c"), start_time=start, end_time=end)
+        print(f"{label} [{start:.2f}, {end:.2f}] s：" + ", ".join(f"{name}={value:.2f} V RMS" for name, value in values.items()))
+    peak = peak_abs(result, "i:FA_G", start_time=0.05, end_time=0.07)
+    print(f"故障中 [0.05, 0.07] s：A 相故障电流峰值={peak:.2f} A")
 
 
 def define_case() -> CaseDefinition:

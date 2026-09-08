@@ -5,6 +5,8 @@
 
 import math
 
+import pytest
+
 from pycy_emt_lite import (
     Circuit,
     IdealSwitch,
@@ -13,7 +15,38 @@ from pycy_emt_lite import (
     VoltageSource,
 )
 from pycy_emt_lite.components.power_electronics import Diode, IGBTSwitch
+from pycy_emt_lite.components.switching import Breaker, Fault
 from pycy_emt_lite.converters import LCLFilter, ThreePhaseAverageInverter
+
+
+@pytest.mark.parametrize(
+    ("closed_resistance", "open_conductance"),
+    ((math.nan, 1e-9), (0.1, math.inf), (0.1, -math.inf)),
+)
+def test_ideal_switch_rejects_nonfinite_conductance_parameters(
+    closed_resistance: float, open_conductance: float
+) -> None:
+    with pytest.raises(ValueError):
+        IdealSwitch(
+            "S1",
+            "source",
+            "load",
+            closed_resistance=closed_resistance,
+            open_conductance=open_conductance,
+        )
+
+
+@pytest.mark.parametrize("factory", (lambda value: Fault("F", "node", value), lambda value: Breaker("B", "node", "0", closed_resistance=value)))
+@pytest.mark.parametrize("value", (math.nan, math.inf, -math.inf))
+def test_fault_and_breaker_reject_nonfinite_resistance(factory: object, value: float) -> None:
+    with pytest.raises(ValueError, match="有限正数"):
+        factory(value)  # type: ignore[operator]
+
+
+def test_ideal_switch_accepts_zero_open_conductance() -> None:
+    switch = IdealSwitch("S1", "source", "load", open_conductance=0.0)
+
+    assert switch.open_conductance == 0.0
 
 
 def test_ideal_switch_conducts_when_closed() -> None:

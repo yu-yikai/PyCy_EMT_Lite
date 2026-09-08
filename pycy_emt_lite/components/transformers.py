@@ -10,6 +10,7 @@
 
 from __future__ import annotations
 
+import math
 from dataclasses import dataclass, field
 from typing import Iterable, Literal
 
@@ -53,23 +54,31 @@ def _validate_transformer_parameters(
 ) -> None:
     """检查变压器参数。"""
 
-    if turns_ratio <= 0:
-        raise ValueError(f"变压器 {name} 的变比必须大于 0。")
-    if leakage_resistance < 0:
-        raise ValueError(f"变压器 {name} 的漏电阻不能小于 0。")
-    if leakage_inductance < 0:
-        raise ValueError(f"变压器 {name} 的漏感不能小于 0。")
-    if magnetizing_inductance is not None and magnetizing_inductance <= 0:
-        raise ValueError(f"变压器 {name} 的励磁电感必须大于 0。")
-    if core_loss_resistance is not None and core_loss_resistance <= 0:
-        raise ValueError(f"变压器 {name} 的铁耗电阻必须大于 0。")
+    if not math.isfinite(turns_ratio) or turns_ratio <= 0:
+        raise ValueError(f"变压器 {name} 的变比必须为有限正数。")
+    if not math.isfinite(leakage_resistance) or leakage_resistance < 0:
+        raise ValueError(f"变压器 {name} 的漏电阻必须为有限非负数。")
+    if not math.isfinite(leakage_inductance) or leakage_inductance < 0:
+        raise ValueError(f"变压器 {name} 的漏感必须为有限非负数。")
+    if magnetizing_inductance is not None and (
+        not math.isfinite(magnetizing_inductance) or magnetizing_inductance <= 0
+    ):
+        raise ValueError(f"变压器 {name} 的励磁电感必须为有限正数。")
+    if core_loss_resistance is not None and (
+        not math.isfinite(core_loss_resistance) or core_loss_resistance <= 0
+    ):
+        raise ValueError(f"变压器 {name} 的铁耗电阻必须为有限正数。")
     has_saturation = saturation_knee_flux is not None or saturated_magnetizing_inductance is not None
     if has_saturation and (saturation_knee_flux is None or saturated_magnetizing_inductance is None):
         raise ValueError(f"变压器 {name} 的饱和参数必须同时给出 knee_flux 和 saturated_magnetizing_inductance。")
-    if saturation_knee_flux is not None and saturation_knee_flux <= 0:
-        raise ValueError(f"变压器 {name} 的饱和拐点磁链必须大于 0。")
-    if saturated_magnetizing_inductance is not None and saturated_magnetizing_inductance <= 0:
-        raise ValueError(f"变压器 {name} 的饱和励磁电感必须大于 0。")
+    if saturation_knee_flux is not None and (
+        not math.isfinite(saturation_knee_flux) or saturation_knee_flux <= 0
+    ):
+        raise ValueError(f"变压器 {name} 的饱和拐点磁链必须为有限正数。")
+    if saturated_magnetizing_inductance is not None and (
+        not math.isfinite(saturated_magnetizing_inductance) or saturated_magnetizing_inductance <= 0
+    ):
+        raise ValueError(f"变压器 {name} 的饱和励磁电感必须为有限正数。")
     if has_saturation and magnetizing_inductance is None:
         raise ValueError(f"变压器 {name} 启用饱和励磁时必须给出线性励磁电感。")
 

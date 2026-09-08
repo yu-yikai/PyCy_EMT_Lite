@@ -27,6 +27,14 @@ uv run pytest
 Example 01 is the trusted starting point. It exercises the complete object
 workflow and checks the simulated voltage against the analytical circuit value.
 
+Create fresh simulator, circuit and component instances for each run, including
+components inside a case definition. Time parameters must be finite and only
+`start_time=0` is supported. Results retain their original fields; the
+`result_transform` callback has been removed. Known initialization and dynamic
+event limitations remain listed in the [improvement plan](docs/project_improvement_plan.en.md).
+Mean, RMS and average power use actual time; select separate continuous windows
+for fault results instead of interpolating across events.
+
 ## Model Levels
 
 The repository currently contains three different levels. They are not
@@ -38,10 +46,13 @@ interchangeable:
 | Switching EMT | Ideal switches driven on the discrete time grid | Two-level PWM teaching example |
 | Average control | Hand-written control/state updates without switching waveforms | Inverter, PV/storage, and HVDC candidates |
 
-The average-control examples are not results from the `Circuit/Simulator` EMT
-path. Examples 06–16 remain runnable, but several still need stronger physical
+Examples 11 and 13–16 use the result label `explicit_control` for their hand-written
+state updates. This is descriptive metadata, not a `SimulationConfig.method` option.
+Examples 06–16 remain runnable, but several still need stronger physical
 checks, consolidation, or removal before they enter the default learning path.
-See the [Chinese README](README.zh-CN.md) for the per-example decision table.
+This README is a concise entrypoint. The [English improvement plan](docs/project_improvement_plan.en.md)
+describes model scope and documentation consolidation; the [Chinese README](README.zh-CN.md)
+also includes a per-example decision table.
 
 ## Recommended Starting Path
 
@@ -68,7 +79,7 @@ available only from their explicit subpackages while their scope is reviewed.
 ## Documentation
 
 - [简体中文 README](README.zh-CN.md): complete project entry and example status
-- [Improvement plan](docs/project_improvement_plan.md): phased reduction and
+- [Improvement plan](docs/project_improvement_plan.en.md): phased reduction and
   correctness work
 
 The existing theory documents are being consolidated into one numerical

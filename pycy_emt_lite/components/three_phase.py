@@ -65,10 +65,12 @@ class ThreePhaseSource(Component):
     branch_indices: dict[PhaseName, int] = field(default_factory=dict, init=False)
 
     def __post_init__(self) -> None:
-        if self.phase_rms <= 0:
-            raise ValueError(f"三相电源 {self.name} 的相电压有效值必须大于 0。")
-        if self.frequency <= 0:
-            raise ValueError(f"三相电源 {self.name} 的频率必须大于 0。")
+        if not math.isfinite(self.phase_rms) or self.phase_rms <= 0:
+            raise ValueError(f"三相电源 {self.name} 的相电压有效值必须为有限正数。")
+        if not math.isfinite(self.frequency) or self.frequency <= 0:
+            raise ValueError(f"三相电源 {self.name} 的频率必须为有限正数。")
+        if not math.isfinite(self.initial_angle):
+            raise ValueError(f"三相电源 {self.name} 的初相角必须为有限数。")
 
     def nodes(self) -> Iterable[str]:
         return [phase_node(self.terminal_bus, phase) for phase in PHASES] + [self.neutral]
@@ -123,10 +125,10 @@ class _ShuntCapacitorState:
 def _validate_series_rl(name: str, resistance: float, inductance: float) -> None:
     """检查串联 RL 参数。"""
 
-    if resistance < 0:
-        raise ValueError(f"{name} 的电阻不能小于 0。")
-    if inductance < 0:
-        raise ValueError(f"{name} 的电感不能小于 0。")
+    if not math.isfinite(resistance) or resistance < 0:
+        raise ValueError(f"{name} 的电阻必须为有限非负数。")
+    if not math.isfinite(inductance) or inductance < 0:
+        raise ValueError(f"{name} 的电感必须为有限非负数。")
     if resistance == 0 and inductance == 0:
         raise ValueError(f"{name} 的电阻和电感不能同时为 0。")
 
@@ -269,16 +271,16 @@ class ThreePhaseParallelRLCLoad(Component):
     last_phase_voltage: dict[PhaseName, float] = field(default_factory=lambda: {phase: 0.0 for phase in PHASES}, init=False)
 
     def __post_init__(self) -> None:
-        if self.nominal_line_voltage <= 0.0:
-            raise ValueError(f"三相并联负荷 {self.name} 的额定线电压必须大于 0。")
-        if self.frequency <= 0.0:
-            raise ValueError(f"三相并联负荷 {self.name} 的频率必须大于 0。")
-        if self.active_power < 0.0:
-            raise ValueError(f"三相并联负荷 {self.name} 的有功功率不能小于 0。")
-        if self.inductive_power < 0.0:
-            raise ValueError(f"三相并联负荷 {self.name} 的感性无功不能小于 0。")
-        if self.capacitive_power < 0.0:
-            raise ValueError(f"三相并联负荷 {self.name} 的容性无功不能小于 0。")
+        if not math.isfinite(self.nominal_line_voltage) or self.nominal_line_voltage <= 0.0:
+            raise ValueError(f"三相并联负荷 {self.name} 的额定线电压必须为有限正数。")
+        if not math.isfinite(self.frequency) or self.frequency <= 0.0:
+            raise ValueError(f"三相并联负荷 {self.name} 的频率必须为有限正数。")
+        if not math.isfinite(self.active_power) or self.active_power < 0.0:
+            raise ValueError(f"三相并联负荷 {self.name} 的有功功率必须为有限非负数。")
+        if not math.isfinite(self.inductive_power) or self.inductive_power < 0.0:
+            raise ValueError(f"三相并联负荷 {self.name} 的感性无功必须为有限非负数。")
+        if not math.isfinite(self.capacitive_power) or self.capacitive_power < 0.0:
+            raise ValueError(f"三相并联负荷 {self.name} 的容性无功必须为有限非负数。")
         if self.active_power == 0.0 and self.inductive_power == 0.0 and self.capacitive_power == 0.0:
             raise ValueError(f"三相并联负荷 {self.name} 的 P、QL、QC 不能同时为 0。")
 

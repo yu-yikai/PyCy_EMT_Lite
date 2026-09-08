@@ -120,7 +120,7 @@ result = simulator.run()
 
 仿真器会始终把 `stop_time` 放入时间序列。若 `stop_time` 不是 `time_step` 的整数倍，最后一步会使用较短的实际步长推进动态元件状态。后续新增动态元件时，必须使用 `StampContext.time_step`，不能直接假设每一步都等于配置中的基础步长。
 
-`SimulationConfig.start_time` 用于 checkpoint 续算。默认值为 `0.0`，表示从仿真初始时刻运行；当从 checkpoint 恢复时，应将 `start_time` 设置为 checkpoint 的 `current_time`，仿真器会从下一时间步继续推进，并跳过该时刻及之前已经发生的事件。
+`SimulationConfig` 当前只支持 `start_time=0.0`。每次运行都应新建 `Simulator`、`Circuit` 和元件实例；完整状态恢复和 checkpoint 续算尚未实现，不能通过设置非零 `start_time` 继续上一段仿真。
 
 ## 3. Circuit 如何形成电路对象
 

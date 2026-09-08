@@ -34,6 +34,7 @@ class Circuit:
     node_manager: NodeManager = field(default_factory=NodeManager)
     variable_manager: VariableManager = field(default_factory=VariableManager)
     prepared: bool = False
+    _run_claimed: bool = field(default=False, init=False)
 
     @classmethod
     def from_components(cls, name: str, components: Iterable[Component]) -> "Circuit":
@@ -84,10 +85,21 @@ class Circuit:
 
         self._prepare()
 
+    def _claim_run(self) -> None:
+        """声明该电路只能被一次仿真占用。"""
+
+        if self._run_claimed:
+            raise RuntimeError(f"电路 {self.name!r} 只能运行一次。")
+        self._run_claimed = True
+        self._claim_components()
+
     def _prepare(self) -> None:
         """建立 MNA 编号：先编号节点电压变量，再注册支路电流变量。"""
 
+        if self.prepared:
+            return
         self._check_component_names()
+        self._claim_components()
         self.node_manager = NodeManager()
         self.variable_manager = VariableManager()
         for component in self.components:
@@ -96,12 +108,26 @@ class Circuit:
             component.register(self.node_manager, self.variable_manager)
         self.prepared = True
 
+    def _claim_components(self) -> None:
+        """在注册变量前声明所有元件属于本电路。"""
+
+        for component in self.components:
+            owner = component._circuit_owner
+            if owner is not None and owner is not self:
+                owner_name = getattr(owner, "name", "<unknown>")
+                raise RuntimeError(f"元件 {component.name!r} 已属于电路 {owner_name!r}。")
+        for component in self.components:
+            if component._circuit_owner is None:
+                component._circuit_owner = self
+
     def _check_component_names(self) -> None:
         """检查元件名称是否唯一，避免结果字段互相覆盖。"""
 
         names: set[str] = set()
         duplicates: set[str] = set()
         for component in self.components:
+            if not isinstance(component.name, str) or not component.name.strip():
+                raise ValueError(f"元件名称必须是非空字符串，收到 {component.name!r}。")
             if component.name in names:
                 duplicates.add(component.name)
             names.add(component.name)

@@ -5,8 +5,100 @@
 
 import math
 
+import pytest
+
 import pycy_emt_lite
 from pycy_emt_lite import Capacitor, Circuit, CurrentSource, Inductor, Resistor, SimulationConfig, Simulator, VoltageSource
+
+
+@pytest.mark.parametrize("invalid", ["", "  ", None, 1])
+def test_preparation_rejects_invalid_node_names(invalid) -> None:
+    circuit = Circuit.from_components("invalid_node", [Resistor("R", invalid, "0", 1.0)])
+    with pytest.raises(ValueError, match="节点名称"):
+        circuit.prepare()
+
+
+@pytest.mark.parametrize("invalid", ["", "  ", None, 1])
+def test_preparation_rejects_invalid_component_names(invalid) -> None:
+    circuit = Circuit.from_components("invalid_name", [Resistor(invalid, "n", "0", 1.0)])
+    with pytest.raises(ValueError, match="元件名称"):
+        circuit.prepare()
+
+
+@pytest.mark.parametrize(
+    "factory",
+    [
+        lambda value: Resistor("Rbad", "n", "0", value),
+        lambda value: Capacitor("Cbad", "n", "0", value),
+        lambda value: Inductor("Lbad", "n", "0", value),
+    ],
+)
+@pytest.mark.parametrize("invalid", [math.nan, math.inf, -math.inf])
+def test_basic_component_parameters_reject_nonfinite_values(factory, invalid) -> None:
+    with pytest.raises(ValueError, match="有限"):
+        factory(invalid)
+
+
+@pytest.mark.parametrize(
+    "factory",
+    [
+        lambda value: Capacitor("Cbad", "n", "0", 1.0, initial_voltage=value),
+        lambda value: Inductor("Lbad", "n", "0", 1.0, initial_current=value),
+    ],
+)
+@pytest.mark.parametrize("invalid", [math.nan, math.inf, -math.inf])
+def test_dynamic_initial_conditions_reject_nonfinite_values(factory, invalid) -> None:
+    with pytest.raises(ValueError, match="有限"):
+        factory(invalid)
+
+
+def test_zero_initial_conditions_are_valid() -> None:
+    capacitor = Capacitor("C0", "n", "0", 1.0, initial_voltage=0.0)
+    inductor = Inductor("L0", "n", "0", 1.0, initial_current=0.0)
+
+    assert capacitor.previous_voltage == 0.0
+    assert inductor.previous_current == 0.0
+
+
+@pytest.mark.parametrize(
+    ("name", "factory"),
+    [
+        ("Ibad", lambda value: CurrentSource("Ibad", "0", "n", value)),
+        ("Vbad", lambda value: VoltageSource("Vbad", "n", "0", value)),
+    ],
+)
+@pytest.mark.parametrize("invalid", [math.nan, math.inf, -math.inf])
+def test_source_constants_reject_nonfinite_values(name, factory, invalid) -> None:
+    with pytest.raises(ValueError, match="有限") as exc_info:
+        factory(invalid)
+    assert name in str(exc_info.value)
+
+
+@pytest.mark.parametrize(
+    ("name", "factory"),
+    [
+        ("Ibad", lambda function: CurrentSource("Ibad", "0", "n", function)),
+        ("Vbad", lambda function: VoltageSource("Vbad", "n", "0", function)),
+    ],
+)
+def test_callable_source_values_are_checked_at_runtime(name, factory) -> None:
+    calls: list[float] = []
+
+    def value_at(time: float) -> float:
+        calls.append(time)
+        return 1.0 if time < 1e-4 else math.nan
+
+    source = factory(value_at)
+    assert calls == []
+    circuit = Circuit.from_components(name, [source, Resistor("R1", "n", "0", 1.0)])
+
+    with pytest.raises(RuntimeError) as exc_info:
+        Simulator(circuit, SimulationConfig(time_step=1e-4, stop_time=1e-4)).run()
+
+    message = str(exc_info.value)
+    assert name in message
+    assert "0.0001" in message
+    assert len(calls) == 2
 
 
 def test_root_public_api_is_limited_to_the_teaching_workflow() -> None:

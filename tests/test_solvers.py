@@ -8,7 +8,25 @@ from __future__ import annotations
 import numpy as np
 import pytest
 
+from pycy_emt_lite import Circuit, Resistor, SimulationConfig, Simulator, VoltageSource
 from pycy_emt_lite.core.solvers import DenseLinearSolver, LinearSolveError
+
+
+class _FailingSolver:
+    name = "test_solver"
+
+    def __init__(self, error: LinearSolveError) -> None:
+        self.error = error
+
+    def solve(self, matrix: np.ndarray, rhs: np.ndarray) -> np.ndarray:
+        del matrix, rhs
+        raise self.error
+
+
+class _BrokenResistor(Resistor):
+    def stamp(self, *args: object) -> None:
+        del args
+        raise ValueError("custom stamp failure")
 
 
 def test_dense_solver_reports_residual_diagnostics() -> None:
@@ -66,3 +84,38 @@ def test_dense_solver_rejects_nonfinite_solution(monkeypatch: pytest.MonkeyPatch
 
     with pytest.raises(LinearSolveError, match="返回 NaN 或 Inf"):
         DenseLinearSolver().solve(np.eye(2), np.ones(2))
+
+
+@pytest.mark.parametrize(
+    "reason",
+    [
+        "MNA 系数矩阵包含 NaN 或 Inf，无法进行 LU 分解。",
+        "稠密 LU 分解失败，MNA 系数矩阵可能奇异。",
+        "dense_scipy_lu 残差超限：absolute=1.000e+00，relative=1.000e+00。",
+    ],
+)
+def test_simulator_preserves_linear_solve_reason_with_time_and_solver(reason: str) -> None:
+    circuit = Circuit.from_components(
+        "solver_context",
+        [VoltageSource("V1", "n", "0", 1.0), Resistor("R1", "n", "0", 1.0)],
+    )
+    solver = _FailingSolver(LinearSolveError(reason))
+
+    with pytest.raises(RuntimeError, match=r"仿真时间 0.*test_solver") as error:
+        Simulator(circuit, SimulationConfig(time_step=1e-3, stop_time=0.0), solver=solver).run()
+
+    assert reason in str(error.value)
+    assert error.value.__cause__ is solver.error
+
+
+def test_simulator_reports_component_name_and_time_when_stamp_fails() -> None:
+    circuit = Circuit.from_components(
+        "stamp_context",
+        [VoltageSource("V1", "n", "0", 1.0), _BrokenResistor("R1", "n", "0", 1.0)],
+    )
+
+    with pytest.raises(RuntimeError, match=r"元件 'R1'.*仿真时间 0.*stamp") as error:
+        Simulator(circuit, SimulationConfig(time_step=1e-3, stop_time=0.0)).run()
+
+    assert isinstance(error.value.__cause__, ValueError)
+    assert "custom stamp failure" in str(error.value.__cause__)

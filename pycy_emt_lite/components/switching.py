@@ -9,6 +9,7 @@
 
 from __future__ import annotations
 
+import math
 from dataclasses import dataclass
 from typing import Iterable
 
@@ -34,8 +35,8 @@ class Fault(Component):
     last_current: float = 0.0
 
     def __post_init__(self) -> None:
-        if self.resistance <= 0:
-            raise ValueError(f"故障 {self.name} 的故障电阻必须大于 0。")
+        if not math.isfinite(self.resistance) or self.resistance <= 0:
+            raise ValueError(f"故障 {self.name} 的故障电阻必须为有限正数。")
 
     def nodes(self) -> Iterable[str]:
         return (self.node, self.ground)
@@ -77,8 +78,8 @@ class Breaker(Component):
     last_current: float = 0.0
 
     def __post_init__(self) -> None:
-        if self.closed_resistance <= 0:
-            raise ValueError(f"断路器 {self.name} 的闭合电阻必须大于 0。")
+        if not math.isfinite(self.closed_resistance) or self.closed_resistance <= 0:
+            raise ValueError(f"断路器 {self.name} 的闭合电阻必须为有限正数。")
 
     def nodes(self) -> Iterable[str]:
         return (self.positive, self.negative)
