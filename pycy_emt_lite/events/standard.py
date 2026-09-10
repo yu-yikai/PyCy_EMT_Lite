@@ -22,7 +22,10 @@ def _find_component(circuit: Circuit, target: str, scheduled_time: float) -> obj
     for component in circuit.components:
         if getattr(component, "name", None) == target:
             return component
-    raise KeyError(f"事件目标 {target!r} 在设定时间 {scheduled_time:g} 不存在。")
+    raise KeyError(
+        f"事件目标 {target!r} 在设定时间 {scheduled_time:g} 不存在；"
+        "请将 target 改为电路中已有元件的 name，或将目标元件加入电路。"
+    )
 
 
 def _check_bool_state(circuit: Circuit, target: str, scheduled_time: float, attribute: str) -> object:
@@ -30,7 +33,10 @@ def _check_bool_state(circuit: Circuit, target: str, scheduled_time: float, attr
 
     component = _find_component(circuit, target, scheduled_time)
     if not hasattr(component, attribute):
-        raise TypeError(f"事件目标 {target!r} 在设定时间 {scheduled_time:g} 不支持状态 {attribute!r}。")
+        raise TypeError(
+            f"事件目标 {target!r} 在设定时间 {scheduled_time:g} 不支持状态 {attribute!r}；"
+            "请将故障事件指向 Fault，将断路器事件指向 Breaker，或使用支持对应状态的元件。"
+        )
     return component
 
 

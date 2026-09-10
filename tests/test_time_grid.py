@@ -6,6 +6,7 @@
 import copy
 import math
 
+import numpy as np
 import pytest
 
 from pycy_emt_lite import (
@@ -29,22 +30,30 @@ def _resistive_circuit() -> Circuit:
     return circuit
 
 
-def test_non_integer_stop_time_is_included_exactly() -> None:
-    circuit = _resistive_circuit()
-    config = SimulationConfig(time_step=1e-4, stop_time=1.5e-4)
-    simulator = Simulator(circuit, config)
-    result = simulator.run()
-
-    assert math.isclose(result.rows[-1]["time"], 1.5e-4, rel_tol=0.0, abs_tol=1e-12)
-    assert math.isclose(result.stop_time, 1.5e-4, rel_tol=0.0, abs_tol=1e-12)
+@pytest.mark.parametrize("step,stop", [(1e-4, 2.5e-4), (0.1, 0.35), (1.0, 1e-10), (1.0, math.ulp(0.0))])
+def test_non_integer_stop_time_is_rejected_with_repair_advice(step, stop) -> None:
+    with pytest.raises(ValueError, match="stop_time.*time_step.*整数倍.*请"):
+        SimulationConfig(time_step=step, stop_time=stop)
 
 
 def test_short_positive_stop_keeps_zero_and_terminal_time() -> None:
-    simulator = Simulator(_resistive_circuit(), SimulationConfig(time_step=1.0, stop_time=1e-10))
+    simulator = Simulator(_resistive_circuit(), SimulationConfig(time_step=1e-10, stop_time=1e-10))
 
     result = simulator.run()
 
     assert [row["time"] for row in result.rows] == [0.0, 1e-10]
+
+
+@pytest.mark.parametrize("offset", [-8, 8, -9, 9])
+def test_stop_alignment_uses_pairwise_eight_ulp(offset) -> None:
+    stop = 0.4 + offset * math.ulp(0.4)
+    if abs(offset) > 8:
+        with pytest.raises(ValueError, match="stop_time.*整数倍"):
+            SimulationConfig(0.1, stop)
+    else:
+        result = Simulator(_resistive_circuit(), SimulationConfig(0.1, stop)).run()
+        assert result.series("time") == pytest.approx([0.0, 0.1, 0.2, 0.3, stop])
+        assert result.rows[-1]["time"] == stop
 
 
 @pytest.mark.parametrize("policy", ["insert", "quantize_up", "require_aligned"])
@@ -302,15 +311,32 @@ def test_failed_run_cannot_be_retried() -> None:
 
 
 @pytest.mark.parametrize("field", ["time_step", "stop_time", "start_time"])
-@pytest.mark.parametrize("value", [math.nan, math.inf, -math.inf])
+@pytest.mark.parametrize("value", [math.nan, math.inf, -math.inf, None, "0.1", True, 0.1j, [0.1], np.array([0.1])])
 def test_simulation_times_must_be_finite(field: str, value: float) -> None:
     values = {"time_step": 1e-4, "stop_time": 1e-3, "start_time": 0.0}
     values[field] = value
 
-    with pytest.raises(ValueError, match=field):
+    with pytest.raises(ValueError, match=field + ".*有限.*请"):
         SimulationConfig(**values)
 
 
 def test_nonzero_start_time_is_rejected_without_state_restore() -> None:
     with pytest.raises(ValueError, match="起始时间目前只支持 0"):
         SimulationConfig(time_step=1e-4, start_time=1e-4, stop_time=2e-4)
+
+
+@pytest.mark.parametrize("field,value,repair", [
+    ("time_step", 0.0, "大于 0"),
+    ("time_step", -0.1, "大于 0"),
+    ("stop_time", -0.1, "非负"),
+    ("start_time", -0.1, "start_time=0"),
+    ("start_time", 0.2, "start_time=0"),
+    ("method", "rk4", "trapezoidal.*backward_euler"),
+    ("method", [], "trapezoidal.*backward_euler"),
+    ("event_time_policy", "nearest", "insert.*quantize_up.*require_aligned"),
+    ("event_time_policy", [], "insert.*quantize_up.*require_aligned"),
+])
+def test_invalid_simulation_options_explain_parameter_and_repair(field, value, repair) -> None:
+    values = {"time_step": 0.1, "stop_time": 0.1, field: value}
+    with pytest.raises(ValueError, match=field + ".*请.*" + repair):
+        SimulationConfig(**values)

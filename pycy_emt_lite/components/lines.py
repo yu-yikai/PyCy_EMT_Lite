@@ -502,7 +502,8 @@ class BergeronLine(Component):
 
     该模型使用特性阻抗 `surge_impedance` 和传播时延 `travel_time` 表示无损线路的
     行波关系，并用历史源把对端延时电压、电流反映到本端。`attenuation` 可用于
-    教学中演示传播衰减，默认 1 表示无衰减。
+    教学中演示传播衰减，默认 1 表示无衰减。仅支持固定时间网格，传播时延必须是
+    步长的正整数倍，停止及实际事件时间须对齐网格；负时间的端口历史为零。
     """
 
     name: str
@@ -513,6 +514,8 @@ class BergeronLine(Component):
     ground: str = "0"
     attenuation: float = 1.0
     history: list[_BergeronHistorySample] = field(default_factory=list, init=False)
+    _time_step: float | None = field(default=None, init=False)
+    _delay_steps: int = field(default=0, init=False)
     last_sending_current: float = 0.0
     last_receiving_current: float = 0.0
 
@@ -534,7 +537,7 @@ class BergeronLine(Component):
         sending = context.node_index(self.sending)
         receiving = context.node_index(self.receiving)
         ground = context.node_index(self.ground)
-        delayed = self._delayed_sample(context.time - self.travel_time)
+        delayed = self._delayed_sample(context.time)
         sending_history = self.attenuation * (-delayed.receiving_voltage / self.surge_impedance - delayed.receiving_current)
         receiving_history = self.attenuation * (-delayed.sending_voltage / self.surge_impedance - delayed.sending_current)
 
@@ -548,7 +551,7 @@ class BergeronLine(Component):
 
         sending_voltage = add_voltage_probe(solution, context.node_index(self.sending), context.node_index(self.ground))
         receiving_voltage = add_voltage_probe(solution, context.node_index(self.receiving), context.node_index(self.ground))
-        delayed = self._delayed_sample(context.time - self.travel_time)
+        delayed = self._delayed_sample(context.time)
         sending_history = self.attenuation * (-delayed.receiving_voltage / self.surge_impedance - delayed.receiving_current)
         receiving_history = self.attenuation * (-delayed.sending_voltage / self.surge_impedance - delayed.sending_current)
         self.last_sending_current = sending_voltage / self.surge_impedance + sending_history
@@ -573,28 +576,17 @@ class BergeronLine(Component):
             f"i:{self.name}:receiving": self.last_receiving_current,
         }
 
-    def _delayed_sample(self, target_time: float) -> _BergeronHistorySample:
-        """按时间线性插值读取延时历史样本。"""
+    def _delayed_sample(self, time: float) -> _BergeronHistorySample:
+        """按整数步读取延时历史，避免浮点时间相减把波前推迟一拍。"""
 
-        if not self.history:
-            return _BergeronHistorySample(target_time, 0.0, 0.0, 0.0, 0.0)
-        if target_time < self.history[0].time:
-            return _BergeronHistorySample(target_time, 0.0, 0.0, 0.0, 0.0)
-        if target_time <= self.history[0].time:
-            return self.history[0]
-        if target_time >= self.history[-1].time:
-            return self.history[-1]
-        for lower, upper in zip(self.history, self.history[1:], strict=False):
-            if lower.time <= target_time <= upper.time:
-                weight = (target_time - lower.time) / (upper.time - lower.time)
-                return _BergeronHistorySample(
-                    time=target_time,
-                    sending_voltage=lower.sending_voltage + weight * (upper.sending_voltage - lower.sending_voltage),
-                    sending_current=lower.sending_current + weight * (upper.sending_current - lower.sending_current),
-                    receiving_voltage=lower.receiving_voltage + weight * (upper.receiving_voltage - lower.receiving_voltage),
-                    receiving_current=lower.receiving_current + weight * (upper.receiving_current - lower.receiving_current),
-                )
-        return self.history[-1]
+        if self._time_step is None:
+            raise RuntimeError(f"Bergeron 线路 {self.name!r} 尚未检查固定时间网格。")
+        index = round(time / self._time_step) - self._delay_steps
+        if index < 0:
+            return _BergeronHistorySample(index * self._time_step, 0.0, 0.0, 0.0, 0.0)
+        if index >= len(self.history):
+            raise RuntimeError(f"Bergeron 线路 {self.name!r} 所需的第 {index} 步历史尚未求解。")
+        return self.history[index]
 
 @dataclass(slots=True)
 class ThreePhaseBergeronLine(Component):

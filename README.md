@@ -29,7 +29,11 @@ workflow and checks the simulated voltage against the analytical circuit value.
 
 Create fresh simulator, circuit and component instances for each run, including
 components inside a case definition. Time parameters must be finite and only
-`start_time=0` is supported. Results retain their original fields; the
+`start_time=0` is supported. `stop_time` must be a nonnegative integer multiple
+of `time_step`; invalid
+configuration raises an error with repair advice before simulation. An 8 ULP
+rounding tolerance accepts expressions such as `0.1 + 0.2` on a 0.1 s grid.
+Results retain their original fields; the
 `result_transform` callback has been removed. The first row preserves declared
 capacitor voltage and inductor current, with consistent current/voltage histories.
 Explicit events advance the old network to the event time, then solve right-side
@@ -66,7 +70,15 @@ also includes a per-example decision table.
 | `02_rc_transient.py` | Capacitor companion model | Initial state/current, first interval and analytical step-halving tests |
 | `03_rl_transient.py` | Inductor branch-current variable | Initial state/voltage, first interval and analytical step-halving tests |
 | `04_rlc_transient.py` | Coupled second-order transient | Damped whole-curve/KCL/convergence tests and lossless LC energy test |
+| `17_single_phase_ac_rlc.py` | Single-phase AC source and series RLC | Zero initial states, steady phasor/RMS and KCL/KVL checks |
 | `05_three_phase_steady_state.py` | Balanced three-phase RMS | Balanced-RMS unit test; planned merge with the fault lesson |
+
+Run the additional AC example with `uv run python examples/17_single_phase_ac_rlc.py`.
+It connects a 220 V RMS, 50 Hz source to 20 Ω, 50 mH and 100 μF in series.
+Voltage and current use separate figures; data and figure saving are off by default.
+Edit the parameters and output flags at the top. The default 0.08–0.12 s window
+compares current RMS and phase with `Z = R + j(ωL - 1/ωC)`; after changing the
+frequency or damping, choose complete steady-state cycles for that window.
 
 ## Minimal Project Structure
 

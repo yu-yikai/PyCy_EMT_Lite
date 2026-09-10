@@ -4,6 +4,8 @@
 """
 
 import math
+from pathlib import Path
+import runpy
 
 import numpy as np
 import pytest
@@ -221,7 +223,7 @@ def test_rlc_response_is_bounded_and_settles_near_source_voltage() -> None:
 
 
 @pytest.mark.parametrize("method", ["trapezoidal", "backward_euler"])
-@pytest.mark.parametrize("stop", [0.0, 0.1, 0.15])
+@pytest.mark.parametrize("stop", [0.0, 0.1, 0.2])
 @pytest.mark.parametrize("initial", [0.0, 0.25])
 def test_rc_initial_state_and_first_interval(method, stop, initial) -> None:
     cap = Capacitor("C", "out", "0", 1.0, initial_voltage=initial)
@@ -380,3 +382,36 @@ def test_rlc_whole_curve_matches_analytic_damped_response() -> None:
         np.testing.assert_allclose(result.series("i:C"), result.series("i:L"), atol=1e-12)
     assert errors[1] < 5e-5
     assert 3.9 < errors[0] / errors[1] < 4.1
+
+
+def test_single_phase_ac_rlc_example_matches_phasors_and_kirchhoff_laws() -> None:
+    example = runpy.run_path(str(Path(__file__).parents[1] / "examples/17_single_phase_ac_rlc.py"))
+    case = example["define_case"]()
+    circuit = Circuit.from_components(case.name, case.components)
+    result = Simulator(circuit, case.config).run()
+    assert result.rows[0]["v:C1"] == pytest.approx(0.0, abs=1e-12)
+    assert result.rows[0]["i:L1"] == pytest.approx(0.0, abs=1e-12)
+    current = result.series("i:L1")
+    np.testing.assert_allclose(result.series("i:C1"), current, atol=1e-10)
+    np.testing.assert_allclose(result.series("i:R1"), current, atol=1e-10)
+    np.testing.assert_allclose(
+        result.series("v:src"),
+        example["RESISTANCE"] * current + result.series("v:L1") + result.series("v:C1"),
+        atol=1e-9,
+    )
+    omega = 2 * math.pi * example["FREQUENCY"]
+    z = complex(example["RESISTANCE"], omega * example["INDUCTANCE"] - 1 / (omega * example["CAPACITANCE"]))
+    peak_current = math.sqrt(2) * example["SOURCE_RMS"] / z
+    time = result.series("time")
+    window = time >= example["STEADY_START"]
+    rotating = np.exp(1j * (omega * time[window] + example["INITIAL_PHASE"]))
+    np.testing.assert_allclose(current[window], (peak_current * rotating).imag, atol=1e-4, rtol=0)
+    np.testing.assert_allclose(
+        result.series("v:C1")[window], (peak_current / (1j * omega * example["CAPACITANCE"]) * rotating).imag,
+        atol=3e-3, rtol=0,
+    )
+    from pycy_emt_lite.analysis import rms
+
+    assert rms(result, "i:L1", start_time=example["STEADY_START"]) == pytest.approx(
+        example["SOURCE_RMS"] / abs(z), rel=1e-5,
+    )

@@ -12,6 +12,7 @@ from __future__ import annotations
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from math import isfinite, ulp
+from numbers import Real
 from typing import Iterable
 
 from pycy_emt_lite.core.circuit import Circuit
@@ -47,10 +48,10 @@ class SimulationEvent(ABC):
     name: str = ""
 
     def __post_init__(self) -> None:
-        if not isfinite(self.time):
-            raise ValueError("事件时间必须为有限数。")
+        if isinstance(self.time, bool) or not isinstance(self.time, Real) or not isfinite(self.time):
+            raise ValueError(f"事件时间 time={self.time!r} 必须为有限实数；请填写以秒为单位的数值。")
         if self.time < 0:
-            raise ValueError("事件时间不能小于 0。")
+            raise ValueError(f"事件时间 time={self.time!r} 不能小于 0；请使用非负秒数，0 表示初始化前应用事件。")
 
     def validate(self, circuit: Circuit) -> None:
         """在求解前检查事件；自定义事件默认无需标准状态约束。"""

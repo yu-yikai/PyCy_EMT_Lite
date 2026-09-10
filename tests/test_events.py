@@ -93,10 +93,15 @@ def test_t0_breaker_close_is_applied_before_topology_is_solved() -> None:
     assert result.event_log[0]["type"] == "breaker_close"
 
 
-@pytest.mark.parametrize("time", [float("nan"), float("inf"), float("-inf")])
+@pytest.mark.parametrize("time", [float("nan"), float("inf"), float("-inf"), None, "0.1", True, 0.1j, [0.1]])
 def test_event_time_must_be_finite(time: float) -> None:
-    with pytest.raises(ValueError, match="事件时间必须为有限数"):
+    with pytest.raises(ValueError, match="事件时间.*有限.*请"):
         FaultApplyEvent(time, "F1")
+
+
+def test_negative_event_time_has_repair_advice() -> None:
+    with pytest.raises(ValueError, match="time=-0.1.*请.*非负"):
+        FaultApplyEvent(-0.1, "F1")
 
 
 @pytest.mark.parametrize(
@@ -225,7 +230,7 @@ def test_capacitor_event_preserves_left_state_and_stores_right_current(method, a
 
 
 @pytest.mark.parametrize("method", ["trapezoidal", "backward_euler"])
-@pytest.mark.parametrize("open_time,close_time,stop", [(0.0, 0.2, 0.3), (0.1, 0.3, 0.3), (0.15, 0.25, 0.35)])
+@pytest.mark.parametrize("open_time,close_time,stop", [(0.0, 0.2, 0.3), (0.1, 0.3, 0.3), (0.15, 0.25, 0.4)])
 def test_rl_open_and_close_events_recompute_voltage_without_advancing_twice(method, open_time, close_time, stop) -> None:
     circuit = Circuit.from_components("rl_events", [
         VoltageSource("V", "src", "0", 1.0), Inductor("L", "src", "n", 1.0, initial_current=0.2),

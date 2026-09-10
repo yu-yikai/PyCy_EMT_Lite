@@ -50,7 +50,7 @@ Three-phase sources, lines, and loads expand the single-phase stamp once per pha
 
 ## Pi lines, Bergeron lines, and transformers
 
-A Pi line stamps one series R-L path plus a shunt `C/2` at each terminal. A Bergeron line combines each terminal voltage with the opposite-terminal voltage/current sampled at the travel delay; interpolation and attenuation must be documented. A transformer stamps referred leakage, a turns-ratio constraint, and a magnetizing branch with stated winding polarity.
+A Pi line stamps one series R-L path plus a shunt `C/2` at each terminal. A Bergeron line combines each terminal voltage with the opposite-terminal voltage/current sampled at the travel delay; the delay must be a positive integer number of base steps, with stop and actual event times aligned to the fixed grid. Integer-step history lookup uses zero negative-time history and rejects missing samples instead of interpolation or holding the last frame. Explicit events keep one right-side frame. Any teaching attenuation must be stated. A transformer stamps referred leakage, a turns-ratio constraint, and a magnetizing branch with stated winding polarity.
 
 ## Required documentation for a new component
 

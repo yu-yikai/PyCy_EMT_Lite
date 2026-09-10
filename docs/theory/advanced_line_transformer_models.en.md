@@ -6,7 +6,7 @@ These teaching and algorithm-validation models prioritize clear boundaries, read
 
 `PiLine` and `ThreePhasePiLine` use a series R-L branch and two shunt C/2 branches per phase. They suit concentrated-parameter line transients; frequency dependence, mutual coupling, and distributed waves are excluded.
 
-`BergeronLine` and `ThreePhaseBergeronLine` use surge impedance `Zc` and travel time `tau`. Their port currents combine the local voltage divided by `Zc` with a delayed history source from the opposite terminal. History samples use linear interpolation and optional teaching attenuation; modal transformation and phase coupling are not modeled.
+`BergeronLine` and `ThreePhaseBergeronLine` use surge impedance `Zc` and travel time `tau`. Their port currents combine the local voltage divided by `Zc` with a delayed history source from the opposite terminal. History uses integer-step lookup with optional teaching attenuation; fractional-step delays, interpolation, modal transformation and phase coupling are not modeled.
 
 `SinglePhaseTransformer` contains a referred leakage impedance, ideal turns ratio `Vp/Vs`, and a parallel magnetizing branch. `ThreePhaseTransformer` composes three single-phase paths. Saturation magnetization and `SynchronousMachine` are educational approximations. `ParkSynchronousGenerator` is a candidate dq0 model and is not validated high-fidelity machinery without parameter and port-equation evidence.
 
@@ -14,7 +14,7 @@ Verify ratios, power balance, initial conditions, and transient trends before in
 
 ## Parameter and event limits
 
-Resistance is in ohms, inductance in henries, capacitance in farads, surge impedance in ohms, and travel time in seconds. For a Bergeron case, travel time, stop time, and event times must be compatible with the time grid when a fixed-step interpretation is required. Check pre-response, wave arrival, reflection, and post-event windows separately.
+Resistance is in ohms, inductance in henries, capacitance in farads, surge impedance in ohms, and travel time in seconds. Bergeron requires travel time to be a positive integer multiple of the step, with stop and actual event times aligned to the fixed grid under the simulator's pairwise 8 ULP rounding rule. Invalid configurations fail before the first solve; `quantize_up` can postpone off-grid scheduled events. Tests cover no pre-response, matched-load arrival and open/short reflection.
 
 Transformer results should distinguish turns-ratio convention, leakage impedance, magnetizing current, and winding polarity. These teaching models do not include every connection group, frequency-dependent loss, mutual coupling, or a validated saturation curve.
 
@@ -24,7 +24,7 @@ For a single-phase Pi line, the topology is: sending terminal — series R-L —
 
 ## Bergeron history
 
-The characteristic impedance `surge_impedance` and propagation delay `travel_time` define the teaching wave model. At each terminal, the current consists of the local voltage divided by characteristic impedance plus a history source. The history source uses the opposite terminal's delayed voltage and current. Linear interpolation is used when a delayed sample falls between stored samples; `attenuation` is an educational propagation factor, not frequency-dependent line loss.
+The characteristic impedance `surge_impedance` and propagation delay `travel_time` define the teaching wave model. At each terminal, the current consists of the local voltage divided by characteristic impedance plus a history source. The history source uses the opposite terminal's delayed voltage and current. Integer-step lookup reads solved samples, with zero port history for negative times and explicit errors for missing history. Same-time events retain only the right-side terminal frame. `attenuation` is an educational propagation factor, not frequency-dependent line loss.
 
 ## Single-phase transformer details
 

@@ -10,7 +10,7 @@ The amplitude-invariant Clarke/Park transform uses alpha = 2/3(a - b/2 - c/2), b
 
 PWM helpers provide triangular carriers, sine-PWM duty generation, and carrier comparison. Controls are called explicitly by examples and do not directly enter MNA assembly. See [renewable_grid_models.en.md](renewable_grid_models.en.md).
 
-The control sampling interval must be passed explicitly, especially when a case contains event boundaries, a short final step, or multiple rates. Controller saturation and state limits belong to the controller contract and should be tested independently from the electrical network. Average-control examples must be labelled as control-level simulations rather than as the same trapezoidal EMT method used by the network solver.
+The control sampling interval must be passed explicitly, especially when a case contains event boundaries or multiple rates. Controller saturation and state limits belong to the controller contract and should be tested independently from the electrical network. Average-control examples must be labelled as control-level simulations rather than as the same trapezoidal EMT method used by the network solver.
 
 ## Controller details
 
