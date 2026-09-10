@@ -24,11 +24,18 @@ def source_voltage(time: float) -> float:
     return math.sqrt(2.0) * SOURCE_RMS * math.sin(2.0 * math.pi * FREQUENCY * time)
 
 
+def source_voltage_derivative(time: float) -> float:
+    """源直接并联线路电容，一致初始化需要 dv/dt，单位 V/s。"""
+
+    omega = 2.0 * math.pi * FREQUENCY
+    return math.sqrt(2.0) * SOURCE_RMS * omega * math.cos(omega * time)
+
+
 def define_case() -> CaseDefinition:
     """定义 π 型线路暂态算例。"""
 
     components = (
-        VoltageSource("V1", "src", "0", source_voltage),
+        VoltageSource("V1", "src", "0", source_voltage, derivative=source_voltage_derivative),
         PiLine("LINE", "src", "load", resistance=2.0, inductance=20e-3, capacitance=2e-6),
         Resistor("LOAD", "load", "0", 100.0),
     )

@@ -17,6 +17,7 @@ from typing import Iterable
 import numpy as np
 
 from pycy_emt_lite.components.base import Component
+from pycy_emt_lite.components.basic import _derivative_at
 from pycy_emt_lite.components.three_phase import PHASES, PhaseName, phase_node
 from pycy_emt_lite.controls import abc_to_dq, dq_to_abc
 from pycy_emt_lite.core.context import StampContext
@@ -33,6 +34,8 @@ def _companion(
 ) -> tuple[float, float]:
     """返回定子电感 companion model 的等效电阻和历史电压。"""
 
+    if time_step == 0.0:
+        return 0.0, 0.0
     if method == "trapezoidal":
         resistance = 2.0 * inductance / time_step
         history_voltage = -resistance * previous_current - previous_inductor_voltage
@@ -193,12 +196,18 @@ class ParkSynchronousGenerator(Component):
                 matrix[neutral, source_branch] -= 1.0
                 matrix[source_branch, neutral] -= 1.0
             rhs[source_branch] += internal_voltage
+            if context._initial is not None:
+                context._initial.source_derivatives.append(({source_branch: 1.0}, lambda:
+                    _derivative_at(None, None, context.time, self.name)
+                ))
 
             if inductance == 0.0:
                 add_conductance(matrix, internal, terminal, 1.0 / resistance)
                 continue
 
             stator_branch = context.branch_offset + self.stator_branch_indices[phase]
+            if context._initial is not None:
+                context._initial.inductors.append((stator_branch, inductance, self.state.previous_current[phase]))
             eq_resistance, history_voltage = _companion(
                 context.method,
                 context.time_step,
@@ -255,7 +264,8 @@ class ParkSynchronousGenerator(Component):
         self.state.terminal_voltage_pu = math.hypot(vd_raw, vq_raw) / voltage_base_peak
         self.state.electrical_power = electrical_power
 
-        self._update_controls_and_machine(context.time_step, electrical_power)
+        if context.time_step > 0.0:
+            self._update_controls_and_machine(context.time_step, electrical_power)
 
     def outputs(self, context: StampContext, solution: np.ndarray) -> dict[str, float]:
         """记录 Park 发电机电气量、控制量和机械状态。"""

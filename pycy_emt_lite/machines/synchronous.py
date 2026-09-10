@@ -17,6 +17,7 @@ from dataclasses import dataclass, field
 import numpy as np
 
 from pycy_emt_lite.components.base import Component
+from pycy_emt_lite.components.basic import _derivative_at
 from pycy_emt_lite.components.three_phase import PHASES, PhaseName, _phase_angle, phase_node
 from pycy_emt_lite.core.context import StampContext
 from pycy_emt_lite.core.nodes import NodeManager
@@ -55,6 +56,8 @@ def _inductor_companion(
 ) -> tuple[float, float]:
     """返回定子电感 companion model 的等效电阻和历史电压。"""
 
+    if time_step == 0.0:
+        return 0.0, 0.0
     if method == "trapezoidal":
         resistance = 2.0 * inductance / time_step
         history_voltage = -resistance * previous_current - previous_inductor_voltage
@@ -164,12 +167,19 @@ class SynchronousMachine(Component):
                 matrix[neutral, source_branch] -= 1.0
                 matrix[source_branch, neutral] -= 1.0
             rhs[source_branch] += internal_voltage
+            if context._initial is not None:
+                # 仅覆盖固定机电状态的直接一致求解；不猜测耦合源导数。
+                context._initial.source_derivatives.append(({source_branch: 1.0}, lambda:
+                    _derivative_at(None, None, context.time, self.name)
+                ))
 
             if self.stator_inductance == 0:
                 add_conductance(matrix, internal, terminal, 1.0 / self.stator_resistance)
                 continue
 
             stator_branch = context.branch_offset + self.stator_branch_indices[phase]
+            if context._initial is not None:
+                context._initial.inductors.append((stator_branch, self.stator_inductance, self.state.previous_current[phase]))
             eq_resistance, history_voltage = _inductor_companion(
                 context.method,
                 context.time_step,

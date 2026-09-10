@@ -30,8 +30,12 @@ workflow and checks the simulated voltage against the analytical circuit value.
 Create fresh simulator, circuit and component instances for each run, including
 components inside a case definition. Time parameters must be finite and only
 `start_time=0` is supported. Results retain their original fields; the
-`result_transform` callback has been removed. Known initialization and dynamic
-event limitations remain listed in the [improvement plan](docs/project_improvement_plan.en.md).
+`result_transform` callback has been removed. The first row preserves declared
+capacitor voltage and inductor current, with consistent current/voltage histories.
+Explicit events advance the old network to the event time, then solve right-side
+algebraic values with storage states held. Impulsive state changes are rejected.
+Constrained callable sources may require an analytical `derivative` (V/s or A/s);
+see the [initialization contract](docs/simulation_program_guide.en.md#consistent-initialization-and-events).
 Mean, RMS and average power use actual time; select separate continuous windows
 for fault results instead of interpolating across events.
 
@@ -59,9 +63,9 @@ also includes a per-example decision table.
 | Example | Learning objective | Current evidence |
 |---|---|---|
 | `01_r_circuit.py` | Object workflow and static MNA | Exact voltage/current unit test |
-| `02_rc_transient.py` | Capacitor companion model | Analytical end-point comparison; full-curve checks planned |
-| `03_rl_transient.py` | Inductor branch-current variable | Analytical end-point comparison; full-curve checks planned |
-| `04_rlc_transient.py` | Coupled second-order transient | Analytical end-point comparison; energy/convergence checks planned |
+| `02_rc_transient.py` | Capacitor companion model | Initial state/current, first interval and analytical step-halving tests |
+| `03_rl_transient.py` | Inductor branch-current variable | Initial state/voltage, first interval and analytical step-halving tests |
+| `04_rlc_transient.py` | Coupled second-order transient | Damped whole-curve/KCL/convergence tests and lossless LC energy test |
 | `05_three_phase_steady_state.py` | Balanced three-phase RMS | Balanced-RMS unit test; planned merge with the fault lesson |
 
 ## Minimal Project Structure

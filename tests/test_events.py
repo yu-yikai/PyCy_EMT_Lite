@@ -11,11 +11,13 @@ from pycy_emt_lite import (
     Breaker,
     BreakerCloseEvent,
     BreakerOpenEvent,
+    Capacitor,
     Circuit,
     CurrentSource,
     Fault,
     FaultApplyEvent,
     FaultClearEvent,
+    Inductor,
     Resistor,
     SimulationConfig,
     Simulator,
@@ -192,3 +194,88 @@ def test_custom_event_is_not_limited_to_standard_target_states() -> None:
     ).run()
 
     assert result.event_log == [{"time": 0.0, "target": "R1", "type": "custom"}]
+
+
+@pytest.mark.parametrize("method", ["trapezoidal", "backward_euler"])
+@pytest.mark.parametrize("apply_time", [0.0, 0.1, 0.15, 0.3])
+def test_capacitor_event_preserves_left_state_and_stores_right_current(method, apply_time) -> None:
+    capacitor = Capacitor("C", "n", "0", 1.0)
+    circuit = Circuit.from_components("capacitor_event", [
+        CurrentSource("I", "0", "n", 1.0), capacitor, Fault("F", "n", 1.0),
+    ])
+    result = Simulator(circuit, SimulationConfig(0.1, 0.3, method=method),
+                       events=[FaultApplyEvent(apply_time, "F")]).run()
+    voltage = 0.0
+    for index, row in enumerate(result.rows):
+        if index:
+            previous = result.rows[index - 1]
+            h = row["time"] - previous["time"]
+            if previous["state:F"] == 0.0:
+                voltage += h
+            else:
+                decay = (1 - h / 2) / (1 + h / 2) if method == "trapezoidal" else 1 / (1 + h)
+                voltage = 1 + (voltage - 1) * decay
+        assert row["v:C"] == pytest.approx(voltage, abs=1e-12)
+        assert row["i:F"] == pytest.approx(voltage * row["state:F"], abs=1e-12)
+        assert row["i:C"] == pytest.approx(1 - row["i:F"])
+    event_row = next(row for row in result.rows if row["time"] == apply_time)
+    assert event_row["v:C"] == pytest.approx(apply_time, abs=1e-12)
+    assert capacitor.previous_current == pytest.approx(result.rows[-1]["i:C"])
+    assert len({row["time"] for row in result.rows}) == len(result.rows)
+
+
+@pytest.mark.parametrize("method", ["trapezoidal", "backward_euler"])
+@pytest.mark.parametrize("open_time,close_time,stop", [(0.0, 0.2, 0.3), (0.1, 0.3, 0.3), (0.15, 0.25, 0.35)])
+def test_rl_open_and_close_events_recompute_voltage_without_advancing_twice(method, open_time, close_time, stop) -> None:
+    circuit = Circuit.from_components("rl_events", [
+        VoltageSource("V", "src", "0", 1.0), Inductor("L", "src", "n", 1.0, initial_current=0.2),
+        Resistor("R", "n", "0", 2.0), Breaker("B", "n", "0", closed_resistance=2.0),
+    ])
+    result = Simulator(circuit, SimulationConfig(0.1, stop, method=method), events=[
+        BreakerOpenEvent(open_time, "B"), BreakerCloseEvent(close_time, "B"),
+    ]).run()
+    current = 0.2
+    for index, row in enumerate(result.rows):
+        if index:
+            previous = result.rows[index - 1]
+            resistance = 1.0 if previous["state:B"] else 2.0
+            h = row["time"] - previous["time"]
+            decay = (1 - resistance * h / 2) / (1 + resistance * h / 2) if method == "trapezoidal" else 1 / (1 + resistance * h)
+            current = 1 / resistance + (current - 1 / resistance) * decay
+        resistance = 1.0 if row["state:B"] else 2.0
+        assert row["i:L"] == pytest.approx(current)
+        assert row["v:L"] == pytest.approx(1 - resistance * current)
+        assert row["i:R"] + row["i:B"] == pytest.approx(current)
+
+
+def test_same_time_events_use_declaration_order_and_one_right_solve() -> None:
+    circuit = Circuit.from_components("same_time", [
+        CurrentSource("I", "0", "n", 1.0), Capacitor("C", "n", "0", 1.0), Fault("F", "n", 1.0),
+    ])
+    solver = DenseLinearSolver()
+    result = Simulator(circuit, SimulationConfig(0.1, 0.3), solver=solver, events=[
+        FaultApplyEvent(0.15, "F"), FaultClearEvent(0.15, "F"),
+    ]).run()
+    assert [record["type"] for record in result.event_log] == ["fault_apply", "fault_clear"]
+    assert result.series("v:C") == pytest.approx(result.series("time"))
+    assert result.series("i:C") == pytest.approx([1.0] * len(result.rows))
+    assert solver.solve_count == len(result.rows) + 1
+
+
+def test_opening_only_inductor_path_reports_state_conflict() -> None:
+    circuit = Circuit.from_components("interrupted_current", [
+        Inductor("L", "n", "0", 1.0, initial_current=1.0),
+        Breaker("B", "n", "0", closed_resistance=1.0),
+    ])
+    with pytest.raises(RuntimeError, match="仿真时间 0.15.*冲突"):
+        Simulator(circuit, SimulationConfig(0.1, 0.2), events=[BreakerOpenEvent(0.15, "B")]).run()
+
+
+def test_capacitor_clear_event_restores_charging_current_and_history() -> None:
+    result = Simulator(Circuit.from_components("clear_capacitor", [
+        CurrentSource("I", "0", "n", 1.0), Capacitor("C", "n", "0", 1.0), Fault("F", "n", 1.0),
+    ]), SimulationConfig(0.1, 0.3), events=[FaultApplyEvent(0.0, "F"), FaultClearEvent(0.15, "F")]).run()
+    voltage_at_clear = 1 - (0.95 / 1.05) * (0.975 / 1.025)
+    assert result.rows[2]["v:C"] == pytest.approx(voltage_at_clear)
+    assert result.rows[2]["i:C"] == pytest.approx(1.0)
+    assert result.rows[-1]["v:C"] == pytest.approx(voltage_at_clear + 0.15)

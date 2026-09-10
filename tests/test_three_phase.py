@@ -10,7 +10,10 @@ from pathlib import Path
 import pytest
 
 from pycy_emt_lite import (
+    Capacitor,
     Circuit,
+    Inductor,
+    Resistor,
     SimulationConfig,
     Simulator,
     ThreePhaseLine,
@@ -19,6 +22,43 @@ from pycy_emt_lite import (
 )
 from pycy_emt_lite.analysis import three_phase_rms
 from pycy_emt_lite.components.three_phase import ThreePhaseParallelRLCLoad
+
+
+@pytest.mark.parametrize("kind", ["series", "parallel"])
+def test_three_phase_storage_initialization_matches_basic_components(kind) -> None:
+    source = lambda: ThreePhaseSource("VS", "source", phase_rms=100.0)
+    if kind == "series":
+        composite = [ThreePhaseLine("LINE", "source", "load", 1.0, 2.0),
+                     ThreePhaseLoad("LOAD", "load", 3.0, 4.0)]
+        separate = [part for p in "abc" for part in (
+            Resistor(f"R1{p}", f"source:{p}", f"mid:{p}", 1.0),
+            Inductor(f"L1{p}", f"mid:{p}", f"load:{p}", 2.0),
+            Resistor(f"R2{p}", f"load:{p}", f"rl:{p}", 3.0),
+            Inductor(f"L2{p}", f"rl:{p}", "0", 4.0),
+        )]
+        pairs = [(f"i:LINE:{p}", f"i:L1{p}") for p in "abc"]
+    else:
+        load = ThreePhaseParallelRLCLoad("LOAD", "source", 400.0, 1000.0, 500.0, 200.0)
+        # 直接并联正弦源的电容须预充到各相 t=0 电压。
+        for phase, angle in zip("abc", [0.0, -2 * math.pi / 3, 2 * math.pi / 3]):
+            load.capacitor_state.previous_voltage[phase] = math.sqrt(2) * 100 * math.sin(angle)
+        composite = [load]
+        separate = [part for p in "abc" for part in (
+            Resistor(f"R{p}", f"source:{p}", "0", 1 / load.phase_conductance),
+            Inductor(f"L{p}", f"source:{p}", "0", load.phase_inductance),
+            Capacitor(f"C{p}", f"source:{p}", "0", load.phase_capacitance,
+                      initial_voltage=load.capacitor_state.previous_voltage[p]),
+        )]
+        pairs = [(f"i:VS:{p}", f"i:VS:{p}") for p in "abc"]
+    config = SimulationConfig(1e-4, 1e-4)
+    result = Simulator(Circuit.from_components("composite", [source(), *composite]), config).run()
+    reference = Simulator(Circuit.from_components("separate", [source(), *separate]), config).run()
+    for actual, expected in pairs:
+        assert result.series(actual) == pytest.approx(reference.series(expected), abs=1e-12)
+    if kind == "parallel":
+        for phase, angle in zip("abc", [0.0, -2 * math.pi / 3, 2 * math.pi / 3]):
+            expected = load.phase_capacitance * math.sqrt(2) * 100 * 2 * math.pi * 50 * math.cos(angle)
+            assert reference.rows[0][f"i:C{phase}"] == pytest.approx(expected)
 
 
 @pytest.mark.parametrize(

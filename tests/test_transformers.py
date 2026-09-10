@@ -10,6 +10,9 @@ import pytest
 
 from pycy_emt_lite import (
     Circuit,
+    Fault,
+    FaultApplyEvent,
+    Inductor,
     Resistor,
     SimulationConfig,
     Simulator,
@@ -167,3 +170,45 @@ def test_three_phase_yd_and_dy_transformers_are_solvable() -> None:
 
     assert np.isfinite(yd_result.series("i:TYD:primary:a")).all()
     assert np.isfinite(dy_result.series("i:TDY:secondary:a")).all()
+
+
+@pytest.mark.parametrize("method", ["trapezoidal", "backward_euler"])
+@pytest.mark.parametrize("event_time", [None, 0.05])
+def test_transformer_initial_state_and_first_step_match_separate_equivalent(method, event_time) -> None:
+    transformer = SinglePhaseTransformer("T", "src", "0", "out", "0", 2.0,
+        leakage_resistance=1.0, leakage_inductance=2.0, magnetizing_inductance=4.0, core_loss_resistance=100.0)
+    transformer.state.leakage_previous_current = 0.2
+    transformer.state.magnetizing_previous_current = 0.3
+    circuit = Circuit.from_components("transformer", [
+        VoltageSource("V", "src", "0", 10.0), transformer, Resistor("LOAD", "out", "0", 3.0), Fault("F", "out", 3.0),
+    ])
+    equivalent = Circuit.from_components("equivalent", [
+        VoltageSource("V", "src", "0", 10.0), Resistor("R", "src", "mid", 1.0),
+        Inductor("L", "mid", "primary", 2.0, initial_current=0.2),
+        SinglePhaseTransformer("T", "primary", "0", "out", "0", 2.0),
+        Inductor("LM", "src", "0", 4.0, initial_current=0.3),
+        Resistor("CORE", "src", "0", 100.0), Resistor("LOAD", "out", "0", 3.0), Fault("F", "out", 3.0),
+    ])
+    config = SimulationConfig(0.1, 0.1, method=method)
+    events = [] if event_time is None else [FaultApplyEvent(event_time, "F")]
+    result = Simulator(circuit, config, events=events).run()
+    reference = Simulator(equivalent, config, events=events).run()
+    for actual, expected in [("v:out", "v:out"), ("i:T:primary", "i:L"),
+                             ("i:T:magnetizing", "i:LM"), ("i:V", "i:V")]:
+        np.testing.assert_allclose(result.series(actual), reference.series(expected), atol=1e-12)
+    assert result.rows[0]["flux:T:magnetizing"] == 0.0
+    assert result.rows[0]["v:out"] == pytest.approx(1.2)
+
+
+def test_three_phase_transformer_freezes_each_winding_current_at_zero() -> None:
+    transformer = ThreePhaseTransformer("T", "src", "out", 2.0, leakage_inductance=1.0, magnetizing_inductance=2.0)
+    result = Simulator(Circuit.from_components("three_phase_initial", [
+        ThreePhaseSource("V", "src", 100.0), transformer,
+        *[Resistor(f"R{phase}", f"out:{phase}", "0", 10.0) for phase in "abc"],
+    ]), SimulationConfig(0.1, 0.0)).run()
+    row = result.rows[0]
+    for phase in "abc":
+        assert row[f"i:T:primary:{phase}"] == pytest.approx(0.0, abs=1e-12)
+        assert row[f"i:T:magnetizing:{phase}"] == pytest.approx(0.0, abs=1e-12)
+        assert transformer.states[phase].leakage_previous_voltage == pytest.approx(row[f"v:src:{phase}"])
+        assert transformer.states[phase].magnetizing_previous_voltage == pytest.approx(row[f"v:src:{phase}"])

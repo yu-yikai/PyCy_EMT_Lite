@@ -16,7 +16,7 @@ Capacitors use a conductance plus a history current source. Trapezoidal integrat
 
 ## Three-phase and dynamic elements
 
-Three-phase sources, lines, and loads stamp one phase branch at a time using the same sign convention. Faults and breakers change the effective conductance before the affected time step. Pi lines combine series R-L and two shunt C/2 branches. Bergeron lines use delayed terminal history sources. Transformers add referred leakage, turns-ratio constraints, and magnetizing branches according to their simplified model.
+Three-phase sources, lines, and loads stamp one phase branch at a time using the same sign convention. Faults and breakers change conductance after advancing to the event left limit, before the right-side consistency solve. Pi lines combine series R-L and two shunt C/2 branches. Bergeron lines use delayed terminal history sources. Transformers add referred leakage, turns-ratio constraints, and magnetizing branches according to their simplified model.
 
 ## Switching and extension rule
 
@@ -74,7 +74,7 @@ Connect each phase to the declared neutral through its own R-L path. Do not sile
 
 ### Fault, Breaker, and IdealSwitch
 
-The inactive state contributes leakage or no effective short; the active state contributes the configured conductance. State transitions occur before the matrix for the affected step is assembled and must follow the event-boundary convention.
+The inactive state contributes leakage or no effective short; the active state contributes the configured conductance. Explicit state transitions follow integration to the event left limit; the right-side consistency solve holds storage and supplies the next histories.
 
 ### PiLine and BergeronLine
 

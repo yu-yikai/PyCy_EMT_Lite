@@ -96,6 +96,10 @@ class ThreePhaseSource(Component):
                 matrix[neutral, branch] -= 1.0
                 matrix[branch, neutral] -= 1.0
             rhs[branch] += amplitude * math.sin(omega * context.time + _phase_angle(phase, self.initial_angle))
+            if context._initial is not None:
+                context._initial.source_derivatives.append(({branch: 1.0}, lambda phase=phase:
+                    amplitude * omega * math.cos(omega * context.time + _phase_angle(phase, self.initial_angle))
+                ))
 
     def outputs(self, context: StampContext, solution: np.ndarray) -> dict[str, float]:
         """记录三相电源各相支路电流。"""
@@ -135,6 +139,8 @@ def _validate_series_rl(name: str, resistance: float, inductance: float) -> None
 def _companion(method: str, time_step: float, inductance: float, previous_current: float, previous_inductor_voltage: float) -> tuple[float, float]:
     """返回串联电感 companion model 的等效电阻和历史电压。"""
 
+    if time_step == 0.0:
+        return 0.0, 0.0
     if method == "trapezoidal":
         resistance = 2.0 * inductance / time_step
         history_voltage = -resistance * previous_current - previous_inductor_voltage
@@ -206,6 +212,8 @@ class ThreePhaseLine(Component):
                 add_conductance(matrix, p, n, 1.0 / self.resistance)
                 continue
             branch = context.branch_offset + self.branch_indices[phase]
+            if context._initial is not None:
+                context._initial.inductors.append((branch, self.inductance, self.state.previous_current[phase]))
             eq_resistance, history_voltage = _companion(
                 context.method,
                 context.time_step,
@@ -341,6 +349,8 @@ class ThreePhaseParallelRLCLoad(Component):
                 add_conductance(matrix, p, neutral, conductance)
             if inductance > 0.0:
                 branch = context.branch_offset + self.inductor_branch_indices[phase]
+                if context._initial is not None:
+                    context._initial.inductors.append((branch, inductance, self.inductor_state.previous_current[phase]))
                 eq_resistance, history_voltage = _companion(
                     context.method,
                     context.time_step,
@@ -357,6 +367,11 @@ class ThreePhaseParallelRLCLoad(Component):
                 matrix[branch, branch] -= eq_resistance
                 rhs[branch] += history_voltage
             if capacitance > 0.0:
+                if context._initial is not None:
+                    context._initial.capacitors[id(self), phase] = (
+                        p, neutral, capacitance, self.capacitor_state.previous_voltage[phase]
+                    )
+                    continue
                 cap_conductance, history_current = _capacitor_companion(
                     context.method,
                     context.time_step,
@@ -388,14 +403,17 @@ class ThreePhaseParallelRLCLoad(Component):
                 self.inductor_state.last_voltage[phase] = voltage
             capacitive_current = 0.0
             if capacitance > 0.0:
-                cap_conductance, history_current = _capacitor_companion(
-                    context.method,
-                    context.time_step,
-                    capacitance,
-                    self.capacitor_state.previous_voltage[phase],
-                    self.capacitor_state.previous_current[phase],
-                )
-                capacitive_current = cap_conductance * voltage + history_current
+                if context._initial is not None:
+                    capacitive_current = context._initial.capacitor_currents[id(self), phase]
+                else:
+                    cap_conductance, history_current = _capacitor_companion(
+                        context.method,
+                        context.time_step,
+                        capacitance,
+                        self.capacitor_state.previous_voltage[phase],
+                        self.capacitor_state.previous_current[phase],
+                    )
+                    capacitive_current = cap_conductance * voltage + history_current
                 self.capacitor_state.previous_voltage[phase] = voltage
                 self.capacitor_state.previous_current[phase] = capacitive_current
                 self.capacitor_state.last_current[phase] = capacitive_current

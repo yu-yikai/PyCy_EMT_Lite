@@ -3,6 +3,8 @@
 文件作用：验证带 AVR 和调速器的 Park dq0 同步发电机模型。
 """
 
+import pytest
+
 from pycy_emt_lite import Circuit, Resistor, SimulationConfig, Simulator
 from pycy_emt_lite.analysis import three_phase_rms
 from pycy_emt_lite.machines import ParkSynchronousGenerator
@@ -34,6 +36,22 @@ def _base_generator(**overrides) -> ParkSynchronousGenerator:
     }
     params.update(overrides)
     return ParkSynchronousGenerator(**params)
+
+
+def test_generator_initial_row_preserves_stator_and_control_states() -> None:
+    generator = _base_generator(d_axis_transient_reactance_pu=0.2, initial_rotor_angle=0.2, initial_speed_pu=1.01)
+    result = Simulator(Circuit.from_components("initial_generator", [generator,
+        *[Resistor(f"R{p}", f"bus:{p}", "0", 9.0) for p in "abc"],
+    ]), SimulationConfig(1e-4, 0.0)).run()
+    row = result.rows[0]
+    assert row["rotor_angle:GEN"] == 0.2
+    assert row["speed_pu:GEN"] == 1.01
+    assert row["eq_prime_pu:GEN"] == 1.0
+    assert row["efd_pu:GEN"] == 1.0
+    assert row["pm_pu:GEN"] == 0.9
+    for p in "abc":
+        assert row[f"i:GEN:{p}"] == pytest.approx(0.0, abs=1e-12)
+        assert generator.state.previous_inductor_voltage[p] == pytest.approx(row[f"e:GEN:{p}"])
 
 
 def test_park_generator_terminal_voltage_with_resistive_load() -> None:

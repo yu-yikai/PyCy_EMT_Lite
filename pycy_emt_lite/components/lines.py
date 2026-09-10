@@ -63,6 +63,8 @@ def _series_companion(
 ) -> tuple[float, float]:
     """计算串联电感的等效电阻和历史电压。"""
 
+    if time_step == 0.0:  # 一致求解先写连续支路方程，再固定电感电流。
+        return 0.0, 0.0
     if method == "trapezoidal":
         resistance = 2.0 * inductance / time_step
         history_voltage = -resistance * previous_current - previous_inductor_voltage
@@ -107,6 +109,8 @@ def _stamp_series_rl(
     if branch_index is None:
         raise RuntimeError("含电感线路支路尚未注册电流变量。")
     branch = context.branch_offset + branch_index
+    if context._initial is not None:
+        context._initial.inductors.append((branch, inductance, state.previous_current))
     equivalent_resistance, history_voltage = _series_companion(
         context.method,
         context.time_step,
@@ -135,6 +139,11 @@ def _stamp_shunt_capacitor(
     """写入并联电容 companion model。"""
 
     if capacitance == 0:
+        return
+    if context._initial is not None:
+        context._initial.capacitors[id(state)] = (
+            context.node_index(node), context.node_index(ground), capacitance, state.previous_voltage
+        )
         return
     conductance, history_current = _capacitor_companion(context.method, context.time_step, capacitance, state)
     add_conductance(matrix, context.node_index(node), context.node_index(ground), conductance)
@@ -178,8 +187,11 @@ def _update_shunt_capacitor_state(
         state.last_current = 0.0
         return
     voltage = add_voltage_probe(solution, context.node_index(node), context.node_index(ground))
-    conductance, history_current = _capacitor_companion(context.method, context.time_step, capacitance, state)
-    current = conductance * voltage + history_current
+    if context._initial is not None:
+        current = context._initial.capacitor_currents[id(state)]
+    else:
+        conductance, history_current = _capacitor_companion(context.method, context.time_step, capacitance, state)
+        current = conductance * voltage + history_current
     state.previous_voltage = voltage
     state.previous_current = current
     state.last_current = current
@@ -541,15 +553,17 @@ class BergeronLine(Component):
         receiving_history = self.attenuation * (-delayed.sending_voltage / self.surge_impedance - delayed.sending_current)
         self.last_sending_current = sending_voltage / self.surge_impedance + sending_history
         self.last_receiving_current = receiving_voltage / self.surge_impedance + receiving_history
-        self.history.append(
-            _BergeronHistorySample(
-                time=context.time,
-                sending_voltage=sending_voltage,
-                sending_current=self.last_sending_current,
-                receiving_voltage=receiving_voltage,
-                receiving_current=self.last_receiving_current,
-            )
+        sample = _BergeronHistorySample(
+            time=context.time,
+            sending_voltage=sending_voltage,
+            sending_current=self.last_sending_current,
+            receiving_voltage=receiving_voltage,
+            receiving_current=self.last_receiving_current,
         )
+        if self.history and self.history[-1].time == context.time:
+            self.history[-1] = sample  # 显式事件只保存右侧端口值。
+        else:
+            self.history.append(sample)
 
     def outputs(self, context: StampContext, solution: np.ndarray) -> dict[str, float]:
         """记录线路两端电流。"""

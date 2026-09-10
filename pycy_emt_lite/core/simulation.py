@@ -10,7 +10,7 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass, replace
 from typing import Iterable, Literal
 
 import numpy as np
@@ -18,6 +18,7 @@ import numpy as np
 from pycy_emt_lite.core.circuit import Circuit
 from pycy_emt_lite.core.context import IntegrationMethod, StampContext
 from pycy_emt_lite.core.solvers import DenseLinearSolver, LinearSolveError, LinearSolver
+from pycy_emt_lite.core.stamping import _InitialConditions
 from pycy_emt_lite.events import EventQueue, SimulationEvent
 from pycy_emt_lite.events.base import _time_close, _time_tolerance
 from pycy_emt_lite.io.results import SimulationResult
@@ -94,11 +95,10 @@ class Simulator:
         核心流程如下：
 
         1. 准备电路变量：节点电压变量和必要的支路电流变量。
-        2. 生成时间序列：从 0 推进到 `stop_time`。
-        3. 每个时间步重新组装 MNA 矩阵和右端项。
-        4. 求解线性方程，得到当前时刻节点电压和支路电流。
-        5. 调用动态元件的 `update_state()`，把当前状态变成下一步历史项。
-        6. 记录节点电压、元件电流、电容电压等输出量。
+        2. 在 t=0 应用事件，固定储能初值求一致代数量并记录。
+        3. 只在正时间区间组装积分 companion、求解并更新储能状态。
+        4. 事件先积分至左侧，再依声明顺序修改网络，固定状态求右侧代数量。
+        5. 写回历史并记录，每个时刻只输出一行；事件行使用右侧值。
         """
 
         if self._run_started:
@@ -118,11 +118,10 @@ class Simulator:
 
         for index, time in enumerate(times):
             if index == 0:
-                actual_time_step = self.config.time_step
+                actual_time_step = 0.0
             else:
                 actual_time_step = self._effective_time_step(float(time - times[index - 1]))
-            for event in self.event_queue.pop_due(float(time)):
-                self.event_log.append(event.apply(self.circuit, float(time)))
+            due_events = self.event_queue.pop_due(float(time))
             context = StampContext(
                 node_manager=self.circuit.node_manager,
                 branch_offset=self.circuit.node_manager.count,
@@ -130,10 +129,17 @@ class Simulator:
                 time_step=actual_time_step,
                 method=self.config.method,
             )
-            solution = self._solve_step(context)
-
-            for component in self.circuit.components:
-                component.update_state(context, solution)
+            if index > 0:
+                solution = self._solve_step(context)
+                for component in self.circuit.components:
+                    component.update_state(context, solution)
+            for event in due_events:
+                self.event_log.append(event.apply(self.circuit, float(time)))
+            if index == 0 or due_events:
+                context = replace(context, time_step=0.0, _initial=_InitialConditions())
+                solution = self._solve_step(context)
+                for component in self.circuit.components:
+                    component.update_state(context, solution)
             rows.append(self._record_row(context, solution))
             self._last_time = float(time)
             self._last_solution = solution.copy()
@@ -156,10 +162,16 @@ class Simulator:
 
         matrix, rhs = self._assemble(context)
         try:
-            return self.solver.solve(matrix, rhs)
-        except LinearSolveError as exc:
+            if context._initial is not None:
+                matrix, rhs = context._initial.assemble(matrix, rhs)
+            solution = self.solver.solve(matrix, rhs)
+            if context._initial is not None:
+                context._initial.accept(solution, self.circuit.size)
+            return solution[:self.circuit.size]
+        except (LinearSolveError, ValueError) as exc:
+            initial_note = "一致求解" if context._initial is not None else ""
             raise RuntimeError(
-                f"MNA 矩阵求解失败：仿真时间 {context.time:g}，"
+                f"MNA {initial_note}矩阵求解失败：仿真时间 {context.time:g}，"
                 f"当前求解器为 {self.solver.name}；{exc}"
             ) from exc
 

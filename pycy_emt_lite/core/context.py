@@ -9,6 +9,7 @@ from dataclasses import dataclass
 from typing import Literal
 
 from pycy_emt_lite.core.nodes import NodeManager
+from pycy_emt_lite.core.stamping import _InitialConditions
 
 IntegrationMethod = Literal["trapezoidal", "backward_euler"]
 
@@ -26,6 +27,7 @@ class StampContext:
     time: float
     time_step: float
     method: IntegrationMethod
+    _initial: _InitialConditions | None = None
 
     def node_index(self, node: str) -> int | None:
         """返回节点在 MNA 矩阵中的行列号；参考节点返回 None。"""

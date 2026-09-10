@@ -35,6 +35,16 @@ def _value_at(value: TimeValue, time: float, *, name: str | None = None) -> floa
         raise ValueError(f"源{source_name} 在 time={time:g} 的值必须为有限数。")
     return result
 
+
+def _derivative_at(value: TimeValue | None, derivative: TimeValue | None, time: float, name: str) -> float:
+    """仅在理想约束欠定时读取解析导数；value=None 表示未建模的内部源。"""
+
+    if derivative is not None:
+        return _value_at(derivative, time, name=f"{name} derivative")
+    if value is not None and not callable(value):
+        return 0.0
+    raise ValueError(f"源 {name!r} 在 time={time:g} 的一致求解需要 derivative；未提供解析导数时不支持该约束。")
+
 @dataclass(slots=True)
 class Resistor(Component):
     """线性电阻。
@@ -77,12 +87,14 @@ class CurrentSource(Component):
 
     `current` 定义为从 `positive` 节点流向 `negative` 节点的电流。按照 MNA
     右端向量注入约定，正向电流会从 positive 节点流出、注入 negative 节点。
+    `derivative` 是可选解析 di/dt（A/s），仅在一致求解需要源导数时读取。
     """
 
     name: str
     positive: str
     negative: str
     current: TimeValue
+    derivative: TimeValue | None = field(default=None, kw_only=True)
 
     def __post_init__(self) -> None:
         if not callable(self.current) and not np.isfinite(float(self.current)):
@@ -104,6 +116,15 @@ class CurrentSource(Component):
             context.node_index(self.negative),
             _value_at(self.current, context.time, name=self.name),
         )
+        if context._initial is not None:
+            terms: dict[int, float] = {}
+            for node, sign in ((self.positive, -1.0), (self.negative, 1.0)):
+                index = context.node_index(node)
+                if index is not None:
+                    terms[index] = terms.get(index, 0.0) + sign
+            context._initial.source_derivatives.append((terms, lambda: _derivative_at(
+                self.current, self.derivative, context.time, self.name
+            )))
 
 @dataclass(slots=True)
 class VoltageSource(Component):
@@ -111,12 +132,14 @@ class VoltageSource(Component):
 
     MNA 无法只用节点电压处理理想电压源，因此需要额外增加一个支路电流未知量。
     方程形式为 `V_positive - V_negative = voltage`。
+    `derivative` 是可选解析 dv/dt（V/s），例如源直接并联电容时需要它。
     """
 
     name: str
     positive: str
     negative: str
     voltage: TimeValue
+    derivative: TimeValue | None = field(default=None, kw_only=True)
     branch_index: int | None = field(default=None, init=False)
 
     def __post_init__(self) -> None:
@@ -156,6 +179,10 @@ class VoltageSource(Component):
             matrix[n, branch] -= 1.0
             matrix[branch, n] -= 1.0
         rhs[branch] += _value_at(self.voltage, context.time, name=self.name)
+        if context._initial is not None:
+            context._initial.source_derivatives.append(({branch: 1.0}, lambda: _derivative_at(
+                self.voltage, self.derivative, context.time, self.name
+            )))
 
     def outputs(self, context: StampContext, solution: np.ndarray) -> dict[str, float]:
         """记录电压源支路电流。"""
@@ -200,9 +227,12 @@ class Capacitor(Component):
         历史电流源进入右端项。这样动态元件就能放入当前时间步的线性方程。
         """
 
-        conductance, history_current = self._companion(context)
         p = context.node_index(self.positive)
         n = context.node_index(self.negative)
+        if context._initial is not None:
+            context._initial.capacitors[id(self)] = (p, n, self.capacitance, self.previous_voltage)
+            return
+        conductance, history_current = self._companion(context)
         add_conductance(matrix, p, n, conductance)
         add_current_source(rhs, p, n, history_current)
 
@@ -214,8 +244,11 @@ class Capacitor(Component):
         """
 
         voltage = add_voltage_probe(solution, context.node_index(self.positive), context.node_index(self.negative))
-        conductance, history_current = self._companion(context)
-        self.last_current = conductance * voltage + history_current
+        if context._initial is not None:
+            self.last_current = context._initial.capacitor_currents[id(self)]
+        else:
+            conductance, history_current = self._companion(context)
+            self.last_current = conductance * voltage + history_current
         self.previous_voltage = voltage
         self.previous_current = self.last_current
 
@@ -296,7 +329,11 @@ class Inductor(Component):
         branch = context.branch_offset + self.branch_index
         p = context.node_index(self.positive)
         n = context.node_index(self.negative)
-        resistance, history_voltage = self._companion(context)
+        if context._initial is not None:
+            resistance, history_voltage = 0.0, 0.0
+            context._initial.inductors.append((branch, self.inductance, self.previous_current))
+        else:
+            resistance, history_voltage = self._companion(context)
 
         if p is not None:
             matrix[p, branch] += 1.0

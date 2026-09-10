@@ -4,13 +4,23 @@
 
 ## 1. Overall flow
 
-The recommended flow is `CaseDefinition -> Circuit -> Simulator -> SimulationResult`. A case declares components and configuration; the circuit assigns nodes and branch variables; the simulator assembles and solves one MNA system per time step; the result stores time and named signals.
+The recommended flow is `CaseDefinition -> Circuit -> Simulator -> SimulationResult`. A case declares components and configuration; the circuit assigns nodes and branch variables; the simulator solves consistent initial values, advances positive intervals and solves event right limits; the result stores time and named signals.
 
 ## 2. Case structure and run
 
 Keep each example focused on one physical question. Declare units, time step, stop time, integration method, plots, and output flags near the top. Call `run_case(case)` from the repository root.
 
 `SimulationConfig` currently supports only `start_time=0.0`. Create fresh simulator, circuit, and component instances for each run; full state restoration and checkpoint continuation are not implemented, so a nonzero `start_time` cannot continue a previous simulation.
+
+### Consistent initialization and events
+
+No integration occurs at `t=0`; `stop_time=0` still solves and records one consistent initial row. A 1 V, 1 kΩ, 1 μF RC circuit with zero capacitor voltage starts at `vC=0 V`, `iC=1 mA`. The first positive interval uses these histories. A capacitor parallel to an ideal voltage source must have the same initial voltage. Parallel capacitors also require matching voltages and share initial current according to capacitance. A floating inductor node uses differentiated KCL to determine its voltage. Conflicts, remaining underdetermination after one differentiation, and nonunique branch currents are rejected.
+
+`VoltageSource(..., derivative=...)` and `CurrentSource(..., derivative=...)` accept constants or time functions for analytical dv/dt (V/s) and di/dt (A/s). They are evaluated and checked for finite values only when the consistency solve needs source derivatives. Constant sources default to zero derivative; `ThreePhaseSource` uses its analytical sinusoidal derivative. Ordinary full-rank RC/RL callable sources need no derivative. For example, `VoltageSource("V", "n", "0", lambda t: 1 + 3*t, derivative=3.0)` parallel to `Capacitor("C", "n", "0", 2.0, initial_voltage=1.0)` gives 6 A initially. A callable value alone cannot guarantee an exact derivative; no finite-difference fallback is used. Example 08 demonstrates a sinusoidal source.
+
+Pi/segmented lines, three-phase RLC and linear transformer storage branches follow the same convention; composite initial values use existing state fields. Machines support direct consistency solves with mechanical/control states held; constrained internal sources needing derivatives are rejected. Transformer initialization does not advance flux. These initialization checks do not establish physical validity of saturation, machines or average control models.
+
+At explicit events, first integrate the old network to the left limit, then apply same-time events in declaration order and solve one right limit. Keep capacitor voltage and inductor current continuous; use right-side algebraic values as the next trapezoidal histories. Record one right-side row and keep every event log entry. Do not reinitialize ordinary steps. Callable source jumps and PWM edges still use the actual sampled grid, without automatic left/right handling. Bergeron initial launch and aligned-event right-side history are checked; short delays and nonaligned grids/interpolation remain in the improvement plan.
 
 ## 3. Circuit preparation
 
@@ -42,7 +52,7 @@ The case creates a `Circuit` and registers every component. `prepare()` collects
 
 ### One time step
 
-For each step, the simulator applies events scheduled for the step boundary, creates a fresh matrix and right-hand side, and asks every component to stamp its current conductance, source, constraint, or history term. It solves `A x = z`, records the solution, and then calls `update_state()`.
+At t=0 apply same-time events, solve consistent storage/algebraic values and record them. For each positive interval, assemble and solve the old network and update states. Apply boundary events next, solve right-side algebraic values with storage held and update histories. Record the row after these updates, once per time point.
 
 ### Errors and results
 
@@ -72,11 +82,11 @@ The linear solve returns node voltages and extra branch currents in the prepared
 
 ### State update order
 
-The first solution uses the declared initial history. After the solution is recorded, capacitors update voltage and current history and inductors update current and voltage history. Updating before the solve changes the discrete equation and can erase the intended initial condition.
+The first solution holds declared capacitor voltages and inductor currents and calculates consistent current/voltage histories. Each positive step solves before updating these histories and output values; recording follows the update. Event consistency solves update algebraic values without advancing storage a second time.
 
 ## Output contract
 
-`SimulationResult.time` is the authoritative time axis. The nominal `time_step` is a configuration value and does not replace the actual time differences when a short final step or event policy changes the spacing. `event_log` records topology changes and is serialized in JSON and NPZ. CSV remains a plain table and does not carry all metadata.
+`result.series("time")` is the authoritative time axis. The nominal `time_step` is a configuration value and does not replace the actual time differences when a short final step or event policy changes the spacing. `event_log` records topology changes and is serialized in JSON and NPZ. CSV remains a plain table and does not carry all metadata.
 
 ## Plotting and persistence
 

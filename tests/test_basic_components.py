@@ -5,6 +5,7 @@
 
 import math
 
+import numpy as np
 import pytest
 
 import pycy_emt_lite
@@ -217,3 +218,165 @@ def test_rlc_response_is_bounded_and_settles_near_source_voltage() -> None:
     assert out.max() < 1.4
     assert out.min() > -0.1
     assert 0.95 < out[-1] < 1.05
+
+
+@pytest.mark.parametrize("method", ["trapezoidal", "backward_euler"])
+@pytest.mark.parametrize("stop", [0.0, 0.1, 0.15])
+@pytest.mark.parametrize("initial", [0.0, 0.25])
+def test_rc_initial_state_and_first_interval(method, stop, initial) -> None:
+    cap = Capacitor("C", "out", "0", 1.0, initial_voltage=initial)
+    circuit = Circuit.from_components("rc_initial", [
+        VoltageSource("V", "src", "0", 1.0), Resistor("R", "src", "out", 1.0), cap,
+    ])
+    result = Simulator(circuit, SimulationConfig(0.1, stop, method=method)).run()
+    assert result.rows[0]["v:C"] == pytest.approx(initial, abs=1e-14)
+    assert result.rows[0]["i:C"] == pytest.approx(1.0 - initial)
+    voltage = initial
+    for before, row in zip(result.rows, result.rows[1:]):
+        h = row["time"] - before["time"]
+        decay = (1 - h / 2) / (1 + h / 2) if method == "trapezoidal" else 1 / (1 + h)
+        voltage = 1 + (voltage - 1) * decay
+        assert row["v:C"] == pytest.approx(voltage)
+        assert row["i:C"] == pytest.approx(1 - voltage)
+    assert cap.previous_current == pytest.approx(result.rows[-1]["i:C"])
+
+
+@pytest.mark.parametrize("method", ["trapezoidal", "backward_euler"])
+@pytest.mark.parametrize("initial", [0.0, 0.2])
+def test_rl_initial_state_and_first_interval(method, initial) -> None:
+    coil = Inductor("L", "out", "0", 1.0, initial_current=initial)
+    circuit = Circuit.from_components("rl_initial", [
+        VoltageSource("V", "src", "0", 1.0), Resistor("R", "src", "out", 1.0), coil,
+    ])
+    result = Simulator(circuit, SimulationConfig(0.1, 0.1, method=method)).run()
+    assert result.rows[0]["i:L"] == pytest.approx(initial, abs=1e-14)
+    assert result.rows[0]["v:L"] == pytest.approx(1 - initial)
+    decay = 0.95 / 1.05 if method == "trapezoidal" else 1 / 1.1
+    assert result.rows[1]["i:L"] == pytest.approx(1 + (initial - 1) * decay)
+    assert coil.previous_voltage == pytest.approx(result.rows[1]["v:L"])
+
+
+def test_parallel_capacitors_share_initial_current_by_capacitance() -> None:
+    result = Simulator(Circuit.from_components("parallel_c", [
+        CurrentSource("I", "0", "n", 3.0),
+        Capacitor("C1", "n", "0", 1.0, initial_voltage=0.25),
+        Capacitor("C2", "n", "0", 2.0, initial_voltage=0.25),
+    ]), SimulationConfig(0.1, 0.1)).run()
+    assert result.series("v:n") == pytest.approx([0.25, 0.35])
+    assert result.series("i:C1") == pytest.approx([1.0, 1.0])
+    assert result.series("i:C2") == pytest.approx([2.0, 2.0])
+
+
+def test_floating_inductor_star_satisfies_kcl_and_its_derivative() -> None:
+    components = []
+    for phase, voltage in zip("abc", [400.0, 0.0, 0.0]):
+        components.extend([VoltageSource(f"V{phase}", phase, "0", voltage),
+                           Inductor(f"L{phase}", phase, "star", 1.0)])
+    result = Simulator(Circuit.from_components("star", components), SimulationConfig(0.1, 0.1)).run()
+    assert result.series("v:star") == pytest.approx([400 / 3, 400 / 3])
+    for phase, voltage in zip("abc", [400.0, 0.0, 0.0]):
+        assert result.rows[0][f"i:L{phase}"] == pytest.approx(0.0, abs=1e-12)
+        assert result.rows[0][f"v:L{phase}"] == pytest.approx(voltage - 400 / 3)
+    assert sum(result.rows[1][f"i:L{phase}"] for phase in "abc") == pytest.approx(0.0, abs=1e-12)
+
+
+def test_inconsistent_capacitor_voltage_is_rejected() -> None:
+    circuit = Circuit.from_components("conflict", [
+        VoltageSource("V", "n", "0", 1.0), Capacitor("C", "n", "0", 1.0),
+    ])
+    with pytest.raises(RuntimeError, match="初值.*冲突"):
+        Simulator(circuit, SimulationConfig(0.1, 0.0)).run()
+
+
+def test_consistent_voltage_source_parallel_capacitor_has_zero_dc_current() -> None:
+    result = Simulator(Circuit.from_components("voltage_c", [
+        VoltageSource("V", "n", "0", 1.0), Capacitor("C", "n", "0", 2.0, initial_voltage=1.0),
+    ]), SimulationConfig(0.1, 0.1)).run()
+    assert result.series("v:C") == pytest.approx([1.0, 1.0])
+    assert result.series("i:C") == pytest.approx([0.0, 0.0], abs=1e-12)
+
+
+def test_lossless_lc_preserves_initial_energy() -> None:
+    result = Simulator(Circuit.from_components("lc", [
+        Capacitor("C", "n", "0", 1.0, initial_voltage=1.0), Inductor("L", "n", "0", 1.0),
+    ]), SimulationConfig(0.05, 5.0)).run()
+    energy = 0.5 * (result.series("v:C") ** 2 + result.series("i:L") ** 2)
+    np.testing.assert_allclose(energy, 0.5, atol=1e-12, rtol=0)
+    assert result.rows[0]["i:C"] == pytest.approx(0.0, abs=1e-12)
+    assert result.rows[0]["v:L"] == pytest.approx(1.0)
+
+
+@pytest.mark.parametrize("source_kind", ["voltage", "current"])
+def test_constrained_callable_source_requires_and_uses_analytic_derivative(source_kind) -> None:
+    def make_circuit(derivative=None):
+        if source_kind == "voltage":
+            parts = [VoltageSource("S", "n", "0", lambda t: 1 + 3 * t, derivative=derivative),
+                     Capacitor("C", "n", "0", 2.0, initial_voltage=1.0)]
+        else:
+            parts = [CurrentSource("S", "0", "n", lambda t: 1 + 3 * t, derivative=derivative),
+                     Inductor("L", "n", "0", 2.0, initial_current=1.0)]
+        return Circuit.from_components("constrained_callable", parts)
+
+    with pytest.raises(RuntimeError, match="S.*derivative"):
+        Simulator(make_circuit(), SimulationConfig(0.1, 0.0)).run()
+    for invalid in [math.nan, math.inf]:
+        with pytest.raises(RuntimeError, match="derivative.*有限"):
+            Simulator(make_circuit(lambda t: invalid), SimulationConfig(0.1, 0.0)).run()
+    result = Simulator(make_circuit(lambda t: 3.0), SimulationConfig(0.1, 0.1)).run()
+    algebraic = "i:C" if source_kind == "voltage" else "v:L"
+    assert result.series(algebraic) == pytest.approx([6.0, 6.0])
+
+
+def test_unconstrained_callable_does_not_require_derivative() -> None:
+    result = Simulator(Circuit.from_components("ordinary_callable", [
+        VoltageSource("V", "src", "0", lambda t: 1 + t), Resistor("R", "src", "n", 1.0),
+        Capacitor("C", "n", "0", 1.0),
+    ]), SimulationConfig(0.1, 0.0)).run()
+    assert result.rows[0]["i:C"] == pytest.approx(1.0)
+
+
+@pytest.mark.parametrize("case", ["parallel_c", "inductor_cutset", "redundant_sources"])
+def test_initial_conflicts_and_nonunique_branch_currents_are_rejected(case) -> None:
+    parts = {
+        "parallel_c": [Capacitor("C1", "n", "0", 1.0), Capacitor("C2", "n", "0", 2.0, initial_voltage=1.0)],
+        "inductor_cutset": [CurrentSource("I", "0", "n", 1.0), Inductor("L", "n", "0", 1.0)],
+        "redundant_sources": [VoltageSource("V1", "n", "0", 1.0), VoltageSource("V2", "n", "0", 1.0)],
+    }[case]
+    with pytest.raises(RuntimeError, match="冲突|欠定"):
+        Simulator(Circuit.from_components(case, parts), SimulationConfig(0.1, 0.0)).run()
+
+
+@pytest.mark.parametrize("kind", ["RC", "RL"])
+@pytest.mark.parametrize("method", ["trapezoidal", "backward_euler"])
+def test_rc_rl_analytic_error_converges_on_common_physical_grid(kind, method) -> None:
+    errors = []
+    for h in [0.1, 0.05]:
+        storage = Capacitor("C", "n", "0", 1.0, initial_voltage=0.2) if kind == "RC" else Inductor("L", "n", "0", 1.0, initial_current=0.2)
+        result = Simulator(Circuit.from_components(kind, [
+            VoltageSource("V", "src", "0", 1.0), Resistor("R", "src", "n", 1.0), storage,
+        ]), SimulationConfig(h, 1.0, method=method)).run()
+        stride = round(0.1 / h)
+        times = result.series("time")[::stride]
+        values = result.series("v:C" if kind == "RC" else "i:L")[::stride]
+        errors.append(np.max(np.abs(values - (1 - 0.8 * np.exp(-times)))))
+    expected_order_ratio = 4.0 if method == "trapezoidal" else 2.0
+    assert errors[0] / errors[1] == pytest.approx(expected_order_ratio, rel=0.06)
+
+
+def test_rlc_whole_curve_matches_analytic_damped_response() -> None:
+    errors = []
+    omega = math.sqrt(3) / 2
+    for h in [0.05, 0.025]:
+        result = Simulator(Circuit.from_components("rlc_analytic", [
+            VoltageSource("V", "src", "0", 1.0), Resistor("R", "src", "mid", 1.0),
+            Inductor("L", "mid", "out", 1.0), Capacitor("C", "out", "0", 1.0),
+        ]), SimulationConfig(h, 5.0)).run()
+        stride = round(0.05 / h)
+        t = result.series("time")[::stride]
+        expected_v = 1 - np.exp(-t / 2) * (np.cos(omega * t) + np.sin(omega * t) / (2 * omega))
+        expected_i = np.exp(-t / 2) * np.sin(omega * t) / omega
+        errors.append(max(np.max(np.abs(result.series("v:C")[::stride] - expected_v)),
+                          np.max(np.abs(result.series("i:L")[::stride] - expected_i))))
+        np.testing.assert_allclose(result.series("i:C"), result.series("i:L"), atol=1e-12)
+    assert errors[1] < 5e-5
+    assert 3.9 < errors[0] / errors[1] < 4.1

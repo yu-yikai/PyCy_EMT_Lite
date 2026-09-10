@@ -5,9 +5,24 @@
 
 import math
 
+import pytest
 from pycy_emt_lite import Circuit, Resistor, SimulationConfig, Simulator
 from pycy_emt_lite.analysis import three_phase_rms
 from pycy_emt_lite.machines import SynchronousMachine
+
+
+def test_machine_initial_row_does_not_advance_stator_or_rotor() -> None:
+    machine = SynchronousMachine("SM", "bus", 100.0, 1.0, 0.1, 3000.0, 3.5,
+                                 mechanical_power=2700.0, initial_rotor_angle=0.2, initial_speed_pu=1.01)
+    result = Simulator(Circuit.from_components("initial_machine", [machine,
+        *[Resistor(f"R{p}", f"bus:{p}", "0", 9.0) for p in "abc"],
+    ]), SimulationConfig(1e-4, 0.0)).run()
+    row = result.rows[0]
+    assert row["rotor_angle:SM"] == 0.2
+    assert row["speed_pu:SM"] == 1.01
+    for p in "abc":
+        assert row[f"i:SM:{p}"] == pytest.approx(0.0, abs=1e-12)
+        assert machine.state.previous_inductor_voltage[p] == pytest.approx(row[f"e:SM:{p}"])
 
 
 def test_synchronous_machine_terminal_voltage_with_resistive_load() -> None:

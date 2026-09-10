@@ -92,6 +92,8 @@ def _inductor_companion(
 ) -> tuple[float, float]:
     """计算电感 companion model 的等效电阻和历史电压。"""
 
+    if time_step == 0.0:
+        return 0.0, 0.0
     if method == "trapezoidal":
         resistance = 2.0 * inductance / time_step
         history_voltage = -resistance * previous_current - previous_voltage
@@ -173,6 +175,8 @@ def _stamp_transformer_phase(
     leakage_equivalent_resistance = 0.0
     leakage_history_voltage = 0.0
     if leakage_inductance > 0:
+        if context._initial is not None:
+            context._initial.inductors.append((primary_branch, leakage_inductance, state.leakage_previous_current))
         leakage_equivalent_resistance, leakage_history_voltage = _inductor_companion(
             context.method,
             context.time_step,
@@ -201,6 +205,10 @@ def _stamp_transformer_phase(
         if magnetizing_branch_index is None:
             raise RuntimeError("励磁支路尚未注册支路电流变量。")
         magnetizing_branch = context.branch_offset + magnetizing_branch_index
+        if context._initial is not None:
+            context._initial.inductors.append((
+                magnetizing_branch, effective_magnetizing_inductance, state.magnetizing_previous_current
+            ))
         _stamp_branch_current(matrix, primary_positive_index, primary_negative_index, magnetizing_branch)
         equivalent_resistance, history_voltage = _inductor_companion(
             context.method,

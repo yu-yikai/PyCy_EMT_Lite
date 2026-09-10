@@ -8,7 +8,7 @@ Use `bus:phase` names such as `source:a` and `load:c`; result voltages are prefi
 
 `ThreePhaseLine` uses an independent series R-L branch per phase. `ThreePhaseLoad` is a wye load from each `bus:phase` to `neutral`, also using series R-L branches. Delta connections, mutual coupling, frequency-dependent parameters, and complex unbalanced loads are outside the first version.
 
-Events can apply and clear a fault before fixed time steps, for example `FaultApplyEvent(0.04, "FA")` followed by `FaultClearEvent(0.08, "FA")`. The event log is saved with JSON and NPZ results. `pycy_emt_lite.analysis` provides `rms`, `peak_abs`, `mean_value`, and `three_phase_rms`.
+Explicit events first advance the old network to the left limit, then change component states and solve/record right-side algebraic values with storage held. For example, use `FaultApplyEvent(0.04, "FA")` followed by `FaultClearEvent(0.08, "FA")`. The event log is saved with JSON and NPZ results. `pycy_emt_lite.analysis` provides `rms`, `peak_abs`, `mean_value`, and `three_phase_rms`.
 
 For a balanced positive-sequence source, state the phase sequence and RMS convention with the result. The first version is intended for balanced teaching cases and simple faults; it does not claim a complete unbalanced-network or frequency-dependent line model. Use phase-specific columns in tests and plots.
 
