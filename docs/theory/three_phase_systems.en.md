@@ -18,6 +18,13 @@ The source connects one ideal voltage source from each `terminal_bus:phase` node
 
 For `ThreePhaseLine`, `resistance` and `inductance` are per-phase series parameters. With `inductance = 0`, no dynamic branch state is needed. With positive inductance, each phase registers a branch current. The load uses the same series R-L convention from each phase node to `neutral`.
 
+Example 05 uses a 20 Ω + 50 mH load and 0.5 Ω line resistance per phase. At 50 Hz,
+the load reactance is about 15.7 Ω. Steady current is
+`I = Vsource / (Rline + Rload + jωLload)` and load voltage is
+`Vload = I(Rload + jωLload)`. RMS and three-phase P/Q use two cycles at 0.06–0.10 s;
+current lags its phase source voltage by about 37.46°. All three inductor currents
+start at zero, including phases B/C whose source voltages are nonzero at t=0.
+
 ## Event example and analysis window
 
 ```python
@@ -31,7 +38,22 @@ events = [
 result = Simulator(circuit, config, events=events).run()
 ```
 
-The event log records event time, type, target, and state change. Use `three_phase_rms(result, ("v:load:a", "v:load:b", "v:load:c"), start_time=0.05, end_time=0.07)` for a full 50 Hz period during the fault. Example 07 compares 0.01–0.03, 0.05–0.07 and 0.09–0.11 s windows.
+The event log records event time, type, target, and state change. Use `three_phase_rms(result, ("v:load:a", "v:load:b", "v:load:c"), start_time=0.05, end_time=0.07)` for a full 50 Hz period during the fault in example 07. Examples 06/07 compare 0.01–0.03, 0.05–0.07 and 0.09–0.11 s windows. Example 06 retains decaying components in its fault window, so phase RMS values can differ and are not pure steady-state phasors. Mean power in each resistive load is `Vbus_rms²/Rload`.
+
+Example 06 uses 0.8 Ω + 5 mH per line phase, a 50 Ω load and a 0.1 Ω fault resistor.
+The fault applies at 0.04 s and clears at 0.08 s. Each stage obeys
+`L di/dt + (Rline + Req)i = vsource`, with `Req = Rload` normally and
+`Req = Rload || Rfault` during the fault. Inductor current is continuous;
+bus voltage `vbus = Req i` and fault-branch current can jump at events.
+
+At clearing, line current transfers to the resistive load. Default parameters
+produce a bus-voltage absolute peak of about 7.79 kV, decaying with the approximately
+98 μs time constant `L/(Rline+Rload)`. The step is therefore 10 μs. This ideal
+teaching circuit contains no parasitic capacitance, surge arrester or arc model.
+Separate line-current, fault-current and bus-voltage plots distinguish continuous
+inductor current from discontinuous fault current. Tests use sinusoidal particular
+solutions plus exponential transients to check zero states, application/clearing
+currents, complete waveforms and fixed-window metrics.
 
 Mean and RMS integrate piecewise-linear signals over actual time, interpolating window endpoints when needed. Time must be finite and strictly increasing; integration windows need positive duration inside the data range. Do not integrate across events or interpolate within a raw sample interval containing a jump. `peak_abs` still returns the sampled peak and accepts a single-point window.
 

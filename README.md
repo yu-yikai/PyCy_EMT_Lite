@@ -85,6 +85,13 @@ Pi-line phasors/energy, loaded linear-transformer power including magnetizing DC
 and PWM fundamental/step sensitivity. Voltage and current use separate figures
 in 08/09; PWM reports total RMS separately from its fundamental.
 
+Example 05 uses a 20 Ω + 50 mH load per phase, with zero-current startup and a
+phasor/power summary. Example 06 adds 5 mH per line phase and uses a 10 μs step to
+resolve fault clearing. It reports pre/fault/post RMS and load power, and plots
+continuous line currents separately from fault currents and bus voltages. The
+ideal circuit produces a brief clearing overvoltage as line current transfers
+to the resistive load; it contains no surge arrester or parasitic capacitance.
+
 ## Minimal Project Structure
 
 ```text

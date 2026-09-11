@@ -473,6 +473,8 @@ class ThreePhaseLoad(Component):
                 add_conductance(matrix, p, neutral, 1.0 / self.resistance)
                 continue
             branch = context.branch_offset + self.branch_indices[phase]
+            if context._initial is not None:
+                context._initial.inductors.append((branch, self.inductance, self.state.previous_current[phase]))
             eq_resistance, history_voltage = _companion(
                 context.method,
                 context.time_step,

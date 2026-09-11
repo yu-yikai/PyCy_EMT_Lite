@@ -7,7 +7,9 @@ import math
 import runpy
 from pathlib import Path
 
+import numpy as np
 import pytest
+from scipy.integrate import quad
 
 from pycy_emt_lite import (
     Capacitor,
@@ -20,7 +22,7 @@ from pycy_emt_lite import (
     ThreePhaseLoad,
     ThreePhaseSource,
 )
-from pycy_emt_lite.analysis import three_phase_rms
+from pycy_emt_lite.analysis import rms, three_phase_power, three_phase_rms
 from pycy_emt_lite.components.three_phase import ThreePhaseParallelRLCLoad
 
 
@@ -108,26 +110,88 @@ def test_single_phase_fault_example_matches_resistive_dividers() -> None:
 
 
 def test_three_phase_source_load_has_balanced_rms() -> None:
-    components = [
-        ThreePhaseSource("VS", "source", phase_rms=230.0),
-        ThreePhaseLine("LINE", "source", "load", resistance=0.5, inductance=0.0),
-        ThreePhaseLoad("LOAD", "load", resistance=20.0),
-    ]
-    circuit = Circuit.from_components("three_phase_balanced", components)
+    example = runpy.run_path(str(Path(__file__).parents[1] / "examples/05_three_phase_steady_state.py"))
+    case = example["define_case"]()
+    source, line, load = case.components
+    assert load.inductance == pytest.approx(50e-3)
+    result = Simulator(Circuit.from_components(case.name, case.components), case.config).run()
+    omega = 2 * math.pi * source.frequency
+    total_resistance = line.resistance + load.resistance
+    impedance = complex(total_resistance, omega * load.inductance)
+    current_phasor = source.phase_rms / impedance
+    voltage_phasor = current_phasor * complex(load.resistance, omega * load.inductance)
+    time = result.series("time")
+    for phase, angle in zip("abc", [0.0, -2 * math.pi / 3, 2 * math.pi / 3]):
+        phasor = current_phasor * np.exp(1j * angle)
+        # 正弦特解加指数暂态，零初值；同时检查三相相序和电流滞后。
+        reference = math.sqrt(2) * ((phasor * np.exp(1j * omega * time)).imag
+                                   - phasor.imag * np.exp(-total_resistance * time / load.inductance))
+        np.testing.assert_allclose(result.series(f"i:LOAD:{phase}"), reference, atol=0.002, rtol=0)
+        assert result.rows[0][f"i:LOAD:{phase}"] == pytest.approx(0.0, abs=1e-12)
+        np.testing.assert_allclose(result.series(f"i:LINE:{phase}"), result.series(f"i:LOAD:{phase}"), atol=1e-12)
+        np.testing.assert_allclose(result.series(f"v:load:{phase}"),
+                                   result.series(f"v:source:{phase}") - line.resistance * reference, atol=0.001)
+        assert rms(result, f"i:LOAD:{phase}", start_time=0.06, end_time=0.1) == pytest.approx(abs(current_phasor), rel=2e-4)
+        assert rms(result, f"v:load:{phase}", start_time=0.06, end_time=0.1) == pytest.approx(abs(voltage_phasor), rel=1e-4)
+    power = three_phase_power(result, ("v:load:a", "v:load:b", "v:load:c"),
+                              ("i:LOAD:a", "i:LOAD:b", "i:LOAD:c"), start_time=0.06, end_time=0.1)
+    assert power.active_power == pytest.approx(3 * load.resistance * abs(current_phasor)**2, rel=3e-4)
+    assert power.reactive_power == pytest.approx(3 * omega * load.inductance * abs(current_phasor)**2, rel=3e-4)
 
-    config = SimulationConfig(time_step=1e-4, stop_time=0.1)
-    simulator = Simulator(circuit, config)
-    result = simulator.run()
-    rms_values = three_phase_rms(
-        result,
-        ("v:load:a", "v:load:b", "v:load:c"),
-        start_time=0.06,
-        end_time=0.1,
-    )
 
-    assert all(220.0 < value < 230.0 for value in rms_values.values())
-    assert math.isclose(rms_values["v:load:a"], rms_values["v:load:b"], rel_tol=2e-3)
-    assert math.isclose(rms_values["v:load:b"], rms_values["v:load:c"], rel_tol=2e-3)
+def test_three_phase_inductive_fault_example_matches_piecewise_rl_solution() -> None:
+    example = runpy.run_path(str(Path(__file__).parents[1] / "examples/06_three_phase_short_circuit.py"))
+    case = example["define_case"]()
+    source, line, load, *faults = case.components
+    assert line.inductance == pytest.approx(5e-3)
+    result = Simulator(Circuit.from_components(case.name, case.components), case.config, case.events).run()
+    time = result.series("time")
+    omega = 2 * math.pi * source.frequency
+    fault_resistance = faults[0].resistance
+    parallel = 1 / (1 / load.resistance + 1 / fault_resistance)
+    # 每次事件只改变电流微分方程的电阻项，电感电流作为下一段初值连续传递。
+    stages = ((0.0, 0.04, load.resistance, 0.01, 0.03),
+              (0.04, 0.08, parallel, 0.05, 0.07),
+              (0.08, 0.12, load.resistance, 0.09, 0.11))
+    expected_load_power = np.zeros(3)
+    for phase, angle in zip("abc", [0.0, -2 * math.pi / 3, 2 * math.pi / 3]):
+        initial_current = 0.0
+        reference_current = np.zeros_like(time)
+        reference_voltage = np.zeros_like(time)
+        for index, (start, end, receiving_r, window_start, window_end) in enumerate(stages):
+            resistance = line.resistance + receiving_r
+            phasor = source.phase_rms * np.exp(1j * angle) / complex(resistance, omega * line.inductance)
+
+            def current_at(t):
+                steady = math.sqrt(2) * (phasor * np.exp(1j * omega * t)).imag
+                steady_start = math.sqrt(2) * (phasor * np.exp(1j * omega * start)).imag
+                return steady + (initial_current - steady_start) * np.exp(-resistance * (t - start) / line.inductance)
+
+            window = (time >= start) & (time <= end)
+            reference_current[window] = current_at(time[window])
+            reference_voltage[window] = receiving_r * current_at(time[window])
+            mean_square = quad(lambda t: float(current_at(t))**2, window_start, window_end)[0] / (window_end - window_start)
+            assert rms(result, f"i:LINE:{phase}", start_time=window_start, end_time=window_end) == pytest.approx(math.sqrt(mean_square), rel=2e-5)
+            assert rms(result, f"v:fault_bus:{phase}", start_time=window_start, end_time=window_end) == pytest.approx(receiving_r * math.sqrt(mean_square), rel=2e-5)
+            expected_load_power[index] += receiving_r**2 * mean_square / load.resistance
+            initial_current = current_at(end)
+
+        # 包括清除后的最快衰减；10 μs 步长的全波形误差限为 0.06 A。
+        np.testing.assert_allclose(result.series(f"i:LINE:{phase}"), reference_current, atol=0.06, rtol=0)
+        np.testing.assert_allclose(result.series(f"v:fault_bus:{phase}"), reference_voltage, atol=3.0, rtol=0)
+        fault_current = result.series(f"i:F{phase.upper()}")
+        np.testing.assert_allclose(result.series(f"i:LINE:{phase}"), result.series(f"i:LOAD:{phase}") + fault_current, atol=1e-9)
+        np.testing.assert_allclose(fault_current[(time < 0.04) | (time >= 0.08)], 0.0, atol=1e-12)
+        for event_time in (0.04, 0.08):
+            event_index = round(event_time / case.config.time_step)
+            assert result.series(f"i:LINE:{phase}")[event_index] == pytest.approx(reference_current[event_index], abs=3e-4)
+    for (_, _, _, start, end), expected in zip(stages, expected_load_power):
+        power = three_phase_power(result, ("v:fault_bus:a", "v:fault_bus:b", "v:fault_bus:c"),
+                                  ("i:LOAD:a", "i:LOAD:b", "i:LOAD:c"), start_time=start, end_time=end)
+        assert power.active_power == pytest.approx(expected, rel=4e-5)
+    np.testing.assert_allclose(sum(result.series(f"i:LINE:{phase}") for phase in "abc"), 0.0, atol=1e-9)
+    assert [record["target"] for record in result.event_log] == ["FA", "FB", "FC"] * 2
+    assert np.all(np.diff(time) > 0)
 
 
 def test_three_phase_line_records_phase_currents() -> None:
