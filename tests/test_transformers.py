@@ -4,6 +4,9 @@
 """
 
 import math
+from dataclasses import replace
+from pathlib import Path
+import runpy
 
 import numpy as np
 import pytest
@@ -20,7 +23,7 @@ from pycy_emt_lite import (
     ThreePhaseSource,
     VoltageSource,
 )
-from pycy_emt_lite.analysis import three_phase_rms
+from pycy_emt_lite.analysis import mean_value, rms, three_phase_rms
 from pycy_emt_lite.components.transformers import ThreePhaseTransformer
 
 
@@ -212,3 +215,80 @@ def test_three_phase_transformer_freezes_each_winding_current_at_zero() -> None:
         assert row[f"i:T:magnetizing:{phase}"] == pytest.approx(0.0, abs=1e-12)
         assert transformer.states[phase].leakage_previous_voltage == pytest.approx(row[f"v:src:{phase}"])
         assert transformer.states[phase].magnetizing_previous_voltage == pytest.approx(row[f"v:src:{phase}"])
+
+
+@pytest.mark.parametrize("core_loss_resistance", [None, 1000.0])
+def test_loaded_transformer_ac_matches_phasors_dc_magnetizing_current_and_energy(core_loss_resistance) -> None:
+    example = runpy.run_path(str(Path(__file__).parents[1] / "examples/09_single_phase_transformer.py"))
+    case = example["define_case"]()
+    source, transformer, load = case.components
+    transformer = replace(transformer, core_loss_resistance=core_loss_resistance)
+    result = Simulator(Circuit.from_components(case.name, [source, transformer, load]), case.config).run()
+    omega = 2 * math.pi * example["FREQUENCY"]
+    source_rms = example["SOURCE_RMS"]
+    ratio = transformer.turns_ratio
+    primary_phasor = source_rms / complex(
+        transformer.leakage_resistance + ratio**2 * load.resistance, omega * transformer.leakage_inductance,
+    )
+    secondary_phasor = ratio * load.resistance * primary_phasor
+    magnetizing_phasor = source_rms / (1j * omega * transformer.magnetizing_inductance)
+    magnetizing_dc = math.sqrt(2) * abs(magnetizing_phasor)  # 零初值理想电感保留 DC 分量
+    core_conductance = 0.0 if core_loss_resistance is None else 1 / core_loss_resistance
+    input_phasor = primary_phasor + magnetizing_phasor + core_conductance * source_rms
+    time = result.series("time")
+    window = time >= 0.02
+    rotating = np.exp(1j * omega * time[window])
+    for column, phasor in {"v:sec": secondary_phasor, "i:T1:primary": primary_phasor,
+                           "i:T1:secondary": -ratio * primary_phasor}.items():
+        np.testing.assert_allclose(result.series(column)[window], math.sqrt(2) * (phasor * rotating).imag,
+                                   atol=1e-5 * abs(phasor), rtol=0)
+        assert rms(result, column, start_time=0.02) == pytest.approx(abs(phasor), rel=1e-4)
+    expected_magnetizing = magnetizing_dc * (1 - np.cos(omega * time))
+    np.testing.assert_allclose(result.series("i:T1:magnetizing"), expected_magnetizing, atol=2e-4, rtol=0)
+    assert mean_value(result, "i:T1:magnetizing", start_time=0.02) == pytest.approx(magnetizing_dc, rel=1e-4)
+    assert rms(result, "i:V1", start_time=0.02) == pytest.approx(
+        math.sqrt(abs(input_phasor)**2 + magnetizing_dc**2), rel=2e-4,
+    )
+
+    primary = result.series("i:T1:primary")
+    secondary = result.series("i:T1:secondary")
+    magnetizing = result.series("i:T1:magnetizing")
+    voltage = result.series("v:pri")
+    input_current = -result.series("i:V1")
+    np.testing.assert_allclose(ratio * primary + secondary, 0.0, atol=1e-12)
+    np.testing.assert_allclose(input_current, primary + magnetizing + core_conductance * voltage, atol=1e-12)
+
+    def midpoint(values):
+        return (values[:-1] + values[1:]) / 2
+
+    energy = 0.5 * (transformer.leakage_inductance * primary**2 + transformer.magnetizing_inductance * magnetizing**2)
+    net_work = np.cumsum(np.diff(time) * (
+        midpoint(voltage) * midpoint(input_current) - midpoint(result.series("v:sec")) * midpoint(result.series("i:LOAD"))
+        - transformer.leakage_resistance * midpoint(primary)**2 - core_conductance * midpoint(voltage)**2
+    ))
+    np.testing.assert_allclose(net_work, energy[1:] - energy[0], atol=1e-11, rtol=0)
+
+
+@pytest.mark.parametrize("method,order_ratio", [("trapezoidal", 4.0), ("backward_euler", 2.0)])
+def test_loaded_transformer_ac_error_converges_on_common_physical_grid(method, order_ratio) -> None:
+    example = runpy.run_path(str(Path(__file__).parents[1] / "examples/09_single_phase_transformer.py"))
+    errors = []
+    for step in [2e-4, 1e-4]:
+        case = example["define_case"]()
+        transformer, load = case.components[1:]
+        result = Simulator(Circuit.from_components(case.name, case.components), replace(case.config, time_step=step, method=method)).run()
+        stride = round(2e-4 / step)
+        time = result.series("time")[::stride]
+        window = time >= 0.02
+        time = time[window]
+        omega = 2 * math.pi * example["FREQUENCY"]
+        primary = example["SOURCE_RMS"] / complex(
+            transformer.leakage_resistance + transformer.turns_ratio**2 * load.resistance,
+            omega * transformer.leakage_inductance,
+        )
+        expected = {
+            "v:sec": math.sqrt(2) * (transformer.turns_ratio * load.resistance * primary * np.exp(1j * omega * time)).imag,
+            "i:T1:magnetizing": math.sqrt(2) * example["SOURCE_RMS"] / (omega * transformer.magnetizing_inductance) * (1 - np.cos(omega * time)),
+        }
+        errors.append([np.max(np.abs(result.series(column)[::stride][window] - reference)) for column, reference in expected.items()])
+    np.testing.assert_allclose(np.array(errors[0]) / errors[1], order_ratio, rtol=0.02)

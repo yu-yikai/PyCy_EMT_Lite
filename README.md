@@ -80,6 +80,11 @@ Edit the parameters and output flags at the top. The default 0.08–0.12 s windo
 compares current RMS and phase with `Z = R + j(ωL - 1/ωC)`; after changing the
 frequency or damping, choose complete steady-state cycles for that window.
 
+Examples 08, 09 and 12 also have quantitative summaries and physical regressions:
+Pi-line phasors/energy, loaded linear-transformer power including magnetizing DC,
+and PWM fundamental/step sensitivity. Voltage and current use separate figures
+in 08/09; PWM reports total RMS separately from its fundamental.
+
 ## Minimal Project Structure
 
 ```text

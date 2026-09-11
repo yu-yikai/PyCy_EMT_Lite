@@ -22,6 +22,16 @@ Transformer results should distinguish turns-ratio convention, leakage impedance
 
 For a single-phase Pi line, the topology is: sending terminal — series R-L — receiving terminal, with a shunt `C/2` from each terminal to ground. `resistance` is in ohms, `inductance` in henries, and `capacitance` is the total line-to-ground capacitance in farads. Zero inductance or capacitance reduces the corresponding part of the model.
 
+Example 08 compares RMS phasors over two complete cycles at 0.02–0.06 s:
+
+```text
+Yrecv = 1/Rload + jωC/2
+Vrecv = Vsend / (1 + (R + jωL)Yrecv)
+Iseries = Yrecv Vrecv
+```
+
+Tests cover both capacitor currents, KCL, storage/port-work balance over the entire startup, and errors on common physical times: halving the step reduces trapezoidal error by approximately four and backward-Euler error by two. The trapezoidal discrete energy check computes port work from the averages of endpoint voltages/currents. Stored energy is `L Iseries²/2 + C(Vsend²+Vrecv²)/4`. Example RMS and resistor power use the existing piecewise-linear metrics.
+
 ## Bergeron history
 
 The characteristic impedance `surge_impedance` and propagation delay `travel_time` define the teaching wave model. At each terminal, the current consists of the local voltage divided by characteristic impedance plus a history source. The history source uses the opposite terminal's delayed voltage and current. Integer-step lookup reads solved samples, with zero port history for negative times and explicit errors for missing history. Same-time events retain only the right-side terminal frame. `attenuation` is an educational propagation factor, not frequency-dependent line loss.
@@ -29,6 +39,17 @@ The characteristic impedance `surge_impedance` and propagation delay `travel_tim
 ## Single-phase transformer details
 
 `turns_ratio` is the primary-to-secondary voltage ratio `Vp/Vs`. The model includes primary-referred leakage impedance, an ideal ratio relation, and a parallel magnetizing branch. The sign of secondary voltage and current must be checked against the stated winding polarity. A three-phase transformer composes phase paths but does not automatically provide all vector groups or mutual-coupling effects.
+
+The turns ratio is the ideal winding ratio; loaded terminal voltage ratio also depends on leakage impedance. `i:T1:primary` excludes parallel magnetizing and core-loss currents. Total current supplied to the transformer in example 09 is `-i:V1`. For sinusoidal primary voltage and a resistive secondary load, RMS phasors satisfy:
+
+```text
+Ileak = Vpri / (Rleak + jωLleak + n²Rload)
+Vsec = n Rload Ileak
+Isecondary = -n Ileak
+Iinput = Ileak + Imag + Vpri/Rcore   # omit the last term when core loss is absent
+```
+
+With zero initial current and `sqrt(2) Vrms sin(ωt)` primary voltage, ideal magnetizing current is `im(t) = sqrt(2) Vrms (1-cos(ωt))/(ωLm)`. Its DC component does not decay and must be included in total input RMS. Example 09 compares loaded voltage/total current to analytical values over 0.02–0.06 s and checks input power minus load power and copper loss. Tests also cover optional core loss, full-startup energy balance and step convergence for both methods. These checks establish the linear model only, not saturation or hysteresis.
 
 ## Machine limits
 

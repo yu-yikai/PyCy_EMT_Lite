@@ -4,11 +4,14 @@
 """
 
 import math
+from pathlib import Path
+import runpy
 
 import numpy as np
 import pytest
 
 from pycy_emt_lite import Capacitor, Circuit, CurrentSource, Fault, FaultApplyEvent, Inductor, PiLine, Resistor, SimulationConfig, Simulator, VoltageSource
+from pycy_emt_lite.analysis import rms
 from pycy_emt_lite.components.lines import (
     BergeronLine,
     SegmentedLine,
@@ -301,3 +304,75 @@ def test_three_phase_bergeron_propagates_independent_matched_port_waves() -> Non
     for phase, voltage in zip("abc", [5.0, -2.0, 1.0]):
         assert result.series(f"v:recv:{phase}") == pytest.approx([0.0, 0.0, voltage, voltage, voltage])
         assert result.series(f"i:BL:receiving:{phase}") == pytest.approx([0.0, 0.0, -voltage / 10, -voltage / 10, -voltage / 10])
+
+
+def test_pi_line_ac_example_matches_phasors_and_conserves_energy() -> None:
+    example = runpy.run_path(str(Path(__file__).parents[1] / "examples/08_pi_line_transient.py"))
+    case = example["define_case"]()
+    line, load = case.components[1:]
+    result = Simulator(Circuit.from_components(case.name, case.components), case.config).run()
+    omega = 2 * math.pi * example["FREQUENCY"]
+    shunt = 1j * omega * line.capacitance / 2
+    receiving_admittance = 1 / load.resistance + shunt
+    receiving_voltage = example["SOURCE_RMS"] / (
+        1 + complex(line.resistance, omega * line.inductance) * receiving_admittance
+    )
+    expected = {
+        "v:load": receiving_voltage,
+        "i:LINE:series": receiving_admittance * receiving_voltage,
+        "i:LINE:send_cap": shunt * example["SOURCE_RMS"],
+        "i:LINE:recv_cap": shunt * receiving_voltage,
+    }
+    time = result.series("time")
+    window = time >= 0.02  # 固定物理窗口：启动后两个完整工频周期
+    rotating = np.exp(1j * omega * time[window])
+    for column, phasor in expected.items():
+        reference = math.sqrt(2) * (phasor * rotating).imag
+        np.testing.assert_allclose(result.series(column)[window], reference, atol=2e-4 * math.sqrt(2) * abs(phasor), rtol=0)
+        assert rms(result, column, start_time=0.02) == pytest.approx(abs(phasor), rel=1e-4)
+
+    sending = result.series("v:src")
+    receiving = result.series("v:load")
+    current = result.series("i:LINE:series")
+    input_current = -result.series("i:V1")  # 电源支路正方向流入电源
+    output_current = result.series("i:LOAD")
+    np.testing.assert_allclose(input_current, current + result.series("i:LINE:send_cap"), atol=1e-12)
+    np.testing.assert_allclose(current, output_current + result.series("i:LINE:recv_cap"), atol=1e-12)
+
+    def midpoint(values):
+        return (values[:-1] + values[1:]) / 2
+
+    # 梯形法的储能变化等于端口中点功减去电阻耗能，覆盖整个启动过程。
+    energy = 0.5 * line.inductance * current**2 + 0.25 * line.capacitance * (sending**2 + receiving**2)
+    net_work = np.cumsum(np.diff(time) * (
+        midpoint(sending) * midpoint(input_current) - midpoint(receiving) * midpoint(output_current)
+        - line.resistance * midpoint(current)**2
+    ))
+    np.testing.assert_allclose(net_work, energy[1:] - energy[0], atol=1e-11, rtol=0)
+
+
+@pytest.mark.parametrize("method,order_ratio", [("trapezoidal", 4.0), ("backward_euler", 2.0)])
+def test_pi_line_ac_error_converges_on_common_physical_grid(method, order_ratio) -> None:
+    errors = []
+    omega = 2 * math.pi * 50.0
+    source_rms, resistance, inductance, capacitance, load_resistance = 220.0, 2.0, 20e-3, 2e-6, 100.0
+    shunt = 1j * omega * capacitance / 2
+    receiving = source_rms / (1 + complex(resistance, omega * inductance) * (1 / load_resistance + shunt))
+    for step in [2e-4, 1e-4]:
+        circuit = Circuit.from_components("pi_ac_convergence", [
+            VoltageSource("V", "src", "0", lambda t: math.sqrt(2) * source_rms * math.sin(omega * t),
+                          derivative=lambda t: math.sqrt(2) * source_rms * omega * math.cos(omega * t)),
+            PiLine("LINE", "src", "load", resistance, inductance, capacitance),
+            Resistor("LOAD", "load", "0", load_resistance),
+        ])
+        result = Simulator(circuit, SimulationConfig(step, 0.06, method=method)).run()
+        stride = round(2e-4 / step)
+        times = result.series("time")[::stride]
+        window = times >= 0.02
+        rotating = np.exp(1j * omega * times[window])
+        expected = {"v:load": receiving, "i:LINE:series": (1 / load_resistance + shunt) * receiving}
+        errors.append([
+            np.max(np.abs(result.series(column)[::stride][window] - math.sqrt(2) * (phasor * rotating).imag))
+            for column, phasor in expected.items()
+        ])
+    np.testing.assert_allclose(np.array(errors[0]) / errors[1], order_ratio, rtol=0.02)
