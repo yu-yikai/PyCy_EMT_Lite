@@ -20,7 +20,7 @@ Start with a source, load, and one dynamic element. Add lines, transformers, con
 
 ## 5. Control-level cases
 
-Clearly label average-control and hand-written state updates. They are not automatically part of the `Circuit`/`Simulator` trapezoidal EMT path. Record the actual sampling interval and test saturation, power direction, and state limits.
+Example 11 calls PLL `step()` in an explicit sampled-control loop and labels its `SimulationResult` as `explicit_control`. This standalone control demonstration has no electrical-network solve or network/control coupling. Former integrated candidates 13–16 have been removed. Record actual sampling intervals and test relevant saturation and state limits.
 
 ## 6. Organization
 
@@ -37,4 +37,4 @@ Run examples from the repository root, use the public API, avoid hidden global s
 
 ## Validation checklist
 
-Check `t=0`, the first step, each event boundary, and the final short step if present. Compare resistive circuits with Ohm's law, dynamic circuits with analytical solutions, and passive circuits with KCL/KVL, residual, energy, or step-convergence checks.
+Check `t=0`, the first step, each event boundary and the configured stop, which must be a nonnegative integer number of base steps. Compare resistive circuits with Ohm's law, dynamic circuits with analytical solutions, and passive circuits with KCL/KVL, residual, energy, or step-convergence checks.

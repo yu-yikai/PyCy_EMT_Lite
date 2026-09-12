@@ -20,7 +20,7 @@ Three-phase sources, lines, and loads stamp one phase branch at a time using the
 
 ## Switching and extension rule
 
-Ideal switches use on/off conductance, while diode and IGBT approximations select an explicit state from the previous step or gate signal. A new component must document its physical equation, discrete equation, stamp entries, state-update order, code location, units, current direction, and at least one analytical or physical test. Do not call an average-control update a trapezoidal EMT stamp.
+Ideal switches select on/off conductance from a Boolean state or time function. A new component must document its physical equation, discrete equation, stamp entries, state-update order, code location, units, current direction, and at least one analytical or physical test. Do not call a discrete-control update a trapezoidal EMT stamp.
 
 ## Component reference
 
@@ -84,17 +84,17 @@ Stamp the Pi line's series branch and two terminal shunt capacitors, each with i
 
 Stamp leakage, ideal turns ratio, and magnetizing branch using stated primary/secondary polarity. Verify open-circuit ratio and loaded power direction. State which connection groups and mutual effects are unsupported.
 
-### Saturation and machines
+### Saturation
 
-Document the flux or magnetizing-current approximation and valid range. For `SynchronousMachine`, identify rotor-angle and speed states, initial values, and electrical torque/power sign. For `ParkSynchronousGenerator`, document dq0 scaling, angle convention, port mapping, and parameter use.
+Document the flux or magnetizing-current approximation and valid range.
 
-### Diode and IGBTSwitch
+### Synchronous machines
 
-The first implementation selects an explicit state from previous terminal voltage or gate signal. It must not be described as a same-step nonlinear semiconductor solve.
+The classical model in `machines/synchronous.py` uses three internal ideal voltage sources and stator R–L branches with the existing companion stamps. Electromagnetic power uses internal voltage times branch current, separately from terminal active power.
 
-### Average renewable models
+The fourth-order model in `machines/park_generator.py` uses `Vd=Ed'-Rs*Id+Xq'*Iq`, `Vq=Eq'-Rs*Iq-Xd'*Id`. Transforming to abc gives an angle-dependent coupled impedance: all three branch rows include cross-phase coefficients, instead of a single d-axis inductor. Stator currents are algebraic and may jump at events. Air-gap power is terminal power plus stator copper loss.
 
-PV, battery, DC-link, grid-following, grid-forming, VSG, and LVRT updates must state their sampling interval and energy/power conventions. They are not MNA stamps unless explicitly connected to the network solver.
+Both models advance mechanical states once with left-end feedback before a positive-interval stamp, then solve the current network. `update_state()` records network feedback and classical stator histories; event-right solves do not advance states again. Rotor angle, internal voltage, terminal voltage and current share one output time. See [machine equations and validation](advanced_line_transformer_models.en.md) for full equations, units, initialization and limits, without duplicating the control equations here.
 
 ## Review questions
 

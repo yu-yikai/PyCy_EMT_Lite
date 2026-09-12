@@ -26,7 +26,7 @@ uv sync
 ```bash
 uv run python examples/01_r_circuit.py
 uv run python examples/04_rlc_transient.py
-uv run python examples/16_vsc_hvdc_average.py
+uv run python examples/12_two_level_pwm_generator.py
 ```
 
 每个示例运行后会自动绘制并显示结果波形（无显示环境下自动跳过窗口显示，
@@ -39,7 +39,7 @@ uv run python examples/16_vsc_hvdc_average.py
 uv run pytest
 ```
 
-测试覆盖基础元件、三相系统、事件、线路、变压器、同步机、控制、新能源、
+测试覆盖基础元件、三相系统、事件、线路、变压器、同步机、控制、PWM、
 结果读写、求解器和可视化等全部核心功能。
 
 ## 5. 编写自己的算例

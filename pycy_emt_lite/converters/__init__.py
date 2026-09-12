@@ -1,6 +1,5 @@
-"""变流器和滤波器辅助模型。"""
+"""由基础 RLC 元件组成的滤波器。"""
 
-from pycy_emt_lite.converters.average import ModularMultilevelConverterAverage, ThreePhaseAverageInverter, VSCHVDCLinkAverage
 from pycy_emt_lite.converters.filters import LCFilter, LCLFilter, LFilter
 
-__all__ = ["LCLFilter", "LCFilter", "LFilter", "ModularMultilevelConverterAverage", "ThreePhaseAverageInverter", "VSCHVDCLinkAverage"]
+__all__ = ["LCLFilter", "LCFilter", "LFilter"]

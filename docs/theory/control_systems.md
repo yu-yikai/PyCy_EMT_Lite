@@ -61,6 +61,5 @@ PWM 辅助函数包括：
 ## 6. 与编译管线的说明
 
 本文第 1～5 节描述 PyCy_EMT_Lite 的对象式控制模块（`pycy_emt_lite.controls`）。
-控制模块在采样时刻由算例代码显式调用（例如 `examples/13_three_phase_grid_inverter_average.py`
-中的 dq 电流环、`examples/11_pll_dynamic_response.py` 中的 SRF-PLL），不直接写入 MNA 矩阵。
-新能源相关的跟网/构网控制器见 [renewable_grid_models.md](renewable_grid_models.md)。
+控制模块在采样时刻由算例代码显式调用，例如 `examples/11_pll_dynamic_response.py`
+中的 SRF-PLL；PWM 函数用于示例 12 的门极计算。它们不直接写入 MNA 矩阵。

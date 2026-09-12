@@ -18,9 +18,8 @@ from pycy_emt_lite import (
     Simulator,
     VoltageSource,
 )
-from pycy_emt_lite.components.power_electronics import Diode, IGBTSwitch
 from pycy_emt_lite.components.switching import Breaker, Fault
-from pycy_emt_lite.converters import LCLFilter, ThreePhaseAverageInverter
+from pycy_emt_lite.converters import LCLFilter
 
 
 @pytest.mark.parametrize(
@@ -69,40 +68,6 @@ def test_ideal_switch_conducts_when_closed() -> None:
     assert result.rows[-1]["state:S1"] == 1.0
 
 
-def test_diode_uses_previous_voltage_for_explicit_state() -> None:
-    diode = Diode("D1", "src", "out", previous_voltage=1.0, on_resistance=1.0)
-    components = [
-        VoltageSource("V1", "src", "0", 10.0),
-        diode,
-        IdealSwitch("Sload", "out", "0", closed=True, closed_resistance=9.0),
-    ]
-    circuit = Circuit.from_components("diode_explicit", components)
-
-    config = SimulationConfig(time_step=1e-4, stop_time=1e-4)
-    simulator = Simulator(circuit, config)
-    result = simulator.run()
-
-    assert result.rows[-1]["state:D1"] == 1.0
-    assert result.rows[-1]["i:D1"] > 0.0
-
-
-def test_igbt_gate_controls_conductance() -> None:
-    components = [
-        VoltageSource("V1", "src", "0", 5.0),
-        IGBTSwitch("Q1", "src", "out", gate=lambda time: time >= 1e-4, on_resistance=0.1),
-        IdealSwitch("Sload", "out", "0", closed=True, closed_resistance=4.9),
-    ]
-    circuit = Circuit.from_components("igbt_gate", components)
-
-    config = SimulationConfig(time_step=1e-4, stop_time=2e-4)
-    simulator = Simulator(circuit, config)
-    result = simulator.run()
-
-    assert result.rows[0]["state:Q1"] == 0.0
-    assert result.rows[-1]["state:Q1"] == 1.0
-    assert result.rows[-1]["i:Q1"] > 0.9
-
-
 def test_lcl_filter_creates_expected_component_list() -> None:
     lcl_filter = LCLFilter(
         "F1",
@@ -128,14 +93,6 @@ def test_lcl_filter_creates_expected_component_list() -> None:
         "F1:grid:R",
         "F1:grid:L",
     ]
-
-
-def test_three_phase_average_inverter_limits_modulation() -> None:
-    inverter = ThreePhaseAverageInverter(dc_voltage=800.0)
-
-    voltages = inverter.phase_voltages_from_modulation((1.2, 0.0, -1.2))
-
-    assert voltages == (400.0, 0.0, -400.0)
 
 
 def test_pwm_bridge_phasors_current_balance_and_step_sensitivity() -> None:

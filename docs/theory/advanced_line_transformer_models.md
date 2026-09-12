@@ -2,7 +2,7 @@
 
 [English](advanced_line_transformer_models.en.md)
 
-本文说明阶段 5 中新增的 π 型线路、Bergeron 线路教学版、单相变压器、三相变压器和同步机教学模型。当前实现定位为教学和算法验证版本，优先保证模型边界清楚、stamp 原理可读、结果可测试。
+本文说明 π 型线路、Bergeron 线路教学版、单相变压器、三相变压器和同步机教学模型。当前实现定位为教学和算法验证版本，优先保证模型边界清楚、stamp 原理可读、结果可测试。
 
 ## 1. π 型线路
 
@@ -134,36 +134,118 @@ c 绕组：bus:c -> bus:a
 
 `turns_ratio` 表示一次每相绕组电压与二次每相绕组电压之比。含 Δ 接法时，纯理想变压器会形成理想电压约束环；因此教学模型要求设置非零 `leakage_resistance` 或 `leakage_inductance`，以避免 MNA 矩阵奇异。
 
-## 6. 同步机经典二阶教学模型
+## 6. 同步机：保留两种有明确边界的模型
 
-`SynchronousMachine` 使用经典电力系统暂态稳定模型中常见的“内电势后接定子阻抗”结构：
+两种模型均从 `pycy_emt_lite.machines` 导入，接入现有 `Circuit/Simulator`；示例
+[10](../../examples/10_park_generator_avr_governor.py) 使用 `CaseDefinition`。
 
-```text
-三相内电势 Eabc -- 定子 R-L -- 机端母线
-```
+| 模型 | 保留的方程 | 适用范围 |
+|---|---|---|
+| `SynchronousMachine` | 固定幅值三相内电势、每相定子 R–L、转子角与转速 | 电路暂态和机电功率教学；不包含励磁、调速器或完整磁链电机 |
+| `ParkSynchronousGenerator` | 四阶暂态电势模型，加一阶 AVR 和一阶调速器，共六个状态 | 平衡、近工频的负荷与调节响应；定子快速暂态用代数端口近似 |
 
-参数说明：
+Park 模型不用于短路直流偏置、次暂态、不平衡故障、饱和或磁滞分析。
+其零序端口只剩定子电阻，不能解释为完整 dq0 模型。恢复模型并不意味着这些效应已经实现。
 
-- `internal_phase_rms`：三相内电势相电压 RMS，单位 V；若算例采用标幺制，可直接填入相电压标幺值。
-- `stator_resistance`：定子等效电阻，单位 Ω 或对应标幺值。
-- `stator_inductance`：定子等效电感，单位 H 或对应标幺值。
-- `base_power`：摆动方程的三相基准容量，单位 VA。
-- `inertia_constant`：惯性常数 H，单位 s。
-- `mechanical_power`：机械输入功率，单位 W，可为常数或时间函数。
-- `damping`：阻尼系数，使用标幺功率/标幺转速偏差。
+### 单位、方向和端口
 
-转子动态采用二阶摆动方程：
+电流从内部电势流向机端为正，端口功率 `p` 为向外部网络送出的三相总有功（W）。
+`base_power` 是三相总容量（VA），`base_phase_rms` 是相电压有效值（V）：
 
 ```text
-dω_pu/dt = (P_m - P_e - D(ω_pu - 1)) / (2H)
-dδ/dt = ω_sync (ω_pu - 1)
+Zbase = 3 Vbase_rms² / Sbase
+Vbase_peak = sqrt(2) Vbase_rms
+Ibase_peak = sqrt(2) Sbase / (3 Vbase_rms)
+theta = 2 pi frequency t + rotor_angle
 ```
 
-当前模型用于教学、负荷流初始化复现和系统级暂态趋势验证。它不包含励磁绕组、阻尼绕组、磁饱和、AVR、PSS、调速器和轴系多质量模型；这些高保真结构应在后续非线性迭代和控制器接口更完善后再扩展。
+经典模型的 `stator_resistance/stator_inductance` 分别用 Ω/H，不能直接传入标幺电抗。
+`inertia_constant` 用 s，`frequency` 用 Hz，`rotor_angle` 用电角度 rad，`speed_pu` 为转速标幺值。
+`damping` 表示相对同步转速偏差对应的标幺阻尼功率系数。经典模型的 `mechanical_power` 用 W，
+可以为常数或时间函数；Park 的 `mechanical_power_*_pu` 用三相容量基准。
 
-本项目提供 `examples/reproductions/reproduce_loadflow_sm_initialization.py`，用于对比 Simscape Electrical R2026a `LoadflowSMInitializationExample` 中同步机 swing bus 的初始负荷流目标。该对比重点验证机端电压标幺值和相角，而不是完整复刻 Simscape 的励磁/机械暂态细节。
+Park 定义 d 轴为 `-cos(theta)`、q 轴为 `sin(theta)`：调用通用 `abc_to_dq` 后，
+两个分量均取负再除以峰值基准；反变换为 `dq_to_abc(-ed, -eq, theta)`。
+因此不能直接沿用旧实现只翻转 q 轴的电流符号。
+各相角为 `theta`、`theta-2pi/3`、`theta+2pi/3`。标幺端口方程为：
 
-若需要观察励磁和调速动态，可使用 `ParkSynchronousGenerator`。该模型使用 Park dq0 暂态电势方程、一阶 AVR、一阶调速器和摆动方程，验证算例位于 `examples/park_generator_avr_governor.py`。它仍是教学模型，不包含阻尼绕组、磁饱和、PSS 和多质量轴系。
+```text
+Vd = Ed' - Rs Id + Xq' Iq
+Vq = Eq' - Rs Iq - Xd' Id
+```
+
+两轴暂态电抗分别进入端口。令矩阵 M 的各行为 `[-cos(theta_phase), sin(theta_phase)]`，
+则实际值 abc 支路满足 `Eabc - Vabc = Zabc Iabc`，其中：
+
+```text
+Zabc = Rs_ohm I3 + Zbase M [[0, -Xq'], [Xd', 0]] (2/3 M^T)
+```
+
+该线性、随转角变化的耦合 stamp 沿用现有求解器。Park 定子电流为代数量；
+旧 `stator_inductance` 推导属性和电感历史项已取消，不再把 `X'd` 当成三相独立动态电感。
+
+### 功率、状态和初值
+
+经典模型使用 `P_em = sum(e_phase*i_phase)`；它与端口功率之差包含铜损及定子 R–L 储能交换。
+Park 忽略定子快速储能，使用 `P_em = P_terminal + P_copper`。平衡条件下：
+
+```text
+P_terminal / Sbase = Vd Id + Vq Iq
+P_copper / Sbase = Rs (Id² + Iq²)
+P_em / Sbase = Ed' Id + Eq' Iq + (Xq' - Xd') Id Iq
+```
+
+最后一项为凸极磁阻项；两轴暂态电抗不同时，不能只把暂态内电势与电流的乘积当作气隙功率。
+两种模型输出 `p`（端口）、`p_copper`（铜损）和 `p_em`（电磁/气隙功率），单位均为 W。
+机械状态使用功率形式的摆动方程，保留速度分母：
+
+```text
+dspeed_pu/dt = (Pm/Sbase - P_em/Sbase - D(speed_pu-1)) / (2 H speed_pu)
+drotor_angle/dt = 2 pi frequency (speed_pu-1)
+```
+
+Park 的其余状态方程为：
+
+```text
+dEq'/dt = (Efd - Eq' - (Xd-Xd') Id) / Tdo'
+dEd'/dt = (-Ed' + (Xq-Xq') Iq) / Tqo'
+dEfd/dt = (Efd_initial + Kavr (Vref-Vt) - Efd) / Tavr
+dPm_pu/dt = (Pm_reference - (speed_pu-1)/droop - Pm_pu) / Tgov
+```
+
+`Vt=hypot(Vd,Vq)`；励磁以 `initial_efd_pu` 为偏置，因此 `avr_gain=0` 时保持给定励磁。
+所有时间常数以 s 表示，电压、电抗、控制限幅及参考采用对应标幺量。
+励磁和机械功率更新后分别限制在 `efd_min/max_pu`、`mechanical_power_min/max_pu` 内。
+
+`t=0` 保持声明的动态状态后解网络。经典模型定子电流初值为零；Park 电流由上述端口方程求得，
+一般不为零。机电和控制状态始终用同一左端反馈显式欧拉推进一次，然后求当前网络并记录；
+同一结果行的转角、暂态电势和 abc 输出属于同一时刻。正时间区间上的机电耦合是一阶精度，
+`SimulationConfig.method` 只决定经典模型定子 R–L 及外部储能元件的积分方法。
+显式事件固定动态状态求右侧网络；Park 电流允许代数跳变，经典模型电感电流连续。
+
+本模型不自动做潮流初始化。示例 10 用平衡电阻负荷的解析关系生成初值：
+`I=1/Rload_pu`、`A=Rload_pu+Rs`、`Iq=I A/hypot(A,Xq)`、`Id=I Xq/hypot(A,Xq)`，
+再由端口及状态方程求 `Ed'/Eq'/Efd/Pm`。初始端口为 100 V RMS、1000 W，铜损 13.333333 W，
+机械输入为 1013.333333 W。0.2 s 时每相并入 18 Ω（加断路器 1 mΩ），默认计算到 0.6 s；
+这个终点用于观察暂态，不声称已经达到新的稳态。
+
+运行 `uv run python examples/10_park_generator_avr_governor.py`。修改顶部容量、电压、阻抗、
+负荷、时间和保存开关即可；`define_case()` 中保留励磁、调速器和惯性参数。
+默认分别显示电压/励磁、转速、功率三张图，不保存文件；启用保存后每张图有固定文件名。
+任意非有限数、负阻抗、非正时间常数/惯性、倒置限幅或越界初值会报出参数及修复方法。
+应减小步长并做收敛检查；Park 内部理想电势节点若被额外理想约束要求求导，明确报不支持，
+应解除内部约束并从带有限阻抗的机端连接外部电路。
+
+### 现有验证与限制
+
+- 经典模型：纯电阻分压、铜损造成的解析减速；独立积分转子和三相 R–L 电流、离散储能平衡、转角一阶收敛。
+- Park 模型：非相等 d/q 暂态电抗的解析端口电流、abc/dq 方向、气隙功率含磁阻项、同刻状态与内电势一致。
+- 示例 10：阶跃前平衡点保持、阶跃后 KCL/端口方程、独立分段连续 ODE 对照；200/100/50 μs 在共同时间点呈一阶收敛；t=0、非对齐和终点事件不重复推进状态。
+- 数值/参数检查是本项目近似方程的验证，不等于与厂商完整电机模型或实验数据对标。复杂故障与控制器工程定值不在上述证据范围内。
+
+建模层级和显式推进顺序可参见 [PowerWorld 的暂态稳定建模说明](https://www.powerworld.com/files/T01ModelRelationships.pdf)；
+完整电机 dq 变换和绕组结构参见 [PSCAD Basic Machine Theory](https://www.pscad.com/webhelp/EMTDC/Rotating_Machines/basic_machine_theory.htm)。
+本节明确给出本项目实际采用的近似和符号约定，不把这些参考软件的功能视为项目已实现的功能。
 
 ## 7. 使用示例
 
@@ -206,31 +288,6 @@ components = [
 
 circuit = Circuit.from_components("transformer_demo", components)
 config = SimulationConfig(time_step=1e-4, stop_time=0.1)
-simulator = Simulator(circuit, config)
-result = simulator.run()
-```
-
-同步机示例：
-
-```python
-from pycy_emt_lite import Circuit, SimulationConfig, Simulator, SynchronousMachine
-
-components = [
-    SynchronousMachine(
-        "SM",
-        "bus",
-        internal_phase_rms=1.02,
-        stator_resistance=1e-3,
-        stator_inductance=0.0,
-        base_power=30e6,
-        inertia_constant=3.5,
-        mechanical_power=0.0,
-        frequency=60.0,
-    )
-]
-
-circuit = Circuit.from_components("sm_swing_bus_demo", components)
-config = SimulationConfig(time_step=1e-4, stop_time=0.2)
 simulator = Simulator(circuit, config)
 result = simulator.run()
 ```

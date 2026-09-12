@@ -20,7 +20,9 @@ No integration occurs at `t=0`; `stop_time=0` still solves and records one consi
 
 `VoltageSource(..., derivative=...)` and `CurrentSource(..., derivative=...)` accept constants or time functions for analytical dv/dt (V/s) and di/dt (A/s). They are evaluated and checked for finite values only when the consistency solve needs source derivatives. Constant sources default to zero derivative; `ThreePhaseSource` uses its analytical sinusoidal derivative. Ordinary full-rank RC/RL callable sources need no derivative. For example, `VoltageSource("V", "n", "0", lambda t: 1 + 3*t, derivative=3.0)` parallel to `Capacitor("C", "n", "0", 2.0, initial_voltage=1.0)` gives 6 A initially. A callable value alone cannot guarantee an exact derivative; no finite-difference fallback is used. Example 08 demonstrates a sinusoidal source constrained by a parallel capacitor. [Example 17](../examples/17_single_phase_ac_rlc.py) connects a sinusoidal source to series RLC without a `derivative` callback, reports steady amplitude/phase, and separates voltage/current figures.
 
-Pi/segmented lines, three-phase RLC and linear transformer storage branches follow the same convention; composite initial values use existing state fields. Machines support direct consistency solves with mechanical/control states held; constrained internal sources needing derivatives are rejected. Transformer initialization does not advance flux. These initialization checks do not establish physical validity of saturation, machines or average control models.
+Pi/segmented lines, three-phase RLC and linear transformer storage branches follow the same convention; composite initial values use existing state fields. Transformer initialization does not advance flux. These initialization checks do not establish physical validity of saturation models.
+
+The classical machine holds initial rotor states and solves voltages consistent with zero stator current. The fourth-order Park model solves stator currents algebraically; mechanical/control states do not advance at t=0. These states use left-end forward Euler before the current network solve, independently of `SimulationConfig.method`. See the [machine conventions](theory/advanced_line_transformer_models.en.md).
 
 At explicit events, first integrate the old network to the left limit, then apply same-time events in declaration order and solve one right limit. Keep capacitor voltage and inductor current continuous; use right-side algebraic values as the next trapezoidal histories. Record one right-side row and keep every event log entry. Do not reinitialize ordinary steps. Callable source jumps and PWM edges still use the actual sampled grid, without automatic left/right handling. Bergeron requires propagation delay to be a positive integer multiple of the base step and actual events to align with the fixed grid; unsupported configurations fail before the first solve. `quantize_up` can postpone an off-grid scheduled event to a grid point. History uses integer-step lookup, zero prehistory and one right-side frame per event time. Tests cover no pre-response, matched-load arrival, open/short reflection and floating-point boundaries.
 
@@ -42,7 +44,7 @@ Each result row contains `time`, node voltages such as `v:out`, and component cu
 
 ## 7. Learning order
 
-Run examples 01–04 first, then the three-phase and fault cases 05–07, line/transformer cases 08–10, and finally PLL, PWM, average inverter, PV, storage, and HVDC candidates 11–16. The latter candidates require stronger physical validation than the core path.
+Run examples 01–04 and AC RLC example 17 first, then three-phase/fault cases 05–07, line/transformer cases 08–09, generator case 10 and PLL/PWM cases 11–12. Former integrated candidates 13–16 have been removed; retained filenames keep their original numbers.
 
 Related theory: [mna.en.md](theory/mna.en.md), [basic_components.en.md](theory/basic_components.en.md), [three_phase_systems.en.md](theory/three_phase_systems.en.md), and [stamp_principles.en.md](theory/stamp_principles.en.md).
 
@@ -62,7 +64,7 @@ A singular system can result from an isolated node, conflicting ideal voltage so
 
 ### Learning path and evidence
 
-Examples 01–04 establish R, RC, RL, and RLC behavior. Examples 05–07 cover balanced three-phase operation and faults. Examples 08–10 cover lines, transformers, and machine candidates. Examples 11–16 cover PLL, PWM, average inverter, PV, storage, and HVDC candidates and require stronger physical checks before being treated as trusted course material.
+Examples 01–04 and 17 establish resistive, transient and AC RLC behavior. Examples 05–07 cover balanced three-phase operation and faults. Examples 08–09 cover lines and transformers. Example 10 covers a balanced synchronous-generator load step, with algebraic dq ports and mechanical/control states. Examples 11–12 cover standalone PLL control and PWM switching.
 
 ## Component lifecycle
 

@@ -142,8 +142,10 @@ result = simulator.run()
 [示例 17](../examples/17_single_phase_ac_rlc.py) 为单相正弦源串联 RLC，无需 `derivative`，含稳态幅相摘要及电压/电流分图。
 
 π/分段线路、三相 RLC 和线性变压器的内部储能支路使用同一约定；组合件初值沿用现有 state 字段。
-电机只覆盖固定机电/控制状态的直接一致求解，若受约束内部源还需要导数则拒绝。
-变压器初始化不推进磁链；这些初值检查不代表饱和、电机或平均控制模型已经完成物理验证。
+变压器初始化不推进磁链；这些初值检查不代表饱和模型已经完成物理验证。
+经典同步机保持转子初值并求零定子电流的一致电压；四阶 Park 模型的定子电流由代数端口求得，
+机电/控制状态不在 t=0 推进。机电状态采用左端显式欧拉，随后求本时刻网络，
+不随 `SimulationConfig.method` 改为梯形；完整约定见[同步机说明](theory/advanced_line_transformer_models.md)。
 
 显式事件行使用右侧电压/电流，电容电压和电感电流保持左侧值，右侧代数量成为下一段梯形历史。
 正常连续步不重新初始化。callable 源跳变与 PWM 边沿仍按实际网格采样，没有自动左右极限处理。
@@ -282,24 +284,21 @@ plot_three_phase(result, ("v:load:a", "v:load:b", "v:load:c"))
 
 ## 9. 推荐学习顺序
 
-建议按以下顺序阅读和运行（示例编号即学习路径顺序）：
+建议按以下顺序阅读和运行；保留原脚本编号，17 归入基础 RLC 单元：
 
 1. `examples/01_r_circuit.py`
 2. `examples/02_rc_transient.py`
 3. `examples/03_rl_transient.py`
 4. `examples/04_rlc_transient.py`
-5. `examples/05_three_phase_steady_state.py`
-6. `examples/06_three_phase_short_circuit.py`
-7. `examples/07_single_phase_ground_fault.py`
-8. `examples/08_pi_line_transient.py`
-9. `examples/09_single_phase_transformer.py`
-10. `examples/10_park_generator_avr_governor.py`
-11. `examples/11_pll_dynamic_response.py`
-12. `examples/12_two_level_pwm_generator.py`
-13. `examples/13_three_phase_grid_inverter_average.py`
-14. `examples/14_pv_grid_following.py`
-15. `examples/15_storage_grid_forming.py`
-16. `examples/16_vsc_hvdc_average.py`
+5. `examples/17_single_phase_ac_rlc.py`
+6. `examples/05_three_phase_steady_state.py`
+7. `examples/06_three_phase_short_circuit.py`
+8. `examples/07_single_phase_ground_fault.py`
+9. `examples/08_pi_line_transient.py`
+10. `examples/09_single_phase_transformer.py`
+11. `examples/10_park_generator_avr_governor.py`
+12. `examples/11_pll_dynamic_response.py`
+13. `examples/12_two_level_pwm_generator.py`
 
 配套理论文档：
 
@@ -308,7 +307,6 @@ plot_three_phase(result, ("v:load:a", "v:load:b", "v:load:c"))
 - `docs/theory/three_phase_systems.md`
 - `docs/theory/control_systems.md`
 - `docs/theory/power_electronics.md`
-- `docs/theory/renewable_grid_models.md`
 - `docs/theory/advanced_line_transformer_models.md`
 - `docs/theory/stamp_principles.md`
 

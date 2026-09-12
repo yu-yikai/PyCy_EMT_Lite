@@ -45,19 +45,23 @@ for fault results instead of interpolating across events.
 
 ## Model Levels
 
-The repository currently contains three different levels. They are not
-interchangeable:
+The retained models use the following levels and approximations:
 
 | Level | Meaning | Current use |
 |---|---|---|
 | Network EMT | MNA network solved at every time step | RLC, three-phase circuits, faults, pi line, transformer |
 | Switching EMT | Ideal switches driven on the discrete time grid | Two-level PWM teaching example |
-| Average control | Hand-written control/state updates without switching waveforms | Inverter, PV/storage, and HVDC candidates |
+| Electromechanical approximation | Algebraic dq stator ports with explicit mechanical/control dynamics | Fourth-order synchronous-generator example 10 |
+| Discrete control | Hand-written control/state updates without an electrical network solve | Standalone PLL example 11 |
 
-Examples 11 and 13–16 use the result label `explicit_control` for their hand-written
-state updates. This is descriptive metadata, not a `SimulationConfig.method` option.
-Examples 06–16 remain runnable, but several still need stronger physical
-checks, consolidation, or removal before they enter the default learning path.
+Example 11 uses the result label `explicit_control` for its hand-written state
+updates. This is descriptive metadata, not a `SimulationConfig.method` option.
+Examples 13–16 and their average inverter, PV/storage and HVDC/MMC models have been
+removed under the scope-reduction plan, along with the Diode/IGBT approximations.
+This version has no integrated GFL/GFM example. Both synchronous-machine models
+and example 10 are retained and improved: corrected power accounting, consistent
+state timing and separate d/q transient reactances in the Park terminal equations.
+The 13 remaining scripts retain their original numbers: 01–12 and 17.
 This README is a concise entrypoint. The [English improvement plan](docs/project_improvement_plan.en.md)
 describes model scope and documentation consolidation; the [Chinese README](README.zh-CN.md)
 also includes a per-example decision table.
@@ -71,7 +75,7 @@ also includes a per-example decision table.
 | `03_rl_transient.py` | Inductor branch-current variable | Initial state/voltage, first interval and analytical step-halving tests |
 | `04_rlc_transient.py` | Coupled second-order transient | Damped whole-curve/KCL/convergence tests and lossless LC energy test |
 | `17_single_phase_ac_rlc.py` | Single-phase AC source and series RLC | Zero initial states, steady phasor/RMS and KCL/KVL checks |
-| `05_three_phase_steady_state.py` | Balanced three-phase RMS | Balanced-RMS unit test; planned merge with the fault lesson |
+| `05_three_phase_steady_state.py` | Balanced three-phase RL load | Zero-current startup, phase sequence, phasor/RMS and P/Q checks |
 
 Run the additional AC example with `uv run python examples/17_single_phase_ac_rlc.py`.
 It connects a 220 V RMS, 50 Hz source to 20 Ω, 50 mH and 100 μF in series.
@@ -92,6 +96,12 @@ continuous line currents separately from fault currents and bus voltages. The
 ideal circuit produces a brief clearing overvoltage as line current transfers
 to the resistive load; it contains no surge arrester or parasitic capacitance.
 
+Run `uv run python examples/10_park_generator_avr_governor.py` for a synchronous
+generator load step with AVR/governor. It starts from a balanced operating point
+and uses a fourth-order dq machine with algebraic stator ports and explicit Euler
+mechanical/control updates. See the [machine equations and usage](docs/theory/advanced_line_transformer_models.en.md)
+for units, initialization, power balance and the limits of this near-fundamental approximation.
+
 ## Minimal Project Structure
 
 ```text
@@ -101,8 +111,10 @@ tests/           # numerical and physical regression checks
 docs/            # documentation being consolidated
 ```
 
-Import the core teaching API from `pycy_emt_lite`. Advanced candidates are
-available only from their explicit subpackages while their scope is reviewed.
+Import the core teaching API from `pycy_emt_lite`. Optional line/transformer
+candidates remain in explicit subpackages while their scope is reviewed.
+The machine classes remain in `pycy_emt_lite.machines`. The former renewable and converter-average classes are no longer available;
+`pycy_emt_lite.converters` retains only the existing L/LC/LCL filter assemblies.
 
 ## Documentation
 

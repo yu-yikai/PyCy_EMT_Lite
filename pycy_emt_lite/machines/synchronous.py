@@ -13,11 +13,11 @@ from __future__ import annotations
 import math
 from collections.abc import Callable, Iterable
 from dataclasses import dataclass, field
+from numbers import Real
 
 import numpy as np
 
 from pycy_emt_lite.components.base import Component
-from pycy_emt_lite.components.basic import _derivative_at
 from pycy_emt_lite.components.three_phase import PHASES, PhaseName, _phase_angle, phase_node
 from pycy_emt_lite.core.context import StampContext
 from pycy_emt_lite.core.nodes import NodeManager
@@ -38,14 +38,15 @@ class _MachineState:
     last_terminal_voltage: dict[PhaseName, float] = field(default_factory=lambda: {phase: 0.0 for phase in PHASES})
     last_internal_voltage: dict[PhaseName, float] = field(default_factory=lambda: {phase: 0.0 for phase in PHASES})
     electrical_power: float = 0.0
+    electromagnetic_power: float = 0.0
+    copper_loss: float = 0.0
     mechanical_power: float = 0.0
+    time: float = 0.0
 
-def _value_at(value: PowerInput, time: float) -> float:
-    """返回常数或时间函数在当前时刻的值。"""
-
-    if callable(value):
-        return float(value(time))
-    return float(value)
+def _finite_parameter(name: str, parameter: str, value: float) -> None:
+    """两种电机共用的实数输入检查；保留参数名和修复提示。"""
+    if isinstance(value, bool) or not isinstance(value, Real) or not math.isfinite(value):
+        raise ValueError(f"同步机 {name} 的 {parameter}={value!r} 必须为有限实数；请改用数值，不使用布尔值、NaN 或 Inf。")
 
 def _inductor_companion(
     method: str,
@@ -78,9 +79,11 @@ class SynchronousMachine(Component):
 
     转子机电动态采用经典摆动方程：
 
-    `dω_pu/dt = (P_m - P_e - D(ω_pu - 1)) / (2H)`
+    `dω_pu/dt = (P_m/Sbase - P_em/Sbase - D(ω_pu - 1)) / (2H ω_pu)`
 
-    该模型适合教学、负荷流初始化趋势复现和系统级暂态入门算例。它不包含励磁
+    P_em=Σe_phase*i_phase；包含定子铜损和 R-L 支路储能交换。机电状态使用
+    左端功率显式欧拉推进，再解本时刻网络；R-L 支路使用 SimulationConfig.method。
+    该模型适合对称内电势后的 R-L 电路与机电响应教学。它不包含励磁
     绕组、阻尼绕组、磁饱和、AVR、PSS 和调速器等高保真结构。
     """
 
@@ -103,22 +106,29 @@ class SynchronousMachine(Component):
     state: _MachineState = field(init=False)
 
     def __post_init__(self) -> None:
+        for parameter in ("internal_phase_rms", "stator_resistance", "stator_inductance", "base_power",
+                          "inertia_constant", "damping", "frequency", "initial_rotor_angle", "initial_speed_pu"):
+            _finite_parameter(self.name, parameter, getattr(self, parameter))
+        if not callable(self.mechanical_power):
+            _finite_parameter(self.name, "mechanical_power", self.mechanical_power)
+        if self.damping < 0:
+            raise ValueError(f"同步机 {self.name} 的 damping 不能为负；请设置非负阻尼。")
         if self.internal_phase_rms <= 0:
-            raise ValueError(f"同步机 {self.name} 的内电势相电压 RMS 必须大于 0。")
+            raise ValueError(f"同步机 {self.name} 的 internal_phase_rms 非法；请设置大于 0 的内电势相电压 RMS（V）。")
         if self.stator_resistance < 0:
-            raise ValueError(f"同步机 {self.name} 的定子电阻不能小于 0。")
+            raise ValueError(f"同步机 {self.name} 的 stator_resistance 非法；请设置非负定子电阻（Ω）。")
         if self.stator_inductance < 0:
-            raise ValueError(f"同步机 {self.name} 的定子电感不能小于 0。")
+            raise ValueError(f"同步机 {self.name} 的 stator_inductance 非法；请设置非负定子电感（H）。")
         if self.stator_resistance == 0 and self.stator_inductance == 0:
-            raise ValueError(f"同步机 {self.name} 的定子电阻和定子电感不能同时为 0。")
+            raise ValueError(f"同步机 {self.name} 的定子阻抗为零；请将 stator_resistance 或 stator_inductance 设为正数。")
         if self.base_power <= 0:
-            raise ValueError(f"同步机 {self.name} 的基准容量必须大于 0。")
+            raise ValueError(f"同步机 {self.name} 的 base_power 非法；请设置大于 0 的三相基准容量（VA）。")
         if self.inertia_constant <= 0:
-            raise ValueError(f"同步机 {self.name} 的惯性常数必须大于 0。")
+            raise ValueError(f"同步机 {self.name} 的 inertia_constant 非法；请设置大于 0 的惯性常数（s）。")
         if self.frequency <= 0:
-            raise ValueError(f"同步机 {self.name} 的频率必须大于 0。")
+            raise ValueError(f"同步机 {self.name} 的 frequency 非法；请设置大于 0 的频率（Hz）。")
         if self.initial_speed_pu <= 0:
-            raise ValueError(f"同步机 {self.name} 的初始转速标幺值必须大于 0。")
+            raise ValueError(f"同步机 {self.name} 的 initial_speed_pu 非法；请设置大于 0 的转速标幺值。")
         self.state = _MachineState(self.initial_rotor_angle, self.initial_speed_pu)
 
     @property
@@ -148,6 +158,14 @@ class SynchronousMachine(Component):
     def stamp(self, context: StampContext, matrix: np.ndarray, rhs: np.ndarray) -> None:
         """写入同步机内电势源和定子阻抗 stamp。"""
 
+        if context.time_step > 0 and context.time > self.state.time:
+            speed = self.state.speed_pu
+            power = (self.state.mechanical_power - self.state.electromagnetic_power) / self.base_power
+            self.state.rotor_angle += 2 * math.pi * self.frequency * (speed - 1) * context.time_step
+            self.state.speed_pu += (power - self.damping * (speed - 1)) / (2 * self.inertia_constant * speed) * context.time_step
+            if not math.isfinite(self.state.rotor_angle) or not math.isfinite(self.state.speed_pu) or self.state.speed_pu <= 0:
+                raise ValueError(f"同步机 {self.name} 在 time={context.time:g} 的机电状态失效；请减小 time_step 并检查机械功率、惯性和初值。")
+            self.state.time = context.time
         neutral = context.node_index(self.neutral)
         amplitude = math.sqrt(2.0) * self.internal_phase_rms
         omega_sync = 2.0 * math.pi * self.frequency
@@ -168,10 +186,9 @@ class SynchronousMachine(Component):
                 matrix[source_branch, neutral] -= 1.0
             rhs[source_branch] += internal_voltage
             if context._initial is not None:
-                # 仅覆盖固定机电状态的直接一致求解；不猜测耦合源导数。
-                context._initial.source_derivatives.append(({source_branch: 1.0}, lambda:
-                    _derivative_at(None, None, context.time, self.name)
-                ))
+                derivative = amplitude * omega_sync * self.state.speed_pu * math.cos(
+                    omega_sync * context.time + self.state.rotor_angle + _phase_angle(phase, 0.0))
+                context._initial.source_derivatives.append(({source_branch: 1.0}, lambda value=derivative: value))
 
             if self.stator_inductance == 0:
                 add_conductance(matrix, internal, terminal, 1.0 / self.stator_resistance)
@@ -197,9 +214,11 @@ class SynchronousMachine(Component):
             rhs[stator_branch] += history_voltage
 
     def update_state(self, context: StampContext, solution: np.ndarray) -> None:
-        """更新定子支路历史项和转子摆动方程状态。"""
+        """记录同一时刻的定子历史和功率，供下一正时间区间使用。"""
 
         electrical_power = 0.0
+        electromagnetic_power = 0.0
+        copper_loss = 0.0
         for phase in PHASES:
             internal = context.node_index(phase_node(self.internal_bus_name, phase))
             terminal = context.node_index(phase_node(self.terminal_bus, phase))
@@ -214,16 +233,15 @@ class SynchronousMachine(Component):
             self.state.last_current[phase] = current
             self.state.last_terminal_voltage[phase] = terminal_voltage
             electrical_power += terminal_voltage * current
+            electromagnetic_power += self.state.last_internal_voltage[phase] * current
+            copper_loss += self.stator_resistance * current**2
 
         self.state.electrical_power = electrical_power
-        self.state.mechanical_power = _value_at(self.mechanical_power, context.time)
-        mechanical_pu = self.state.mechanical_power / self.base_power
-        electrical_pu = electrical_power / self.base_power
-        acceleration = (mechanical_pu - electrical_pu - self.damping * (self.state.speed_pu - 1.0)) / (
-            2.0 * self.inertia_constant
-        )
-        self.state.speed_pu += acceleration * context.time_step
-        self.state.rotor_angle += 2.0 * math.pi * self.frequency * (self.state.speed_pu - 1.0) * context.time_step
+        self.state.electromagnetic_power = electromagnetic_power
+        self.state.copper_loss = copper_loss
+        power = self.mechanical_power(context.time) if callable(self.mechanical_power) else self.mechanical_power
+        _finite_parameter(self.name, f"mechanical_power(time={context.time:g})", power)
+        self.state.mechanical_power = float(power)
 
     def outputs(self, context: StampContext, solution: np.ndarray) -> dict[str, float]:
         """记录同步机电气量和机械状态。"""
@@ -235,6 +253,8 @@ class SynchronousMachine(Component):
             outputs[f"e:{self.name}:{phase}"] = self.state.last_internal_voltage[phase]
         outputs[f"p:{self.name}"] = self.state.electrical_power
         outputs[f"p_pu:{self.name}"] = self.state.electrical_power / self.base_power
+        outputs[f"p_em:{self.name}"] = self.state.electromagnetic_power
+        outputs[f"p_copper:{self.name}"] = self.state.copper_loss
         outputs[f"pm:{self.name}"] = self.state.mechanical_power
         outputs[f"rotor_angle:{self.name}"] = self.state.rotor_angle
         outputs[f"speed_pu:{self.name}"] = self.state.speed_pu

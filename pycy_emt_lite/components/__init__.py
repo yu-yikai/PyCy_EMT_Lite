@@ -3,7 +3,7 @@
 from pycy_emt_lite.components.base import Component
 from pycy_emt_lite.components.basic import Capacitor, CurrentSource, Inductor, Resistor, VoltageSource
 from pycy_emt_lite.components.lines import BergeronLine, PiLine, SegmentedLine, ThreePhaseBergeronLine, ThreePhasePiLine
-from pycy_emt_lite.components.power_electronics import Diode, IdealSwitch, IGBTSwitch
+from pycy_emt_lite.components.power_electronics import IdealSwitch
 from pycy_emt_lite.components.switching import Breaker, Fault
 from pycy_emt_lite.components.three_phase import (
     ThreePhaseLine,
@@ -20,9 +20,7 @@ __all__ = [
     "Capacitor",
     "Component",
     "CurrentSource",
-    "Diode",
     "Fault",
-    "IGBTSwitch",
     "IdealSwitch",
     "Inductor",
     "PiLine",
