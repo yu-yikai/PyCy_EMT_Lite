@@ -7,7 +7,7 @@ refers to the implemented equations. Successful execution, parameter checks and 
 
 ## 1. Validated scope
 
-Local validation record (2026-09-13, including the PLL time correction): 526 tests passed, all 13 retained examples ran headlessly
+Local validation record (2026-09-14, including output-field, control-input and PLL-limit fixes): 658 tests passed, all 13 retained examples ran headlessly
 without default output files, and wheel/sdist builds, archive inspection and installed-package checks outside the source tree passed.
 This is local evidence, not remote CI status. No full-model comparison with experimental data or commercial EMT software is claimed.
 
@@ -343,7 +343,7 @@ This section states this project's actual approximations and signs; the referenc
 
 ### Explicit switches
 
-`IdealSwitch` in `pycy_emt_lite.components.power_electronics` is controlled by a Boolean state or time function. It stamps `1/closed_resistance` when on and `open_conductance` when off. The resistance must be finite and positive (Ω); off conductance must be finite and nonnegative (S), and may be zero. This explicit conductance approximation is not a complete device model. PWM checks cover gate timing, on/off conductance, current direction and the fundamental component; nonlinear semiconductor equations and switching losses are outside scope.
+`IdealSwitch` in `pycy_emt_lite.components.power_electronics` accepts a Boolean, numeric 0/1, or a time function returning those values. It stamps `1/closed_resistance` when on and `open_conductance` when off. The resistance must be finite and positive (Ω); off conductance must be finite and nonnegative (S), and may be zero. Constant gates are checked at construction and callable results at each stamp. NaN/Inf, strings, arrays and other numeric values raise an error before Boolean conversion, with the switch name, time and `closed` value. A rejected sample does not change switch state. This explicit conductance approximation is not a complete device model. PWM checks cover gate timing, on/off conductance, current direction and the fundamental component; nonlinear semiconductor equations and switching losses are outside scope.
 
 ### Filter composition
 
@@ -401,6 +401,9 @@ Tests verify complementary gates, floating-star phase voltages, zero current sum
 `pycy_emt_lite.controls` supplies discrete blocks called explicitly by the example; they do not stamp MNA.
 `block.step(input_value, time_step)` uses the actual control sampling interval. `block.reset()` resets only the control block,
 not a `Simulator`. Calling code connects sampling, measurements and control outputs; there is no hidden closed-loop scheduler.
+Numeric block parameters, inputs, sampling intervals and reset values are checked for type and finiteness, rejecting NaN/Inf,
+Boolean numeric inputs and strings. Sampling intervals and low-pass time constants must be positive; `SampleDelay.steps` must be
+a nonnegative integer. Validation precedes updates, so invalid inputs and reset values do not contaminate history.
 
 | Block | Implemented discrete relation |
 |---|---|
@@ -434,7 +437,12 @@ Vbase = max(abs(vd), abs(vq), 1.0)
 ```
 
 Both `nominal_frequency` and output `frequency` use **rad/s**, not Hz: pass `2π50` for 50 Hz.
-The current `minimum_frequency/maximum_frequency` parameters feed PI output limits, constraining **Δω**, not absolute ω.
+`nominal_frequency` must be finite and positive. `minimum_frequency/maximum_frequency` bound **absolute angular frequency**;
+provided bounds must be finite and contain nominal frequency, while `None` leaves that side unbounded. Internally, PI correction
+limits are `[ωmin−ωnom, ωmax−ωnom]`, preserving integral freezing during saturation. For nominal 50 Hz with 45–55 Hz limits,
+pass `2π50`, `2π45`, `2π55` respectively; nominal locked output remains 50 Hz. Invalid ranges, including those excluding nominal
+frequency, fail at construction. This corrects the earlier correction-limit interpretation: add `nominal_frequency` to each old Δω
+bound when migrating an existing script.
 Returned `PLLState` d/q voltages use the returned angle; angle, angular frequency and voltages belong to the current sample row.
 `time_step` must be a finite positive real number. Invalid intervals fail before state changes and report how to repair the input;
 do not call `step` merely to observe initial values at zero time.
@@ -446,7 +454,9 @@ before the loop; this does not change the control discretization above. Defaults
 100 μs sampling and a 1 s duration. PLL aligns with the voltage space vector: for this sinusoidal source the target angle is `2πft+offset−π/2`.
 
 Regressions cover nominal initial lock with varying positive intervals, same-time returned angle/dq, example initialization/endpoints
-and invalid intervals without state advancement. The balanced 325 V peak, 50 Hz test with 100 μs sampling and PI gains 80/1000
+and invalid intervals without state advancement. PLL voltage samples must contain exactly three finite real numbers; invalid
+parameters, samples or reset angles raise explicit errors, and rejected samples preserve usable prior state. Further checks cover
+45–55 Hz limits, one-sided limits, persistent saturation and release, reset, and no partial PI update on frequency overflow. The balanced 325 V peak, 50 Hz test with 100 μs sampling and PI gains 80/1000
 still checks `|vq|<5 V` and angular-frequency error `<2 rad/s` after about 0.1 s.
 An independent continuous reference additionally checks positive-time transients with `dθ/dt=ωnom+Kp e+xi`, `dxi/dt=Ki e`,
 where `e=sin(θgrid−θ)/max(|cos(θgrid−θ)|,|sin(θgrid−θ)|,1/Vpeak)`, without calling PLL transforms or state updates.
@@ -456,12 +466,13 @@ PI gains 80/1000 and zero initial integral, with a DOP853 reference over 0–0.2
 For 100/50/25 μs steps, maximum angle errors at common positive times are approximately 0.002471/0.001230/0.000614 rad,
 and angular-frequency errors are 0.2168/0.1079/0.0538 rad/s, showing first-order convergence.
 Declared initial frequency remains nominal and is held over the first interval; the continuous equation's instantaneous proportional
-feedback frequency is not used to check the declared t=0 output. Evidence is limited to these balanced inputs and discrete relations,
-not frequency/phase-step performance, exhaustive invalid-parameter handling, weak-grid stability, negative-sequence decoupling,
+feedback frequency is not used to check the declared t=0 output. Evidence is limited to these balanced inputs, discrete relations
+and the listed input boundaries, not frequency/phase-step performance, weak-grid stability, negative-sequence decoupling,
 notch filters, specialized limit recovery or closed-loop grid control.
 
 PWM helpers `triangular_carrier()` generate a [-1,1] triangle, `sine_pwm_duty()` gives duty from modulation index and electrical angle,
-and `carrier_compare()` returns a 0/1 comparison. Space-vector modulation, three-level modulation and dead time are not currently promised features.
+and `carrier_compare()` returns a 0/1 comparison. PWM functions reject nonfinite values and incorrect types before comparison;
+carrier frequency must be positive and modulation index must lie in [0,1]. Space-vector modulation, three-level modulation and dead time are not currently promised features.
 
 ## 12. Optional connection examples
 

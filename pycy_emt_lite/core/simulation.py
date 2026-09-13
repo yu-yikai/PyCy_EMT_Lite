@@ -259,7 +259,14 @@ class Simulator:
             if node_index is not None:
                 row[f"v:{node_name}"] = float(solution[node_index])
         for component in self.circuit.components:
-            row.update(component.outputs(context, solution))
+            outputs = component.outputs(context, solution)
+            duplicates = row.keys() & outputs.keys()
+            if duplicates:
+                raise ValueError(
+                    f"元件 {component.name!r} 在仿真时间 {context.time:g} 的输出字段与已有结果冲突："
+                    f"{', '.join(sorted(duplicates))}；请重命名对应节点或元件，避免覆盖节点电压、时间或其他元件输出。"
+                )
+            row.update(outputs)
         return row
 
     def _time_points(self) -> np.ndarray:

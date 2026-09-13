@@ -89,6 +89,32 @@ def test_ideal_switch_accepts_zero_open_conductance() -> None:
     assert switch.open_conductance == 0.0
 
 
+@pytest.mark.parametrize("invalid", [math.nan, math.inf, -math.inf, 0.5, 2, "False", None, np.array([1])])
+def test_ideal_switch_rejects_invalid_constant_or_sampled_gate(invalid) -> None:
+    with pytest.raises(ValueError, match="S.*closed.*请"):
+        IdealSwitch("S", "src", "load", closed=invalid)
+    switch = IdealSwitch("S", "src", "load", closed=lambda t: True if t == 0 else invalid,
+                         closed_resistance=1.0, open_conductance=0.0)
+    circuit = Circuit.from_components("invalid_gate", [VoltageSource("V", "src", "0", 10.0), switch,
+                                                        Resistor("R", "load", "0", 9.0)])
+    simulator = Simulator(circuit, SimulationConfig(1e-4, 1e-4))
+    with pytest.raises(RuntimeError, match="S.*0.0001.*closed.*请"):
+        simulator.run()
+    assert simulator.last_time == 0.0
+    assert switch.last_state is True
+    assert switch.last_current == pytest.approx(1.0)
+
+
+@pytest.mark.parametrize("closed", [False, True, 0, 1, 0.0, 1.0, np.bool_(True), np.int64(1)])
+def test_ideal_switch_accepts_boolean_and_binary_numeric_gates(closed) -> None:
+    circuit = Circuit.from_components("binary_gate", [VoltageSource("V", "src", "0", 10.0),
+        IdealSwitch("S", "src", "load", closed=closed, closed_resistance=1.0, open_conductance=0.0),
+        Resistor("R", "load", "0", 9.0)])
+    row = Simulator(circuit, SimulationConfig(1e-4, 0.0)).run().rows[0]
+    assert row["state:S"] == float(closed)
+    assert row["i:S"] == pytest.approx(float(closed))
+
+
 def test_ideal_switch_conducts_when_closed() -> None:
     components = [
         VoltageSource("V1", "src", "0", 10.0),

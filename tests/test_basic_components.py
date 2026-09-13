@@ -14,6 +14,32 @@ import pycy_emt_lite
 from pycy_emt_lite import Capacitor, Circuit, CurrentSource, Inductor, Resistor, SimulationConfig, Simulator, VoltageSource
 
 
+def test_node_and_capacitor_output_collision_is_rejected_with_repair() -> None:
+    def circuit(capacitor_name):
+        return Circuit.from_components("field_collision", [
+            VoltageSource("VA", "a", "0", 10.0),
+            VoltageSource("VB", "b", "0", 5.0),
+            Capacitor(capacitor_name, "a", "b", 1.0, initial_voltage=5.0),
+        ])
+
+    with pytest.raises(ValueError, match="元件.*a.*时间 0.*v:a.*请.*重命名"):
+        Simulator(circuit("a"), SimulationConfig(0.1, 0.1)).run()
+    result = Simulator(circuit("C"), SimulationConfig(0.1, 0.1)).run()
+    assert result.series("v:a") == pytest.approx([10.0, 10.0])
+    assert result.series("v:C") == pytest.approx([5.0, 5.0])
+
+
+def test_distinct_component_names_cannot_overwrite_composite_outputs() -> None:
+    from pycy_emt_lite import ThreePhaseSource
+
+    circuit = Circuit.from_components("composite_field_collision", [
+        ThreePhaseSource("VS", "bus", phase_rms=100.0),
+        Resistor("VS:a", "bus:a", "0", 10.0),
+    ])
+    with pytest.raises(ValueError, match="VS:a.*i:VS:a.*请.*重命名"):
+        Simulator(circuit, SimulationConfig(1e-4, 1e-4)).run()
+
+
 @pytest.mark.parametrize("invalid", ["", "  ", None, 1])
 def test_preparation_rejects_invalid_node_names(invalid) -> None:
     circuit = Circuit.from_components("invalid_node", [Resistor("R", invalid, "0", 1.0)])

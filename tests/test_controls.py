@@ -18,6 +18,7 @@ from pycy_emt_lite.controls import (
     PIController,
     SampleDelay,
     abc_to_dq,
+    carrier_compare,
     dq_to_abc,
     sine_pwm_duty,
     triangular_carrier,
@@ -204,3 +205,125 @@ def test_pwm_helpers_generate_expected_values() -> None:
     assert math.isclose(triangular_carrier(0.0, 1000.0), -1.0, rel_tol=0.0, abs_tol=1e-12)
     assert math.isclose(triangular_carrier(0.00025, 1000.0), 0.0, rel_tol=0.0, abs_tol=1e-12)
     assert math.isclose(sine_pwm_duty(0.8, math.pi / 2.0), 0.9, rel_tol=0.0, abs_tol=1e-12)
+
+
+@pytest.mark.parametrize("factory", [lambda: Limiter(-1, 1), lambda: PIController(2, 10),
+                                      lambda: FirstOrderLowPass(0.1), lambda: SampleDelay(2)])
+@pytest.mark.parametrize("invalid", [math.nan, math.inf, -math.inf, True, "1", None])
+def test_control_blocks_reject_invalid_input_and_interval_without_state_change(factory, invalid) -> None:
+    block, reference = factory(), factory()
+    block.step(0.2, 0.01)
+    reference.step(0.2, 0.01)
+    for value, step in ((invalid, 0.01), (0.3, invalid)):
+        with pytest.raises(ValueError, match="请"):
+            block.step(value, step)
+    with pytest.raises(ValueError, match="请"):
+        block.reset(invalid)
+    for value in (0.3, 0.4, 0.5):
+        assert block.step(value, 0.01) == reference.step(value, 0.01)
+
+
+@pytest.mark.parametrize("factory", [
+    lambda v: Limiter(v, 1), lambda v: Limiter(-1, v),
+    lambda v: PIController(v, 1), lambda v: PIController(1, v),
+    lambda v: PIController(1, 1, lower=v), lambda v: PIController(1, 1, upper=v),
+    lambda v: FirstOrderLowPass(v), lambda v: SampleDelay(1, initial_value=v),
+    lambda v: SRFPLL(v, 1), lambda v: SRFPLL(1, v),
+    lambda v: SRFPLL(1, 1, nominal_frequency=v), lambda v: SRFPLL(1, 1, initial_angle=v),
+])
+@pytest.mark.parametrize("invalid", [math.nan, math.inf, True])
+def test_control_construction_rejects_invalid_numeric_parameters(factory, invalid) -> None:
+    with pytest.raises(ValueError, match="请"):
+        factory(invalid)
+
+
+@pytest.mark.parametrize("invalid", [-1, 1.5, True, math.nan])
+def test_sample_delay_requires_nonnegative_integer_steps(invalid) -> None:
+    with pytest.raises(ValueError, match="steps.*请"):
+        SampleDelay(invalid)
+
+
+@pytest.mark.parametrize("voltages", [(math.nan, 0, 0), (0, math.inf, 0), (0, 0, -math.inf),
+                                      (True, 0, 0), ("1", 0, 0), (None, 0, 0), (1, 2), None])
+def test_pll_rejects_invalid_voltage_sample_without_state_change(voltages) -> None:
+    pll, reference = SRFPLL(80, 1000), SRFPLL(80, 1000)
+    valid = (325.0, -162.5, -162.5)
+    pll.step(valid, 1e-4)
+    reference.step(valid, 1e-4)
+    with pytest.raises(ValueError, match="voltages_abc.*请"):
+        pll.step(voltages, 1e-4)
+    assert pll.step(valid, 1e-4) == reference.step(valid, 1e-4)
+
+
+@pytest.mark.parametrize("invalid", [math.nan, math.inf, True, "1"])
+def test_pll_rejects_invalid_reset_angle_without_state_change(invalid) -> None:
+    pll, reference = SRFPLL(80, 1000), SRFPLL(80, 1000)
+    valid = (325.0, -162.5, -162.5)
+    pll.step(valid, 1e-4)
+    reference.step(valid, 1e-4)
+    with pytest.raises(ValueError, match="angle.*请"):
+        pll.reset(invalid)
+    assert pll.step(valid, 1e-4) == reference.step(valid, 1e-4)
+
+
+@pytest.mark.parametrize("call", [
+    lambda v: triangular_carrier(v, 1000), lambda v: triangular_carrier(0, v),
+    lambda v: sine_pwm_duty(v, 0), lambda v: sine_pwm_duty(0.8, v),
+    lambda v: carrier_compare(v, 0), lambda v: carrier_compare(0, v),
+])
+@pytest.mark.parametrize("invalid", [math.nan, math.inf, True, "0"])
+def test_pwm_helpers_reject_invalid_values_before_gate_comparison(call, invalid) -> None:
+    with pytest.raises(ValueError, match="请"):
+        call(invalid)
+
+
+def test_pll_absolute_frequency_limits_preserve_50hz_lock() -> None:
+    omega, step, angle = 2 * math.pi * 50, 1e-4, 0.4
+    pll = SRFPLL(80, 1000, nominal_frequency=omega, initial_angle=angle,
+                 minimum_frequency=2 * math.pi * 45, maximum_frequency=2 * math.pi * 55)
+    voltages = tuple(325 * math.cos(angle + omega * step + phase) for phase in (0, -2*math.pi/3, 2*math.pi/3))
+    state = pll.step(voltages, step)
+    assert state.frequency / (2 * math.pi) == pytest.approx(50.0, abs=1e-10)
+
+
+@pytest.mark.parametrize("bounds,errors", [((45, 55), [0.8, -0.8]), ((45, None), [-0.8]), ((None, 55), [0.8])])
+def test_pll_absolute_limits_saturate_and_release_without_windup(bounds, errors) -> None:
+    lower, upper = (None if value is None else 2 * math.pi * value for value in bounds)
+    pll = SRFPLL(1000, 10000, minimum_frequency=lower, maximum_frequency=upper)
+    step = 1e-4
+    for error in errors + [0.0]:
+        for _ in range(20):
+            predicted = pll.angle + pll.frequency * step
+            voltages = tuple(325 * math.cos(predicted + error + phase) for phase in (0, -2*math.pi/3, 2*math.pi/3))
+            state = pll.step(voltages, step)
+            expected = upper if error > 0 else lower if error < 0 else pll.nominal_frequency
+            assert state.frequency == pytest.approx(expected, abs=1e-9)
+            if lower is not None:
+                assert state.frequency >= lower
+            if upper is not None:
+                assert state.frequency <= upper
+    pll.reset()
+    assert pll.frequency == pll.nominal_frequency
+
+
+@pytest.mark.parametrize("parameters", [
+    {"minimum_frequency": 2 * math.pi * 60}, {"maximum_frequency": 2 * math.pi * 40},
+    {"minimum_frequency": 400, "maximum_frequency": 300},
+    {"minimum_frequency": -2 * math.pi * 5, "maximum_frequency": 2 * math.pi * 5},
+    {"minimum_frequency": math.nan}, {"maximum_frequency": math.inf}, {"maximum_frequency": True},
+    {"nominal_frequency": 0}, {"nominal_frequency": -1},
+])
+def test_pll_rejects_invalid_absolute_frequency_range(parameters) -> None:
+    with pytest.raises(ValueError, match="frequency.*请"):
+        SRFPLL(80, 1000, **parameters)
+
+
+def test_pll_frequency_overflow_does_not_commit_partial_controller_state() -> None:
+    pll, reference = SRFPLL(1e308, 0, nominal_frequency=1e308), SRFPLL(1e308, 0, nominal_frequency=1e308)
+    step = 1e-308
+    angle = pll.frequency * step
+    invalid = tuple(math.cos(angle + 1.2 + phase) for phase in (0, -2*math.pi/3, 2*math.pi/3))
+    with pytest.raises(ValueError, match="frequency.*请"):
+        pll.step(invalid, step)
+    valid = tuple(math.cos(angle + phase) for phase in (0, -2*math.pi/3, 2*math.pi/3))
+    assert pll.step(valid, step) == reference.step(valid, step)

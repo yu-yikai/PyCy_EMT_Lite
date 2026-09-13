@@ -30,7 +30,9 @@ from contaminating a new calculation. `SimulationResult` contains data, not a st
 Circuits use SI units: time s, voltage V, current A, resistance Ω, inductance H and capacitance F; frequency usually uses Hz and
 angles use rad. Machine per-unit quantities and PLL rad/s units are specified separately in the model document.
 `0`, `gnd` and `ground` are reference-node aliases. The unknown vector contains nonreference node voltages and branch currents
-required by voltage sources, inductors and similar elements. Component names must be unique; keep node names and result fields consistent.
+required by voltage sources, inductors and similar elements. Component names and all result fields must be unique. A collision is rejected while recording the row, identifying the component, time and repair.
+For example, if nodes a/b are at 10/5 V, a capacitor named a across them conflicts with node field `v:a`.
+Rename the capacitor C to retain `v:a=10 V` and `v:C=5 V` separately. Expanded composite fields must also be distinct from other component outputs.
 
 For a two-terminal element `p → n`, `v=Vp−Vn` and current flows from p to n. A voltage source delivering power usually records
 a negative branch current; `v*i` is therefore not automatically outward power. Three-phase nodes usually use `bus:a/b/c`;
@@ -156,6 +158,8 @@ state common physical times, window, directions, units and reference; a finer-st
 | Problem | Repair |
 |---|---|
 | Noninteger-step stop, invalid step or start | Correct configuration using section 3; do not tolerate an incorrect endpoint |
+| Output field collision | Rename the identified node or component; existing voltage, time or branch fields cannot be overwritten |
+| Invalid control/PWM input or gate | Use finite real numeric parameters, samples and reset values; gates accept only Booleans or numeric 0/1 |
 | Duplicate component names, missing or incompatible event target | Use unique names and target the appropriate Fault/Breaker |
 | Repeated run or reused owned circuit | Create fresh components, Circuit and Simulator |
 | Invalid R/L/C, turns ratio, time constant or control limits | Use the named parameter and allowed range in the error; check SI/per-unit units |

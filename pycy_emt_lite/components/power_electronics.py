@@ -9,6 +9,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 import math
+from numbers import Real
 from typing import Callable, Iterable
 
 import numpy as np
@@ -17,14 +18,18 @@ from pycy_emt_lite.components.base import Component
 from pycy_emt_lite.core.context import StampContext
 from pycy_emt_lite.core.stamping import add_conductance, add_voltage_probe
 
-BoolTimeValue = bool | Callable[[float], bool]
+BoolTimeValue = bool | float | Callable[[float], bool | float]
 
-def _bool_at(value: BoolTimeValue, time: float) -> bool:
-    """返回布尔值或时间函数在当前时刻的开关状态。"""
+def _bool_at(value: BoolTimeValue, time: float, *, name: str) -> bool:
+    """先验证布尔值或数值 0/1，再转换为开关状态。"""
 
-    if callable(value):
-        return bool(value(time))
-    return bool(value)
+    value = value(time) if callable(value) else value
+    if isinstance(value, (bool, np.bool_)) or (isinstance(value, Real) and value in (0, 1)):
+        return bool(value)
+    raise ValueError(
+        f"开关 {name!r} 在仿真时间 {time:g} 的 closed={value!r} 非法；"
+        "请使用布尔值或有限数值 0/1，门极时间函数也必须返回这样的标量。"
+    )
 
 @dataclass(slots=True)
 class IdealSwitch(Component):
@@ -44,6 +49,8 @@ class IdealSwitch(Component):
     last_state: bool = False
 
     def __post_init__(self) -> None:
+        if not callable(self.closed):
+            _bool_at(self.closed, 0.0, name=self.name)
         if not math.isfinite(self.closed_resistance) or self.closed_resistance <= 0.0:
             raise ValueError(f"开关 {self.name} 的闭合电阻必须为有限正数。")
         if not math.isfinite(self.open_conductance) or self.open_conductance < 0.0:
@@ -55,7 +62,7 @@ class IdealSwitch(Component):
     def stamp(self, context: StampContext, matrix: np.ndarray, rhs: np.ndarray) -> None:
         """按当前控制状态写入开关电导。"""
 
-        self.last_state = _bool_at(self.closed, context.time)
+        self.last_state = _bool_at(self.closed, context.time, name=self.name)
         conductance = 1.0 / self.closed_resistance if self.last_state else self.open_conductance
         if conductance > 0.0:
             add_conductance(matrix, context.node_index(self.positive), context.node_index(self.negative), conductance)

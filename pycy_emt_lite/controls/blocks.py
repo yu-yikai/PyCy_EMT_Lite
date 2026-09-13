@@ -12,6 +12,8 @@ from __future__ import annotations
 
 from collections import deque
 from dataclasses import dataclass, field
+import math
+from numbers import Integral, Real
 from typing import Protocol, runtime_checkable
 
 
@@ -30,11 +32,23 @@ class ControlBlock(Protocol):
         """重置控制模块内部状态。"""
 
 
-def _validate_time_step(time_step: float) -> None:
-    """检查控制采样周期是否合法。"""
+def _finite_real(value: float, name: str, *, positive: bool = False) -> float:
+    """在转换为 float 前拒绝非数值、布尔值和非有限量。"""
 
-    if time_step <= 0.0:
-        raise ValueError("控制采样周期必须大于 0。")
+    try:
+        valid = not isinstance(value, bool) and isinstance(value, Real) and math.isfinite(value)
+    except OverflowError:
+        valid = False
+    if not valid or (positive and value <= 0.0):
+        required = "有限正实数" if positive else "有限实数"
+        raise ValueError(f"{name}={value!r} 非法；请使用{required}，不要使用布尔值、字符串、NaN 或 Inf。")
+    return float(value)
+
+
+def _validate_time_step(time_step: float) -> None:
+    """控制采样间隔以秒为单位，且必须为有限正数。"""
+
+    _finite_real(time_step, "time_step", positive=True)
 
 
 @dataclass(slots=True)
@@ -48,18 +62,21 @@ class Limiter:
     upper: float
 
     def __post_init__(self) -> None:
+        self.lower = _finite_real(self.lower, "Limiter.lower")
+        self.upper = _finite_real(self.upper, "Limiter.upper")
         if self.lower > self.upper:
-            raise ValueError("限幅器下限不能大于上限。")
+            raise ValueError("Limiter.lower 大于 upper；请将下限设为不大于上限的值。")
 
     def step(self, input_value: float, time_step: float) -> float:
         """返回限幅后的输入值。"""
 
         _validate_time_step(time_step)
-        return min(max(float(input_value), self.lower), self.upper)
+        return min(max(_finite_real(input_value, "Limiter.input_value"), self.lower), self.upper)
 
     def reset(self, value: float = 0.0) -> None:
         """限幅器没有内部状态，重置时不执行操作。"""
 
+        _finite_real(value, "Limiter.reset value")
 
 @dataclass(slots=True)
 class PIController:
@@ -84,16 +101,23 @@ class PIController:
     last_output: float = 0.0
 
     def __post_init__(self) -> None:
+        for name in ("proportional_gain", "integral_gain", "integrator", "last_output"):
+            setattr(self, name, _finite_real(getattr(self, name), f"PIController.{name}"))
+        for name in ("lower", "upper"):
+            value = getattr(self, name)
+            if value is not None:
+                setattr(self, name, _finite_real(value, f"PIController.{name}"))
         if self.lower is not None and self.upper is not None and self.lower > self.upper:
-            raise ValueError("PI 控制器输出下限不能大于上限。")
+            raise ValueError("PIController.lower 大于 upper；请将下限设为不大于上限的值。")
 
     def step(self, input_value: float, time_step: float) -> float:
         """根据误差输入推进 PI 控制器。"""
 
         _validate_time_step(time_step)
-        error = float(input_value)
-        candidate_integrator = self.integrator + self.integral_gain * error * time_step
-        raw_output = self.proportional_gain * error + candidate_integrator
+        error = _finite_real(input_value, "PIController.input_value")
+        candidate_integrator = _finite_real(self.integrator + self.integral_gain * error * time_step,
+                                            "PIController.integrator")
+        raw_output = _finite_real(self.proportional_gain * error + candidate_integrator, "PIController.output")
         limited_output = self._limit(raw_output)
 
         saturated_high = self.upper is not None and raw_output > self.upper and error > 0.0
@@ -107,8 +131,9 @@ class PIController:
     def reset(self, value: float = 0.0) -> None:
         """把积分状态和输出状态重置为指定值。"""
 
-        self.integrator = float(value)
-        self.last_output = self._limit(float(value))
+        value = _finite_real(value, "PIController.reset value")
+        self.integrator = value
+        self.last_output = self._limit(value)
 
     def _limit(self, value: float) -> float:
         """按可选上下限约束输出。"""
@@ -137,21 +162,23 @@ class FirstOrderLowPass:
     state: float = 0.0
 
     def __post_init__(self) -> None:
-        if self.time_constant <= 0.0:
-            raise ValueError("低通滤波器时间常数必须大于 0。")
+        self.time_constant = _finite_real(self.time_constant, "FirstOrderLowPass.time_constant", positive=True)
+        self.state = _finite_real(self.state, "FirstOrderLowPass.state")
 
     def step(self, input_value: float, time_step: float) -> float:
         """推进一阶低通滤波器。"""
 
         _validate_time_step(time_step)
-        alpha = time_step / self.time_constant
-        self.state = (self.state + alpha * float(input_value)) / (1.0 + alpha)
+        value = _finite_real(input_value, "FirstOrderLowPass.input_value")
+        alpha = _finite_real(time_step / self.time_constant, "FirstOrderLowPass.time_step/time_constant")
+        state = _finite_real((self.state + alpha * value) / (1.0 + alpha), "FirstOrderLowPass.state")
+        self.state = state
         return self.state
 
     def reset(self, value: float = 0.0) -> None:
         """重置滤波器状态。"""
 
-        self.state = float(value)
+        self.state = _finite_real(value, "FirstOrderLowPass.reset value")
 
 
 @dataclass(slots=True)
@@ -166,22 +193,25 @@ class SampleDelay:
     _buffer: deque[float] = field(init=False, repr=False)
 
     def __post_init__(self) -> None:
-        if self.steps < 0:
-            raise ValueError("采样延迟步数不能小于 0。")
-        self._buffer = deque([float(self.initial_value)] * self.steps, maxlen=self.steps)
+        if isinstance(self.steps, bool) or not isinstance(self.steps, Integral) or self.steps < 0:
+            raise ValueError(f"SampleDelay.steps={self.steps!r} 非法；请使用非负整数步数，不使用布尔值。")
+        self.steps = int(self.steps)
+        self.initial_value = _finite_real(self.initial_value, "SampleDelay.initial_value")
+        self._buffer = deque([self.initial_value] * self.steps, maxlen=self.steps)
 
     def step(self, input_value: float, time_step: float) -> float:
         """返回延迟后的输入值。"""
 
         _validate_time_step(time_step)
+        value = _finite_real(input_value, "SampleDelay.input_value")
         if self.steps == 0:
-            return float(input_value)
+            return value
         output = self._buffer[0]
-        self._buffer.append(float(input_value))
+        self._buffer.append(value)
         return output
 
     def reset(self, value: float = 0.0) -> None:
         """用指定值重新填充延迟队列。"""
 
-        self.initial_value = float(value)
+        self.initial_value = _finite_real(value, "SampleDelay.reset value")
         self._buffer = deque([self.initial_value] * self.steps, maxlen=self.steps)
