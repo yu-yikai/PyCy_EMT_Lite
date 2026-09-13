@@ -2,21 +2,14 @@
 
 English | [简体中文](README.zh-CN.md)
 
-PyCy_EMT_Lite is a small, pure-Python teaching project for electromagnetic
-transient (EMT) simulation of modern power systems. Its recommended public
-workflow is:
+PyCy_EMT_Lite is a pure-Python teaching project for small electromagnetic-transient simulations, using
+`CaseDefinition → Circuit → Simulator → SimulationResult`. Basic circuits may use `Circuit/Simulator` directly.
+Equations, evidence and applicability are in [Models and validation](docs/models_and_validation.en.md).
+The scope is teaching and algorithm checks, not plant-scale EMT, protection settings, equipment design or operational decisions.
 
-```text
-CaseDefinition -> Circuit -> Simulator -> SimulationResult
-```
+## 1. Install and run
 
-> **Teaching scope:** version 0.1 is being reduced to a small trusted model set.
-> It is not a facility-grade EMT tool and must not be used for protection
-> settings, grid-code compliance, equipment design, or operational decisions.
-
-## Quick Start
-
-Requires Python 3.14 and [uv](https://docs.astral.sh/uv/).
+Use Python 3.14 and [uv](https://docs.astral.sh/uv/) from the project root:
 
 ```bash
 uv sync --locked
@@ -24,114 +17,113 @@ uv run python examples/01_r_circuit.py
 uv run pytest
 ```
 
-Example 01 is the trusted starting point. It exercises the complete object
-workflow and checks the simulated voltage against the analytical circuit value.
+Dependencies are NumPy, SciPy and Matplotlib; tests use pytest. Examples display figures by default without saving data or images.
+For network cases, set `SAVE_RESULT_DATA` or `SAVE_RESULT_FIGURE` at the top of the script to `1` to save to `outputs/<case-name>/`.
+The standalone PLL example 11 only displays a plot and has no saving flags.
+Noninteractive backends such as `MPLBACKEND=Agg` skip window display while retaining computation and saving.
 
-Create fresh simulator, circuit and component instances for each run, including
-components inside a case definition. Time parameters must be finite and only
-`start_time=0` is supported. `stop_time` must be a nonnegative integer multiple
-of `time_step`; invalid
-configuration raises an error with repair advice before simulation. An 8 ULP
-rounding tolerance accepts expressions such as `0.1 + 0.2` on a 0.1 s grid.
-Results retain their original fields; the
-`result_transform` callback has been removed. The first row preserves declared
-capacitor voltage and inductor current, with consistent current/voltage histories.
-Explicit events advance the old network to the event time, then solve right-side
-algebraic values with storage states held. Impulsive state changes are rejected.
-Constrained callable sources may require an analytical `derivative` (V/s or A/s);
-see the [initialization contract](docs/simulation_program_guide.en.md#consistent-initialization-and-events).
-Mean, RMS and average power use actual time; select separate continuous windows
-for fault results instead of interpolating across events.
+## 2. Learning order
 
-## Model Levels
+Thirteen short scripts form eight units. Integrated average renewable/converter and HVDC/MMC candidates 13–16 were removed; retained commands keep their original numbers.
 
-The retained models use the following levels and approximations:
-
-| Level | Meaning | Current use |
+| Unit | Scripts | Topics |
 |---|---|---|
-| Network EMT | MNA network solved at every time step | RLC, three-phase circuits, faults, pi line, transformer |
-| Switching EMT | Ideal switches driven on the discrete time grid | Two-level PWM teaching example |
-| Electromechanical approximation | Algebraic dq stator ports with explicit mechanical/control dynamics | Fourth-order synchronous-generator example 10 |
-| Discrete control | Hand-written control/state updates without an electrical network solve | Standalone PLL example 11 |
+| R and MNA | [01](examples/01_r_circuit.py) | Object workflow, Ohm's law and source-current direction |
+| Dynamic RLC | [02 RC](examples/02_rc_transient.py), [03 RL](examples/03_rl_transient.py), [04 RLC](examples/04_rlc_transient.py), [17 AC RLC](examples/17_single_phase_ac_rlc.py) | Initial conditions, time constants, storage, phasors and step error |
+| Three-phase and faults | [05](examples/05_three_phase_steady_state.py), [06](examples/06_three_phase_short_circuit.py), [07](examples/07_single_phase_ground_fault.py) | Balanced RL, three-phase short circuit, single-phase grounding and fixed-window metrics |
+| Lines | [08](examples/08_pi_line_transient.py) | Pi line; segmented and Bergeron models provide optional comparisons |
+| Transformers | [09](examples/09_single_phase_transformer.py) | Turns ratio, leakage and magnetization; three-phase connections are in the model document |
+| Synchronous machines | [10](examples/10_park_generator_avr_governor.py) | Equilibrium initialization, load step, AVR and governor |
+| Discrete control | [11](examples/11_pll_dynamic_response.py) | SRF-PLL in a standalone control loop |
+| PWM | [12](examples/12_two_level_pwm_generator.py) | Ideal switches, SPWM and RL current |
 
-Example 11 uses the result label `explicit_control` for its hand-written state
-updates. This is descriptive metadata, not a `SimulationConfig.method` option.
-Examples 13–16 and their average inverter, PV/storage and HVDC/MMC models have been
-removed under the scope-reduction plan, along with the Diode/IGBT approximations.
-This version has no integrated GFL/GFM example. Both synchronous-machine models
-and example 10 are retained and improved: corrected power accounting, consistent
-state timing and separate d/q transient reactances in the Park terminal equations.
-The 13 remaining scripts retain their original numbers: 01–12 and 17.
-This README is a concise entrypoint. The [English improvement plan](docs/project_improvement_plan.en.md)
-describes model scope and documentation consolidation; the [Chinese README](README.zh-CN.md)
-also includes a per-example decision table.
+Example 17 uses a 220 V RMS, 50 Hz source in series with 20 Ω, 50 mH and 100 μF, with separate voltage/current figures.
+Its default steady-state phasor window is 0.08–0.12 s; select a new window after changing frequency or damping.
+Example 10 retains a fourth-order synchronous generator, starting at equilibrium and adding load at 0.2 s, with separate voltage/field, speed and power figures.
+The classical synchronous machine also remains; the two models have different approximations. Example 11's `explicit_control` label describes its explicit control loop and is not an EMT integration-method option.
 
-## Recommended Starting Path
+## 3. Write a case
 
-| Example | Learning objective | Current evidence |
-|---|---|---|
-| `01_r_circuit.py` | Object workflow and static MNA | Exact voltage/current unit test |
-| `02_rc_transient.py` | Capacitor companion model | Initial state/current, first interval and analytical step-halving tests |
-| `03_rl_transient.py` | Inductor branch-current variable | Initial state/voltage, first interval and analytical step-halving tests |
-| `04_rlc_transient.py` | Coupled second-order transient | Damped whole-curve/KCL/convergence tests and lossless LC energy test |
-| `17_single_phase_ac_rlc.py` | Single-phase AC source and series RLC | Zero initial states, steady phasor/RMS and KCL/KVL checks |
-| `05_three_phase_steady_state.py` | Balanced three-phase RL load | Zero-current startup, phase sequence, phasor/RMS and P/Q checks |
+Save the following as a Python script and run it. Parameters stay beside the components, and voltage/current use separate figures.
 
-Run the additional AC example with `uv run python examples/17_single_phase_ac_rlc.py`.
-It connects a 220 V RMS, 50 Hz source to 20 Ω, 50 mH and 100 μF in series.
-Voltage and current use separate figures; data and figure saving are off by default.
-Edit the parameters and output flags at the top. The default 0.08–0.12 s window
-compares current RMS and phase with `Z = R + j(ωL - 1/ωC)`; after changing the
-frequency or damping, choose complete steady-state cycles for that window.
+```python
+from pycy_emt_lite import Resistor, SimulationConfig, VoltageSource
+from pycy_emt_lite.cases import CaseDefinition, OutputOptions, PlotSpec, run_case
 
-Examples 08, 09 and 12 also have quantitative summaries and physical regressions:
-Pi-line phasors/energy, loaded linear-transformer power including magnetizing DC,
-and PWM fundamental/step sensitivity. Voltage and current use separate figures
-in 08/09; PWM reports total RMS separately from its fundamental.
+SAVE_RESULT_DATA = 0
+SAVE_RESULT_FIGURE = 0
 
-Example 05 uses a 20 Ω + 50 mH load per phase, with zero-current startup and a
-phasor/power summary. Example 06 adds 5 mH per line phase and uses a 10 μs step to
-resolve fault clearing. It reports pre/fault/post RMS and load power, and plots
-continuous line currents separately from fault currents and bus voltages. The
-ideal circuit produces a brief clearing overvoltage as line current transfers
-to the resistive load; it contains no surge arrester or parasitic capacitance.
+def define_case() -> CaseDefinition:
+    components = (
+        VoltageSource("V1", "n1", "0", 10.0),
+        Resistor("R1", "n1", "0", 5.0),
+    )
+    config = SimulationConfig(time_step=1e-4, stop_time=1e-3)
+    plots = (
+        PlotSpec(("v:n1",), figure_name="voltage.png", title="Voltage / V"),
+        PlotSpec(("i:R1",), figure_name="current.png", title="Current / A"),
+    )
+    output = OutputOptions(save_data=bool(SAVE_RESULT_DATA),
+                           save_figure=bool(SAVE_RESULT_FIGURE), show_figure=True)
+    return CaseDefinition("my_r_circuit", components, config, plots=plots, output=output)
 
-Run `uv run python examples/10_park_generator_avr_governor.py` for a synchronous
-generator load step with AVR/governor. It starts from a balanced operating point
-and uses a fourth-order dq machine with algebraic stator ports and explicit Euler
-mechanical/control updates. See the [machine equations and usage](docs/theory/advanced_line_transformer_models.en.md)
-for units, initialization, power balance and the limits of this near-fundamental approximation.
-
-## Minimal Project Structure
-
-```text
-pycy_emt_lite/   # simulation kernel and model implementations
-examples/        # runnable teaching cases
-tests/           # numerical and physical regression checks
-docs/            # documentation being consolidated
+if __name__ == "__main__":
+    case = define_case()
+    result = run_case(case)
 ```
 
-Import the core teaching API from `pycy_emt_lite`. Optional line/transformer
-candidates remain in explicit subpackages while their scope is reviewed.
-The machine classes remain in `pycy_emt_lite.machines`. The former renewable and converter-average classes are no longer available;
-`pycy_emt_lite.converters` retains only the existing L/LC/LCL filter assemblies.
+Longer cases can put a summary in `CaseDefinition.summary`, events in `events`, and three-phase figures in `PlotSpec(kind="three_phase")` with exactly three columns.
+Every plot needs `figure_name` when saving images. Extract functions only for logic that becomes long or needs reuse; examples do not import each other.
+Create intermediate `case`, `circuit` and `simulator` objects before the next operation to make execution and debugging easy to follow.
 
-## Documentation
+Create fresh components, `Circuit` and `Simulator` for each run; calling `define_case()` again obtains new components.
+Components inside a `CaseDefinition` are also single-use. Only `start_time=0` is supported; `stop_time` must be a nonnegative integer number of base steps.
+A 100 μs step cannot stop at 250 μs: choose 200/300 μs or a 50 μs step.
+Initial conditions, source derivatives and event rules are in [Numerical conventions](docs/numerical_conventions.en.md).
 
-- [简体中文 README](README.zh-CN.md): complete project entry and example status
-- [Improvement plan](docs/project_improvement_plan.en.md): phased reduction and
-  correctness work
+## 4. Read, plot and save results
 
-The existing theory documents are being consolidated into one numerical
-conventions document and one model/validation document. Until that work is
-complete, source docstrings and tests define implemented behavior.
+`result.columns` lists fields; `result.series("v:n1")` returns a NumPy array. Node voltage is `v:<node>` and ordinary branch current is `i:<component>`; see model descriptions for three-phase/composite fields.
+Node voltages are relative to reference ground; current delivered by a voltage source is opposite to its branch-current direction.
 
-## Relationship to PyCy_EMT
+This code continues with `result` from the preceding example, explicitly saves JSON and reads it back for comparison:
 
-PyCy_EMT_Lite is a streamlined teaching edition derived from the object-oriented
-PyCy_EMT v0.6 workflow. It intentionally excludes the YAML/CaseSpec pipeline and
-other platform-level architecture.
+```python
+from pycy_emt_lite import SimulationResult
+from pycy_emt_lite.analysis import rms
+from pycy_emt_lite.visualization import plot_result_comparison, plot_zoom_window, write_markdown_report
 
-## License
+voltage_rms = rms(result, "v:n1", start_time=0.0, end_time=1e-3)
+result.to_json("outputs/my_r_circuit/result.json")
+loaded = SimulationResult.from_json("outputs/my_r_circuit/result.json")
+plot_result_comparison([result, loaded], "v:n1", labels=["original", "loaded"], show=False)
+plot_zoom_window(result, ["v:n1"], 0.0, 5e-4,
+                 output_path="outputs/my_r_circuit/zoom.png", show=False)
+write_markdown_report(result, "outputs/my_r_circuit/report.md",
+                      summary={"Voltage RMS / V": voltage_rms}, figure_paths=["zoom.png"])
+```
 
-[MIT](LICENSE)
+`to_csv/from_csv` and `to_npz/from_npz` are also available. JSON/NPZ retain metadata and `event_log`; CSV contains only tabular data.
+Supply the case name/method when reading CSV; its inferred first interval need not equal the original base step. Reading a file does not restore resumable simulation state.
+Other plotting functions are `plot_series` and `plot_three_phase`; `output_path` supports extensions such as PNG/SVG/PDF.
+Reports organize existing results and user-provided summaries; they do not establish model correctness.
+Window and direction rules for RMS, mean, three-phase power, sampled peaks and sag statistics are in [Numerical conventions](docs/numerical_conventions.en.md).
+
+## 5. Documents and source
+
+| Document | Contents |
+|---|---|
+| This README | Installation, learning order, case creation and result operations |
+| [Numerical conventions](docs/numerical_conventions.en.md) | MNA/stamps, units, initialization, time, events, metrics and diagnostics |
+| [Models and validation](docs/models_and_validation.en.md) | Retained equations, example parameters, evidence and unvalidated scope |
+
+The root exposes `CaseDefinition`, `Circuit`, `Simulator`, `SimulationResult`, basic RLC/independent sources, switches/faults/events,
+three-phase sources/lines/loads, Pi lines and single-phase transformers. See the [root interface](pycy_emt_lite/__init__.py) for exact exports.
+Import machines from `pycy_emt_lite.machines`, L/LC/LCL from `pycy_emt_lite.converters`, and segmented/Bergeron/three-phase Pi lines and three-phase transformers from their `components` modules.
+Use the respective subpackages for control, analysis and plotting; importability does not imply complete physical validation.
+
+`pycy_emt_lite/` contains implementations, `examples/` cases, `tests/` regressions, and `docs/` full bilingual versions of the two topics above.
+New components need physical/discrete equations, units/directions, initialization/event behavior, and an analytical, conservation or independent-reference check.
+Update the learning table for new cases; avoid wrappers, dependencies or entrypoints added only for organization.
+
+PyCy_EMT_Lite derives from the object workflow in PyCy_EMT v0.6, retaining material suitable for small teaching models. [MIT license](LICENSE).
