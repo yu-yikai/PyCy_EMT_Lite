@@ -7,10 +7,9 @@ refers to the implemented equations. Successful execution, parameter checks and 
 
 ## 1. Validated scope
 
-The latest code baseline is `f9dee81` (local validation on 2026-09-13): 512 tests passed, all 13 retained examples ran headlessly
+Local validation record (2026-09-13, including the PLL time correction): 526 tests passed, all 13 retained examples ran headlessly
 without default output files, and wheel/sdist builds, archive inspection and installed-package checks outside the source tree passed.
-This is local evidence, not remote CI status for that commit. No full-model comparison with experimental data or commercial EMT
-software is claimed. This documentation consolidation does not change model implementations.
+This is local evidence, not remote CI status. No full-model comparison with experimental data or commercial EMT software is claimed.
 
 | Scope | Existing evidence | Boundary and test entry point |
 |---|---|---|
@@ -24,7 +23,7 @@ software is claimed. This documentation consolidation does not change model impl
 | L/LC/LCL filters | Parameter rejection, wiring, independent ODEs, KCL, discrete energy and step convergence | Passive linear networks; [power-electronic tests](../tests/test_power_electronics.py) |
 | PWM example 12 | Gates, floating star point, fundamental RL reference, finer-grid comparison | Fine grids are not device references; no automatic edge location; same power-electronic tests |
 | `ThreePhasePiLine`, `ThreePhaseParallelRLCLoad` | Initialization/first step and output fields; nominal-power conversion for the parallel load | Local checks, no complete independent three-phase AC/fault validation; three-phase/line tests |
-| Control blocks and SRF-PLL | Limiting, PI, low-pass, delay, balanced transforms and frequency tracking for a particular balanced input | Functional and single-condition checks, no closed-loop grid/weak-grid engineering validation; [control tests](../tests/test_controls.py) |
+| Control blocks and SRF-PLL | Basic functions, sample-time consistency, preserved initial lock, independent balanced-input ODE and first-order convergence | Functional and specific balanced-condition checks, no closed-loop grid/weak-grid engineering validation; [control tests](../tests/test_controls.py) |
 | Saturation approximation | Parameter and linear flux/current regressions | **No independent saturation-curve, energy or inrush validation**; linear checks cannot replace it |
 
 Metrics, I/O, plotting and linear solves have separate [metric](../tests/test_analysis.py), [I/O](../tests/test_results_io.py),
@@ -422,26 +421,44 @@ q = -alpha sin(theta) + beta cos(theta)
 `dq_to_abc()` reconstructs with zero sequence set to zero. Round trips are tested for balanced signals without zero sequence;
 do not assume arbitrary input zero sequence is retained. Machine d/q axes use the section 9 convention and cannot be substituted directly.
 
-`SRFPLL.step(voltages_abc, time_step)` first obtains d/q using the old angle, then advances PI, frequency and angle:
+`SRFPLL.step(voltages_abc, time_step)` takes voltage samples at the **current time**; `time_step` is the interval since the previous
+sample. First integrate angle using the previous angular frequency, then update PI using the current voltage and that angle.
+The new angular frequency applies to the next integration interval:
 
 ```text
+θ_new = wrap_0_to_2pi(θ_old + ω_old h)
+(vd, vq) = abc_to_dq(vabc_current, θ_new)
 Vbase = max(abs(vd), abs(vq), 1.0)
 Δω = PI(vq / Vbase)
 ω_new = nominal_frequency + Δω
-θ_new = wrap_0_to_2pi(θ_old + ω_new h)
 ```
 
 Both `nominal_frequency` and output `frequency` use **rad/s**, not Hz: pass `2π50` for 50 Hz.
 The current `minimum_frequency/maximum_frequency` parameters feed PI output limits, constraining **Δω**, not absolute ω.
-Returned `PLLState` angle/frequency have advanced; d/q voltages still use the current input and pre-update angle, so they are not
-a directly reconstructable same-time set.
+Returned `PLLState` d/q voltages use the returned angle; angle, angular frequency and voltages belong to the current sample row.
+`time_step` must be a finite positive real number. Invalid intervals fail before state changes and report how to repair the input;
+do not call `step` merely to observe initial values at zero time.
 
 [Example 11](../examples/11_pll_dynamic_response.py) is a pure control loop marked `explicit_control`, without an MNA network.
-Its first row, labeled t=0, already calls `step` once; it is not an unadvanced consistent initial row in the network simulator's sense.
-It uses 230 V RMS, 50 Hz, a 30° offset, 100 μs sampling and a 1 s duration, showing locking for that input only.
-The existing test uses balanced 325 V peak, 50 Hz input, 100 μs sampling and PI gains 80/1000 to check `|vq|<5 V` and angular-frequency
-error `<2 rad/s` after about 0.1 s. This does not validate frequency/phase-step dynamic metrics, exhaustive invalid-parameter handling
-or weak-grid stability. Negative-sequence decoupling, notch filters, specialized limit recovery and closed-loop grid control are not validated.
+It records the declared t=0 angle, nominal angular frequency and their d/q projection before advancing from the first positive time;
+`stop_time=0` produces only the initial row. Time parameters reuse `SimulationConfig` validation, rejecting noninteger-step stops
+before the loop; this does not change the control discretization above. Defaults are 230 V RMS, 50 Hz, a 30° source-phase offset,
+100 μs sampling and a 1 s duration. PLL aligns with the voltage space vector: for this sinusoidal source the target angle is `2πft+offset−π/2`.
+
+Regressions cover nominal initial lock with varying positive intervals, same-time returned angle/dq, example initialization/endpoints
+and invalid intervals without state advancement. The balanced 325 V peak, 50 Hz test with 100 μs sampling and PI gains 80/1000
+still checks `|vq|<5 V` and angular-frequency error `<2 rad/s` after about 0.1 s.
+An independent continuous reference additionally checks positive-time transients with `dθ/dt=ωnom+Kp e+xi`, `dxi/dt=Ki e`,
+where `e=sin(θgrid−θ)/max(|cos(θgrid−θ)|,|sin(θgrid−θ)|,1/Vpeak)`, without calling PLL transforms or state updates.
+
+That comparison uses nominal 50 Hz, actual 52 Hz, 325 V peak, initial angle 0.4 rad, initial grid space-vector angle 0.7 rad,
+PI gains 80/1000 and zero initial integral, with a DOP853 reference over 0–0.2 s.
+For 100/50/25 μs steps, maximum angle errors at common positive times are approximately 0.002471/0.001230/0.000614 rad,
+and angular-frequency errors are 0.2168/0.1079/0.0538 rad/s, showing first-order convergence.
+Declared initial frequency remains nominal and is held over the first interval; the continuous equation's instantaneous proportional
+feedback frequency is not used to check the declared t=0 output. Evidence is limited to these balanced inputs and discrete relations,
+not frequency/phase-step performance, exhaustive invalid-parameter handling, weak-grid stability, negative-sequence decoupling,
+notch filters, specialized limit recovery or closed-loop grid control.
 
 PWM helpers `triangular_carrier()` generate a [-1,1] triangle, `sine_pwm_duty()` gives duty from modulation index and electrical angle,
 and `carrier_compare()` returns a 0/1 comparison. Space-vector modulation, three-level modulation and dead time are not currently promised features.

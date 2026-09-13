@@ -6,7 +6,8 @@
 
 import math
 
-from pycy_emt_lite.controls import SRFPLL
+from pycy_emt_lite import SimulationConfig
+from pycy_emt_lite.controls import SRFPLL, abc_to_dq
 from pycy_emt_lite.io.results import SimulationResult
 from pycy_emt_lite.visualization import plot_series
 
@@ -33,6 +34,7 @@ def grid_voltages(time: float) -> tuple[float, float, float]:
 def main() -> None:
     """运行 PLL 动态响应控制仿真。"""
 
+    config = SimulationConfig(time_step=TIME_STEP, stop_time=STOP_TIME)
     pll = SRFPLL(
         proportional_gain=100.0,
         integral_gain=1000.0,
@@ -40,11 +42,13 @@ def main() -> None:
         initial_angle=0.0,
     )
 
-    rows: list[dict[str, float]] = []
-    steps = int(round(STOP_TIME / TIME_STEP))
-    for index in range(steps + 1):
-        time = index * TIME_STEP
-        state = pll.step(grid_voltages(time), TIME_STEP)
+    # 首行只观察声明初值，不推进 PI 或角度。
+    _, initial_q = abc_to_dq(*grid_voltages(0.0), pll.angle)
+    rows = [{"time": 0.0, "angle": pll.angle, "frequency": pll.frequency, "q_axis_voltage": initial_q}]
+    steps = int(round(config.stop_time / config.time_step))
+    for index in range(1, steps + 1):
+        time = config.stop_time if index == steps else index * config.time_step
+        state = pll.step(grid_voltages(time), time - rows[-1]["time"])
         rows.append(
             {
                 "time": time,
@@ -57,8 +61,8 @@ def main() -> None:
     result = SimulationResult(
         circuit_name="pll_dynamic_response",
         method="explicit_control",
-        time_step=TIME_STEP,
-        stop_time=STOP_TIME,
+        time_step=config.time_step,
+        stop_time=config.stop_time,
         rows=rows,
     )
     last = result.rows[-1]

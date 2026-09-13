@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import math
 from dataclasses import dataclass, field
+from numbers import Real
 
 from pycy_emt_lite.controls.blocks import PIController
 from pycy_emt_lite.controls.transforms import abc_to_dq, wrap_angle
@@ -18,7 +19,7 @@ from pycy_emt_lite.controls.transforms import abc_to_dq, wrap_angle
 
 @dataclass(frozen=True, slots=True)
 class PLLState:
-    """SRF-PLL 单步输出状态。"""
+    """当前采样时刻的角度、角频率及该角度下的 d/q 电压。"""
 
     angle: float
     frequency: float
@@ -55,15 +56,22 @@ class SRFPLL:
         self.frequency = self.nominal_frequency
 
     def step(self, voltages_abc: tuple[float, float, float], time_step: float) -> PLLState:
-        """用一组三相电压采样推进 PLL。"""
+        """从上次时刻推进到当前电压采样时刻。
 
-        if time_step <= 0.0:
-            raise ValueError("PLL 采样周期必须大于 0。")
-        d_axis_voltage, q_axis_voltage = abc_to_dq(*voltages_abc, self.angle)
+        先用上次角频率积分本区间角度，再用当前电压和角度更新 PI。
+        新角频率用于下一积分区间；返回的 d/q 电压与返回角度一致。
+        """
+
+        if isinstance(time_step, bool) or not isinstance(time_step, Real) or not math.isfinite(time_step) or time_step <= 0.0:
+            raise ValueError(
+                f"PLL time_step={time_step!r} 非法；请使用以秒为单位的有限正实数作为实际采样间隔。"
+            )
+        angle = wrap_angle(self.angle + self.frequency * time_step)
+        d_axis_voltage, q_axis_voltage = abc_to_dq(*voltages_abc, angle)
         voltage_base = max(abs(d_axis_voltage), abs(q_axis_voltage), 1.0)
         correction = self._controller.step(q_axis_voltage / voltage_base, time_step)
         self.frequency = self.nominal_frequency + correction
-        self.angle = wrap_angle(self.angle + self.frequency * time_step)
+        self.angle = angle
         return PLLState(self.angle, self.frequency, d_axis_voltage, q_axis_voltage)
 
     def reset(self, angle: float | None = None) -> None:
