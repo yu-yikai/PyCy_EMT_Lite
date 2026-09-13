@@ -127,52 +127,118 @@ def test_three_phase_yy_transformer_voltage_ratio() -> None:
     assert all(49.5 < value < 50.5 for value in rms_values.values())
 
 
-def test_three_phase_yd_and_dy_transformers_are_solvable() -> None:
-    yd_components = [
-        ThreePhaseSource("VS1", "p1", phase_rms=100.0),
-        ThreePhaseTransformer(
-            "TYD",
-            "p1",
-            "s1",
-            turns_ratio=2.0,
-            primary_connection="Y",
-            secondary_connection="D",
-            leakage_resistance=0.01,
-        ),
-        Resistor("DAB", "s1:a", "s1:b", 60.0),
-        Resistor("DBC", "s1:b", "s1:c", 60.0),
-        Resistor("DCA", "s1:c", "s1:a", 60.0),
-        Resistor("REF", "s1:a", "0", 1e9),
-    ]
-    yd_circuit = Circuit.from_components("three_phase_yd_transformer", yd_components)
-    yd_config = SimulationConfig(time_step=1e-4, stop_time=0.02)
-    yd_simulator = Simulator(yd_circuit, yd_config)
+@pytest.mark.parametrize("primary", ["Y", "D"])
+def test_ideal_transformer_with_secondary_y_has_unique_loaded_solution(primary) -> None:
+    transformer = ThreePhaseTransformer("T", "in", "out", 2.0, primary, "Y")
+    loads = np.array([10.0, 20.0, 30.0])
+    result = Simulator(Circuit.from_components("ideal_secondary_y", [
+        ThreePhaseSource("V", "in", 100.0), transformer,
+        *[Resistor(f"R{p}", f"out:{p}", "0", r) for p, r in zip("abc", loads)],
+    ]), SimulationConfig(1e-4, 0.02)).run()
+    vin = np.array([result.series(f"v:in:{p}") for p in "abc"])
+    vout = np.array([result.series(f"v:out:{p}") for p in "abc"])
+    winding_voltage = vin if primary == "Y" else vin - np.roll(vin, -1, axis=0)
+    np.testing.assert_allclose(vout, winding_voltage / 2, atol=1e-12)
+    input_current = -np.array([result.series(f"i:V:{p}") for p in "abc"])
+    np.testing.assert_allclose(np.sum(vin * input_current, axis=0),
+                               np.sum(vout**2 / loads[:, None], axis=0), atol=1e-10)
 
-    yd_result = yd_simulator.run()
 
-    dy_components = [
-        ThreePhaseSource("VS2", "p2", phase_rms=100.0),
-        ThreePhaseTransformer(
-            "TDY",
-            "p2",
-            "s2",
-            turns_ratio=2.0,
-            primary_connection="D",
-            secondary_connection="Y",
-            leakage_resistance=0.01,
-        ),
-        Resistor("LA", "s2:a", "0", 50.0),
-        Resistor("LB", "s2:b", "0", 50.0),
-        Resistor("LC", "s2:c", "0", 50.0),
-    ]
-    dy_circuit = Circuit.from_components("three_phase_dy_transformer", dy_components)
-    dy_config = SimulationConfig(time_step=1e-4, stop_time=0.02)
-    dy_simulator = Simulator(dy_circuit, dy_config)
+@pytest.mark.parametrize("primary", ["Y", "D"])
+def test_secondary_delta_requires_leakage_to_determine_circulating_current(primary) -> None:
+    with pytest.raises(ValueError, match="二次.*Δ.*leakage_resistance.*leakage_inductance"):
+        ThreePhaseTransformer("T", "in", "out", 2.0, primary, "D")
 
-    dy_result = dy_simulator.run()
 
-    assert np.isfinite(yd_result.series("i:TYD:primary:a")).all()
-    assert np.isfinite(dy_result.series("i:TDY:secondary:a")).all()
+@pytest.mark.parametrize("three_phase", [False, True])
+@pytest.mark.parametrize("method", ["trapezoidal", "backward_euler"])
+@pytest.mark.parametrize("event_time", [None, 0.0075, 0.02])
+def test_linear_magnetizing_flux_equals_inductance_times_current(three_phase, method, event_time) -> None:
+    if three_phase:
+        transformer = ThreePhaseTransformer("T", "in", "out", 2.0, magnetizing_inductance=3.0)
+        source = ThreePhaseSource("V", "in", 10.0, frequency=5.0, initial_angle=0.3)
+        ports = [(f"out:{p}", f":{p}") for p in "abc"]
+    else:
+        transformer = SinglePhaseTransformer("T", "in", "0", "out", "0", 2.0, magnetizing_inductance=3.0)
+        source = VoltageSource("V", "in", "0", lambda t: 10 * math.sin(2 * math.pi * 5 * t + 0.3))
+        ports = [("out", "")]
+    result = Simulator(Circuit.from_components("linear_flux", [source, transformer,
+        *[Resistor(f"R{suffix}", node, "0", 10.0) for node, suffix in ports],
+        Fault("F", ports[0][0], 10.0),
+    ]), SimulationConfig(0.001, 0.02, method=method),
+        events=[] if event_time is None else [FaultApplyEvent(event_time, "F")]).run()
+    for _, suffix in ports:
+        np.testing.assert_allclose(result.series(f"flux:T:magnetizing{suffix}"),
+                                   3.0 * result.series(f"i:T:magnetizing{suffix}"), atol=1e-12)
+
+
+@pytest.mark.parametrize("primary,secondary", [("Y", "Y"), ("Y", "D"), ("D", "Y"), ("D", "D")])
+@pytest.mark.parametrize("method,order_ratio", [("trapezoidal", 4.0), ("backward_euler", 2.0)])
+def test_three_phase_connections_match_analytical_transients_and_energy(primary, secondary, method, order_ratio) -> None:
+    ratio, resistance, inductance, magnetizing, core, load = 2.0, 0.2, 0.02, 2.0, 1000.0, 10.0
+    omega = 2 * math.pi * 50
+    source_phasor = 100 * np.exp(1j * np.array([0.0, -2 * math.pi / 3, 2 * math.pi / 3]))
+    primary_phasor = source_phasor if primary == "Y" else source_phasor - np.roll(source_phasor, -1)
+    # 平衡星形负荷折算到 Δ 绕组为 3 Rload；每相用独立 RL 解析启动解。
+    winding_load = load if secondary == "Y" else 3 * load
+    total_resistance = resistance + ratio**2 * winding_load
+    leakage_phasor = primary_phasor / complex(total_resistance, omega * inductance)
+    errors = []
+    for step in [2e-5, 1e-5]:
+        transformer = ThreePhaseTransformer("T", "in", "out", ratio, primary, secondary,
+            leakage_resistance=resistance, leakage_inductance=inductance,
+            magnetizing_inductance=magnetizing, core_loss_resistance=core)
+        result = Simulator(Circuit.from_components("three_phase_connections", [
+            ThreePhaseSource("V", "in", 100.0), transformer,
+            *[Resistor(f"R{p}", f"out:{p}", "0", load) for p in "abc"],
+        ]), SimulationConfig(step, 0.02, method=method)).run()
+        time = result.series("time")
+        vin = np.array([result.series(f"v:in:{p}") for p in "abc"])
+        vout = np.array([result.series(f"v:out:{p}") for p in "abc"])
+        ip = np.array([result.series(f"i:T:primary:{p}") for p in "abc"])
+        im = np.array([result.series(f"i:T:magnetizing:{p}") for p in "abc"])
+        secondary_current = np.array([result.series(f"i:T:secondary:{p}") for p in "abc"])
+        input_current = -np.array([result.series(f"i:V:{p}") for p in "abc"])
+        winding_voltage = vin if primary == "Y" else vin - np.roll(vin, -1, axis=0)
+        winding_input = ip + im + winding_voltage / core
+        expected_input = winding_input if primary == "Y" else winding_input - np.roll(winding_input, 1, axis=0)
+        expected_output = -secondary_current if secondary == "Y" else -secondary_current + np.roll(secondary_current, 1, axis=0)
+        np.testing.assert_allclose(input_current, expected_input, atol=1e-11)
+        np.testing.assert_allclose(vout / load, expected_output, atol=1e-11)
+        np.testing.assert_allclose(secondary_current, -ratio * ip, atol=1e-11)
+        np.testing.assert_allclose(np.sum(input_current, axis=0), 0.0, atol=1e-11)
+        np.testing.assert_allclose([ip[:, 0], im[:, 0]], 0.0, atol=1e-12)
+
+        stride = round(2e-5 / step)
+        common_time = time[::stride]
+        rotating = np.exp(1j * omega * common_time)
+        exact_ip = math.sqrt(2) * ((leakage_phasor[:, None] * rotating).imag
+            - leakage_phasor.imag[:, None] * np.exp(-total_resistance * common_time / inductance))
+        exact_im = math.sqrt(2) * (primary_phasor.real[:, None]
+            - (primary_phasor[:, None] * rotating).real) / (omega * magnetizing)
+        exact_vout = ratio * winding_load * exact_ip
+        if secondary == "D":
+            exact_vout = (exact_vout - np.roll(exact_vout, 1, axis=0)) / 3
+        errors.append(np.array([np.max(np.abs(actual[:, ::stride] - exact))
+            for actual, exact in [(ip, exact_ip), (im, exact_im), (vout, exact_vout)]]))
+        flux = np.array([result.series(f"flux:T:magnetizing:{p}") for p in "abc"])
+        np.testing.assert_allclose(flux, magnetizing * im, atol=1e-12)
+
+        energy = 0.5 * np.sum(inductance * ip**2 + magnetizing * im**2, axis=0)
+        if method == "trapezoidal":
+            vi, ii, vo, iw, vw = [(x[:, :-1] + x[:, 1:]) / 2
+                for x in [vin, input_current, vout, ip, winding_voltage]]
+            numerical_loss = 0.0
+        else:
+            vi, ii, vo, iw, vw = [x[:, 1:] for x in [vin, input_current, vout, ip, winding_voltage]]
+            numerical_loss = 0.5 * np.sum(inductance * np.diff(ip)**2 + magnetizing * np.diff(im)**2, axis=0)
+        power = np.sum(vi * ii - vo**2 / load - resistance * iw**2 - vw**2 / core, axis=0)
+        work = np.cumsum(np.diff(time) * power - numerical_loss)
+        np.testing.assert_allclose(work, energy[1:] - energy[0], atol=1e-10, rtol=0)
+
+    limits = [2.5e-4, 7e-7, 0.008] if method == "trapezoidal" else [0.025, 0.0013, 0.75]
+    assert np.all(errors[1] < limits), errors  # A、A、V，整个启动区间
+    np.testing.assert_allclose(errors[0] / errors[1], order_ratio, rtol=0.08)
 
 
 @pytest.mark.parametrize("method", ["trapezoidal", "backward_euler"])

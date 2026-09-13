@@ -15,13 +15,61 @@
 
 ## 2. 滤波器组合
 
-`pycy_emt_lite.converters.filters` 提供 L、LC、LCL 滤波器组合类。它们不是新的 MNA 元件，而是把已有 `Resistor`、`Inductor`、`Capacitor` 组合成常见滤波结构：
+`pycy_emt_lite.converters` 导出三个可选的单相组合类，用于学习滤波器接线和阻尼。
+调用 `.components()` 得到普通 R/L/C 列表，直接接入现有 `Circuit/Simulator`；组合本身没有动态状态或独立求解流程。
 
-- `LFilter`
-- `LCFilter`
-- `LCLFilter`
+| 组合 | 接线与电流方向 |
+|---|---|
+| `LFilter` | `input_node → series_resistance → inductance → output_node`；电流沿输入到输出为正 |
+| `LCFilter` | 同一串联 R–L 支路，输出节点另接 C 到 `ground`；电容电流沿输出到地为正 |
+| `LCLFilter` | `converter_node → R1/L1 → capacitor_node → R2/L2 → grid_node`；中间节点经串联 Rd–C 接地，i1 流入中间节点，i2 流向电网 |
 
-这种方式复用已有 stamp 和动态状态更新逻辑，降低新增模型风险。
+电感单位 H、电容单位 F、电阻单位 Ω；L/C 必须大于 0，三个组合中的电阻均可为 0，表示省略对应电阻。
+`damping_resistance` 是与 C **串联**的阻尼电阻。Rd=0 时 C 直接接中间节点，不能解释为省略电容。
+所有电气参数须为有限实数；创建组合时即拒绝负值、NaN/Inf、布尔值或非数值，并指出名称、参数和修复范围。
+例如 `series_resistance=-1` 原来会静默省略电阻，现在报错；无损支路请明确写 0。
+
+以下 LC 接线可直接运行；电源为 10 V 峰值、50 Hz，负荷为 10 Ω：
+
+```python
+import math
+from pycy_emt_lite import Circuit, Resistor, SimulationConfig, Simulator, VoltageSource
+from pycy_emt_lite.converters import LCFilter
+
+filter_ = LCFilter("F", "src", "load", "0", inductance=0.01,
+                   capacitance=1e-4, series_resistance=0.5)
+components = [
+    VoltageSource("V", "src", "0", lambda t: 10 * math.cos(2 * math.pi * 50 * t)),
+    *filter_.components(),
+    Resistor("LOAD", "load", "0", 10.0),
+]
+result = Simulator(Circuit.from_components("lc_filter", components),
+                   SimulationConfig(time_step=1e-5, stop_time=0.02)).run()
+print(result.rows[-1]["v:load"])
+```
+
+组合生成的 iL/vC 初值均为 0；需要非零初值时，在构建电路前使用 `dataclasses.replace`
+替换列表中电感的 `initial_current` 或电容的 `initial_voltage`。每次仿真重新调用 `.components()` 取得新元件。
+结果沿用各基础元件名称，例如 LC 的 `i:F:L`、`i:F:C`；LCL 的 `i:F:converter:L`、`i:F:grid:L`、`i:F:C`。
+Rd>0 时，中间节点相对 `ground` 的电压为 `vC + Rd·(i1-i2)`，电容上端是内部节点 `F:damping`；Rd=0 时两者电压相同。
+
+独立参考直接积分下列电路方程，不调用组合的 stamp 或状态更新：
+
+- LC 接电阻负荷 Rload：`L·di/dt = vin-Rs·i-vC`，`C·dvC/dt = i-vC/Rload`。
+- LCL 两端接独立电压源：`ic=i1-i2`，`vm=vC+Rd·ic`，
+  `L1·di1/dt=vconv-R1·i1-vm`，`L2·di2/dt=vm-R2·i2-vgrid`，`C·dvC/dt=ic`。
+- LCL 储能 `E=(L1·i1²+L2·i2²+C·vC²)/2`；功率关系为
+  `dE/dt=vconv·i1-vgrid·i2-R1·i1²-R2·i2²-Rd·ic²`。
+
+现有回归覆盖零初值、源端电流方向、KCL、Rd 压降和全过程离散能量平衡，包含零电阻及有阻尼情况。
+L 的串联结构由 LC/LCL 复用并一同检查。参考采用 SciPy DOP853，比较窗口为 0–0.02 s 的共同时间点：
+LC 使用上面的参数并对照 Rs=0，步长 20/10 μs；LCL 使用 L1=10 mH、L2=5 mH、C=100 μF，
+两端电压为 `10 cos(2π50t)` V 和 `6 cos(2π50t-0.2)` V，电阻为全零或 `(R1,R2,Rd)=(0.4,0.3,2)` Ω，步长 5/2.5 μs。
+步长减半的最大状态误差比，梯形法约 4，后向欧拉约 1.93–1.99。
+
+梯形法用区间端值的平均电压/电流核对储能与端口功、真实电阻损耗；后向欧拉还需计入每步
+`(ΣL·Δi²+ΣC·Δv²)/2` 的数值耗散。无阻尼 LCL 在 2.5 μs 下的最大 vC 误差仍约 0.541 V，
+梯形法约 0.000387 V；后向欧拉的衰减不能解释为真实阻尼。这些检查针对线性被动滤波网络，不代表闭环并网变流器验证。
 
 ## 3. PWM 教学示例
 

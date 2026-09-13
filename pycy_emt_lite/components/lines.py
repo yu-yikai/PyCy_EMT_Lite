@@ -465,7 +465,7 @@ class SegmentedLine(Component):
             _update_shunt_capacitor_state(context, solution, negative, self.ground, half_capacitance, self.receiving_cap_states[index])
 
     def outputs(self, context: StampContext, solution: np.ndarray) -> dict[str, float]:
-        """记录首段、末段和平均线路电流。"""
+        """记录首段、末段和平均串联电流，不含端口并联电容电流。"""
 
         currents = [state.last_current for state in self.series_states]
         return {

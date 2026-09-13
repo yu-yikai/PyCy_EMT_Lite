@@ -2,7 +2,7 @@
 
 [English](advanced_line_transformer_models.en.md)
 
-本文说明 π 型线路、Bergeron 线路教学版、单相变压器、三相变压器和同步机教学模型。当前实现定位为教学和算法验证版本，优先保证模型边界清楚、stamp 原理可读、结果可测试。
+本文说明 π 型/分段线路、Bergeron 线路教学版、单相变压器、三相变压器和同步机教学模型。当前实现定位为教学和算法验证版本，优先保证模型边界清楚、stamp 原理可读、结果可测试。
 
 ## 1. π 型线路
 
@@ -36,6 +36,33 @@ Iseries = Yrecv Vrecv
 已验证两端电容电流、KCL、整个启动过程的储能/端口功平衡，以及相同物理时间点上的误差收敛：
 梯形法步长减半误差约缩为 1/4，后退欧拉约缩为 1/2。梯形法的离散能量检查用区间两端电压/电流的平均值计算端口功；
 储能为 `L Iseries²/2 + C(Vsend²+Vrecv²)/4`。示例的 RMS 和电阻有功采用现有分段线性指标。
+
+### 分段线路：比较空间离散误差
+
+`pycy_emt_lite.components.lines.SegmentedLine` 把总 R/L/C 等分为 N 个 π 段；每段两端各有 C/(2N)，
+内部节点相邻两只电容合计 C/N。R/L/C 分别使用 Ω/H/F，`sections` 为正整数，允许 L 或 C 为 0，R/L 不能同时为 0。
+它保留为集中参数线路课程的可选对照，不另建仿真流程；增加段数不会自动消除时间步长误差，也不包含相间耦合或频率相关参数。
+
+现有 `i:LINE:sending`、`i:LINE:receiving` 分别是首段和末段的**串联电流**，
+`i:LINE:average` 是各段串联电流的算术平均，均沿发送端到接收端为正。
+端口总电流另包含端部电容：`Iin=Ifirst+C/(2N)·dVsend/dt`，`Iout=Ilast-C/(2N)·dVrecv/dt`，
+这里 Iin 流入发送端，Iout 流出接收端。不能直接用上述串联电流输出计算端口功率。
+例如 C=40 μF、N=4、发送电压 `10 sin(2π50t)` V、零储能初值时，t=0 的 Ifirst=0，Iin=0.015708 A。
+
+独立交流参考从单段二端口矩阵级联得到：
+
+```text
+Z = R + jωL, Y = jωC, z = Z/N, y = Y/N
+Mπ = [[1+zy/2, z], [y(1+zy/4), 1+zy/2]]
+[Vsend, Iin]ᵀ = Mπᴺ [Vrecv, Iout]ᵀ
+```
+
+连续均匀线参考为 `exp([[0,Z],[Y,0]])`，对应从受端向送端、归一化长度 0–1 上的电压电流空间方程。
+在总 R=8 Ω、L=60 mH、C=40 μF、负荷 30 Ω、100 V RMS/50 Hz 下，测试用独立相量初始化，
+固定 10 μs 步长和 0–0.02 s 窗口。N=1/2/4/8 的受端复相量误差依次约为
+1.6680/0.40882/0.10171/0.025407 V，段数加倍后误差约缩为 1/4。
+另验证零初值、无电容退化、端部电容 KCL，以及无线路电阻时的储能与端口功/负荷耗能平衡。
+这些证据针对声明的线性均匀参数模型，不代表完整分布参数线路的宽频暂态验证。
 
 ## 2. Bergeron 线路教学版
 
@@ -106,13 +133,17 @@ Iinput = Ileak + Imag + Vpri/Rcore   # 未设置铁耗电阻时省略末项
 |ψ| >= ψ_knee     使用 saturated_magnetizing_inductance
 ```
 
-磁链用一次侧电压积分：
+磁链用一次侧电压积分，方法与励磁电感保持一致：
 
 ```text
-ψ_k = ψ_{k-1} + v_p,k Δt
+梯形法：    ψ_k = ψ_{k-1} + (v_p,k-1 + v_p,k) Δt/2
+后向欧拉：  ψ_k = ψ_{k-1} + v_p,k Δt
 ```
 
-该做法避免引入非线性迭代，适合解释“饱和后励磁电感下降、励磁电流增大”的趋势。它不是完整铁芯磁滞模型，也不包含剩磁、回线和频率相关损耗。
+线性 Lm 下应满足 `ψ(t)-ψ(0)=Lm·(im(t)-im(0))`；单相/三相、两种积分方法及非整步/终点事件已有回归。
+旧实现一律用后向欧拉积磁链，导致梯形法下磁链与电流不一致，现已修正。
+饱和电感仍按上一时刻磁链选择，不引入非线性迭代；该近似未通过独立饱和曲线或能量验证，不能由线性回归推断涌流准确性。
+不包含完整铁芯磁滞、剩磁、回线和频率相关损耗。
 
 ## 5. 三相变压器
 
@@ -121,6 +152,7 @@ Iinput = Ileak + Imag + Vpri/Rcore   # 未设置铁耗电阻时省略末项
 - Y/Y
 - Y/Δ
 - Δ/Y
+- Δ/Δ
 
 接法通过 `primary_connection` 和 `secondary_connection` 指定，取值为 `"Y"` 或 `"D"`。
 
@@ -132,7 +164,30 @@ b 绕组：bus:b -> bus:c
 c 绕组：bus:c -> bus:a
 ```
 
-`turns_ratio` 表示一次每相绕组电压与二次每相绕组电压之比。含 Δ 接法时，纯理想变压器会形成理想电压约束环；因此教学模型要求设置非零 `leakage_resistance` 或 `leakage_inductance`，以避免 MNA 矩阵奇异。
+`turns_ratio=n` 为理想绕组匝数比；漏阻抗折算到一次每相，单位 Ω/H，励磁电感和铁损电阻也按一次绕组定义。
+二次侧为 Δ 且漏阻抗为零时，绕组环流无法唯一确定，创建时要求将 `leakage_resistance` 或 `leakage_inductance` 设为正数。
+Δ/Y 可以使用零漏阻抗；程序不再将一次侧含 Δ 直接判为不可求解。Y 中性点默认接地；浮置网络仍须有实际电路约束，程序不自动补泄漏电阻。
+
+按以上绕组方向和 abc 正序，无漏阻抗压降时的线电压关系为：
+
+| 一次/二次 | 二次/一次线电压 RMS | 二次相对一次的相移 |
+|---|---|---|
+| Y/Y | 1/n | 0° |
+| Y/Δ | 1/(√3 n) | −30° |
+| Δ/Y | √3/n | +30° |
+| Δ/Δ | 1/n | 0° |
+
+表中含二次 Δ 的理想值是非零漏阻抗趋近于零时的参考；带载压降和相角还受实际漏阻抗影响。
+输出 `i:T:primary:a` 是 a 绕组漏阻抗支路电流，不含励磁/铁损；`i:T:secondary:a` 沿二次绕组正端流入，满足 `Is=-n Ip`。
+Δ 侧的线电流是相邻绕组电流之差：`Iline,a=Iw,a-Iw,c`，其余两相轮换；一次侧要先把励磁与铁损电流加到 Iw。
+接地星形负荷上的输出线电流方向与二次绕组流入方向相反，不能把绕组电流直接当作负荷相电流。
+
+四种接法均已用电感电流从零启动的独立 RL 解析解检验。测试设置一次相电压 100 V RMS/50 Hz、n=2、
+Rleak=0.2 Ω、Lleak=20 mH、Lm=2 H、Rcore=1000 Ω，二次每相接地负荷为 10 Ω。
+平衡星形负荷折算到 Δ 绕组为 3Rload；每个绕组用 `Vp/(Rleak+jωLleak+n²Rw)` 得到稳态电流，叠加零初值指数暂态。
+核对整个 0–0.02 s 区间的端口电压、两侧线/绕组电流、励磁直流分量、磁链与铜损/铁损/储能平衡。
+20/10 μs 的共同时间点误差比，梯形法约 4，后向欧拉约 1.95–2.00；后者的能量账包含数值耗散。
+另验证零漏阻抗 Y/Y、Δ/Y 在不平衡电阻负荷下的电压和功率。该模型用于比较三相接线的变比与相移；证据不外推到共同铁芯耦合、任意矢量组或饱和故障。
 
 ## 6. 同步机：保留两种有明确边界的模型
 
@@ -249,25 +304,31 @@ dPm_pu/dt = (Pm_reference - (speed_pu-1)/droop - Pm_pu) / Tgov
 
 ## 7. 使用示例
 
+分段线路示例（零储能初值，10 V 峰值/50 Hz 电源）：
+
 ```python
-from pycy_emt_lite import Circuit, PiLine, Resistor, SimulationConfig, Simulator, VoltageSource
+import math
+from pycy_emt_lite import Circuit, Resistor, SimulationConfig, Simulator, VoltageSource
+from pycy_emt_lite.components.lines import SegmentedLine
 
 components = [
-    VoltageSource("V1", "source", "0", 10.0),
-    PiLine("LINE", "source", "load", resistance=1.0, inductance=1e-3, capacitance=1e-6),
+    VoltageSource("V1", "source", "0", lambda t: 10 * math.sin(2 * math.pi * 50 * t),
+                  derivative=lambda t: 10 * 2 * math.pi * 50 * math.cos(2 * math.pi * 50 * t)),
+    SegmentedLine("LINE", "source", "load", resistance=1.0, inductance=1e-3, capacitance=1e-6, sections=4),
     Resistor("LOAD", "load", "0", 9.0),
 ]
 
-circuit = Circuit.from_components("pi_line_demo", components)
+circuit = Circuit.from_components("segmented_line_demo", components)
 config = SimulationConfig(time_step=1e-5, stop_time=0.02)
 simulator = Simulator(circuit, config)
 result = simulator.run()
 ```
 
-三相变压器示例：
+Δ/Y 三相变压器示例（零漏阻抗，二次相电压约 86.6025 V RMS）：
 
 ```python
-from pycy_emt_lite import Circuit, Resistor, SimulationConfig, Simulator, ThreePhaseSource, ThreePhaseTransformer
+from pycy_emt_lite import Circuit, Resistor, SimulationConfig, Simulator, ThreePhaseSource
+from pycy_emt_lite.components.transformers import ThreePhaseTransformer
 
 components = [
     ThreePhaseSource("VS", "primary", phase_rms=100.0),
@@ -276,9 +337,8 @@ components = [
         "primary",
         "secondary",
         turns_ratio=2.0,
-        primary_connection="Y",
+        primary_connection="D",
         secondary_connection="Y",
-        leakage_resistance=0.01,
         magnetizing_inductance=10.0,
     ),
     Resistor("LA", "secondary:a", "0", 50.0),

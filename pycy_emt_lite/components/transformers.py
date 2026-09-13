@@ -4,7 +4,7 @@
 
 主要内容：
 1. 单相变压器：理想变比、漏阻抗、励磁支路
-2. 三相 Y/Y、Y/Δ、Δ/Y 变压器
+2. 三相 Y/Y、Y/Δ、Δ/Y、Δ/Δ 变压器
 3. 显式滞后的饱和励磁简化模型
 """
 
@@ -251,9 +251,12 @@ def _update_transformer_phase(
 
     if magnetizing_branch_index is not None:
         magnetizing_current = float(solution[context.branch_offset + magnetizing_branch_index])
+        flux_voltage = primary_voltage
+        if context.method == "trapezoidal":
+            flux_voltage = 0.5 * (state.magnetizing_previous_voltage + primary_voltage)
+        state.magnetizing_flux += flux_voltage * context.time_step
         state.magnetizing_previous_current = magnetizing_current
         state.magnetizing_previous_voltage = primary_voltage
-        state.magnetizing_flux += primary_voltage * context.time_step
         state.last_magnetizing_current = magnetizing_current
 
 
@@ -379,7 +382,7 @@ class ThreePhaseTransformer(Component):
     """三相两绕组变压器教学模型。
 
     `primary_connection` 和 `secondary_connection` 支持 `"Y"` 与 `"D"`，因此可表示
-    Y/Y、Y/Δ、Δ/Y。`turns_ratio` 是一次每相绕组电压与二次每相绕组电压之比。
+    Y/Y、Y/Δ、Δ/Y、Δ/Δ。`turns_ratio` 是一次每相绕组电压与二次每相绕组电压之比。
     """
 
     name: str
@@ -416,12 +419,11 @@ class ThreePhaseTransformer(Component):
             raise ValueError(f"变压器 {self.name} 的一次接法必须为 'Y' 或 'D'。")
         if self.secondary_connection not in {"Y", "D"}:
             raise ValueError(f"变压器 {self.name} 的二次接法必须为 'Y' 或 'D'。")
-        has_delta = self.primary_connection == "D" or self.secondary_connection == "D"
         has_leakage = self.leakage_resistance > 0 or self.leakage_inductance > 0
-        if has_delta and not has_leakage:
+        if self.secondary_connection == "D" and not has_leakage:
             raise ValueError(
-                f"三相变压器 {self.name} 含 Δ 接法时需要设置非零漏阻抗，"
-                "以避免纯理想电压约束环导致 MNA 矩阵奇异。"
+                f"三相变压器 {self.name} 的二次侧为 Δ 时，零漏阻抗无法唯一确定绕组环流；"
+                "请将 leakage_resistance 或 leakage_inductance 设置为正数。"
             )
 
     def nodes(self) -> Iterable[str]:

@@ -10,9 +10,22 @@
 
 from __future__ import annotations
 
+import math
 from dataclasses import dataclass
+from numbers import Real
 
 from pycy_emt_lite.components import Capacitor, Component, Inductor, Resistor
+
+
+def _validate_parameter(name: str, parameter: str, value: float, *, allow_zero: bool = False) -> None:
+    """在选择拓扑前检查参数，避免把非法电阻当作省略支路。"""
+    if (isinstance(value, bool) or not isinstance(value, Real) or not math.isfinite(value)
+            or value < 0.0 or (value == 0.0 and not allow_zero)):
+        required_range = "大于或等于 0" if allow_zero else "大于 0"
+        raise ValueError(
+            f"滤波器 {name} 的 {parameter}={value!r} 必须为{required_range}的有限实数；"
+            "请按参数单位设置合法数值，不使用布尔值、NaN 或 Inf。"
+        )
 
 
 @dataclass(frozen=True, slots=True)
@@ -24,6 +37,10 @@ class LFilter:
     output_node: str
     inductance: float
     series_resistance: float = 0.0
+
+    def __post_init__(self) -> None:
+        _validate_parameter(self.name, "inductance", self.inductance)
+        _validate_parameter(self.name, "series_resistance", self.series_resistance, allow_zero=True)
 
     def components(self) -> list[Component]:
         """返回组成该 L 滤波器的元件对象列表。"""
@@ -49,6 +66,11 @@ class LCFilter:
     capacitance: float
     series_resistance: float = 0.0
 
+    def __post_init__(self) -> None:
+        _validate_parameter(self.name, "inductance", self.inductance)
+        _validate_parameter(self.name, "capacitance", self.capacitance)
+        _validate_parameter(self.name, "series_resistance", self.series_resistance, allow_zero=True)
+
     def components(self) -> list[Component]:
         """返回组成该 LC 滤波器的元件对象列表。"""
 
@@ -73,6 +95,12 @@ class LCLFilter:
     converter_resistance: float = 0.0
     grid_resistance: float = 0.0
     damping_resistance: float = 0.0
+
+    def __post_init__(self) -> None:
+        for parameter in ("converter_inductance", "grid_inductance", "capacitance"):
+            _validate_parameter(self.name, parameter, getattr(self, parameter))
+        for parameter in ("converter_resistance", "grid_resistance", "damping_resistance"):
+            _validate_parameter(self.name, parameter, getattr(self, parameter), allow_zero=True)
 
     def components(self) -> list[Component]:
         """返回组成该 LCL 滤波器的元件对象列表。"""

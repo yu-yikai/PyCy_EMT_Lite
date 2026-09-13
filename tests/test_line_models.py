@@ -9,6 +9,7 @@ import runpy
 
 import numpy as np
 import pytest
+from scipy.linalg import expm
 
 from pycy_emt_lite import Capacitor, Circuit, CurrentSource, Fault, FaultApplyEvent, Inductor, PiLine, Resistor, SimulationConfig, Simulator, VoltageSource
 from pycy_emt_lite.analysis import rms
@@ -129,6 +130,82 @@ def test_segmented_line_preserves_dc_divider_with_consistent_initial_voltages() 
 
     assert math.isclose(result.rows[-1]["v:load"], 9.0, rel_tol=0.0, abs_tol=5e-3)
     assert "i:SL:average" in result.columns
+
+
+@pytest.mark.parametrize("sections", [1, 4])
+@pytest.mark.parametrize("capacitance", [0.0, 4e-5])
+def test_segmented_line_distinguishes_series_and_port_currents_and_balances_energy(sections, capacitance) -> None:
+    inductance, omega, load = 0.06, 2 * math.pi * 50, 30.0
+    line = SegmentedLine("SL", "send", "recv", 0.0, inductance, capacitance, sections)
+    result = Simulator(Circuit.from_components("segmented_energy", [
+        VoltageSource("V", "send", "0", lambda t: 10 * math.sin(omega * t),
+                      derivative=lambda t: 10 * omega * math.cos(omega * t)),
+        line, Resistor("LOAD", "recv", "0", load),
+    ]), SimulationConfig(2e-5, 0.006)).run()
+    time = result.series("time")
+    send, recv = result.series("v:send"), result.series("v:recv")
+    input_current, output_current = -result.series("i:V"), result.series("i:LOAD")
+    first, last = result.series("i:SL:sending"), result.series("i:SL:receiving")
+
+    def midpoint(values):
+        return (values[:-1] + values[1:]) / 2
+
+    half_capacitance = capacitance / (2 * sections)
+    np.testing.assert_allclose(midpoint(input_current - first), half_capacitance * np.diff(send) / np.diff(time), atol=1e-11)
+    np.testing.assert_allclose(midpoint(last - output_current), half_capacitance * np.diff(recv) / np.diff(time), atol=1e-11)
+    assert first[0] == pytest.approx(0.0, abs=1e-12)
+    assert input_current[0] == pytest.approx(half_capacitance * 10 * omega, abs=1e-12)
+    # Rline=0，仅负载耗能；逐段末状态独立计算储能，不把串联电流当端口总电流。
+    nodes = ["send", *[f"SL:internal:{j}" for j in range(1, sections)], "recv"]
+    voltage = np.array([result.rows[-1][f"v:{node}"] for node in nodes])
+    energy = 0.5 * inductance / sections * sum(state.last_current**2 for state in line.series_states)
+    energy += 0.5 * half_capacitance * np.sum(voltage[:-1]**2 + voltage[1:]**2)
+    work = np.sum(np.diff(time) * (midpoint(send) * midpoint(input_current) - midpoint(recv) * midpoint(output_current)))
+    assert work == pytest.approx(energy, abs=1e-12)
+
+
+def test_segmented_line_matches_cascaded_pi_phasors_and_converges_to_uniform_line() -> None:
+    resistance, inductance, capacitance, load, source_rms = 8.0, 0.06, 4e-5, 30.0, 100.0
+    omega = 2 * math.pi * 50
+    impedance, admittance = complex(resistance, omega * inductance), 1j * omega * capacitance
+    # 均匀线的连续空间方程：从受端向送端积分 d[V,I]/dx = [[0,Z],[Y,0]] [V,I]。
+    uniform = expm(np.array([[0, impedance], [admittance, 0]], dtype=complex))
+    uniform_voltage = source_rms / (uniform[0, 0] + uniform[0, 1] / load)
+    errors = []
+    for sections in [1, 2, 4, 8]:
+        z, y = impedance / sections, admittance / sections
+        section = np.array([[1 + z*y/2, z], [y * (1 + z*y/4), 1 + z*y/2]])
+        total = np.linalg.matrix_power(section, sections)
+        voltage = np.zeros(sections + 1, dtype=complex)
+        series = np.zeros(sections, dtype=complex)
+        voltage[-1] = source_rms / (total[0, 0] + total[0, 1] / load)
+        port_current = voltage[-1] / load
+        for index in range(sections - 1, -1, -1):
+            series[index] = port_current + y * voltage[index + 1] / 2
+            voltage[index], port_current = section @ [voltage[index + 1], port_current]
+
+        line = SegmentedLine("SL", "send", "recv", resistance, inductance, capacitance, sections)
+        # 用独立相量设定一致稳态初值，将空间分段误差与启动暂态分开。
+        for index in range(sections):
+            line.series_states[index].previous_current = math.sqrt(2) * series[index].imag
+            line.sending_cap_states[index].previous_voltage = math.sqrt(2) * voltage[index].imag
+            line.receiving_cap_states[index].previous_voltage = math.sqrt(2) * voltage[index + 1].imag
+        result = Simulator(Circuit.from_components("segmented_phasor", [
+            VoltageSource("V", "send", "0", lambda t: math.sqrt(2) * source_rms * math.sin(omega * t),
+                          derivative=lambda t: math.sqrt(2) * source_rms * omega * math.cos(omega * t)),
+            line, Resistor("LOAD", "recv", "0", load),
+        ]), SimulationConfig(1e-5, 0.02)).run()
+        time = result.series("time")
+        rotating = np.exp(1j * omega * time)
+        expected = {"v:recv": voltage[-1], "i:SL:sending": series[0], "i:SL:receiving": series[-1],
+                    "i:SL:average": series.mean(), "i:V": -port_current}
+        for column, phasor in expected.items():
+            np.testing.assert_allclose(result.series(column), math.sqrt(2) * (phasor * rotating).imag,
+                                       atol=1e-4, rtol=0)
+        received = result.series("v:recv")
+        measured = math.sqrt(2) * np.trapezoid(received * (np.sin(omega * time) + 1j * np.cos(omega * time)), time) / time[-1]
+        errors.append(abs(measured - uniform_voltage))
+    np.testing.assert_allclose(np.array(errors[:-1]) / errors[1:], 4.0, rtol=0.08)
 
 
 @pytest.mark.parametrize("kind", ["pi", "segmented", "three_phase"])

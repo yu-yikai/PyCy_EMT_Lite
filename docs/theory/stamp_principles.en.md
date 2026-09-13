@@ -84,9 +84,15 @@ Stamp the Pi line's series branch and two terminal shunt capacitors, each with i
 
 Stamp leakage, ideal turns ratio, and magnetizing branch using stated primary/secondary polarity. Verify open-circuit ratio and loaded power direction. State which connection groups and mutual effects are unsupported.
 
+`ThreePhaseTransformer` supports Y/Y, Y/Δ, Δ/Y and Δ/Δ. A delta secondary with zero leakage has undetermined circulating winding current and requires positive leakage resistance or inductance. Δ/Y permits zero leakage. Delta line current is the difference between adjacent winding currents, for example `Ia=Iab-Ica`; primary winding totals also include magnetizing and core-loss currents. See [line and transformer models](advanced_line_transformer_models.en.md) for winding ratios, line-voltage phase shifts and validation limits.
+
+### SegmentedLine
+
+Assemble equal Pi sections sequentially in one component using the shared solver, with separate series and capacitor histories. The `sending/receiving` outputs are the first/last series currents, and `average` is their arithmetic mean, all positive from sending to receiving. They exclude end-capacitor currents: total input is `Ifirst+C/(2N)·dVsend/dt` and total output is `Ilast-C/(2N)·dVrecv/dt`. Use total currents for terminal power.
+
 ### Saturation
 
-Document the flux or magnetizing-current approximation and valid range.
+Flux integrates primary winding voltage using the magnetizing inductor's method: `ψ_k=ψ_{k-1}+(v_p,k-1+v_p,k)Δt/2` for trapezoidal and `ψ_k=ψ_{k-1}+v_p,k Δt` for backward Euler. Read the old voltage before replacing it with the current value. Linear Lm satisfies `Δψ=Lm·Δim`; initialization and event right-side consistency solves do not advance flux. Saturation still selects inductance from previous flux and lacks independent saturation-curve and energy validation; hysteresis, remanence and frequency-dependent core losses are excluded.
 
 ### Synchronous machines
 
