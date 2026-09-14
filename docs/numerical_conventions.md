@@ -57,7 +57,7 @@
 
 ## 3. 时间网格和参数
 
-`SimulationConfig(time_step, stop_time, start_time=0, method="trapezoidal", event_time_policy="insert")`：
+`SimulationConfig(time_step, stop_time, start_time=0, method="trapezoidal", event_time_policy="insert", record_every=1)`：
 
 - `time_step` 必须是有限正实数；`stop_time` 必须是有限非负实数；布尔值不作为数值接受。
 - 当前只支持 `start_time=0`。`stop_time=0` 合法，只记录一致初值一行。
@@ -70,7 +70,25 @@
 `insert` 允许显式事件在基本网格之间插点，因此实际区间 h 可不相等。所有储能历史与统计指标必须使用实际时间。
 终点整步要求与事件插点是两个独立约定。Bergeron 历史另要求固定网格和整步传播时延。
 
+`record_every` 必须为正整数，默认保存每个求解点。设为 N 时按求解点序号每 N 点保存一次，
+初始点、显式事件点和终点始终保留；插入事件会参与序号计数，因此输出不一定等间隔。
+它仅减少结果行，网络、状态更新和控制回调仍在每个求解点执行。
+`result.time_step` 仍是基础 EMT 步长；绘图和统计读取实际 `time` 列。
+
+### 可选步后控制回调
+
+`CaseDefinition(..., on_step=callback)` 或 `Simulator(..., on_step=callback)` 连接显式控制。
+回调接收当前只读测量行，返回新增字段的映射（无字段时返回 `{}`）；键须为非空字符串且不得与已有字段重名，值须为有限实数，布尔值不接受。
+执行顺序为求解和状态更新、事件右侧一致求解、一次回调、选择保存结果；同刻事件不重复推进控制器。
+回调在 t=0 也执行，此时只观察/初始化，不能给要求正间隔的 PI/PLL 传零步长。
+控制器保留的命令通过元件 callable 作用于下一网络步；没有同一步代数闭环。
+回调需从相邻 `row["time"]` 计算实际间隔，并随新算例重新创建状态。
+示例见 [三端 VSC-HVDC](three_terminal_vsc_hvdc.md)，默认 `on_step=None` 保持原流程。
+
 ## 4. 一致初值
+
+当高压储能与近零电压约束并存时，LU 消减误差可能使一致解未通过逐行约束检查。
+此时只补求一次残差方程 `A δx=b−Ax`，再使用原初值阈值复查；不放松约束或允许冲激。
 
 `t=0` 先应用零时刻事件，再解初始网络并记录；不会先积分一个正步长，也不会把 h=0 代入上表。
 电容保持 `initial_voltage`，电感保持 `initial_current`，默认均为零；同时从网络约束求出配套的电容电流、

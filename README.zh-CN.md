@@ -24,7 +24,7 @@ uv run pytest
 
 ## 2. 学习顺序
 
-保留 13 个短脚本，组成八个学习单元。编号 13–16 的平均新能源/变流器及 HVDC/MMC 综合候选已移除，现有命令沿用原编号。
+13 个基础脚本和 1 个综合示例组成九个学习单元。编号 13–16 的平均新能源/变流器及 HVDC/MMC 综合候选已移除，现有命令沿用原编号。
 
 | 单元 | 脚本 | 内容 |
 |---|---|---|
@@ -36,6 +36,11 @@ uv run pytest
 | 同步机 | [10](examples/10_park_generator_avr_governor.py) | 平衡初值、负荷阶跃、AVR 和调速器 |
 | 离散控制 | [11](examples/11_pll_dynamic_response.py) | SRF-PLL，独立控制循环 |
 | PWM | [12](examples/12_two_level_pwm_generator.py) | 理想开关、SPWM 和 RL 电流 |
+| VSC-HVDC 综合仿真 | [18](examples/18_three_terminal_vsc_hvdc.py) | 三个两电平桥、独立 PLL/dq 闭环、双极 DC 网络和交流故障 |
+
+运行 `uv run python examples/18_three_terminal_vsc_hvdc.py`，默认 FAST 为 20 μs、0.8 s。
+修改脚本顶部 `MODE` 可选择 `FULL`（5 μs）或 `BENCHMARK`（2 μs），两者均运行 2.5 s。
+[完整说明](docs/three_terminal_vsc_hvdc.md) 给出来源映射、参数、验证和模型调整，包括故障清除 RC 缓冲支路。
 
 示例 17 为 220 V RMS、50 Hz 电源串联 20 Ω、50 mH、100 μF，电压和电流分图；
 默认用 0.08–0.12 s 稳态窗口核对相量。修改频率或阻尼后需重新选取窗口。
@@ -116,6 +121,7 @@ RMS、均值、三相功率、采样峰值和跌落统计的窗口/方向规则�
 | 本 README | 安装、学习顺序、编写算例、结果操作 |
 | [数值约定](docs/numerical_conventions.md) | MNA/stamp、单位、初值、时间、事件、指标和错误诊断 |
 | [模型与验证](docs/models_and_validation.md) | 保留模型方程、算例参数、验证证据及未验证范围 |
+| [三端 VSC-HVDC](docs/three_terminal_vsc_hvdc.md) | 参考映射、开关网络、闭环控制、模式、故障与验证 |
 
 顶层保留 `CaseDefinition`、`Circuit`、`Simulator`、`SimulationResult`，基础 RLC/独立源、开关/故障/事件、
 三相源/线路/负荷、π 线路和单相变压器。具体导出见[顶层接口](pycy_emt_lite/__init__.py)。
@@ -123,8 +129,9 @@ RMS、均值、三相功率、采样峰值和跌落统计的窗口/方向规则�
 分段/Bergeron/三相 π 线路及三相变压器从相应 `components` 模块导入。
 控制、分析、绘图使用各自子包；子包可导入不等于已完成全部物理验证。
 
-`pycy_emt_lite/` 放实现，`examples/` 放案例，`tests/` 放回归，`docs/` 放上述两项专题的完整双语版本。
+`pycy_emt_lite/` 放实现，`examples/` 放案例，`tests/` 放回归，`docs/` 放上述三项专题的完整双语版本。
 新增元件需说明物理方程、离散式、单位/方向、初值/事件行为，并增加解析、守恒或独立参考检查。
 新增案例更新学习表即可；避免仅为组织形式增加包装层、依赖或入口。
+文档中的仓库文件链接使用相对路径，运行与输出路径以项目根目录为基准；外部参考资料提供公开来源链接和文件名，不写个人绝对路径或临时验证目录。
 
 PyCy_EMT_Lite 源自 PyCy_EMT v0.6 的对象式工作流，保留适合小规模教学的内容。[MIT 许可证](LICENSE)。

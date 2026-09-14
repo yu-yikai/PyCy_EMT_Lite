@@ -24,7 +24,7 @@ Noninteractive backends such as `MPLBACKEND=Agg` skip window display while retai
 
 ## 2. Learning order
 
-Thirteen short scripts form eight units. Integrated average renewable/converter and HVDC/MMC candidates 13–16 were removed; retained commands keep their original numbers.
+Thirteen introductory scripts and one integrated example form nine units. Integrated average renewable/converter and HVDC/MMC candidates 13–16 were removed; retained commands keep their original numbers.
 
 | Unit | Scripts | Topics |
 |---|---|---|
@@ -36,6 +36,11 @@ Thirteen short scripts form eight units. Integrated average renewable/converter 
 | Synchronous machines | [10](examples/10_park_generator_avr_governor.py) | Equilibrium initialization, load step, AVR and governor |
 | Discrete control | [11](examples/11_pll_dynamic_response.py) | SRF-PLL in a standalone control loop |
 | PWM | [12](examples/12_two_level_pwm_generator.py) | Ideal switches, SPWM and RL current |
+| Integrated VSC-HVDC | [18](examples/18_three_terminal_vsc_hvdc.py) | Three two-level bridges, independent PLL/dq loops, bipolar DC network and AC fault |
+
+Run `uv run python examples/18_three_terminal_vsc_hvdc.py` for the default FAST case (20 μs, 0.8 s).
+Set `MODE` in that script to `FULL` (5 μs) or `BENCHMARK` (2 μs) for 2.5 s runs.
+The [complete benchmark guide](docs/three_terminal_vsc_hvdc.en.md) gives source mapping, parameters, validation and model adjustments, including the fault-clearing RC snubber.
 
 Example 17 uses a 220 V RMS, 50 Hz source in series with 20 Ω, 50 mH and 100 μF, with separate voltage/current figures.
 Its default steady-state phasor window is 0.08–0.12 s; select a new window after changing frequency or damping.
@@ -116,14 +121,16 @@ Window and direction rules for RMS, mean, three-phase power, sampled peaks and s
 | This README | Installation, learning order, case creation and result operations |
 | [Numerical conventions](docs/numerical_conventions.en.md) | MNA/stamps, units, initialization, time, events, metrics and diagnostics |
 | [Models and validation](docs/models_and_validation.en.md) | Retained equations, example parameters, evidence and unvalidated scope |
+| [Three-terminal VSC-HVDC](docs/three_terminal_vsc_hvdc.en.md) | Reference mapping, switching network, closed-loop control, modes, fault and validation |
 
 The root exposes `CaseDefinition`, `Circuit`, `Simulator`, `SimulationResult`, basic RLC/independent sources, switches/faults/events,
 three-phase sources/lines/loads, Pi lines and single-phase transformers. See the [root interface](pycy_emt_lite/__init__.py) for exact exports.
 Import machines from `pycy_emt_lite.machines`, L/LC/LCL from `pycy_emt_lite.converters`, and segmented/Bergeron/three-phase Pi lines and three-phase transformers from their `components` modules.
 Use the respective subpackages for control, analysis and plotting; importability does not imply complete physical validation.
 
-`pycy_emt_lite/` contains implementations, `examples/` cases, `tests/` regressions, and `docs/` full bilingual versions of the two topics above.
+`pycy_emt_lite/` contains implementations, `examples/` cases, `tests/` regressions, and `docs/` full bilingual versions of the three topics above.
 New components need physical/discrete equations, units/directions, initialization/event behavior, and an analytical, conservation or independent-reference check.
 Update the learning table for new cases; avoid wrappers, dependencies or entrypoints added only for organization.
+Documentation links to repository files use relative paths; execution and output paths are relative to the project root. Identify external references by public source links and filenames, without personal absolute paths or temporary validation directories.
 
 PyCy_EMT_Lite derives from the object workflow in PyCy_EMT v0.6, retaining material suitable for small teaching models. [MIT license](LICENSE).

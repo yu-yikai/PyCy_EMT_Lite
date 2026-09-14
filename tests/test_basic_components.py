@@ -441,3 +441,15 @@ def test_single_phase_ac_rlc_example_matches_phasors_and_kirchhoff_laws() -> Non
     assert rms(result, "i:L1", start_time=example["STEADY_START"]) == pytest.approx(
         example["SOURCE_RMS"] / abs(z), rel=1e-5,
     )
+def test_initial_solve_resolves_small_source_beside_charged_hv_capacitor():
+    # 最小复现：1 nV 电压约束邻接 200 kV 已充电电容。直接 LU 的消减误差
+    # 曾使源约束偏差约 10 pV 并被误判为初值冲突；不能放松初值容差。
+    circuit = Circuit.from_components("hv_initial_scale", (
+        VoltageSource("V", "s", "0", 1e-9),
+        Resistor("R1", "s", "a", 1.0), Resistor("R2", "a", "c", 1.0),
+        Capacitor("C", "c", "0", 1e-4, initial_voltage=200e3),
+    ))
+    row = Simulator(circuit, SimulationConfig(1e-5, 0)).run().rows[0]
+    assert abs(row["v:s"] - 1e-9) < 1e-12
+    assert abs(row["v:c"] - 200e3) < 1e-7
+    assert abs(row["i:C"] - (1e-9 - 200e3)/2) < 1e-7

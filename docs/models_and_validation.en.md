@@ -7,8 +7,8 @@ refers to the implemented equations. Successful execution, parameter checks and 
 
 ## 1. Validated scope
 
-Local validation record (2026-09-14, including output-field, control-input and PLL-limit fixes): 658 tests passed, all 13 retained examples ran headlessly
-without default output files, and wheel/sdist builds, archive inspection and installed-package checks outside the source tree passed.
+Local validation record (2026-09-14, including the integrated three-terminal VSC-HVDC example): 681 tests passed and all 14 examples ran headlessly without default output files.
+The integrated example's modes, results and deviations are in its [dedicated guide](three_terminal_vsc_hvdc.en.md).
 This is local evidence, not remote CI status. No full-model comparison with experimental data or commercial EMT software is claimed.
 
 | Scope | Existing evidence | Boundary and test entry point |
@@ -22,6 +22,7 @@ This is local evidence, not remote CI status. No full-model comparison with expe
 | Two machines and example 10 | Port equations, power direction, equilibrium, independent continuous ODEs, first-order mechanical convergence | Stated approximations; [classical](../tests/test_synchronous_machine.py), [Park](../tests/test_park_synchronous_generator.py) |
 | L/LC/LCL filters | Parameter rejection, wiring, independent ODEs, KCL, discrete energy and step convergence | Passive linear networks; [power-electronic tests](../tests/test_power_electronics.py) |
 | PWM example 12 | Gates, floating star point, fundamental RL reference, finer-grid comparison | Fine grids are not device references; no automatic edge location; same power-electronic tests |
+| Three-terminal two-level VSC-HVDC example 18 | Single-station open/closed loop, two stations, three-station FAST fault recovery, PLL/dq/P/Vdc/Vac, bridge port power and discrete DC energy | Teaching reimplementation with RC snubber and control adjustments; [system tests](../tests/test_three_terminal_vsc_hvdc.py), [post-step callback and recording](../tests/test_step_callback.py) |
 | `ThreePhasePiLine`, `ThreePhaseParallelRLCLoad` | Initialization/first step and output fields; nominal-power conversion for the parallel load | Local checks, no complete independent three-phase AC/fault validation; three-phase/line tests |
 | Control blocks and SRF-PLL | Basic functions, sample-time consistency, preserved initial lock, independent balanced-input ODE and first-order convergence | Functional and specific balanced-condition checks, no closed-loop grid/weak-grid engineering validation; [control tests](../tests/test_controls.py) |
 | Saturation approximation | Parameter and linear flux/current regressions | **No independent saturation-curve, energy or inrush validation**; linear checks cannot replace it |
@@ -401,6 +402,7 @@ Tests verify complementary gates, floating-star phase voltages, zero current sum
 `pycy_emt_lite.controls` supplies discrete blocks called explicitly by the example; they do not stamp MNA.
 `block.step(input_value, time_step)` uses the actual control sampling interval. `block.reset()` resets only the control block,
 not a `Simulator`. Calling code connects sampling, measurements and control outputs; there is no hidden closed-loop scheduler.
+Example 18 explicitly updates three independent controllers through optional `on_step` at each EMT solution point; commands act at the next network step. See the [control and reference mapping](three_terminal_vsc_hvdc.en.md).
 Numeric block parameters, inputs, sampling intervals and reset values are checked for type and finiteness, rejecting NaN/Inf,
 Boolean numeric inputs and strings. Sampling intervals and low-pass time constants must be positive; `SampleDelay.steps` must be
 a nonnegative integer. Validation precedes updates, so invalid inputs and reset values do not contaminate history.

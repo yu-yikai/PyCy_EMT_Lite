@@ -16,7 +16,7 @@ from typing import Literal
 
 from pycy_emt_lite.components.base import Component
 from pycy_emt_lite.core.circuit import Circuit
-from pycy_emt_lite.core.simulation import SimulationConfig, Simulator
+from pycy_emt_lite.core.simulation import SimulationConfig, Simulator, StepCallback
 from pycy_emt_lite.events import SimulationEvent
 from pycy_emt_lite.io.results import SimulationResult
 from pycy_emt_lite.visualization import plot_series, plot_three_phase
@@ -58,6 +58,7 @@ class CaseDefinition:
     plots: tuple[PlotSpec, ...] = ()
     output: OutputOptions = field(default_factory=OutputOptions)
     summary: Callable[[SimulationResult], None] | None = None
+    on_step: StepCallback | None = None
 
 
 def run_case(case: CaseDefinition) -> SimulationResult:
@@ -68,7 +69,7 @@ def run_case(case: CaseDefinition) -> SimulationResult:
     """
 
     circuit = Circuit.from_components(case.name, case.components)
-    simulator = Simulator(circuit, case.config, events=case.events)
+    simulator = Simulator(circuit, case.config, events=case.events, on_step=case.on_step)
     result = simulator.run()
 
     print(

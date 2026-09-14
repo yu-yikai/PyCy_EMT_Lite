@@ -57,7 +57,7 @@ Machine mechanical/control states have their own explicit update order; their in
 
 ## 3. Time grid and parameters
 
-`SimulationConfig(time_step, stop_time, start_time=0, method="trapezoidal", event_time_policy="insert")`:
+`SimulationConfig(time_step, stop_time, start_time=0, method="trapezoidal", event_time_policy="insert", record_every=1)`:
 
 - `time_step` must be a finite positive real number; `stop_time` must be finite and nonnegative. Booleans are not accepted as numbers.
 - Only `start_time=0` is supported. `stop_time=0` is valid and records one consistent initial row.
@@ -71,7 +71,26 @@ Machine mechanical/control states have their own explicit update order; their in
 must use actual times. Integer-step stop time and inserted events are separate conventions. Bergeron history additionally requires
 a fixed grid and an integer-step propagation delay.
 
+`record_every` must be a positive integer and defaults to saving every solution point. N saves every Nth point by index,
+always retaining the initial point, explicit-event points and endpoint. Inserted events count toward the index, so output need not be uniform.
+It only reduces stored rows; network solves, state updates and control callbacks still run at every solution point.
+`result.time_step` remains the base EMT step; plots and metrics use the actual `time` column.
+
+### Optional post-step control callback
+
+Use `CaseDefinition(..., on_step=callback)` or `Simulator(..., on_step=callback)` to connect explicit control.
+The callback receives the current read-only measurement row and returns a mapping of additional fields (`{}` when none are needed).
+Keys must be nonempty strings without collisions; values must be finite real numbers, excluding booleans.
+The order is solve/update, consistent event right-side solve, one callback, then selective recording. Same-time events do not advance controllers twice.
+The callback also runs at t=0 for observation/initialization; do not pass a zero interval to PI/PLL blocks requiring positive intervals.
+Held controller commands reach the next network step through component callables; there is no same-step algebraic control loop.
+Use consecutive `row["time"]` values for the actual interval and create fresh controller state with each case.
+See [three-terminal VSC-HVDC](three_terminal_vsc_hvdc.en.md). The default `on_step=None` preserves the original workflow.
+
 ## 4. Consistent initialization
+
+With high-voltage storage beside near-zero voltage constraints, LU cancellation may cause a consistent solution to fail per-row checks.
+In that case, solve the residual equation `A δx=b−Ax` once and recheck against the original initialization thresholds; constraints are not relaxed and impulses are not allowed.
 
 At `t=0`, apply zero-time events, solve the initial network and record it. No positive step is integrated first, and h=0 is not
 substituted into the companion formulas above. Capacitors preserve `initial_voltage`, inductors preserve `initial_current`, and both

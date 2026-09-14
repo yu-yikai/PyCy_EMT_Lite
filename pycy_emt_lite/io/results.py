@@ -47,12 +47,7 @@ class SimulationResult:
     def columns(self) -> list[str]:
         """返回结果字段名，保持首次出现顺序。"""
 
-        columns: list[str] = []
-        for row in self.rows:
-            for key in row:
-                if key not in columns:
-                    columns.append(key)
-        return columns
+        return list(dict.fromkeys(key for row in self.rows for key in row))
 
     def series(self, column: str) -> np.ndarray:
         """读取某一列数据。"""
@@ -143,13 +138,15 @@ class SimulationResult:
     def from_npz(cls, path: str | Path) -> "SimulationResult":
         """从 NPZ 文件读入仿真结果。"""
 
-        data = np.load(Path(path), allow_pickle=False)
-        columns = [str(column) for column in data["__columns__"]]
-        meta = json.loads(str(data["__meta__"]))
-        length = len(data[columns[0]]) if columns else 0
+        with np.load(Path(path), allow_pickle=False) as data:
+            columns = [str(column) for column in data["__columns__"]]
+            meta = json.loads(str(data["__meta__"]))
+            # 每列只从归档读取一次，避免大结果逐行反复加载/解压整列。
+            arrays = {column: data[column] for column in columns}
+        length = len(arrays[columns[0]]) if columns else 0
         rows = []
         for index in range(length):
-            rows.append({column: float(data[column][index]) for column in columns})
+            rows.append({column: float(arrays[column][index]) for column in columns})
         return cls(
             circuit_name=str(meta["circuit_name"]),
             method=str(meta["method"]),

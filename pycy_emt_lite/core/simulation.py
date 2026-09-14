@@ -11,7 +11,9 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, replace
-from numbers import Real
+from numbers import Integral, Real
+from collections.abc import Callable, Mapping
+from types import MappingProxyType
 from typing import Iterable, Literal
 
 import numpy as np
@@ -26,6 +28,7 @@ from pycy_emt_lite.events.base import _time_close, _time_tolerance
 from pycy_emt_lite.io.results import SimulationResult
 
 EventTimePolicy = Literal["insert", "quantize_up", "require_aligned"]
+StepCallback = Callable[[Mapping[str, float]], Mapping[str, float]]
 
 
 @dataclass(frozen=True, slots=True)
@@ -42,8 +45,11 @@ class SimulationConfig:
     start_time: float = 0.0
     method: IntegrationMethod = "trapezoidal"
     event_time_policy: EventTimePolicy = "insert"
+    record_every: int = 1
 
     def __post_init__(self) -> None:
+        if isinstance(self.record_every, bool) or not isinstance(self.record_every, Integral) or self.record_every < 1:
+            raise ValueError("record_every 必须为正整数；请填写每隔多少个求解点保存一次结果。")
         for field_name, value in (
             ("time_step", self.time_step),
             ("stop_time", self.stop_time),
@@ -99,6 +105,8 @@ class Simulator:
         config: SimulationConfig,
         events: Iterable[SimulationEvent] = (),
         solver: LinearSolver | None = None,
+        *,
+        on_step: StepCallback | None = None,
     ) -> None:
         self.circuit = circuit
         self.config = config
@@ -106,6 +114,9 @@ class Simulator:
         self.event_queue = EventQueue(self.events)
         self.event_log: list[dict[str, float | str]] = []
         self.solver = solver or DenseLinearSolver()
+        if on_step is not None and not callable(on_step):
+            raise ValueError("on_step 必须为可调用对象或 None。")
+        self.on_step = on_step
         self._last_time: float | None = None
         self._last_solution: np.ndarray | None = None
         self._run_started = False
@@ -162,7 +173,21 @@ class Simulator:
                 solution = self._solve_step(context)
                 for component in self.circuit.components:
                     component.update_state(context, solution)
-            rows.append(self._record_row(context, solution))
+            row = self._record_row(context, solution)
+            # 每个求解点只回调一次，事件点读取右侧值；控制输出作用于下一步。
+            # t=0 也调用，但控制器须只观察/初始化，不把零间隔传给 PI/PLL.step。
+            if self.on_step is not None:
+                extra = self.on_step(MappingProxyType(row))
+                if not isinstance(extra, Mapping):
+                    raise ValueError("on_step 必须返回新增结果字段的映射（无需字段时返回空字典）。")
+                for key, value in extra.items():
+                    if not isinstance(key, str) or not key or key in row:
+                        raise ValueError(f"on_step 输出字段 {key!r} 非法或与已有结果冲突。")
+                    if isinstance(value, bool) or not isinstance(value, Real) or not np.isfinite(value):
+                        raise ValueError(f"on_step 输出 {key!r} 必须为有限实数。")
+                row.update(extra)
+            if index % self.config.record_every == 0 or due_events or index == len(times) - 1:
+                rows.append(row)
             self._last_time = float(time)
             self._last_solution = solution.copy()
 
@@ -217,7 +242,13 @@ class Simulator:
                 matrix, rhs = context._initial.assemble(matrix, rhs)
             solution = self.solver.solve(matrix, rhs)
             if context._initial is not None:
-                context._initial.accept(solution, self.circuit.size)
+                try:
+                    context._initial.accept(solution, self.circuit.size)
+                except ValueError:
+                    # 高压储能与近零源约束并存时，LU 消减误差可能通过整体残差检查
+                    # 却不满足逐行约束。只补一次残差方程，原有初值检查仍须通过。
+                    solution += self.solver.solve(matrix, rhs - matrix @ solution)
+                    context._initial.accept(solution, self.circuit.size)
             return solution[:self.circuit.size]
         except (LinearSolveError, ValueError) as exc:
             initial_note = "一致求解" if context._initial is not None else ""
