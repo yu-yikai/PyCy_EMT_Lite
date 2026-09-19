@@ -3,6 +3,7 @@
 [简体中文](numerical_conventions.md) · [Running the project](../README.md) · [Models and validation](models_and_validation.en.md)
 
 This document collects the implemented equation, time, initialization, event and metric conventions. Model-specific equations and evidence belong in the model document.
+For equation derivations, local matrices and state updates, read [Component derivations](component_derivations.en.md): Sections 1–5 cover basic stamps and a worked RLC example; Sections 13–15 explain consistent initialization, the event loop and discrete energy.
 
 ## 1. From components to results
 

@@ -4,6 +4,7 @@
 
 The retained scope is small linear networks, explicit switches, control blocks and two teaching machine models. Evidence below
 refers to the implemented equations. Successful execution, parameter checks and verified physical relationships are distinguished.
+See [Component derivations](component_derivations.en.md) for how physical relations become discrete equations, MNA stamps and history updates. It covers basic elements, three-phase networks, lines, transformers, machines, filters and control, with source and test links; this document continues to maintain parameters and validation scope.
 
 ## 1. Validated scope
 

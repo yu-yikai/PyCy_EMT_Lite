@@ -5,6 +5,7 @@
 This example reproduces the reference benchmark's core three-terminal circuit and station duties using 18 ideal switches that actually stamp MNA.
 It is a teaching reimplementation with documented provenance, **not a 1:1 cross-platform reproduction accepted through waveform comparisons**.
 Controller gains, measurement filtering, startup, fault-clearing snubbers and numerical methods are adjusted as described below.
+For model derivations, see [Component derivations](component_derivations.en.md): Section 9 explains transformer matrices; Sections 11–12 develop filters, dq control and six-switch bridge stamps; Sections 13–15 cover initialization, events and energy checks.
 
 ## 1. Reference Benchmark
 

@@ -5,6 +5,7 @@ English | [简体中文](README.zh-CN.md)
 PyCy_EMT_Lite is a pure-Python teaching project for small electromagnetic-transient simulations, using
 `CaseDefinition → Circuit → Simulator → SimulationResult`. Basic circuits may use `Circuit/Simulator` directly.
 Equations, evidence and applicability are in [Models and validation](docs/models_and_validation.en.md).
+For step-by-step derivations from physical equations to discrete models, matrix stamps and history updates, see [Component derivations](docs/component_derivations.en.md), including a runnable RLC matrix check.
 The scope is teaching and algorithm checks, not plant-scale EMT, protection settings, equipment design or operational decisions.
 
 ## 1. Install and run
@@ -120,6 +121,7 @@ Window and direction rules for RMS, mean, three-phase power, sampled peaks and s
 |---|---|
 | This README | Installation, learning order, case creation and result operations |
 | [Numerical conventions](docs/numerical_conventions.en.md) | MNA/stamps, units, initialization, time, events, metrics and diagnostics |
+| [Component derivations](docs/component_derivations.en.md) | Physical equations, TR/BE discretization, local MNA matrices, history updates and the complete EMT loop |
 | [Models and validation](docs/models_and_validation.en.md) | Retained equations, example parameters, evidence and unvalidated scope |
 | [Three-terminal VSC-HVDC](docs/three_terminal_vsc_hvdc.en.md) | Reference mapping, switching network, closed-loop control, modes, fault and validation |
 
@@ -128,7 +130,7 @@ three-phase sources/lines/loads, Pi lines and single-phase transformers. See the
 Import machines from `pycy_emt_lite.machines`, L/LC/LCL from `pycy_emt_lite.converters`, and segmented/Bergeron/three-phase Pi lines and three-phase transformers from their `components` modules.
 Use the respective subpackages for control, analysis and plotting; importability does not imply complete physical validation.
 
-`pycy_emt_lite/` contains implementations, `examples/` cases, `tests/` regressions, and `docs/` full bilingual versions of the three topics above.
+`pycy_emt_lite/` contains implementations, `examples/` cases, `tests/` regressions, and `docs/` full bilingual versions of the four topics above.
 New components need physical/discrete equations, units/directions, initialization/event behavior, and an analytical, conservation or independent-reference check.
 Update the learning table for new cases; avoid wrappers, dependencies or entrypoints added only for organization.
 Documentation links to repository files use relative paths; execution and output paths are relative to the project root. Identify external references by public source links and filenames, without personal absolute paths or temporary validation directories.

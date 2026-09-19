@@ -3,6 +3,7 @@
 [English](numerical_conventions.en.md) · [运行入口](../README.zh-CN.md) · [模型与验证](models_and_validation.md)
 
 本文集中说明当前程序的方程、时间、初值、事件和指标约定。各模型的专用方程及验证证据见模型文档。
+需要逐项理解公式来源、局部矩阵和状态更新时，阅读[元件推导](component_derivations.md)：第 1–5 节给出基础盖章与 RLC 手算例子，第 13–15 节展开一致初值、事件循环和离散能量。
 
 ## 1. 从元件到结果
 

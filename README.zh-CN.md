@@ -5,6 +5,7 @@
 PyCy_EMT_Lite 是小规模电磁暂态仿真的纯 Python 教学项目，主流程为
 `CaseDefinition → Circuit → Simulator → SimulationResult`。基础电路也可直接使用 `Circuit/Simulator`。
 模型方程、验证证据和适用边界见[模型与验证](docs/models_and_validation.md)。
+从物理方程到离散模型、矩阵盖章与历史更新的逐项推导见[元件推导](docs/component_derivations.md)，包含可运行的 RLC 矩阵核对例子。
 当前范围用于教学与算法核对，不作为厂站级 EMT、保护整定、设备设计或运行决策工具。
 
 ## 1. 安装与运行
@@ -120,6 +121,7 @@ RMS、均值、三相功率、采样峰值和跌落统计的窗口/方向规则�
 |---|---|
 | 本 README | 安装、学习顺序、编写算例、结果操作 |
 | [数值约定](docs/numerical_conventions.md) | MNA/stamp、单位、初值、时间、事件、指标和错误诊断 |
+| [元件推导](docs/component_derivations.md) | 各元件物理方程、TR/BE 离散式、局部 MNA 矩阵、历史更新与完整 EMT 循环 |
 | [模型与验证](docs/models_and_validation.md) | 保留模型方程、算例参数、验证证据及未验证范围 |
 | [三端 VSC-HVDC](docs/three_terminal_vsc_hvdc.md) | 参考映射、开关网络、闭环控制、模式、故障与验证 |
 
@@ -129,7 +131,7 @@ RMS、均值、三相功率、采样峰值和跌落统计的窗口/方向规则�
 分段/Bergeron/三相 π 线路及三相变压器从相应 `components` 模块导入。
 控制、分析、绘图使用各自子包；子包可导入不等于已完成全部物理验证。
 
-`pycy_emt_lite/` 放实现，`examples/` 放案例，`tests/` 放回归，`docs/` 放上述三项专题的完整双语版本。
+`pycy_emt_lite/` 放实现，`examples/` 放案例，`tests/` 放回归，`docs/` 放上述四项专题的完整双语版本。
 新增元件需说明物理方程、离散式、单位/方向、初值/事件行为，并增加解析、守恒或独立参考检查。
 新增案例更新学习表即可；避免仅为组织形式增加包装层、依赖或入口。
 文档中的仓库文件链接使用相对路径，运行与输出路径以项目根目录为基准；外部参考资料提供公开来源链接和文件名，不写个人绝对路径或临时验证目录。
