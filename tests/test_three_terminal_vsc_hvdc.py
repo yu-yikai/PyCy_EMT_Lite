@@ -31,7 +31,7 @@ def average(a, key, start, end):
 
 @pytest.fixture(scope="module")
 def fast(example):
-    case = example["define_case"]()
+    case = example["define_case"]("FAST")
     circuit = Circuit.from_components(case.name, case.components)
     result = Simulator(circuit, case.config, events=case.events, on_step=case.on_step).run()
     return case, result, arrays(result)
