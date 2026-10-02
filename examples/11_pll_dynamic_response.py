@@ -70,11 +70,9 @@ def main() -> None:
     print(f"最终 q 轴电压：{last['q_axis_voltage']:.3f} V（收敛目标 0 V）")
     print(f"最终频率：{last['frequency']:.6f} rad/s（额定 {2.0 * math.pi * FREQUENCY:.6f} rad/s）")
     print(f"最终锁相角度：{last['angle']:.6f} rad")
-    plot_series(
-        result,
-        ("angle", "frequency", "q_axis_voltage"),
-        title="SRF-PLL 锁定过程",
-    )
+    plot_series(result, ("angle",), title="SRF-PLL: angle / rad")
+    plot_series(result, ("frequency",), title="SRF-PLL: angular frequency / (rad/s)")
+    plot_series(result, ("q_axis_voltage",), title="SRF-PLL: q-axis voltage / V")
 
 
 if __name__ == "__main__":

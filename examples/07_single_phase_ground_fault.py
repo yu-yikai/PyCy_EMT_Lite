@@ -55,8 +55,9 @@ def define_case() -> CaseDefinition:
     plots = (
         PlotSpec(
             columns=("v:load:a", "v:load:b", "v:load:c"),
+            figure_name="voltages.png",
             kind="three_phase",
-            title="单相接地故障负荷端电压",
+            title="Single-phase ground fault: load voltages / V",
         ),
     )
 

@@ -1,8 +1,9 @@
 """演示二阶 RLC 暂态过程。
 
 RLC 串联电路在阶跃激励下可能出现欠阻尼振荡，是理解二阶系统动态特性
-和 MNA 状态更新顺序的经典教学算例。运行后把仿真末值与解析解
-`v(t) = 1 - exp(-alpha t)(cos(wd t) + alpha/wd sin(wd t))` 对比。"""
+和 MNA 状态更新顺序的经典教学算例。欠阻尼时把仿真末值与解析解
+`v(t) = V(1 - exp(-alpha t)(cos(wd t) + alpha/wd sin(wd t)))` 对比。
+改为临界阻尼或过阻尼参数时继续仿真和绘图，摘要跳过欠阻尼解析对比。"""
 
 import math
 
@@ -28,6 +29,9 @@ def print_summary(result: SimulationResult) -> None:
     # 衰减系数 alpha = R/2L，无阻尼自然频率 w0 = 1/sqrt(LC)，阻尼振荡频率 wd = sqrt(w0^2 - alpha^2)
     alpha = RESISTANCE / (2.0 * INDUCTANCE)
     natural_frequency = 1.0 / math.sqrt(INDUCTANCE * CAPACITANCE)
+    if alpha >= natural_frequency:
+        print(f"最终输出电压：{voltage[-1]:.6f} V；当前参数为临界阻尼或过阻尼，跳过欠阻尼解析对比。")
+        return
     damped_frequency = math.sqrt(natural_frequency**2 - alpha**2)
     t_end = time[-1]
     theoretical = SOURCE_VOLTAGE * (
@@ -57,8 +61,14 @@ def define_case() -> CaseDefinition:
 
     plots = (
         PlotSpec(
-            columns=("v:out", "i:L1"),
-            title="RLC 暂态响应",
+            columns=("v:out",),
+            figure_name="voltage.png",
+            title="RLC transient: capacitor voltage / V",
+        ),
+        PlotSpec(
+            columns=("i:L1",),
+            figure_name="current.png",
+            title="RLC transient: inductor current / A",
         ),
     )
 

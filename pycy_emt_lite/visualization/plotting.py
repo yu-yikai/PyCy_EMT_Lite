@@ -13,7 +13,7 @@ import numpy as np
 
 
 class PlottableResult(Protocol):
-    """绘图只依赖时间/信号读取，不要求旧行式结果。"""
+    """绘图只依赖 series() 读取时间和信号，不限定结果的存储方式。"""
 
     def series(self, column: str) -> Sequence[float]: ...
 
@@ -133,7 +133,7 @@ def plot_three_phase(
 
     time = np.asarray(result.series("time"), dtype=float)
     figure, axes = plt.subplots()
-    labels = ("A 相", "B 相", "C 相")
+    labels = ("Phase A", "Phase B", "Phase C")
     for column, label in zip(columns, labels, strict=True):
         axes.plot(time, result.series(column), label=f"{label} {column}")
     axes.set_xlabel("time / s")

@@ -48,7 +48,8 @@ def define_case() -> CaseDefinition:
     plots = (
         PlotSpec(
             columns=("v:out",),
-            title="RC 暂态电容电压",
+            figure_name="voltage.png",
+            title="RC transient: capacitor voltage / V",
         ),
     )
 

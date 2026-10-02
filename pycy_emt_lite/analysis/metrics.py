@@ -17,7 +17,7 @@ import numpy as np
 
 
 class SeriesProvider(Protocol):
-    """数值分析只依赖时间/信号读取，不要求旧行式结果。
+    """数值分析只依赖 series() 读取时间和信号，不限定结果的存储方式。
 
     若实现没有 `event_log`，调用者负责只选择不跨事件的平滑时间窗。
     """

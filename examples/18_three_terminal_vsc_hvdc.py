@@ -23,7 +23,7 @@ from pycy_emt_lite.controls.vsc import VSCControlConfig, VSCController
 SAVE_RESULT_DATA = 0
 SAVE_RESULT_FIGURE = 0
 SHOW_FIGURE = True
-MODE = "BENCHMARK"  # FAST, FULL, BENCHMARK
+MODE = "FAST"  # FAST, FULL, BENCHMARK
 
 # 来自本地 SLX + 参数脚本。容量为换流变铭牌，不能当作本例已验证的输送功率。
 RATED_POWER = 1500e6

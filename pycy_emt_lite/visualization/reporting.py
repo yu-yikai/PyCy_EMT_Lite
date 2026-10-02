@@ -15,7 +15,7 @@ from typing import Protocol
 
 
 class ReportableResult(Protocol):
-    """报告只依赖结果元数据与信号读取，稳定列式与旧行式结果都满足。"""
+    """报告所需的基本仿真元数据。"""
 
     method: str
     time_step: float
@@ -32,8 +32,8 @@ def write_markdown_report(
 ) -> None:
     """生成仿真结果 Markdown 报告。
 
-    `result` 可以是稳定列式 `RuntimeResult` 或旧行式 `SimulationResult`。事件日志只在
-    旧行式结果存在时输出；稳定结果不携带事件日志，会输出明确的说明。
+    `result` 通常为 `SimulationResult`，也可为提供所需元数据的结果对象。
+    事件记录从 `event_log` 读取；缺少该属性时说明未提供事件日志。
     """
 
     target = Path(path)
@@ -79,7 +79,7 @@ def write_markdown_report(
             )
         lines.append("")
     elif event_log is None:
-        lines.extend(["## 事件日志", "", "- 稳定列式结果不保存事件日志，请通过 `SimulationSession.event_log` 读取。", ""])
+        lines.extend(["## 事件日志", "", "- 结果对象未提供事件日志。", ""])
     if figure_paths:
         lines.extend(["## 图像", ""])
         for figure_path in figure_paths:

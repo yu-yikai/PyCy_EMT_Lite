@@ -48,7 +48,8 @@ def define_case() -> CaseDefinition:
     plots = (
         PlotSpec(
             columns=("i:L1",),
-            title="RL 暂态电感电流",
+            figure_name="current.png",
+            title="RL transient: inductor current / A",
         ),
     )
 

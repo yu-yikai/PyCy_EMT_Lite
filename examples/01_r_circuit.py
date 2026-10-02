@@ -38,8 +38,14 @@ def define_case() -> CaseDefinition:
 
     plots = (
         PlotSpec(
-            columns=("v:n1", "i:R1"),
-            title="R 电路电压与电流",
+            columns=("v:n1",),
+            figure_name="voltage.png",
+            title="R circuit: voltage / V",
+        ),
+        PlotSpec(
+            columns=("i:R1",),
+            figure_name="current.png",
+            title="R circuit: current / A",
         ),
     )
 

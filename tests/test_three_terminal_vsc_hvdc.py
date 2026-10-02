@@ -17,6 +17,13 @@ def example():
     return runpy.run_path(str(Path(__file__).parents[1] / "examples/18_three_terminal_vsc_hvdc.py"))
 
 
+def test_default_example_uses_fast_configuration(example):
+    case = example["define_case"]()
+    assert case.name == "three_terminal_vsc_hvdc_fast"
+    assert case.config.time_step == pytest.approx(20e-6)
+    assert case.config.stop_time == pytest.approx(0.8)
+
+
 def arrays(result):
     columns = list(result.rows[0])
     data = np.array([[row[k] for k in columns] for row in result.rows])
