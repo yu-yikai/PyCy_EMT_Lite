@@ -60,7 +60,7 @@ class LinearSolver(Protocol):
     name: str
 
     def solve(self, matrix: MatrixInput, rhs: np.ndarray) -> np.ndarray:
-        """求解 `matrix * x = rhs` 并返回解向量。"""
+        """求解 `matrix * x = rhs`；返回数组可只读或由求解器复用，调用者修改前须复制。"""
 
 
 @dataclass(slots=True)

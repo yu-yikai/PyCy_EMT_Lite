@@ -16,7 +16,7 @@ import numpy as np
 
 from pycy_emt_lite.components.base import Component, _finite_real
 from pycy_emt_lite.core.context import StampContext
-from pycy_emt_lite.core.stamping import add_conductance, add_voltage_probe, _conductance_current
+from pycy_emt_lite.core.stamping import add_conductance, _conductance_current
 
 BoolTimeValue = bool | float | Callable[[float], bool | float]
 
@@ -74,7 +74,6 @@ class IdealSwitch(Component):
     def update_state(self, context: StampContext, solution: np.ndarray) -> None:
         """记录开关支路电流。"""
 
-        voltage = add_voltage_probe(solution, context.node_index(self.positive), context.node_index(self.negative))
         conductance = 1.0 / self.closed_resistance if self.last_state else self.open_conductance
         self.last_current = _conductance_current(solution, context.node_index(self.positive), context.node_index(self.negative),
                                                  conductance, self.name)

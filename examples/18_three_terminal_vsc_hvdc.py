@@ -160,23 +160,31 @@ class HVDCControl:
 def validation_summary(result, mode: RunMode) -> dict[str, float]:
     """按固定物理窗口核对稳态与恢复；原始信号先转数组，避免反复遍历大结果。"""
 
+    if not result.rows:
+        raise ValueError("仿真结果为空，无法核对统计窗口。")
     columns = list(result.rows[0])
     data = np.array([[row[c] for c in columns] for row in result.rows])
     a = {c: data[:, k] for k, c in enumerate(columns)}
+    time = a["time"]
+    if not np.isfinite(time).all() or np.any(np.diff(time) <= 0):
+        raise ValueError("统计窗口要求有限且严格递增的结果时间。")
     metrics = {"all_finite": float(np.isfinite(data).all()),
                "dc_balance_residual_W": float(np.max(np.abs(a["DC:balance_residual"])))}
     for label, start, end in (("pre", mode.fault_on - 0.12, mode.fault_on - 0.02),
                               ("post", mode.stop_time - 0.1, mode.stop_time)):
-        window = (a["time"] >= start) & (a["time"] <= end)
-        t = a["time"][window]
-        if len(t) < 2:
+        if start < time[0] or end > time[-1]:
             raise ValueError("仿真结果未覆盖要求的稳态/恢复窗口。")
+        # 窗端不落在采样点时，线性插值补端点，按声明的完整物理窗口积分。
+        interior = (time > start) & (time < end)
+        t = np.concatenate(([start], time[interior], [end]))
+        def values_in_window(values):
+            return np.interp(t, time, values)
         def mean(key):
-            return float(np.trapezoid(a[key][window], t) / (t[-1] - t[0]))
+            return float(np.trapezoid(values_in_window(a[key]), t) / (end - start))
         def error_rms(values):
-            values = values[window]
+            values = values_in_window(values)
             square = values[:-1]**2 + values[:-1]*values[1:] + values[1:]**2
-            return float(np.sqrt(np.sum(np.diff(t) * square / 3) / (t[-1] - t[0])))
+            return float(np.sqrt(np.sum(np.diff(t) * square / 3) / (end - start)))
         for s, frequency, _, _ in STATIONS:
             metrics[f"{label}:{s}:Vdc_kV"] = mean(f"{s}:Vdc") / 1e3
             metrics[f"{label}:{s}:P_MW"] = mean(f"{s}:P") / 1e6
@@ -191,7 +199,7 @@ def validation_summary(result, mode: RunMode) -> dict[str, float]:
             beta = (vb - vc) / math.sqrt(3)
             theta = a[f"{s}:PLL_theta"]
             vd = alpha * np.cos(theta) + beta * np.sin(theta)
-            metrics[f"{label}:{s}:PLL_Vd_min_V"] = float(vd[window].min())
+            metrics[f"{label}:{s}:PLL_Vd_min_V"] = float(values_in_window(vd).min())
             for axis in ("Id", "Iq"):
                 metrics[f"{label}:{s}:{axis}_mean_error_A"] = abs(mean(f"{s}:{axis}") - mean(f"{s}:{axis}_ref"))
                 metrics[f"{label}:{s}:{axis}_rms_error_A"] = error_rms(a[f"{s}:{axis}"] - a[f"{s}:{axis}_ref"])
@@ -205,6 +213,9 @@ def validation_summary(result, mode: RunMode) -> dict[str, float]:
         metrics[f"{label}:DC:loss_MW"] = mean("DC:loss") / 1e6
         metrics[f"{label}:DC:storage_power_MW"] = mean("DC:storage_power") / 1e6
     fault = (a["time"] >= mode.fault_on + 0.02) & (a["time"] <= mode.fault_off - 0.02)
+    if not fault.any():
+        raise ValueError("故障统计窗口内没有采样点；请检查结果时间范围与抽稀设置。")
+    # 保留既有故障字段的采样算术均值，不将其解释为连续窗口时间平均。
     metrics["fault:S3:Vac_pu_mean"] = float(np.mean(a["S3:Vac_pu"][fault]))
     metrics["Vdc_min_kV"] = min(float(a[f"{s}:Vdc"].min()) / 1e3 for s, *_ in STATIONS)
     metrics["Vdc_max_kV"] = max(float(a[f"{s}:Vdc"].max()) / 1e3 for s, *_ in STATIONS)

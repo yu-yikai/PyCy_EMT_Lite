@@ -45,6 +45,48 @@ def test_control_summary_rejects_zero_mean_oscillation_and_wrong_polarity(exampl
                 assert metrics[f"{label}:{station}:Id_rms_error_A"] > 50.0
 
 
+def _linear_summary_result(example, times):
+    rows = []
+    for time in times:
+        row = {"time": time, "DC:balance_residual": 0.0,
+               "DC:power_in": time * 1e6, "DC:loss": 0.0, "DC:storage_power": 0.0}
+        for station, frequency, *_ in example["STATIONS"]:
+            row.update({f"{station}:Vdc": 400e3 + time * 1e3, f"{station}:P": time * 1e6,
+                        f"{station}:Q": 0.0, f"{station}:Vac_pu": 1 + time,
+                        f"{station}:PLL_frequency_Hz": frequency + time, f"{station}:PLL_Vq_pu": time,
+                        f"{station}:PLL_theta": 0.0, f"v:{station}:hv:a": 1.0,
+                        f"v:{station}:hv:b": -0.5, f"v:{station}:hv:c": -0.5})
+            for axis in ("Id", "Iq"):
+                row[f"{station}:{axis}"] = time
+                row[f"{station}:{axis}_ref"] = 0.0
+        rows.append(row)
+    return SimulationResult("linear_summary", "manual", 0.005, 0.8, rows)
+
+
+def test_summary_integrates_full_physical_windows_on_nonuniform_samples(example):
+    times = [0.0, 0.17, 0.195, 0.245, 0.285, 0.32, 0.4, 0.45, 0.68, 0.735, 0.77, 0.8]
+    metrics = example["validation_summary"](_linear_summary_result(example, times), example["MODES"]["FAST"])
+    for label, start, end in (("pre", 0.18, 0.28), ("post", 0.7, 0.8)):
+        expected_mean = (start + end) / 2
+        expected_rms = math.sqrt((start**2 + start * end + end**2) / 3)
+        for station, *_ in example["STATIONS"]:
+            assert metrics[f"{label}:{station}:Vdc_kV"] == pytest.approx(400 + expected_mean)
+            assert metrics[f"{label}:{station}:PLL_error_Hz"] == pytest.approx(expected_mean)
+            assert metrics[f"{label}:{station}:PLL_error_rms_Hz"] == pytest.approx(expected_rms)
+            assert metrics[f"{label}:{station}:Id_rms_error_A"] == pytest.approx(expected_rms)
+    # 现有fault字段保留采样算术均值；不误称连续物理窗口的时间平均。
+    assert metrics["fault:S3:Vac_pu_mean"] == pytest.approx(1.36)
+
+
+@pytest.mark.parametrize("times", [
+    [0.195, 0.245, 0.285, 0.32, 0.4, 0.45, 0.68, 0.735, 0.77, 0.8],
+    [0.0, 0.17, 0.195, 0.245, 0.285, 0.46, 0.68, 0.735, 0.77, 0.8],
+])
+def test_summary_rejects_uncovered_or_empty_windows(example, times):
+    with pytest.raises(ValueError, match="窗口"):
+        example["validation_summary"](_linear_summary_result(example, times), example["MODES"]["FAST"])
+
+
 def test_default_example_uses_fast_configuration(example):
     case = example["define_case"]()
     assert case.name == "three_terminal_vsc_hvdc_fast"

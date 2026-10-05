@@ -224,6 +224,9 @@ Default figures cover station DC voltage, P/Q, Vac, station Id/Iq tracking, PLL 
 Metric windows are FAST 0.18–0.28 s / 0.70–0.80 s and FULL/BENCHMARK 1.38–1.48 s / 2.40–2.50 s.
 Each 0.1 s window contains six 60 Hz cycles and five 50 Hz cycles and does not cross explicit fault events.
 Pre/post windows report time-weighted means. Current error is `|mean(I)−mean(I*)|`, **not instantaneous ripple RMS tracking error**.
+When pre/post boundaries fall between samples, piecewise-linear endpoint interpolation precedes integration over the full declared
+window; results must cover both endpoints. `fault:S3:Vac_pu_mean` retains the arithmetic sample mean from 20 ms after application to
+20 ms before clearing. With nonuniform sampling it is not a time-weighted mean; a window with no samples raises an explicit error.
 Means measure bias only. The current summary also reports frequency-error/Vq/dq-error RMS of piecewise-linear signals, minimum Vd, and `control_accuracy_met`. This flag requires frequency-error RMS<0.05 Hz, Vq RMS<0.01 pu, Id/Iq-error RMS<25 A and Vd>0; cancellation in signed means cannot establish accuracy. `PLL_Vq_pu` now uses the same `Vq/max(|Vd|,|Vq|,1 V)` normalization as the internal PI.
 
 The 2026-10-05 FAST rerun gave prefault/recovery frequency-error RMS of 0.336–0.445/0.331–0.460 Hz and dq-error RMS of 148.4–170.7/147.9–171.6 A; minimum Vd was positive. All three stations have strict accuracy flags of 0. Passing bias and physical-conservation regressions does not establish these RMS limits. Controller gains and algorithms were not changed.

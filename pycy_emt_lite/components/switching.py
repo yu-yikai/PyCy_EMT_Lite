@@ -17,7 +17,7 @@ import numpy as np
 
 from pycy_emt_lite.components.base import Component, _finite_real
 from pycy_emt_lite.core.context import StampContext
-from pycy_emt_lite.core.stamping import add_conductance, add_voltage_probe, _conductance_current
+from pycy_emt_lite.core.stamping import add_conductance, _conductance_current
 
 @dataclass(slots=True)
 class Fault(Component):
@@ -55,7 +55,6 @@ class Fault(Component):
         if not self.enabled:
             self.last_current = 0.0
             return
-        voltage = add_voltage_probe(solution, context.node_index(self.node), context.node_index(self.ground))
         self.last_current = _conductance_current(solution, context.node_index(self.node), context.node_index(self.ground),
                                                  1.0 / self.resistance, self.name)
 
@@ -104,7 +103,6 @@ class Breaker(Component):
         if not self.closed:
             self.last_current = 0.0
             return
-        voltage = add_voltage_probe(solution, context.node_index(self.positive), context.node_index(self.negative))
         self.last_current = _conductance_current(solution, context.node_index(self.positive), context.node_index(self.negative),
                                                  1.0 / self.closed_resistance, self.name)
 

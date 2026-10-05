@@ -229,6 +229,10 @@ has numerical dissipation. Model-specific evidence and unvalidated items are mai
 Both `DenseLinearSolver.solve()` and the existing `factorize().solve()` check finite solutions, scaled residuals and diagnostics;
 the latter retains support for multiple right-hand sides. Residual tolerances must be finite nonnegative real scalars.
 Residuals measure backward error, without guaranteeing forward accuracy in ill-conditioned equations or derived-current accuracy.
+Solvers may return read-only arrays or reuse buffers; the simulator copies the solution before consistent-initialization correction
+and does not modify solver-owned arrays. `last_diagnostics` describes the most recent linear call: after correction, it refers to
+`A δx=b−Ax`. The corrected initial state is checked separately against the original network constraints; the correction-equation
+residual is not the final original-equation residual.
 Branches using `G(Vp−Vn)+Ihist` also check floating-point representation resolution: estimated uncertainty above `1e-7 A + 1e-3*abs(i)`
 causes explicit rejection. This targets voltage/history cancellation rather than providing a complete error bound. A roughly 1 pA capacitor
 error lies below this absolute scale, so no relative-accuracy guarantee follows. Resistance values, leakage and network unknowns are not

@@ -10,7 +10,7 @@ See [Component derivations](component_derivations.en.md) for how physical relati
 
 Local validation record (2026-09-14, including the integrated three-terminal VSC-HVDC example): 681 tests passed and all 14 examples ran headlessly without default output files.
 Its producing commit, environment and complete commands have not been verified; it is preserved as historical information rather than a reproduction record for the current version.
-The local regression after the 2026-10-05 correctness fixes contains 819 passing tests; all 14 default examples ran headlessly. Version, environment, commands, itemized implementation status and the unmet strict FAST control-accuracy limits are recorded together in [section 7.4 of the issue and improvement plan](audit_20261005/项目问题与改进计划.md#74-当前纠错实施与验收2026-10-05).
+The local regression after R5 on 2026-10-05 contains 832 passing tests; all 14 default examples ran headlessly. R0–R4 versions, environment, commands and itemized fixes are recorded in [section 7.4 of the issue and improvement plan](audit_20261005/项目问题与改进计划.md#74-当前纠错实施与验收2026-10-05); the current risk findings and acceptance are in [section 7.5](audit_20261005/项目问题与改进计划.md#r5-follow-up). The unmet strict FAST control-accuracy limits remain.
 The integrated example's modes, results and deviations are in its [dedicated guide](three_terminal_vsc_hvdc.en.md).
 This is local evidence, not remote CI status. No full-model comparison with experimental data or commercial EMT software is claimed.
 
@@ -466,12 +466,19 @@ Vbase = max(abs(vd), abs(vq), 1.0)
 ```
 
 Both `nominal_frequency` and output `frequency` use **rad/s**, not Hz: pass `2π50` for 50 Hz.
+PLL Kp/Ki must be finite and nonnegative; either or both may be zero. Zero gains support degenerate control/initial observation
+without guaranteeing asymptotic locking after a disturbance. With the fixed positive-sequence transform, `vq=V sin(θgrid−θ)`:
+positive vq means the estimate lags. Negative gains reverse local feedback or destabilize the integral loop and are rejected at construction.
+The general `PIController` still supports negative Ki; this restriction concerns this SRF-PLL phase-detector convention.
+[SRF-PLL tuning reference](https://imperix.com/doc/implementation/synchronous-reference-frame-pll)
 `nominal_frequency` must be finite and positive. `minimum_frequency/maximum_frequency` bound **absolute angular frequency**;
 provided bounds must be finite and contain nominal frequency, while `None` leaves that side unbounded. Internally, PI correction
 limits are `[ωmin−ωnom, ωmax−ωnom]`, preserving integral freezing during saturation. For nominal 50 Hz with 45–55 Hz limits,
 pass `2π50`, `2π45`, `2π55` respectively; nominal locked output remains 50 Hz. Invalid ranges, including those excluding nominal
 frequency, fail at construction. This corrects the earlier correction-limit interpretation: add `nominal_frequency` to each old Δω
 bound when migrating an existing script.
+Here, “absolute” means angular velocity after adding nominal frequency; it remains signed and a supplied lower bound may be negative.
+This does not establish reverse-sequence grid operation.
 Returned `PLLState` d/q voltages use the returned angle; angle, angular frequency and voltages belong to the current sample row.
 `time_step` must be a finite positive real number. Invalid intervals fail before state changes and report how to repair the input;
 do not call `step` merely to observe initial values at zero time.
@@ -489,8 +496,11 @@ parameters, samples or reset angles raise explicit errors, and rejected samples 
 still checks `|vq|<5 V` and angular-frequency error `<2 rad/s` after about 0.1 s.
 An independent continuous reference additionally checks positive-time transients with `dθ/dt=ωnom+Kp e+xi`, `dxi/dt=Ki e`,
 where `e=sin(θgrid−θ)/max(|cos(θgrid−θ)|,|sin(θgrid−θ)|,1/Vpeak)`, without calling PLL transforms or state updates.
+Voltage samples use V, and the denominator's 1.0 is a 1 V floor. Below 1 V, normalized error decreases with amplitude;
+per-unit voltages cannot be passed directly as V. The same independent ODE comparison now covers 0.1/1/325 V peaks and checks this
+mathematical convention, without adding loss-of-voltage, low-voltage locking or negative-sequence decoupling.
 
-That comparison uses nominal 50 Hz, actual 52 Hz, 325 V peak, initial angle 0.4 rad, initial grid space-vector angle 0.7 rad,
+The 325 V baseline group uses nominal 50 Hz, actual 52 Hz, initial angle 0.4 rad, initial grid space-vector angle 0.7 rad,
 PI gains 80/1000 and zero initial integral, with a DOP853 reference over 0–0.2 s.
 For 100/50/25 μs steps, maximum angle errors at common positive times are approximately 0.002471/0.001230/0.000614 rad,
 and angular-frequency errors are 0.2168/0.1079/0.0538 rad/s, showing first-order convergence.

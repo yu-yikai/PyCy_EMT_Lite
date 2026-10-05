@@ -47,6 +47,12 @@ class SRFPLL:
     frequency: float = field(init=False)
 
     def __post_init__(self) -> None:
+        # 正序下 vq>0 表示角度落后；非负增益使频率修正沿减小角差的方向。
+        for name in ("proportional_gain", "integral_gain"):
+            value = _finite_real(getattr(self, name), f"SRFPLL.{name}")
+            if value < 0:
+                raise ValueError(f"SRFPLL.{name}={value!r} 非法；当前正序相位检测器要求非负增益。")
+            setattr(self, name, value)
         self.nominal_frequency = _finite_real(self.nominal_frequency, "SRFPLL.nominal_frequency", positive=True)
         self.initial_angle = _finite_real(self.initial_angle, "SRFPLL.initial_angle")
         for name in ("minimum_frequency", "maximum_frequency"):

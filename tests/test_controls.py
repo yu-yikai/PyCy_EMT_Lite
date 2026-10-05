@@ -168,8 +168,9 @@ def test_srf_pll_rejects_invalid_interval_without_advancing(step) -> None:
     assert pll.step(voltages, 1e-4) == fresh.step(voltages, 1e-4)
 
 
-def test_srf_pll_phase_and_frequency_converge_to_independent_continuous_ode() -> None:
-    kp, ki, amplitude = 80.0, 1000.0, 325.0
+@pytest.mark.parametrize("amplitude", [0.1, 1.0, 325.0])
+def test_srf_pll_phase_and_frequency_converge_to_independent_continuous_ode(amplitude) -> None:
+    kp, ki = 80.0, 1000.0
     nominal, grid_omega = 2 * math.pi * 50, 2 * math.pi * 52
     initial_angle, offset = 0.4, 0.7
     times = np.linspace(0.0, 0.2, 2001)
@@ -310,6 +311,25 @@ def test_pll_rejects_invalid_reset_angle_without_state_change(invalid) -> None:
 def test_pwm_helpers_reject_invalid_values_before_gate_comparison(call, invalid) -> None:
     with pytest.raises(ValueError, match="请"):
         call(invalid)
+
+
+@pytest.mark.parametrize("parameter", ["proportional_gain", "integral_gain"])
+def test_pll_rejects_gain_sign_opposed_to_its_phase_detector(parameter) -> None:
+    gains = {"proportional_gain": 80.0, "integral_gain": 1000.0, parameter: -1.0}
+    with pytest.raises(ValueError, match=parameter + ".*非负"):
+        SRFPLL(**gains)
+
+
+@pytest.mark.parametrize("kp,ki", [(0.0, 0.0), (80.0, 0.0), (0.0, 1000.0)])
+def test_pll_zero_gains_preserve_exact_nominal_lock(kp, ki) -> None:
+    nominal, step = 2 * math.pi * 50, 1e-4
+    pll = SRFPLL(kp, ki, nominal_frequency=nominal)
+    for index in range(1, 21):
+        angle = nominal * index * step
+        voltages = tuple(325 * math.cos(angle + phase) for phase in (0.0, -2*math.pi/3, 2*math.pi/3))
+        state = pll.step(voltages, step)
+        assert state.frequency == pytest.approx(nominal, abs=1e-10)
+        assert state.q_axis_voltage == pytest.approx(0.0, abs=1e-10)
 
 
 def test_pll_absolute_frequency_limits_preserve_50hz_lock() -> None:

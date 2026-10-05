@@ -74,6 +74,48 @@ def test_other_simulation_failures_preserve_stage_time_and_cause(stage) -> None:
     assert caught.value.__cause__ is error
 
 
+@pytest.mark.parametrize("storage", ["owned", "readonly", "shared"])
+def test_initial_correction_preserves_solver_array_ownership(storage) -> None:
+    from pycy_emt_lite import Capacitor
+
+    class BufferedSolver:
+        name = "buffered_solver"
+
+        def __init__(self):
+            self.backend = DenseLinearSolver()
+            self.returned, self.snapshots = [], []
+            self.buffer = None
+
+        def solve(self, matrix, rhs):
+            values = self.backend.solve(matrix, rhs)
+            if not self.returned:
+                values[1] += 1e-5  # 全局残差很小，但破坏0.25V电容的逐行初值约束。
+            if storage == "shared":
+                if self.buffer is None:
+                    self.buffer = np.empty_like(values)
+                self.buffer[:] = values
+                values = self.buffer
+            elif storage == "readonly":
+                values.setflags(write=False)
+            self.returned.append(values)
+            self.snapshots.append(values.copy())
+            return values
+
+    solver = BufferedSolver()
+    circuit = Circuit.from_components("initial_ownership", [
+        VoltageSource("V", "s", "0", 1e6), Resistor("R", "s", "c", 1.0),
+        Capacitor("C", "c", "0", 1.0, initial_voltage=0.25),
+    ])
+    result = Simulator(circuit, SimulationConfig(1e-4, 0.0), solver=solver).run()
+    assert len(solver.returned) == 2  # 确实触发修正，而非仅验证普通求解。
+    assert result.rows[0]["v:c"] == pytest.approx(0.25, abs=1e-12)
+    assert result.rows[0]["i:C"] == pytest.approx(1e6 - 0.25, rel=1e-12)
+    if storage == "shared":
+        np.testing.assert_array_equal(solver.buffer, solver.snapshots[-1])
+    else:
+        np.testing.assert_array_equal(solver.returned[0], solver.snapshots[0])
+
+
 class _FailingSolver:
     name = "test_solver"
 

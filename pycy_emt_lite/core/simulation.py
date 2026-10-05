@@ -252,7 +252,8 @@ class Simulator:
         try:
             if context._initial is not None:
                 matrix, rhs = context._initial.assemble(matrix, rhs)
-            solution = self.solver.solve(matrix, rhs)
+            # 求解器可返回只读数组或复用缓冲；仿真器持有独立解，供一致初值修正。
+            solution = self.solver.solve(matrix, rhs).copy()
             if context._initial is not None:
                 try:
                     context._initial.accept(solution, self.circuit.size)
