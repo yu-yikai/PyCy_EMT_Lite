@@ -56,12 +56,13 @@ Dependencies are NumPy, SciPy and Matplotlib; tests use pytest. Run `uv run pyte
 If the default temporary directory raises `PermissionError` on Windows, rerun from the project root with a project-local temporary directory:
 
 ```powershell
+New-Item -ItemType Directory -Force -Path .tmp | Out-Null
 $env:UV_CACHE_DIR = "$PWD/.tmp/uv-cache"
 $env:MPLBACKEND = "Agg"
 uv run --locked pytest -o addopts= -q -p no:cacheprovider --basetemp=.tmp/pytest-local
 ```
 
-Ensure no other test run uses the same `--basetemp`; pytest clears that directory. This distinguishes directory-permission failures from code failures. Existing automatic CI remains Linux-only; Windows CI is a future task.
+Create `.tmp` explicitly so a fresh download has the parent directory required by `--basetemp`. Ensure no other test run uses the same `--basetemp`; pytest clears that directory. This distinguishes directory-permission failures from code failures. Existing automatic CI remains Linux-only; Windows CI is a future task.
 
 Examples display figures by default without saving data or images.
 For network cases, set `SAVE_RESULT_DATA` or `SAVE_RESULT_FIGURE` at the top of the script to `1` to save to `outputs/<case-name>/`.

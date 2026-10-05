@@ -55,12 +55,13 @@ uv run python examples/01_r_circuit.py
 Windows 若默认临时目录出现 `PermissionError`，可在项目根目录使用项目内临时目录复验：
 
 ```powershell
+New-Item -ItemType Directory -Force -Path .tmp | Out-Null
 $env:UV_CACHE_DIR = "$PWD/.tmp/uv-cache"
 $env:MPLBACKEND = "Agg"
 uv run --locked pytest -o addopts= -q -p no:cacheprovider --basetemp=.tmp/pytest-local
 ```
 
-运行前确认没有其他测试使用同一个 `--basetemp`；pytest 会清理该目录。本命令用于区分目录权限问题与代码失败。现有自动 CI 仍为 Linux，Windows 自动 CI 属于未来计划。
+先显式创建 `.tmp`，避免干净下载的项目缺少 `--basetemp` 的父目录。运行前确认没有其他测试使用同一个 `--basetemp`；pytest 会清理该目录。本命令用于区分目录权限问题与代码失败。现有自动 CI 仍为 Linux，Windows 自动 CI 属于未来计划。
 
 示例默认显示图形，不保存数据或图片。
 网络算例需要保存时，把脚本顶部 `SAVE_RESULT_DATA` 或 `SAVE_RESULT_FIGURE` 改为 `1`；输出位于 `outputs/<算例名>/`。
