@@ -1,8 +1,23 @@
 """演示 RC 一阶充电暂态过程。
 
+在项目根目录运行：uv run python examples/02_rc_transient.py
+
+电路连接（0 为参考地；电源正端接 src）：
+    src o---[R1=1000 ohm]---o out
+        |                  |
+     [V1=1 V]          [C1=1 uF]
+        |                  |
+    0 --+------------------+
+
 电容电压按时间常数 `tau = R*C` 指数趋近电源电压，可用于理解动态元件
 历史项等效模型与梯形积分法。运行后把仿真结果与解析解
-`v(t) = V(1 - exp(-t/tau))` 对比，验证数值积分精度。"""
+`v(t) = V(1 - exp(-t/tau))` 对比，验证数值积分精度。
+观察：v:out 从 0 V 开始；tau=1 ms，1 ms 时约 0.6321 V，5 ms 时约 0.9933 V。
+练习：将 CAPACITANCE 从 1e-6 改为 2e-6 F，时间常数变为 2 ms，充电更慢。
+长期极限仍为 1 V，但原来的 5 ms 终点会离它更远；观察后恢复原值。
+源码：pycy_emt_lite/components/basic.py 的 Capacitor._companion() 计算等效参数，
+stamp() 写入矩阵，update_state() 在求解后保存电压和电流，供下一步使用。
+"""
 
 import math
 
@@ -14,9 +29,9 @@ SAVE_RESULT_DATA = 0
 SAVE_RESULT_FIGURE = 0
 SHOW_FIGURE = True
 
-SOURCE_VOLTAGE = 1.0
-RESISTANCE = 1000.0
-CAPACITANCE = 1e-6
+SOURCE_VOLTAGE = 1.0  # V
+RESISTANCE = 1000.0  # ohm
+CAPACITANCE = 1e-6  # F，等于 1 uF
 
 
 def print_summary(result: SimulationResult) -> None:

@@ -1,8 +1,24 @@
 """演示 RL 一阶电流建立过程。
 
+在项目根目录运行：uv run python examples/03_rl_transient.py
+
+电路连接（0 为参考地；电源正端接 src）：
+    src o---[R1=10 ohm]---o mid
+        |                |
+     [V1=1 V]        [L1=10 mH]
+        |                |
+    0 --+----------------+
+
 电感电流按时间常数 `tau = L/R` 指数趋近稳态值，用于理解电感的历史项
 等效模型与支路电流未知量的引入。运行后把仿真结果与解析解
-`i(t) = (V/R)(1 - exp(-t/tau))` 对比。"""
+`i(t) = (V/R)(1 - exp(-t/tau))` 对比。
+观察：i:L1 从 0 A 开始，方向为 mid -> 0；tau=1 ms，
+1 ms 时约 0.06321 A，5 ms 时约 0.09933 A，长期极限为 V/R=0.1 A。
+练习：将 INDUCTANCE 从 10e-3 改为 20e-3 H，时间常数变为 2 ms，
+电流建立更慢，长期极限仍为 0.1 A；观察后恢复原值。
+源码：pycy_emt_lite/components/basic.py 的 Inductor.register() 注册电流未知量，
+_companion() 计算离散参数，update_state() 保存下一步需要的电流和电压。
+"""
 
 import math
 
@@ -14,9 +30,9 @@ SAVE_RESULT_DATA = 0
 SAVE_RESULT_FIGURE = 0
 SHOW_FIGURE = True
 
-SOURCE_VOLTAGE = 1.0
-RESISTANCE = 10.0
-INDUCTANCE = 10e-3
+SOURCE_VOLTAGE = 1.0  # V
+RESISTANCE = 10.0  # ohm
+INDUCTANCE = 10e-3  # H，等于 10 mH
 
 
 def print_summary(result: SimulationResult) -> None:

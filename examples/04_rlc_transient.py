@@ -1,9 +1,25 @@
 """演示二阶 RLC 暂态过程。
 
+在项目根目录运行：uv run python examples/04_rlc_transient.py
+
+电路连接（0 为参考地；电源正端接 src）：
+    src o---[R1=20 ohm]---o n1---[L1=10 mH]---o out
+        |                                   |
+     [V1=1 V]                           [C1=10 uF]
+        |                                   |
+    0 --+-----------------------------------+
+
 RLC 串联电路在阶跃激励下可能出现欠阻尼振荡，是理解二阶系统动态特性
 和 MNA 状态更新顺序的经典教学算例。欠阻尼时把仿真末值与解析解
 `v(t) = V(1 - exp(-alpha t)(cos(wd t) + alpha/wd sin(wd t)))` 对比。
-改为临界阻尼或过阻尼参数时继续仿真和绘图，摘要跳过欠阻尼解析对比。"""
+观察：电容电压 v:out 和电感电流 i:L1 都从零开始；电压先超过 1 V，
+随后振荡衰减并接近 1 V。电流的正方向为 n1 -> out。
+练习：将 RESISTANCE 从 20.0 改为 40.0 ohm，第一处电压峰值应降低。
+改成 100.0 ohm 后为过阻尼，仍会仿真和绘图，摘要提示跳过欠阻尼解析对比。
+观察后恢复原值。研究步长误差时应对照整段暂态，不能只看已接近稳态的末值。
+源码：pycy_emt_lite/core/simulation.py 的 Simulator.run() 组织求解和状态更新；
+docs/component_derivations.md 第 5 节给出一个完整 RLC 矩阵的手算与运行核对。
+"""
 
 import math
 
@@ -15,10 +31,10 @@ SAVE_RESULT_DATA = 0
 SAVE_RESULT_FIGURE = 0
 SHOW_FIGURE = True
 
-SOURCE_VOLTAGE = 1.0
-RESISTANCE = 20.0
-INDUCTANCE = 10e-3
-CAPACITANCE = 10e-6
+SOURCE_VOLTAGE = 1.0  # V
+RESISTANCE = 20.0  # ohm
+INDUCTANCE = 10e-3  # H，等于 10 mH
+CAPACITANCE = 10e-6  # F，等于 10 uF
 
 
 def print_summary(result: SimulationResult) -> None:
