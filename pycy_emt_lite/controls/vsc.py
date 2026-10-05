@@ -159,7 +159,7 @@ class VSCController:
             "Vdc": vdc, "Vac_pu": vac, "P": pac, "Q": qac, "P_ref": pref,
             "Id": id_meas, "Iq": iq_meas, "Id_ref": id_ref, "Iq_ref": iq_ref,
             "PLL_theta": theta, "PLL_frequency_Hz": self.pll.frequency / (2 * math.pi),
-            "PLL_Vq": pll_vq, "PLL_Vq_pu": pll_vq / max(abs(pll_vd), 1.0),
+            "PLL_Vq": pll_vq, "PLL_Vq_pu": pll_vq / max(abs(pll_vd), abs(pll_vq), 1.0),
             "carrier": triangular_carrier(time, self.switching_frequency),
             "modulation_magnitude": math.sqrt(sum(m*m for m in self.modulation) * 2/3),
             # m 是刚完成求解所用参考，m_next 是本次控制生成的下一步参考。

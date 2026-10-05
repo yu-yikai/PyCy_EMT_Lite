@@ -55,6 +55,32 @@ def test_transformer_rejects_nonfinite_parameters(parameter: str, value: float) 
         SinglePhaseTransformer("T1", "primary", "0", "secondary", "0", **values)
 
 
+def test_transformer_rejects_increasing_saturation_inductance() -> None:
+    with pytest.raises(ValueError, match="T.*saturated_magnetizing_inductance"):
+        SinglePhaseTransformer("T", "p", "0", "s", "0", 1.0,
+                               magnetizing_inductance=1.0, saturation_knee_flux=0.1,
+                               saturated_magnetizing_inductance=2.0)
+
+
+@pytest.mark.parametrize("method", ["trapezoidal", "backward_euler"])
+def test_saturation_matches_piecewise_flux_current_and_refines(method) -> None:
+    errors = []
+    for step in (0.02, 0.01):
+        transformer = SinglePhaseTransformer("T", "p", "0", "s", "0", 1.0,
+            magnetizing_inductance=1.0, saturation_knee_flux=0.105, saturated_magnetizing_inductance=0.1)
+        result = Simulator(Circuit.from_components("saturation_reference", [
+            VoltageSource("V", "p", "0", 1.0), transformer, Resistor("R", "s", "0", 10.0),
+        ]), SimulationConfig(step, 0.2, method=method)).run()
+        time = result.series("time")
+        reference = np.minimum(time, 0.105) + np.maximum(time - 0.105, 0.0) / 0.1
+        np.testing.assert_allclose(result.series("flux:T:magnetizing"), time, atol=1e-14)
+        error = np.max(np.abs(result.series("i:T:magnetizing") - reference))
+        assert error <= 9 * step + 1e-12
+        assert result.series("i:T:magnetizing")[-1] > 0.9  # 线性对照仅 0.2 A。
+        errors.append(error)
+    assert errors[1] < errors[0] * 0.5
+
+
 def test_single_phase_transformer_voltage_ratio() -> None:
     components = [
         VoltageSource("V1", "primary", "0", 100.0),

@@ -25,6 +25,41 @@ from pycy_emt_lite.controls import (
 )
 
 
+def test_delay_rejects_huge_allocation_before_buffer_creation() -> None:
+    with pytest.raises(ValueError, match="SampleDelay.steps.*上限"):
+        SampleDelay(1_000_001)
+
+
+@pytest.mark.parametrize("parameter", ["proportional_gain", "integral_gain", "nominal_frequency"])
+def test_pll_rejects_config_mutation_without_advancing_state(parameter) -> None:
+    pll = SRFPLL(1.0, 2.0)
+    before = (pll.angle, pll.frequency, pll._controller.integrator)
+    setattr(pll, parameter, getattr(pll, parameter) + 1.0)
+    with pytest.raises(ValueError, match=rf"{parameter}.*请"):
+        pll.step((1.0, -0.5, -0.5), 0.001)
+    assert (pll.angle, pll.frequency, pll._controller.integrator) == before
+
+
+@pytest.mark.parametrize("ki,error,expected", [(-1.0, 1.0, 1.5), (-1.0, -1.0, 2.0), (1.0, -1.0, 1.5), (1.0, 1.0, 2.0), (0.0, 1.0, 2.0)])
+def test_pi_antiwindup_follows_integral_increment(ki, error, expected) -> None:
+    controller = PIController(0.0, ki, lower=-1.0, upper=1.0)
+    controller.reset(2.0)
+    assert controller.step(error, 0.5) == 1.0
+    assert controller.integrator == expected
+
+
+def test_vsc_pll_trace_matches_actual_normalized_error() -> None:
+    from pycy_emt_lite.controls.vsc import VSCController
+
+    controller = VSCController("S", 50.0, 420e3, 230e3, 200e6, 1000.0)
+    controller.pll.angle = math.pi / 2
+    row = {"time": 0.0, "v:S:dc_p": 200e3, "v:S:dc_n": -200e3}
+    for phase, voltage in zip("abc", (200.0, -100.0, -100.0)):
+        row.update({f"v:S:hv:{phase}": voltage, f"v:S:lv:{phase}": 0.0, f"i:S:reactor:{phase}": 0.0})
+    traces = controller.sample(row)
+    assert traces["S:PLL_Vq_pu"] == pytest.approx(-1.0)
+
+
 def test_limiter_clamps_value() -> None:
     limiter = Limiter(-1.0, 1.0)
 

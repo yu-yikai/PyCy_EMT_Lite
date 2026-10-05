@@ -11,6 +11,9 @@
 from __future__ import annotations
 
 from pathlib import Path
+import os
+import re
+from urllib.parse import quote
 from typing import Protocol
 
 
@@ -20,6 +23,17 @@ class ReportableResult(Protocol):
     method: str
     time_step: float
     stop_time: float
+
+
+def _text(value: object) -> str:
+    return re.sub(r"([\\`*_{}\[\]()#+.!|<>])", r"\\\1", str(value).replace("\n", " ").replace("\r", " "))
+
+
+def _code(value: object) -> str:
+    text = str(value).replace("\n", " ").replace("\r", " ")
+    delimiter = "`" * (max((len(run) for run in re.findall(r"`+", text)), default=0) + 1)
+    padding = " " if text.startswith("`") or text.endswith("`") else ""
+    return f"{delimiter}{padding}{text}{padding}{delimiter}"
 
 
 def write_markdown_report(
@@ -51,12 +65,12 @@ def write_markdown_report(
     event_log = getattr(result, "event_log", None)
 
     lines = [
-        f"# {title or case_id}",
+        f"# {_text(title or case_id)}",
         "",
         "## 仿真信息",
         "",
-        f"- 算例名称：`{case_id}`",
-        f"- 方法：`{result.method}`",
+        f"- 算例名称：{_code(case_id)}",
+        f"- 方法：{_code(result.method)}",
         f"- 时间步长：`{result.time_step}` s",
         f"- 终止时间：`{result.stop_time}` s",
         f"- 采样点数：`{sample_count}`",
@@ -65,17 +79,17 @@ def write_markdown_report(
     if summary:
         lines.extend(["## 摘要指标", ""])
         for key, value in summary.items():
-            lines.append(f"- {key}：{value}")
+            lines.append(f"- {_text(key)}：{_text(value)}")
         lines.append("")
     lines.extend(["## 结果字段", ""])
     for column in signal_names:
-        lines.append(f"- `{column}`")
+        lines.append(f"- {_code(column)}")
     lines.append("")
     if event_log:
         lines.extend(["## 事件日志", ""])
         for record in event_log:
             lines.append(
-                f"- t={record.get('time')} s，类型 `{record.get('type')}`，目标 `{record.get('target')}`"
+                f"- t={_text(record.get('time'))} s，类型 {_code(record.get('type'))}，目标 {_code(record.get('target'))}"
             )
         lines.append("")
     elif event_log is None:
@@ -84,6 +98,10 @@ def write_markdown_report(
         lines.extend(["## 图像", ""])
         for figure_path in figure_paths:
             figure = Path(figure_path)
-            lines.append(f"![{figure.stem}]({figure.as_posix()})")
+            try:
+                link = quote(Path(os.path.relpath(figure.resolve(), target.parent.resolve())).as_posix(), safe="/:")
+            except ValueError:  # Windows 不同驱动器没有相对路径。
+                link = figure.resolve().as_uri()
+            lines.append(f"![{_text(figure.stem)}]({link})")
         lines.append("")
     target.write_text("\n".join(lines), encoding="utf-8")

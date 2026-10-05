@@ -14,9 +14,9 @@ from typing import Callable, Iterable
 
 import numpy as np
 
-from pycy_emt_lite.components.base import Component
+from pycy_emt_lite.components.base import Component, _finite_real
 from pycy_emt_lite.core.context import StampContext
-from pycy_emt_lite.core.stamping import add_conductance, add_voltage_probe
+from pycy_emt_lite.core.stamping import add_conductance, add_voltage_probe, _conductance_current
 
 BoolTimeValue = bool | float | Callable[[float], bool | float]
 
@@ -49,12 +49,16 @@ class IdealSwitch(Component):
     last_state: bool = False
 
     def __post_init__(self) -> None:
+        self.closed_resistance = _finite_real(self.closed_resistance, f"开关 {self.name} 的 closed_resistance")
+        self.open_conductance = _finite_real(self.open_conductance, f"开关 {self.name} 的 open_conductance")
         if not callable(self.closed):
             _bool_at(self.closed, 0.0, name=self.name)
         if not math.isfinite(self.closed_resistance) or self.closed_resistance <= 0.0:
             raise ValueError(f"开关 {self.name} 的闭合电阻必须为有限正数。")
         if not math.isfinite(self.open_conductance) or self.open_conductance < 0.0:
             raise ValueError(f"开关 {self.name} 的断开电导必须为有限非负数。")
+        if self.open_conductance * self.closed_resistance > 1.0:
+            raise ValueError(f"开关 {self.name} 的 open_conductance 大于闭合电导；请保证 Goff <= 1/closed_resistance。")
 
     def nodes(self) -> Iterable[str]:
         return (self.positive, self.negative)
@@ -72,7 +76,8 @@ class IdealSwitch(Component):
 
         voltage = add_voltage_probe(solution, context.node_index(self.positive), context.node_index(self.negative))
         conductance = 1.0 / self.closed_resistance if self.last_state else self.open_conductance
-        self.last_current = conductance * voltage
+        self.last_current = _conductance_current(solution, context.node_index(self.positive), context.node_index(self.negative),
+                                                 conductance, self.name)
 
     def outputs(self, context: StampContext, solution: np.ndarray) -> dict[str, float]:
         """记录开关电流和导通状态。"""

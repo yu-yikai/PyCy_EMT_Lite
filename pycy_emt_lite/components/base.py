@@ -11,6 +11,8 @@
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
+import math
+from numbers import Real
 from typing import Iterable
 
 import numpy as np
@@ -18,6 +20,19 @@ import numpy as np
 from pycy_emt_lite.core.context import StampContext
 from pycy_emt_lite.core.nodes import NodeManager
 from pycy_emt_lite.core.variables import VariableManager
+
+
+def _finite_real(value: float, label: str) -> float:
+    """只接受有限实数标量；转换后的范围也必须能用 float 表示。"""
+    try:
+        if isinstance(value, bool) or not isinstance(value, Real):
+            raise ValueError
+        converted = float(value)
+        if not math.isfinite(converted):
+            raise ValueError
+    except (TypeError, ValueError, OverflowError) as exc:
+        raise ValueError(f"{label}={value!r} 必须为有限实数；请使用数值标量，不使用布尔值、字符串、NaN 或 Inf。") from exc
+    return converted
 
 
 class Component(ABC):

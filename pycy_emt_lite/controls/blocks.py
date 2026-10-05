@@ -115,13 +115,14 @@ class PIController:
 
         _validate_time_step(time_step)
         error = _finite_real(input_value, "PIController.input_value")
-        candidate_integrator = _finite_real(self.integrator + self.integral_gain * error * time_step,
+        increment = self.integral_gain * error * time_step
+        candidate_integrator = _finite_real(self.integrator + increment,
                                             "PIController.integrator")
         raw_output = _finite_real(self.proportional_gain * error + candidate_integrator, "PIController.output")
         limited_output = self._limit(raw_output)
 
-        saturated_high = self.upper is not None and raw_output > self.upper and error > 0.0
-        saturated_low = self.lower is not None and raw_output < self.lower and error < 0.0
+        saturated_high = self.upper is not None and raw_output > self.upper and increment > 0.0
+        saturated_low = self.lower is not None and raw_output < self.lower and increment < 0.0
         if not (saturated_high or saturated_low):
             self.integrator = candidate_integrator
 
@@ -196,12 +197,16 @@ class SampleDelay:
         if isinstance(self.steps, bool) or not isinstance(self.steps, Integral) or self.steps < 0:
             raise ValueError(f"SampleDelay.steps={self.steps!r} 非法；请使用非负整数步数，不使用布尔值。")
         self.steps = int(self.steps)
+        if self.steps > 1_000_000:
+            raise ValueError("SampleDelay.steps 超过当前上限 1000000；请减小延时长度，避免过大队列分配。")
         self.initial_value = _finite_real(self.initial_value, "SampleDelay.initial_value")
         self._buffer = deque([self.initial_value] * self.steps, maxlen=self.steps)
 
     def step(self, input_value: float, time_step: float) -> float:
         """返回延迟后的输入值。"""
 
+        if self.steps != self._buffer.maxlen:
+            raise ValueError("SampleDelay.steps 在构造后已修改；请创建新的延时模块。")
         _validate_time_step(time_step)
         value = _finite_real(input_value, "SampleDelay.input_value")
         if self.steps == 0:
@@ -213,5 +218,7 @@ class SampleDelay:
     def reset(self, value: float = 0.0) -> None:
         """用指定值重新填充延迟队列。"""
 
+        if self.steps != self._buffer.maxlen:
+            raise ValueError("SampleDelay.steps 在构造后已修改；请创建新的延时模块。")
         self.initial_value = _finite_real(value, "SampleDelay.reset value")
         self._buffer = deque([self.initial_value] * self.steps, maxlen=self.steps)

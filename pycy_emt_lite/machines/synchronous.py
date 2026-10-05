@@ -20,8 +20,8 @@ import numpy as np
 from pycy_emt_lite.components.base import Component
 from pycy_emt_lite.components.three_phase import PHASES, PhaseName, _phase_angle, phase_node
 from pycy_emt_lite.core.context import StampContext
-from pycy_emt_lite.core.nodes import NodeManager
-from pycy_emt_lite.core.stamping import add_conductance, add_voltage_probe
+from pycy_emt_lite.core.nodes import NodeManager, _check_internal_nodes
+from pycy_emt_lite.core.stamping import add_conductance, add_voltage_probe, _conductance_current
 from pycy_emt_lite.core.variables import VariableManager
 
 PowerInput = float | Callable[[float], float]
@@ -130,12 +130,14 @@ class SynchronousMachine(Component):
         if self.initial_speed_pu <= 0:
             raise ValueError(f"同步机 {self.name} 的 initial_speed_pu 非法；请设置大于 0 的转速标幺值。")
         self.state = _MachineState(self.initial_rotor_angle, self.initial_speed_pu)
+        _check_internal_nodes(self.name, [phase_node(self.internal_bus_name, p) for p in PHASES],
+                              [self.neutral, *[phase_node(self.terminal_bus, p) for p in PHASES]])
 
     @property
     def internal_bus_name(self) -> str:
         """返回内部电势节点母线名。"""
 
-        return self.internal_bus or f"{self.name}_internal"
+        return f"{self.name}_internal" if self.internal_bus is None else self.internal_bus
 
     def nodes(self) -> Iterable[str]:
         nodes: list[str] = [self.neutral]
@@ -229,7 +231,7 @@ class SynchronousMachine(Component):
                 self.state.previous_current[phase] = current
                 self.state.previous_inductor_voltage[phase] = branch_voltage - self.stator_resistance * current
             else:
-                current = branch_voltage / self.stator_resistance
+                current = _conductance_current(solution, internal, terminal, 1.0 / self.stator_resistance, f"{self.name}:{phase}")
             self.state.last_current[phase] = current
             self.state.last_terminal_voltage[phase] = terminal_voltage
             electrical_power += terminal_voltage * current

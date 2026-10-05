@@ -12,6 +12,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
+from pycy_emt_lite.components.switching import Breaker, Fault
 from pycy_emt_lite.core.circuit import Circuit
 from pycy_emt_lite.events.base import EventRecord, SimulationEvent
 
@@ -32,10 +33,11 @@ def _check_bool_state(circuit: Circuit, target: str, scheduled_time: float, attr
     """检查目标存在且支持指定的布尔状态。"""
 
     component = _find_component(circuit, target, scheduled_time)
-    if not hasattr(component, attribute):
+    expected_type = Fault if attribute == "enabled" else Breaker
+    if not isinstance(component, expected_type):
         raise TypeError(
             f"事件目标 {target!r} 在设定时间 {scheduled_time:g} 不支持状态 {attribute!r}；"
-            "请将故障事件指向 Fault，将断路器事件指向 Breaker，或使用支持对应状态的元件。"
+            "请将故障事件指向 Fault，将断路器事件指向 Breaker；其他操作请继承 SimulationEvent 自定义事件。"
         )
     return component
 

@@ -173,6 +173,10 @@ def validation_summary(result, mode: RunMode) -> dict[str, float]:
             raise ValueError("仿真结果未覆盖要求的稳态/恢复窗口。")
         def mean(key):
             return float(np.trapezoid(a[key][window], t) / (t[-1] - t[0]))
+        def error_rms(values):
+            values = values[window]
+            square = values[:-1]**2 + values[:-1]*values[1:] + values[1:]**2
+            return float(np.sqrt(np.sum(np.diff(t) * square / 3) / (t[-1] - t[0])))
         for s, frequency, _, _ in STATIONS:
             metrics[f"{label}:{s}:Vdc_kV"] = mean(f"{s}:Vdc") / 1e3
             metrics[f"{label}:{s}:P_MW"] = mean(f"{s}:P") / 1e6
@@ -180,8 +184,23 @@ def validation_summary(result, mode: RunMode) -> dict[str, float]:
             metrics[f"{label}:{s}:Vac_pu"] = mean(f"{s}:Vac_pu")
             metrics[f"{label}:{s}:PLL_error_Hz"] = abs(mean(f"{s}:PLL_frequency_Hz") - frequency)
             metrics[f"{label}:{s}:PLL_Vq_pu"] = abs(mean(f"{s}:PLL_Vq_pu"))
+            metrics[f"{label}:{s}:PLL_error_rms_Hz"] = error_rms(a[f"{s}:PLL_frequency_Hz"] - frequency)
+            metrics[f"{label}:{s}:PLL_Vq_rms_pu"] = error_rms(a[f"{s}:PLL_Vq_pu"])
+            va, vb, vc = (a[f"v:{s}:hv:{p}"] for p in "abc")
+            alpha = (2/3) * (va - vb/2 - vc/2)
+            beta = (vb - vc) / math.sqrt(3)
+            theta = a[f"{s}:PLL_theta"]
+            vd = alpha * np.cos(theta) + beta * np.sin(theta)
+            metrics[f"{label}:{s}:PLL_Vd_min_V"] = float(vd[window].min())
             for axis in ("Id", "Iq"):
                 metrics[f"{label}:{s}:{axis}_mean_error_A"] = abs(mean(f"{s}:{axis}") - mean(f"{s}:{axis}_ref"))
+                metrics[f"{label}:{s}:{axis}_rms_error_A"] = error_rms(a[f"{s}:{axis}"] - a[f"{s}:{axis}_ref"])
+            # 原均值阈值现在只说明偏置；严格精度验收还要求 RMS 和正确相位极性。
+            metrics[f"{label}:{s}:control_accuracy_met"] = float(
+                metrics[f"{label}:{s}:PLL_error_rms_Hz"] < 0.05
+                and metrics[f"{label}:{s}:PLL_Vq_rms_pu"] < 0.01
+                and metrics[f"{label}:{s}:PLL_Vd_min_V"] > 0
+                and all(metrics[f"{label}:{s}:{axis}_rms_error_A"] < 25 for axis in ("Id", "Iq")))
         metrics[f"{label}:DC:power_in_MW"] = mean("DC:power_in") / 1e6
         metrics[f"{label}:DC:loss_MW"] = mean("DC:loss") / 1e6
         metrics[f"{label}:DC:storage_power_MW"] = mean("DC:storage_power") / 1e6

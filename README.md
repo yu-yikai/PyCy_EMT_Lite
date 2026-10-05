@@ -52,6 +52,17 @@ Open `examples/01_r_circuit.py` in a text editor, change `RESISTANCE = 5.0` to `
 The voltage should remain 10 V, the resistor current should become 1 A, and the source current should become −1 A. Restore 5.0 before moving to the next example.
 
 Dependencies are NumPy, SciPy and Matplotlib; tests use pytest. Run `uv run pytest` when you want to check installation or changed behavior.
+
+If the default temporary directory raises `PermissionError` on Windows, rerun from the project root with a project-local temporary directory:
+
+```powershell
+$env:UV_CACHE_DIR = "$PWD/.tmp/uv-cache"
+$env:MPLBACKEND = "Agg"
+uv run --locked pytest -o addopts= -q -p no:cacheprovider --basetemp=.tmp/pytest-local
+```
+
+Ensure no other test run uses the same `--basetemp`; pytest clears that directory. This distinguishes directory-permission failures from code failures. Existing automatic CI remains Linux-only; Windows CI is a future task.
+
 Examples display figures by default without saving data or images.
 For network cases, set `SAVE_RESULT_DATA` or `SAVE_RESULT_FIGURE` at the top of the script to `1` to save to `outputs/<case-name>/`.
 The standalone PLL example 11 only displays figures and has no saving flags.
@@ -176,7 +187,7 @@ plot_result_comparison([result, loaded], "v:n1", labels=["original", "loaded"], 
 plot_zoom_window(result, ["v:n1"], 0.0, 5e-4,
                  output_path="outputs/my_r_circuit/zoom.png", show=False)
 write_markdown_report(result, "outputs/my_r_circuit/report.md",
-                      summary={"Voltage RMS / V": voltage_rms}, figure_paths=["zoom.png"])
+                      summary={"Voltage RMS / V": voltage_rms}, figure_paths=["outputs/my_r_circuit/zoom.png"])
 ```
 
 `to_csv/from_csv` and `to_npz/from_npz` are also available. JSON/NPZ retain metadata and `event_log`; CSV contains only tabular data.

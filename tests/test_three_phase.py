@@ -26,6 +26,97 @@ from pycy_emt_lite.analysis import rms, three_phase_power, three_phase_rms
 from pycy_emt_lite.components.three_phase import ThreePhaseParallelRLCLoad
 
 
+@pytest.mark.parametrize("kind", ["pi_line", "parallel_load"])
+@pytest.mark.parametrize("method", ["trapezoidal", "backward_euler"])
+def test_three_phase_existing_models_match_independent_ac_fault_reference(kind, method) -> None:
+    from scipy.integrate import solve_ivp
+    from pycy_emt_lite import VoltageSource, Fault, FaultApplyEvent, FaultClearEvent
+    from pycy_emt_lite.components.lines import ThreePhasePiLine
+
+    omega, tau = 2 * math.pi * 50, 0.003
+    phases = np.array([0.0, -2*math.pi/3, 2*math.pi/3])
+    def source(time):
+        return 100 * np.sin(omega*time + phases) * (1 - np.exp(-time/tau))
+    def derivative(time, phase):
+        return 100 * (omega * math.cos(omega*time + phases[phase]) * (1-math.exp(-time/tau))
+                      + math.sin(omega*time + phases[phase]) * math.exp(-time/tau)/tau)
+    inductance = .01 if kind == "pi_line" else 10/omega
+    capacitance = 1e-4 if kind == "pi_line" else 500/(omega*30000)
+    series_r = 1.0 if kind == "pi_line" else 2.0
+    def equations(time, state, fault_g):
+        current, voltage = state[:3], state[3:]
+        if kind == "pi_line":
+            di = (source(time) - series_r*current - voltage) / inductance
+            dv = (current - (0.1+fault_g)*voltage) / capacitance
+        else:
+            di = voltage / inductance
+            dv = ((source(time)-voltage)/series_r - (0.1+fault_g)*voltage-current) / capacitance
+        return np.concatenate((di, dv))
+    # 六个连续状态的独立 ODE，分段处理故障，不调用任何模型 stamp/update。
+    segments, initial = [], np.zeros(6)
+    for start, end, g in ((0.0, .008, 0.0), (.008, .014, .5), (.014, .02, 0.0)):
+        reference = solve_ivp(lambda t, y: equations(t, y, g), (start, end), initial,
+                              method="DOP853", rtol=1e-11, atol=1e-11, dense_output=True)
+        assert reference.success
+        initial = reference.y[:, -1]
+        segments.append((start, end, reference.sol))
+    errors = []
+    # 最快故障 RC 时间常数约 48 µs；用 20/10 µs 验证，而不是跨越该动态。
+    steps = (.00002, .00001) if method == "trapezoidal" else (.000005, .0000025)
+    for step in steps:
+        components = [VoltageSource(f"V{p}", f"source:{p}", "0", lambda t, k=k: float(source(t)[k]),
+                      derivative=lambda t, k=k: derivative(t, k)) for k, p in enumerate("abc")]
+        if kind == "pi_line":
+            components += [ThreePhasePiLine("LINE", "source", "bus", 1.0, .01, 2e-4),
+                           ThreePhaseLoad("LOAD", "bus", 10.0)]
+        else:
+            components += [Resistor(f"SERIES{p}", f"source:{p}", f"bus:{p}", 2.0) for p in "abc"]
+            components += [ThreePhaseParallelRLCLoad("LOAD", "bus", math.sqrt(30000), 3000, 3000, 500)]
+        components += [Fault(f"F{p}", f"bus:{p}", 2.0) for p in "abc"]
+        events = [event(t, f"F{p}") for t, event in ((.008, FaultApplyEvent), (.014, FaultClearEvent)) for p in "abc"]
+        result = Simulator(Circuit.from_components(kind, components), SimulationConfig(step, .02, method=method), events).run()
+        time = result.series("time")
+        exact = np.array([next(sol(t) for start, end, sol in segments if start <= t <= end + 1e-15) for t in time]).T
+        voltage = np.array([result.series(f"v:bus:{p}") for p in "abc"])
+        current = np.array([result.series(f"i:LINE:series:{p}" if kind == "pi_line" else f"i:LOAD:L:{p}") for p in "abc"])
+        stride = round(steps[0]/step)
+        error = max(np.max(np.abs(voltage[:, ::stride]-exact[3:, ::stride])) / 100,
+                    np.max(np.abs(current[:, ::stride]-exact[:3, ::stride])) / 10)
+        errors.append(error)
+        assert error < .02
+        if kind == "parallel_load":
+            for k, p in enumerate("abc"):
+                np.testing.assert_allclose(result.series(f"i:LOAD:{p}") + result.series(f"i:F{p}"),
+                    (np.array([source(t)[k] for t in time])-voltage[k])/series_r, atol=1e-9)
+        else:
+            # 不跨事件核对离散储能与独立端口功率；事件时状态连续。
+            avg_i = (current[:, 1:]+current[:, :-1])/2
+            avg_v = (voltage[:, 1:]+voltage[:, :-1])/2
+            avg_source = (np.array([source(t) for t in time[1:]]).T + np.array([source(t) for t in time[:-1]]).T)/2
+            g = .1 + .5*((time[1:] >= .008) & (time[1:] < .014))
+            if method == "trapezoidal":
+                work = step * np.sum(avg_source*avg_i - series_r*avg_i**2 - g*avg_v**2, axis=0)
+            else:
+                source_right = np.array([source(t) for t in time[1:]]).T
+                work = step * np.sum(source_right*current[:, 1:] - series_r*current[:, 1:]**2 - g*voltage[:, 1:]**2, axis=0)
+                work -= np.sum(.5*inductance*np.diff(current)**2 + .5*capacitance*np.diff(voltage)**2, axis=0)
+            energy = np.sum(.5*inductance*current**2 + .5*capacitance*voltage**2, axis=0)
+            mask = ~np.isclose(time[1:, None], [.008, .014], atol=1e-14, rtol=0).any(axis=1)
+            np.testing.assert_allclose(np.diff(energy)[mask], work[mask], atol=1e-9)
+    assert errors[1] < errors[0] * .6
+
+
+@pytest.mark.parametrize("ground", ["Ground", "gNd", "gRoUnD"])
+def test_ground_aliases_keep_three_phase_network_separate(ground) -> None:
+    components = [ThreePhaseSource("V", "bus", 100.0, neutral=ground),
+                  ThreePhaseLoad("R", "bus", 10.0, neutral=ground)]
+    circuit = Circuit.from_components("ground_alias", components)
+    result = Simulator(circuit, SimulationConfig(0.001, 0.001)).run()
+    assert circuit.node_manager.names == ["bus:a", "bus:b", "bus:c"]
+    for phase in "abc":
+        assert result.series(f"i:R:{phase}") == pytest.approx(np.array(result.series(f"v:bus:{phase}")) / 10)
+
+
 @pytest.mark.parametrize("kind", ["series", "parallel"])
 def test_three_phase_storage_initialization_matches_basic_components(kind) -> None:
     source = lambda: ThreePhaseSource("VS", "source", phase_rms=100.0)

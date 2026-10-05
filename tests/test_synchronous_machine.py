@@ -13,6 +13,12 @@ from pycy_emt_lite.analysis import three_phase_rms
 from pycy_emt_lite.machines import SynchronousMachine
 
 
+@pytest.mark.parametrize("terminal,internal", [("bus", "bus"), ("SM_internal", None), ("bus", "Ground")])
+def test_classical_machine_rejects_internal_bus_collision(terminal, internal) -> None:
+    with pytest.raises(ValueError, match="SM.*内部"):
+        SynchronousMachine("SM", terminal, 100.0, 1.0, 0.1, 3000.0, 3.5, internal_bus=internal)
+
+
 def test_machine_initial_row_does_not_advance_stator_or_rotor() -> None:
     machine = SynchronousMachine("SM", "bus", 100.0, 1.0, 0.1, 3000.0, 3.5,
                                  mechanical_power=2700.0, initial_rotor_angle=0.2, initial_speed_pu=1.01)
@@ -159,7 +165,8 @@ def test_classical_machine_reports_invalid_parameter_and_repair(overrides, match
 def test_classical_machine_rejects_nonfinite_callable_power_at_its_time() -> None:
     machine = SynchronousMachine("SM", "bus", 100, 1, 0, 3000, 3.5,
                                  mechanical_power=lambda t: 2700 if t == 0 else float("nan"))
-    with pytest.raises(ValueError, match=r"mechanical_power\(time=0.0001\).+请"):
+    with pytest.raises(RuntimeError, match=r"SM.*时间 0.0001.*update_state.*mechanical_power.+请") as caught:
         Simulator(Circuit.from_components("bad_power", [machine,
             *[Resistor(f"R{p}", f"bus:{p}", "0", 9.0) for p in "abc"],
         ]), SimulationConfig(1e-4, 1e-4)).run()
+    assert isinstance(caught.value.__cause__, ValueError)

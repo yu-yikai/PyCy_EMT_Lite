@@ -7,7 +7,7 @@ import runpy
 import numpy as np
 import pytest
 
-from pycy_emt_lite import Circuit, IdealSwitch, SimulationConfig, Simulator, VoltageSource
+from pycy_emt_lite import Circuit, IdealSwitch, SimulationConfig, Simulator, VoltageSource, SimulationResult
 from pycy_emt_lite.components.transformers import ThreePhaseTransformer
 from pycy_emt_lite.controls import dq_to_abc
 
@@ -15,6 +15,34 @@ from pycy_emt_lite.controls import dq_to_abc
 @pytest.fixture(scope="module")
 def example():
     return runpy.run_path(str(Path(__file__).parents[1] / "examples/18_three_terminal_vsc_hvdc.py"))
+
+
+@pytest.mark.parametrize("bad", ["oscillation", "opposite_phase", "normal"])
+def test_control_summary_rejects_zero_mean_oscillation_and_wrong_polarity(example, bad):
+    mode = example["MODES"]["FAST"]
+    rows = []
+    for index in range(161):
+        alternating = (-1.0)**index if bad == "oscillation" else 0.0
+        vd = -1.0 if bad == "opposite_phase" else 1.0
+        row = {"time": index * 0.005, "DC:balance_residual": 0.0,
+               "DC:power_in": 0.0, "DC:loss": 0.0, "DC:storage_power": 0.0}
+        for station, frequency, *_ in example["STATIONS"]:
+            row.update({f"{station}:Vdc": 400e3, f"{station}:P": 0.0, f"{station}:Q": 0.0,
+                        f"{station}:Vac_pu": 1.0, f"{station}:PLL_frequency_Hz": frequency + 10 * alternating,
+                        f"{station}:PLL_Vq_pu": 0.5 * alternating, f"{station}:PLL_theta": 0.0,
+                        f"v:{station}:hv:a": vd, f"v:{station}:hv:b": -vd/2, f"v:{station}:hv:c": -vd/2})
+            for axis in ("Id", "Iq"):
+                row[f"{station}:{axis}"] = 100 * alternating
+                row[f"{station}:{axis}_ref"] = 0.0
+        rows.append(row)
+    metrics = example["validation_summary"](SimulationResult("synthetic", "manual", .005, .8, rows), mode)
+    for label in ("pre", "post"):
+        for station, *_ in example["STATIONS"]:
+            assert metrics[f"{label}:{station}:control_accuracy_met"] == float(bad == "normal")
+            assert metrics[f"{label}:{station}:PLL_error_Hz"] < 1e-10
+            if bad == "oscillation":
+                assert metrics[f"{label}:{station}:PLL_error_rms_Hz"] > 5.0
+                assert metrics[f"{label}:{station}:Id_rms_error_A"] > 50.0
 
 
 def test_default_example_uses_fast_configuration(example):
@@ -111,7 +139,7 @@ def test_three_terminal_vsc_hvdc_fast_run(fast):
     assert max(np.max(np.abs(a[f"v:S3:hv:{p}"])) for p in "abc") < 5e6
 
 
-def test_three_plls_lock(fast):
+def test_three_plls_have_small_mean_bias(fast):
     _, _, a = fast
     for start, end in ((.18, .28), (.7, .8)):
         for s, nominal in (("S1", 60), ("S2", 50), ("S3", 50)):
@@ -119,7 +147,7 @@ def test_three_plls_lock(fast):
             assert abs(average(a, f"{s}:PLL_Vq_pu", start, end)) < .01
 
 
-def test_dc_slack_station_regulates_voltage_and_outer_controls_track(fast):
+def test_dc_slack_station_regulates_voltage_and_controls_have_small_mean_bias(fast):
     _, _, a = fast
     for start, end in ((.18, .28), (.7, .8)):
         assert abs(average(a, "S1:Vdc", start, end) - 400e3) < 4e3

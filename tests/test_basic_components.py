@@ -14,6 +14,30 @@ import pycy_emt_lite
 from pycy_emt_lite import Capacitor, Circuit, CurrentSource, Inductor, Resistor, SimulationConfig, Simulator, VoltageSource
 
 
+@pytest.mark.parametrize("factory", [Resistor, Capacitor, Inductor, CurrentSource, VoltageSource])
+@pytest.mark.parametrize("value", [True, "1.0"])
+def test_basic_parameter_rejects_convertible_non_numbers(factory, value) -> None:
+    with pytest.raises(ValueError, match="X.*有限"):
+        factory("X", "in", "0", value)
+
+
+@pytest.mark.parametrize("change", ["append", "endpoint", "name"])
+def test_prepared_circuit_rejects_direct_topology_changes(change) -> None:
+    resistor = Resistor("R", "in", "0", 10.0)
+    circuit = Circuit.from_components("frozen_topology", [VoltageSource("V", "in", "0", 10.0), resistor])
+    circuit.prepare()
+    if change == "append":
+        circuit.components.append(Resistor("R2", "in", "0", 20.0))
+    elif change == "endpoint":
+        resistor.positive = "0"
+    else:
+        resistor.name = "renamed"
+    simulator = Simulator(circuit, SimulationConfig(0.001, 0.001))
+    with pytest.raises(RuntimeError, match="拓扑.*请"):
+        simulator.run()
+    assert simulator.solver.solve_count == 0
+
+
 def test_node_and_capacitor_output_collision_is_rejected_with_repair() -> None:
     def circuit(capacitor_name):
         return Circuit.from_components("field_collision", [

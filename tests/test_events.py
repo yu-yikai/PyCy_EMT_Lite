@@ -7,6 +7,7 @@ from dataclasses import dataclass
 
 import pytest
 
+
 from pycy_emt_lite import (
     Breaker,
     BreakerCloseEvent,
@@ -25,6 +26,23 @@ from pycy_emt_lite import (
 )
 from pycy_emt_lite.events import SimulationEvent
 from pycy_emt_lite.core.solvers import DenseLinearSolver
+
+
+@pytest.mark.parametrize("event_type", [BreakerOpenEvent, BreakerCloseEvent])
+def test_breaker_event_preserves_switch_gate_on_wrong_target(event_type) -> None:
+    from pycy_emt_lite import IdealSwitch
+
+    gate = lambda time: True
+    switch = IdealSwitch("S", "in", "out", closed=gate)
+    circuit = Circuit.from_components("wrong_gate", [
+        VoltageSource("V", "in", "0", 10.0), switch, Resistor("R", "out", "0", 10.0),
+    ])
+    simulator = Simulator(circuit, SimulationConfig(0.001, 0.002), [event_type(0.001, "S")])
+    with pytest.raises(TypeError, match="S.*0.001.*closed"):
+        simulator.run()
+    assert switch.closed is gate
+    assert simulator.solver.solve_count == 0
+    assert simulator.event_log == []
 
 
 @dataclass(frozen=True, slots=True)

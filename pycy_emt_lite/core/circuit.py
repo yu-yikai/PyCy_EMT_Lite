@@ -35,6 +35,7 @@ class Circuit:
     variable_manager: VariableManager = field(default_factory=VariableManager)
     prepared: bool = False
     _run_claimed: bool = field(default=False, init=False)
+    _prepared_topology: tuple = field(default=(), init=False, repr=False)
 
     @classmethod
     def from_components(cls, name: str, components: Iterable[Component]) -> "Circuit":
@@ -90,6 +91,7 @@ class Circuit:
 
         if self._run_claimed:
             raise RuntimeError(f"电路 {self.name!r} 只能运行一次。")
+        self._check_topology()
         self._run_claimed = True
         self._claim_components()
 
@@ -97,6 +99,7 @@ class Circuit:
         """建立 MNA 编号：先编号节点电压变量，再注册支路电流变量。"""
 
         if self.prepared:
+            self._check_topology()
             return
         self._check_component_names()
         self._claim_components()
@@ -107,6 +110,14 @@ class Circuit:
         for component in self.components:
             component.register(self.node_manager, self.variable_manager)
         self.prepared = True
+        self._prepared_topology = self._topology()
+
+    def _topology(self) -> tuple:
+        return tuple((id(c), c.name, tuple(c.nodes())) for c in self.components)
+
+    def _check_topology(self) -> None:
+        if self.prepared and self._topology() != self._prepared_topology:
+            raise RuntimeError(f"电路 {self.name!r} 在 prepare 后的拓扑已修改；请用新元件构造新电路，保留事件对状态的合法修改。")
 
     def _claim_components(self) -> None:
         """在注册变量前声明所有元件属于本电路。"""

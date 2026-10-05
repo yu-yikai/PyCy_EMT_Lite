@@ -15,6 +15,7 @@ from dataclasses import dataclass
 from numbers import Real
 
 from pycy_emt_lite.components import Capacitor, Component, Inductor, Resistor
+from pycy_emt_lite.core.nodes import _check_internal_nodes
 
 
 def _validate_parameter(name: str, parameter: str, value: float, *, allow_zero: bool = False) -> None:
@@ -41,6 +42,8 @@ class LFilter:
     def __post_init__(self) -> None:
         _validate_parameter(self.name, "inductance", self.inductance)
         _validate_parameter(self.name, "series_resistance", self.series_resistance, allow_zero=True)
+        if self.series_resistance > 0:
+            _check_internal_nodes(self.name, [f"{self.name}:mid"], [self.input_node, self.output_node])
 
     def components(self) -> list[Component]:
         """返回组成该 L 滤波器的元件对象列表。"""
@@ -70,6 +73,8 @@ class LCFilter:
         _validate_parameter(self.name, "inductance", self.inductance)
         _validate_parameter(self.name, "capacitance", self.capacitance)
         _validate_parameter(self.name, "series_resistance", self.series_resistance, allow_zero=True)
+        if self.series_resistance > 0:
+            _check_internal_nodes(self.name, [f"{self.name}:mid"], [self.input_node, self.output_node, self.ground])
 
     def components(self) -> list[Component]:
         """返回组成该 LC 滤波器的元件对象列表。"""
@@ -101,6 +106,14 @@ class LCLFilter:
             _validate_parameter(self.name, parameter, getattr(self, parameter))
         for parameter in ("converter_resistance", "grid_resistance", "damping_resistance"):
             _validate_parameter(self.name, parameter, getattr(self, parameter), allow_zero=True)
+        internal = []
+        if self.converter_resistance > 0:
+            internal.append(f"{self.name}:converter:mid")
+        if self.grid_resistance > 0:
+            internal.append(f"{self.name}:grid:mid")
+        if self.damping_resistance > 0:
+            internal.append(f"{self.name}:damping")
+        _check_internal_nodes(self.name, internal, [self.converter_node, self.capacitor_node, self.grid_node, self.ground])
 
     def components(self) -> list[Component]:
         """返回组成该 LCL 滤波器的元件对象列表。"""

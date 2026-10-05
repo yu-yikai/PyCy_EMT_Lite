@@ -21,6 +21,19 @@ from pycy_emt_lite.components.lines import (
 )
 
 
+@pytest.mark.parametrize("port", ["sending", "receiving", "ground"])
+def test_segmented_line_rejects_internal_node_collision(port) -> None:
+    params = {"sending": "in", "receiving": "out", "ground": "0"}
+    params[port] = "LINE:internal:1"
+    with pytest.raises(ValueError, match="LINE.*内部节点"):
+        SegmentedLine("LINE", resistance=1.0, inductance=0.01, capacitance=1e-6, sections=2, **params)
+
+
+def test_segmented_line_rejects_huge_allocation_before_creating_states() -> None:
+    with pytest.raises(ValueError, match="LINE.*sections.*上限"):
+        SegmentedLine("LINE", "in", "out", 1.0, 0.01, 1e-6, 1001)
+
+
 @pytest.mark.parametrize(
     ("parameter", "value"),
     (("resistance", math.nan), ("inductance", math.inf), ("capacitance", math.nan)),

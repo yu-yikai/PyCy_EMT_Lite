@@ -13,7 +13,19 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Iterable
 
-GROUND_NAMES = {"0", "gnd", "ground", "GND", "GROUND"}
+GROUND_NAMES = {"0", "gnd", "ground"}
+
+
+def _is_ground(node: str) -> bool:
+    return isinstance(node, str) and node.lower() in GROUND_NAMES
+
+
+def _check_internal_nodes(name: str, internal: Iterable[str], external: Iterable[str]) -> None:
+    """内部节点不能接地或与外部端点重合；普通节点仍区分大小写。"""
+    ports = set(external)
+    for node in internal:
+        if _is_ground(node) or node in ports:
+            raise ValueError(f"元件 {name!r} 的内部节点 {node!r} 与外部端点/参考地冲突；请重命名内部节点或外部端点。")
 
 
 @dataclass(slots=True)
@@ -30,7 +42,7 @@ class NodeManager:
 
         if not isinstance(node, str) or not node.strip():
             raise ValueError(f"节点名称必须是非空字符串，收到 {node!r}。")
-        if node in GROUND_NAMES:
+        if _is_ground(node):
             return
         if node not in self._indices:
             self._indices[node] = len(self._indices)
@@ -44,7 +56,7 @@ class NodeManager:
     def index(self, node: str) -> int | None:
         """返回节点编号；参考节点返回 None。"""
 
-        if node in GROUND_NAMES:
+        if _is_ground(node):
             return None
         try:
             return self._indices[node]

@@ -15,9 +15,9 @@ from typing import Iterable
 
 import numpy as np
 
-from pycy_emt_lite.components.base import Component
+from pycy_emt_lite.components.base import Component, _finite_real
 from pycy_emt_lite.core.context import StampContext
-from pycy_emt_lite.core.stamping import add_conductance, add_voltage_probe
+from pycy_emt_lite.core.stamping import add_conductance, add_voltage_probe, _conductance_current
 
 @dataclass(slots=True)
 class Fault(Component):
@@ -35,6 +35,7 @@ class Fault(Component):
     last_current: float = 0.0
 
     def __post_init__(self) -> None:
+        self.resistance = _finite_real(self.resistance, f"故障 {self.name} 的 resistance")
         if not math.isfinite(self.resistance) or self.resistance <= 0:
             raise ValueError(f"故障 {self.name} 的故障电阻必须为有限正数。")
 
@@ -55,7 +56,8 @@ class Fault(Component):
             self.last_current = 0.0
             return
         voltage = add_voltage_probe(solution, context.node_index(self.node), context.node_index(self.ground))
-        self.last_current = voltage / self.resistance
+        self.last_current = _conductance_current(solution, context.node_index(self.node), context.node_index(self.ground),
+                                                 1.0 / self.resistance, self.name)
 
     def outputs(self, context: StampContext, solution: np.ndarray) -> dict[str, float]:
         """记录故障电流和投入状态。"""
@@ -78,6 +80,7 @@ class Breaker(Component):
     last_current: float = 0.0
 
     def __post_init__(self) -> None:
+        self.closed_resistance = _finite_real(self.closed_resistance, f"断路器 {self.name} 的 closed_resistance")
         if not math.isfinite(self.closed_resistance) or self.closed_resistance <= 0:
             raise ValueError(f"断路器 {self.name} 的闭合电阻必须为有限正数。")
 
@@ -102,7 +105,8 @@ class Breaker(Component):
             self.last_current = 0.0
             return
         voltage = add_voltage_probe(solution, context.node_index(self.positive), context.node_index(self.negative))
-        self.last_current = voltage / self.closed_resistance
+        self.last_current = _conductance_current(solution, context.node_index(self.positive), context.node_index(self.negative),
+                                                 1.0 / self.closed_resistance, self.name)
 
     def outputs(self, context: StampContext, solution: np.ndarray) -> dict[str, float]:
         """记录断路器电流和开合状态。"""

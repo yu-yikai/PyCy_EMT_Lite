@@ -103,6 +103,7 @@ DC-1 -- R,L -- Cmid-to-ground -- R,L -- DC-2
 
 Each station: DC+ -- 300 uF -- ground -- 300 uF -- DC-
 Each transformer: LV neutral -- 1 Mohm -- ground
+Each S1/S2/S3 HV phase -- 1 Mohm -- ground
 ```
 
 Cmid is a shunt capacitor from the line midpoint to ground, not a series element in the DC path.
@@ -206,7 +207,7 @@ NPZ is preferable for large data. Enabling data saving in standard `run_case()` 
 
 Each phase of the S3 transformer HV PCC is grounded through 5 Ω for 150 ms. FULL/BENCHMARK use the original event times.
 FAST moves application to 0.30 s while retaining 150 ms duration. Timing comes from white-paper page 4 and the parameter script.
-The original fault block's 1 MΩ snubber branches are retained.
+Every HV phase of every station has a 1 MΩ ground branch, including the original S3 fault-block snubbers. S1/S2 ground branches are also part of the actual topology and must not be omitted or treated as appearing only when a fault is applied.
 
 With strictly continuous inductor currents, the original purely resistive snubber arrangement produces an approximately 14 GV algebraic spike at clearing: pre-clearing fault current must immediately transfer to the 1 MΩ path.
 An independent finite series RC snubber is added to each S3 phase to provide an energy-storage path for commutation.
@@ -223,9 +224,13 @@ Default figures cover station DC voltage, P/Q, Vac, station Id/Iq tracking, PLL 
 Metric windows are FAST 0.18–0.28 s / 0.70–0.80 s and FULL/BENCHMARK 1.38–1.48 s / 2.40–2.50 s.
 Each 0.1 s window contains six 60 Hz cycles and five 50 Hz cycles and does not cross explicit fault events.
 Pre/post windows report time-weighted means. Current error is `|mean(I)−mean(I*)|`, **not instantaneous ripple RMS tracking error**.
-PLL lock checks also use means; full frequency/Vq ripple remains in the data.
+Means measure bias only. The current summary also reports frequency-error/Vq/dq-error RMS of piecewise-linear signals, minimum Vd, and `control_accuracy_met`. This flag requires frequency-error RMS<0.05 Hz, Vq RMS<0.01 pu, Id/Iq-error RMS<25 A and Vd>0; cancellation in signed means cannot establish accuracy. `PLL_Vq_pu` now uses the same `Vq/max(|Vd|,|Vq|,1 V)` normalization as the internal PI.
 
-Measured FAST results (20 μs, 1000 Hz):
+The 2026-10-05 FAST rerun gave prefault/recovery frequency-error RMS of 0.336–0.445/0.331–0.460 Hz and dq-error RMS of 148.4–170.7/147.9–171.6 A; minimum Vd was positive. All three stations have strict accuracy flags of 0. Passing bias and physical-conservation regressions does not establish these RMS limits. Controller gains and algorithms were not changed.
+
+The following FAST/FULL/BENCHMARK tables preserve historical records. Their producing commits, complete Python/numerical-library environments and commands are not fully bound and remain unverified. Only FAST was rerun here; FULL/BENCHMARK were not rerun. Historical means do not establish current RMS accuracy or equivalence to the commercial model.
+
+Historical FAST results (20 μs, 1000 Hz):
 
 | Metric | Prefault | Recovery window |
 |---|---:|---:|

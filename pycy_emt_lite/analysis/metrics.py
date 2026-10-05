@@ -11,6 +11,8 @@ from __future__ import annotations
 
 from collections.abc import Iterable, Sequence
 from dataclasses import dataclass
+import math
+from numbers import Real
 from typing import Protocol
 
 import numpy as np
@@ -128,32 +130,50 @@ def _continuous_window(
 def _linear_mean(time: np.ndarray, values: np.ndarray) -> float:
     """精确积分分段线性信号并返回时间平均值。"""
 
-    widths = np.diff(time)
-    integral = np.sum(widths * (values[:-1] + values[1:]) / 2.0)
-    return float(integral / (time[-1] - time[0]))
+    scale = float(np.max(np.abs(values))) or 1.0
+    normalized = values / scale
+    average = np.sum(_weights(time) * (normalized[:-1] + normalized[1:]) / 2.0)
+    return _finite_metric(float(average) * scale)
+
+
+def _weights(time: np.ndarray) -> np.ndarray:
+    span = float(time[-1] - time[0])
+    if not math.isfinite(span) or span <= 0:
+        raise ValueError("统计时间跨度超出支持范围。")
+    return np.diff(time) / span
+
+
+def _finite_metric(value: float) -> float:
+    if not math.isfinite(value):
+        raise ValueError("统计运算溢出，指标无法表示为有限数；请检查信号尺度和单位。")
+    return value
 
 
 def _linear_product_mean(time: np.ndarray, left: np.ndarray, right: np.ndarray) -> float:
     """精确积分两条分段线性信号的乘积并返回时间平均值。"""
 
-    widths = np.diff(time)
-    a = left[:-1]
-    b = left[1:]
-    c = right[:-1]
-    d = right[1:]
-    integral = np.sum(widths * (2.0 * a * c + a * d + b * c + 2.0 * b * d) / 6.0)
-    return float(integral / (time[-1] - time[0]))
+    left_scale = float(np.max(np.abs(left))) or 1.0
+    right_scale = float(np.max(np.abs(right))) or 1.0
+    left, right = left / left_scale, right / right_scale
+    a, b, c, d = left[:-1], left[1:], right[:-1], right[1:]
+    average = float(np.sum(_weights(time) * (2.0 * a * c + a * d + b * c + 2.0 * b * d) / 6.0))
+    try:
+        mantissas, exponents = zip(*(math.frexp(v) for v in (average, left_scale, right_scale)))
+        return _finite_metric(math.ldexp(math.prod(mantissas), sum(exponents)))
+    except OverflowError as exc:
+        raise ValueError("乘积均值溢出，指标无法表示为有限数。") from exc
 
 
 def rms(result: SeriesProvider, column: str, *, start_time: float | None = None, end_time: float | None = None) -> float:
     """按分段线性重建计算指定连续窗口的均方根值。"""
 
     time, values = _continuous_window(result, result.series(column), start_time, end_time)
-    widths = np.diff(time)
+    scale = float(np.max(np.abs(values))) or 1.0
+    values = values / scale
     square_integral = np.sum(
-        widths * (values[:-1] ** 2 + values[:-1] * values[1:] + values[1:] ** 2) / 3.0
+        _weights(time) * (values[:-1] ** 2 + values[:-1] * values[1:] + values[1:] ** 2) / 3.0
     )
-    return float(np.sqrt(square_integral / (time[-1] - time[0])))
+    return _finite_metric(float(np.sqrt(square_integral)) * scale)
 
 
 def peak_abs(result: SeriesProvider, column: str, *, start_time: float | None = None, end_time: float | None = None) -> float:
@@ -196,12 +216,16 @@ def instantaneous_three_phase_power(
     `q = 1.5(v_beta i_alpha - v_alpha i_beta)`，只表达 alpha-beta 分量。
     """
 
-    va = np.asarray(result.series(voltage_columns[0]), dtype=float)
-    vb = np.asarray(result.series(voltage_columns[1]), dtype=float)
-    vc = np.asarray(result.series(voltage_columns[2]), dtype=float)
-    ia = np.asarray(result.series(current_columns[0]), dtype=float)
-    ib = np.asarray(result.series(current_columns[1]), dtype=float)
-    ic = np.asarray(result.series(current_columns[2]), dtype=float)
+    if len(voltage_columns) != 3 or len(current_columns) != 3:
+        raise ValueError("三相功率必须分别提供三个电压和电流字段。")
+    signals = []
+    for column in (*voltage_columns, *current_columns):
+        try:
+            _, values = _time_and_values(result, result.series(column))
+        except (ValueError, TypeError, KeyError) as exc:
+            raise ValueError(f"三相功率字段 {column!r} 非法：{exc}") from exc
+        signals.append(values)
+    va, vb, vc, ia, ib, ic = signals
 
     v_alpha = (2.0 / 3.0) * (va - 0.5 * vb - 0.5 * vc)
     v_beta = (2.0 / 3.0) * ((np.sqrt(3.0) / 2.0) * (vb - vc))
@@ -210,6 +234,8 @@ def instantaneous_three_phase_power(
 
     active_power = va * ia + vb * ib + vc * ic
     reactive_power = 1.5 * (v_beta * i_alpha - v_alpha * i_beta)
+    if not np.all(np.isfinite(active_power)) or not np.all(np.isfinite(reactive_power)):
+        raise ValueError("瞬时三相功率运算溢出；请检查信号尺度和单位。")
     return active_power, reactive_power
 
 
@@ -248,7 +274,7 @@ def three_phase_power(
     )
     apparent = float(np.hypot(p_avg, q_avg))
     power_factor = 0.0 if apparent == 0.0 else p_avg / apparent
-    return ThreePhasePowerSummary(p_avg, q_avg, apparent, power_factor)
+    return ThreePhasePowerSummary(*(_finite_metric(v) for v in (p_avg, q_avg, apparent, power_factor)))
 
 
 def voltage_sag_summary(
@@ -266,10 +292,9 @@ def voltage_sag_summary(
     再找出最低标幺值并判断是否低于阈值。
     """
 
-    if nominal_rms <= 0.0:
-        raise ValueError("额定 RMS 电压必须大于 0。")
-    if threshold_pu <= 0.0:
-        raise ValueError("电压跌落阈值必须大于 0。")
+    for parameter, value in (("nominal_rms", nominal_rms), ("threshold_pu", threshold_pu)):
+        if isinstance(value, bool) or not isinstance(value, Real) or not math.isfinite(value) or value <= 0:
+            raise ValueError(f"{parameter} 必须为有限正实数。")
 
     rms_values = {
         column: rms(result, column, start_time=start_time, end_time=end_time)
@@ -279,5 +304,5 @@ def voltage_sag_summary(
         raise ValueError("至少需要提供一个电压字段。")
     worst_column = min(rms_values, key=rms_values.__getitem__)
     min_rms = rms_values[worst_column]
-    min_pu = min_rms / nominal_rms
+    min_pu = _finite_metric(min_rms / nominal_rms)
     return VoltageSagSummary(min_pu < threshold_pu, worst_column, min_rms, min_pu)

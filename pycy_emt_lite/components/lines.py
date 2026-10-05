@@ -18,11 +18,11 @@ from typing import Iterable
 
 import numpy as np
 
-from pycy_emt_lite.components.base import Component
+from pycy_emt_lite.components.base import Component, _finite_real
 from pycy_emt_lite.components.three_phase import PHASES, PhaseName, phase_node
 from pycy_emt_lite.core.context import StampContext
-from pycy_emt_lite.core.nodes import NodeManager
-from pycy_emt_lite.core.stamping import add_conductance, add_current_source, add_voltage_probe
+from pycy_emt_lite.core.nodes import NodeManager, _check_internal_nodes
+from pycy_emt_lite.core.stamping import add_conductance, add_current_source, add_voltage_probe, _conductance_current
 from pycy_emt_lite.core.variables import VariableManager
 
 @dataclass(slots=True)
@@ -44,6 +44,9 @@ class _SeriesState:
 
 def _validate_pi_parameters(name: str, resistance: float, inductance: float, capacitance: float) -> None:
     """检查 π 型线路参数。"""
+
+    for parameter, value in (("resistance", resistance), ("inductance", inductance), ("capacitance", capacitance)):
+        _finite_real(value, f"{name} 的 {parameter}")
 
     if not math.isfinite(resistance) or resistance < 0:
         raise ValueError(f"{name} 的串联电阻必须为有限非负数。")
@@ -170,7 +173,8 @@ def _update_series_state(
         state.previous_inductor_voltage = voltage - resistance * current
         state.last_current = current
     else:
-        state.last_current = voltage / resistance
+        state.last_current = _conductance_current(solution, context.node_index(positive), context.node_index(negative),
+                                                 1.0 / resistance, f"{positive}->{negative}")
     state.last_voltage = voltage
 
 def _update_shunt_capacitor_state(
@@ -191,7 +195,8 @@ def _update_shunt_capacitor_state(
         current = context._initial.capacitor_currents[id(state)]
     else:
         conductance, history_current = _capacitor_companion(context.method, context.time_step, capacitance, state)
-        current = conductance * voltage + history_current
+        current = _conductance_current(solution, context.node_index(node), context.node_index(ground),
+                                       conductance, f"{node}->{ground}", history_current)
     state.previous_voltage = voltage
     state.previous_current = current
     state.last_current = current
@@ -401,7 +406,11 @@ class SegmentedLine(Component):
     def __post_init__(self) -> None:
         if not isinstance(self.sections, Integral) or isinstance(self.sections, bool) or self.sections <= 0:
             raise ValueError(f"分段线路 {self.name} 的段数必须为正整数。")
+        if self.sections > 1000:
+            raise ValueError(f"分段线路 {self.name} 的 sections 超过当前上限 1000；请减小段数，避免过大矩阵和状态分配。")
         _validate_pi_parameters(f"分段线路 {self.name}", self.resistance, self.inductance, self.capacitance)
+        _check_internal_nodes(self.name, (self._internal_node(i) for i in range(1, self.sections)),
+                              [self.sending, self.receiving, self.ground])
         self.series_states = [_SeriesState() for _ in range(self.sections)]
         self.sending_cap_states = [_CapacitorState() for _ in range(self.sections)]
         self.receiving_cap_states = [_CapacitorState() for _ in range(self.sections)]
@@ -520,6 +529,8 @@ class BergeronLine(Component):
     last_receiving_current: float = 0.0
 
     def __post_init__(self) -> None:
+        for parameter in ("surge_impedance", "travel_time", "attenuation"):
+            setattr(self, parameter, _finite_real(getattr(self, parameter), f"Bergeron 线路 {self.name} 的 {parameter}"))
         if not math.isfinite(self.surge_impedance) or self.surge_impedance <= 0:
             raise ValueError(f"Bergeron 线路 {self.name} 的特性阻抗必须为有限正数。")
         if not math.isfinite(self.travel_time) or self.travel_time <= 0:

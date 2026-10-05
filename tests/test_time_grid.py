@@ -23,6 +23,15 @@ from pycy_emt_lite import (
 )
 
 
+def test_time_grid_rejects_unsupported_scale_and_size() -> None:
+    with pytest.raises(ValueError, match="time_step.*正规"):
+        SimulationConfig(math.ulp(0.0), 1e-320)
+    with pytest.raises(ValueError, match="步数.*上限"):
+        SimulationConfig(1e-9, 1.0)
+    # 已有 BENCHMARK 配置仍合法；本测试不分配或运行长网格。
+    assert SimulationConfig(2e-6, 2.5, record_every=25).stop_time == 2.5
+
+
 def _resistive_circuit() -> Circuit:
     circuit = Circuit("time_grid")
     circuit.add(VoltageSource("V1", "src", "0", 10.0))

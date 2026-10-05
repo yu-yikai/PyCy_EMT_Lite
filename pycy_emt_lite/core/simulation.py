@@ -11,6 +11,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, replace
+import math
 from numbers import Integral, Real
 from collections.abc import Callable, Mapping
 from types import MappingProxyType
@@ -55,13 +56,20 @@ class SimulationConfig:
             ("stop_time", self.stop_time),
             ("start_time", self.start_time),
         ):
-            if isinstance(value, bool) or not isinstance(value, Real) or not np.isfinite(value):
+            try:
+                valid = not isinstance(value, bool) and isinstance(value, Real) and math.isfinite(float(value))
+            except (TypeError, ValueError, OverflowError):
+                valid = False
+            if not valid:
                 raise ValueError(
                     f"仿真时间字段 {field_name}={value!r} 必须为有限实数；"
                     "请填写以秒为单位的数值，不使用布尔值、字符串、数组、NaN 或 Inf。"
                 )
+            object.__setattr__(self, field_name, float(value))
         if self.time_step <= 0:
             raise ValueError(f"time_step={self.time_step!r} 非法；请将仿真步长设为大于 0 的秒数。")
+        if self.time_step < np.finfo(float).tiny:
+            raise ValueError("time_step 使用未支持的非正规浮点尺度；请设置不小于 float 最小正规数的步长。")
         if self.stop_time < 0:
             raise ValueError(f"stop_time={self.stop_time!r} 非法；请使用非负终止时间，0 表示只求初值。")
         if self.start_time != 0.0:
@@ -83,6 +91,8 @@ class SimulationConfig:
                 "请减小终止时间或增大步长。"
             )
         steps = round(ratio)
+        if steps > 5_000_000:
+            raise ValueError("基础步数超过当前上限 5000000；请增大步长或缩短仿真，避免整体时间网格耗尽资源。")
         if self.stop_time > 0 and (steps < 1 or not _time_close(self.stop_time, steps * self.time_step)):
             nearest_stop = max(1, steps) * self.time_step
             raise ValueError(
@@ -164,20 +174,21 @@ class Simulator:
             )
             if index > 0:
                 solution = self._solve_step(context)
-                for component in self.circuit.components:
-                    component.update_state(context, solution)
+                self._update_components(context, solution)
             for event in due_events:
                 self.event_log.append(event.apply(self.circuit, float(time)))
             if index == 0 or due_events:
                 context = replace(context, time_step=0.0, _initial=_InitialConditions())
                 solution = self._solve_step(context)
-                for component in self.circuit.components:
-                    component.update_state(context, solution)
+                self._update_components(context, solution)
             row = self._record_row(context, solution)
             # 每个求解点只回调一次，事件点读取右侧值；控制输出作用于下一步。
             # t=0 也调用，但控制器须只观察/初始化，不把零间隔传给 PI/PLL.step。
             if self.on_step is not None:
-                extra = self.on_step(MappingProxyType(row))
+                try:
+                    extra = self.on_step(MappingProxyType(row))
+                except Exception as exc:
+                    raise RuntimeError(f"电路 {self.circuit.name!r} 在仿真时间 {time:g} on_step 失败：{exc}") from exc
                 if not isinstance(extra, Mapping):
                     raise ValueError("on_step 必须返回新增结果字段的映射（无需字段时返回空字典）。")
                 for key, value in extra.items():
@@ -186,6 +197,7 @@ class Simulator:
                     if isinstance(value, bool) or not isinstance(value, Real) or not np.isfinite(value):
                         raise ValueError(f"on_step 输出 {key!r} 必须为有限实数。")
                 row.update(extra)
+                self.circuit._check_topology()
             if index % self.config.record_every == 0 or due_events or index == len(times) - 1:
                 rows.append(row)
             self._last_time = float(time)
@@ -265,6 +277,7 @@ class Simulator:
         最终形成完整的 `A x = z`。
         """
 
+        self.circuit._check_topology()
         size = self.circuit.size
         matrix = np.zeros((size, size), dtype=float)
         rhs = np.zeros(size, dtype=float)
@@ -276,6 +289,13 @@ class Simulator:
                     f"元件 {component.name!r} 在仿真时间 {context.time:g} stamp 失败：{exc}"
                 ) from exc
         return matrix, rhs
+
+    def _update_components(self, context: StampContext, solution: np.ndarray) -> None:
+        for component in self.circuit.components:
+            try:
+                component.update_state(context, solution)
+            except Exception as exc:
+                raise RuntimeError(f"元件 {component.name!r} 在仿真时间 {context.time:g} update_state 失败：{exc}") from exc
 
     def _record_row(self, context: StampContext, solution: np.ndarray) -> dict[str, float]:
         """把当前时刻求解结果转换成一行可读结果。
@@ -290,7 +310,10 @@ class Simulator:
             if node_index is not None:
                 row[f"v:{node_name}"] = float(solution[node_index])
         for component in self.circuit.components:
-            outputs = component.outputs(context, solution)
+            try:
+                outputs = component.outputs(context, solution)
+            except Exception as exc:
+                raise RuntimeError(f"元件 {component.name!r} 在仿真时间 {context.time:g} outputs 失败：{exc}") from exc
             duplicates = row.keys() & outputs.keys()
             if duplicates:
                 raise ValueError(
@@ -313,6 +336,8 @@ class Simulator:
         time_step = self.config.time_step
         stop_time = self.config.stop_time
         count = round(stop_time / time_step)
+        if count + len(self.events) > 5_000_000:
+            raise ValueError("基础步数与事件数之和超过当前上限 5000000；请缩短仿真或减少事件，避免整体网格分配过大。")
         points = [float(index * time_step) for index in range(count + 1)]
         points[-1] = float(stop_time)
 

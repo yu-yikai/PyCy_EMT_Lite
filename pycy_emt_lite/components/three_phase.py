@@ -17,10 +17,10 @@ from typing import Iterable, Literal
 
 import numpy as np
 
-from pycy_emt_lite.components.base import Component
+from pycy_emt_lite.components.base import Component, _finite_real
 from pycy_emt_lite.core.context import StampContext
-from pycy_emt_lite.core.nodes import NodeManager
-from pycy_emt_lite.core.stamping import add_conductance, add_current_source, add_voltage_probe
+from pycy_emt_lite.core.nodes import NodeManager, _is_ground
+from pycy_emt_lite.core.stamping import add_conductance, add_current_source, add_voltage_probe, _conductance_current
 from pycy_emt_lite.core.variables import VariableManager
 
 PhaseName = Literal["a", "b", "c"]
@@ -33,7 +33,9 @@ def phase_node(bus: str, phase: PhaseName) -> str:
     参考地 `"0"`、`"gnd"`、`"ground"` 不附加相别。
     """
 
-    if bus.lower() in {"0", "gnd", "ground"}:
+    if not isinstance(bus, str) or not bus.strip() or phase not in PHASES:
+        raise ValueError(f"母线 {bus!r} 或相别 {phase!r} 非法；请提供非空母线名和 a/b/c 相别。")
+    if _is_ground(bus):
         return bus
     return f"{bus}:{phase}"
 
@@ -65,6 +67,8 @@ class ThreePhaseSource(Component):
     branch_indices: dict[PhaseName, int] = field(default_factory=dict, init=False)
 
     def __post_init__(self) -> None:
+        for parameter in ("phase_rms", "frequency", "initial_angle"):
+            setattr(self, parameter, _finite_real(getattr(self, parameter), f"三相电源 {self.name} 的 {parameter}"))
         if not math.isfinite(self.phase_rms) or self.phase_rms <= 0:
             raise ValueError(f"三相电源 {self.name} 的相电压有效值必须为有限正数。")
         if not math.isfinite(self.frequency) or self.frequency <= 0:
@@ -128,6 +132,9 @@ class _ShuntCapacitorState:
 
 def _validate_series_rl(name: str, resistance: float, inductance: float) -> None:
     """检查串联 RL 参数。"""
+
+    _finite_real(resistance, f"{name} 的 resistance")
+    _finite_real(inductance, f"{name} 的 inductance")
 
     if not math.isfinite(resistance) or resistance < 0:
         raise ValueError(f"{name} 的电阻必须为有限非负数。")
@@ -243,7 +250,7 @@ class ThreePhaseLine(Component):
                 self.state.previous_inductor_voltage[phase] = voltage - self.resistance * current
                 self.state.last_current[phase] = current
             else:
-                self.state.last_current[phase] = voltage / self.resistance
+                self.state.last_current[phase] = _conductance_current(solution, p, n, 1.0 / self.resistance, f"{self.name}:{phase}")
             self.state.last_voltage[phase] = voltage
 
     def outputs(self, context: StampContext, solution: np.ndarray) -> dict[str, float]:
@@ -279,6 +286,8 @@ class ThreePhaseParallelRLCLoad(Component):
     last_phase_voltage: dict[PhaseName, float] = field(default_factory=lambda: {phase: 0.0 for phase in PHASES}, init=False)
 
     def __post_init__(self) -> None:
+        for parameter in ("nominal_line_voltage", "frequency", "active_power", "inductive_power", "capacitive_power"):
+            setattr(self, parameter, _finite_real(getattr(self, parameter), f"三相并联负荷 {self.name} 的 {parameter}"))
         if not math.isfinite(self.nominal_line_voltage) or self.nominal_line_voltage <= 0.0:
             raise ValueError(f"三相并联负荷 {self.name} 的额定线电压必须为有限正数。")
         if not math.isfinite(self.frequency) or self.frequency <= 0.0:
@@ -392,7 +401,7 @@ class ThreePhaseParallelRLCLoad(Component):
         for phase in PHASES:
             p = context.node_index(phase_node(self.bus, phase))
             voltage = add_voltage_probe(solution, p, neutral)
-            resistive_current = conductance * voltage
+            resistive_current = _conductance_current(solution, p, neutral, conductance, f"{self.name}:{phase}:R")
             inductive_current = 0.0
             if inductance > 0.0:
                 branch = context.branch_offset + self.inductor_branch_indices[phase]
@@ -413,7 +422,7 @@ class ThreePhaseParallelRLCLoad(Component):
                         self.capacitor_state.previous_voltage[phase],
                         self.capacitor_state.previous_current[phase],
                     )
-                    capacitive_current = cap_conductance * voltage + history_current
+                    capacitive_current = _conductance_current(solution, p, neutral, cap_conductance, f"{self.name}:{phase}:C", history_current)
                 self.capacitor_state.previous_voltage[phase] = voltage
                 self.capacitor_state.previous_current[phase] = capacitive_current
                 self.capacitor_state.last_current[phase] = capacitive_current
@@ -504,7 +513,7 @@ class ThreePhaseLoad(Component):
                 self.state.previous_inductor_voltage[phase] = voltage - self.resistance * current
                 self.state.last_current[phase] = current
             else:
-                self.state.last_current[phase] = voltage / self.resistance
+                self.state.last_current[phase] = _conductance_current(solution, p, neutral, 1.0 / self.resistance, f"{self.name}:{phase}")
             self.state.last_voltage[phase] = voltage
 
     def outputs(self, context: StampContext, solution: np.ndarray) -> dict[str, float]:

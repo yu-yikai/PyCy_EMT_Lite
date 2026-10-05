@@ -24,6 +24,57 @@ from pycy_emt_lite.components.switching import Breaker, Fault
 from pycy_emt_lite.converters import LCFilter, LCLFilter, LFilter
 
 
+@pytest.mark.parametrize("factory", [
+    lambda: LFilter("F", "F:mid", "out", 0.01, 1.0),
+    lambda: LCFilter("F", "in", "out", "F:mid", 0.01, 1e-4, 1.0),
+    lambda: LCLFilter("F", "in", "cap", "F:converter:mid", "0", 0.01, 0.01, 1e-4, converter_resistance=1.0),
+    lambda: LCLFilter("F", "in", "cap", "out", "F:damping", 0.01, 0.01, 1e-4, damping_resistance=1.0),
+])
+def test_filter_internal_nodes_cannot_alias_external_ports(factory) -> None:
+    with pytest.raises(ValueError, match="F.*内部节点"):
+        factory().components()
+
+
+@pytest.mark.parametrize("ron", [1e-3, 1e-6, 1e-9, 1e-12])
+def test_small_resistance_current_is_accurate_or_explicitly_rejected(ron) -> None:
+    simulator = Simulator(Circuit.from_components("cancellation", [
+        VoltageSource("V", "in", "0", 10.0), IdealSwitch("S", "in", "out", True, ron),
+        Resistor("R", "out", "0", 1e6),
+    ]), SimulationConfig(0.001, 0.0))
+    if ron <= 1e-9:
+        with pytest.raises((ValueError, RuntimeError), match="S.*消去"):
+            simulator.run()
+    else:
+        row = simulator.run().rows[0]
+        expected = 10.0 / (1e6 + ron)
+        assert row["i:S"] == pytest.approx(expected, rel=1e-6, abs=1e-9)
+        assert row["i:R"] == pytest.approx(expected, rel=1e-12)
+        assert row["i:V"] + row["i:R"] == pytest.approx(0.0, abs=1e-9)
+
+
+def test_l_filter_independent_current_energy_and_common_grid_refinement() -> None:
+    errors = []
+    for step in (0.005, 0.0025):
+        result = Simulator(Circuit.from_components("L_reference", [VoltageSource("V", "in", "0", 10.0),
+            *LFilter("F", "in", "out", 0.1, 1.0).components(), Resistor("LOAD", "out", "0", 1.0),
+        ]), SimulationConfig(step, 0.5)).run()
+        time, current = result.series("time"), result.series("i:F:L")
+        exact = 5.0 * (1.0 - np.exp(-20.0 * time))
+        errors.append(np.max(np.abs(current[::round(.005/step)] - exact[::round(.005/step)])))
+        np.testing.assert_allclose(result.series("i:F:R"), current, atol=1e-12)
+        np.testing.assert_allclose(result.series("i:LOAD"), current, atol=1e-12)
+        average_i = (current[1:] + current[:-1]) / 2
+        work = step * (10 * average_i - 2 * average_i**2)
+        np.testing.assert_allclose(np.diff(0.05 * current**2), work, atol=1e-12)
+    assert errors[1] < errors[0] * 0.3
+
+
+def test_switch_rejects_reversed_on_off_conductances() -> None:
+    with pytest.raises(ValueError, match="S.*open_conductance"):
+        IdealSwitch("S", "a", "0", closed_resistance=10.0, open_conductance=1.0)
+    assert IdealSwitch("S", "a", "0", open_conductance=0.0).open_conductance == 0.0
+
+
 @pytest.mark.parametrize("assembly,parameter", [
     (LFilter("F", "in", "out", 0.01), "inductance"),
     (LFilter("F", "in", "out", 0.01), "series_resistance"),
@@ -79,7 +130,7 @@ def test_ideal_switch_rejects_nonfinite_conductance_parameters(
 @pytest.mark.parametrize("factory", (lambda value: Fault("F", "node", value), lambda value: Breaker("B", "node", "0", closed_resistance=value)))
 @pytest.mark.parametrize("value", (math.nan, math.inf, -math.inf))
 def test_fault_and_breaker_reject_nonfinite_resistance(factory: object, value: float) -> None:
-    with pytest.raises(ValueError, match="有限正数"):
+    with pytest.raises(ValueError, match="(?:F|B).*有限"):
         factory(value)  # type: ignore[operator]
 
 

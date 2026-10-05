@@ -15,10 +15,10 @@ from typing import Callable, Iterable
 
 import numpy as np
 
-from pycy_emt_lite.components.base import Component
+from pycy_emt_lite.components.base import Component, _finite_real
 from pycy_emt_lite.core.context import StampContext
 from pycy_emt_lite.core.nodes import NodeManager
-from pycy_emt_lite.core.stamping import add_conductance, add_current_source, add_voltage_probe
+from pycy_emt_lite.core.stamping import add_conductance, add_current_source, add_voltage_probe, _conductance_current
 from pycy_emt_lite.core.variables import VariableManager
 
 TimeValue = float | Callable[[float], float]
@@ -26,14 +26,7 @@ TimeValue = float | Callable[[float], float]
 def _value_at(value: TimeValue, time: float, *, name: str | None = None) -> float:
     """返回常数或时间函数在当前时刻的数值。"""
 
-    if callable(value):
-        result = float(value(time))
-    else:
-        result = float(value)
-    if not np.isfinite(result):
-        source_name = f" {name!r}" if name is not None else ""
-        raise ValueError(f"源{source_name} 在 time={time:g} 的值必须为有限数。")
-    return result
+    return _finite_real(value(time) if callable(value) else value, f"源 {name!r} 在 time={time:g} 的值")
 
 
 def _derivative_at(value: TimeValue | None, derivative: TimeValue | None, time: float, name: str) -> float:
@@ -58,8 +51,7 @@ class Resistor(Component):
     resistance: float
 
     def __post_init__(self) -> None:
-        if not np.isfinite(self.resistance):
-            raise ValueError(f"电阻 {self.name} 的阻值必须为有限数。")
+        self.resistance = _finite_real(self.resistance, f"电阻 {self.name} 的 resistance")
         if self.resistance <= 0:
             raise ValueError(f"电阻 {self.name} 的阻值必须大于 0。")
 
@@ -78,8 +70,9 @@ class Resistor(Component):
     def outputs(self, context: StampContext, solution: np.ndarray) -> dict[str, float]:
         """根据两端电压计算电阻电流并记录。"""
 
-        voltage = add_voltage_probe(solution, context.node_index(self.positive), context.node_index(self.negative))
-        return {f"i:{self.name}": voltage / self.resistance}
+        current = _conductance_current(solution, context.node_index(self.positive), context.node_index(self.negative),
+                                       1.0 / self.resistance, self.name)
+        return {f"i:{self.name}": current}
 
 @dataclass(slots=True)
 class CurrentSource(Component):
@@ -97,8 +90,10 @@ class CurrentSource(Component):
     derivative: TimeValue | None = field(default=None, kw_only=True)
 
     def __post_init__(self) -> None:
-        if not callable(self.current) and not np.isfinite(float(self.current)):
-            raise ValueError(f"电流源 {self.name} 的常数电流必须为有限数。")
+        if not callable(self.current):
+            self.current = _finite_real(self.current, f"电流源 {self.name} 的 current")
+        if self.derivative is not None and not callable(self.derivative):
+            self.derivative = _finite_real(self.derivative, f"电流源 {self.name} 的 derivative")
 
     def nodes(self) -> Iterable[str]:
         return (self.positive, self.negative)
@@ -143,8 +138,10 @@ class VoltageSource(Component):
     branch_index: int | None = field(default=None, init=False)
 
     def __post_init__(self) -> None:
-        if not callable(self.voltage) and not np.isfinite(float(self.voltage)):
-            raise ValueError(f"电压源 {self.name} 的常数电压必须为有限数。")
+        if not callable(self.voltage):
+            self.voltage = _finite_real(self.voltage, f"电压源 {self.name} 的 voltage")
+        if self.derivative is not None and not callable(self.derivative):
+            self.derivative = _finite_real(self.derivative, f"电压源 {self.name} 的 derivative")
 
     def nodes(self) -> Iterable[str]:
         return (self.positive, self.negative)
@@ -209,12 +206,10 @@ class Capacitor(Component):
     last_current: float = field(default=0.0, init=False)
 
     def __post_init__(self) -> None:
-        if not np.isfinite(self.capacitance):
-            raise ValueError(f"电容 {self.name} 的电容值必须为有限数。")
+        self.capacitance = _finite_real(self.capacitance, f"电容 {self.name} 的 capacitance")
+        self.initial_voltage = _finite_real(self.initial_voltage, f"电容 {self.name} 的 initial_voltage")
         if self.capacitance <= 0:
             raise ValueError(f"电容 {self.name} 的电容值必须大于 0。")
-        if not np.isfinite(self.initial_voltage):
-            raise ValueError(f"电容 {self.name} 的初始电压必须为有限数。")
         self.previous_voltage = float(self.initial_voltage)
 
     def nodes(self) -> Iterable[str]:
@@ -248,7 +243,8 @@ class Capacitor(Component):
             self.last_current = context._initial.capacitor_currents[id(self)]
         else:
             conductance, history_current = self._companion(context)
-            self.last_current = conductance * voltage + history_current
+            self.last_current = _conductance_current(solution, context.node_index(self.positive), context.node_index(self.negative),
+                                                     conductance, self.name, history_current)
         self.previous_voltage = voltage
         self.previous_current = self.last_current
 
@@ -297,12 +293,10 @@ class Inductor(Component):
     last_voltage: float = field(default=0.0, init=False)
 
     def __post_init__(self) -> None:
-        if not np.isfinite(self.inductance):
-            raise ValueError(f"电感 {self.name} 的电感值必须为有限数。")
+        self.inductance = _finite_real(self.inductance, f"电感 {self.name} 的 inductance")
+        self.initial_current = _finite_real(self.initial_current, f"电感 {self.name} 的 initial_current")
         if self.inductance <= 0:
             raise ValueError(f"电感 {self.name} 的电感值必须大于 0。")
-        if not np.isfinite(self.initial_current):
-            raise ValueError(f"电感 {self.name} 的初始电流必须为有限数。")
         self.previous_current = float(self.initial_current)
 
     def nodes(self) -> Iterable[str]:

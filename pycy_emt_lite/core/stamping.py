@@ -11,9 +11,25 @@
 from __future__ import annotations
 
 from collections.abc import Callable
+import math
 
 import numpy as np
 from scipy.linalg import qr, solve_triangular
+
+
+def _conductance_current(solution: np.ndarray, positive: int | None, negative: int | None,
+                         conductance: float, name: str, history: float = 0.0) -> float:
+    """检测电压差/历史项的浮点消去；不能用整体残差替代测量精度。"""
+    vp = float(solution[positive]) if positive is not None else 0.0
+    vn = float(solution[negative]) if negative is not None else 0.0
+    current = math.fsum(((vp - vn) * conductance, history))
+    uncertainty = 0.0 if positive == negative else (math.ulp(vp) + math.ulp(vn)) * abs(conductance)
+    uncertainty += math.ulp(history)
+    # 保守的表示分辨率检查：0.1 µA 绝对容差 + 0.1% 相对容差。
+    # 这只检查消去尺度，不承诺病态网络的全部前向误差。
+    if not math.isfinite(current) or uncertainty > 1e-7 + 1e-3 * abs(current):
+        raise ValueError(f"支路 {name!r} 的电流存在不可可靠表示的消去误差（估计分辨率 {uncertainty:g} A）；请检查阻抗/电压尺度，当前拒绝该测量。")
+    return current
 
 
 class _InitialConditions:

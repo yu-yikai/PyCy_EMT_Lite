@@ -16,7 +16,7 @@ from typing import Iterable, Literal
 
 import numpy as np
 
-from pycy_emt_lite.components.base import Component
+from pycy_emt_lite.components.base import Component, _finite_real
 from pycy_emt_lite.components.three_phase import PHASES, PhaseName, phase_node
 from pycy_emt_lite.core.context import StampContext
 from pycy_emt_lite.core.nodes import NodeManager
@@ -54,6 +54,13 @@ def _validate_transformer_parameters(
 ) -> None:
     """检查变压器参数。"""
 
+    for parameter, value in (("turns_ratio", turns_ratio), ("leakage_resistance", leakage_resistance),
+                             ("leakage_inductance", leakage_inductance), ("magnetizing_inductance", magnetizing_inductance),
+                             ("core_loss_resistance", core_loss_resistance), ("saturation_knee_flux", saturation_knee_flux),
+                             ("saturated_magnetizing_inductance", saturated_magnetizing_inductance)):
+        if value is not None or parameter in {"turns_ratio", "leakage_resistance", "leakage_inductance"}:
+            _finite_real(value, f"变压器 {name} 的 {parameter}")
+
     if not math.isfinite(turns_ratio) or turns_ratio <= 0:
         raise ValueError(f"变压器 {name} 的变比必须为有限正数。")
     if not math.isfinite(leakage_resistance) or leakage_resistance < 0:
@@ -81,6 +88,8 @@ def _validate_transformer_parameters(
         raise ValueError(f"变压器 {name} 的饱和励磁电感必须为有限正数。")
     if has_saturation and magnetizing_inductance is None:
         raise ValueError(f"变压器 {name} 启用饱和励磁时必须给出线性励磁电感。")
+    if has_saturation and saturated_magnetizing_inductance > magnetizing_inductance:
+        raise ValueError(f"变压器 {name} 的 saturated_magnetizing_inductance 大于线性励磁电感；请设置 Lsat <= Lm，相等表示线性模型。")
 
 
 def _inductor_companion(

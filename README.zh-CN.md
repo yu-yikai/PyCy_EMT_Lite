@@ -51,6 +51,17 @@ uv run python examples/01_r_circuit.py
 预期电压仍为 10 V，电阻电流变为 1 A，电源电流变为 −1 A。做完后恢复 5.0，再继续下一个例子。
 
 依赖为 NumPy、SciPy、Matplotlib，测试使用 pytest；需要检查安装或修改后的行为时，可运行 `uv run pytest`。
+
+Windows 若默认临时目录出现 `PermissionError`，可在项目根目录使用项目内临时目录复验：
+
+```powershell
+$env:UV_CACHE_DIR = "$PWD/.tmp/uv-cache"
+$env:MPLBACKEND = "Agg"
+uv run --locked pytest -o addopts= -q -p no:cacheprovider --basetemp=.tmp/pytest-local
+```
+
+运行前确认没有其他测试使用同一个 `--basetemp`；pytest 会清理该目录。本命令用于区分目录权限问题与代码失败。现有自动 CI 仍为 Linux，Windows 自动 CI 属于未来计划。
+
 示例默认显示图形，不保存数据或图片。
 网络算例需要保存时，把脚本顶部 `SAVE_RESULT_DATA` 或 `SAVE_RESULT_FIGURE` 改为 `1`；输出位于 `outputs/<算例名>/`。
 独立 PLL 示例 11 只显示图形，没有保存开关。
@@ -175,7 +186,7 @@ plot_result_comparison([result, loaded], "v:n1", labels=["original", "loaded"], 
 plot_zoom_window(result, ["v:n1"], 0.0, 5e-4,
                  output_path="outputs/my_r_circuit/zoom.png", show=False)
 write_markdown_report(result, "outputs/my_r_circuit/report.md",
-                      summary={"Voltage RMS / V": voltage_rms}, figure_paths=["zoom.png"])
+                      summary={"Voltage RMS / V": voltage_rms}, figure_paths=["outputs/my_r_circuit/zoom.png"])
 ```
 
 同样支持 `to_csv/from_csv`、`to_npz/from_npz`。JSON/NPZ 保留元数据与 `event_log`；CSV 只保存表格，

@@ -42,6 +42,7 @@ class SRFPLL:
     minimum_frequency: float | None = None
     maximum_frequency: float | None = None
     _controller: PIController = field(init=False, repr=False)
+    _configuration: tuple = field(init=False, repr=False)
     angle: float = field(init=False)
     frequency: float = field(init=False)
 
@@ -67,6 +68,16 @@ class SRFPLL:
         )
         self.angle = wrap_angle(self.initial_angle)
         self.frequency = self.nominal_frequency
+        self._configuration = tuple(getattr(self, p) for p in self._configuration_fields())
+
+    @staticmethod
+    def _configuration_fields() -> tuple[str, ...]:
+        return ("proportional_gain", "integral_gain", "nominal_frequency", "initial_angle", "minimum_frequency", "maximum_frequency")
+
+    def _check_configuration(self) -> None:
+        for parameter, original in zip(self._configuration_fields(), self._configuration):
+            if getattr(self, parameter) != original:
+                raise ValueError(f"SRFPLL.{parameter} 在构造后已修改；请创建新的 PLL 实例，当前不支持配置重建。")
 
     def step(self, voltages_abc: tuple[float, float, float], time_step: float) -> PLLState:
         """从上次时刻推进到当前电压采样时刻。
@@ -75,6 +86,7 @@ class SRFPLL:
         新角频率用于下一积分区间；返回的 d/q 电压与返回角度一致。
         """
 
+        self._check_configuration()
         _validate_time_step(time_step)
         try:
             voltages = tuple(voltages_abc)
@@ -106,6 +118,7 @@ class SRFPLL:
     def reset(self, angle: float | None = None) -> None:
         """重置 PLL 角度、频率和 PI 积分状态。"""
 
+        self._check_configuration()
         angle = _finite_real(self.initial_angle if angle is None else angle, "SRFPLL.reset angle")
         self.angle = wrap_angle(angle)
         self.frequency = self.nominal_frequency

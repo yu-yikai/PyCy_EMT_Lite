@@ -9,6 +9,8 @@ See [Component derivations](component_derivations.en.md) for how physical relati
 ## 1. Validated scope
 
 Local validation record (2026-09-14, including the integrated three-terminal VSC-HVDC example): 681 tests passed and all 14 examples ran headlessly without default output files.
+Its producing commit, environment and complete commands have not been verified; it is preserved as historical information rather than a reproduction record for the current version.
+The local regression after the 2026-10-05 correctness fixes contains 819 passing tests; all 14 default examples ran headlessly. Version, environment, commands, itemized implementation status and the unmet strict FAST control-accuracy limits are recorded together in [section 7.4 of the issue and improvement plan](audit_20261005/项目问题与改进计划.md#74-当前纠错实施与验收2026-10-05).
 The integrated example's modes, results and deviations are in its [dedicated guide](three_terminal_vsc_hvdc.en.md).
 This is local evidence, not remote CI status. No full-model comparison with experimental data or commercial EMT software is claimed.
 
@@ -90,7 +92,7 @@ branches per phase. With `Vp=nominal_line_voltage/sqrt(3)` and `ω=2π frequency
 `R=Vp²/(P/3)`, `L=Vp²/[ω(QL/3)]`, `C=(QC/3)/(ωVp²)`.
 `active_power` uses W and `inductive_power/capacitive_power` use nonnegative var. A zero value omits that branch; all three cannot
 be zero. This is a **fixed-impedance load** derived at the nominal point: power changes with terminal voltage rather than holding P/Q.
-Existing checks cover conversion, outputs and initialization/first step, not full fault validation.
+In addition to conversion, outputs and initialization/first step, balanced AC startup and three-phase ground-fault application/clearing have an independent six-state DOP853 reference. Common-time convergence and KCL checks use 20/10 μs for trapezoidal and 5/2.5 μs for backward Euler. This does not establish arbitrary unbalanced-fault validity.
 
 An enabled `Fault` connects its node to ground through a finite positive resistance; disabled, it has no branch conductance.
 A closed `Breaker` uses a finite positive resistance; open, it has no branch conductance. Add them to the circuit before applying
@@ -270,7 +272,7 @@ Its zero-sequence port contains only stator resistance; this is not a full dq0 m
 ### Units, directions and ports
 
 Positive current flows from internal voltage to the terminal. `p` is total three-phase active power delivered to the network (W).
-`base_power` is total three-phase capacity (VA); `base_phase_rms` is phase-to-neutral RMS voltage (V):
+`base_power` is total three-phase capacity (VA). The classical machine's internal-emf RMS parameter is `internal_phase_rms`; Park's phase-voltage base is `base_phase_rms` (V). The following base conversion applies to Park:
 
 ```text
 Zbase = 3 Vbase_rms² / Sbase
@@ -336,7 +338,7 @@ dPm_pu/dt = (Pm_reference - (speed_pu-1)/droop - Pm_pu) / Tgov
 Time constants are in seconds; voltages, reactances, control limits and references use their respective per-unit bases.
 Updated field voltage and mechanical power are clipped to `efd_min/max_pu` and `mechanical_power_min/max_pu`.
 
-At t=0, hold declared dynamic states and solve the network. Classical stator currents start at zero; Park currents follow the algebraic port and are generally nonzero.
+At t=0, hold declared dynamic states and solve the network. Classical stator currents start at zero when `stator_inductance>0`; with `L=0, R>0`, currents follow the algebraic circuit and are not fixed at zero. Park currents follow the algebraic port and are generally nonzero.
 Electromechanical/control states advance once by forward Euler using the same left-end feedback, before solving and recording the current network.
 Rotor angle, transient voltage and abc outputs in one row therefore share one time.
 Electromechanical coupling is first order; `SimulationConfig.method` selects integration only for classical stator R–L and external storage components.

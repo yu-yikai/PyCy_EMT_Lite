@@ -18,6 +18,40 @@ from pycy_emt_lite.analysis import (
 from pycy_emt_lite.io.results import SimulationResult
 
 
+def test_instantaneous_power_rejects_broadcastable_short_column() -> None:
+    class Provider:
+        def series(self, column):
+            return [0.0, 1.0, 2.0] if column != "ia" else [1.0]
+
+    with pytest.raises(ValueError, match="ia.*等长"):
+        instantaneous_three_phase_power(Provider(), ("va", "vb", "vc"), ("ia", "ib", "ic"))
+
+
+@pytest.mark.parametrize("parameter", ["nominal_rms", "threshold_pu"])
+@pytest.mark.parametrize("value", [math.nan, math.inf, True, "1.0"])
+def test_sag_rejects_invalid_parameters(parameter, value) -> None:
+    result = SimulationResult("invalid_sag", "manual", 1.0, 1.0, [{"time": 0.0, "v": 1.0}, {"time": 1.0, "v": 1.0}])
+    params = {"nominal_rms": 1.0, "threshold_pu": 0.9, parameter: value}
+    with pytest.raises(ValueError, match=rf"{parameter}.*有限"):
+        voltage_sag_summary(result, ["v"], **params)
+
+
+def test_rms_and_mean_preserve_representable_large_constant() -> None:
+    result = SimulationResult("large", "manual", 1.0, 2.0,
+                              [{"time": t, "x": 1e200} for t in (0.0, 1.0, 2.0)])
+    assert rms(result, "x") == pytest.approx(1e200)
+    assert mean_value(result, "x") == pytest.approx(1e200)
+
+
+def test_peak_window_excludes_distinct_global_peak_and_keeps_sample_boundaries() -> None:
+    result = SimulationResult("peaks", "manual", 1.0, 3.0,
+                              [{"time": float(t), "x": x} for t, x in enumerate((100.0, -3.0, 2.0, 200.0))])
+    assert peak_abs(result, "x", start_time=1.0, end_time=2.0) == 3.0
+    assert peak_abs(result, "x", start_time=2.0, end_time=2.0) == 2.0
+    with pytest.raises(ValueError):
+        peak_abs(result, "x", start_time=1.1, end_time=1.9)
+
+
 def test_basic_analysis_metrics() -> None:
     result = SimulationResult(
         circuit_name="metrics",

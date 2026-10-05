@@ -49,6 +49,12 @@ def _base_generator(**overrides) -> ParkSynchronousGenerator:
 STATE_COLUMNS = ("rotor_angle:GEN", "speed_pu:GEN", "eq_prime_pu:GEN", "ed_prime_pu:GEN", "efd_pu:GEN", "pm_pu:GEN")
 
 
+@pytest.mark.parametrize("overrides", [{"internal_bus": "bus"}, {"terminal_bus": "GEN_internal"}, {"internal_bus": "Ground"}])
+def test_park_generator_rejects_internal_bus_collision(overrides) -> None:
+    with pytest.raises(ValueError, match="GEN.*内部"):
+        _base_generator(**overrides)
+
+
 def _reference(gen, resistance, times, initial=None):
     """消去平衡电阻网络，独立积分六个连续状态；不调用模型的 stamp/update。"""
     load = resistance / (3 * gen.base_phase_rms**2 / gen.base_power)

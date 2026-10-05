@@ -36,20 +36,22 @@ def plot_series(
 
     time = np.asarray(result.series("time"), dtype=float)
     figure, axes = plt.subplots()
-    for column in columns:
-        axes.plot(time, result.series(column), label=column)
-    axes.set_xlabel("time / s")
-    axes.set_ylabel("value")
-    if title is not None:
-        axes.set_title(title)
-    axes.grid(True)
-    axes.legend()
-    if output_path is not None:
-        target = Path(output_path)
-        target.parent.mkdir(parents=True, exist_ok=True)
-        figure.savefig(target, dpi=150, bbox_inches="tight")
-    _show_if_interactive(show)
-    plt.close(figure)
+    try:
+        for column in columns:
+            axes.plot(time, result.series(column), label=column)
+        axes.set_xlabel("time / s")
+        axes.set_ylabel("value")
+        if title is not None:
+            axes.set_title(title)
+        axes.grid(True)
+        axes.legend()
+        if output_path is not None:
+            target = Path(output_path)
+            target.parent.mkdir(parents=True, exist_ok=True)
+            figure.savefig(target, dpi=150, bbox_inches="tight")
+        _show_if_interactive(show)
+    finally:
+        plt.close(figure)
 
 
 def plot_result_comparison(
@@ -72,13 +74,16 @@ def plot_result_comparison(
         raise ValueError("对比标签数量必须与结果数量一致。")
 
     figure, axes = plt.subplots()
-    for result, label in zip(result_list, label_list, strict=True):
-        axes.plot(result.series("time"), result.series(column), label=label)
-    axes.set_xlabel("time / s")
-    axes.set_ylabel(column)
-    axes.grid(True)
-    axes.legend()
-    _save_show_close(figure, output_path, show)
+    try:
+        for result, label in zip(result_list, label_list, strict=True):
+            axes.plot(result.series("time"), result.series(column), label=label)
+        axes.set_xlabel("time / s")
+        axes.set_ylabel(column)
+        axes.grid(True)
+        axes.legend()
+        _save_show_close(figure, output_path, show)
+    finally:
+        plt.close(figure)
 
 
 def plot_zoom_window(
@@ -102,16 +107,19 @@ def plot_zoom_window(
     if not mask.any():
         raise ValueError("指定局部放大时间窗内没有结果采样点。")
     figure, axes = plt.subplots()
-    for column in columns:
-        values = np.asarray(result.series(column), dtype=float)
-        axes.plot(time[mask], values[mask], label=column)
-    axes.set_xlabel("time / s")
-    axes.set_ylabel("value")
-    if title is not None:
-        axes.set_title(title)
-    axes.grid(True)
-    axes.legend()
-    _save_show_close(figure, output_path, show)
+    try:
+        for column in columns:
+            values = np.asarray(result.series(column), dtype=float)
+            axes.plot(time[mask], values[mask], label=column)
+        axes.set_xlabel("time / s")
+        axes.set_ylabel("value")
+        if title is not None:
+            axes.set_title(title)
+        axes.grid(True)
+        axes.legend()
+        _save_show_close(figure, output_path, show)
+    finally:
+        plt.close(figure)
 
 
 def plot_three_phase(
@@ -133,16 +141,19 @@ def plot_three_phase(
 
     time = np.asarray(result.series("time"), dtype=float)
     figure, axes = plt.subplots()
-    labels = ("Phase A", "Phase B", "Phase C")
-    for column, label in zip(columns, labels, strict=True):
-        axes.plot(time, result.series(column), label=f"{label} {column}")
-    axes.set_xlabel("time / s")
-    axes.set_ylabel("value")
-    if title is not None:
-        axes.set_title(title)
-    axes.grid(True)
-    axes.legend()
-    _save_show_close(figure, output_path, show)
+    try:
+        labels = ("Phase A", "Phase B", "Phase C")
+        for column, label in zip(columns, labels, strict=True):
+            axes.plot(time, result.series(column), label=f"{label} {column}")
+        axes.set_xlabel("time / s")
+        axes.set_ylabel("value")
+        if title is not None:
+            axes.set_title(title)
+        axes.grid(True)
+        axes.legend()
+        _save_show_close(figure, output_path, show)
+    finally:
+        plt.close(figure)
 
 
 def _save_show_close(figure, output_path: str | Path | None, show: bool) -> None:
@@ -170,7 +181,7 @@ def _show_if_interactive(show: bool) -> None:
     import matplotlib
 
     backend = (matplotlib.get_backend() or "").lower()
-    non_interactive = {"agg", "pdf", "ps", "svg", "cairo", "template"}
+    non_interactive = {"agg", "pdf", "pgf", "ps", "svg", "cairo", "template"}
     if backend not in non_interactive:
         import matplotlib.pyplot as plt
 

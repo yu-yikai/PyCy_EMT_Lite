@@ -20,7 +20,7 @@ from pycy_emt_lite.components.base import Component
 from pycy_emt_lite.components.three_phase import PHASES, PhaseName, phase_node
 from pycy_emt_lite.controls import abc_to_dq, dq_to_abc
 from pycy_emt_lite.core.context import StampContext
-from pycy_emt_lite.core.nodes import NodeManager
+from pycy_emt_lite.core.nodes import NodeManager, _check_internal_nodes
 from pycy_emt_lite.core.stamping import add_voltage_probe
 from pycy_emt_lite.core.variables import VariableManager
 from pycy_emt_lite.machines.synchronous import _finite_parameter
@@ -103,6 +103,8 @@ class ParkSynchronousGenerator(Component):
 
     def __post_init__(self) -> None:
         self._validate_parameters()
+        _check_internal_nodes(self.name, [phase_node(self.internal_bus_name, p) for p in PHASES],
+                              [self.neutral, *[phase_node(self.terminal_bus, p) for p in PHASES]])
         self.state = _ParkGeneratorState(
             rotor_angle=self.initial_rotor_angle,
             speed_pu=self.initial_speed_pu,
@@ -116,7 +118,7 @@ class ParkSynchronousGenerator(Component):
     def internal_bus_name(self) -> str:
         """返回内部电势节点母线名。"""
 
-        return self.internal_bus or f"{self.name}_internal"
+        return f"{self.name}_internal" if self.internal_bus is None else self.internal_bus
 
     @property
     def base_impedance(self) -> float:
