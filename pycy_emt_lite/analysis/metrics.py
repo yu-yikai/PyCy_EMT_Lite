@@ -262,7 +262,7 @@ def voltage_sag_summary(
 ) -> VoltageSagSummary:
     """按窗口 RMS 判断电压跌落。
 
-    该函数面向阶段 4 的教学算例：先统计每个电压字段在窗口内的 RMS，
+    先统计每个电压字段在窗口内的 RMS，
     再找出最低标幺值并判断是否低于阈值。
     """
 

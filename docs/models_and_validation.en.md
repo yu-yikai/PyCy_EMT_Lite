@@ -53,6 +53,30 @@ Current/voltage RMS, phase and KVL are checked over two cycles at 0.08–0.12 s.
 saving by default. After changing amplitude, frequency or R/L/C, reconsider the steady-state window and fastest time scale.
 The detailed case template and saving instructions are maintained only in the README.
 
+<a id="read-tests"></a>
+
+### How to read a basic test
+
+After running Examples 01–04, use the [Component derivations map](component_derivations.en.md#reading-map) to find implementations and tests.
+Open [test_basic_components.py](../tests/test_basic_components.py) and start with `test_resistor_voltage_source_solution()`:
+it creates a circuit and run configuration, calls `Simulator.run()`, then uses `assert` to check a node voltage of 10 V and resistor current of 2 A.
+An `assert` states a condition the result must satisfy; `pytest.approx()` allows floating-point error within a tolerance.
+
+Next, run these commands one at a time from the project root:
+
+```powershell
+uv run pytest tests/test_basic_components.py::test_rc_initial_state_and_first_interval
+uv run pytest tests/test_basic_components.py::test_rc_rl_analytic_error_converges_on_common_physical_grid
+uv run pytest tests/test_basic_components.py::test_rlc_whole_curve_matches_analytic_damped_response
+```
+
+`file::function` selects that test only; the project configuration already enables concise output. The commands should report `12 passed`, `4 passed` and `1 passed`, respectively.
+A single function runs multiple cases because `@pytest.mark.parametrize` lists combinations of integration methods, initial values and other inputs.
+The first checks initialization and the first two integration intervals. The second compares RC/RL analytic errors at common physical times: halving the step reduces trapezoidal error to about 1/4 and backward-Euler error to about 1/2.
+The third checks the complete RLC voltage and current curves and trapezoidal error convergence.
+Tests use their own small circuits and parameters, which may differ from example defaults. Read the circuit first, then the independent reference formula, and finally the errors and tolerances.
+If a test reports `FAILED`, first inspect the failing assertion and input parameters. The validation table above still defines what passing these tests covers.
+
 ## 3. Three-phase networks and faults
 
 `ThreePhaseSource` constructs abc positive-sequence sinusoids from `phase_rms` (V), `frequency` (Hz) and phase angle,

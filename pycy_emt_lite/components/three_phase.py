@@ -1,6 +1,6 @@
 """
 文件名称：three_phase.py
-文件作用：实现阶段 2 的三相电源、线路和负荷简化模型。
+文件作用：实现三相电源、线路和负荷简化模型。
 
 主要内容：
 1. 三相节点命名辅助函数
@@ -29,7 +29,7 @@ PHASES: tuple[PhaseName, PhaseName, PhaseName] = ("a", "b", "c")
 def phase_node(bus: str, phase: PhaseName) -> str:
     """返回三相节点名称。
 
-    阶段 2 采用 `母线:相别` 的命名方式，例如 `source:a`、`load:b`。
+    三相节点采用 `母线:相别` 的命名方式，例如 `source:a`、`load:b`。
     参考地 `"0"`、`"gnd"`、`"ground"` 不附加相别。
     """
 

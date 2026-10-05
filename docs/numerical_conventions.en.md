@@ -5,6 +5,11 @@
 This document collects the implemented equation, time, initialization, event and metric conventions. Model-specific equations and evidence belong in the model document.
 For equation derivations, local matrices and state updates, read [Component derivations](component_derivations.en.md): Sections 1–5 cover basic stamps and a worked RLC example; Sections 13–15 explain consistent initialization, the event loop and discrete energy.
 
+Read by question: start with Section 1 for the call order; use [Time grid](#time-grid) for unexpected sample times,
+[Consistent initialization](#initialization) for the first result row, and [Events](#events) for behavior across fault switching.
+
+<a id="source-route"></a>
+
 ## 1. From components to results
 
 `CaseDefinition` holds components, simulation settings, events and output options; `run_case()` creates a `Circuit` and `Simulator`.
@@ -16,15 +21,18 @@ Create fresh components, a circuit and a simulator for every run. A `Simulator` 
 simulator cannot be transferred to another; rebuild after a failed run too. This prevents old inductor, capacitor and event states
 from contaminating a new calculation. `SimulationResult` contains data, not a state snapshot from which integration can resume.
 
-| Reading order | Responsibility |
-|---|---|
-| [cases.py](../pycy_emt_lite/cases.py) | Shared case definition, plotting and saving |
-| [circuit.py](../pycy_emt_lite/core/circuit.py) | Components, nodes, unknowns and initial constraints |
-| [stamping.py](../pycy_emt_lite/core/stamping.py) | Basic matrix contributions |
-| [basic.py](../pycy_emt_lite/components/basic.py) | R/L/C and independent-source equations |
-| [simulation.py](../pycy_emt_lite/core/simulation.py) | Configuration checks, time grid and update order |
-| [solvers.py](../pycy_emt_lite/core/solvers.py) | Linear solves, nonfinite values and residual checks |
-| [results.py](../pycy_emt_lite/io/results.py) | Result access and CSV/JSON/NPZ |
+| Reading order | Search within the file | Question to answer |
+|---|---|---|
+| [cases.py](../pycy_emt_lite/cases.py) | `CaseDefinition`, `run_case()` | How do the example's components and settings reach the simulator, and how do results reach the summary, plots and saved files? |
+| [circuit.py](../pycy_emt_lite/core/circuit.py) | `Circuit._prepare()` | How are node voltages and extra branch currents indexed? |
+| [basic.py](../pycy_emt_lite/components/basic.py) | `Capacitor._companion()`, `stamp()`, `update_state()` | How does the capacitor formula become the step equation, and when are history voltage and current saved? |
+| [stamping.py](../pycy_emt_lite/core/stamping.py) | `add_conductance()`, `add_current_source()` | How are signs written into the matrix and right-hand side for a two-terminal element? For initialization, also read `_InitialConditions`. |
+| [simulation.py](../pycy_emt_lite/core/simulation.py) | `Simulator.run()`, `_solve_step()`, `_assemble()` | What calls component stamps, the solver and state updates in order? How do initialization and event instants differ? |
+| [solvers.py](../pycy_emt_lite/core/solvers.py) | `DenseLinearSolver.solve()` | How is `A x = b` solved, and how are nonfinite values and residuals checked? |
+| [results.py](../pycy_emt_lite/io/results.py) | `SimulationResult.series()`, `to_json()` | How do field names retrieve arrays, and how are results saved to a file? |
+
+Names beginning with an underscore in this table are internal implementation details for reading; write cases using the public interfaces in the README.
+For a capacitor trace through the code, follow the [RC reading route in Component derivations](component_derivations.en.md#reading-map) from the example to equations and tests.
 
 ## 2. Units, directions and minimal MNA
 
@@ -55,6 +63,8 @@ For an integration interval h>0, subscript 0 denotes its left endpoint:
 A series R–L branch uses `v−(R+Req)i=Vhist`. A capacitor becomes a parallel conductance and history current; an inductor retains
 its branch-current unknown. Save endpoint voltage and current only after the solve, without overwriting history during stamping.
 Machine mechanical/control states have their own explicit update order; their integration order cannot be inferred from global `method`.
+
+<a id="time-grid"></a>
 
 ## 3. Time grid and parameters
 
@@ -87,6 +97,8 @@ The callback also runs at t=0 for observation/initialization; do not pass a zero
 Held controller commands reach the next network step through component callables; there is no same-step algebraic control loop.
 Use consecutive `row["time"]` values for the actual interval and create fresh controller state with each case.
 See [three-terminal VSC-HVDC](three_terminal_vsc_hvdc.en.md). The default `on_step=None` preserves the original workflow.
+
+<a id="initialization"></a>
 
 ## 4. Consistent initialization
 
@@ -127,6 +139,8 @@ needs `derivative` only when network constraints require it; derivatives are not
 Conflicting ideal-voltage/capacitor initial constraints, conflicting current/inductor initial constraints, or redundant ideal sources
 with nonunique currents require corrected initial values or wiring. The program does not add small leakage resistors automatically
 and does not support every higher-order algebraic-constraint topology.
+
+<a id="events"></a>
 
 ## 5. Explicit-event left and right sides
 

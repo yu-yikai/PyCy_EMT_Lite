@@ -5,6 +5,11 @@
 本文集中说明当前程序的方程、时间、初值、事件和指标约定。各模型的专用方程及验证证据见模型文档。
 需要逐项理解公式来源、局部矩阵和状态更新时，阅读[元件推导](component_derivations.md)：第 1–5 节给出基础盖章与 RLC 手算例子，第 13–15 节展开一致初值、事件循环和离散能量。
 
+按问题阅读：不清楚调用顺序时从第 1 节开始；结果时刻与预期不同时看[时间网格](#time-grid)；
+第一行结果有疑问时看[一致初值](#initialization)；故障切换前后有疑问时看[事件](#events)。
+
+<a id="source-route"></a>
+
 ## 1. 从元件到结果
 
 `CaseDefinition` 保存元件、仿真配置、事件和输出选项；`run_case()` 创建 `Circuit` 和 `Simulator`。
@@ -16,15 +21,18 @@
 不能转交另一个仿真器；失败后也应重新构建。这样可避免旧电感、电容和事件状态污染新计算。
 `SimulationResult` 是数据，不是可继续积分的状态快照。
 
-| 阅读顺序 | 代码职责 |
-|---|---|
-| [cases.py](../pycy_emt_lite/cases.py) | 统一算例定义、绘图和保存 |
-| [circuit.py](../pycy_emt_lite/core/circuit.py) | 元件、节点、未知量和初值约束 |
-| [stamping.py](../pycy_emt_lite/core/stamping.py) | 基础矩阵写入 |
-| [basic.py](../pycy_emt_lite/components/basic.py) | R/L/C 与独立电源方程 |
-| [simulation.py](../pycy_emt_lite/core/simulation.py) | 配置检查、时间网格和推进顺序 |
-| [solvers.py](../pycy_emt_lite/core/solvers.py) | 线性求解、非有限量与残差检查 |
-| [results.py](../pycy_emt_lite/io/results.py) | 结果访问与 CSV/JSON/NPZ |
+| 阅读顺序 | 在文件中搜索 | 需要弄清的问题 |
+|---|---|---|
+| [cases.py](../pycy_emt_lite/cases.py) | `CaseDefinition`、`run_case()` | 示例的元件和配置怎样交给仿真器，结果怎样交给摘要、绘图和保存？ |
+| [circuit.py](../pycy_emt_lite/core/circuit.py) | `Circuit._prepare()` | 节点电压和额外支路电流怎样编号？ |
+| [basic.py](../pycy_emt_lite/components/basic.py) | `Capacitor._companion()`、`stamp()`、`update_state()` | 电容公式怎样变为本步方程，何时保存历史电压和电流？ |
+| [stamping.py](../pycy_emt_lite/core/stamping.py) | `add_conductance()`、`add_current_source()` | 两端元件对矩阵和右端项的正负号如何写入？初值时再读 `_InitialConditions`。 |
+| [simulation.py](../pycy_emt_lite/core/simulation.py) | `Simulator.run()`、`_solve_step()`、`_assemble()` | 谁依次调用元件盖章、求解和状态更新？初值及事件点有何不同？ |
+| [solvers.py](../pycy_emt_lite/core/solvers.py) | `DenseLinearSolver.solve()` | 怎样解 `A x = b`，并检查非有限量与残差？ |
+| [results.py](../pycy_emt_lite/io/results.py) | `SimulationResult.series()`、`to_json()` | 怎样用字段名读取数组、将结果保存到文件？ |
+
+表中带下划线的函数是内部实现，供阅读；编写算例仍使用 README 中的公开接口。
+想逐行对照电容，可按[元件推导的 RC 阅读路线](component_derivations.md#reading-map)连接示例、公式和测试。
 
 ## 2. 单位、方向与最小 MNA
 
@@ -56,6 +64,8 @@
 求解后才保存这一步的端电压和电流；不能在 stamp 时提前覆盖历史量。
 同步机机电/控制状态采用单独声明的显式推进顺序，不能由全局 `method` 推断其积分阶次。
 
+<a id="time-grid"></a>
+
 ## 3. 时间网格和参数
 
 `SimulationConfig(time_step, stop_time, start_time=0, method="trapezoidal", event_time_policy="insert", record_every=1)`：
@@ -85,6 +95,8 @@
 控制器保留的命令通过元件 callable 作用于下一网络步；没有同一步代数闭环。
 回调需从相邻 `row["time"]` 计算实际间隔，并随新算例重新创建状态。
 示例见 [三端 VSC-HVDC](three_terminal_vsc_hvdc.md)，默认 `on_step=None` 保持原流程。
+
+<a id="initialization"></a>
 
 ## 4. 一致初值
 
@@ -122,6 +134,8 @@ assert abs(result.rows[0]["i:C"] - 6.0) < 1e-12
 常量源的导数为零，三相正弦源提供解析导数。只有网络约束确实需要时，才要求 callable 独立源提供
 `derivative`；不能一律用差分猜测或假定为零。理想电压约束与电容初值冲突、电流约束与电感初值冲突、
 冗余理想源造成电流不唯一等情况应修正初值或实际接线。程序不自动加微小泄漏电阻，也不支持所有高阶代数约束拓扑。
+
+<a id="events"></a>
 
 ## 5. 显式事件的左右侧
 

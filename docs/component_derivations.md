@@ -5,6 +5,9 @@
 本文回答三个问题：元件的微分/代数方程从何而来，方程怎样写入当前时间步的矩阵，以及求解后怎样建立下一步的历史量。
 推导对应仓库实际实现。模型参数、已有验证数值和适用范围仍由[模型与验证](models_and_validation.md)维护；三端系统的参考来源与控制定值见[综合示例](three_terminal_vsc_hvdc.md)。
 
+第一次阅读时，先运行 README 中的示例 01–04，再按第 1–5 节理解方向、R/L/C 和[完整矩阵核对](#rlc-matrix)。
+想知道程序如何调用这些方程，可接着读[第 14 节主循环](#emt-loop)；学习其他模型时，从[第 16 节示例与源码表](#reading-map)跳转即可。
+
 ## 1. 先区分节点导纳矩阵和完整 MNA 矩阵
 
 ### 1.1 未知量、单位和方向
@@ -105,6 +108,8 @@ $$
 `register()` 分配电流编号，`stamp()` 写入节点列和电压约束行，`outputs()` 读取解中的电流。
 源供电时 jk 常为负；E·jk 是按被动方向定义的吸收功率。求导信息不进入普通正时间步，只供第 13 节的瞬时一致求解使用。
 
+<a id="capacitor"></a>
+
 ## 3. Capacitor：电容如何变为电导和历史电流源
 
 从电荷 q=Cu 和 i=dq/dt 出发，对常值 C 有 i=C du/dt。
@@ -184,6 +189,8 @@ $$a^Tv_1-(R+R_L)i_1=H_L.$$
 如果把总端电压 u₁当成 uL₁，就会在历史项中重复加入电阻压降。
 这些组合允许 L=0、R>0，此时不注册电感电流，直接盖章电导 1/R；允许 R=0、L>0，但不允许两者同时为零。
 
+<a id="rlc-matrix"></a>
+
 ## 5. 一个完整 RLC 电路：手算矩阵、求解、更新再求解
 
 ### 5.1 电路与编号
@@ -249,6 +256,8 @@ b 节点上的 `−iL` 表示电感电流流入该节点；`GC Vb+HC` 是流向�
 
 下面使用已有 `solver` 接口记录真实装配矩阵，不修改库。初始一致系统临时包含电容电流，
 所以 `systems[0]` 是 6×6 系统；`systems[1]` 才是上面的首个正时间步 5×5 矩阵。
+将下面代码保存为项目根目录的 `rlc_matrix_check.py`，运行 `uv run python rlc_matrix_check.py`。
+核对通过时会分别打印 `trapezoidal`、`backward_euler` 及各自第一步的结果；不一致时会触发 `AssertionError`。
 
 ```python
 import numpy as np
@@ -842,6 +851,8 @@ $$|(A_0x-b_0)_r|\le 10^{-12}+10^{-10}\bigl((|A_0||x|)_r+|b_{0,r}|\bigr).$$
 这一次迭代改进没有放宽容差，也不修复物理不相容的初值。
 最后用 h=0 的 `update_state()` 保存一致的 iC/uL；不推进 vC、iL、机械状态或磁链。
 
+<a id="emt-loop"></a>
+
 ## 14. 完整 EMT 时间循环：矩阵何时重建，状态何时生效
 
 ### 14.1 从算例到一次网络求解
@@ -952,18 +963,26 @@ $$h u_1i_1=E_{L,1}-E_{L,0}+\tfrac12 L(i_1-i_0)^2.$$
 逐步能量验证应使用 `record_every=1`，或者在每步回调中累计所需量；涉及事件左侧时还须保留相应验证数据。
 示例 18 的桥端口功率、DC 离散能量及目前证据边界见[综合示例说明](three_terminal_vsc_hvdc.md)。
 
+<a id="reading-map"></a>
+
 ## 16. 按源码与验证入口继续阅读
 
-| 本文内容 | 实现入口 | 对照验证 |
-|---|---|---|
-| 第 1–5 节：编号、RLC 与基础源 | [basic.py](../pycy_emt_lite/components/basic.py)、[stamping.py](../pycy_emt_lite/core/stamping.py) | [test_basic_components.py](../tests/test_basic_components.py) |
-| 第 6 节：三相源和负荷 | [three_phase.py](../pycy_emt_lite/components/three_phase.py) | [test_three_phase.py](../tests/test_three_phase.py) |
-| 第 7–8 节：π、分段与行波线路 | [lines.py](../pycy_emt_lite/components/lines.py) | [test_line_models.py](../tests/test_line_models.py) |
-| 第 9 节：变压器 | [transformers.py](../pycy_emt_lite/components/transformers.py) | [test_transformers.py](../tests/test_transformers.py) |
-| 第 10 节：两种电机 | [synchronous.py](../pycy_emt_lite/machines/synchronous.py)、[park_generator.py](../pycy_emt_lite/machines/park_generator.py) | [经典机测试](../tests/test_synchronous_machine.py)、[Park 机测试](../tests/test_park_synchronous_generator.py) |
-| 第 11–12 节：滤波、控制和开关 | [filters.py](../pycy_emt_lite/converters/filters.py)、[controls](../pycy_emt_lite/controls)、[power_electronics.py](../pycy_emt_lite/components/power_electronics.py) | [控制测试](../tests/test_controls.py)、[电力电子测试](../tests/test_power_electronics.py) |
-| 第 12 节：完整 VSC 控制与电路 | [示例 18](../examples/18_three_terminal_vsc_hvdc.py)、[vsc.py](../pycy_emt_lite/controls/vsc.py) | [系统测试](../tests/test_three_terminal_vsc_hvdc.py) |
-| 第 13–15 节：初值、事件与主循环 | [simulation.py](../pycy_emt_lite/core/simulation.py)、[stamping.py](../pycy_emt_lite/core/stamping.py) | [事件](../tests/test_events.py)、[时间网格](../tests/test_time_grid.py)、[步后回调](../tests/test_step_callback.py) |
+| 本文内容 | 从哪个示例开始 | 实现入口 | 对照验证 |
+|---|---|---|---|
+| 第 1–5 节：编号、RLC 与基础源 | [01 R](../examples/01_r_circuit.py)、[02 RC](../examples/02_rc_transient.py)、[03 RL](../examples/03_rl_transient.py)、[04 RLC](../examples/04_rlc_transient.py)、[17 AC](../examples/17_single_phase_ac_rlc.py) | [basic.py](../pycy_emt_lite/components/basic.py)、[stamping.py](../pycy_emt_lite/core/stamping.py) | [test_basic_components.py](../tests/test_basic_components.py) |
+| 第 6 节：三相源和负荷 | [05 平衡三相](../examples/05_three_phase_steady_state.py) | [three_phase.py](../pycy_emt_lite/components/three_phase.py) | [test_three_phase.py](../tests/test_three_phase.py) |
+| 第 7–8 节：π、分段与行波线路 | [08 π 线](../examples/08_pi_line_transient.py)；分段与行波模型继续读测试 | [lines.py](../pycy_emt_lite/components/lines.py) | [test_line_models.py](../tests/test_line_models.py) |
+| 第 9 节：变压器 | [09 单相变压器](../examples/09_single_phase_transformer.py) | [transformers.py](../pycy_emt_lite/components/transformers.py) | [test_transformers.py](../tests/test_transformers.py) |
+| 第 10 节：两种电机 | [10 Park 发电机](../examples/10_park_generator_avr_governor.py)；经典机见测试 | [synchronous.py](../pycy_emt_lite/machines/synchronous.py)、[park_generator.py](../pycy_emt_lite/machines/park_generator.py) | [经典机测试](../tests/test_synchronous_machine.py)、[Park 机测试](../tests/test_park_synchronous_generator.py) |
+| 第 11–12 节：滤波、控制和开关 | [11 PLL](../examples/11_pll_dynamic_response.py)、[12 PWM](../examples/12_two_level_pwm_generator.py)；LC/LCL 见测试 | [filters.py](../pycy_emt_lite/converters/filters.py)、[controls](../pycy_emt_lite/controls)、[power_electronics.py](../pycy_emt_lite/components/power_electronics.py) | [控制测试](../tests/test_controls.py)、[电力电子测试](../tests/test_power_electronics.py) |
+| 第 12 节：完整 VSC 控制与电路 | [18 三端 VSC-HVDC](../examples/18_three_terminal_vsc_hvdc.py) | [vsc.py](../pycy_emt_lite/controls/vsc.py) | [系统测试](../tests/test_three_terminal_vsc_hvdc.py) |
+| 第 13–15 节：初值、事件与主循环 | [06 三相故障](../examples/06_three_phase_short_circuit.py)、[07 单相接地](../examples/07_single_phase_ground_fault.py) | [simulation.py](../pycy_emt_lite/core/simulation.py)、[stamping.py](../pycy_emt_lite/core/stamping.py) | [事件](../tests/test_events.py)、[时间网格](../tests/test_time_grid.py)、[步后回调](../tests/test_step_callback.py) |
 
-建议先运行第 5 节矩阵例子，再沿“元件 `stamp` → 组装 → 求解 → `update_state` → 下一步历史源”阅读。
+以示例 02 的电容为线索，在文件中搜索下面的函数名即可逐步对照：
+
+1. 在示例的 `define_case()` 找到 `Capacitor` 的接线和容量；未写 `initial_voltage` 时使用默认初始电压 0 V。再读[第 3 节](#capacitor)的 `G`、`Ihist`。
+2. 在 `basic.py` 的 `Capacitor._companion()` 找到这两个量；`stamp()` 用它们写入矩阵和右端项。
+3. 在 `simulation.py` 沿 `Simulator.run()` → `_solve_step()` → `_assemble()` 阅读。求解返回后，`run()` 才调用 `Capacitor.update_state()`，将本步电压、电流留给下一步。初值和事件点另走第 13 节的一致求解。
+4. 按[测试阅读说明](models_and_validation.md#read-tests)检查初值、暂态和步长误差；整条调用链的文件职责见[数值约定](numerical_conventions.md#source-route)。
+
 本文补全的是当前实现的推导和阅读路径；各模型实际完成了哪些独立验证，仍以[模型与验证](models_and_validation.md)为准。

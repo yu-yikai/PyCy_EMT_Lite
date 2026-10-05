@@ -1,6 +1,6 @@
 """
 文件名称：test_controls.py
-文件作用：验证阶段 3 控制模块、坐标变换、PLL 和 PWM 的基础行为。
+文件作用：验证控制模块、坐标变换、PLL 和 PWM 的基础行为。
 """
 
 import math

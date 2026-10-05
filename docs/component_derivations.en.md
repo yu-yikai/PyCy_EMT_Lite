@@ -5,6 +5,9 @@
 This guide answers three questions: where a component's differential/algebraic equations come from, how they enter the matrix for the current step, and how the solution supplies history for the next step.
 The derivations follow the repository implementation. [Models and validation](models_and_validation.en.md) remains the reference for parameters, validation results and applicability; the [integrated example](three_terminal_vsc_hvdc.en.md) documents the three-terminal system's sources and control settings.
 
+On a first reading, run Examples 01–04 from the README, then follow Sections 1–5 through directions, R/L/C and the [complete matrix check](#rlc-matrix).
+Continue with [Section 14's main loop](#emt-loop) to see how the program calls these equations. For other models, use the [example and source map in Section 16](#reading-map).
+
 ## 1. Distinguish the nodal admittance matrix from the full MNA matrix
 
 ### 1.1 Unknowns, units and directions
@@ -105,6 +108,8 @@ $$
 `register()` allocates the current index, `stamp()` writes the nodal column and voltage-constraint row, and `outputs()` reads the current from the solution.
 jk is often negative when the source delivers power; E·jk is absorbed power under the passive sign convention. Derivative information is used only for the instantaneous consistency solve in Section 13, not ordinary positive-time steps.
 
+<a id="capacitor"></a>
+
 ## 3. Capacitor: deriving a conductance and a history current source
 
 Starting with charge q=Cu and i=dq/dt, constant C gives i=C du/dt.
@@ -184,6 +189,8 @@ The nodal incidence entries stay unchanged, while the branch diagonal becomes `�
 Using total terminal voltage u₁ as uL₁ would include the resistive drop again in the history.
 These compositions allow L=0 with R>0: no inductor current is registered and conductance 1/R is stamped directly. R=0 with L>0 is also allowed, but both cannot be zero.
 
+<a id="rlc-matrix"></a>
+
 ## 5. A complete RLC circuit: assemble, solve, update and solve again
 
 ### 5.1 Circuit and indexing
@@ -249,6 +256,8 @@ For example, the second trapezoidal step uses `HC=−20×0.213301662708−0.1660
 
 The existing `solver` interface can record the actual assembled matrices without modifying the library. The initial consistency system temporarily contains capacitor current,
 so `systems[0]` is 6×6; `systems[1]` is the first positive-step 5×5 matrix above.
+Save the code below as `rlc_matrix_check.py` in the project root and run `uv run python rlc_matrix_check.py`.
+Successful checks print `trapezoidal` and `backward_euler`, each with its first-step result; a mismatch raises `AssertionError`.
 
 ```python
 import numpy as np
@@ -842,6 +851,8 @@ If LU rounding causes a row to fail, `_solve_step()` performs just one more solv
 This single iterative-refinement correction does not relax tolerances or repair physically incompatible initial conditions.
 Finally, h=0 `update_state()` saves consistent iC/uL without advancing vC, iL, mechanical states or flux linkage.
 
+<a id="emt-loop"></a>
+
 ## 14. The complete EMT loop: rebuilding matrices and applying states
 
 ### 14.1 From a case to one network solve
@@ -952,18 +963,26 @@ Two decimated rows may span many internal steps. Their output interval and diffe
 For stepwise energy checks, use `record_every=1` or accumulate required quantities in each step callback; checks needing event-left values must also retain the corresponding validation data.
 See the [integrated example guide](three_terminal_vsc_hvdc.en.md) for Example 18's bridge-port power, DC discrete energy and current evidence boundaries.
 
+<a id="reading-map"></a>
+
 ## 16. Source and validation reading map
 
-| Content in this guide | Implementation | Corresponding checks |
-|---|---|---|
-| Sections 1–5: indexing, RLC and basic sources | [basic.py](../pycy_emt_lite/components/basic.py), [stamping.py](../pycy_emt_lite/core/stamping.py) | [test_basic_components.py](../tests/test_basic_components.py) |
-| Section 6: three-phase sources and loads | [three_phase.py](../pycy_emt_lite/components/three_phase.py) | [test_three_phase.py](../tests/test_three_phase.py) |
-| Sections 7–8: Pi, segmented and traveling-wave lines | [lines.py](../pycy_emt_lite/components/lines.py) | [test_line_models.py](../tests/test_line_models.py) |
-| Section 9: transformers | [transformers.py](../pycy_emt_lite/components/transformers.py) | [test_transformers.py](../tests/test_transformers.py) |
-| Section 10: both machines | [synchronous.py](../pycy_emt_lite/machines/synchronous.py), [park_generator.py](../pycy_emt_lite/machines/park_generator.py) | [Classical machine tests](../tests/test_synchronous_machine.py), [Park machine tests](../tests/test_park_synchronous_generator.py) |
-| Sections 11–12: filters, control and switches | [filters.py](../pycy_emt_lite/converters/filters.py), [controls](../pycy_emt_lite/controls), [power_electronics.py](../pycy_emt_lite/components/power_electronics.py) | [Control tests](../tests/test_controls.py), [Power-electronics tests](../tests/test_power_electronics.py) |
-| Section 12: complete VSC control and circuit | [Example 18](../examples/18_three_terminal_vsc_hvdc.py), [vsc.py](../pycy_emt_lite/controls/vsc.py) | [System tests](../tests/test_three_terminal_vsc_hvdc.py) |
-| Sections 13–15: initialization, events and main loop | [simulation.py](../pycy_emt_lite/core/simulation.py), [stamping.py](../pycy_emt_lite/core/stamping.py) | [Events](../tests/test_events.py), [Time grid](../tests/test_time_grid.py), [Step callback](../tests/test_step_callback.py) |
+| Content in this guide | Example to start with | Implementation | Corresponding checks |
+|---|---|---|---|
+| Sections 1–5: indexing, RLC and basic sources | [01 R](../examples/01_r_circuit.py), [02 RC](../examples/02_rc_transient.py), [03 RL](../examples/03_rl_transient.py), [04 RLC](../examples/04_rlc_transient.py), [17 AC](../examples/17_single_phase_ac_rlc.py) | [basic.py](../pycy_emt_lite/components/basic.py), [stamping.py](../pycy_emt_lite/core/stamping.py) | [test_basic_components.py](../tests/test_basic_components.py) |
+| Section 6: three-phase sources and loads | [05 balanced three-phase circuit](../examples/05_three_phase_steady_state.py) | [three_phase.py](../pycy_emt_lite/components/three_phase.py) | [test_three_phase.py](../tests/test_three_phase.py) |
+| Sections 7–8: Pi, segmented and traveling-wave lines | [08 Pi line](../examples/08_pi_line_transient.py); continue with tests for segmented and traveling-wave models | [lines.py](../pycy_emt_lite/components/lines.py) | [test_line_models.py](../tests/test_line_models.py) |
+| Section 9: transformers | [09 single-phase transformer](../examples/09_single_phase_transformer.py) | [transformers.py](../pycy_emt_lite/components/transformers.py) | [test_transformers.py](../tests/test_transformers.py) |
+| Section 10: both machines | [10 Park generator](../examples/10_park_generator_avr_governor.py); see tests for the classical machine | [synchronous.py](../pycy_emt_lite/machines/synchronous.py), [park_generator.py](../pycy_emt_lite/machines/park_generator.py) | [Classical machine tests](../tests/test_synchronous_machine.py), [Park machine tests](../tests/test_park_synchronous_generator.py) |
+| Sections 11–12: filters, control and switches | [11 PLL](../examples/11_pll_dynamic_response.py), [12 PWM](../examples/12_two_level_pwm_generator.py); see tests for LC/LCL | [filters.py](../pycy_emt_lite/converters/filters.py), [controls](../pycy_emt_lite/controls), [power_electronics.py](../pycy_emt_lite/components/power_electronics.py) | [Control tests](../tests/test_controls.py), [Power-electronics tests](../tests/test_power_electronics.py) |
+| Section 12: complete VSC control and circuit | [18 three-terminal VSC-HVDC](../examples/18_three_terminal_vsc_hvdc.py) | [vsc.py](../pycy_emt_lite/controls/vsc.py) | [System tests](../tests/test_three_terminal_vsc_hvdc.py) |
+| Sections 13–15: initialization, events and main loop | [06 three-phase fault](../examples/06_three_phase_short_circuit.py), [07 single-phase grounding](../examples/07_single_phase_ground_fault.py) | [simulation.py](../pycy_emt_lite/core/simulation.py), [stamping.py](../pycy_emt_lite/core/stamping.py) | [Events](../tests/test_events.py), [Time grid](../tests/test_time_grid.py), [Step callback](../tests/test_step_callback.py) |
 
-Start with Section 5's matrix example, then follow “component `stamp` → assembly → solve → `update_state` → next history source.”
+Use the capacitor in Example 02 as a trace through the code; search the files for these function names:
+
+1. In the example's `define_case()`, find the `Capacitor` connections and capacitance; omitting `initial_voltage` uses the default initial voltage of 0 V. Then read about `G` and `Ihist` in [Section 3](#capacitor).
+2. Find both quantities in `Capacitor._companion()` in `basic.py`; `stamp()` uses them to write the matrix and right-hand side.
+3. In `simulation.py`, follow `Simulator.run()` → `_solve_step()` → `_assemble()`. Once the solve returns, `run()` calls `Capacitor.update_state()` to retain this step's voltage and current for the next step. Initialization and event instants use the separate consistency solve in Section 13.
+4. Follow the [test-reading guide](models_and_validation.en.md#read-tests) to check initialization, transients and step errors; see [Numerical conventions](numerical_conventions.en.md#source-route) for each file's role in the call chain.
+
 This guide expands the derivations and reading path for the current implementation. [Models and validation](models_and_validation.en.md) remains authoritative on which independent checks have actually been completed for each model.

@@ -53,6 +53,30 @@ VL = jωL I, VC = I/(jωC), VR = R I
 修改电源幅值、频率或 R/L/C 后，也应重新选择稳态窗口并检查最短时间尺度。
 详细的建例模板和保存方式只在 README 维护。
 
+<a id="read-tests"></a>
+
+### 怎样读一个基础测试
+
+运行示例 01–04 后，可按[元件推导的对应表](component_derivations.md#reading-map)找到实现和测试。
+打开 [test_basic_components.py](../tests/test_basic_components.py)，先找 `test_resistor_voltage_source_solution()`：
+创建电路和运行配置，调用 `Simulator.run()`，最后用 `assert` 检查节点电压 10 V 和电阻电流 2 A。
+`assert` 表示结果必须满足的条件；`pytest.approx()` 允许指定容差内的浮点误差。
+
+接着在项目根目录逐条运行：
+
+```powershell
+uv run pytest tests/test_basic_components.py::test_rc_initial_state_and_first_interval
+uv run pytest tests/test_basic_components.py::test_rc_rl_analytic_error_converges_on_common_physical_grid
+uv run pytest tests/test_basic_components.py::test_rlc_whole_curve_matches_analytic_damped_response
+```
+
+`文件::函数` 只选择该测试；项目配置已启用简洁输出。三条命令分别应显示 `12 passed`、`4 passed`、`1 passed`；
+一个函数会运行多组参数，是因为 `@pytest.mark.parametrize` 为积分方法、初值等列出了不同组合。
+第一项核对初值和前两个积分区间；第二项在共同物理时刻比较 RC/RL 的解析误差，步长减半后梯形法误差约降至 1/4、后向欧拉约降至 1/2；
+第三项核对 RLC 整段电压、电流以及梯形法的误差收敛。
+测试使用各自的小电路和参数，未必与示例默认值相同。阅读时先找电路，再找独立参考公式，最后看误差与容差。
+若出现 `FAILED`，先核对失败的断言和输入参数；这些测试通过所覆盖的范围仍以上面的验证表为准。
+
 ## 3. 三相网络与故障
 
 `ThreePhaseSource` 以 `phase_rms`（V）、`frequency`（Hz）及相角构造 abc 正序正弦电压；

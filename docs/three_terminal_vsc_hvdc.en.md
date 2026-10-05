@@ -7,6 +7,9 @@ It is a teaching reimplementation with documented provenance, **not a 1:1 cross-
 Controller gains, measurement filtering, startup, fault-clearing snubbers and numerical methods are adjusted as described below.
 For model derivations, see [Component derivations](component_derivations.en.md): Section 9 explains transformer matrices; Sections 11–12 develop filters, dq control and six-switch bridge stamps; Sections 13–15 cover initialization, events and energy checks.
 
+First complete Examples [05 three-phase network](../examples/05_three_phase_steady_state.py), [11 PLL](../examples/11_pll_dynamic_response.py) and [12 PWM](../examples/12_two_level_pwm_generator.py).
+For a first run, read [Section 10's modes](#10-simulation-modes) and use the default FAST mode. Then follow [Section 6's topology](#6-final-topology) and [Section 7's control duties](#7-station-controls) through the source, and interpret results with [Section 12's validation](#12-validation). Sections 1–3 retain the reference sources and model mapping for provenance checks.
+
 ## 1. Reference Benchmark
 
 The sole primary electrical reference is the **MATLAB-Simulink Three-Terminal Two-Level VSC-HVDC Benchmark** published by DIgSILENT.
@@ -56,7 +59,7 @@ The parameter script alone is insufficient: its legacy `Filter.Lf/Rf/Cf` fields 
 | AC fault and clearing | Three `Fault` instances, `FaultApplyEvent` / `FaultClearEvent` and the existing `EventQueue` |
 | Controller/network coupling | `CaseDefinition.on_step` → `Simulator.on_step`, a post-step callback at every solution point |
 
-## 4. Files Added
+## 4. Implementation and Test Entry Points
 
 | File | Purpose |
 |---|---|
@@ -66,15 +69,15 @@ The parameter script alone is insufficient: its legacy `Filter.Lf/Rf/Cf` fields 
 | [Callback tests](../tests/test_step_callback.py) | Initialization/event sampling order, next-step actuation, read-only input and result decimation |
 | This guide and its Chinese companion | Parameter provenance, control derivation, execution and validation boundaries |
 
-No simulation framework, CLI, dependency or new power-electronic nonlinear solver is added.
+Circuit stepping uses the existing `Circuit/Simulator`; see [Numerical conventions](numerical_conventions.en.md#time-grid) for post-step callback timing.
 
-## 5. Files Modified
+## 5. Shared Solver and Result Interfaces
 
-`core/simulation.py` adds an optional post-step callback and result decimation; `cases.py` forwards the callback with unchanged defaults.
+`core/simulation.py` provides an optional post-step callback and result decimation; `cases.py` passes the case's callback to the simulator.
 `io/results.py` uses ordered dictionary deduplication for column names, avoiding repeated linear membership searches for hundreds of fields while preserving first-occurrence order and later new columns.
 NPZ reading now loads each column from the archive once before assembling rows. Repeatedly loading entire columns for each row did not scale to this example.
 A 1001-row, 21-column readback decreased from approximately 0.646 s to 0.00374 s with identical data; the complete compressed 50001-row, 377-column result took approximately 2.46 s to read.
-The READMEs and existing model/numerical guides add entry points and necessary interface descriptions.
+See the [source reading table in Numerical conventions](numerical_conventions.en.md#source-route) for file responsibilities and specific function entry points.
 
 Fault application exposed an initialization check false positive near a high-voltage zero crossing. A four-element reproducer was added to the
 [basic tests](../tests/test_basic_components.py): a 1 nV source, two 1 Ω resistors and a capacitor precharged to 200 kV.

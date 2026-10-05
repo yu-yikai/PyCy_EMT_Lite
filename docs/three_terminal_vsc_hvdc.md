@@ -7,6 +7,9 @@
 控制增益、测量滤波、启动、故障清除缓冲和数值方法有调整，具体见下文。
 基础模型的推导见[元件推导](component_derivations.md)，其中第 9 节解释变压器矩阵，第 11–12 节展开滤波、dq 控制与六开关桥的盖章，第 13–15 节说明初值、事件及能量核对。
 
+建议先完成示例 [05 三相网络](../examples/05_three_phase_steady_state.py)、[11 PLL](../examples/11_pll_dynamic_response.py) 和 [12 PWM](../examples/12_two_level_pwm_generator.py)。
+首次运行本例先看[第 10 节模式](#10-simulation-modes)，使用默认 FAST；再对照[第 6 节拓扑](#6-final-topology)、[第 7 节控制职责](#7-station-controls)阅读源码，最后用[第 12 节验证](#12-validation)解释结果。第 1–3 节保留参考来源与模型映射，便于核对来源。
+
 ## 1. Reference Benchmark
 
 唯一主要电气参考为 DIgSILENT 发布的 **MATLAB-Simulink Three-Terminal Two-Level VSC-HVDC Benchmark**。
@@ -56,7 +59,7 @@ R2022b 报告了转换器布尔比较参数 0.5 量化为 1 的警告，因此�
 | AC fault and clearing | 三个 `Fault` + `FaultApplyEvent` / `FaultClearEvent` + 现有 `EventQueue` |
 | Controller/network coupling | `CaseDefinition.on_step` → `Simulator.on_step`，每个求解点的步后回调 |
 
-## 4. 新增文件
+## 4. 实现与测试入口
 
 | 文件 | 用途 |
 |---|---|
@@ -66,15 +69,15 @@ R2022b 报告了转换器布尔比较参数 0.5 量化为 1 的警告，因此�
 | [回调测试](../tests/test_step_callback.py) | 初值/事件采样顺序、下一步作用、只读输入、结果抽样 |
 | 本文及英文伴随文档 | 参数来源、控制推导、运行和验证边界 |
 
-没有添加仿真框架、CLI、依赖或新的电力电子非线性求解器。
+电路推进使用现有 `Circuit/Simulator`；步后回调的时间约定见[数值约定](numerical_conventions.md#time-grid)。
 
-## 5. 修改现有文件
+## 5. 共用求解与结果接口
 
-`core/simulation.py` 增加可选步后回调与结果抽样；`cases.py` 转发回调，保持默认行为。
+`core/simulation.py` 提供可选步后回调与结果抽样；`cases.py` 将算例的回调传给仿真器。
 `io/results.py` 改用有序字典去重结果字段，避免数百列综合结果反复进行线性成员查找；仍保留首次出现顺序及后续新增列。
 NPZ 读取改为每列从归档加载一次，再组装结果行；原先逐行反复加载整列不适合此例的大结果。
 1001 行、21 列的读回核对由约 0.646 s 降至 0.00374 s，数据相同；完整 50001 行、377 列压缩结果约 2.46 s 读回。
-README 和现有模型/数值文档增加入口及必要的接口说明。
+文件职责和具体函数入口见[数值约定的源码阅读表](numerical_conventions.md#source-route)。
 
 故障投入发现高压过零条件下的初值检查误报，已用四元件电路复现并加入
 [基础测试](../tests/test_basic_components.py)：1 nV 电压源、两个 1 Ω 电阻和初充 200 kV 的电容。
