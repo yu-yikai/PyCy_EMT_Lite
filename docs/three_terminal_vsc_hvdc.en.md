@@ -200,6 +200,8 @@ FULL/BENCHMARK use `record_every=10/25` to limit memory. Control and network ope
 50 μs output supports low-frequency dynamics and coarse PWM inspection, not precise edge timing or harmonic-amplitude acceptance. Set `record_every=1` and shorten the run when such detail is needed.
 Backward Euler dissipates switching-ripple energy, particularly in FAST; AC power differences cannot establish real conversion efficiency.
 
+FAST uses a larger step for quick teaching runs and development regression: check finite operation, basic operating points, conservation, faults and gates, without requiring particularly high instantaneous waveform accuracy. FULL/BENCHMARK also change PWM and timing along with the step. Mode names do not replace accuracy validation with the same PWM/physical parameters and explicit windows and metrics.
+
 The default displays figures without saving. The two top-level saving flags enable CSV/JSON/NPZ and figures under `outputs/three_terminal_vsc_hvdc_<mode>/`.
 NPZ is preferable for large data. Enabling data saving in standard `run_case()` still writes all three formats by project convention, which can consume substantial disk space.
 
@@ -229,9 +231,11 @@ window; results must cover both endpoints. `fault:S3:Vac_pu_mean` retains the ar
 20 ms before clearing. With nonuniform sampling it is not a time-weighted mean; a window with no samples raises an explicit error.
 Means measure bias only. The current summary also reports frequency-error/Vq/dq-error RMS of piecewise-linear signals, minimum Vd, and `control_accuracy_met`. This flag requires frequency-error RMS<0.05 Hz, Vq RMS<0.01 pu, Id/Iq-error RMS<25 A and Vd>0; cancellation in signed means cannot establish accuracy. `PLL_Vq_pu` now uses the same `Vq/max(|Vd|,|Vq|,1 V)` normalization as the internal PI.
 
-The current-code revalidation on 2026-10-05/06 uses default PLL gains Kp=80, Ki=1000 and the FAST 20 µs step. The table gives ranges across the three stations, combining Id/Iq. All Vd minima are positive, but all six station/window strict flags are 0: **false acceptance has been corrected; default FAST strict control accuracy remains unmet.**
+For FAST's quick-regression purpose, the strict RMS limits above remain diagnostic references: **`control_accuracy_met=0` does not mean FAST basic regression failed**. Existing tests separately check finite values/voltage ranges, mean bias and operating points, bridge/DC conservation, faults and PWM gates; this flag is not a required FAST pass condition. Actual RMS values, existing fields and synthetic bad-waveform negative cases remain. Limits and gains are not changed to make the flag 1. See the [R12 scope update](audit_20261005/项目问题与改进计划.md#fast-regression-scope).
 
-| Piecewise-linear RMS of instantaneous error | Prefault | Recovery window | Strict limit |
+The current-code revalidation on 2026-10-05/06 uses default PLL gains Kp=80, Ki=1000 and the FAST 20 µs step. The table gives ranges across the three stations, combining Id/Iq. All Vd minima are positive and all six station/window strict observation flags are 0; existing FAST basic regression checks passed. **These results do not establish fine control-waveform accuracy.**
+
+| Piecewise-linear RMS of instantaneous error | Prefault | Recovery window | Strict diagnostic reference (not a FAST gate) |
 |---|---:|---:|---:|
 | Frequency error / Hz | 0.336–0.445 | 0.331–0.460 | <0.05 |
 | PLL Vq / pu | 0.02641–0.03495 | 0.02613–0.03613 | <0.01 |
@@ -246,7 +250,7 @@ The follow-up investigation explains errors and the candidate experiment without
 | [R9 isolated experiment](audit_20261005/项目问题与改进计划.md#r9-pll-experiment) | Four Kp=80/40, 20/10 µs runs fix 1000 Hz PWM, 0–0.8 s and 0.3/0.45 s events. The 20 µs baseline arrays equal R7 exactly. Candidate high-frequency frequency-error ratios are 0.4923–0.5176 / 0.4988–0.5018, but raw frequency error remains 0.1562–0.2315 Hz and dq error 143.0–171.4 A; all 24 strict flags across four runs are 0. |
 | [R10 offline review](audit_20261005/项目问题与改进计划.md#r10-rejection-review) | There are 24 cross-gain PLL replays; the 12 own-input/original-gain frequency traces match within 7.11e-15 Hz. For S3 recovery with fixed inputs, high-frequency frequency-error ratios are 0.49984–0.50018, while low-frequency frequency-error/Vq ratios are 1.940–3.181 / 1.267–1.349. The gain change alone can produce this low-frequency regression. |
 
-Bands and smoothed signals are diagnostic measures. The R7 DFT uses 5000 samples per window, 10 Hz spacing and no taper, with ≥500 Hz as a diagnostic boundary; sampled mean square does not replace piecewise-linear RMS. Default filtered current feedback, 1 ms cycle averages and S1 low-frequency Iq still have unmet targets; spectra and values are in R7/R8. Removing ripple or substituting smoothed signals does not establish that all targets are met.
+Bands and smoothed signals are diagnostic measures. The R7 DFT uses 5000 samples per window, 10 Hz spacing and no taper, with ≥500 Hz as a diagnostic boundary; sampled mean square does not replace piecewise-linear RMS. Default filtered current feedback, 1 ms cycle averages and S1 low-frequency Iq still exceed some strict references; spectra and values are in R7/R8. These references are not current mandatory FAST accuracy requirements. Removing ripple or substituting smoothed signals does not establish fine waveform accuracy.
 
 **The Kp=40 candidate was rejected; defaults remain 80/1000.** In R9, S3 recovery low-frequency frequency error increases to 2.220/2.423 times baseline. Sampled clearing-current peaks at 20 µs/S1 and 10 µs/S2 increase by 7.884%/5.765%, exceeding the planned 5% ceiling. All 24 existing integration-check invocations and independent control/integration checks passed, establishing only their respective safeguards. A 10 µs step refines both electrical integration and control sampling; two resolutions do not prove continuous physical accuracy or convergence order.
 
@@ -329,7 +333,7 @@ Validation stages are: single-station open-loop switching/port power → indepen
 Single-station validation may use a constant DC source. The final three-station test explicitly checks 18 switches, three transformers and a dynamic DC network.
 A shared FAST fixture avoids repeating the full system run for each metric.
 
-Key thresholds are mean PLL frequency error <0.05 Hz, mean Vq <0.01 pu, S1 mean Vdc error <1%, mean P2/P3 error <5%, mean Vac error <2%, mean dq error <25 A and DC power residual <1 W.
+Key FAST basic-regression thresholds are mean PLL frequency error <0.05 Hz, mean Vq <0.01 pu, S1 mean Vdc error <1%, mean P2/P3 error <5%, mean Vac error <2%, mean dq error <25 A and DC power residual <1 W. They measure basic operation and mean bias; the strict RMS in Section 12 is observational and has a different meaning.
 Gate/carrier agreement, bridge-node KCL, conduction loss, discrete DC energy and fault-resistor currents are checked independently.
 Historical acceptance records report 681 full-regression tests, 14 headless examples and 7 I/O/plotting tests after the NPZ-reading change passed, with both 50001×377 result sets read back in the standard format. Producing-version/environment/command limitations are in Section 12; these are not current rerun results.
 On 2026-10-05, the R5 main environment (CPython3.14.6) and R6 clean copy (CPython3.14.2) each completed 832 full-regression tests and 14 default examples; see the [R5 record](audit_20261005/项目问题与改进计划.md#r5-follow-up) and [R6 record](audit_20261005/项目问题与改进计划.md#r6-delivery). Existing tests and limits are retained; R11 only checks documentation without rerunning the full suite. These are the respective local records, not remote CI evidence or proof that the strict control-accuracy limits in Section 12 are met.
