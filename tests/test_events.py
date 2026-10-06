@@ -221,12 +221,13 @@ def test_custom_event_is_not_limited_to_standard_target_states() -> None:
 
 @pytest.mark.parametrize("method", ["trapezoidal", "backward_euler"])
 @pytest.mark.parametrize("apply_time", [0.0, 0.1, 0.15, 0.3])
-def test_capacitor_event_preserves_left_state_and_stores_right_current(method, apply_time) -> None:
+@pytest.mark.parametrize("linear_solver_mode", ["rebuild", "reuse"])
+def test_capacitor_event_preserves_left_state_and_stores_right_current(method, apply_time, linear_solver_mode) -> None:
     capacitor = Capacitor("C", "n", "0", 1.0)
     circuit = Circuit.from_components("capacitor_event", [
         CurrentSource("I", "0", "n", 1.0), capacitor, Fault("F", "n", 1.0),
     ])
-    result = Simulator(circuit, SimulationConfig(0.1, 0.3, method=method),
+    result = Simulator(circuit, SimulationConfig(0.1, 0.3, method=method, linear_solver_mode=linear_solver_mode),
                        events=[FaultApplyEvent(apply_time, "F")]).run()
     voltage = 0.0
     for index, row in enumerate(result.rows):
@@ -249,12 +250,13 @@ def test_capacitor_event_preserves_left_state_and_stores_right_current(method, a
 
 @pytest.mark.parametrize("method", ["trapezoidal", "backward_euler"])
 @pytest.mark.parametrize("open_time,close_time,stop", [(0.0, 0.2, 0.3), (0.1, 0.3, 0.3), (0.15, 0.25, 0.4)])
-def test_rl_open_and_close_events_recompute_voltage_without_advancing_twice(method, open_time, close_time, stop) -> None:
+@pytest.mark.parametrize("linear_solver_mode", ["rebuild", "reuse"])
+def test_rl_open_and_close_events_recompute_voltage_without_advancing_twice(method, open_time, close_time, stop, linear_solver_mode) -> None:
     circuit = Circuit.from_components("rl_events", [
         VoltageSource("V", "src", "0", 1.0), Inductor("L", "src", "n", 1.0, initial_current=0.2),
         Resistor("R", "n", "0", 2.0), Breaker("B", "n", "0", closed_resistance=2.0),
     ])
-    result = Simulator(circuit, SimulationConfig(0.1, stop, method=method), events=[
+    result = Simulator(circuit, SimulationConfig(0.1, stop, method=method, linear_solver_mode=linear_solver_mode), events=[
         BreakerOpenEvent(open_time, "B"), BreakerCloseEvent(close_time, "B"),
     ]).run()
     current = 0.2
@@ -271,12 +273,13 @@ def test_rl_open_and_close_events_recompute_voltage_without_advancing_twice(meth
         assert row["i:R"] + row["i:B"] == pytest.approx(current)
 
 
-def test_same_time_events_use_declaration_order_and_one_right_solve() -> None:
+@pytest.mark.parametrize("linear_solver_mode", ["rebuild", "reuse"])
+def test_same_time_events_use_declaration_order_and_one_right_solve(linear_solver_mode) -> None:
     circuit = Circuit.from_components("same_time", [
         CurrentSource("I", "0", "n", 1.0), Capacitor("C", "n", "0", 1.0), Fault("F", "n", 1.0),
     ])
     solver = DenseLinearSolver()
-    result = Simulator(circuit, SimulationConfig(0.1, 0.3), solver=solver, events=[
+    result = Simulator(circuit, SimulationConfig(0.1, 0.3, linear_solver_mode=linear_solver_mode), solver=solver, events=[
         FaultApplyEvent(0.15, "F"), FaultClearEvent(0.15, "F"),
     ]).run()
     assert [record["type"] for record in result.event_log] == ["fault_apply", "fault_clear"]
@@ -285,13 +288,14 @@ def test_same_time_events_use_declaration_order_and_one_right_solve() -> None:
     assert solver.solve_count == len(result.rows) + 1
 
 
-def test_opening_only_inductor_path_reports_state_conflict() -> None:
+@pytest.mark.parametrize("linear_solver_mode", ["rebuild", "reuse"])
+def test_opening_only_inductor_path_reports_state_conflict(linear_solver_mode) -> None:
     circuit = Circuit.from_components("interrupted_current", [
         Inductor("L", "n", "0", 1.0, initial_current=1.0),
         Breaker("B", "n", "0", closed_resistance=1.0),
     ])
     with pytest.raises(RuntimeError, match="仿真时间 0.15.*冲突"):
-        Simulator(circuit, SimulationConfig(0.1, 0.2), events=[BreakerOpenEvent(0.15, "B")]).run()
+        Simulator(circuit, SimulationConfig(0.1, 0.2, linear_solver_mode=linear_solver_mode), events=[BreakerOpenEvent(0.15, "B")]).run()
 
 
 def test_capacitor_clear_event_restores_charging_current_and_history() -> None:

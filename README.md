@@ -146,7 +146,7 @@ def define_case() -> CaseDefinition:
         VoltageSource("V1", "n1", "0", 10.0),
         Resistor("R1", "n1", "0", 5.0),
     )
-    config = SimulationConfig(time_step=1e-4, stop_time=1e-3)
+    config = SimulationConfig(time_step=1e-4, stop_time=1e-3, linear_solver_mode="rebuild")
     plots = (
         PlotSpec(("v:n1",), figure_name="voltage.png", title="Voltage / V"),
         PlotSpec(("i:R1",), figure_name="current.png", title="Current / A"),
@@ -168,6 +168,11 @@ Create fresh components, `Circuit` and `Simulator` for each run; calling `define
 Components inside a `CaseDefinition` are also single-use. Only `start_time=0` is supported; `stop_time` must be a nonnegative integer number of base steps.
 A 100 μs step cannot stop at 250 μs: choose 200/300 μs or a 50 μs step.
 Initial conditions, source derivatives and event rules are in [Numerical conventions](docs/numerical_conventions.en.md).
+
+Choose the network solve strategy before running through `linear_solver_mode`: the default `"rebuild"` performs a fresh LU factorization for every solve.
+Change the configuration above to `"reuse"` to refactor only when the actual coefficient matrix changes; other solves reuse the previous LU.
+Each step still assembles the matrix/right-hand side, updates states and performs numerical checks; changes in step size, parameters or machine states can also invalidate the LU.
+This choice is independent of the BE/trapezoidal integration `method` and does not guarantee a speedup for every case. Precomputation of all topologies is not implemented yet.
 
 ## 4. Read, plot and save results
 

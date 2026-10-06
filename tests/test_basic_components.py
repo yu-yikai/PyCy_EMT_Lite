@@ -22,7 +22,8 @@ def test_basic_parameter_rejects_convertible_non_numbers(factory, value) -> None
 
 
 @pytest.mark.parametrize("change", ["append", "endpoint", "name"])
-def test_prepared_circuit_rejects_direct_topology_changes(change) -> None:
+@pytest.mark.parametrize("linear_solver_mode", ["rebuild", "reuse"])
+def test_prepared_circuit_rejects_direct_topology_changes(change, linear_solver_mode) -> None:
     resistor = Resistor("R", "in", "0", 10.0)
     circuit = Circuit.from_components("frozen_topology", [VoltageSource("V", "in", "0", 10.0), resistor])
     circuit.prepare()
@@ -32,7 +33,7 @@ def test_prepared_circuit_rejects_direct_topology_changes(change) -> None:
         resistor.positive = "0"
     else:
         resistor.name = "renamed"
-    simulator = Simulator(circuit, SimulationConfig(0.001, 0.001))
+    simulator = Simulator(circuit, SimulationConfig(0.001, 0.001, linear_solver_mode=linear_solver_mode))
     with pytest.raises(RuntimeError, match="拓扑.*请"):
         simulator.run()
     assert simulator.solver.solve_count == 0
@@ -388,25 +389,27 @@ def test_unconstrained_callable_does_not_require_derivative() -> None:
 
 
 @pytest.mark.parametrize("case", ["parallel_c", "inductor_cutset", "redundant_sources"])
-def test_initial_conflicts_and_nonunique_branch_currents_are_rejected(case) -> None:
+@pytest.mark.parametrize("linear_solver_mode", ["rebuild", "reuse"])
+def test_initial_conflicts_and_nonunique_branch_currents_are_rejected(case, linear_solver_mode) -> None:
     parts = {
         "parallel_c": [Capacitor("C1", "n", "0", 1.0), Capacitor("C2", "n", "0", 2.0, initial_voltage=1.0)],
         "inductor_cutset": [CurrentSource("I", "0", "n", 1.0), Inductor("L", "n", "0", 1.0)],
         "redundant_sources": [VoltageSource("V1", "n", "0", 1.0), VoltageSource("V2", "n", "0", 1.0)],
     }[case]
     with pytest.raises(RuntimeError, match="冲突|欠定"):
-        Simulator(Circuit.from_components(case, parts), SimulationConfig(0.1, 0.0)).run()
+        Simulator(Circuit.from_components(case, parts), SimulationConfig(0.1, 0.0, linear_solver_mode=linear_solver_mode)).run()
 
 
 @pytest.mark.parametrize("kind", ["RC", "RL"])
 @pytest.mark.parametrize("method", ["trapezoidal", "backward_euler"])
-def test_rc_rl_analytic_error_converges_on_common_physical_grid(kind, method) -> None:
+@pytest.mark.parametrize("linear_solver_mode", ["rebuild", "reuse"])
+def test_rc_rl_analytic_error_converges_on_common_physical_grid(kind, method, linear_solver_mode) -> None:
     errors = []
     for h in [0.1, 0.05]:
         storage = Capacitor("C", "n", "0", 1.0, initial_voltage=0.2) if kind == "RC" else Inductor("L", "n", "0", 1.0, initial_current=0.2)
         result = Simulator(Circuit.from_components(kind, [
             VoltageSource("V", "src", "0", 1.0), Resistor("R", "src", "n", 1.0), storage,
-        ]), SimulationConfig(h, 1.0, method=method)).run()
+        ]), SimulationConfig(h, 1.0, method=method, linear_solver_mode=linear_solver_mode)).run()
         stride = round(0.1 / h)
         times = result.series("time")[::stride]
         values = result.series("v:C" if kind == "RC" else "i:L")[::stride]
@@ -415,14 +418,15 @@ def test_rc_rl_analytic_error_converges_on_common_physical_grid(kind, method) ->
     assert errors[0] / errors[1] == pytest.approx(expected_order_ratio, rel=0.06)
 
 
-def test_rlc_whole_curve_matches_analytic_damped_response() -> None:
+@pytest.mark.parametrize("linear_solver_mode", ["rebuild", "reuse"])
+def test_rlc_whole_curve_matches_analytic_damped_response(linear_solver_mode) -> None:
     errors = []
     omega = math.sqrt(3) / 2
     for h in [0.05, 0.025]:
         result = Simulator(Circuit.from_components("rlc_analytic", [
             VoltageSource("V", "src", "0", 1.0), Resistor("R", "src", "mid", 1.0),
             Inductor("L", "mid", "out", 1.0), Capacitor("C", "out", "0", 1.0),
-        ]), SimulationConfig(h, 5.0)).run()
+        ]), SimulationConfig(h, 5.0, linear_solver_mode=linear_solver_mode)).run()
         stride = round(0.05 / h)
         t = result.series("time")[::stride]
         expected_v = 1 - np.exp(-t / 2) * (np.cos(omega * t) + np.sin(omega * t) / (2 * omega))

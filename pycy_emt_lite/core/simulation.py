@@ -22,7 +22,7 @@ import numpy as np
 from pycy_emt_lite.components.lines import BergeronLine, ThreePhaseBergeronLine
 from pycy_emt_lite.core.circuit import Circuit
 from pycy_emt_lite.core.context import IntegrationMethod, StampContext
-from pycy_emt_lite.core.solvers import DenseLinearSolver, LinearSolveError, LinearSolver
+from pycy_emt_lite.core.solvers import DenseLinearSolver, Factorization, LinearSolveError, LinearSolver
 from pycy_emt_lite.core.stamping import _InitialConditions
 from pycy_emt_lite.events import EventQueue, SimulationEvent
 from pycy_emt_lite.events.base import _time_close, _time_tolerance
@@ -39,6 +39,8 @@ class SimulationConfig:
     `time_step` 是每次推进的时间间隔，`stop_time` 是仿真结束时间，`method`
     是动态元件离散化方法。终止时间必须是基础步长的整数倍；显式事件可按所选
     策略插入非对齐时刻，储能元件使用对应的实际区间步长。
+    `linear_solver_mode` 选择每次重新 LU 分解，或在实际矩阵相同时复用上一份 LU；
+    它不改变积分方法、时间网格或元件状态推进。
     """
 
     time_step: float
@@ -47,8 +49,13 @@ class SimulationConfig:
     method: IntegrationMethod = "trapezoidal"
     event_time_policy: EventTimePolicy = "insert"
     record_every: int = 1
+    linear_solver_mode: Literal["rebuild", "reuse"] = "rebuild"
 
     def __post_init__(self) -> None:
+        if not isinstance(self.linear_solver_mode, str) or self.linear_solver_mode not in {"rebuild", "reuse"}:
+            raise ValueError(
+                f"不支持 linear_solver_mode={self.linear_solver_mode!r}；请选择 'rebuild' 或 'reuse'。"
+            )
         if isinstance(self.record_every, bool) or not isinstance(self.record_every, Integral) or self.record_every < 1:
             raise ValueError("record_every 必须为正整数；请填写每隔多少个求解点保存一次结果。")
         for field_name, value in (
@@ -124,6 +131,12 @@ class Simulator:
         self.event_queue = EventQueue(self.events)
         self.event_log: list[dict[str, float | str]] = []
         self.solver = solver or DenseLinearSolver()
+        if config.linear_solver_mode == "reuse" and not isinstance(self.solver, DenseLinearSolver):
+            raise ValueError(
+                "linear_solver_mode='reuse' 目前只支持 DenseLinearSolver；"
+                "请使用默认稠密求解器，或设为 'rebuild' 保留自定义求解器。"
+            )
+        self._factorization: Factorization | None = None
         if on_step is not None and not callable(on_step):
             raise ValueError("on_step 必须为可调用对象或 None。")
         self.on_step = on_step
@@ -241,6 +254,17 @@ class Simulator:
             line._time_step = time_step
             line._delay_steps = delay_steps
 
+    def _solve_linear_system(self, matrix: np.ndarray, rhs: np.ndarray) -> np.ndarray:
+        """选择逐次分解或上一份 LU；两条路径使用相同的求解与残差保护。"""
+
+        if self.config.linear_solver_mode == "rebuild":
+            return self.solver.solve(matrix, rhs)
+        # 结构拓扑不变并不保证 A 不变；步长、参数和模型状态也会改变系数。
+        reused = self._factorization is not None and np.array_equal(matrix, self._factorization.matrix)
+        if not reused:
+            self._factorization = self.solver.factorize(matrix)
+        return self.solver._solve(self._factorization, rhs, reused=reused)
+
     def _solve_step(self, context: StampContext) -> np.ndarray:
         """装配并求解单个时间步，返回本步解向量。
 
@@ -253,14 +277,14 @@ class Simulator:
             if context._initial is not None:
                 matrix, rhs = context._initial.assemble(matrix, rhs)
             # 求解器可返回只读数组或复用缓冲；仿真器持有独立解，供一致初值修正。
-            solution = self.solver.solve(matrix, rhs).copy()
+            solution = self._solve_linear_system(matrix, rhs).copy()
             if context._initial is not None:
                 try:
                     context._initial.accept(solution, self.circuit.size)
                 except ValueError:
                     # 高压储能与近零源约束并存时，LU 消减误差可能通过整体残差检查
                     # 却不满足逐行约束。只补一次残差方程，原有初值检查仍须通过。
-                    solution += self.solver.solve(matrix, rhs - matrix @ solution)
+                    solution += self._solve_linear_system(matrix, rhs - matrix @ solution)
                     context._initial.accept(solution, self.circuit.size)
             return solution[:self.circuit.size]
         except (LinearSolveError, ValueError) as exc:

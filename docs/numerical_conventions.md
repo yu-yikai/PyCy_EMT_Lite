@@ -71,7 +71,7 @@
 
 ## 3. 时间网格和参数
 
-`SimulationConfig(time_step, stop_time, start_time=0, method="trapezoidal", event_time_policy="insert", record_every=1)`：
+`SimulationConfig(time_step, stop_time, start_time=0, method="trapezoidal", event_time_policy="insert", record_every=1, linear_solver_mode="rebuild")`：
 
 - `time_step` 必须是有限正实数；`stop_time` 必须是有限非负实数；布尔值不作为数值接受。
 - 当前只支持 `start_time=0`。`stop_time=0` 合法，只记录一致初值一行。
@@ -80,6 +80,7 @@
 - 只吸收浮点表示造成的微小舍入差异：正时间比较使用成对 8 ULP 容差，并统一到标准网格值；
   零时刻只与零相等。这不允许任意近似对齐。
 - `method` 只接受表中的两种方法。普通 R/L/C 参数必须为有限正实数；复合模型是否允许零阻抗由模型说明决定。
+- `linear_solver_mode` 只接受 `"rebuild"`（默认，每次重新 LU 分解）或 `"reuse"`（实际 A 完全相同时复用上一份 LU）；不改变积分方法或时间网格。第三种预分解策略尚未实现。
 
 元件参数按 `numbers.Real` 接受 Python/NumPy 实数，转换为有限浮点数后检查范围；布尔值、可转换字符串和复数不接受。
 `time_step` 不支持非正规浮点数（小于 `numpy.finfo(float).tiny`）。在分配前限制基础步数和基础步数加事件数
@@ -212,6 +213,14 @@ assert abs(result.rows[0]["i:C"] - 6.0) < 1e-12
 梯形法能量账使用区间平均电压/电流，后向欧拉还含数值耗散。具体已有证据与未验证项只在模型文档维护。
 
 ## 8. 求解保护、结果文件与输出预检
+
+`Simulator` 在两种网络策略中都按原顺序每次装配 A/b，再求解最新 b。`reuse` 用完整矩阵精确相等判断失效，
+不使用近似阈值，也不只看开关状态：参数、实际 h、饱和档位和 Park 电角度均可能改变 A。
+缓存只属于一个 Simulator，最多保存上一份 LU；A1→A2→A1 要重新分解三次，不保留多拓扑历史。
+初值/事件右侧增广矩阵也参与相同判断，现有一次修正使用该矩阵的 LU，不减少源/门极/状态/回调执行。
+显式 `solver=` 的现有自定义后端在 `rebuild` 保持原行为；`reuse` 当前只接受 DenseLinearSolver 实例，否则在占用电路前报错。
+`factorization_count` 为实际分解次数，`solve_count` 为实际求解次数；Simulator 每次新分解的 `reused_factorization=False`，
+命中上一份分解（包括一致修正）时为 True。分解减少不代表全流程必然加速；性能测量及有限拓扑预计算属于后续阶段。
 
 `DenseLinearSolver.solve()` 与已有 `factorize().solve()` 都检查解有限性、缩放残差和求解诊断；后者保留多右端项能力。
 残差阈值须为有限非负实数。残差反映后向误差，不能保证病态方程的前向误差或派生电流精度。

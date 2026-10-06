@@ -72,7 +72,7 @@ Machine mechanical/control states have their own explicit update order; their in
 
 ## 3. Time grid and parameters
 
-`SimulationConfig(time_step, stop_time, start_time=0, method="trapezoidal", event_time_policy="insert", record_every=1)`:
+`SimulationConfig(time_step, stop_time, start_time=0, method="trapezoidal", event_time_policy="insert", record_every=1, linear_solver_mode="rebuild")`:
 
 - `time_step` must be a finite positive real number; `stop_time` must be finite and nonnegative. Booleans are not accepted as numbers.
 - Only `start_time=0` is supported. `stop_time=0` is valid and records one consistent initial row.
@@ -81,6 +81,7 @@ Machine mechanical/control states have their own explicit update order; their in
 - Only small floating-point representation differences are absorbed: positive times use a pairwise 8 ULP tolerance and are
   canonicalized to grid values; zero matches only zero. This is not arbitrary approximate alignment.
 - `method` accepts only the two methods above. Basic R/L/C values must be finite positive real numbers; composite-model rules determine whether zero impedance is allowed.
+- `linear_solver_mode` accepts only `"rebuild"` (default, fresh LU for each solve) or `"reuse"` (reuse the previous LU when actual A is exactly equal); integration and the time grid are unchanged. The third, precomputed strategy is not implemented yet.
 
 Component parameters accept Python/NumPy real scalars through `numbers.Real`, convert to finite floats, then check ranges.
 Booleans, convertible strings and complex values are rejected. Subnormal `time_step` values (below `numpy.finfo(float).tiny`)
@@ -225,6 +226,14 @@ KCL, energy and step convergence. Trapezoidal energy accounting uses interval-av
 has numerical dissipation. Model-specific evidence and unvalidated items are maintained only in the model document.
 
 ## 8. Solver checks, result files and output preflight
+
+With either network strategy, `Simulator` assembles A/b in the original order for every solve and uses the latest b. `reuse` compares the complete matrices exactly,
+without an approximate threshold or a switch-only key: parameters, actual h, saturation states and the Park electrical angle can all change A.
+The cache belongs to one Simulator and holds only its previous LU; A1→A2→A1 needs three factorizations and does not retain a topology history.
+Augmented initial/event-right matrices use the same check; the existing single correction uses that matrix's LU. Source/gate/state/callback execution is not reduced.
+An explicit custom `solver=` keeps its original behavior under `rebuild`; `reuse` currently accepts only DenseLinearSolver instances and otherwise raises before claiming the circuit.
+`factorization_count` counts actual factorizations and `solve_count` counts actual solves. In Simulator, `reused_factorization=False` for a fresh factorization,
+and True for reuse of the previous one, including a consistent-state correction. Fewer factorizations do not guarantee a faster whole pipeline; performance measurement and finite-topology precomputation are later stages.
 
 Both `DenseLinearSolver.solve()` and the existing `factorize().solve()` check finite solutions, scaled residuals and diagnostics;
 the latter retains support for multiple right-hand sides. Residual tolerances must be finite nonnegative real scalars.

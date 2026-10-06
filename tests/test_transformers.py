@@ -63,14 +63,15 @@ def test_transformer_rejects_increasing_saturation_inductance() -> None:
 
 
 @pytest.mark.parametrize("method", ["trapezoidal", "backward_euler"])
-def test_saturation_matches_piecewise_flux_current_and_refines(method) -> None:
+@pytest.mark.parametrize("linear_solver_mode", ["rebuild", "reuse"])
+def test_saturation_matches_piecewise_flux_current_and_refines(method, linear_solver_mode) -> None:
     errors = []
     for step in (0.02, 0.01):
         transformer = SinglePhaseTransformer("T", "p", "0", "s", "0", 1.0,
             magnetizing_inductance=1.0, saturation_knee_flux=0.105, saturated_magnetizing_inductance=0.1)
         result = Simulator(Circuit.from_components("saturation_reference", [
             VoltageSource("V", "p", "0", 1.0), transformer, Resistor("R", "s", "0", 10.0),
-        ]), SimulationConfig(step, 0.2, method=method)).run()
+        ]), SimulationConfig(step, 0.2, method=method, linear_solver_mode=linear_solver_mode)).run()
         time = result.series("time")
         reference = np.minimum(time, 0.105) + np.maximum(time - 0.105, 0.0) / 0.1
         np.testing.assert_allclose(result.series("flux:T:magnetizing"), time, atol=1e-14)

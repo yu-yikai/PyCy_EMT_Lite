@@ -145,7 +145,7 @@ def define_case() -> CaseDefinition:
         VoltageSource("V1", "n1", "0", 10.0),
         Resistor("R1", "n1", "0", 5.0),
     )
-    config = SimulationConfig(time_step=1e-4, stop_time=1e-3)
+    config = SimulationConfig(time_step=1e-4, stop_time=1e-3, linear_solver_mode="rebuild")
     plots = (
         PlotSpec(("v:n1",), figure_name="voltage.png", title="Voltage / V"),
         PlotSpec(("i:R1",), figure_name="current.png", title="Current / A"),
@@ -167,6 +167,11 @@ if __name__ == "__main__":
 同一 `CaseDefinition` 内的元件也不能重复运行。只支持 `start_time=0`；`stop_time` 必须是基础步长的非负整数倍。
 例如 100 μs 步长不能终止于 250 μs，可改为 200/300 μs 或使用 50 μs 步长。
 初值、源导数和事件规则见[数值约定](docs/numerical_conventions.md)。
+
+仿真前用 `linear_solver_mode` 选择网络求解策略：默认 `"rebuild"` 每次重新 LU 分解；
+把上面配置改成 `"reuse"`，只在实际系数矩阵改变时重新分解，其余求解复用上一份 LU。
+每步仍装配矩阵/右端项、执行状态更新和数值保护；步长、参数或电机状态变化也可能使 LU 失效。
+这个选择独立于 BE/梯形积分 `method`，不保证所有算例都会加速；全部拓扑预分解尚未实现。
 
 ## 4. 读取、绘图与保存结果
 

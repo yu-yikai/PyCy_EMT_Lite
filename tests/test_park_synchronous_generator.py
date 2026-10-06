@@ -106,11 +106,15 @@ def test_dq_terminal_equations_and_air_gap_power_at_initial_time() -> None:
         assert row["p_em:GEN"] == pytest.approx(row["p:GEN"] + row["p_copper:GEN"])
 
 
-def test_internal_voltage_and_states_belong_to_same_output_time() -> None:
+@pytest.mark.parametrize("linear_solver_mode", ["rebuild", "reuse"])
+def test_internal_voltage_and_states_belong_to_same_output_time(linear_solver_mode) -> None:
     gen = _base_generator(d_axis_transient_reactance_pu=0.2, initial_ed_prime_pu=0.1)
-    result = Simulator(Circuit.from_components("state_time", [gen,
+    simulator = Simulator(Circuit.from_components("state_time", [gen,
         *[Resistor(f"R{p}", f"bus:{p}", "0", 9.0) for p in "abc"],
-    ]), SimulationConfig(1e-4, 0.01)).run()
+    ]), SimulationConfig(1e-4, 0.01, linear_solver_mode=linear_solver_mode))
+    result = simulator.run()
+    # 非等轴端口的 A 随电角度改变，即使没有开关也须重新分解。
+    assert simulator.solver.factorization_count == simulator.solver.solve_count == len(result.rows)
     for row in result.rows:
         angle = 2 * math.pi * gen.frequency * row["time"] + row["rotor_angle:GEN"]
         expected = math.sqrt(2) * gen.base_phase_rms * np.array(dq_to_abc(

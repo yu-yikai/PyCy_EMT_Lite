@@ -170,7 +170,7 @@ def _solve_factorization(
 class DenseLinearSolver:
     """基于 SciPy 稠密 LU 分解的线性求解器。
 
-    每个时间步对当前 MNA 矩阵执行一次 LU 分解并求解右端项，同时检查残差、
+    solve() 逐次 LU 分解；factorize() 返回可复用分解，两种入口都检查残差、
     奇异矩阵和非有限数。这些检查衡量后向误差，不能保证病态系统的前向误差或
     由相近电压相减得到的电流精度；物理量还需要独立验收。
     """

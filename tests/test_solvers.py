@@ -8,8 +8,201 @@ from __future__ import annotations
 import numpy as np
 import pytest
 
-from pycy_emt_lite import Circuit, Resistor, SimulationConfig, Simulator, VoltageSource
+from pycy_emt_lite import Circuit, CurrentSource, Resistor, SimulationConfig, Simulator, VoltageSource
 from pycy_emt_lite.core.solvers import DenseLinearSolver, LinearSolveError
+
+
+@pytest.mark.parametrize("mode", ["precompute", "inverse", "", None, True, 0, ["reuse"]])
+def test_network_solver_mode_rejects_unsupported_values(mode) -> None:
+    with pytest.raises(ValueError, match="linear_solver_mode.*rebuild.*reuse"):
+        SimulationConfig(.1, .2, linear_solver_mode=mode)
+
+
+@pytest.mark.parametrize("mode,expected_factors", [("rebuild", 4), ("reuse", 1)])
+def test_network_solver_updates_rhs_and_reports_actual_reuse(mode, expected_factors) -> None:
+    calls, diagnostics = [], []
+    def current(time):
+        calls.append(time)
+        return 1.0 + time
+    solver = DenseLinearSolver(residual_rtol=1e-12, residual_atol=1e-14)
+    def observe(row):
+        diagnostics.append(solver.last_diagnostics)
+        return {}
+    circuit = Circuit.from_components("changing_rhs", [
+        CurrentSource("I", "0", "n", current), Resistor("R", "n", "0", 2.0),
+    ])
+    # 默认配置必须保持逐次分解。
+    config = SimulationConfig(.1, .3) if mode == "rebuild" else SimulationConfig(.1, .3, linear_solver_mode=mode)
+    assert config.linear_solver_mode == mode
+    simulator = Simulator(circuit, config, solver=solver, on_step=observe)
+    result = simulator.run()
+    np.testing.assert_array_equal(result.series("v:n"), 2 * (1 + result.series("time")))
+    assert calls == list(result.series("time"))  # 查缓存不额外调用源或回调。
+    assert solver.factorization_count == expected_factors and solver.solve_count == 4
+    assert [d.reused_factorization for d in diagnostics] == [False] + [mode == "reuse"] * 3
+    assert [d.solve_count for d in diagnostics] == [1, 2, 3, 4]
+    with pytest.raises(RuntimeError, match="只能运行一次"):
+        simulator.run()
+    with pytest.raises(RuntimeError, match="只能运行一次"):
+        Simulator(circuit, config).run()
+
+
+def test_network_solver_reuse_refactors_parameter_changes_and_revisited_matrix() -> None:
+    resistor = Resistor("R", "n", "0", 1.0)
+    solver = DenseLinearSolver()
+    def change(row):
+        resistor.resistance = 2.0 if row["time"] == 0.0 else 1.0
+        return {}
+    result = Simulator(Circuit.from_components("parameter_change", [
+        resistor, CurrentSource("I", "0", "n", 1.0),
+    ]), SimulationConfig(.1, .3, linear_solver_mode="reuse"), solver=solver, on_step=change).run()
+    np.testing.assert_array_equal(result.series("v:n"), [1., 2., 1., 1.])
+    assert solver.factorization_count == 3  # A1→A2→A1，只有上一份分解可复用。
+    assert solver.solve_count == 4 and solver.last_diagnostics.reused_factorization
+
+
+def test_network_solver_reuse_does_not_round_small_matrix_changes() -> None:
+    resistor = Resistor("R", "n", "0", 1.0)
+    changed = np.nextafter(1.0, 2.0)
+    def change(row):
+        resistor.resistance = changed
+        return {}
+    simulator = Simulator(Circuit.from_components("small_change", [
+        resistor, CurrentSource("I", "0", "n", 1.0),
+    ]), SimulationConfig(.1, .1, linear_solver_mode="reuse"), on_step=change)
+    result = simulator.run()
+    assert result.rows[1]["v:n"] == changed
+    assert simulator.solver.factorization_count == 2
+    assert not simulator.solver.last_diagnostics.reused_factorization
+
+
+def test_network_solver_cache_belongs_to_one_simulator() -> None:
+    solver = DenseLinearSolver()
+    for name in ("first", "second"):
+        result = Simulator(Circuit.from_components(name, [
+            CurrentSource("I", "0", "n", 1.0), Resistor("R", "n", "0", 2.0),
+        ]), SimulationConfig(.1, .1, linear_solver_mode="reuse"), solver=solver).run()
+        np.testing.assert_array_equal(result.series("v:n"), [2., 2.])
+    assert solver.factorization_count == 2 and solver.solve_count == 4
+
+
+def test_network_solver_reuse_rejects_custom_backend_before_claiming_circuit() -> None:
+    solver = _FailingSolver(LinearSolveError("must not run"))
+    circuit = Circuit.from_components("custom_backend", [Resistor("R", "n", "0", 1.0)])
+    with pytest.raises(ValueError, match="reuse.*DenseLinearSolver.*rebuild"):
+        Simulator(circuit, SimulationConfig(.1, .1, linear_solver_mode="reuse"), solver=solver)
+    assert not circuit.prepared
+    # 拒绝新增模式后，同一电路仍可使用已有自定义求解路径，原异常链不变。
+    with pytest.raises(RuntimeError) as caught:
+        Simulator(circuit, SimulationConfig(.1, .1), solver=solver).run()
+    assert caught.value.__cause__ is solver.error
+
+
+@pytest.mark.parametrize("fault,reason", [("zero", "残差"), ("nonfinite", "NaN 或 Inf"), ("shape", "维度")])
+def test_network_solver_cache_hits_keep_backend_checks(monkeypatch, fault, reason) -> None:
+    from pycy_emt_lite.core import solvers
+    original = solvers.lu_solve
+    calls = 0
+    def solve(*args, **kwargs):
+        nonlocal calls
+        calls += 1
+        if calls == 1:
+            return original(*args, **kwargs)
+        return np.full(1, np.inf) if fault == "nonfinite" else np.zeros((1, 1)) if fault == "shape" else np.zeros(1)
+    monkeypatch.setattr(solvers, "lu_solve", solve)
+    simulator = Simulator(Circuit.from_components("backend_check", [
+        Resistor("R", "n", "0", 1.0), CurrentSource("I", "0", "n", 1.0),
+    ]), SimulationConfig(.1, .1, linear_solver_mode="reuse"))
+    with pytest.raises(RuntimeError, match=rf"仿真时间 0.1.*{reason}") as caught:
+        simulator.run()
+    assert isinstance(caught.value.__cause__, LinearSolveError)
+    assert calls == 2 and simulator.solver.factorization_count == 1
+
+
+@pytest.mark.parametrize("fault,reason", [("matrix", "NaN 或 Inf"), ("singular", "奇异"),
+                                         ("rhs", "右端项.*NaN 或 Inf"), ("rhs_shape", "右端项维度")])
+def test_network_solver_reuse_rejects_invalid_next_equation(fault, reason) -> None:
+    class BadEquation(Resistor):
+        def stamp(self, context, matrix, rhs):
+            super().stamp(context, matrix, rhs)
+            if context.time > 0:
+                if fault in {"matrix", "singular"}:
+                    matrix[:] = np.nan if fault == "matrix" else 0.0
+                elif fault == "rhs":
+                    rhs[:] = np.nan
+                else:
+                    rhs.resize((1, 1), refcheck=False)
+    simulator = Simulator(Circuit.from_components("bad_equation", [
+        CurrentSource("I", "0", "n", 1.0), BadEquation("R", "n", "0", 1.0),
+    ]), SimulationConfig(.1, .1, linear_solver_mode="reuse"))
+    with pytest.raises(RuntimeError, match=rf"仿真时间 0.1.*{reason}"):
+        simulator.run()
+
+
+def test_network_solver_reuse_keeps_runtime_residual_threshold_validation() -> None:
+    solver = DenseLinearSolver()
+    def change(row):
+        solver.residual_rtol = np.nan
+        return {}
+    simulator = Simulator(Circuit.from_components("changed_tolerance", [
+        CurrentSource("I", "0", "n", 1.0), Resistor("R", "n", "0", 1.0),
+    ]), SimulationConfig(.1, .1, linear_solver_mode="reuse"), solver=solver, on_step=change)
+    with pytest.raises(RuntimeError, match="仿真时间 0.1.*residual_rtol"):
+        simulator.run()
+    assert solver.factorization_count == 1
+
+
+@pytest.mark.parametrize("storage", ["readonly", "shared"])
+def test_network_solver_reuse_initial_correction_preserves_ownership(monkeypatch, storage) -> None:
+    from pycy_emt_lite import Capacitor
+    from pycy_emt_lite.core import solvers
+    original = solvers.lu_solve
+    returned, snapshots, lu_snapshots = [], [], []
+    buffer = None
+    def solve(factors, rhs, **kwargs):
+        nonlocal buffer
+        lu_snapshots.append(factors[0].copy())
+        values = original(factors, rhs, **kwargs)
+        if not returned:
+            values[1] += 1e-5  # 原全局残差允许，但电容初值约束要求一次修正。
+        if storage == "readonly":
+            values.setflags(write=False)
+        else:
+            if buffer is None:
+                buffer = np.empty_like(values)
+            buffer[:] = values
+            values = buffer
+        returned.append(values)
+        snapshots.append(values.copy())
+        return values
+    monkeypatch.setattr(solvers, "lu_solve", solve)
+    simulator = Simulator(Circuit.from_components("reuse_correction", [
+        VoltageSource("V", "s", "0", 1e6), Resistor("R", "s", "c", 1.0),
+        Capacitor("C", "c", "0", 1.0, initial_voltage=.25),
+    ]), SimulationConfig(1e-4, 0.0, linear_solver_mode="reuse"))
+    result = simulator.run()
+    assert simulator.solver.factorization_count == 1 and simulator.solver.solve_count == 2
+    assert simulator.solver.last_diagnostics.reused_factorization
+    assert result.rows[0]["v:c"] == pytest.approx(.25, abs=1e-12)
+    assert result.rows[0]["i:C"] == pytest.approx(1e6 - .25, rel=1e-12)
+    np.testing.assert_array_equal(lu_snapshots[0], lu_snapshots[1])
+    np.testing.assert_array_equal(returned[0] if storage == "readonly" else buffer,
+                                  snapshots[0] if storage == "readonly" else snapshots[-1])
+
+
+def test_network_solver_mode_reaches_simulator_through_run_case(monkeypatch) -> None:
+    from pycy_emt_lite.cases import CaseDefinition, run_case
+    original = DenseLinearSolver.factorize
+    matrices = []
+    def factorize(self, matrix):
+        matrices.append(matrix.copy())
+        return original(self, matrix)
+    monkeypatch.setattr(DenseLinearSolver, "factorize", factorize)
+    result = run_case(CaseDefinition("case_reuse", (
+        CurrentSource("I", "0", "n", 1.0), Resistor("R", "n", "0", 2.0),
+    ), SimulationConfig(.1, .2, linear_solver_mode="reuse")))
+    np.testing.assert_array_equal(result.series("v:n"), [2., 2., 2.])
+    assert len(matrices) == 1
 
 
 @pytest.mark.parametrize("value", [np.nan, np.inf, -1.0, True, "1e-10"])
