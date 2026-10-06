@@ -7,6 +7,7 @@
 
 from collections.abc import Mapping
 from dataclasses import dataclass
+from itertools import product
 import math
 from time import perf_counter
 
@@ -24,6 +25,7 @@ SAVE_RESULT_DATA = 0
 SAVE_RESULT_FIGURE = 0
 SHOW_FIGURE = True
 MODE = "FAST"  # FAST, FULL, BENCHMARK
+LINEAR_SOLVER_MODE = "rebuild"  # rebuild, reuse, precompute；独立于仿真步长模式
 
 # 来自本地 SLX + 参数脚本。容量为换流变铭牌，不能当作本例已验证的输送功率。
 RATED_POWER = 1500e6
@@ -222,7 +224,8 @@ def validation_summary(result, mode: RunMode) -> dict[str, float]:
     return metrics
 
 
-def define_case(mode: str = MODE, *, fault: bool = True) -> CaseDefinition:
+def define_case(mode: str = MODE, *, fault: bool = True,
+                linear_solver_mode: str = LINEAR_SOLVER_MODE) -> CaseDefinition:
     """创建新实例；每次运行的元件与控制器都独立。"""
 
     settings = MODES[mode]
@@ -255,8 +258,22 @@ def define_case(mode: str = MODE, *, fault: bool = True) -> CaseDefinition:
     plots.extend((PlotSpec(tuple(f"v:S3:hv:{p}" for p in "abc"), "fault_voltage.png", title="S3 HV voltage / V"),
                   PlotSpec(tuple(f"i:S3:reactor:{p}" for p in "abc"), "fault_current.png", title="S3 phase current / A"),
                   PlotSpec(("i:S1_S2:p:L_from", "i:S1_S3:p:L_from"), "dc_current.png", title="Positive pole line currents, S1 to S2/S3 / A")))
+    states = None
+    if linear_solver_mode == "precompute":
+        # 每对上下管来自同一保持调制量且互补；三相故障同刻 apply 后才求一次右侧。
+        # 声明完整的512个桥状态×故障开/关，不根据已有波形缩减可达状态。
+        pairs = [(f"{control.name}:{phase}_top", f"{control.name}:{phase}_bottom")
+                 for control in controllers for phase in "abc"]
+        states = []
+        for tops in product((False, True), repeat=len(pairs)):
+            for enabled in ((False, True) if fault else (False,)):
+                state = {f"S3:fault:{phase}": enabled for phase in "abc"}
+                for (top, bottom), closed in zip(pairs, tops):
+                    state[top], state[bottom] = closed, not closed
+                states.append(state)
     config = SimulationConfig(settings.time_step, settings.stop_time, method="backward_euler",
-                              event_time_policy="require_aligned", record_every=settings.record_every)
+                              event_time_policy="require_aligned", record_every=settings.record_every,
+                              linear_solver_mode=linear_solver_mode, precompute_states=states)
     def summary(result):
         for key, value in validation_summary(result, settings).items():
             print(f"{key}: {value:.6g}")

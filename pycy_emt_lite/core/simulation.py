@@ -24,6 +24,8 @@ from pycy_emt_lite.components.basic import Capacitor, CurrentSource, Inductor, R
 from pycy_emt_lite.components.lines import BergeronLine, ThreePhaseBergeronLine
 from pycy_emt_lite.components.power_electronics import IdealSwitch
 from pycy_emt_lite.components.switching import Breaker, Fault
+from pycy_emt_lite.components.three_phase import ThreePhaseLine, ThreePhaseSource
+from pycy_emt_lite.components.transformers import ThreePhaseTransformer
 from pycy_emt_lite.core.circuit import Circuit
 from pycy_emt_lite.core.context import IntegrationMethod, StampContext
 from pycy_emt_lite.core.solvers import DenseLinearSolver, Factorization, LinearSolveError, LinearSolver
@@ -36,7 +38,8 @@ EventTimePolicy = Literal["insert", "quantize_up", "require_aligned"]
 StepCallback = Callable[[Mapping[str, float]], Mapping[str, float]]
 
 # 首版只核定这些固定参数 stamp；精确类型检查也拒绝覆盖公式的自定义子类。
-_PRECOMPUTE_TYPES = (Resistor, Capacitor, Inductor, CurrentSource, VoltageSource, Fault, Breaker, IdealSwitch)
+_PRECOMPUTE_TYPES = (Resistor, Capacitor, Inductor, CurrentSource, VoltageSource, Fault, Breaker, IdealSwitch,
+                     ThreePhaseSource, ThreePhaseLine, ThreePhaseTransformer)
 _PRECOMPUTE_MAX_BYTES = 1 << 30  # 数值数组、去重键及估计临时空间的私有预算，非进程 RSS 上限。
 
 
@@ -200,8 +203,10 @@ class Simulator:
                 if type(component) not in _PRECOMPUTE_TYPES:
                     raise ValueError(
                         f"precompute 不支持元件 {component.name!r}（{type(component).__name__}）；"
-                        "当前只核定固定参数 RLC、独立源及 Fault/Breaker/IdealSwitch，请使用 reuse。"
+                        "当前只核定固定参数 RLC、独立源、开关及三相电源/RL线路/线性变压器，请使用 reuse。"
                     )
+                if type(component) is ThreePhaseTransformer and component.saturation_knee_flux is not None:
+                    raise ValueError(f"precompute 不支持变压器 {component.name!r} 的饱和档位变化；请使用 reuse。")
         self.circuit._claim_run()
         if not self.circuit.prepared:
             self.circuit._prepare()
@@ -353,6 +358,10 @@ class Simulator:
                     copy = replace(component, current=0.0, derivative=0.0)
                 elif type(component) is VoltageSource:
                     copy = replace(component, voltage=0.0, derivative=0.0)
+                elif type(component) is ThreePhaseSource:
+                    copy = replace(component)
+                    # 原模型要求正幅值；仅在私有数值副本上置零 RHS/导数，A 不依赖幅值。
+                    copy.phase_rms = 0.0
                 elif type(component) is Capacitor:
                     copy = replace(component, initial_voltage=0.0)
                 elif type(component) is Inductor:
@@ -362,6 +371,7 @@ class Simulator:
                 elif type(component) in (Breaker, IdealSwitch):
                     copy = replace(component, closed=switches[component.name])
                 else:
+                    # 三相 RL/线性变压器的 init=False 状态与支路字典由构造器重新创建。
                     copy = replace(component)
                 copies.append(copy)
             circuit = Circuit.from_components(self.circuit.name, copies)

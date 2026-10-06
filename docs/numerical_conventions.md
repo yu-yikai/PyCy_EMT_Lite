@@ -225,10 +225,13 @@ assert abs(result.rows[0]["i:C"] - 6.0) < 1e-12
 
 <a id="network-precompute"></a>
 
-`linear_solver_mode="precompute"` 当前只核定固定参数 Resistor、Capacitor、Inductor、CurrentSource、VoltageSource、Fault、Breaker、IdealSwitch 的精确类型；
-自定义子类、组合线路/变压器、电机和 HVDC 组合模型尚未接入，在占用电路前报错，可选 reuse。
+`linear_solver_mode="precompute"` 当前核定固定参数 Resistor、Capacitor、Inductor、CurrentSource、VoltageSource、Fault、Breaker、IdealSwitch，
+以及 ThreePhaseSource、ThreePhaseLine、不含饱和的 ThreePhaseTransformer 的精确类型。
+自定义子类、其他组合线路/变压器、电机及带饱和的三相变压器仍在占用电路前报错，可选 reuse。
 它用独立数值副本，保留参数与变量编号，将源值/导数及储能历史置零以形成系数矩阵；准备阶段不调用真实源/门极、事件、控制回调或状态更新。
 真实求解仍读取最新源/历史量，并执行源导数要求、初值冲突和所有原有数值检查。
+三相源副本先按合法原参数构造，再仅将私有副本幅值置零以消除 RHS/导数；原源的幅值检查和真实正弦/解析导数保持。
+三相 RL 和线性变压器的内部历史/支路字典由构造器重新创建，不共享原组件的可变状态。
 
 默认 `precompute_states=None` 枚举全部 Fault.enabled、Breaker.closed、IdealSwitch 导通状态的二值组合，包括当前固定的布尔门极。
 `precompute_max_states=1024` 必须为正整数；状态数超限在枚举和分解前拒绝。
@@ -263,6 +266,8 @@ assert simulator.solver.factorization_count == 4
 私有数值预算为 1 GiB：先按状态数、全部 h、普通/增广尺寸估计 A、LU、主元、准备期去重键、查表键及临时数组空间，再创建；创建时累计实际数组/字节键 nbytes 复核。
 这是数值存储与估计工作空间的限制，不是进程 RSS 保证；Python 对象及底层库实际峰值尚待测量。
 超过预算时应缩小仍完整的状态集合或选 reuse，不能为通过检查遗漏可达状态；提高 `precompute_max_states` 也不会解除字节预算。
+完整 HVDC FAST 的 20 µs 名义网格目前产生 15 种精确不同的实际正 h；1024 状态需 16384 个不同矩阵，仅原 A/LU/主元就约 4.29 GiB。
+因此它在现有 1 GiB 预算下启动拒绝；支持类型已接入不表示该完整算例通过预计算验收，见[HVDC范围](three_terminal_vsc_hvdc.md#network-solver-scope)。
 
 `DenseLinearSolver.solve()` 与已有 `factorize().solve()` 都检查解有限性、缩放残差和求解诊断；后者保留多右端项能力。
 残差阈值须为有限非负实数。残差反映后向误差，不能保证病态方程的前向误差或派生电流精度。

@@ -188,6 +188,24 @@ uv run python examples/18_three_terminal_vsc_hvdc.py
 
 Set `MODE` at the top of the script, or call `define_case("FULL")` in Python and pass the case to the existing `run_case()`.
 
+<a id="network-solver-scope"></a>
+
+The network strategy is independent of MODE. The top-level `LINEAR_SOLVER_MODE` defaults to `"rebuild"`; alternatively call
+`define_case("FAST", linear_solver_mode="reuse")` to reuse the previous LU through the existing run_case/Simulator path.
+It invalidates by exact equality of the complete actual A, preserving step sizes, source/gate/control calls and initial/event ordering.
+
+Type admission for `linear_solver_mode="precompute"` is verified: three-phase sources, RL lines and transformers without saturation use independent numerical copies.
+Nine complementary gate pairs without dead time generate 512 bridge states. All three fault events apply before the right-side solve, allowing two synchronous off/on states, for 1024 states total.
+With `fault=False`, only fault-off is declared, for 512 states. Runtime looks up and verifies actual A; broken complementarity/synchrony or new coefficients raise without an in-loop LU.
+
+**Full FAST precomputation has not passed resource acceptance.** Floating differences in its nominal 20 µs grid retain 15 distinct positive h values after existing normalization.
+Its 1024 states require 15360 ordinary 131-dimensional matrices and 1024 consistency matrices of dimension 153. An isolated state-by-state audit factored all 16384 and passed nonzero-RHS residual checks, confirming distinct matrix bytes.
+Simultaneously retaining A/LU/pivots requires 4609695744 bytes, about 4.29 GiB; preparation estimates about 6.45 GiB, exceeding the existing 1 GiB numerical budget.
+Full FAST precompute therefore raises before real sources/gates, events or control execute, with zero factorizations. **Choose rebuild/reuse for current full runs.**
+Within budget, t=0 and the first two original FAST intervals (0–40 µs) were also checked. All 1024 states remain, with 2048 prepared LUs; all result fields and 43 control telemetry columns match the first three R9 rows exactly across strategies, with zero in-loop LUs.
+This short-window native cache uses 665862144 bytes, about 635 MiB. It and the state-by-state audit do not accept a full 0.8 s precompute run. The budget, reachable-state coverage and h values were not changed.
+FULL/BENCHMARK did not receive full-run acceptance in this stage. Time/peak process memory benefits remain a later stage; numerical nbytes do not measure RSS.
+
 | Mode | EMT step | PWM | Duration | Fault application/clearing | Recorded interval |
 |---|---|---|---|---|---|
 | FAST (default) | 20 μs | 1000 Hz | 0.8 s | 0.30 / 0.45 s | 20 μs |

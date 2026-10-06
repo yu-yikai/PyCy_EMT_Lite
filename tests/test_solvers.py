@@ -453,6 +453,68 @@ def test_precompute_keeps_real_source_and_initial_constraint_checks(fault, reaso
     assert simulator.solver.factorization_count == 1 and simulator.solver.solve_count == 0
 
 
+@pytest.mark.parametrize("method", ["trapezoidal", "backward_euler"])
+@pytest.mark.parametrize("connections", [("Y", "Y"), ("Y", "D"), ("D", "Y"), ("D", "D")])
+def test_precompute_three_phase_composites_match_events_and_preserve_original_history(method, connections, monkeypatch):
+    from pycy_emt_lite.components.three_phase import ThreePhaseLine, ThreePhaseSource
+    from pycy_emt_lite.components.transformers import ThreePhaseTransformer
+    original = DenseLinearSolver.factorize
+    results = []
+    for mode in ("rebuild", "reuse", "precompute"):
+        source = ThreePhaseSource("V", "src", 10.0, frequency=5.0)
+        line = ThreePhaseLine("Z", "src", "pri", 1.0, .01)
+        transformer = ThreePhaseTransformer("T", "pri", "sec", 2.0,
+            primary_connection=connections[0], secondary_connection=connections[1],
+            leakage_resistance=.5, leakage_inductance=.02,
+            magnetizing_inductance=.1, core_loss_resistance=100.0)
+        counts = []
+        def factorize(self, matrix):
+            if mode == "precompute":
+                assert counts == []
+                assert source.phase_rms == 10.0
+                assert all(value == 0.0 for value in line.state.previous_current.values())
+                assert all(state.magnetizing_flux == 0.0 for state in transformer.states.values())
+            return original(self, matrix)
+        monkeypatch.setattr(DenseLinearSolver, "factorize", factorize)
+        solver = DenseLinearSolver()
+        def observe(row):
+            counts.append(solver.factorization_count)
+            return {}
+        components = [source, line, transformer, Fault("F", "sec:a", 2.0),
+                      *(Resistor(f"R:{p}", f"sec:{p}", "0", 10.0) for p in "abc")]
+        result = Simulator(Circuit.from_components("three_phase_precompute", components),
+            SimulationConfig(.01, .03, method=method, linear_solver_mode=mode),
+            [FaultApplyEvent(.015, "F"), FaultClearEvent(.02, "F")], solver=solver, on_step=observe).run()
+        if mode == "precompute":
+            assert len(set(counts)) == 1
+        results.append((result.rows, result.event_log))
+    assert results[0] == results[1] == results[2]
+
+
+def test_precompute_three_phase_source_keeps_real_dependent_derivative():
+    from pycy_emt_lite.components.three_phase import ThreePhaseSource
+    amplitude = 10.0 * np.sqrt(2.0)
+    results = []
+    for mode in ("rebuild", "precompute"):
+        components = [ThreePhaseSource("V", "n", 10.0, 5.0),
+            *(Capacitor(f"C:{p}", f"n:{p}", "0", .01,
+                       initial_voltage=amplitude * np.sin(-k * 2 * np.pi / 3)) for k, p in enumerate("abc"))]
+        results.append(Simulator(Circuit.from_components("three_phase_derivative", components),
+            SimulationConfig(.01, 0.0, linear_solver_mode=mode)).run().rows)
+    assert results[0] == results[1]
+    assert results[0][0]["i:C:a"] == pytest.approx(.01 * amplitude * 2 * np.pi * 5)
+
+
+def test_precompute_rejects_saturating_three_phase_transformer_before_claiming():
+    from pycy_emt_lite.components.transformers import ThreePhaseTransformer
+    circuit = Circuit.from_components("saturating_precompute", [ThreePhaseTransformer("T", "p", "s", 1.0,
+        magnetizing_inductance=.1, saturation_knee_flux=.01, saturated_magnetizing_inductance=.02)])
+    simulator = Simulator(circuit, SimulationConfig(.01, .01, linear_solver_mode="precompute"))
+    with pytest.raises(ValueError, match="precompute.*T.*饱和.*reuse"):
+        simulator.run()
+    assert not circuit.prepared and not circuit._run_claimed and simulator.solver.factorization_count == 0
+
+
 @pytest.mark.parametrize("value", [np.nan, np.inf, -1.0, True, "1e-10"])
 @pytest.mark.parametrize("parameter", ["residual_rtol", "residual_atol"])
 def test_solver_rejects_invalid_residual_thresholds(parameter, value) -> None:

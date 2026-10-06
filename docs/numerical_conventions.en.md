@@ -238,10 +238,13 @@ Fewer factorizations do not establish an end-to-end speedup; preparation/loop/to
 
 <a id="network-precompute"></a>
 
-`linear_solver_mode="precompute"` currently admits only the exact fixed-parameter Resistor, Capacitor, Inductor, CurrentSource, VoltageSource, Fault, Breaker and IdealSwitch types.
-Custom subclasses, composite lines/transformers, machines and HVDC composite models are not admitted yet; they raise before claiming the circuit, and can use reuse.
+`linear_solver_mode="precompute"` currently admits the exact fixed-parameter Resistor, Capacitor, Inductor, CurrentSource, VoltageSource, Fault, Breaker and IdealSwitch types,
+plus ThreePhaseSource, ThreePhaseLine and ThreePhaseTransformer without saturation.
+Custom subclasses, other composite lines/transformers, machines and saturating three-phase transformers still raise before claiming the circuit, and can use reuse.
 Independent numerical copies retain parameters and variable numbering, with zero source values/derivatives and storage histories to form coefficient matrices. Preparation does not call real sources/gates, events, control callbacks or state updates.
 Real solves still read current source/history values and perform source-derivative requirements, initial-conflict checks and all existing numerical checks.
+A three-phase source copy is constructed with valid original parameters, then only its private amplitude is set to zero to remove RHS/derivative values. Original amplitude checks and real sinusoidal/analytic-derivative behavior remain.
+Internal histories/branch dictionaries for three-phase RL and linear transformers are created afresh by their constructors, without sharing mutable state with original components.
 
 The default `precompute_states=None` enumerates all binary combinations of Fault.enabled, Breaker.closed and IdealSwitch conduction, including gates currently set to a constant boolean.
 `precompute_max_states=1024` must be a positive integer; an excessive count is rejected before enumeration or factorization.
@@ -276,6 +279,8 @@ Per-step assembly and consistency QR/rank checks remain; the strategy only reduc
 The private numerical budget is 1 GiB. Before creation, it estimates A, LU, pivots, preparation deduplication keys, lookup keys and temporary arrays from state count, every h and ordinary/augmented dimensions; creation also checks accumulated actual array/byte-key nbytes.
 This limits numerical storage and estimated workspace, and does not guarantee process RSS; actual peaks for Python objects and underlying libraries remain to be measured.
 If the budget is exceeded, choose a smaller but still complete state family or reuse. Do not omit reachable states to pass the check; raising `precompute_max_states` does not remove the byte budget.
+The nominal 20 µs grid of full HVDC FAST currently produces 15 exactly distinct positive h values. Its 1024 states require 16384 distinct matrices, with about 4.29 GiB for A/LU/pivots alone.
+It therefore raises at startup under the existing 1 GiB budget. Admitting component types does not accept full-case precomputation; see [HVDC scope](three_terminal_vsc_hvdc.en.md#network-solver-scope).
 
 Both `DenseLinearSolver.solve()` and the existing `factorize().solve()` check finite solutions, scaled residuals and diagnostics;
 the latter retains support for multiple right-hand sides. Residual tolerances must be finite nonnegative real scalars.
