@@ -11,6 +11,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, replace
+from itertools import product
 import math
 from numbers import Integral, Real
 from collections.abc import Callable, Mapping
@@ -19,7 +20,10 @@ from typing import Iterable, Literal
 
 import numpy as np
 
+from pycy_emt_lite.components.basic import Capacitor, CurrentSource, Inductor, Resistor, VoltageSource
 from pycy_emt_lite.components.lines import BergeronLine, ThreePhaseBergeronLine
+from pycy_emt_lite.components.power_electronics import IdealSwitch
+from pycy_emt_lite.components.switching import Breaker, Fault
 from pycy_emt_lite.core.circuit import Circuit
 from pycy_emt_lite.core.context import IntegrationMethod, StampContext
 from pycy_emt_lite.core.solvers import DenseLinearSolver, Factorization, LinearSolveError, LinearSolver
@@ -31,6 +35,10 @@ from pycy_emt_lite.io.results import SimulationResult
 EventTimePolicy = Literal["insert", "quantize_up", "require_aligned"]
 StepCallback = Callable[[Mapping[str, float]], Mapping[str, float]]
 
+# 首版只核定这些固定参数 stamp；精确类型检查也拒绝覆盖公式的自定义子类。
+_PRECOMPUTE_TYPES = (Resistor, Capacitor, Inductor, CurrentSource, VoltageSource, Fault, Breaker, IdealSwitch)
+_PRECOMPUTE_MAX_BYTES = 1 << 30  # 数值数组、去重键及估计临时空间的私有预算，非进程 RSS 上限。
+
 
 @dataclass(frozen=True, slots=True)
 class SimulationConfig:
@@ -39,7 +47,7 @@ class SimulationConfig:
     `time_step` 是每次推进的时间间隔，`stop_time` 是仿真结束时间，`method`
     是动态元件离散化方法。终止时间必须是基础步长的整数倍；显式事件可按所选
     策略插入非对齐时刻，储能元件使用对应的实际区间步长。
-    `linear_solver_mode` 选择每次重新 LU 分解，或在实际矩阵相同时复用上一份 LU；
+    `linear_solver_mode` 选择逐次 LU、复用上一份 LU，或在循环前预分解有限矩阵族；
     它不改变积分方法、时间网格或元件状态推进。
     """
 
@@ -49,13 +57,35 @@ class SimulationConfig:
     method: IntegrationMethod = "trapezoidal"
     event_time_policy: EventTimePolicy = "insert"
     record_every: int = 1
-    linear_solver_mode: Literal["rebuild", "reuse"] = "rebuild"
+    linear_solver_mode: Literal["rebuild", "reuse", "precompute"] = "rebuild"
+    precompute_states: tuple[Mapping[str, bool], ...] | list[Mapping[str, bool]] | None = None
+    precompute_max_states: int = 1024
 
     def __post_init__(self) -> None:
-        if not isinstance(self.linear_solver_mode, str) or self.linear_solver_mode not in {"rebuild", "reuse"}:
+        if not isinstance(self.linear_solver_mode, str) or self.linear_solver_mode not in {"rebuild", "reuse", "precompute"}:
             raise ValueError(
-                f"不支持 linear_solver_mode={self.linear_solver_mode!r}；请选择 'rebuild' 或 'reuse'。"
+                f"不支持 linear_solver_mode={self.linear_solver_mode!r}；请选择 'rebuild'、'reuse' 或 'precompute'。"
             )
+        if (isinstance(self.precompute_max_states, bool) or not isinstance(self.precompute_max_states, Integral)
+                or self.precompute_max_states < 1):
+            raise ValueError("precompute_max_states 必须为正整数。")
+        if self.precompute_states is not None:
+            if not isinstance(self.precompute_states, (tuple, list)):
+                raise ValueError("precompute_states 必须为映射的列表或元组，或 None 自动枚举。")
+            if not self.precompute_states:
+                raise ValueError("precompute_states 必须为非空状态列表。")
+            if len(self.precompute_states) > self.precompute_max_states:
+                raise ValueError(
+                    f"precompute 状态数 {len(self.precompute_states)} 超过上限 {self.precompute_max_states}；"
+                    "请缩小声明集合或使用 reuse。"
+                )
+            for state in self.precompute_states:
+                if not isinstance(state, Mapping):
+                    raise ValueError("precompute_states 中每个状态必须为名称到布尔值的映射。")
+                if any(not isinstance(name, str) or not name.strip() for name in state):
+                    raise ValueError("precompute_states 的名称必须为非空字符串。")
+                if any(not isinstance(value, (bool, np.bool_)) for value in state.values()):
+                    raise ValueError("precompute_states 的状态值必须为布尔值（True/False）。")
         if isinstance(self.record_every, bool) or not isinstance(self.record_every, Integral) or self.record_every < 1:
             raise ValueError("record_every 必须为正整数；请填写每隔多少个求解点保存一次结果。")
         for field_name, value in (
@@ -131,12 +161,18 @@ class Simulator:
         self.event_queue = EventQueue(self.events)
         self.event_log: list[dict[str, float | str]] = []
         self.solver = solver or DenseLinearSolver()
-        if config.linear_solver_mode == "reuse" and not isinstance(self.solver, DenseLinearSolver):
+        if config.linear_solver_mode != "rebuild" and not isinstance(self.solver, DenseLinearSolver):
             raise ValueError(
-                "linear_solver_mode='reuse' 目前只支持 DenseLinearSolver；"
+                f"linear_solver_mode={config.linear_solver_mode!r} 目前只支持 DenseLinearSolver；"
                 "请使用默认稠密求解器，或设为 'rebuild' 保留自定义求解器。"
             )
         self._factorization: Factorization | None = None
+        # 在接收配置时复制，后续修改用户的状态列表/字典不会改变已声明集合。
+        self._declared_states = None if config.precompute_states is None else tuple(
+            tuple(state.items()) for state in config.precompute_states
+        )
+        self._precompute_switches: tuple[Fault | Breaker | IdealSwitch, ...] = ()
+        self._precomputed: dict[tuple[float, bool, tuple[bool, ...]], Factorization] = {}
         if on_step is not None and not callable(on_step):
             raise ValueError("on_step 必须为可调用对象或 None。")
         self.on_step = on_step
@@ -159,6 +195,13 @@ class Simulator:
         if self._run_started:
             raise RuntimeError("Simulator 实例只能运行一次。")
         self._run_started = True
+        if self.config.linear_solver_mode == "precompute":
+            for component in self.circuit.components:
+                if type(component) not in _PRECOMPUTE_TYPES:
+                    raise ValueError(
+                        f"precompute 不支持元件 {component.name!r}（{type(component).__name__}）；"
+                        "当前只核定固定参数 RLC、独立源及 Fault/Breaker/IdealSwitch，请使用 reuse。"
+                    )
         self.circuit._claim_run()
         if not self.circuit.prepared:
             self.circuit._prepare()
@@ -169,6 +212,8 @@ class Simulator:
         self._prepare_delay_lines(times)
         for event in self.events:
             event.validate(self.circuit)
+        if self.config.linear_solver_mode == "precompute":
+            self._prepare_linear_systems(times)
         rows: list[dict[str, float]] = []
         solution = np.zeros(self.circuit.size, dtype=float)
 
@@ -254,11 +299,128 @@ class Simulator:
             line._time_step = time_step
             line._delay_steps = delay_steps
 
-    def _solve_linear_system(self, matrix: np.ndarray, rhs: np.ndarray) -> np.ndarray:
-        """选择逐次分解或上一份 LU；两条路径使用相同的求解与残差保护。"""
+    def _prepare_linear_systems(self, times: np.ndarray) -> None:
+        """对隔离数值副本预分解；不调用真实源/门极，不应用事件或推进状态。"""
+
+        self._precompute_switches = tuple(
+            c for c in self.circuit.components if type(c) in (Fault, Breaker, IdealSwitch)
+        )
+        names = tuple(c.name for c in self._precompute_switches)
+        count = 2 ** len(names) if self._declared_states is None else len(self._declared_states)
+        if count > self.config.precompute_max_states:
+            raise ValueError(
+                f"precompute 状态数 {count} 超过上限 {self.config.precompute_max_states}；"
+                "请声明较小的完整状态集合或使用 reuse。"
+            )
+        # 使用与主循环相同的差分和归一化，保留事件插点的全部实际正 h。
+        steps = sorted({self._effective_time_step(float(h)) for h in np.diff(times)})
+        size = self.circuit.size
+        initial_size = size + sum(type(c) is Capacitor for c in self.circuit.components)
+        # 每份按原 A、LU、准备期字节键三份 float64 矩阵，再计主元和查表键。
+        def entry_bytes(n):
+            return 3 * 8 * n * n + 4 * n + 256 + 32 * len(names)
+        estimated = count * (len(steps) * entry_bytes(size) + entry_bytes(initial_size))
+        # 另留增广组装/QR 等临时数组的估计空间；Python/底层库 RSS 在 N4 实测。
+        scratch = 8 * 8 * initial_size ** 2 + 10 * 8 * initial_size
+        if estimated + scratch > _PRECOMPUTE_MAX_BYTES:
+            raise ValueError(
+                f"precompute 的 {count} 个状态、{count * (len(steps) + 1)} 个矩阵预计需要 "
+                f"{estimated + scratch} 字节，超过数值预算 {_PRECOMPUTE_MAX_BYTES} 字节；"
+                "请缩小完整状态集合或使用 reuse。"
+            )
+        if self._declared_states is None:
+            states = product((False, True), repeat=len(names))
+        else:
+            states = []
+            for items in self._declared_states:
+                state = dict(items)
+                if set(state) != set(names):
+                    raise ValueError(f"precompute_states 名称必须恰好包含所有开关/故障/断路器 {names!r}。")
+                if any(not isinstance(value, (bool, np.bool_)) for value in state.values()):
+                    raise ValueError("precompute_states 的状态值必须为布尔值。")
+                states.append(tuple(bool(state[name]) for name in names))
+            if len(set(states)) != len(states):
+                raise ValueError("precompute_states 存在重复状态；请只声明一次。")
+
+        unique: dict[tuple, Factorization] = {}
+        allocated = 0
+        for state in states:
+            switches = dict(zip(names, state))
+            copies = []
+            for component in self.circuit.components:
+                # 只替换进入 RHS 的源/历史量；所有电气参数和编号顺序保持。
+                if type(component) is CurrentSource:
+                    copy = replace(component, current=0.0, derivative=0.0)
+                elif type(component) is VoltageSource:
+                    copy = replace(component, voltage=0.0, derivative=0.0)
+                elif type(component) is Capacitor:
+                    copy = replace(component, initial_voltage=0.0)
+                elif type(component) is Inductor:
+                    copy = replace(component, initial_current=0.0)
+                elif type(component) is Fault:
+                    copy = replace(component, enabled=switches[component.name])
+                elif type(component) in (Breaker, IdealSwitch):
+                    copy = replace(component, closed=switches[component.name])
+                else:
+                    copy = replace(component)
+                copies.append(copy)
+            circuit = Circuit.from_components(self.circuit.name, copies)
+            circuit.prepare()
+            if (circuit.node_manager.names != self.circuit.node_manager.names
+                    or circuit.variable_manager.branch_names != self.circuit.variable_manager.branch_names):
+                raise ValueError("precompute 数值副本的变量编号与原电路不一致。")
+            for h in [0.0, *steps]:
+                initial = _InitialConditions() if h == 0.0 else None
+                context = StampContext(circuit.node_manager, circuit.node_manager.count, 0.0,
+                                       h, self.config.method, _initial=initial)
+                matrix = np.zeros((size, size))
+                rhs = np.zeros(size)
+                try:
+                    for component in copies:
+                        component.stamp(context, matrix, rhs)
+                    if initial is not None:
+                        matrix, rhs = initial.assemble(matrix, rhs)
+                    # 相同 A 只预分解一次。字节键仅在准备期间存在，运行仍精确核对 A。
+                    signature = (matrix.shape, matrix.tobytes())
+                    factor = unique.get(signature)
+                    if factor is None:
+                        factor = self.solver.factorize(matrix)
+                        allocated += (factor.matrix.nbytes + factor.lu.nbytes + factor.pivots.nbytes
+                                      + len(signature[1]))
+                        if allocated + scratch > _PRECOMPUTE_MAX_BYTES:
+                            raise ValueError("实际数值存储超过 precompute 字节预算；请缩小集合或使用 reuse。")
+                        unique[signature] = factor
+                    self._precomputed[h, initial is not None, state] = factor
+                except (LinearSolveError, ValueError) as exc:
+                    kind = "一致" if initial is not None else "积分"
+                    raise ValueError(
+                        f"precompute 准备失败：状态 {switches!r}，h={h!r}，{kind}矩阵；{exc}"
+                    ) from exc
+
+    def _solve_linear_system(self, matrix: np.ndarray, rhs: np.ndarray, context: StampContext) -> np.ndarray:
+        """三种策略共用现有求解与残差保护；预计算路径绝不临时补分解。"""
 
         if self.config.linear_solver_mode == "rebuild":
             return self.solver.solve(matrix, rhs)
+        if self.config.linear_solver_mode == "precompute":
+            # IdealSwitch 在原 stamp 已读取门极；查表不能再次调用真实门极函数。
+            values = []
+            for component in self._precompute_switches:
+                if type(component) is Fault:
+                    values.append(bool(component.enabled))
+                elif type(component) is IdealSwitch:
+                    values.append(bool(component.last_state))
+                else:
+                    values.append(bool(component.closed))
+            state = tuple(values)
+            factor = self._precomputed.get((context.time_step, context._initial is not None, state))
+            if factor is None:
+                names = tuple(c.name for c in self._precompute_switches)
+                raise LinearSolveError(f"precompute 遇到未声明状态/步长 {dict(zip(names, state))!r}，"
+                                       f"h={context.time_step!r}；请补全有限集合或使用 reuse。")
+            if not np.array_equal(matrix, factor.matrix):
+                raise LinearSolveError("precompute 实际矩阵系数已改变；请保持固定参数或使用 reuse。")
+            return self.solver._solve(factor, rhs, reused=True)
         # 结构拓扑不变并不保证 A 不变；步长、参数和模型状态也会改变系数。
         reused = self._factorization is not None and np.array_equal(matrix, self._factorization.matrix)
         if not reused:
@@ -277,14 +439,14 @@ class Simulator:
             if context._initial is not None:
                 matrix, rhs = context._initial.assemble(matrix, rhs)
             # 求解器可返回只读数组或复用缓冲；仿真器持有独立解，供一致初值修正。
-            solution = self._solve_linear_system(matrix, rhs).copy()
+            solution = self._solve_linear_system(matrix, rhs, context).copy()
             if context._initial is not None:
                 try:
                     context._initial.accept(solution, self.circuit.size)
                 except ValueError:
                     # 高压储能与近零源约束并存时，LU 消减误差可能通过整体残差检查
                     # 却不满足逐行约束。只补一次残差方程，原有初值检查仍须通过。
-                    solution += self._solve_linear_system(matrix, rhs - matrix @ solution)
+                    solution += self._solve_linear_system(matrix, rhs - matrix @ solution, context)
                     context._initial.accept(solution, self.circuit.size)
             return solution[:self.circuit.size]
         except (LinearSolveError, ValueError) as exc:

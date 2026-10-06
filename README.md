@@ -172,7 +172,11 @@ Initial conditions, source derivatives and event rules are in [Numerical convent
 Choose the network solve strategy before running through `linear_solver_mode`: the default `"rebuild"` performs a fresh LU factorization for every solve.
 Change the configuration above to `"reuse"` to refactor only when the actual coefficient matrix changes; other solves reuse the previous LU.
 Each step still assembles the matrix/right-hand side, updates states and performs numerical checks; changes in step size, parameters or machine states can also invalidate the LU.
-This choice is independent of the BE/trapezoidal integration `method` and does not guarantee a speedup for every case. Precomputation of all topologies is not implemented yet.
+The third option, `"precompute"`, factors matrices for a finite state family and every actual step size before the time loop, then solves by table lookup.
+It currently supports only fixed-parameter Resistor/Capacitor/Inductor, CurrentSource/VoltageSource and Fault/Breaker/IdealSwitch;
+composite models and machines are not admitted yet. Binary states are enumerated automatically, up to 1024 states; `precompute_states` can instead declare the complete valid family.
+Undeclared states, coefficient-matrix changes, singular matrices or exceeded limits raise errors; see [precomputation rules and example](docs/numerical_conventions.en.md#network-precompute).
+The network strategy is independent of the BE/trapezoidal integration `method`. Precomputation adds startup cost and memory, and does not guarantee a speedup for every case.
 
 ## 4. Read, plot and save results
 

@@ -214,13 +214,55 @@ assert abs(result.rows[0]["i:C"] - 6.0) < 1e-12
 
 ## 8. 求解保护、结果文件与输出预检
 
-`Simulator` 在两种网络策略中都按原顺序每次装配 A/b，再求解最新 b。`reuse` 用完整矩阵精确相等判断失效，
+`Simulator` 在三种网络策略中都按原顺序每次装配 A/b，再求解最新 b。`reuse` 用完整矩阵精确相等判断失效，
 不使用近似阈值，也不只看开关状态：参数、实际 h、饱和档位和 Park 电角度均可能改变 A。
 缓存只属于一个 Simulator，最多保存上一份 LU；A1→A2→A1 要重新分解三次，不保留多拓扑历史。
 初值/事件右侧增广矩阵也参与相同判断，现有一次修正使用该矩阵的 LU，不减少源/门极/状态/回调执行。
-显式 `solver=` 的现有自定义后端在 `rebuild` 保持原行为；`reuse` 当前只接受 DenseLinearSolver 实例，否则在占用电路前报错。
+显式 `solver=` 的现有自定义后端在 `rebuild` 保持原行为；`reuse/precompute` 当前只接受 DenseLinearSolver 实例，否则在占用电路前报错。
 `factorization_count` 为实际分解次数，`solve_count` 为实际求解次数；Simulator 每次新分解的 `reused_factorization=False`，
-命中上一份分解（包括一致修正）时为 True。分解减少不代表全流程必然加速；性能测量及有限拓扑预计算属于后续阶段。
+命中上一份分解（包括一致修正）时为 True。precompute 的准备分解也计入次数，循环内每次求解的该标志均为 True。
+分解减少不代表全流程必然加速；三策略的准备/循环/总时间和进程峰值内存测量留到后续阶段。
+
+<a id="network-precompute"></a>
+
+`linear_solver_mode="precompute"` 当前只核定固定参数 Resistor、Capacitor、Inductor、CurrentSource、VoltageSource、Fault、Breaker、IdealSwitch 的精确类型；
+自定义子类、组合线路/变压器、电机和 HVDC 组合模型尚未接入，在占用电路前报错，可选 reuse。
+它用独立数值副本，保留参数与变量编号，将源值/导数及储能历史置零以形成系数矩阵；准备阶段不调用真实源/门极、事件、控制回调或状态更新。
+真实求解仍读取最新源/历史量，并执行源导数要求、初值冲突和所有原有数值检查。
+
+默认 `precompute_states=None` 枚举全部 Fault.enabled、Breaker.closed、IdealSwitch 导通状态的二值组合，包括当前固定的布尔门极。
+`precompute_max_states=1024` 必须为正整数；状态数超限在枚举和分解前拒绝。
+显式 `precompute_states` 是非空列表或元组，每个字典必须恰好覆盖电路中所有这些元件的名称，值为 True/False；不能遗漏名称或重复状态。
+Simulator 接收时复制为内部不可变快照；之后修改外部列表/字典不改变声明。
+显式集合可排除确定不会出现的奇异组合，调用者须保证覆盖实际状态；自动集合中任一矩阵奇异/欠定都会在时间推进前报错。
+
+下面的小电路显式声明 S 的关断与导通两种状态，无需另设求解器或控制接口：
+
+```python
+from pycy_emt_lite import Capacitor, Circuit, CurrentSource, IdealSwitch, Resistor, SimulationConfig, Simulator
+
+components = [
+    CurrentSource("I", "0", "n", 1.0), Resistor("R", "n", "0", 2.0),
+    Capacitor("C", "n", "0", 1.0),
+    IdealSwitch("S", "n", "0", lambda t: 0.1 <= t < 0.2,
+                closed_resistance=1.0, open_conductance=0.0),
+]
+config = SimulationConfig(time_step=0.1, stop_time=0.2, linear_solver_mode="precompute",
+                          precompute_states=({"S": False}, {"S": True}))
+simulator = Simulator(Circuit.from_components("finite_switch_states", components), config)
+result = simulator.run()
+assert result.series("state:S").tolist() == [0.0, 1.0, 0.0]
+assert simulator.solver.factorization_count == 4
+```
+
+查表键包含实际 h、积分/一致求解类别和状态，积分方法固定属于本次 Simulator；矩阵族覆盖既有网格的全部正 h 及初值/事件一致增广矩阵。
+相同完整 A 仅预分解一次，即使不同状态/求解类别可共用；运行时核对实际 A 精确相等，并复用同一 LU 做一致修正。
+未知状态/h 或新系数在求解前拒绝，不能在循环中补分解或静默换成 reuse。查表读取 stamp 已保存的门极状态，不额外调用门极函数。
+每步组装及一致约束的 QR/秩检查仍保留；此策略只减少网络 LU，不省略其他计算或数值保护。
+
+私有数值预算为 1 GiB：先按状态数、全部 h、普通/增广尺寸估计 A、LU、主元、准备期去重键、查表键及临时数组空间，再创建；创建时累计实际数组/字节键 nbytes 复核。
+这是数值存储与估计工作空间的限制，不是进程 RSS 保证；Python 对象及底层库实际峰值尚待测量。
+超过预算时应缩小仍完整的状态集合或选 reuse，不能为通过检查遗漏可达状态；提高 `precompute_max_states` 也不会解除字节预算。
 
 `DenseLinearSolver.solve()` 与已有 `factorize().solve()` 都检查解有限性、缩放残差和求解诊断；后者保留多右端项能力。
 残差阈值须为有限非负实数。残差反映后向误差，不能保证病态方程的前向误差或派生电流精度。

@@ -227,13 +227,55 @@ has numerical dissipation. Model-specific evidence and unvalidated items are mai
 
 ## 8. Solver checks, result files and output preflight
 
-With either network strategy, `Simulator` assembles A/b in the original order for every solve and uses the latest b. `reuse` compares the complete matrices exactly,
+With all three network strategies, `Simulator` assembles A/b in the original order for every solve and uses the latest b. `reuse` compares the complete matrices exactly,
 without an approximate threshold or a switch-only key: parameters, actual h, saturation states and the Park electrical angle can all change A.
 The cache belongs to one Simulator and holds only its previous LU; A1→A2→A1 needs three factorizations and does not retain a topology history.
 Augmented initial/event-right matrices use the same check; the existing single correction uses that matrix's LU. Source/gate/state/callback execution is not reduced.
-An explicit custom `solver=` keeps its original behavior under `rebuild`; `reuse` currently accepts only DenseLinearSolver instances and otherwise raises before claiming the circuit.
+An explicit custom `solver=` keeps its original behavior under `rebuild`; `reuse/precompute` currently accept only DenseLinearSolver instances and otherwise raise before claiming the circuit.
 `factorization_count` counts actual factorizations and `solve_count` counts actual solves. In Simulator, `reused_factorization=False` for a fresh factorization,
-and True for reuse of the previous one, including a consistent-state correction. Fewer factorizations do not guarantee a faster whole pipeline; performance measurement and finite-topology precomputation are later stages.
+and True for reuse of the previous one, including a consistent-state correction. Preparation factorizations in precompute also count, and every solve inside its loop reports True.
+Fewer factorizations do not establish an end-to-end speedup; preparation/loop/total time and peak process memory measurements for all three strategies remain a later stage.
+
+<a id="network-precompute"></a>
+
+`linear_solver_mode="precompute"` currently admits only the exact fixed-parameter Resistor, Capacitor, Inductor, CurrentSource, VoltageSource, Fault, Breaker and IdealSwitch types.
+Custom subclasses, composite lines/transformers, machines and HVDC composite models are not admitted yet; they raise before claiming the circuit, and can use reuse.
+Independent numerical copies retain parameters and variable numbering, with zero source values/derivatives and storage histories to form coefficient matrices. Preparation does not call real sources/gates, events, control callbacks or state updates.
+Real solves still read current source/history values and perform source-derivative requirements, initial-conflict checks and all existing numerical checks.
+
+The default `precompute_states=None` enumerates all binary combinations of Fault.enabled, Breaker.closed and IdealSwitch conduction, including gates currently set to a constant boolean.
+`precompute_max_states=1024` must be a positive integer; an excessive count is rejected before enumeration or factorization.
+Explicit `precompute_states` is a nonempty list or tuple. Each dictionary must cover exactly all these component names with True/False values; missing names and duplicate states are invalid.
+Simulator copies the declarations into an internal immutable snapshot when receiving them; later changes to the external list/dictionaries do not change the declaration.
+An explicit family can exclude singular combinations that are known to be unreachable, and the caller must ensure coverage of actual states. Any singular/underdetermined matrix in the automatic family raises before time advances.
+
+This small circuit explicitly declares both off and on states of S, without another solver or control interface:
+
+```python
+from pycy_emt_lite import Capacitor, Circuit, CurrentSource, IdealSwitch, Resistor, SimulationConfig, Simulator
+
+components = [
+    CurrentSource("I", "0", "n", 1.0), Resistor("R", "n", "0", 2.0),
+    Capacitor("C", "n", "0", 1.0),
+    IdealSwitch("S", "n", "0", lambda t: 0.1 <= t < 0.2,
+                closed_resistance=1.0, open_conductance=0.0),
+]
+config = SimulationConfig(time_step=0.1, stop_time=0.2, linear_solver_mode="precompute",
+                          precompute_states=({"S": False}, {"S": True}))
+simulator = Simulator(Circuit.from_components("finite_switch_states", components), config)
+result = simulator.run()
+assert result.series("state:S").tolist() == [0.0, 1.0, 0.0]
+assert simulator.solver.factorization_count == 4
+```
+
+Lookup keys contain actual h, integration/consistency solve kind and state; the integration method is fixed for this Simulator. The family covers every positive h in the existing grid and augmented initial/event consistency matrices.
+Identical complete A matrices are factored only once, even across states/solve kinds. Runtime requires exact equality of actual A and uses the same LU for a consistency correction.
+Unknown states/h or new coefficients raise before solving, with no in-loop factorization or silent fallback to reuse. Lookup reads the gate state saved by stamp, without calling the gate function again.
+Per-step assembly and consistency QR/rank checks remain; the strategy only reduces network LU and does not skip other computation or numerical checks.
+
+The private numerical budget is 1 GiB. Before creation, it estimates A, LU, pivots, preparation deduplication keys, lookup keys and temporary arrays from state count, every h and ordinary/augmented dimensions; creation also checks accumulated actual array/byte-key nbytes.
+This limits numerical storage and estimated workspace, and does not guarantee process RSS; actual peaks for Python objects and underlying libraries remain to be measured.
+If the budget is exceeded, choose a smaller but still complete state family or reuse. Do not omit reachable states to pass the check; raising `precompute_max_states` does not remove the byte budget.
 
 Both `DenseLinearSolver.solve()` and the existing `factorize().solve()` check finite solutions, scaled residuals and diagnostics;
 the latter retains support for multiple right-hand sides. Residual tolerances must be finite nonnegative real scalars.

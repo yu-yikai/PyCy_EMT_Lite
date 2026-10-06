@@ -171,7 +171,11 @@ if __name__ == "__main__":
 仿真前用 `linear_solver_mode` 选择网络求解策略：默认 `"rebuild"` 每次重新 LU 分解；
 把上面配置改成 `"reuse"`，只在实际系数矩阵改变时重新分解，其余求解复用上一份 LU。
 每步仍装配矩阵/右端项、执行状态更新和数值保护；步长、参数或电机状态变化也可能使 LU 失效。
-这个选择独立于 BE/梯形积分 `method`，不保证所有算例都会加速；全部拓扑预分解尚未实现。
+第三种 `"precompute"` 在时间循环前预分解有限状态和全部实际步长的矩阵，循环中只查表求解。
+目前只支持固定参数的 Resistor/Capacitor/Inductor、CurrentSource/VoltageSource 及 Fault/Breaker/IdealSwitch；
+组合模型和电机尚未接入。默认自动枚举二值状态，最多 1024 种；也可用 `precompute_states` 声明完整有效集合。
+未声明状态、系数矩阵改变、奇异或超限会报错，详见[预计算规则与示例](docs/numerical_conventions.md#network-precompute)。
+网络策略独立于 BE/梯形积分 `method`；预计算增加启动成本和内存，不保证所有算例都会加速。
 
 ## 4. 读取、绘图与保存结果
 
