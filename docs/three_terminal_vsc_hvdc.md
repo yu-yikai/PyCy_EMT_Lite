@@ -190,21 +190,18 @@ uv run python examples/18_three_terminal_vsc_hvdc.py
 
 <a id="network-solver-scope"></a>
 
-网络求解策略独立于 MODE：顶部 `LINEAR_SOLVER_MODE` 默认 `"rebuild"`，也可调用
+网络求解策略独立于 MODE：本例含 18 个桥臂开关，**只允许 `"rebuild"` 或 `"reuse"`**。顶部 `LINEAR_SOLVER_MODE` 默认 `"rebuild"`，也可调用
 `define_case("FAST", linear_solver_mode="reuse")`，沿现有 run_case/Simulator 路径复用上一份 LU。
 它仍按实际完整 A 精确失效，不改变步长、源/门极/控制调用或初值与事件顺序。
 
-`linear_solver_mode="precompute"` 的类型接入已核定：三相电源、三相 RL 线路和不含饱和的三相变压器使用独立数值副本。
-九对无死区互补门极生成 512 个桥状态，三相故障同刻 apply 完成后才求右侧，因此声明同步开/关两种，共 1024 状态；
-`fault=False` 时只声明故障关断，共 512 状态。运行时查表并核对实际 A；破坏互补/同步关系或出现新系数都会拒绝，不临时补 LU。
+**含大量开关器件的网络不采用预计算。** `define_case(..., linear_solver_mode="precompute")` 在创建控制器和网络前报错；
+FAST/FULL/BENCHMARK、无故障运行及随后缩短仿真时间均遵守这一限制。本例不再生成或保存全部开关状态的矩阵族。
+小型有限状态网络仍可使用通用 Simulator 的 precompute，见[预计算规则](numerical_conventions.md#network-precompute)。
 
-**完整 FAST 预计算尚未通过资源验收。** 名义 20 µs 网格的浮点差分在既有归一化后仍有 15 种不同正 h；
-1024 状态需 15360 个131维积分矩阵及1024个153维一致矩阵。隔离审计逐状态分解全部16384份并通过非零 RHS 残差检查，确认字节矩阵均不同；
-若同时保存原 A/LU/主元，需要4609695744字节，约4.29GiB，准备期估算约6.45GiB，超过现有1GiB数值预算。
-因此完整 FAST 的 precompute 在真实源/门极、事件及控制执行前报错，分解次数为0；**当前完整运行请选择 rebuild/reuse**。
-预算内另核对了 t=0 及原 FAST 前两个区间（0–40 µs）：保留全部1024状态，预备2048份LU，三策略全部结果/43列控制遥测与R9前三行逐值一致，循环新增LU为0。
-该短窗口 native 缓存665862144字节，约635MiB；它与逐状态审计均不构成完整0.8s预计算运行通过，没有扩大预算、减少可达状态或改变 h。
-FULL/BENCHMARK 未做本阶段完整运行验收。时间/进程峰值内存收益仍留到后续阶段；现有数值 nbytes 不代表 RSS。
+此前 N3 按九对互补门极和同步故障核定了 1024 状态；15 种实际正 h 对应 16384 份矩阵，原 A/LU/主元需约4.29GiB，超过1GiB预算。
+该核定及仅 t=0/前两个区间的旧证据保留于[改进计划第7.18节](audit_20261005/项目问题与改进计划.md#network-solver-n3)，不代表当前开放 HVDC 预计算。
+当前范围由[第7.19节](audit_20261005/项目问题与改进计划.md#network-solver-scope-update)更新；不再为 HVDC 预计算推进 h 归一或预算扩容。
+后续性能测量只比较本例的 rebuild/reuse，小型网络另行比较三策略；尚未测时间及进程峰值内存收益，FULL/BENCHMARK 未补做完整运行验收。
 
 | 模式 | EMT 步长 | PWM | 时长 | 故障投入/清除 | 结果保存间隔 |
 |---|---|---|---|---|---|

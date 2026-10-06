@@ -172,13 +172,14 @@ Initial conditions, source derivatives and event rules are in [Numerical convent
 Choose the network solve strategy before running through `linear_solver_mode`: the default `"rebuild"` performs a fresh LU factorization for every solve.
 Change the configuration above to `"reuse"` to refactor only when the actual coefficient matrix changes; other solves reuse the previous LU.
 Each step still assembles the matrix/right-hand side, updates states and performs numerical checks; changes in step size, parameters or machine states can also invalidate the LU.
-The third option, `"precompute"`, factors matrices for a finite state family and every actual step size before the time loop, then solves by table lookup.
+The third option, `"precompute"`, is only for networks with few switches, a small complete state family and acceptable resource use. It factors matrices for every state and actual step size before the time loop, then solves by table lookup.
+Networks with many switching devices do not use precomputation; choose `"rebuild"` or `"reuse"`.
 It currently supports fixed-parameter Resistor/Capacitor/Inductor, CurrentSource/VoltageSource, Fault/Breaker/IdealSwitch,
 plus ThreePhaseSource, ThreePhaseLine and ThreePhaseTransformer without saturation; other composite models and machines are not admitted yet.
 Binary states are enumerated automatically, up to 1024 states; `precompute_states` can instead declare the complete valid family.
 Undeclared states, coefficient-matrix changes, singular matrices or exceeded limits raise errors; see [precomputation rules and example](docs/numerical_conventions.en.md#network-precompute).
 The network strategy is independent of the BE/trapezoidal integration `method`. Precomputation adds startup cost and memory, and does not guarantee a speedup for every case.
-The existing HVDC entry accepts a strategy, but full FAST precomputation raises because its actual h family exceeds the 1 GiB budget. Rebuild/reuse remain available; see [HVDC strategy scope](docs/three_terminal_vsc_hvdc.en.md#network-solver-scope).
+The HVDC example has 18 bridge switches and only allows rebuild/reuse. Selecting precompute raises before controllers or the network are constructed, for every MODE and for runs without faults; see [HVDC strategy scope](docs/three_terminal_vsc_hvdc.en.md#network-solver-scope).
 
 ## 4. Read, plot and save results
 

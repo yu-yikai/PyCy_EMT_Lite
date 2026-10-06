@@ -190,21 +190,18 @@ Set `MODE` at the top of the script, or call `define_case("FULL")` in Python and
 
 <a id="network-solver-scope"></a>
 
-The network strategy is independent of MODE. The top-level `LINEAR_SOLVER_MODE` defaults to `"rebuild"`; alternatively call
+The network strategy is independent of MODE. This example has 18 bridge switches and **only allows `"rebuild"` or `"reuse"`**. The top-level `LINEAR_SOLVER_MODE` defaults to `"rebuild"`; alternatively call
 `define_case("FAST", linear_solver_mode="reuse")` to reuse the previous LU through the existing run_case/Simulator path.
 It invalidates by exact equality of the complete actual A, preserving step sizes, source/gate/control calls and initial/event ordering.
 
-Type admission for `linear_solver_mode="precompute"` is verified: three-phase sources, RL lines and transformers without saturation use independent numerical copies.
-Nine complementary gate pairs without dead time generate 512 bridge states. All three fault events apply before the right-side solve, allowing two synchronous off/on states, for 1024 states total.
-With `fault=False`, only fault-off is declared, for 512 states. Runtime looks up and verifies actual A; broken complementarity/synchrony or new coefficients raise without an in-loop LU.
+**Networks with many switching devices do not use precomputation.** `define_case(..., linear_solver_mode="precompute")` raises before constructing controllers or the network.
+This restriction applies to FAST/FULL/BENCHMARK, runs without faults and subsequent shortening of the simulation. This example no longer generates or stores a complete switching-state matrix family.
+Small finite-state networks can still use precompute through the generic Simulator; see [precomputation rules](numerical_conventions.en.md#network-precompute).
 
-**Full FAST precomputation has not passed resource acceptance.** Floating differences in its nominal 20 µs grid retain 15 distinct positive h values after existing normalization.
-Its 1024 states require 15360 ordinary 131-dimensional matrices and 1024 consistency matrices of dimension 153. An isolated state-by-state audit factored all 16384 and passed nonzero-RHS residual checks, confirming distinct matrix bytes.
-Simultaneously retaining A/LU/pivots requires 4609695744 bytes, about 4.29 GiB; preparation estimates about 6.45 GiB, exceeding the existing 1 GiB numerical budget.
-Full FAST precompute therefore raises before real sources/gates, events or control execute, with zero factorizations. **Choose rebuild/reuse for current full runs.**
-Within budget, t=0 and the first two original FAST intervals (0–40 µs) were also checked. All 1024 states remain, with 2048 prepared LUs; all result fields and 43 control telemetry columns match the first three R9 rows exactly across strategies, with zero in-loop LUs.
-This short-window native cache uses 665862144 bytes, about 635 MiB. It and the state-by-state audit do not accept a full 0.8 s precompute run. The budget, reachable-state coverage and h values were not changed.
-FULL/BENCHMARK did not receive full-run acceptance in this stage. Time/peak process memory benefits remain a later stage; numerical nbytes do not measure RSS.
+The earlier N3 review covered 1024 states from nine complementary gate pairs and synchronous faults. Its 15 distinct positive h values required 16384 matrices and about 4.29 GiB for A/LU/pivots, exceeding the 1 GiB budget.
+That review and the old t=0/first-two-interval evidence remain in [plan section 7.18](audit_20261005/项目问题与改进计划.md#network-solver-n3); they do not enable current HVDC precomputation.
+[Section 7.19](audit_20261005/项目问题与改进计划.md#network-solver-scope-update) updates the current scope. Step-size normalization and budget expansion will no longer be pursued for HVDC precomputation.
+Later performance measurements will compare rebuild/reuse for this example and all three strategies separately for small networks. Time and peak process memory benefits have not been measured; no additional full-run acceptance was performed for FULL/BENCHMARK.
 
 | Mode | EMT step | PWM | Duration | Fault application/clearing | Recorded interval |
 |---|---|---|---|---|---|

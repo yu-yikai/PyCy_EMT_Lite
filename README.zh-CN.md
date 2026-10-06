@@ -171,13 +171,14 @@ if __name__ == "__main__":
 仿真前用 `linear_solver_mode` 选择网络求解策略：默认 `"rebuild"` 每次重新 LU 分解；
 把上面配置改成 `"reuse"`，只在实际系数矩阵改变时重新分解，其余求解复用上一份 LU。
 每步仍装配矩阵/右端项、执行状态更新和数值保护；步长、参数或电机状态变化也可能使 LU 失效。
-第三种 `"precompute"` 在时间循环前预分解有限状态和全部实际步长的矩阵，循环中只查表求解。
+第三种 `"precompute"` 仅用于开关少、完整状态集合小且满足预算的网络，在时间循环前预分解有限状态和全部实际步长的矩阵，循环中只查表求解。
+含大量开关器件的网络不采用预计算，选择 `"rebuild"` 或 `"reuse"`。
 目前支持固定参数的 Resistor/Capacitor/Inductor、CurrentSource/VoltageSource、Fault/Breaker/IdealSwitch，
 以及 ThreePhaseSource、ThreePhaseLine 和不含饱和的 ThreePhaseTransformer；其他组合模型和电机尚未接入。
 默认自动枚举二值状态，最多 1024 种；也可用 `precompute_states` 声明完整有效集合。
 未声明状态、系数矩阵改变、奇异或超限会报错，详见[预计算规则与示例](docs/numerical_conventions.md#network-precompute)。
 网络策略独立于 BE/梯形积分 `method`；预计算增加启动成本和内存，不保证所有算例都会加速。
-HVDC 现有入口可选策略，但完整 FAST 的预计算因实际 h 族导致超过 1 GiB 预算而拒绝；当前可用 rebuild/reuse，见[HVDC策略范围](docs/three_terminal_vsc_hvdc.md#network-solver-scope)。
+HVDC 示例含 18 个桥臂开关，仅允许 rebuild/reuse；选择 precompute 会在创建控制器和网络前报错，所有 MODE 及无故障运行均适用，见[HVDC策略范围](docs/three_terminal_vsc_hvdc.md#network-solver-scope)。
 
 ## 4. 读取、绘图与保存结果
 

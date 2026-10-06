@@ -80,7 +80,7 @@
 - 只吸收浮点表示造成的微小舍入差异：正时间比较使用成对 8 ULP 容差，并统一到标准网格值；
   零时刻只与零相等。这不允许任意近似对齐。
 - `method` 只接受表中的两种方法。普通 R/L/C 参数必须为有限正实数；复合模型是否允许零阻抗由模型说明决定。
-- `linear_solver_mode` 只接受 `"rebuild"`（默认，每次重新 LU 分解）或 `"reuse"`（实际 A 完全相同时复用上一份 LU）；不改变积分方法或时间网格。第三种预分解策略尚未实现。
+- `linear_solver_mode` 接受 `"rebuild"`（默认，每次重新 LU 分解）、`"reuse"`（实际 A 完全相同时复用上一份 LU）或 `"precompute"`（小型网络启动预分解）；不改变积分方法或时间网格。含大量开关器件的网络选择前两种，第三种的限定范围见[预计算规则](#network-precompute)。
 
 元件参数按 `numbers.Real` 接受 Python/NumPy 实数，转换为有限浮点数后检查范围；布尔值、可转换字符串和复数不接受。
 `time_step` 不支持非正规浮点数（小于 `numpy.finfo(float).tiny`）。在分配前限制基础步数和基础步数加事件数
@@ -225,6 +225,9 @@ assert abs(result.rows[0]["i:C"] - 6.0) < 1e-12
 
 <a id="network-precompute"></a>
 
+预计算仅用于开关少、完整状态集合小且满足预算的网络。含大量开关器件的网络使用 rebuild/reuse，不能为使用预计算而缩减可达状态、改步长或扩大预算。
+通用 Simulator 保留状态数和字节预算检查；不新增任意的开关个数阈值或自动选型。HVDC 示例入口另行明确拒绝 precompute。
+
 `linear_solver_mode="precompute"` 当前核定固定参数 Resistor、Capacitor、Inductor、CurrentSource、VoltageSource、Fault、Breaker、IdealSwitch，
 以及 ThreePhaseSource、ThreePhaseLine、不含饱和的 ThreePhaseTransformer 的精确类型。
 自定义子类、其他组合线路/变压器、电机及带饱和的三相变压器仍在占用电路前报错，可选 reuse。
@@ -266,8 +269,8 @@ assert simulator.solver.factorization_count == 4
 私有数值预算为 1 GiB：先按状态数、全部 h、普通/增广尺寸估计 A、LU、主元、准备期去重键、查表键及临时数组空间，再创建；创建时累计实际数组/字节键 nbytes 复核。
 这是数值存储与估计工作空间的限制，不是进程 RSS 保证；Python 对象及底层库实际峰值尚待测量。
 超过预算时应缩小仍完整的状态集合或选 reuse，不能为通过检查遗漏可达状态；提高 `precompute_max_states` 也不会解除字节预算。
-完整 HVDC FAST 的 20 µs 名义网格目前产生 15 种精确不同的实际正 h；1024 状态需 16384 个不同矩阵，仅原 A/LU/主元就约 4.29 GiB。
-因此它在现有 1 GiB 预算下启动拒绝；支持类型已接入不表示该完整算例通过预计算验收，见[HVDC范围](three_terminal_vsc_hvdc.md#network-solver-scope)。
+此前 HVDC 核定发现 1024 状态及 15 种实际正 h 需要 16384 个不同矩阵，仅原 A/LU/主元就约 4.29 GiB。
+目前按大量开关网络的使用限制，HVDC 入口在创建控制器和网络前直接拒绝 precompute，不再生成该状态族；缩短时间或关闭故障也不开放，见[HVDC范围](three_terminal_vsc_hvdc.md#network-solver-scope)。
 
 `DenseLinearSolver.solve()` 与已有 `factorize().solve()` 都检查解有限性、缩放残差和求解诊断；后者保留多右端项能力。
 残差阈值须为有限非负实数。残差反映后向误差，不能保证病态方程的前向误差或派生电流精度。

@@ -81,7 +81,7 @@ Machine mechanical/control states have their own explicit update order; their in
 - Only small floating-point representation differences are absorbed: positive times use a pairwise 8 ULP tolerance and are
   canonicalized to grid values; zero matches only zero. This is not arbitrary approximate alignment.
 - `method` accepts only the two methods above. Basic R/L/C values must be finite positive real numbers; composite-model rules determine whether zero impedance is allowed.
-- `linear_solver_mode` accepts only `"rebuild"` (default, fresh LU for each solve) or `"reuse"` (reuse the previous LU when actual A is exactly equal); integration and the time grid are unchanged. The third, precomputed strategy is not implemented yet.
+- `linear_solver_mode` accepts `"rebuild"` (default, fresh LU for each solve), `"reuse"` (reuse the previous LU when actual A is exactly equal) or `"precompute"` (startup factorization for small networks); integration and the time grid are unchanged. Networks with many switching devices use the first two; see [precomputation rules](#network-precompute) for the third option's scope.
 
 Component parameters accept Python/NumPy real scalars through `numbers.Real`, convert to finite floats, then check ranges.
 Booleans, convertible strings and complex values are rejected. Subnormal `time_step` values (below `numpy.finfo(float).tiny`)
@@ -238,6 +238,9 @@ Fewer factorizations do not establish an end-to-end speedup; preparation/loop/to
 
 <a id="network-precompute"></a>
 
+Precomputation is only for networks with few switches, a small complete state family and acceptable resource use. Networks with many switching devices use rebuild/reuse; do not reduce reachable-state coverage, change step sizes or raise the budget to enable precomputation.
+The generic Simulator retains its state-count and byte-budget checks, without an arbitrary switch-count threshold or automatic strategy selection. The HVDC example entry separately rejects precompute explicitly.
+
 `linear_solver_mode="precompute"` currently admits the exact fixed-parameter Resistor, Capacitor, Inductor, CurrentSource, VoltageSource, Fault, Breaker and IdealSwitch types,
 plus ThreePhaseSource, ThreePhaseLine and ThreePhaseTransformer without saturation.
 Custom subclasses, other composite lines/transformers, machines and saturating three-phase transformers still raise before claiming the circuit, and can use reuse.
@@ -279,8 +282,8 @@ Per-step assembly and consistency QR/rank checks remain; the strategy only reduc
 The private numerical budget is 1 GiB. Before creation, it estimates A, LU, pivots, preparation deduplication keys, lookup keys and temporary arrays from state count, every h and ordinary/augmented dimensions; creation also checks accumulated actual array/byte-key nbytes.
 This limits numerical storage and estimated workspace, and does not guarantee process RSS; actual peaks for Python objects and underlying libraries remain to be measured.
 If the budget is exceeded, choose a smaller but still complete state family or reuse. Do not omit reachable states to pass the check; raising `precompute_max_states` does not remove the byte budget.
-The nominal 20 µs grid of full HVDC FAST currently produces 15 exactly distinct positive h values. Its 1024 states require 16384 distinct matrices, with about 4.29 GiB for A/LU/pivots alone.
-It therefore raises at startup under the existing 1 GiB budget. Admitting component types does not accept full-case precomputation; see [HVDC scope](three_terminal_vsc_hvdc.en.md#network-solver-scope).
+The earlier HVDC review found that 1024 states and 15 distinct positive h values required 16384 distinct matrices, with about 4.29 GiB for A/LU/pivots alone.
+Under the current restriction for networks with many switches, the HVDC entry rejects precompute before constructing controllers or the network, without generating that state family. Shortening the run or disabling faults does not enable it; see [HVDC scope](three_terminal_vsc_hvdc.en.md#network-solver-scope).
 
 Both `DenseLinearSolver.solve()` and the existing `factorize().solve()` check finite solutions, scaled residuals and diagnostics;
 the latter retains support for multiple right-hand sides. Residual tolerances must be finite nonnegative real scalars.

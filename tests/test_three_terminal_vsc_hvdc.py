@@ -95,81 +95,44 @@ def test_default_example_uses_fast_configuration(example):
     assert case.config.linear_solver_mode == "rebuild" and case.config.precompute_states is None
 
 
-@pytest.mark.parametrize("fault,count", [(True, 1024), (False, 512)])
-def test_hvdc_precompute_family_is_complete_complementary_and_faults_synchronous(example, fault, count):
-    case = example["define_case"]("FAST", fault=fault, linear_solver_mode="precompute")
-    states = case.config.precompute_states
-    assert len(states) == count and len({tuple(sorted(state.items())) for state in states}) == count
-    assert all(len(state) == 21 for state in states)
-    patterns = set()
-    for state in states:
-        tops = []
-        for station, *_ in example["STATIONS"]:
-            for phase in "abc":
-                top = state[f"{station}:{phase}_top"]
-                assert state[f"{station}:{phase}_bottom"] is not top
-                tops.append(top)
-        enabled = [state[f"S3:fault:{phase}"] for phase in "abc"]
-        assert enabled[0] == enabled[1] == enabled[2]
-        if not fault:
-            assert not any(enabled)
-        patterns.add((tuple(tops), enabled[0]))
-    assert len(patterns) == count
+@pytest.mark.parametrize("mode", ["FAST", "FULL", "BENCHMARK"])
+@pytest.mark.parametrize("fault", [True, False])
+def test_hvdc_rejects_precompute_before_creating_controllers_or_network(example, mode, fault, monkeypatch):
+    def must_not_create(*args, **kwargs):
+        pytest.fail("precompute must be rejected before constructing controllers or network")
+    monkeypatch.setitem(example["define_case"].__globals__, "VSCController", must_not_create)
+    with pytest.raises(ValueError, match="HVDC.*大量开关.*precompute.*rebuild.*reuse"):
+        example["define_case"](mode, fault=fault, linear_solver_mode="precompute")
+
+
+@pytest.mark.parametrize("mode", ["FAST", "FULL", "BENCHMARK"])
+@pytest.mark.parametrize("fault", [True, False])
+@pytest.mark.parametrize("linear_solver_mode", ["rebuild", "reuse"])
+def test_hvdc_supported_strategies_preserve_configuration_and_fault_events(example, mode, fault, linear_solver_mode):
+    case = example["define_case"](mode, fault=fault, linear_solver_mode=linear_solver_mode)
+    settings = example["MODES"][mode]
+    assert case.config.linear_solver_mode == linear_solver_mode
+    assert case.config.precompute_states is None
+    assert case.config.time_step == settings.time_step and case.config.stop_time == settings.stop_time
+    assert case.config.record_every == settings.record_every
+    assert case.config.method == "backward_euler" and case.config.event_time_policy == "require_aligned"
+    assert len([c for c in case.components if type(c) is IdealSwitch]) == 18
+    assert len(case.on_step.controllers) == 3
     events = [(event.time, type(event).__name__, event.target) for event in case.events]
     assert len(events) == (6 if fault else 0)
     if fault:
-        for time, kind in ((.3, "FaultApplyEvent"), (.45, "FaultClearEvent")):
+        for time, kind in ((settings.fault_on, "FaultApplyEvent"), (settings.fault_off, "FaultClearEvent")):
             assert {target for t, name, target in events if t == time and name == kind} == {
                 f"S3:fault:{phase}" for phase in "abc"}
 
 
-def test_hvdc_precompute_snapshot_does_not_call_gate_or_advance_controller(example, monkeypatch):
-    from dataclasses import replace
-    from pycy_emt_lite.core.solvers import DenseLinearSolver
-    case = example["define_case"]("FAST", fault=False, linear_solver_mode="precompute")
-    # 完整512状态×普通/一致矩阵的专项验收另有全FAST证据；此处只验证一个声明状态的隔离。
-    state = {name: ("_top" in name) for name in case.config.precompute_states[0]}
-    state.update({f"S3:fault:{phase}": False for phase in "abc"})
-    def gate_must_not_run(time):
-        pytest.fail("preparation must not call real gates")
-    for component in case.components:
-        if type(component) is IdealSwitch:
-            component.closed = gate_must_not_run
-    config = replace(case.config, precompute_states=[state])
-    simulator = Simulator(Circuit.from_components(case.name, case.components), config, solver=DenseLinearSolver())
-    simulator.circuit.prepare()
-    before = [(c.last_time, c.modulation, c.pll.frequency, c.dc_pi.integrator, c.d_pi.integrator)
-              for c in case.on_step.controllers]
-    storage = [(c.name, getattr(c, "previous_voltage", None), getattr(c, "previous_current", None))
-               for c in case.components]
-    simulator._prepare_linear_systems(simulator._time_points())
-    assert simulator.solver.factorization_count == 16 and simulator.solver.solve_count == 0
-    assert simulator.event_log == [] and simulator.last_time is None
-    assert before == [(c.last_time, c.modulation, c.pll.frequency, c.dc_pi.integrator, c.d_pi.integrator)
-                      for c in case.on_step.controllers]
-    assert storage == [(c.name, getattr(c, "previous_voltage", None), getattr(c, "previous_current", None))
-                       for c in case.components]
-
-
-def test_hvdc_full_precompute_family_rejects_budget_before_sources_events_or_control(example):
-    case = example["define_case"]("FAST", linear_solver_mode="precompute")
-    simulator = Simulator(Circuit.from_components(case.name, case.components), case.config,
-                          case.events, on_step=case.on_step)
-    with pytest.raises(ValueError, match="precompute.*1024.*16384.*字节.*reuse"):
-        simulator.run()
-    assert simulator.solver.factorization_count == simulator.solver.solve_count == 0
-    assert simulator.event_log == [] and simulator.last_time is None
-    assert all(c.last_time is None and c.modulation == (0.0, 0.0, 0.0) for c in case.on_step.controllers)
-    assert all(not c.last_state for c in case.components if type(c) is IdealSwitch)
-
-
-@pytest.mark.parametrize("fault,expected_factors", [(True, 1024), (False, 512)])
-def test_hvdc_precompute_initial_row_and_control_states_match_all_strategies(example, fault, expected_factors):
+@pytest.mark.parametrize("fault", [True, False])
+def test_hvdc_initial_row_and_control_states_match_supported_strategies(example, fault):
     from dataclasses import replace
     results, states = [], []
-    for mode in ("rebuild", "reuse", "precompute"):
+    for mode in ("rebuild", "reuse"):
         case = example["define_case"]("FAST", fault=fault, linear_solver_mode=mode)
-        # 仅初值：完整一致矩阵族可在预算内形成；不能把该测试当作完整FAST验收。
+        # 两种允许策略的一致初值及控制状态保持相同。
         simulator = Simulator(Circuit.from_components(case.name, case.components),
             replace(case.config, stop_time=0.0), case.events, on_step=case.on_step)
         results.append(simulator.run().rows)
@@ -177,11 +140,8 @@ def test_hvdc_precompute_initial_row_and_control_states_match_all_strategies(exa
                         c.dc_pi.integrator, c.ac_pi.integrator, c.d_pi.integrator, c.q_pi.integrator,
                         *(f.state for f in c.current_filters), *(f.state for f in c.voltage_filters),
                         c.vac_filter.state, c.vdc_filter.state) for c in case.on_step.controllers])
-        if mode == "precompute":
-            assert simulator.solver.factorization_count == expected_factors
-            assert simulator.solver.solve_count == 1 and simulator.solver.last_diagnostics.reused_factorization
-    assert results[0] == results[1] == results[2]
-    assert states[0] == states[1] == states[2]
+    assert results[0] == results[1]
+    assert states[0] == states[1]
 
 
 def arrays(result):
