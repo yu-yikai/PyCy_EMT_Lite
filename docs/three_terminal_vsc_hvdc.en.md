@@ -201,7 +201,9 @@ Small finite-state networks can still use precompute through the generic Simulat
 The earlier N3 review covered 1024 states from nine complementary gate pairs and synchronous faults. Its 15 distinct positive h values required 16384 matrices and about 4.29 GiB for A/LU/pivots, exceeding the 1 GiB budget.
 That review and the old t=0/first-two-interval evidence remain in [plan section 7.18](audit_20261005/项目问题与改进计划.md#network-solver-n3); they do not enable current HVDC precomputation.
 [Section 7.19](audit_20261005/项目问题与改进计划.md#network-solver-scope-update) updates the current scope. Step-size normalization and budget expansion will no longer be pursued for HVDC precomputation.
-Later performance measurements will compare rebuild/reuse for this example and all three strategies separately for small networks. Time and peak process memory benefits have not been measured; no additional full-run acceptance was performed for FULL/BENCHMARK.
+N4 completed three interleaved measurements per rebuild/reuse strategy for both the default and three-format/image-saving workflows. Independently captured result fields and 43 control telemetry columns match R9 exactly; the order, times and states of 720054 gate calls also match between strategies.
+Reuse reduces the LU count by about 31.45%, but neither complete workflow established a stable overall speedup. Median complete-workflow peak working sets were about 0.75%/0.43% lower on this machine, without a guarantee across scenarios. The default remains rebuild; see [section 7.20 for costs and scope](audit_20261005/项目问题与改进计划.md#network-solver-n4).
+Small networks separately compare all three strategies, including preparation costs. No additional full-run acceptance was performed for FULL/BENCHMARK. This stage only measured costs and updated existing documents; other optimizations remain deferred.
 
 | Mode | EMT step | PWM | Duration | Fault application/clearing | Recorded interval |
 |---|---|---|---|---|---|

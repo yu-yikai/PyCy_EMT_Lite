@@ -179,6 +179,8 @@ if __name__ == "__main__":
 未声明状态、系数矩阵改变、奇异或超限会报错，详见[预计算规则与示例](docs/numerical_conventions.md#network-precompute)。
 网络策略独立于 BE/梯形积分 `method`；预计算增加启动成本和内存，不保证所有算例都会加速。
 HVDC 示例含 18 个桥臂开关，仅允许 rebuild/reuse；选择 precompute 会在创建控制器和网络前报错，所有 MODE 及无故障运行均适用，见[HVDC策略范围](docs/three_terminal_vsc_hvdc.md#network-solver-scope)。
+N4 本机三次交错测量中，reuse 虽减少 FAST 的 LU 次数约31.45%，但默认及保存完整流程均未核定稳定加速；小网络预计算也需计入准备成本。
+默认仍为 rebuild；时间、峰值工作集及测量范围见[成本验收记录](docs/audit_20261005/项目问题与改进计划.md#network-solver-n4)。
 
 ## 4. 读取、绘图与保存结果
 

@@ -180,6 +180,8 @@ Binary states are enumerated automatically, up to 1024 states; `precompute_state
 Undeclared states, coefficient-matrix changes, singular matrices or exceeded limits raise errors; see [precomputation rules and example](docs/numerical_conventions.en.md#network-precompute).
 The network strategy is independent of the BE/trapezoidal integration `method`. Precomputation adds startup cost and memory, and does not guarantee a speedup for every case.
 The HVDC example has 18 bridge switches and only allows rebuild/reuse. Selecting precompute raises before controllers or the network are constructed, for every MODE and for runs without faults; see [HVDC strategy scope](docs/three_terminal_vsc_hvdc.en.md#network-solver-scope).
+In N4's three interleaved measurements on this machine, reuse reduced FAST's LU count by about 31.45%, but neither the default nor the saving workflow established a stable overall speedup. Small-network precomputation must also include preparation costs.
+The default remains rebuild; see the [cost acceptance record](docs/audit_20261005/项目问题与改进计划.md#network-solver-n4) for timings, peak working sets and measurement scope.
 
 ## 4. Read, plot and save results
 

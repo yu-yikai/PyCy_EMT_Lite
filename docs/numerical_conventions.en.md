@@ -280,7 +280,8 @@ Unknown states/h or new coefficients raise before solving, with no in-loop facto
 Per-step assembly and consistency QR/rank checks remain; the strategy only reduces network LU and does not skip other computation or numerical checks.
 
 The private numerical budget is 1 GiB. Before creation, it estimates A, LU, pivots, preparation deduplication keys, lookup keys and temporary arrays from state count, every h and ordinary/augmented dimensions; creation also checks accumulated actual array/byte-key nbytes.
-This limits numerical storage and estimated workspace, and does not guarantee process RSS; actual peaks for Python objects and underlying libraries remain to be measured.
+This limits numerical storage and estimated workspace, and does not guarantee process RSS; actual peaks for Python objects and underlying libraries must be measured per case.
+N4 measured all three strategies for two existing small networks and two strategies for HVDC. Its preparation costs and process-lifetime peak working sets do not guarantee memory use for every supported network; see [cost acceptance](audit_20261005/项目问题与改进计划.md#network-solver-n4).
 If the budget is exceeded, choose a smaller but still complete state family or reuse. Do not omit reachable states to pass the check; raising `precompute_max_states` does not remove the byte budget.
 The earlier HVDC review found that 1024 states and 15 distinct positive h values required 16384 distinct matrices, with about 4.29 GiB for A/LU/pivots alone.
 Under the current restriction for networks with many switches, the HVDC entry rejects precompute before constructing controllers or the network, without generating that state family. Shortening the run or disabling faults does not enable it; see [HVDC scope](three_terminal_vsc_hvdc.en.md#network-solver-scope).
