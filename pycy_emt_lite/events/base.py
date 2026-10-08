@@ -90,19 +90,3 @@ class EventQueue:
             due.append(self._events[self._next_index])
             self._next_index += 1
         return due
-
-    def skip_until(self, time: float, *, tolerance: float) -> None:
-        """跳过所有设定时间不晚于 `time` 的事件。
-
-        当 `SimulationConfig.start_time` 大于 0 时，起始时刻之前的事件已经反映在
-        元件状态中，事件队列只应继续处理后续事件，避免把历史事件重复作用到电路。
-        """
-
-        while self._next_index < len(self._events) and self._events[self._next_index].time <= time + tolerance:
-            self._next_index += 1
-
-    @property
-    def remaining_count(self) -> int:
-        """返回尚未触发的事件数量。"""
-
-        return len(self._events) - self._next_index

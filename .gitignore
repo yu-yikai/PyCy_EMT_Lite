@@ -14,6 +14,13 @@ __pycache__/
 # generated simulation outputs
 outputs/
 
+# local-only audit evidence attachments (kept on this machine, not for Git)
+docs/audit_20261005/*.json
+docs/audit_20261005/*.txt
+docs/audit_20261005/mutation_check.py
+docs/audit_20261005/reproduce.py
+docs/audit_20261005/supplemental_check.py
+
 # editor and OS files
 .idea/
 .vscode/

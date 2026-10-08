@@ -145,10 +145,9 @@ def run_case(case: CaseDefinition) -> SimulationResult:
         result.to_npz(output_dir / "result.npz")
         print(f"数据结果已保存到：{output_dir}")
 
+    # kind、列数和图名已在 _output_directory 仿真前校验，此处按校验后的两类直接绘图。
     for plot in case.plots:
         figure_path = output_dir / plot.figure_name if case.output.save_figure else None
-        if case.output.save_figure and not plot.figure_name:
-            raise ValueError("保存图像时每个 PlotSpec 都需要提供 figure_name。")
         if plot.kind == "series":
             plot_series(
                 result,
@@ -157,20 +156,14 @@ def run_case(case: CaseDefinition) -> SimulationResult:
                 show=case.output.show_figure,
                 title=plot.title,
             )
-            continue
-
-        if len(plot.columns) != 3:
-            raise ValueError(
-                f"三相曲线 {plot.figure_name!r} 必须正好包含 3 个字段，"
-                f"当前为 {len(plot.columns)} 个。"
+        else:
+            plot_three_phase(
+                result,
+                (plot.columns[0], plot.columns[1], plot.columns[2]),
+                figure_path,
+                show=case.output.show_figure,
+                title=plot.title,
             )
-        plot_three_phase(
-            result,
-            (plot.columns[0], plot.columns[1], plot.columns[2]),
-            figure_path,
-            show=case.output.show_figure,
-            title=plot.title,
-        )
 
     if case.output.save_figure:
         print(f"结果图像已保存到：{output_dir}")
