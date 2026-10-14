@@ -3,12 +3,20 @@
 文件作用：验证仿真结果 CSV、JSON、NPZ 保存和读入。
 """
 
-import math
 import json
+import math
+
 import numpy as np
 import pytest
 
-from pycy_emt_lite import Circuit, Resistor, SimulationConfig, SimulationResult, Simulator, VoltageSource
+from pycy_emt_lite import (
+    Circuit,
+    Resistor,
+    SimulationConfig,
+    SimulationResult,
+    Simulator,
+    VoltageSource,
+)
 
 
 @pytest.mark.parametrize("format", ["csv", "json", "npz"])

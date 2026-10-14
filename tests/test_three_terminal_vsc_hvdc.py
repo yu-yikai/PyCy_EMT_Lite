@@ -1,13 +1,20 @@
 """开关级三端示例：分阶段控制验证、端口守恒和完整 FAST 故障回归。"""
 
-from pathlib import Path
 import math
 import runpy
+from pathlib import Path
 
 import numpy as np
 import pytest
 
-from pycy_emt_lite import Circuit, IdealSwitch, SimulationConfig, Simulator, VoltageSource, SimulationResult
+from pycy_emt_lite import (
+    Circuit,
+    IdealSwitch,
+    SimulationConfig,
+    SimulationResult,
+    Simulator,
+    VoltageSource,
+)
 from pycy_emt_lite.components.transformers import ThreePhaseTransformer
 from pycy_emt_lite.controls import dq_to_abc
 
@@ -179,6 +186,7 @@ def test_single_bridge_open_loop_power_identity(example):
     _assert_bridge_power(a, "S2", example)
 
 
+@pytest.mark.slow
 def test_single_station_pll_and_dq_tracking_with_step_refinement(example):
     means = []
     for step in (20e-6, 10e-6):
@@ -202,6 +210,7 @@ def test_single_station_pll_and_dq_tracking_with_step_refinement(example):
     assert abs(means[0] - means[1]) < 4e6  # 相同 PWM/物理窗口；只检查平均 P，不声称波形二阶收敛。
 
 
+@pytest.mark.slow
 def test_two_station_intermediate_dc_exchange(example):
     controllers = tuple(example["VSCController"](s, f, hv, 230e3, p, 1000) for s, f, hv, p in example["STATIONS"][:2])
     components = tuple(part for c in controllers for part in example["station_components"](c))
@@ -216,6 +225,7 @@ def test_two_station_intermediate_dc_exchange(example):
     assert np.max(np.abs(a["DC:balance_residual"])) < 1.0
 
 
+@pytest.mark.slow
 def test_three_terminal_vsc_hvdc_fast_run(fast):
     case, result, a = fast
     assert sum(isinstance(c, IdealSwitch) for c in case.components) == 18
@@ -231,6 +241,7 @@ def test_three_terminal_vsc_hvdc_fast_run(fast):
     assert max(np.max(np.abs(a[f"v:S3:hv:{p}"])) for p in "abc") < 5e6
 
 
+@pytest.mark.slow
 def test_three_plls_have_small_mean_bias(fast):
     _, _, a = fast
     for start, end in ((.18, .28), (.7, .8)):
@@ -239,6 +250,7 @@ def test_three_plls_have_small_mean_bias(fast):
             assert abs(average(a, f"{s}:PLL_Vq_pu", start, end)) < .01
 
 
+@pytest.mark.slow
 def test_dc_slack_station_regulates_voltage_and_controls_have_small_mean_bias(fast):
     _, _, a = fast
     for start, end in ((.18, .28), (.7, .8)):
@@ -267,6 +279,7 @@ def _assert_bridge_power(a, s, example):
     np.testing.assert_allclose(pac, dc_out + loss, atol=2, rtol=0)
 
 
+@pytest.mark.slow
 def test_three_terminal_power_balance_reasonable_and_discrete_energy(fast, example):
     _, _, a = fast
     assert np.max(np.abs(a["DC:balance_residual"])) < 1.0  # W，对 200 MW 级功率。
@@ -297,6 +310,7 @@ def test_three_terminal_power_balance_reasonable_and_discrete_energy(fast, examp
     assert abs(average(a, "DC:power_in", .7, .8)-average(a, "DC:loss", .7, .8)) < 5e6
 
 
+@pytest.mark.slow
 def test_pwm_complementary_and_matches_recorded_carrier(fast):
     _, _, a = fast
     for s in ("S1", "S2", "S3"):
@@ -308,6 +322,7 @@ def test_pwm_complementary_and_matches_recorded_carrier(fast):
             assert np.count_nonzero(np.diff(top)) > 500
 
 
+@pytest.mark.slow
 def test_fault_event_applies_and_clears(fast):
     _, result, a = fast
     assert len(result.event_log) == 6

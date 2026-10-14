@@ -4,9 +4,9 @@
 """
 
 import math
+import runpy
 from dataclasses import replace
 from pathlib import Path
-import runpy
 
 import numpy as np
 import pytest
@@ -321,6 +321,7 @@ def test_lcl_filter_two_port_startup_matches_ode_kcl_and_energy(resistances, met
     np.testing.assert_allclose(errors[0] / errors[1], order_ratio, rtol=0.08)
 
 
+@pytest.mark.slow
 def test_pwm_bridge_phasors_current_balance_and_step_sensitivity() -> None:
     example = runpy.run_path(str(Path(__file__).parents[1] / "examples/12_two_level_pwm_generator.py"))
     omega = 2 * math.pi * example["FUNDAMENTAL_FREQUENCY"]
@@ -367,7 +368,7 @@ def test_pwm_bridge_phasors_current_balance_and_step_sensitivity() -> None:
 
     fine_time, fine_current, fine_phasor = snapshots[-1]
     waveform_errors = []
-    for time, current, phasor in snapshots[:2]:
+    for time, current, _phasor in snapshots[:2]:
         np.testing.assert_allclose(time, fine_time, atol=1e-14, rtol=0)
         waveform_errors.append(np.sqrt(np.trapezoid((current - fine_current)**2, time, axis=1) / (time[-1] - time[0])))
     assert np.max(waveform_errors[0]) < 0.6  # A，默认 5 μs 相对细网格的三相最大 RMS 差

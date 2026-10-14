@@ -10,14 +10,15 @@
 from __future__ import annotations
 
 import math
+from collections.abc import Iterable
 from dataclasses import dataclass
-from typing import Iterable
 
 import numpy as np
 
 from pycy_emt_lite.components.base import Component, _finite_real
 from pycy_emt_lite.core.context import StampContext
-from pycy_emt_lite.core.stamping import add_conductance, _conductance_current
+from pycy_emt_lite.core.stamping import _conductance_current, add_conductance
+
 
 @dataclass(slots=True)
 class Fault(Component):

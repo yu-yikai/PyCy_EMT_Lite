@@ -16,8 +16,8 @@ from pycy_emt_lite import (
     ThreePhaseLoad,
     ThreePhaseSource,
 )
-from pycy_emt_lite.cases import CaseDefinition, OutputOptions, PlotSpec, run_case
 from pycy_emt_lite.analysis import peak_abs, three_phase_rms
+from pycy_emt_lite.cases import CaseDefinition, OutputOptions, PlotSpec, run_case
 from pycy_emt_lite.io.results import SimulationResult
 
 SAVE_RESULT_DATA = 0
@@ -42,7 +42,7 @@ def print_summary(result: SimulationResult) -> None:
         voltage_rms = three_phase_rms(result, voltages, start_time=start, end_time=end)
         current_rms = three_phase_rms(result, currents, start_time=start, end_time=end)
         print(f"{label} [{start:.2f}, {end:.2f}] s（完整周期，保留暂态分量）：")
-        for phase, voltage, branch in zip("ABC", voltages, currents):
+        for phase, voltage, branch in zip("ABC", voltages, currents, strict=True):
             print(f"  {phase} 相：母线 {voltage_rms[voltage]:.3f} V RMS，线路 {current_rms[branch]:.3f} A RMS，"
                   f"负荷有功 {voltage_rms[voltage]**2 / LOAD_RESISTANCE:.3f} W")
     peak = max(peak_abs(result, column, start_time=0.04, end_time=0.08) for column in ("i:FA", "i:FB", "i:FC"))

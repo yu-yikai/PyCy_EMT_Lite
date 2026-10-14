@@ -12,7 +12,11 @@ from __future__ import annotations
 import math
 from dataclasses import dataclass, field
 
-from pycy_emt_lite.controls.blocks import PIController, _finite_real, _validate_time_step
+from pycy_emt_lite.controls.blocks import (
+    PIController,
+    _finite_real,
+    _validate_time_step,
+)
 from pycy_emt_lite.controls.transforms import abc_to_dq, wrap_angle
 
 
@@ -81,7 +85,7 @@ class SRFPLL:
         return ("proportional_gain", "integral_gain", "nominal_frequency", "initial_angle", "minimum_frequency", "maximum_frequency")
 
     def _check_configuration(self) -> None:
-        for parameter, original in zip(self._configuration_fields(), self._configuration):
+        for parameter, original in zip(self._configuration_fields(), self._configuration, strict=True):
             if getattr(self, parameter) != original:
                 raise ValueError(f"SRFPLL.{parameter} 在构造后已修改；请创建新的 PLL 实例，当前不支持配置重建。")
 
@@ -100,9 +104,9 @@ class SRFPLL:
             raise ValueError("SRFPLL.voltages_abc 非法；请提供 a/b/c 三个有限实数电压采样。") from exc
         if len(voltages) != 3:
             raise ValueError("SRFPLL.voltages_abc 长度错误；请提供 a/b/c 三个有限实数电压采样。")
-        voltages = tuple(_finite_real(v, f"SRFPLL.voltages_abc[{phase}]") for phase, v in zip("abc", voltages))
+        va, vb, vc = (_finite_real(v, f"SRFPLL.voltages_abc[{phase}]") for phase, v in zip("abc", voltages, strict=True))
         angle = wrap_angle(_finite_real(self.angle + self.frequency * time_step, "SRFPLL.angle"))
-        d_axis_voltage, q_axis_voltage = abc_to_dq(*voltages, angle)
+        d_axis_voltage, q_axis_voltage = abc_to_dq(va, vb, vc, angle)
         _finite_real(d_axis_voltage, "SRFPLL.d_axis_voltage")
         _finite_real(q_axis_voltage, "SRFPLL.q_axis_voltage")
         voltage_base = max(abs(d_axis_voltage), abs(q_axis_voltage), 1.0)

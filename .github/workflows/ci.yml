@@ -10,10 +10,19 @@ permissions:
 
 jobs:
   ci:
-    name: ci
-    runs-on: ubuntu-latest
+    name: ci (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    defaults:
+      run:
+        shell: bash
     env:
       MPLBACKEND: Agg
+      OPENBLAS_NUM_THREADS: "1"
 
     steps:
       - name: Checkout
@@ -30,19 +39,39 @@ jobs:
       - name: Sync locked environment
         run: uv sync --locked
 
-      - name: Run tests
-        run: uv run pytest
+      - name: Check lint and package types
+        run: |
+          uv run --locked ruff check pycy_emt_lite examples tests
+          uv run --locked mypy
+
+      - name: Run all tests with coverage (including slow)
+        timeout-minutes: 15
+        run: |
+          mkdir -p .tmp/ci
+          uv run --locked pytest -p pytest_cov --basetemp=.tmp/ci/pytest --junitxml=.tmp/ci/tests.xml --cov --cov-report=term-missing --cov-report=xml:.tmp/ci/coverage.xml --cov-report=html:.tmp/ci/htmlcov
+
+      - name: Upload test and coverage reports
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: test-coverage-${{ runner.os }}
+          path: |
+            .tmp/ci/tests.xml
+            .tmp/ci/coverage.xml
+            .tmp/ci/htmlcov/
+          retention-days: 14
 
       - name: Run README Quick Start
-        run: uv run python examples/01_r_circuit.py
+        run: uv run --locked python examples/01_r_circuit.py
 
       - name: Run all examples
+        timeout-minutes: 10
         shell: bash
         run: |
           set -euo pipefail
           for example in examples/*.py; do
             echo "Running ${example}"
-            uv run python "${example}"
+            uv run --locked python "${example}"
           done
 
       - name: Build distributions
@@ -52,7 +81,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          wheel="$(realpath .tmp/dist/*.whl)"
+          wheel="$(uv run --locked python -c 'from pathlib import Path; print(next(Path(".tmp/dist").glob("*.whl")).resolve())')"
           smoke_dir="$(mktemp -d)"
           cd "${smoke_dir}"
           uv run --python 3.14 --isolated --no-project --with "${wheel}" python - <<'PY'
@@ -63,6 +92,7 @@ jobs:
           installed = distribution("pycy-emt-lite")
           assert installed.version == emt.__version__
           assert Path(emt.__file__).resolve() == Path(installed.locate_file("pycy_emt_lite/__init__.py")).resolve()
+          assert Path(installed.locate_file("pycy_emt_lite/py.typed")).is_file()
           circuit = emt.Circuit.from_components("wheel_smoke", (
               emt.VoltageSource("V", "n", "0", 10.0),
               emt.Resistor("R", "n", "0", 5.0),

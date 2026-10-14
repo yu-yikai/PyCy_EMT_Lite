@@ -38,7 +38,7 @@ class Circuit:
     _prepared_topology: tuple = field(default=(), init=False, repr=False)
 
     @classmethod
-    def from_components(cls, name: str, components: Iterable[Component]) -> "Circuit":
+    def from_components(cls, name: str, components: Iterable[Component]) -> Circuit:
         """根据用户预先给定的元件对象列表创建电路。
 
         该方法适合教学和算例脚本使用：用户先把每个元件定义为一个对象，例如

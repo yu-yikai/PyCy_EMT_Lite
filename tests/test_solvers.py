@@ -9,9 +9,21 @@ import numpy as np
 import pytest
 
 from pycy_emt_lite import (
-    Breaker, BreakerCloseEvent, BreakerOpenEvent, Capacitor, Circuit, CurrentSource,
-    Fault, FaultApplyEvent, FaultClearEvent, IdealSwitch, Inductor, Resistor,
-    SimulationConfig, Simulator, VoltageSource,
+    Breaker,
+    BreakerCloseEvent,
+    BreakerOpenEvent,
+    Capacitor,
+    Circuit,
+    CurrentSource,
+    Fault,
+    FaultApplyEvent,
+    FaultClearEvent,
+    IdealSwitch,
+    Inductor,
+    Resistor,
+    SimulationConfig,
+    Simulator,
+    VoltageSource,
 )
 from pycy_emt_lite.core.solvers import DenseLinearSolver, LinearSolveError
 

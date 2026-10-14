@@ -12,8 +12,8 @@ from pycy_emt_lite import (
     ThreePhaseLoad,
     ThreePhaseSource,
 )
-from pycy_emt_lite.cases import CaseDefinition, OutputOptions, PlotSpec, run_case
 from pycy_emt_lite.analysis import peak_abs, three_phase_rms
+from pycy_emt_lite.cases import CaseDefinition, OutputOptions, PlotSpec, run_case
 from pycy_emt_lite.io.results import SimulationResult
 
 SAVE_RESULT_DATA = 0

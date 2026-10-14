@@ -10,8 +10,8 @@
 
 from __future__ import annotations
 
-from collections.abc import Callable
 import math
+from collections.abc import Callable
 
 import numpy as np
 from scipy.linalg import qr, solve_triangular
@@ -119,7 +119,7 @@ class _InitialConditions:
         tolerance = 1e-12 + 1e-10 * (np.abs(self.matrix) @ np.abs(solution) + np.abs(self.rhs))
         if np.any(np.abs(residual) > tolerance):
             raise ValueError("储能初值与网络约束冲突；一致求解未满足原始方程。")
-        self.capacitor_currents = dict(zip(self.capacitors, map(float, solution[base_size:])))
+        self.capacitor_currents = dict(zip(self.capacitors, map(float, solution[base_size:]), strict=True))
 
 
 def add_conductance(matrix: np.ndarray, positive: int | None, negative: int | None, conductance: float) -> None:

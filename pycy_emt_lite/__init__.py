@@ -8,7 +8,13 @@
 """
 
 from pycy_emt_lite.cases import CaseDefinition, OutputOptions, PlotSpec, run_case
-from pycy_emt_lite.components.basic import Capacitor, CurrentSource, Inductor, Resistor, VoltageSource
+from pycy_emt_lite.components.basic import (
+    Capacitor,
+    CurrentSource,
+    Inductor,
+    Resistor,
+    VoltageSource,
+)
 from pycy_emt_lite.components.lines import PiLine
 from pycy_emt_lite.components.power_electronics import IdealSwitch
 from pycy_emt_lite.components.switching import Breaker, Fault
@@ -20,7 +26,12 @@ from pycy_emt_lite.components.three_phase import (
 from pycy_emt_lite.components.transformers import SinglePhaseTransformer
 from pycy_emt_lite.core.circuit import Circuit
 from pycy_emt_lite.core.simulation import SimulationConfig, Simulator
-from pycy_emt_lite.events import BreakerCloseEvent, BreakerOpenEvent, FaultApplyEvent, FaultClearEvent
+from pycy_emt_lite.events import (
+    BreakerCloseEvent,
+    BreakerOpenEvent,
+    FaultApplyEvent,
+    FaultClearEvent,
+)
 from pycy_emt_lite.io.results import SimulationResult
 
 __all__ = [
@@ -37,8 +48,8 @@ __all__ = [
     "IdealSwitch",
     "Inductor",
     "OutputOptions",
-    "PlotSpec",
     "PiLine",
+    "PlotSpec",
     "Resistor",
     "SimulationConfig",
     "SimulationResult",
@@ -51,4 +62,4 @@ __all__ = [
     "run_case",
 ]
 
-__version__ = "0.1.0"
+__version__ = "0.1.1"

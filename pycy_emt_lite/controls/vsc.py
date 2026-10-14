@@ -4,11 +4,12 @@
 本模块使用幅值不变、d 对齐电压的 Park 变换，所有电气量采用 SI 单位。
 """
 
+import math
 from collections.abc import Mapping
 from dataclasses import dataclass
-import math
+from typing import cast
 
-from pycy_emt_lite.controls.blocks import PIController, FirstOrderLowPass, _finite_real
+from pycy_emt_lite.controls.blocks import FirstOrderLowPass, PIController, _finite_real
 from pycy_emt_lite.controls.pll import SRFPLL
 from pycy_emt_lite.controls.pwm import carrier_compare, triangular_carrier
 from pycy_emt_lite.controls.transforms import abc_to_alpha_beta, abc_to_dq, dq_to_abc
@@ -93,9 +94,10 @@ class VSCController:
         dt = 0.0 if self.last_time is None else time - self.last_time
         if (self.last_time is None and time != 0) or (self.last_time is not None and dt <= 0):
             raise ValueError("VSCController 须从 t=0 开始，每个递增求解时刻只采样一次。")
-        hv = tuple(row[f"v:{name}:hv:{p}"] for p in "abc")
-        lv = tuple(row[f"v:{name}:lv:{p}"] for p in "abc")
-        current = tuple(row[f"i:{name}:reactor:{p}"] for p in "abc")
+        # 生成器按 "abc" 三相构造，长度恒为 3；cast 仅为向类型检查器声明固定三元组。
+        hv = cast("tuple[float, float, float]", tuple(row[f"v:{name}:hv:{p}"] for p in "abc"))
+        lv = cast("tuple[float, float, float]", tuple(row[f"v:{name}:lv:{p}"] for p in "abc"))
+        current = cast("tuple[float, float, float]", tuple(row[f"i:{name}:reactor:{p}"] for p in "abc"))
         vdc = row[f"v:{name}:dc_p"] - row[f"v:{name}:dc_n"]
         alpha, beta = abc_to_alpha_beta(*hv)
         vac = math.hypot(alpha, beta) / (math.sqrt(2 / 3) * self.grid_voltage)
@@ -112,7 +114,7 @@ class VSCController:
         vd, vq = abc_to_dq(*lv, theta)
         id_meas, iq_meas = abc_to_dq(*current, theta)
         for filters, values in ((self.voltage_filters, (vd, vq)), (self.current_filters, (id_meas, iq_meas))):
-            for filt, value in zip(filters, values):
+            for filt, value in zip(filters, values, strict=True):
                 if dt == 0:
                     filt.reset(value)
                 else:
@@ -121,7 +123,7 @@ class VSCController:
         id_control, iq_control = (f.state for f in self.current_filters)
         pll_vd, pll_vq = abc_to_dq(*hv, theta)
         # P 的测量面在 reactor 的交流端；它与桥 AC 端功率之差是 reactor 储能变化。
-        pac = sum(v * i for v, i in zip(lv, current))
+        pac = sum(v * i for v, i in zip(lv, current, strict=True))
         qac = 1.5 * (vq * id_meas - vd * iq_meas)
         ramp = min(max((time - cfg.ramp_start) / cfg.ramp_duration, 0.0), 1.0)
         pref = 0.0 if self.active_power is None else self.active_power * ramp
@@ -153,8 +155,9 @@ class VSCController:
         if scale < 1:
             # 最终电压饱和时也冻结电流积分；现有 PI 本身只知道自身输出限制。
             self.d_pi.integrator, self.q_pi.integrator = previous_integrators
-        next_modulation = tuple(2 * v * scale / max(vdc, 0.1 * cfg.dc_voltage)
-                                for v in dq_to_abc(vcd, vcq, theta))
+        next_modulation = cast("tuple[float, float, float]",
+                               tuple(2 * v * scale / max(vdc, 0.1 * cfg.dc_voltage)
+                                     for v in dq_to_abc(vcd, vcq, theta)))
         traces = {
             "Vdc": vdc, "Vac_pu": vac, "P": pac, "Q": qac, "P_ref": pref,
             "Id": id_meas, "Iq": iq_meas, "Id_ref": id_ref, "Iq_ref": iq_ref,

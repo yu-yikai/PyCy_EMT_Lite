@@ -11,8 +11,8 @@
 from __future__ import annotations
 
 import math
+from collections.abc import Iterable
 from dataclasses import dataclass, field
-from typing import Iterable
 
 import numpy as np
 
@@ -25,6 +25,7 @@ from pycy_emt_lite.core.stamping import add_voltage_probe
 from pycy_emt_lite.core.variables import VariableManager
 from pycy_emt_lite.machines.synchronous import _finite_parameter
 
+
 @dataclass(slots=True)
 class _ParkGeneratorState:
     """Park 发电机动态状态和最近一次输出。"""
@@ -35,9 +36,9 @@ class _ParkGeneratorState:
     ed_prime_pu: float
     efd_pu: float
     mechanical_power_pu: float
-    last_current: dict[PhaseName, float] = field(default_factory=lambda: {phase: 0.0 for phase in PHASES})
-    last_terminal_voltage: dict[PhaseName, float] = field(default_factory=lambda: {phase: 0.0 for phase in PHASES})
-    last_internal_voltage: dict[PhaseName, float] = field(default_factory=lambda: {phase: 0.0 for phase in PHASES})
+    last_current: dict[PhaseName, float] = field(default_factory=lambda: dict.fromkeys(PHASES, 0.0))
+    last_terminal_voltage: dict[PhaseName, float] = field(default_factory=lambda: dict.fromkeys(PHASES, 0.0))
+    last_internal_voltage: dict[PhaseName, float] = field(default_factory=lambda: dict.fromkeys(PHASES, 0.0))
     id_pu: float = 0.0
     iq_pu: float = 0.0
     vd_pu: float = 0.0
@@ -205,14 +206,14 @@ class ParkSynchronousGenerator(Component):
             voltage.append(v)
             current.append(i)
         angle = self._electrical_angle(context.time)
-        vd, vq = abc_to_dq(*voltage, angle)
-        id_, iq = abc_to_dq(*current, angle)
+        vd, vq = abc_to_dq(voltage[0], voltage[1], voltage[2], angle)
+        id_, iq = abc_to_dq(current[0], current[1], current[2], angle)
         voltage_base = math.sqrt(2.0) * self.base_phase_rms
         current_base = math.sqrt(2.0) * self.base_power / (3.0 * self.base_phase_rms)
         self.state.vd_pu, self.state.vq_pu = -vd / voltage_base, -vq / voltage_base
         self.state.id_pu, self.state.iq_pu = -id_ / current_base, -iq / current_base
         self.state.terminal_voltage_pu = math.hypot(vd, vq) / voltage_base
-        self.state.electrical_power = sum(v * i for v, i in zip(voltage, current))
+        self.state.electrical_power = sum(v * i for v, i in zip(voltage, current, strict=True))
         self.state.copper_loss = self.stator_resistance * sum(i * i for i in current)
         # 定子快速储能已忽略；气隙功率包含铜损和凸极磁阻转矩项。
         self.state.electromagnetic_power = self.state.electrical_power + self.state.copper_loss

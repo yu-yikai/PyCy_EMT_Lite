@@ -11,8 +11,9 @@
 from __future__ import annotations
 
 import math
+from collections.abc import Iterable
 from dataclasses import dataclass, field
-from typing import Iterable, Literal
+from typing import Literal
 
 import numpy as np
 
@@ -88,7 +89,9 @@ def _validate_transformer_parameters(
         raise ValueError(f"变压器 {name} 的饱和励磁电感必须为有限正数。")
     if has_saturation and magnetizing_inductance is None:
         raise ValueError(f"变压器 {name} 启用饱和励磁时必须给出线性励磁电感。")
-    if has_saturation and saturated_magnetizing_inductance > magnetizing_inductance:
+    if (has_saturation and magnetizing_inductance is not None
+            and saturated_magnetizing_inductance is not None
+            and saturated_magnetizing_inductance > magnetizing_inductance):
         raise ValueError(f"变压器 {name} 的 saturated_magnetizing_inductance 大于线性励磁电感；请设置 Lsat <= Lm，相等表示线性模型。")
 
 

@@ -4,14 +4,27 @@
 """
 
 import math
-from pathlib import Path
 import runpy
+from itertools import pairwise
+from pathlib import Path
 
 import numpy as np
 import pytest
 from scipy.linalg import expm
 
-from pycy_emt_lite import Capacitor, Circuit, CurrentSource, Fault, FaultApplyEvent, Inductor, PiLine, Resistor, SimulationConfig, Simulator, VoltageSource
+from pycy_emt_lite import (
+    Capacitor,
+    Circuit,
+    CurrentSource,
+    Fault,
+    FaultApplyEvent,
+    Inductor,
+    PiLine,
+    Resistor,
+    SimulationConfig,
+    Simulator,
+    VoltageSource,
+)
 from pycy_emt_lite.analysis import rms
 from pycy_emt_lite.components.lines import (
     BergeronLine,
@@ -238,14 +251,14 @@ def test_line_initial_state_and_first_step_match_separate_rlc_branches(kind, met
         current_column = "i:LINE:series:a"
 
     def terminals():
-        return [part for s, r in zip(sending, receiving) for part in (
+        return [part for s, r in zip(sending, receiving, strict=True) for part in (
             CurrentSource(f"I{s}", "0", s, 1.0), Resistor(f"R{r}", r, "0", 3.0)
         )]
 
     equivalent = terminals()
-    for s, r in zip(sending, receiving):
+    for s, r in zip(sending, receiving, strict=True):
         endpoints = [s] + [f"mid{j}" for j in range(1, sections)] + [r]
-        for j, (p, n) in enumerate(zip(endpoints, endpoints[1:])):
+        for j, (p, n) in enumerate(pairwise(endpoints)):
             equivalent.extend([
                 Resistor(f"R{s}{j}", p, f"rl{s}{j}", 1.0 / sections),
                 Inductor(f"L{s}{j}", f"rl{s}{j}", n, 2.0 / sections),
@@ -384,14 +397,14 @@ def test_bergeron_validates_actual_grid_and_propagates_event_right_side(policy, 
 def test_three_phase_bergeron_propagates_independent_matched_port_waves() -> None:
     line = ThreePhaseBergeronLine("BL", "send", "recv", 10.0, 0.2)
     terminals = []
-    for phase, voltage in zip("abc", [10.0, -4.0, 2.0]):
+    for phase, voltage in zip("abc", [10.0, -4.0, 2.0], strict=True):
         terminals.extend([
             VoltageSource(f"V{phase}", f"src:{phase}", "0", voltage),
             Resistor(f"RS{phase}", f"src:{phase}", f"send:{phase}", 10.0),
             Resistor(f"RL{phase}", f"recv:{phase}", "0", 10.0),
         ])
     result = Simulator(Circuit.from_components("three_phase_waves", [line, *terminals]), SimulationConfig(0.1, 0.4)).run()
-    for phase, voltage in zip("abc", [5.0, -2.0, 1.0]):
+    for phase, voltage in zip("abc", [5.0, -2.0, 1.0], strict=True):
         assert result.series(f"v:recv:{phase}") == pytest.approx([0.0, 0.0, voltage, voltage, voltage])
         assert result.series(f"i:BL:receiving:{phase}") == pytest.approx([0.0, 0.0, -voltage / 10, -voltage / 10, -voltage / 10])
 

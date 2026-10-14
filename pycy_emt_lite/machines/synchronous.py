@@ -18,10 +18,19 @@ from numbers import Real
 import numpy as np
 
 from pycy_emt_lite.components.base import Component
-from pycy_emt_lite.components.three_phase import PHASES, PhaseName, _phase_angle, phase_node
+from pycy_emt_lite.components.three_phase import (
+    PHASES,
+    PhaseName,
+    _phase_angle,
+    phase_node,
+)
 from pycy_emt_lite.core.context import StampContext
 from pycy_emt_lite.core.nodes import NodeManager, _check_internal_nodes
-from pycy_emt_lite.core.stamping import add_conductance, add_voltage_probe, _conductance_current
+from pycy_emt_lite.core.stamping import (
+    _conductance_current,
+    add_conductance,
+    add_voltage_probe,
+)
 from pycy_emt_lite.core.variables import VariableManager
 
 PowerInput = float | Callable[[float], float]
@@ -32,11 +41,11 @@ class _MachineState:
 
     rotor_angle: float
     speed_pu: float
-    previous_current: dict[PhaseName, float] = field(default_factory=lambda: {phase: 0.0 for phase in PHASES})
-    previous_inductor_voltage: dict[PhaseName, float] = field(default_factory=lambda: {phase: 0.0 for phase in PHASES})
-    last_current: dict[PhaseName, float] = field(default_factory=lambda: {phase: 0.0 for phase in PHASES})
-    last_terminal_voltage: dict[PhaseName, float] = field(default_factory=lambda: {phase: 0.0 for phase in PHASES})
-    last_internal_voltage: dict[PhaseName, float] = field(default_factory=lambda: {phase: 0.0 for phase in PHASES})
+    previous_current: dict[PhaseName, float] = field(default_factory=lambda: dict.fromkeys(PHASES, 0.0))
+    previous_inductor_voltage: dict[PhaseName, float] = field(default_factory=lambda: dict.fromkeys(PHASES, 0.0))
+    last_current: dict[PhaseName, float] = field(default_factory=lambda: dict.fromkeys(PHASES, 0.0))
+    last_terminal_voltage: dict[PhaseName, float] = field(default_factory=lambda: dict.fromkeys(PHASES, 0.0))
+    last_internal_voltage: dict[PhaseName, float] = field(default_factory=lambda: dict.fromkeys(PHASES, 0.0))
     electrical_power: float = 0.0
     electromagnetic_power: float = 0.0
     copper_loss: float = 0.0
@@ -190,7 +199,10 @@ class SynchronousMachine(Component):
             if context._initial is not None:
                 derivative = amplitude * omega_sync * self.state.speed_pu * math.cos(
                     omega_sync * context.time + self.state.rotor_angle + _phase_angle(phase, 0.0))
-                context._initial.source_derivatives.append(({source_branch: 1.0}, lambda value=derivative: value))
+                def source_derivative(value: float = derivative) -> float:
+                    return value
+
+                context._initial.source_derivatives.append(({source_branch: 1.0}, source_derivative))
 
             if self.stator_inductance == 0:
                 add_conductance(matrix, internal, terminal, 1.0 / self.stator_resistance)

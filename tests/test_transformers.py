@@ -4,9 +4,9 @@
 """
 
 import math
+import runpy
 from dataclasses import replace
 from pathlib import Path
-import runpy
 
 import numpy as np
 import pytest
@@ -160,7 +160,7 @@ def test_ideal_transformer_with_secondary_y_has_unique_loaded_solution(primary) 
     loads = np.array([10.0, 20.0, 30.0])
     result = Simulator(Circuit.from_components("ideal_secondary_y", [
         ThreePhaseSource("V", "in", 100.0), transformer,
-        *[Resistor(f"R{p}", f"out:{p}", "0", r) for p, r in zip("abc", loads)],
+        *[Resistor(f"R{p}", f"out:{p}", "0", r) for p, r in zip("abc", loads, strict=True)],
     ]), SimulationConfig(1e-4, 0.02)).run()
     vin = np.array([result.series(f"v:in:{p}") for p in "abc"])
     vout = np.array([result.series(f"v:out:{p}") for p in "abc"])

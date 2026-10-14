@@ -10,15 +10,20 @@
 
 from __future__ import annotations
 
+from collections.abc import Callable, Iterable
 from dataclasses import dataclass, field
-from typing import Callable, Iterable
 
 import numpy as np
 
 from pycy_emt_lite.components.base import Component, _finite_real
 from pycy_emt_lite.core.context import StampContext
 from pycy_emt_lite.core.nodes import NodeManager
-from pycy_emt_lite.core.stamping import add_conductance, add_current_source, add_voltage_probe, _conductance_current
+from pycy_emt_lite.core.stamping import (
+    _conductance_current,
+    add_conductance,
+    add_current_source,
+    add_voltage_probe,
+)
 from pycy_emt_lite.core.variables import VariableManager
 
 TimeValue = float | Callable[[float], float]

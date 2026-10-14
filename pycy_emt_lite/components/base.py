@@ -10,10 +10,10 @@
 
 from __future__ import annotations
 
-from abc import ABC, abstractmethod
 import math
+from abc import ABC, abstractmethod
+from collections.abc import Iterable
 from numbers import Real
-from typing import Iterable
 
 import numpy as np
 
@@ -22,8 +22,8 @@ from pycy_emt_lite.core.nodes import NodeManager
 from pycy_emt_lite.core.variables import VariableManager
 
 
-def _finite_real(value: float, label: str) -> float:
-    """只接受有限实数标量；转换后的范围也必须能用 float 表示。"""
+def _finite_real(value: object, label: str) -> float:
+    """只接受有限实数标量；转换后的范围也必须能用 float 表示。入参可为待校验的任意对象。"""
     try:
         if isinstance(value, bool) or not isinstance(value, Real):
             raise ValueError

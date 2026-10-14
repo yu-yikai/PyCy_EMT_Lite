@@ -61,7 +61,7 @@ $env:MPLBACKEND = "Agg"
 uv run --locked pytest -o addopts= -q -p no:cacheprovider --basetemp=.tmp/pytest-local
 ```
 
-先显式创建 `.tmp`，避免干净下载的项目缺少 `--basetemp` 的父目录。运行前确认没有其他测试使用同一个 `--basetemp`；pytest 会清理该目录。本命令用于区分目录权限问题与代码失败。现有自动 CI 仍为 Linux，Windows 自动 CI 属于未来计划。
+先显式创建 `.tmp`，避免干净下载的项目缺少 `--basetemp` 的父目录。运行前确认没有其他测试使用同一个 `--basetemp`；pytest 会清理该目录。本命令用于区分目录权限问题与代码失败。CI 已配置 Linux 和 Windows；本地检查见第 6 节。
 
 示例默认显示图形，不保存数据或图片。
 网络算例需要保存时，把脚本顶部 `SAVE_RESULT_DATA` 或 `SAVE_RESULT_FIGURE` 改为 `1`；输出位于 `outputs/<算例名>/`。
@@ -232,3 +232,28 @@ RMS、均值、三相功率、采样峰值和跌落统计的窗口/方向规则�
 文档中的仓库文件链接使用相对路径，运行与输出路径以项目根目录为基准；外部参考资料提供公开来源链接和文件名，不写个人绝对路径或临时验证目录。
 
 PyCy_EMT_Lite 源自 PyCy_EMT v0.6 的对象式工作流，保留适合小规模教学的内容。[MIT 许可证](LICENSE)。
+
+## 6. 开发检查
+
+执行 `uv sync --locked` 后，在项目根目录运行：
+
+```powershell
+New-Item -ItemType Directory -Force -Path .tmp | Out-Null
+$env:MPLBACKEND = "Agg"
+$env:OPENBLAS_NUM_THREADS = "1"
+uv run --locked ruff check pycy_emt_lite examples tests
+uv run --locked mypy
+uv run --locked pytest -m "not slow" --basetemp=.tmp/pytest-fast
+uv run --locked pytest -m slow --basetemp=.tmp/pytest-slow
+uv run --locked pytest -p pytest_cov --basetemp=.tmp/pytest-coverage --cov --cov-report=term-missing --cov-report=xml:.tmp/coverage.xml --cov-report=html:.tmp/htmlcov
+```
+
+第一条 pytest 命令用于快速反馈；`slow` 包含耗时的 PWM 步长比较、HVDC 控制仿真及所有共用完整 FAST 仿真的测试。普通 pytest 和 CI 仍执行全量测试。标记严格检查，拼写错误会报错。
+
+Ruff 检查错误、导入顺序、现代化写法和选定缺陷规则，不强制格式化或行宽。mypy 依据已有标注检查 39 个包源码模块，不要求所有函数都有标注，也不完整检查未标注函数体。数组协议使用 NumPy 类型，允许第三方缺失类型存根。`py.typed` 使安装后的包继续携带这些标注。
+
+覆盖率包含分支。打开 `.tmp/htmlcov/index.html` 查看未执行的代码行和分支；当前不设覆盖率百分比阈值。覆盖率和测试通过只说明被验证的行为，物理精度仍需[模型与验证](docs/models_and_validation.md)中的检查。
+
+[CI 配置](.github/workflows/ci.yml)定义 Linux 和 Windows 两项任务：任务超时 30 分钟，测试步骤 15 分钟，示例步骤 10 分钟。两项任务均锁定环境，执行上述检查、全部示例、构建发行包，并在源码目录外验证安装 wheel 的版本及 `py.typed`。JUnit、覆盖率 XML 和 HTML 以 `test-coverage-Linux`、`test-coverage-Windows` 上传，保留 14 天。本地通过不代表远端 Actions 已运行成功。
+
+`pyproject.toml`、`uv.lock` 与 `pycy_emt_lite.__version__` 的版本必须一致。版本变更记入[CHANGELOG](CHANGELOG.md)；修改版本不会自动发布。

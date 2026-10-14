@@ -3,8 +3,17 @@
 import numpy as np
 import pytest
 
-from pycy_emt_lite import (Capacitor, Circuit, Fault, FaultApplyEvent, FaultClearEvent,
-                         Resistor, SimulationConfig, Simulator, VoltageSource)
+from pycy_emt_lite import (
+    Capacitor,
+    Circuit,
+    Fault,
+    FaultApplyEvent,
+    FaultClearEvent,
+    Resistor,
+    SimulationConfig,
+    Simulator,
+    VoltageSource,
+)
 
 
 def test_callback_reads_right_side_once_and_controls_next_step():

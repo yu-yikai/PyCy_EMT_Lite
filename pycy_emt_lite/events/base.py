@@ -10,10 +10,10 @@
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
+from collections.abc import Iterable
 from dataclasses import dataclass
 from math import isfinite, ulp
 from numbers import Real
-from typing import Iterable
 
 from pycy_emt_lite.core.circuit import Circuit
 
@@ -65,7 +65,7 @@ class EventQueue:
     """按时间管理仿真事件的队列。"""
 
     def __init__(self, events: Iterable[SimulationEvent] = ()) -> None:
-        self._events = sorted(list(events), key=lambda event: event.time)
+        self._events = sorted(events, key=lambda event: event.time)
         self._next_index = 0
 
     @property

@@ -10,8 +10,8 @@
 
 from __future__ import annotations
 
+from collections.abc import Iterable
 from dataclasses import dataclass, field
-from typing import Iterable
 
 GROUND_NAMES = {"0", "gnd", "ground"}
 

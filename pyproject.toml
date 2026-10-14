@@ -1,6 +1,6 @@
 [project]
 name = "pycy-emt-lite"
-version = "0.1.0"
+version = "0.1.1"
 description = "面向新型电力系统电磁暂态仿真的 Python 教学项目（精简易用版）"
 readme = "README.md"
 license = "MIT"
@@ -16,13 +16,60 @@ dependencies = [
 
 [dependency-groups]
 dev = [
+  "mypy>=2.4.0",
   "pytest>=8.0",
+  "pytest-cov>=7.1.0",
+  "ruff>=0.16.10",
 ]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["."]
-addopts = "-q"
+addopts = "-q --strict-markers"
+markers = [
+  "slow: 运行时间较长的集成测试；快速反馈可用 uv run pytest -m 'not slow'",
+]
+
+[tool.ruff]
+target-version = "py314"
+
+[tool.ruff.lint]
+# 限定高收益规则：真实错误、导入顺序、现代化升级与常见缺陷；不强制行宽与格式化。
+select = ["E4", "E7", "E9", "F", "W", "I", "UP", "B", "C4", "RUF"]
+ignore = [
+  # RUF001/2/3: 项目文档、注释与错误信息刻意使用中文标点及 ±、π、Ω 等字符。
+  "RUF001", "RUF002", "RUF003",
+]
+
+[tool.ruff.lint.per-file-ignores]
+# 基类保留默认空实现；示例/测试闭包在当前循环内使用；测试 match 有意使用正则。
+"pycy_emt_lite/components/base.py" = ["B027"]
+"pycy_emt_lite/events/base.py" = ["B027"]
+"examples/18_three_terminal_vsc_hvdc.py" = ["B023"]
+"tests/*.py" = ["B023", "RUF043"]
+
+[tool.mypy]
+# 限定宽松范围：检查包源码类型一致性，不做全仓严格类型改造。
+python_version = "3.14"
+mypy_path = "."
+packages = ["pycy_emt_lite"]
+ignore_missing_imports = true
+warn_unused_ignores = true
+warn_redundant_casts = true
+strict_equality = true
+
+[tool.coverage.run]
+source = ["pycy_emt_lite"]
+branch = true
+data_file = ".tmp/.coverage"
+
+[tool.coverage.report]
+show_missing = true
+exclude_also = [
+  "if TYPE_CHECKING:",
+  "raise NotImplementedError",
+  "@(abc\\.)?abstractmethod",
+]
 
 [build-system]
 requires = ["hatchling"]

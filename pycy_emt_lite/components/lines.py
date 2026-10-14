@@ -11,10 +11,10 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass, field
 import math
+from collections.abc import Iterable
+from dataclasses import dataclass, field
 from numbers import Integral
-from typing import Iterable
 
 import numpy as np
 
@@ -22,8 +22,14 @@ from pycy_emt_lite.components.base import Component, _finite_real
 from pycy_emt_lite.components.three_phase import PHASES, PhaseName, phase_node
 from pycy_emt_lite.core.context import StampContext
 from pycy_emt_lite.core.nodes import NodeManager, _check_internal_nodes
-from pycy_emt_lite.core.stamping import add_conductance, add_current_source, add_voltage_probe, _conductance_current
+from pycy_emt_lite.core.stamping import (
+    _conductance_current,
+    add_conductance,
+    add_current_source,
+    add_voltage_probe,
+)
 from pycy_emt_lite.core.variables import VariableManager
+
 
 @dataclass(slots=True)
 class _CapacitorState:

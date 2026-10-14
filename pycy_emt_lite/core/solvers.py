@@ -10,11 +10,11 @@
 
 from __future__ import annotations
 
-import warnings
 import math
-from numbers import Real
+import warnings
 from dataclasses import dataclass
-from typing import Protocol, TypeAlias
+from numbers import Real
+from typing import Protocol
 
 import numpy as np
 from scipy.linalg import LinAlgWarning, lu_factor, lu_solve
@@ -41,7 +41,7 @@ class LinearSolveDiagnostics:
     solve_count: int
 
 
-MatrixInput: TypeAlias = np.ndarray
+type MatrixInput = np.ndarray
 
 
 class Factorization(Protocol):
@@ -143,7 +143,7 @@ def _solve_factorization(
         raise LinearSolveError("残差诊断缩放仍溢出；请检查方程和数值尺度。")
     relative_residual = residual_scale / denominator if denominator > 0 else 0.0
     try:
-        mantissas, exponents = zip(*(math.frexp(v) for v in (residual_scale, a_scale, x_scale)))
+        mantissas, exponents = zip(*(math.frexp(v) for v in (residual_scale, a_scale, x_scale)), strict=True)
         absolute_residual = math.ldexp(math.prod(mantissas), sum(exponents))
     except OverflowError as exc:
         raise LinearSolveError("绝对残差超出有限数范围，拒绝溢出的求解诊断。") from exc
@@ -192,7 +192,7 @@ class DenseLinearSolver:
         self.solve_count = 0
         self.last_diagnostics: LinearSolveDiagnostics | None = None
 
-    def factorize(self, matrix: MatrixInput) -> Factorization:
+    def factorize(self, matrix: MatrixInput) -> _DenseLUFactorization:
         """计算并返回一个可复用的稠密 LU 分解。"""
 
         matrix_array = np.asarray(matrix, dtype=float)

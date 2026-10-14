@@ -7,16 +7,16 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass
 import math
+from collections.abc import Callable, Iterable
+from dataclasses import dataclass
 from numbers import Real
-from typing import Callable, Iterable
 
 import numpy as np
 
 from pycy_emt_lite.components.base import Component, _finite_real
 from pycy_emt_lite.core.context import StampContext
-from pycy_emt_lite.core.stamping import add_conductance, _conductance_current
+from pycy_emt_lite.core.stamping import _conductance_current, add_conductance
 
 BoolTimeValue = bool | float | Callable[[float], bool | float]
 

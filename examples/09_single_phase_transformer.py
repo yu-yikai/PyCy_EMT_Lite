@@ -11,7 +11,12 @@ import math
 
 import numpy as np
 
-from pycy_emt_lite import Resistor, SimulationConfig, SinglePhaseTransformer, VoltageSource
+from pycy_emt_lite import (
+    Resistor,
+    SimulationConfig,
+    SinglePhaseTransformer,
+    VoltageSource,
+)
 from pycy_emt_lite.analysis import mean_value, rms
 from pycy_emt_lite.cases import CaseDefinition, OutputOptions, PlotSpec, run_case
 from pycy_emt_lite.io.results import SimulationResult

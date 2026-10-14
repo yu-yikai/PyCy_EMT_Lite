@@ -12,15 +12,21 @@
 from __future__ import annotations
 
 import math
+from collections.abc import Iterable
 from dataclasses import dataclass, field
-from typing import Iterable, Literal
+from typing import Literal
 
 import numpy as np
 
 from pycy_emt_lite.components.base import Component, _finite_real
 from pycy_emt_lite.core.context import StampContext
 from pycy_emt_lite.core.nodes import NodeManager, _is_ground
-from pycy_emt_lite.core.stamping import add_conductance, add_current_source, add_voltage_probe, _conductance_current
+from pycy_emt_lite.core.stamping import (
+    _conductance_current,
+    add_conductance,
+    add_current_source,
+    add_voltage_probe,
+)
 from pycy_emt_lite.core.variables import VariableManager
 
 PhaseName = Literal["a", "b", "c"]
@@ -101,9 +107,10 @@ class ThreePhaseSource(Component):
                 matrix[branch, neutral] -= 1.0
             rhs[branch] += amplitude * math.sin(omega * context.time + _phase_angle(phase, self.initial_angle))
             if context._initial is not None:
-                context._initial.source_derivatives.append(({branch: 1.0}, lambda phase=phase:
-                    amplitude * omega * math.cos(omega * context.time + _phase_angle(phase, self.initial_angle))
-                ))
+                def source_derivative(phase: PhaseName = phase) -> float:
+                    return amplitude * omega * math.cos(omega * context.time + _phase_angle(phase, self.initial_angle))
+
+                context._initial.source_derivatives.append(({branch: 1.0}, source_derivative))
 
     def outputs(self, context: StampContext, solution: np.ndarray) -> dict[str, float]:
         """记录三相电源各相支路电流。"""
@@ -117,18 +124,18 @@ class ThreePhaseSource(Component):
 class _SeriesRlState:
     """三相串联 RL 支路的历史状态。"""
 
-    previous_current: dict[PhaseName, float] = field(default_factory=lambda: {phase: 0.0 for phase in PHASES})
-    previous_inductor_voltage: dict[PhaseName, float] = field(default_factory=lambda: {phase: 0.0 for phase in PHASES})
-    last_current: dict[PhaseName, float] = field(default_factory=lambda: {phase: 0.0 for phase in PHASES})
-    last_voltage: dict[PhaseName, float] = field(default_factory=lambda: {phase: 0.0 for phase in PHASES})
+    previous_current: dict[PhaseName, float] = field(default_factory=lambda: dict.fromkeys(PHASES, 0.0))
+    previous_inductor_voltage: dict[PhaseName, float] = field(default_factory=lambda: dict.fromkeys(PHASES, 0.0))
+    last_current: dict[PhaseName, float] = field(default_factory=lambda: dict.fromkeys(PHASES, 0.0))
+    last_voltage: dict[PhaseName, float] = field(default_factory=lambda: dict.fromkeys(PHASES, 0.0))
 
 @dataclass(slots=True)
 class _ShuntCapacitorState:
     """并联电容 companion model 的历史状态。"""
 
-    previous_voltage: dict[PhaseName, float] = field(default_factory=lambda: {phase: 0.0 for phase in PHASES})
-    previous_current: dict[PhaseName, float] = field(default_factory=lambda: {phase: 0.0 for phase in PHASES})
-    last_current: dict[PhaseName, float] = field(default_factory=lambda: {phase: 0.0 for phase in PHASES})
+    previous_voltage: dict[PhaseName, float] = field(default_factory=lambda: dict.fromkeys(PHASES, 0.0))
+    previous_current: dict[PhaseName, float] = field(default_factory=lambda: dict.fromkeys(PHASES, 0.0))
+    last_current: dict[PhaseName, float] = field(default_factory=lambda: dict.fromkeys(PHASES, 0.0))
 
 def _validate_series_rl(name: str, resistance: float, inductance: float) -> None:
     """检查串联 RL 参数。"""
@@ -282,8 +289,8 @@ class ThreePhaseParallelRLCLoad(Component):
     inductor_branch_indices: dict[PhaseName, int] = field(default_factory=dict, init=False)
     inductor_state: _SeriesRlState = field(default_factory=_SeriesRlState, init=False)
     capacitor_state: _ShuntCapacitorState = field(default_factory=_ShuntCapacitorState, init=False)
-    last_total_current: dict[PhaseName, float] = field(default_factory=lambda: {phase: 0.0 for phase in PHASES}, init=False)
-    last_phase_voltage: dict[PhaseName, float] = field(default_factory=lambda: {phase: 0.0 for phase in PHASES}, init=False)
+    last_total_current: dict[PhaseName, float] = field(default_factory=lambda: dict.fromkeys(PHASES, 0.0), init=False)
+    last_phase_voltage: dict[PhaseName, float] = field(default_factory=lambda: dict.fromkeys(PHASES, 0.0), init=False)
 
     def __post_init__(self) -> None:
         for parameter in ("nominal_line_voltage", "frequency", "active_power", "inductive_power", "capacitive_power"):

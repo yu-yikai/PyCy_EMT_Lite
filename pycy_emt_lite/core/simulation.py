@@ -10,17 +10,24 @@
 
 from __future__ import annotations
 
+import math
+from collections.abc import Callable, Iterable, Mapping
 from dataclasses import dataclass, replace
 from itertools import product
-import math
 from numbers import Integral, Real
-from collections.abc import Callable, Mapping
 from types import MappingProxyType
-from typing import Iterable, Literal
+from typing import Literal, cast
 
 import numpy as np
 
-from pycy_emt_lite.components.basic import Capacitor, CurrentSource, Inductor, Resistor, VoltageSource
+from pycy_emt_lite.components.base import Component
+from pycy_emt_lite.components.basic import (
+    Capacitor,
+    CurrentSource,
+    Inductor,
+    Resistor,
+    VoltageSource,
+)
 from pycy_emt_lite.components.lines import BergeronLine, ThreePhaseBergeronLine
 from pycy_emt_lite.components.power_electronics import IdealSwitch
 from pycy_emt_lite.components.switching import Breaker, Fault
@@ -28,7 +35,12 @@ from pycy_emt_lite.components.three_phase import ThreePhaseLine, ThreePhaseSourc
 from pycy_emt_lite.components.transformers import ThreePhaseTransformer
 from pycy_emt_lite.core.circuit import Circuit
 from pycy_emt_lite.core.context import IntegrationMethod, StampContext
-from pycy_emt_lite.core.solvers import DenseLinearSolver, Factorization, LinearSolveError, LinearSolver
+from pycy_emt_lite.core.solvers import (
+    DenseLinearSolver,
+    Factorization,
+    LinearSolveError,
+    LinearSolver,
+)
 from pycy_emt_lite.core.stamping import _InitialConditions
 from pycy_emt_lite.events import EventQueue, SimulationEvent
 from pycy_emt_lite.events.base import _time_close, _time_tolerance
@@ -307,8 +319,12 @@ class Simulator:
     def _prepare_linear_systems(self, times: np.ndarray) -> None:
         """对隔离数值副本预分解；不调用真实源/门极，不应用事件或推进状态。"""
 
-        self._precompute_switches = tuple(
-            c for c in self.circuit.components if type(c) in (Fault, Breaker, IdealSwitch)
+        # precompute 在构造时已限定 DenseLinearSolver。
+        solver = cast(DenseLinearSolver, self.solver)
+        # type() 精确过滤不被类型检查器收窄，运行时保证只含这三种元件。
+        self._precompute_switches = cast(
+            "tuple[Fault | Breaker | IdealSwitch, ...]",
+            tuple(c for c in self.circuit.components if type(c) in (Fault, Breaker, IdealSwitch)),
         )
         names = tuple(c.name for c in self._precompute_switches)
         count = 2 ** len(names) if self._declared_states is None else len(self._declared_states)
@@ -334,45 +350,51 @@ class Simulator:
                 "请缩小完整状态集合或使用 reuse。"
             )
         if self._declared_states is None:
-            states = product((False, True), repeat=len(names))
+            states: Iterable[tuple[bool, ...]] = product((False, True), repeat=len(names))
         else:
-            states = []
+            declared_states = []
             for items in self._declared_states:
-                state = dict(items)
-                if set(state) != set(names):
+                state_map = dict(items)
+                if set(state_map) != set(names):
                     raise ValueError(f"precompute_states 名称必须恰好包含所有开关/故障/断路器 {names!r}。")
-                if any(not isinstance(value, (bool, np.bool_)) for value in state.values()):
+                if any(not isinstance(value, (bool, np.bool_)) for value in state_map.values()):
                     raise ValueError("precompute_states 的状态值必须为布尔值。")
-                states.append(tuple(bool(state[name]) for name in names))
-            if len(set(states)) != len(states):
+                declared_states.append(tuple(bool(state_map[name]) for name in names))
+            if len(set(declared_states)) != len(declared_states):
                 raise ValueError("precompute_states 存在重复状态；请只声明一次。")
+            states = declared_states
 
         unique: dict[tuple, Factorization] = {}
         allocated = 0
         for state in states:
-            switches = dict(zip(names, state))
+            switches = dict(zip(names, state, strict=True))
             copies = []
             for component in self.circuit.components:
                 # 只替换进入 RHS 的源/历史量；所有电气参数和编号顺序保持。
+                copy: Component
                 if type(component) is CurrentSource:
                     copy = replace(component, current=0.0, derivative=0.0)
                 elif type(component) is VoltageSource:
                     copy = replace(component, voltage=0.0, derivative=0.0)
                 elif type(component) is ThreePhaseSource:
-                    copy = replace(component)
+                    source_copy = replace(component)
                     # 原模型要求正幅值；仅在私有数值副本上置零 RHS/导数，A 不依赖幅值。
-                    copy.phase_rms = 0.0
+                    source_copy.phase_rms = 0.0
+                    copy = source_copy
                 elif type(component) is Capacitor:
                     copy = replace(component, initial_voltage=0.0)
                 elif type(component) is Inductor:
                     copy = replace(component, initial_current=0.0)
                 elif type(component) is Fault:
                     copy = replace(component, enabled=switches[component.name])
-                elif type(component) in (Breaker, IdealSwitch):
+                elif type(component) is Breaker:
+                    copy = replace(component, closed=switches[component.name])
+                elif type(component) is IdealSwitch:
                     copy = replace(component, closed=switches[component.name])
                 else:
                     # 三相 RL/线性变压器的 init=False 状态与支路字典由构造器重新创建。
-                    copy = replace(component)
+                    # 前置准入检查保证其余元件只有这两类精确类型。
+                    copy = replace(cast("ThreePhaseLine | ThreePhaseTransformer", component))
                 copies.append(copy)
             circuit = Circuit.from_components(self.circuit.name, copies)
             circuit.prepare()
@@ -394,7 +416,8 @@ class Simulator:
                     signature = (matrix.shape, matrix.tobytes())
                     factor = unique.get(signature)
                     if factor is None:
-                        factor = self.solver.factorize(matrix)
+                        factor = solver.factorize(matrix)
+                        # DenseLinearSolver 的分解一定携带 lu/pivots；预算只统计数值数组。
                         allocated += (factor.matrix.nbytes + factor.lu.nbytes + factor.pivots.nbytes
                                       + len(signature[1]))
                         if allocated + scratch > _PRECOMPUTE_MAX_BYTES:
@@ -412,6 +435,8 @@ class Simulator:
 
         if self.config.linear_solver_mode == "rebuild":
             return self.solver.solve(matrix, rhs)
+        # reuse/precompute 在构造时已限定 DenseLinearSolver。
+        solver = cast(DenseLinearSolver, self.solver)
         if self.config.linear_solver_mode == "precompute":
             # IdealSwitch 在原 stamp 已读取门极；查表不能再次调用真实门极函数。
             values = []
@@ -421,21 +446,25 @@ class Simulator:
                 elif type(component) is IdealSwitch:
                     values.append(bool(component.last_state))
                 else:
-                    values.append(bool(component.closed))
+                    values.append(bool(cast(Breaker, component).closed))
             state = tuple(values)
             factor = self._precomputed.get((context.time_step, context._initial is not None, state))
             if factor is None:
                 names = tuple(c.name for c in self._precompute_switches)
-                raise LinearSolveError(f"precompute 遇到未声明状态/步长 {dict(zip(names, state))!r}，"
+                raise LinearSolveError(f"precompute 遇到未声明状态/步长 {dict(zip(names, state, strict=True))!r}，"
                                        f"h={context.time_step!r}；请补全有限集合或使用 reuse。")
             if not np.array_equal(matrix, factor.matrix):
                 raise LinearSolveError("precompute 实际矩阵系数已改变；请保持固定参数或使用 reuse。")
-            return self.solver._solve(factor, rhs, reused=True)
+            return solver._solve(factor, rhs, reused=True)
         # 结构拓扑不变并不保证 A 不变；步长、参数和模型状态也会改变系数。
-        reused = self._factorization is not None and np.array_equal(matrix, self._factorization.matrix)
-        if not reused:
-            self._factorization = self.solver.factorize(matrix)
-        return self.solver._solve(self._factorization, rhs, reused=reused)
+        factorization = self._factorization
+        if factorization is None or not np.array_equal(matrix, factorization.matrix):
+            factorization = solver.factorize(matrix)
+            self._factorization = factorization
+            reused = False
+        else:
+            reused = True
+        return solver._solve(factorization, rhs, reused=reused)
 
     def _solve_step(self, context: StampContext) -> np.ndarray:
         """装配并求解单个时间步，返回本步解向量。

@@ -7,7 +7,6 @@ from dataclasses import dataclass
 
 import pytest
 
-
 from pycy_emt_lite import (
     Breaker,
     BreakerCloseEvent,
@@ -24,15 +23,17 @@ from pycy_emt_lite import (
     Simulator,
     VoltageSource,
 )
-from pycy_emt_lite.events import SimulationEvent
 from pycy_emt_lite.core.solvers import DenseLinearSolver
+from pycy_emt_lite.events import SimulationEvent
 
 
 @pytest.mark.parametrize("event_type", [BreakerOpenEvent, BreakerCloseEvent])
 def test_breaker_event_preserves_switch_gate_on_wrong_target(event_type) -> None:
     from pycy_emt_lite import IdealSwitch
 
-    gate = lambda time: True
+    def gate(time: float) -> bool:
+        return True
+
     switch = IdealSwitch("S", "in", "out", closed=gate)
     circuit = Circuit.from_components("wrong_gate", [
         VoltageSource("V", "in", "0", 10.0), switch, Resistor("R", "out", "0", 10.0),
@@ -144,7 +145,7 @@ def test_standard_event_rejects_missing_target_before_first_solve(event: Simulat
         solver=solver,
     )
 
-    with pytest.raises(KeyError, match=rf"missing.*0\.001"):
+    with pytest.raises(KeyError, match=r"missing.*0\.001"):
         simulator.run()
 
     assert simulator.last_time is None
@@ -196,7 +197,7 @@ def test_invalid_standard_event_prevents_earlier_events_from_changing_state() ->
         solver=solver,
     )
 
-    with pytest.raises(KeyError, match=rf"missing.*0\.001"):
+    with pytest.raises(KeyError, match=r"missing.*0\.001"):
         simulator.run()
 
     assert not fault.enabled

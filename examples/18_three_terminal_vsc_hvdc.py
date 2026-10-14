@@ -5,16 +5,24 @@
 默认 FAST；修改 MODE 选择 FULL 或 BENCHMARK。默认只显示，不保存。
 """
 
+import math
 from collections.abc import Mapping
 from dataclasses import dataclass
-import math
 from time import perf_counter
 
 import numpy as np
 
-from pycy_emt_lite import (Capacitor, Fault, FaultApplyEvent, FaultClearEvent,
-                         IdealSwitch, Inductor, Resistor, SimulationConfig,
-                         ThreePhaseSource)
+from pycy_emt_lite import (
+    Capacitor,
+    Fault,
+    FaultApplyEvent,
+    FaultClearEvent,
+    IdealSwitch,
+    Inductor,
+    Resistor,
+    SimulationConfig,
+    ThreePhaseSource,
+)
 from pycy_emt_lite.cases import CaseDefinition, OutputOptions, PlotSpec, run_case
 from pycy_emt_lite.components.three_phase import ThreePhaseLine
 from pycy_emt_lite.components.transformers import ThreePhaseTransformer

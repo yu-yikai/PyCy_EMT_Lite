@@ -10,11 +10,11 @@
 
 from __future__ import annotations
 
-from pathlib import Path
 import os
 import re
-from urllib.parse import quote
+from pathlib import Path
 from typing import Protocol
+from urllib.parse import quote
 
 
 class ReportableResult(Protocol):

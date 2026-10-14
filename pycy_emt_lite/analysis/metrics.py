@@ -9,13 +9,15 @@
 
 from __future__ import annotations
 
-from collections.abc import Iterable, Sequence
-from dataclasses import dataclass
 import math
+from collections.abc import Iterable
+from dataclasses import dataclass
+from itertools import pairwise
 from numbers import Real
 from typing import Protocol
 
 import numpy as np
+from numpy.typing import ArrayLike
 
 
 class SeriesProvider(Protocol):
@@ -24,7 +26,7 @@ class SeriesProvider(Protocol):
     若实现没有 `event_log`，调用者负责只选择不跨事件的平滑时间窗。
     """
 
-    def series(self, column: str) -> Sequence[float]: ...
+    def series(self, column: str) -> ArrayLike: ...
 
 
 @dataclass(frozen=True, slots=True)
@@ -47,7 +49,7 @@ class VoltageSagSummary:
     min_pu: float
 
 
-def _time_and_values(result: SeriesProvider, values: Sequence[float]) -> tuple[np.ndarray, np.ndarray]:
+def _time_and_values(result: SeriesProvider, values: ArrayLike) -> tuple[np.ndarray, np.ndarray]:
     """读取并验证时间列与等长信号。"""
 
     time = np.asarray(result.series("time"), dtype=float)
@@ -90,7 +92,7 @@ def _crosses_event(result: SeriesProvider, time: np.ndarray, start_time: float, 
         if "time" not in record:
             continue
         event_time = float(record["time"])
-        for left, right in zip(time[:-1], time[1:], strict=True):
+        for left, right in pairwise(time):
             overlap = max(float(left), start_time) < min(float(right), end_time)
             if overlap and left < event_time <= right:
                 return True
@@ -99,7 +101,7 @@ def _crosses_event(result: SeriesProvider, time: np.ndarray, start_time: float, 
 
 def _continuous_window(
     result: SeriesProvider,
-    values: Sequence[float],
+    values: ArrayLike,
     start_time: float | None,
     end_time: float | None,
 ) -> tuple[np.ndarray, np.ndarray]:
@@ -158,7 +160,7 @@ def _linear_product_mean(time: np.ndarray, left: np.ndarray, right: np.ndarray) 
     a, b, c, d = left[:-1], left[1:], right[:-1], right[1:]
     average = float(np.sum(_weights(time) * (2.0 * a * c + a * d + b * c + 2.0 * b * d) / 6.0))
     try:
-        mantissas, exponents = zip(*(math.frexp(v) for v in (average, left_scale, right_scale)))
+        mantissas, exponents = zip(*(math.frexp(v) for v in (average, left_scale, right_scale)), strict=True)
         return _finite_metric(math.ldexp(math.prod(mantissas), sum(exponents)))
     except OverflowError as exc:
         raise ValueError("乘积均值溢出，指标无法表示为有限数。") from exc

@@ -4,9 +4,9 @@
 """
 
 import math
+import runpy
 from dataclasses import replace
 from pathlib import Path
-import runpy
 
 import numpy as np
 import pytest
@@ -14,8 +14,8 @@ from scipy.integrate import solve_ivp
 
 from pycy_emt_lite import Capacitor, Circuit, Resistor, SimulationConfig, Simulator
 from pycy_emt_lite.analysis import three_phase_rms
-from pycy_emt_lite.machines import ParkSynchronousGenerator
 from pycy_emt_lite.controls import dq_to_abc
+from pycy_emt_lite.machines import ParkSynchronousGenerator
 
 
 def _base_generator(**overrides) -> ParkSynchronousGenerator:
@@ -62,7 +62,7 @@ def _reference(gen, resistance, times, initial=None):
     xd, xq = gen.d_axis_transient_reactance_pu, gen.q_axis_transient_reactance_pu
 
     def rhs(t, y):
-        delta, speed, eq, ed, efd, pm = y
+        _delta, speed, eq, ed, efd, pm = y
         id_ = (a * ed + xq * eq) / (a*a + xd*xq)
         iq = (a * eq - xd * ed) / (a*a + xd*xq)
         vt = load * math.hypot(id_, iq)

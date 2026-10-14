@@ -30,7 +30,8 @@ from pycy_emt_lite.components.three_phase import ThreePhaseParallelRLCLoad
 @pytest.mark.parametrize("method", ["trapezoidal", "backward_euler"])
 def test_three_phase_existing_models_match_independent_ac_fault_reference(kind, method) -> None:
     from scipy.integrate import solve_ivp
-    from pycy_emt_lite import VoltageSource, Fault, FaultApplyEvent, FaultClearEvent
+
+    from pycy_emt_lite import Fault, FaultApplyEvent, FaultClearEvent, VoltageSource
     from pycy_emt_lite.components.lines import ThreePhasePiLine
 
     omega, tau = 2 * math.pi * 50, 0.003
@@ -119,7 +120,8 @@ def test_ground_aliases_keep_three_phase_network_separate(ground) -> None:
 
 @pytest.mark.parametrize("kind", ["series", "parallel"])
 def test_three_phase_storage_initialization_matches_basic_components(kind) -> None:
-    source = lambda: ThreePhaseSource("VS", "source", phase_rms=100.0)
+    def source() -> ThreePhaseSource:
+        return ThreePhaseSource("VS", "source", phase_rms=100.0)
     if kind == "series":
         composite = [ThreePhaseLine("LINE", "source", "load", 1.0, 2.0),
                      ThreePhaseLoad("LOAD", "load", 3.0, 4.0)]
@@ -133,7 +135,7 @@ def test_three_phase_storage_initialization_matches_basic_components(kind) -> No
     else:
         load = ThreePhaseParallelRLCLoad("LOAD", "source", 400.0, 1000.0, 500.0, 200.0)
         # 直接并联正弦源的电容须预充到各相 t=0 电压。
-        for phase, angle in zip("abc", [0.0, -2 * math.pi / 3, 2 * math.pi / 3]):
+        for phase, angle in zip("abc", [0.0, -2 * math.pi / 3, 2 * math.pi / 3], strict=True):
             load.capacitor_state.previous_voltage[phase] = math.sqrt(2) * 100 * math.sin(angle)
         composite = [load]
         separate = [part for p in "abc" for part in (
@@ -149,7 +151,7 @@ def test_three_phase_storage_initialization_matches_basic_components(kind) -> No
     for actual, expected in pairs:
         assert result.series(actual) == pytest.approx(reference.series(expected), abs=1e-12)
     if kind == "parallel":
-        for phase, angle in zip("abc", [0.0, -2 * math.pi / 3, 2 * math.pi / 3]):
+        for phase, angle in zip("abc", [0.0, -2 * math.pi / 3, 2 * math.pi / 3], strict=True):
             expected = load.phase_capacitance * math.sqrt(2) * 100 * 2 * math.pi * 50 * math.cos(angle)
             assert reference.rows[0][f"i:C{phase}"] == pytest.approx(expected)
 
@@ -212,7 +214,7 @@ def test_three_phase_source_load_has_balanced_rms() -> None:
     current_phasor = source.phase_rms / impedance
     voltage_phasor = current_phasor * complex(load.resistance, omega * load.inductance)
     time = result.series("time")
-    for phase, angle in zip("abc", [0.0, -2 * math.pi / 3, 2 * math.pi / 3]):
+    for phase, angle in zip("abc", [0.0, -2 * math.pi / 3, 2 * math.pi / 3], strict=True):
         phasor = current_phasor * np.exp(1j * angle)
         # 正弦特解加指数暂态，零初值；同时检查三相相序和电流滞后。
         reference = math.sqrt(2) * ((phasor * np.exp(1j * omega * time)).imag
@@ -245,7 +247,7 @@ def test_three_phase_inductive_fault_example_matches_piecewise_rl_solution() -> 
               (0.04, 0.08, parallel, 0.05, 0.07),
               (0.08, 0.12, load.resistance, 0.09, 0.11))
     expected_load_power = np.zeros(3)
-    for phase, angle in zip("abc", [0.0, -2 * math.pi / 3, 2 * math.pi / 3]):
+    for phase, angle in zip("abc", [0.0, -2 * math.pi / 3, 2 * math.pi / 3], strict=True):
         initial_current = 0.0
         reference_current = np.zeros_like(time)
         reference_voltage = np.zeros_like(time)
@@ -276,7 +278,7 @@ def test_three_phase_inductive_fault_example_matches_piecewise_rl_solution() -> 
         for event_time in (0.04, 0.08):
             event_index = round(event_time / case.config.time_step)
             assert result.series(f"i:LINE:{phase}")[event_index] == pytest.approx(reference_current[event_index], abs=3e-4)
-    for (_, _, _, start, end), expected in zip(stages, expected_load_power):
+    for (_, _, _, start, end), expected in zip(stages, expected_load_power, strict=True):
         power = three_phase_power(result, ("v:fault_bus:a", "v:fault_bus:b", "v:fault_bus:c"),
                                   ("i:LOAD:a", "i:LOAD:b", "i:LOAD:c"), start_time=start, end_time=end)
         assert power.active_power == pytest.approx(expected, rel=4e-5)

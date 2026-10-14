@@ -4,8 +4,8 @@
 """
 
 import math
-from pathlib import Path
 import runpy
+from pathlib import Path
 
 import numpy as np
 import pytest
@@ -54,7 +54,7 @@ def test_vsc_pll_trace_matches_actual_normalized_error() -> None:
     controller = VSCController("S", 50.0, 420e3, 230e3, 200e6, 1000.0)
     controller.pll.angle = math.pi / 2
     row = {"time": 0.0, "v:S:dc_p": 200e3, "v:S:dc_n": -200e3}
-    for phase, voltage in zip("abc", (200.0, -100.0, -100.0)):
+    for phase, voltage in zip("abc", (200.0, -100.0, -100.0), strict=True):
         row.update({f"v:S:hv:{phase}": voltage, f"v:S:lv:{phase}": 0.0, f"i:S:reactor:{phase}": 0.0})
     traces = controller.sample(row)
     assert traces["S:PLL_Vq_pu"] == pytest.approx(-1.0)
@@ -185,7 +185,7 @@ def test_srf_pll_phase_and_frequency_converge_to_independent_continuous_ode(ampl
                           t_eval=times, method="DOP853", rtol=1e-11, atol=1e-12)
     assert reference.success
     # The declared initial frequency is nominal; compare feedback frequencies after t=0.
-    reference_frequency = [reference_rhs(t, state)[0] for t, state in zip(times[1:], reference.y.T[1:])]
+    reference_frequency = [reference_rhs(t, state)[0] for t, state in zip(times[1:], reference.y.T[1:], strict=True)]
     errors = []
     for stride in (1, 2, 4):
         step = 1e-4 / stride
@@ -198,7 +198,7 @@ def test_srf_pll_phase_and_frequency_converge_to_independent_continuous_ode(ampl
             if index % stride == 0:
                 angles.append(state.angle)
                 frequencies.append(state.frequency)
-        angle_error = [abs(math.remainder(a - b, 2 * math.pi)) for a, b in zip(angles, reference.y[0, 1:])]
+        angle_error = [abs(math.remainder(a - b, 2 * math.pi)) for a, b in zip(angles, reference.y[0, 1:], strict=True)]
         errors.append((max(angle_error), np.max(np.abs(np.array(frequencies) - reference_frequency))))
     errors = np.array(errors)
     assert np.all(errors[-1] < [6.2e-4, 0.055])  # rad, rad/s over 0 < t <= 0.2 s
@@ -346,7 +346,7 @@ def test_pll_absolute_limits_saturate_and_release_without_windup(bounds, errors)
     lower, upper = (None if value is None else 2 * math.pi * value for value in bounds)
     pll = SRFPLL(1000, 10000, minimum_frequency=lower, maximum_frequency=upper)
     step = 1e-4
-    for error in errors + [0.0]:
+    for error in [*errors, 0.0]:
         for _ in range(20):
             predicted = pll.angle + pll.frequency * step
             voltages = tuple(325 * math.cos(predicted + error + phase) for phase in (0, -2*math.pi/3, 2*math.pi/3))

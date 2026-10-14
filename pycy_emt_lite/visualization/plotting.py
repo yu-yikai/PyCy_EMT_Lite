@@ -5,17 +5,18 @@
 
 from __future__ import annotations
 
-from collections.abc import Iterable, Sequence
+from collections.abc import Iterable
 from pathlib import Path
 from typing import Protocol
 
 import numpy as np
+from numpy.typing import ArrayLike
 
 
 class PlottableResult(Protocol):
     """绘图只依赖 series() 读取时间和信号，不限定结果的存储方式。"""
 
-    def series(self, column: str) -> Sequence[float]: ...
+    def series(self, column: str) -> ArrayLike: ...
 
 
 def plot_series(

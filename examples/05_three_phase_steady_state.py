@@ -6,7 +6,12 @@
 
 import math
 
-from pycy_emt_lite import SimulationConfig, ThreePhaseLine, ThreePhaseLoad, ThreePhaseSource
+from pycy_emt_lite import (
+    SimulationConfig,
+    ThreePhaseLine,
+    ThreePhaseLoad,
+    ThreePhaseSource,
+)
 from pycy_emt_lite.analysis import three_phase_power, three_phase_rms
 from pycy_emt_lite.cases import CaseDefinition, OutputOptions, PlotSpec, run_case
 from pycy_emt_lite.io.results import SimulationResult
@@ -32,7 +37,7 @@ def print_summary(result: SimulationResult) -> None:
     impedance = complex(LOAD_RESISTANCE, 2 * math.pi * FREQUENCY * LOAD_INDUCTANCE)
     current = SOURCE_RMS / (LINE_RESISTANCE + impedance)
     print(f"稳态窗口：0.06–0.10 s；三相正序，每相负荷为 {LOAD_RESISTANCE:g} Ω + {LOAD_INDUCTANCE * 1e3:g} mH。")
-    for phase, voltage, branch in zip("ABC", voltages, currents):
+    for phase, voltage, branch in zip("ABC", voltages, currents, strict=True):
         print(f"{phase} 相：负荷电压 {voltage_rms[voltage]:.3f} V RMS，电流 {current_rms[branch]:.3f} A RMS")
     print(f"相量解：负荷电压 {abs(current * impedance):.3f} V RMS，电流 {abs(current):.3f} A RMS；"
           f"电流滞后本相电源电压 {math.degrees(math.atan2(-current.imag, current.real)):.3f}°")

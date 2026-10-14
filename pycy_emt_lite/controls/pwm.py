@@ -14,6 +14,7 @@ import math
 
 from pycy_emt_lite.controls.blocks import _finite_real
 
+
 def triangular_carrier(time: float, switching_frequency: float) -> float:
     """生成范围为 `[-1, 1]` 的对称三角载波。"""
 

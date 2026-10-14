@@ -62,7 +62,7 @@ $env:MPLBACKEND = "Agg"
 uv run --locked pytest -o addopts= -q -p no:cacheprovider --basetemp=.tmp/pytest-local
 ```
 
-Create `.tmp` explicitly so a fresh download has the parent directory required by `--basetemp`. Ensure no other test run uses the same `--basetemp`; pytest clears that directory. This distinguishes directory-permission failures from code failures. Existing automatic CI remains Linux-only; Windows CI is a future task.
+Create `.tmp` explicitly so a fresh download has the parent directory required by `--basetemp`. Ensure no other test run uses the same `--basetemp`; pytest clears that directory. This distinguishes directory-permission failures from code failures. CI is configured for Linux and Windows; local checks are described in section 6.
 
 Examples display figures by default without saving data or images.
 For network cases, set `SAVE_RESULT_DATA` or `SAVE_RESULT_FIGURE` at the top of the script to `1` to save to `outputs/<case-name>/`.
@@ -232,3 +232,28 @@ Update the learning table for new cases; avoid wrappers, dependencies or entrypo
 Documentation links to repository files use relative paths; execution and output paths are relative to the project root. Identify external references by public source links and filenames, without personal absolute paths or temporary validation directories.
 
 PyCy_EMT_Lite derives from the object workflow in PyCy_EMT v0.6, retaining material suitable for small teaching models. [MIT license](LICENSE).
+
+## 6. Development checks
+
+Run from the project root after `uv sync --locked`:
+
+```powershell
+New-Item -ItemType Directory -Force -Path .tmp | Out-Null
+$env:MPLBACKEND = "Agg"
+$env:OPENBLAS_NUM_THREADS = "1"
+uv run --locked ruff check pycy_emt_lite examples tests
+uv run --locked mypy
+uv run --locked pytest -m "not slow" --basetemp=.tmp/pytest-fast
+uv run --locked pytest -m slow --basetemp=.tmp/pytest-slow
+uv run --locked pytest -p pytest_cov --basetemp=.tmp/pytest-coverage --cov --cov-report=term-missing --cov-report=xml:.tmp/coverage.xml --cov-report=html:.tmp/htmlcov
+```
+
+The first pytest selection provides quick feedback; `slow` covers the expensive PWM step comparisons, HVDC control runs, and every test sharing the full FAST simulation. Plain pytest and CI run all tests. Markers are checked strictly so misspellings fail.
+
+Ruff checks errors, imports, modernization and selected defect rules without imposing formatting or line length. mypy checks the 39 package modules using their existing annotations; it does not require every function to be annotated or fully check unannotated bodies. NumPy supports the array protocols, and unavailable third-party stubs are tolerated. `py.typed` carries these annotations into installed packages.
+
+Coverage includes branches. Open `.tmp/htmlcov/index.html` to inspect missed lines and branches; there is no percentage threshold yet. Coverage and green tests describe tested behavior, while physical accuracy still requires the checks in [Models and validation](docs/models_and_validation.en.md).
+
+[CI configuration](.github/workflows/ci.yml) defines Linux and Windows jobs with a 30-minute job timeout, 15-minute test timeout and 10-minute example timeout. Both jobs run the locked checks above, all examples, build distributions, and verify the installed wheel outside the checkout, including its version and `py.typed`. JUnit, coverage XML and HTML reports are uploaded as `test-coverage-Linux` and `test-coverage-Windows` with 14-day retention. A local pass does not establish that a remote Actions run succeeded.
+
+Package versions in `pyproject.toml`, `uv.lock` and `pycy_emt_lite.__version__` must agree. Record changes in [CHANGELOG](CHANGELOG.md); version changes do not publish a release automatically.

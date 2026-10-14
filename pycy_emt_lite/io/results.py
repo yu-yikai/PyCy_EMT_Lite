@@ -8,8 +8,8 @@ from __future__ import annotations
 import csv
 import json
 import math
-from numbers import Real
 from dataclasses import dataclass, field
+from numbers import Real
 from pathlib import Path
 
 import numpy as np
@@ -59,7 +59,7 @@ def _checked_meta(meta, rows) -> dict:
     for field_name in ("time_step", "stop_time"):
         value = meta.get(field_name)
         try:
-            valid = not isinstance(value, bool) and isinstance(value, Real) and math.isfinite(float(value)) and value >= 0
+            valid = not isinstance(value, bool) and isinstance(value, Real) and math.isfinite(float(value)) and float(value) >= 0
         except (ValueError, TypeError, OverflowError):
             valid = False
         if not valid:
@@ -174,14 +174,14 @@ class SimulationResult:
                 allow_nan=False,
             )
         )
-        np.savez(target, **arrays)
+        np.savez(target, **arrays)  # type: ignore[arg-type]  # savez 存根未为 **kwds 提供 ArrayLike 形参。
 
     def _metadata(self) -> dict:
         return {"circuit_name": self.circuit_name, "method": self.method, "time_step": self.time_step,
                 "stop_time": self.stop_time, "event_log": self.event_log}
 
     @classmethod
-    def from_json(cls, path: str | Path) -> "SimulationResult":
+    def from_json(cls, path: str | Path) -> SimulationResult:
         """从 JSON 文件读入仿真结果。"""
 
         try:
@@ -192,7 +192,7 @@ class SimulationResult:
             raise ValueError(f"JSON {path} 读入失败：{exc}") from exc
 
     @classmethod
-    def from_csv(cls, path: str | Path, *, circuit_name: str = "csv_result", method: str = "unknown") -> "SimulationResult":
+    def from_csv(cls, path: str | Path, *, circuit_name: str = "csv_result", method: str = "unknown") -> SimulationResult:
         """从 CSV 文件读入仿真结果。
 
         CSV 本身不保存完整元数据，因此需要调用者补充电路名和积分方法。
@@ -218,11 +218,11 @@ class SimulationResult:
             raise ValueError(f"CSV {path} 读入失败：{exc}") from exc
         stop_time = rows[-1]["time"] if rows else 0.0
         time_step = rows[1]["time"] - rows[0]["time"] if len(rows) > 1 else 0.0
-        meta = _checked_meta(dict(circuit_name=circuit_name, method=method, time_step=time_step, stop_time=stop_time), rows)
+        meta = _checked_meta({"circuit_name": circuit_name, "method": method, "time_step": time_step, "stop_time": stop_time}, rows)
         return cls(**meta, rows=rows)
 
     @classmethod
-    def from_npz(cls, path: str | Path) -> "SimulationResult":
+    def from_npz(cls, path: str | Path) -> SimulationResult:
         """从 NPZ 文件读入仿真结果。"""
 
         try:

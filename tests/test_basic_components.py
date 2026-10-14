@@ -4,14 +4,24 @@
 """
 
 import math
-from pathlib import Path
 import runpy
+from itertools import pairwise
+from pathlib import Path
 
 import numpy as np
 import pytest
 
 import pycy_emt_lite
-from pycy_emt_lite import Capacitor, Circuit, CurrentSource, Inductor, Resistor, SimulationConfig, Simulator, VoltageSource
+from pycy_emt_lite import (
+    Capacitor,
+    Circuit,
+    CurrentSource,
+    Inductor,
+    Resistor,
+    SimulationConfig,
+    Simulator,
+    VoltageSource,
+)
 
 
 @pytest.mark.parametrize("factory", [Resistor, Capacitor, Inductor, CurrentSource, VoltageSource])
@@ -285,7 +295,7 @@ def test_rc_initial_state_and_first_interval(method, stop, initial) -> None:
     assert result.rows[0]["v:C"] == pytest.approx(initial, abs=1e-14)
     assert result.rows[0]["i:C"] == pytest.approx(1.0 - initial)
     voltage = initial
-    for before, row in zip(result.rows, result.rows[1:]):
+    for before, row in pairwise(result.rows):
         h = row["time"] - before["time"]
         decay = (1 - h / 2) / (1 + h / 2) if method == "trapezoidal" else 1 / (1 + h)
         voltage = 1 + (voltage - 1) * decay
@@ -322,12 +332,12 @@ def test_parallel_capacitors_share_initial_current_by_capacitance() -> None:
 
 def test_floating_inductor_star_satisfies_kcl_and_its_derivative() -> None:
     components = []
-    for phase, voltage in zip("abc", [400.0, 0.0, 0.0]):
+    for phase, voltage in zip("abc", [400.0, 0.0, 0.0], strict=True):
         components.extend([VoltageSource(f"V{phase}", phase, "0", voltage),
                            Inductor(f"L{phase}", phase, "star", 1.0)])
     result = Simulator(Circuit.from_components("star", components), SimulationConfig(0.1, 0.1)).run()
     assert result.series("v:star") == pytest.approx([400 / 3, 400 / 3])
-    for phase, voltage in zip("abc", [400.0, 0.0, 0.0]):
+    for phase, voltage in zip("abc", [400.0, 0.0, 0.0], strict=True):
         assert result.rows[0][f"i:L{phase}"] == pytest.approx(0.0, abs=1e-12)
         assert result.rows[0][f"v:L{phase}"] == pytest.approx(voltage - 400 / 3)
     assert sum(result.rows[1][f"i:L{phase}"] for phase in "abc") == pytest.approx(0.0, abs=1e-12)

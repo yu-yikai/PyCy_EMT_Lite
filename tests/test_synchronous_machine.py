@@ -8,6 +8,7 @@ import math
 import numpy as np
 import pytest
 from scipy.integrate import solve_ivp
+
 from pycy_emt_lite import Circuit, Resistor, SimulationConfig, Simulator
 from pycy_emt_lite.analysis import three_phase_rms
 from pycy_emt_lite.machines import SynchronousMachine
@@ -154,8 +155,8 @@ def test_classical_rl_energy_and_coupled_state_convergence() -> None:
     ({"frequency": True}, "frequency"),
 ])
 def test_classical_machine_reports_invalid_parameter_and_repair(overrides, match) -> None:
-    parameters = dict(name="SM", terminal_bus="bus", internal_phase_rms=100, stator_resistance=1,
-                      stator_inductance=0, base_power=3000, inertia_constant=3.5)
+    parameters = {"name": "SM", "terminal_bus": "bus", "internal_phase_rms": 100, "stator_resistance": 1,
+                  "stator_inductance": 0, "base_power": 3000, "inertia_constant": 3.5}
     parameters.update(overrides)
     with pytest.raises(ValueError, match=match) as error:
         SynchronousMachine(**parameters)

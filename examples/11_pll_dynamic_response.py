@@ -45,7 +45,7 @@ def main() -> None:
     # 首行只观察声明初值，不推进 PI 或角度。
     _, initial_q = abc_to_dq(*grid_voltages(0.0), pll.angle)
     rows = [{"time": 0.0, "angle": pll.angle, "frequency": pll.frequency, "q_axis_voltage": initial_q}]
-    steps = int(round(config.stop_time / config.time_step))
+    steps = round(config.stop_time / config.time_step)
     for index in range(1, steps + 1):
         time = config.stop_time if index == steps else index * config.time_step
         state = pll.step(grid_voltages(time), time - rows[-1]["time"])

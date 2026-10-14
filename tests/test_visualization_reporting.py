@@ -5,8 +5,8 @@
 
 from __future__ import annotations
 
-from pathlib import Path
 import runpy
+from pathlib import Path
 
 import matplotlib
 import matplotlib.image
@@ -14,7 +14,11 @@ import pytest
 
 from pycy_emt_lite import SimulationResult
 from pycy_emt_lite.cases import run_case
-from pycy_emt_lite.visualization import plot_result_comparison, plot_zoom_window, write_markdown_report
+from pycy_emt_lite.visualization import (
+    plot_result_comparison,
+    plot_zoom_window,
+    write_markdown_report,
+)
 
 matplotlib.use("Agg")
 
@@ -74,6 +78,7 @@ def test_unusable_output_path_fails_before_callback(tmp_path, bad) -> None:
 @pytest.mark.parametrize("kind", ["series", "three_phase", "comparison", "zoom"])
 def test_failed_plot_does_not_leak_figures(kind) -> None:
     import matplotlib.pyplot as plt
+
     from pycy_emt_lite.visualization import plot_series, plot_three_phase
 
     before = plt.get_fignums()
@@ -93,6 +98,7 @@ def test_failed_plot_does_not_leak_figures(kind) -> None:
 def test_failed_save_closes_figure_and_pgf_skips_show(tmp_path, monkeypatch) -> None:
     import matplotlib.pyplot as plt
     from matplotlib.figure import Figure
+
     from pycy_emt_lite.visualization import plot_series
     from pycy_emt_lite.visualization.plotting import _show_if_interactive
 
