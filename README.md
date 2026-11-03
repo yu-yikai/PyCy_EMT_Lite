@@ -66,6 +66,7 @@ Create `.tmp` explicitly so a fresh download has the parent directory required b
 
 Examples display figures by default without saving data or images.
 For network cases, set `SAVE_RESULT_DATA` or `SAVE_RESULT_FIGURE` at the top of the script to `1` to save to `outputs/<case-name>/`.
+With the corresponding saving option enabled, rerunning the same case name under the same output root replaces same-name data files (`result.csv`, `result.json`, `result.npz`) or figures. Copy the earlier results or change the case name before a comparison run.
 The standalone PLL example 11 only displays figures and has no saving flags.
 Noninteractive backends such as `MPLBACKEND=Agg` skip window display while retaining computation and saving.
 
