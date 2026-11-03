@@ -60,3 +60,17 @@ T10 是有性能需求和稳定总流程收益证据才启动的可选候选，�
 - 固定 dq 电压 (90,60) V、电流 (3,-4) A，从 t=0 开始以 1 ms 递增。Vdc=100 V 的 45 V 矢量限幅冻结 d/q 积分，升到 400 V 后按 (-0.06,+0.08) 增量恢复；独立相投影核对矢量方向/幅值、逐相调制上界及 m/m_next 时间层。
 - `.venv/Scripts/python.exe -m pytest tests/test_controls.py --basetemp=.tmp/t8-controls-all`：157 passed；Ruff 和 diff 检查通过。生产 `controls/vsc.py` 无更改。
 - `.tmp/t8-vsc-mutations/` 隔离副本基准 6 passed；删除 q 回滚 2 failed，删除 d/q 回滚 1 failed，逐相削顶代替矢量缩放 1 failed，均被目标状态/方向断言识别。正式工作区未做变异；摘要记录源码/测试 SHA256 和运行命令。变异解释器为 rc3，最终正式测试在稳定版 T9 再验。
+
+### 第五期 T9：工程复验及 Windows CI 编码修复
+
+- 新建忽略目录 `.tmp/venv-py3145`，以稳定 CPython 3.14.5 运行；`uv sync --locked --python .uv-python/cpython-3.14.5-windows-x86_64-none/python.exe` 成功，27 包。原有 rc3 `.venv` 保留。平台 Windows 11 build 26300；NumPy 2.5.2、SciPy 1.18.0、Matplotlib 3.11.1、pytest 9.1.1、pytest-cov 7.1.0、Ruff 0.16.10、mypy 2.4.0；Agg、OPENBLAS_NUM_THREADS=1。
+- 稳定版 `python -m ruff check pycy_emt_lite examples tests` 通过；`python -m mypy --cache-dir=.tmp/t9-stable/mypy-cache` 通过（39 源码文件）。
+- 稳定版 `python -m pytest -p pytest_cov --basetemp=.tmp/t9-stable/pytest --junitxml=.tmp/t9-stable/tests.xml --cov --cov-report=term-missing --cov-report=xml:.tmp/t9-stable/coverage.xml --cov-report=html:.tmp/t9-stable/htmlcov`：**1097 passed**，无跳过，155.97 s；覆盖率 93% 只作覆盖统计，不证明物理正确性。启动 HEAD 为 4e91b06，T8 最终测试当时已在工作区，之后仅提交该相同测试及文档/CI。
+- 14 个默认 examples 全部 Agg 通过；无 `outputs` 生成。18 FAST 共 40001 样本、h=2e-5 s、0.8 s，六条故障事件正确，全部有限，DC 平衡残差 0.0270173 W。日志、完整命令及环境在 `.tmp/t9-stable/`；与 pytest 并行的耗时不作为性能基准。
+- `uv build --out-dir .tmp/t9-dist-final` 成功，明确由 sdist 构建 wheel；在源码树外临时目录用 `uv run --python <stable-python> --isolated --no-project --with <wheel> python smoke.py` 安装导入，检查版本 0.1.1、`py.typed`、安装路径、10 V/5 Ω=2 A 及二值拒绝修复均通过。pyproject/uv.lock/__version__/py.typed 未改。
+- **ENG-001（T9 新确认工程问题）**：起点的 [Windows CI](https://github.com/yu-yikai/PyCy_EMT_Lite/actions/runs/41632731319) 在首例中文摘要输出处因 CP1252 抛 UnicodeEncodeError；Linux 已通过，不能笼统称双平台通过。本地以 `PYTHONIOENCODING=cp1252` 运行例 01 复现同一错误。在 CI job 环境加 `PYTHONUTF8=1`，本地确认 stdout=utf-8 且首例通过。不改生产输出或数值逻辑；新一轮远端双平台结果待推送触发后补记。
+
+### 条件任务和未验证边界
+
+- T10 / AUD-008 不启动：没有新增性能需求，也没有交错测量/进程峰值/稳定总流程收益证据，按计划保留 F1 原实现，不能宣称优化收益。
+- T4 真实初学者 GUI/IDE 跟随试用未做；FULL/BENCHMARK、商业模型/设备认证、饱和回程/能量等不在本轮扩展范围。

@@ -23,6 +23,7 @@ jobs:
     env:
       MPLBACKEND: Agg
       OPENBLAS_NUM_THREADS: "1"
+      PYTHONUTF8: "1"
 
     steps:
       - name: Checkout
