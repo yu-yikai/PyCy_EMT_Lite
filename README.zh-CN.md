@@ -95,6 +95,19 @@ uv run --locked pytest -o addopts= -q -p no:cacheprovider --basetemp=.tmp/pytest
 | PWM | [12](examples/12_two_level_pwm_generator.py) | 对照理想开关的 SPWM 门极与 RL 电流，区分开关纹波和基波。 |
 | VSC-HVDC 综合仿真 | [18](examples/18_three_terminal_vsc_hvdc.py) | 沿三个两电平桥、独立 PLL/dq 闭环和双极 DC 网络，跟踪交流故障后的电压、功率变化。 |
 
+从 12 进入 18 前，可沿[现有 HVDC 测试模块](tests/test_three_terminal_vsc_hvdc.py)逐步阅读：
+`test_single_bridge_open_loop_power_identity` 核对单桥开环功率账；
+`test_single_station_pll_and_dq_tracking_with_step_refinement` 加入单站 PLL/dq 闭环；
+`test_two_station_intermediate_dc_exchange` 连接双站 DC 网络；
+最后看 `test_three_terminal_vsc_hvdc_fast_run` 的完整 FAST 网络。后三项标记为 `slow`。
+先用专用临时目录运行较小的单桥开环测试：
+
+```powershell
+New-Item -ItemType Directory -Force -Path .tmp | Out-Null
+$env:MPLBACKEND = "Agg"
+uv run --locked pytest tests/test_three_terminal_vsc_hvdc.py::test_single_bridge_open_loop_power_identity --basetemp=.tmp/pytest-vsc-bridge
+```
+
 前四个示例可先做以下练习。每次只改一项、保存并重新运行，观察后恢复原值。脚本开头也有电路连接、预期现象和源码位置。
 
 | 示例 | 默认结果的检查点 | 修改与预期 |
@@ -162,6 +175,11 @@ if __name__ == "__main__":
 长算例可把摘要放入 `CaseDefinition.summary`，事件放入 `events`，三相图用 `PlotSpec(kind="three_phase")` 并提供三个字段。
 保存图像时，每个 `PlotSpec` 必须有 `figure_name`。只有真正变长或需要复用的逻辑才拆成函数；示例之间不互相导入。
 先形成 `case`、`circuit`、`simulator` 等中间对象，再运行下一步，方便阅读和调试。
+
+第一次调试可在 `define_case()` 创建 `CaseDefinition` 处停下，核对元件与步长。
+在 [Simulator](pycy_emt_lite/core/simulation.py) 的 `_assemble` 结束处观察 `matrix`（A）与 `rhs`（b），再在 `_solve_step` 返回前将 `solution`（x）与电路的节点/支路映射对应起来。
+在 [Capacitor/Inductor.update_state](pycy_emt_lite/components/basic.py) 写回前后比较 `previous_voltage` 与 `previous_current`，这些历史量会进入下一步的 companion 方程。
+`on_step(row)` 在状态更新后读取刚求解的测量，事件点读取右侧值。VSC 控制器在 t=0 只初始化，随后产生下一步使用的保持调制量；其 `m*` 字段表示刚用过的参考，`m*_next` 表示新命令，见 [VSCController.sample](pycy_emt_lite/controls/vsc.py)。
 
 每次运行重新创建元件、`Circuit` 和 `Simulator`；重新调用 `define_case()` 可得到新元件。
 同一 `CaseDefinition` 内的元件也不能重复运行。只支持 `start_time=0`；`stop_time` 必须是基础步长的非负整数倍。

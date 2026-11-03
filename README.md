@@ -96,6 +96,19 @@ Complete 01 first, then study storage in 02 and 03 before moving to 04 and 17. O
 | PWM | [12](examples/12_two_level_pwm_generator.py) | Compare ideal-switch SPWM gates with RL current and distinguish switching ripple from the fundamental. |
 | Integrated VSC-HVDC | [18](examples/18_three_terminal_vsc_hvdc.py) | Follow voltage and power after an AC fault through three two-level bridges, independent PLL/dq loops and a bipolar DC network. |
 
+Before moving from 12 to 18, follow the existing tests in [the HVDC test module](tests/test_three_terminal_vsc_hvdc.py):
+`test_single_bridge_open_loop_power_identity` checks one bridge's power accounting;
+`test_single_station_pll_and_dq_tracking_with_step_refinement` adds one station's PLL/dq loops;
+`test_two_station_intermediate_dc_exchange` connects two stations through DC;
+then `test_three_terminal_vsc_hvdc_fast_run` introduces the complete FAST network. The last three are marked `slow`.
+Start with the small open-loop test below, using a dedicated temporary directory:
+
+```powershell
+New-Item -ItemType Directory -Force -Path .tmp | Out-Null
+$env:MPLBACKEND = "Agg"
+uv run --locked pytest tests/test_three_terminal_vsc_hvdc.py::test_single_bridge_open_loop_power_identity --basetemp=.tmp/pytest-vsc-bridge
+```
+
 Try these exercises in the first four examples. Change one item at a time, save and rerun, then restore the original value. Each script also starts with connections, expected behavior and source locations.
 
 | Example | Check with default parameters | Change and expected behavior |
@@ -163,6 +176,11 @@ if __name__ == "__main__":
 Longer cases can put a summary in `CaseDefinition.summary`, events in `events`, and three-phase figures in `PlotSpec(kind="three_phase")` with exactly three columns.
 Every plot needs `figure_name` when saving images. Extract functions only for logic that becomes long or needs reuse; examples do not import each other.
 Create intermediate `case`, `circuit` and `simulator` objects before the next operation to make execution and debugging easy to follow.
+
+For a first debugging pass, stop where `define_case()` constructs `CaseDefinition` and inspect components and the time step.
+In [Simulator](pycy_emt_lite/core/simulation.py), stop at the end of `_assemble` to inspect `matrix` (A) and `rhs` (b), then before `_solve_step` returns to inspect `solution` (x) against the circuit's node/branch mapping.
+In [Capacitor/Inductor.update_state](pycy_emt_lite/components/basic.py), compare `previous_voltage` and `previous_current` before and after the update: these histories enter the next step's companion equations.
+The `on_step(row)` callback reads the just-solved measurements after state updates; at an event it reads the right-side values. A VSC controller only initializes at t=0, then generates held modulation for the next step. Its `m*` fields describe the reference just used, while `m*_next` records the new command; see [VSCController.sample](pycy_emt_lite/controls/vsc.py).
 
 Create fresh components, `Circuit` and `Simulator` for each run; calling `define_case()` again obtains new components.
 Components inside a `CaseDefinition` are also single-use. Only `start_time=0` is supported; `stop_time` must be a nonnegative integer number of base steps.

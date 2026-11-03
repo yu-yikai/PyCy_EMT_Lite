@@ -31,6 +31,12 @@ T10 是有性能需求和稳定总流程收益证据才启动的可选候选，�
 - 仅修正例 12 开头说明，使学习目标对应实际三相 RL 电流图及开关纹波；选用计划中的最小文字方案，不增图或改 PWM/网络参数。
 - `MPLBACKEND=Agg OPENBLAS_NUM_THREADS=1 .venv/Scripts/python.exe examples/12_two_level_pwm_generator.py` 默认运行通过，40001 样本，三相基波 RMS 为 105.609214/105.538711/105.605329 A；默认不保存。字体缓存权限提示不影响此次运行，T9 使用仓库内缓存目录。
 
+### 第三期 T4 / AUD-007：中间阅读与调试导航
+
+- 中英 README 增加既有单桥开环→单站 PLL/dq→双站 DC→三站 FAST 测试路线，以及 CaseDefinition、`_assemble` A/b、`_solve_step` x、RLC 历史量和回调时间层的断点导航。
+- 稳定 Python 3.14.5 环境执行文中单桥选择命令：1 passed；文件链接、四个测试符号及 `git diff --check` 通过。用 `sys.settrace` 核对 RC 三采样的 assemble→solve→update_state→on_step 顺序及 A/b/x 形状。
+- **未验证：真实初学者跟随试用。** 脚本与断点顺序核对不等同于 GUI/IDE 教学体验验收。无新模型、脚本或运行行为变更。
+
 ### 第四期 T5 / AUD-002：PI 抗饱和双语推导
 
 - 中英元件推导改按 `Δxi=Ki·e·h` 方向判定上下限冻结，解释负 Ki、Ki=0 及候选输出与保存积分的时间层，不改源码。
