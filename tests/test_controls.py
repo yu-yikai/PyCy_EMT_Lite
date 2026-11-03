@@ -23,6 +23,7 @@ from pycy_emt_lite.controls import (
     sine_pwm_duty,
     triangular_carrier,
 )
+from pycy_emt_lite.controls.vsc import VSCControlConfig, VSCController
 
 
 def test_delay_rejects_huge_allocation_before_buffer_creation() -> None:
@@ -49,8 +50,6 @@ def test_pi_antiwindup_follows_integral_increment(ki, error, expected) -> None:
 
 
 def test_vsc_pll_trace_matches_actual_normalized_error() -> None:
-    from pycy_emt_lite.controls.vsc import VSCController
-
     controller = VSCController("S", 50.0, 420e3, 230e3, 200e6, 1000.0)
     controller.pll.angle = math.pi / 2
     row = {"time": 0.0, "v:S:dc_p": 200e3, "v:S:dc_n": -200e3}
@@ -58,6 +57,90 @@ def test_vsc_pll_trace_matches_actual_normalized_error() -> None:
         row.update({f"v:S:hv:{phase}": voltage, f"v:S:lv:{phase}": 0.0, f"i:S:reactor:{phase}": 0.0})
     traces = controller.sample(row)
     assert traces["S:PLL_Vq_pu"] == pytest.approx(-1.0)
+
+
+def _vsc_row(time, *, vac=1.0, voltage_dq=(30.0, 0.0), current_dq=(0.0, 0.0), vdc=400.0):
+    """Balanced 50 Hz samples, with explicit phase projection independent of transforms."""
+    row = {"time": time, "v:S:dc_p": vdc / 2, "v:S:dc_n": -vdc / 2}
+    for phase, offset in zip("abc", (0.0, -2 * math.pi / 3, 2 * math.pi / 3), strict=True):
+        angle = 2 * math.pi * 50 * time + offset
+        cosine, sine = math.cos(angle), math.sin(angle)
+        row[f"v:S:hv:{phase}"] = math.sqrt(2 / 3) * 100.0 * vac * cosine
+        row[f"v:S:lv:{phase}"] = voltage_dq[0] * cosine - voltage_dq[1] * sine
+        row[f"i:S:reactor:{phase}"] = current_dq[0] * cosine - current_dq[1] * sine
+    return row
+
+
+@pytest.mark.parametrize("id_demand", [0.0, 8.0])
+@pytest.mark.parametrize("vac_error", [-0.5, 0.5])
+def test_vsc_q_current_circle_freezes_only_clipped_vac_integral_and_releases(id_demand, vac_error) -> None:
+    # P/(1.5 Vd) gives Id=0 or 8 A; the independent q margin is 10 or 6 A.
+    step = 1e-3
+    config = VSCControlConfig(current_limit=10.0, ac_kp=16.0, ac_ki=1000.0,
+                              current_kp=1.0, current_ki=10.0, dc_voltage=400.0,
+                              ramp_start=0.0, ramp_duration=step / 2)
+    controller = VSCController("S", 50.0, 100.0, 100.0, 1.5 * 30.0 * id_demand, 1000.0, config)
+    initial = controller.sample(_vsc_row(0.0, vac=1.0 - vac_error))
+    assert (initial["S:Id_ref"], initial["S:Iq_ref"], controller.ac_pi.integrator) == (0.0, 0.0, 0.0)
+
+    traces = controller.sample(_vsc_row(step, vac=1.0 - vac_error))
+    increment = 1000.0 * vac_error * step
+    candidate_q = 16.0 * vac_error + increment  # ±8.5 A, below the PI's own ±10 A limits.
+    q_margin = math.sqrt(10.0**2 - id_demand**2)
+    expected_q = math.copysign(min(abs(candidate_q), q_margin), vac_error)
+    expected_integral = 0.0 if id_demand == 8.0 else increment
+    assert traces["S:Id_ref"] == pytest.approx(id_demand)
+    assert traces["S:Iq_ref"] == pytest.approx(expected_q)
+    assert math.hypot(traces["S:Id_ref"], traces["S:Iq_ref"]) <= 10.0 + 1e-12
+    assert controller.ac_pi.integrator == pytest.approx(expected_integral)
+
+    # Remove the active-power demand to restore all 10 A of q margin at the next sample.
+    controller.active_power = 0.0
+    released = controller.sample(_vsc_row(2 * step, vac=1.0 - vac_error))
+    assert released["S:Id_ref"] == pytest.approx(0.0)
+    assert released["S:Iq_ref"] == pytest.approx(16.0 * vac_error + expected_integral + increment)
+    assert controller.ac_pi.integrator == pytest.approx(expected_integral + increment)
+
+
+def test_vsc_voltage_vector_limit_freezes_both_integrals_and_preserves_direction_on_release() -> None:
+    step, inductance = 1e-3, 0.01
+    config = VSCControlConfig(dc_voltage=400.0, reactor_inductance=inductance,
+                              current_kp=2.0, current_ki=20.0, modulation_limit=0.9,
+                              ac_kp=1.0, ac_ki=1.0)
+    controller = VSCController("S", 50.0, 100.0, 100.0, 0.0, 1000.0, config)
+    measurements = {"voltage_dq": (90.0, 60.0), "current_dq": (3.0, -4.0)}
+    controller.sample(_vsc_row(0.0, vdc=100.0, **measurements))
+    held_modulation = controller.modulation
+    # Constant dq measurements keep the filters settled; errors are exactly (-3, +4) A.
+    errors = (-3.0, 4.0)
+    increments = tuple(20.0 * error * step for error in errors)
+    feedforward = (90.0 - 2 * math.pi * 50 * inductance * 4.0,
+                   60.0 - 2 * math.pi * 50 * inductance * 3.0)
+    for index, vdc in enumerate((100.0, 400.0, 400.0), start=1):
+        traces = controller.sample(_vsc_row(index * step, vdc=vdc, **measurements))
+        # At 100 V the 45 V vector allowance saturates; at 400 V, 180 V releases it.
+        candidate_integrals = tuple(increment * max(index - 1, 1) for increment in increments)
+        raw_voltage = tuple(v - 2.0 * error - integral
+                            for v, error, integral in zip(feedforward, errors, candidate_integrals, strict=True))
+        allowance = 0.9 * vdc / 2
+        assert (math.hypot(*raw_voltage) > allowance) == (index == 1)
+        expected_integrals = (0.0, 0.0) if index == 1 else candidate_integrals
+        assert (controller.d_pi.integrator, controller.q_pi.integrator) == pytest.approx(expected_integrals, abs=1e-12)
+        assert (traces["S:Id_ref"], traces["S:Iq_ref"]) == pytest.approx((0.0, 0.0), abs=1e-12)
+        assert tuple(traces[f"S:m{phase}"] for phase in "abc") == held_modulation
+
+        modulation = tuple(traces[f"S:m{phase}_next"] for phase in "abc")
+        # Independent phase projections measure vector magnitude and direction, so per-phase
+        # clipping cannot pass just by satisfying the individual phase bounds.
+        angles = tuple(2 * math.pi * 50 * index * step + phase for phase in (0, -2 * math.pi / 3, 2 * math.pi / 3))
+        projected = (2 / 3 * sum(m * math.cos(a) for m, a in zip(modulation, angles, strict=True)),
+                     -2 / 3 * sum(m * math.sin(a) for m, a in zip(modulation, angles, strict=True)))
+        expected_magnitude = min(2 * math.hypot(*raw_voltage) / vdc, 0.9)
+        expected_vector = tuple(expected_magnitude * value / math.hypot(*raw_voltage) for value in raw_voltage)
+        assert projected == pytest.approx(expected_vector, abs=1e-12)
+        assert math.hypot(*projected) == pytest.approx(expected_magnitude, abs=1e-12)
+        assert all(math.isfinite(value) and abs(value) <= 0.9 + 1e-12 for value in modulation)
+        held_modulation = modulation
 
 
 def test_limiter_clamps_value() -> None:

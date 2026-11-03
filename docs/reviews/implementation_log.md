@@ -53,3 +53,10 @@ T10 是有性能需求和稳定总流程收益证据才启动的可选候选，�
 
 - 中英 README 保存段明确同一输出根目录/案例名会替换前次同名 result.csv/json/npz 或图片，比较前先复制或改案例名。
 - 人工核对 `cases.py` 默认保存关闭、固定文件名及 `plot.figure_name` 路径；`git diff --check` 通过。不改保存行为、格式或默认设置。
+
+### 第五期 T8 / AUD-004：VSC 多级限幅与积分恢复
+
+- 仅 `tests/test_controls.py` 增加五个合成样本。d 优先限流独立计算 `sqrt(10²−Id²)`，Id=0/8 A 的 q 裕量为 10/6 A，对照 Vac PI 候选 ±8.5 A，检查截断与未截断及解除后的 ±0.5 积分恢复。
+- 固定 dq 电压 (90,60) V、电流 (3,-4) A，从 t=0 开始以 1 ms 递增。Vdc=100 V 的 45 V 矢量限幅冻结 d/q 积分，升到 400 V 后按 (-0.06,+0.08) 增量恢复；独立相投影核对矢量方向/幅值、逐相调制上界及 m/m_next 时间层。
+- `.venv/Scripts/python.exe -m pytest tests/test_controls.py --basetemp=.tmp/t8-controls-all`：157 passed；Ruff 和 diff 检查通过。生产 `controls/vsc.py` 无更改。
+- `.tmp/t8-vsc-mutations/` 隔离副本基准 6 passed；删除 q 回滚 2 failed，删除 d/q 回滚 1 failed，逐相削顶代替矢量缩放 1 failed，均被目标状态/方向断言识别。正式工作区未做变异；摘要记录源码/测试 SHA256 和运行命令。变异解释器为 rc3，最终正式测试在稳定版 T9 再验。
