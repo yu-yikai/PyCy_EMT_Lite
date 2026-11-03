@@ -68,10 +68,24 @@ T10 是有性能需求和稳定总流程收益证据才启动的可选候选，�
 - 稳定版 `python -m pytest -p pytest_cov --basetemp=.tmp/t9-stable/pytest --junitxml=.tmp/t9-stable/tests.xml --cov --cov-report=term-missing --cov-report=xml:.tmp/t9-stable/coverage.xml --cov-report=html:.tmp/t9-stable/htmlcov`：**1097 passed**，无跳过，155.97 s；覆盖率 93% 只作覆盖统计，不证明物理正确性。启动 HEAD 为 4e91b06，T8 最终测试当时已在工作区，之后仅提交该相同测试及文档/CI。
 - 14 个默认 examples 全部 Agg 通过；无 `outputs` 生成。18 FAST 共 40001 样本、h=2e-5 s、0.8 s，六条故障事件正确，全部有限，DC 平衡残差 0.0270173 W。日志、完整命令及环境在 `.tmp/t9-stable/`；与 pytest 并行的耗时不作为性能基准。
 - `uv build --out-dir .tmp/t9-dist-final` 成功，明确由 sdist 构建 wheel；在源码树外临时目录用 `uv run --python <stable-python> --isolated --no-project --with <wheel> python smoke.py` 安装导入，检查版本 0.1.1、`py.typed`、安装路径、10 V/5 Ω=2 A 及二值拒绝修复均通过。pyproject/uv.lock/__version__/py.typed 未改。
-- **ENG-001（T9 新确认工程问题）**：起点的 [Windows CI](https://github.com/yu-yikai/PyCy_EMT_Lite/actions/runs/41632731319) 在首例中文摘要输出处因 CP1252 抛 UnicodeEncodeError；Linux 已通过，不能笼统称双平台通过。本地以 `PYTHONIOENCODING=cp1252` 运行例 01 复现同一错误。在 CI job 环境加 `PYTHONUTF8=1`，本地确认 stdout=utf-8 且首例通过。不改生产输出或数值逻辑；新一轮远端双平台结果待推送触发后补记。
+- **ENG-001（T9 新确认工程问题）**：起点的 [Windows CI](https://github.com/yu-yikai/PyCy_EMT_Lite/actions/runs/41632731319) 在首例中文摘要输出处因 CP1252 抛 UnicodeEncodeError；Linux 已通过，不能笼统称双平台通过。本地以 `PYTHONIOENCODING=cp1252` 运行例 01 复现同一错误。在 CI job 环境加 `PYTHONUTF8=1`，本地确认 stdout=utf-8 且首例通过。不改生产输出或数值逻辑；新一轮远端双平台也均通过，见下方最终结果。
 - 额外最小等价探针在两个隔离副本中比较起点 6b5d206 与当前 T1 三个生产文件：Fault/Breaker × RL/RC × TR/BE × 三种求解模式 × 十种合法状态，共 240 条轨迹（10 V 源、R=2 Ω、L=0.2 H 或 C=0.1 F、开关 1 Ω、h=1 ms、0–6 ms、2/4 ms 标准事件）。15120 个 float64 值逐字节一致，列序、全部行、480 条事件及元数据一致。脚本、轨迹和双方源码 SHA256 留在 `.tmp/t9-equivalence-20261103/`，当前生产文件对应 814f1ed；未重复高成本 FAST。
 
 ### 条件任务和未验证边界
 
 - T10 / AUD-008 不启动：没有新增性能需求，也没有交错测量/进程峰值/稳定总流程收益证据，按计划保留 F1 原实现，不能宣称优化收益。
 - T4 真实初学者 GUI/IDE 跟随试用未做；FULL/BENCHMARK、商业模型/设备认证、饱和回程/能量等不在本轮扩展范围。
+
+## 最终远端验收
+
+已推送 `main@f7801001af35cf3e0ac1f64474086e5dd311340e`，该提交的 [GitHub Actions 41641078937](https://github.com/yu-yikai/PyCy_EMT_Lite/actions/runs/41641078937) 最终为 **success**。
+
+| 平台 | 实际稳定解释器 | 实际全量测试（含 slow） | 其他门禁 |
+|---|---|---|---|
+| [Linux](https://github.com/yu-yikai/PyCy_EMT_Lite/actions/runs/41641078937/job/125934454463) | CPython 3.14.7 | 1097 passed，223.76 s | Ruff、mypy（39 文件）、14 默认示例、sdist→wheel、源码树外安装冒烟、工作区清洁均通过 |
+| [Windows](https://github.com/yu-yikai/PyCy_EMT_Lite/actions/runs/41641078937/job/125934454803) | CPython 3.14.10 | 1097 passed，298.68 s | 同上全部通过，中文首例输出通过 |
+
+数量和解释器来自本次实际 job 日志，不推用本机或历史结果；原始日志、最终 run JSON 与摘要保存在 `.tmp/t9-ci-monitor/`。
+之后仅补交本验收记录，以 `[skip ci]` 避免为记录重跑相同高成本检查；已验证的代码、测试、依赖、示例、双语正文和 CI 配置保持为上述通过版本。
+
+T1/T2/T3/T4/T5/T6/T7/T8 的修改及 T9 工程复验已交付；T4 真实新手试用仍未验证，T10 按启动条件保留。没有未提交的实现修改，也未引入计划排除的物理/架构扩展。
