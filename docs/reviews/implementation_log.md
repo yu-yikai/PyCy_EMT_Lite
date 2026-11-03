@@ -19,3 +19,9 @@ T10 是有性能需求和稳定总流程收益证据才启动的可选候选，�
 - `.venv/Scripts/python.exe -m pytest tests/test_events.py tests/test_power_electronics.py tests/test_step_callback.py --basetemp=.tmp/pytest-t1-green --junitxml=.tmp/t1-tests.xml`：335 passed；覆盖标准事件和三种求解模式下回调非法值在下一次求解前失败，且无新采样输出。
 - 同解释器快速回归 `-m 'not slow' --basetemp=.tmp/pytest-t1-fast --junitxml=.tmp/t1-fast.xml`：1088 passed、9 deselected；组件及新测试 Ruff 通过。此处解释器为既有 3.14.0rc3，稳定版另见 T9。
 - 兼容影响仅为此前未声明的 truthy 状态输入改为抛错；合法状态的电导、事件时刻、输出名及积分方程不变。
+
+### 第二期 T2 / AUD-006：内部节点契约
+
+- 在中英数值约定和元件推导说明局部冲突拒绝、生成名可见、跨元件同名显式抽头允许及改名同步要求，无源码更改。
+- 独立分压：10 V 源、总 2 Ω 两段线、8 Ω 负载得到 8 V；在中点并接 1 Ω 后，`10×0.9/1.9×8/9=4.21052631578947 V`。实际探针与公式相符，两者节点列表均为 `['in', 'out', 'LINE:internal:1']`。
+- 既有 `internal_node_collision` 三个参数例通过，`git diff --check` 通过。保留 I02 局部防冲突范围，不增加节点或改变命名/数值行为。

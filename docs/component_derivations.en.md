@@ -39,6 +39,10 @@ SI units are s, V, A, Ω, H and F. The time-domain admittances here are real dis
 [NodeManager](../pycy_emt_lite/core/nodes.py) numbers non-reference nodes in first-appearance order and returns `None` for ground.
 [VariableManager](../pycy_emt_lite/core/variables.py) assigns relative branch index q; the actual matrix index is `k=context.branch_offset+q=N+q`.
 Internal nodes and delta-winding nodes must also be declared by `nodes()` before the matrix is created.
+Generated internal names follow the same-name-means-connected rule; they are not globally private nodes.
+The program rejects collisions between a model's internal names and its own external terminals or ground, but another
+component may explicitly use that name for a tap or diagnosis. Avoid accidental reuse in external wiring, and update
+intentional taps when renaming the model. Section 7.3 gives a segmented-line example.
 
 | Model | Permanent additional current unknowns | Main history or dynamic quantities |
 |---|---:|---|
@@ -400,6 +404,13 @@ With N segments, each takes R/N, L/N and C/N, with C/(2N) at either end; introdu
 Stamping each Pi unit adds the two adjacent half-capacitances at an internal node to C/N.
 The outer endpoints retain C/(2N), so total line capacitance is C. Assigning C/N at all N+1 nodes would be incorrect.
 The global matrix naturally connects adjacent nodes. With L>0, each segment has one current unknown and separately updated history.
+
+Internal nodes are named `name:internal:1` through `name:internal:N−1`; they can be read in outputs or intentionally connected
+to other components. For example, take a two-segment line `LINE` with total R=2 Ω and L=C=0, a 10 V sending end and an 8 Ω
+receiving-end load to ground. The receiving voltage is `10×8/(2+8)=8 V`. Adding 1 Ω from `LINE:internal:1` to ground makes
+the resistance after the first segment `1 Ω ∥ (1+8) Ω=0.9 Ω`, giving `10×0.9/(1+0.9)×8/9=4.210526… V` at the receiver.
+The explicit tap changes the circuit without adding a separate node or changing the line equations. Naming `LINE`'s own
+sending/receiving terminal or ground `LINE:internal:1` is instead a local collision and is rejected at construction.
 
 `i:<name>:sending/receiving` record series currents in the first/last segments, both directed from sending to receiving;
 `average` is the arithmetic mean of the segment series currents. None is a complete terminal current including endpoint capacitance.
