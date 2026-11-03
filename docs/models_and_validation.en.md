@@ -26,9 +26,9 @@ This is local evidence, not remote CI status. No full-model comparison with expe
 | L/LC/LCL filters | Parameter rejection, wiring, independent ODEs, KCL, discrete energy and step convergence | Passive linear networks; [power-electronic tests](../tests/test_power_electronics.py) |
 | PWM example 12 | Gates, floating star point, fundamental RL reference, finer-grid comparison | Fine grids are not device references; no automatic edge location; same power-electronic tests |
 | Three-terminal two-level VSC-HVDC example 18 | Single-station open/closed loop, two stations, three-station FAST fault recovery, PLL/dq/P/Vdc/Vac, bridge port power and discrete DC energy | Teaching reimplementation with RC snubber and control adjustments; [system tests](../tests/test_three_terminal_vsc_hvdc.py), [post-step callback and recording](../tests/test_step_callback.py) |
-| `ThreePhasePiLine`, `ThreePhaseParallelRLCLoad` | Initialization/first step and output fields; nominal-power conversion for the parallel load | Local checks, no complete independent three-phase AC/fault validation; three-phase/line tests |
+| `ThreePhasePiLine`, `ThreePhaseParallelRLCLoad` | Initialization/first step, output fields and nominal conversion; balanced AC startup and three-phase ground-fault application/clearing against a piecewise six-state DOP853 reference, both integration methods and step refinement; parallel-load KCL and Pi-line discrete energy | Independent-phase simplified networks, not arbitrary unbalanced faults; [`test_three_phase_existing_models_match_independent_ac_fault_reference`](../tests/test_three_phase.py) |
 | Control blocks and SRF-PLL | Basic functions, sample-time consistency, preserved initial lock, independent balanced-input ODE and first-order convergence | Functional and specific balanced-condition checks, no closed-loop grid/weak-grid engineering validation; [control tests](../tests/test_controls.py) |
-| Saturation approximation | Parameter and linear flux/current regressions | **No independent saturation-curve, energy or inrush validation**; linear checks cannot replace it |
+| Saturation approximation | Parameters, linear flux/current relations, and an independent one-way piecewise λ–i knee-crossing reference with step refinement | **No independent nonlinear-energy, return-path/periodic, hysteresis or real-inrush certification**; [`test_saturation_matches_piecewise_flux_current_and_refines`](../tests/test_transformers.py) |
 
 Metrics, I/O, plotting and linear solves have separate [metric](../tests/test_analysis.py), [I/O](../tests/test_results_io.py),
 [plot/report](../tests/test_visualization_reporting.py) and [solver](../tests/test_solvers.py) regressions. These verify utility behavior,
@@ -72,8 +72,9 @@ uv run pytest tests/test_basic_components.py::test_rc_rl_analytic_error_converge
 uv run pytest tests/test_basic_components.py::test_rlc_whole_curve_matches_analytic_damped_response
 ```
 
-`file::function` selects that test only; the project configuration already enables concise output. The commands should report `12 passed`, `4 passed` and `1 passed`, respectively.
-A single function runs multiple cases because `@pytest.mark.parametrize` lists combinations of integration methods, initial values and other inputs.
+`file::function` selects that test only; the project configuration already enables concise output.
+A single function runs multiple cases because `@pytest.mark.parametrize` lists combinations of integration methods, initial values,
+solver strategies and other inputs. The passing count changes with those combinations and is not the number of test functions.
 The first checks initialization and the first two integration intervals. The second compares RC/RL analytic errors at common physical times: halving the step reduces trapezoidal error to about 1/4 and backward-Euler error to about 1/2.
 The third checks the complete RLC voltage and current curves and trapezoidal error convergence.
 Tests use their own small circuits and parameters, which may differ from example defaults. Read the circuit first, then the independent reference formula, and finally the errors and tolerances.
@@ -235,7 +236,11 @@ Trapezoidal:     ψ_k = ψ_{k-1} + (v_p,k-1 + v_p,k) Δt/2
 Backward Euler:  ψ_k = ψ_{k-1} + v_p,k Δt
 ```
 
-For linear Lm, `ψ(t)-ψ(0)=Lm·(im(t)-im(0))`. Regressions cover single/three-phase models, both methods and off-grid/endpoint events. Previously flux always used backward Euler, making it inconsistent with trapezoidal current; this is corrected. Saturation still chooses inductance from the preceding flux: `magnetizing_inductance` below `saturation_knee_flux` in absolute flux, and `saturated_magnetizing_inductance` at or above it. No nonlinear iteration is introduced. This approximation lacks independent saturation-curve or energy validation; linear regressions do not establish inrush accuracy. Full core hysteresis, remanence, loops and frequency-dependent losses are excluded.
+For linear Lm, `ψ(t)-ψ(0)=Lm·(im(t)-im(0))`. Regressions cover single/three-phase models, both methods and off-grid/endpoint events. Previously flux always used backward Euler, making it inconsistent with trapezoidal current; this is corrected. Saturation still chooses inductance from the preceding flux: `magnetizing_inductance` below `saturation_knee_flux` in absolute flux, and `saturated_magnetizing_inductance` at or above it. No nonlinear iteration is introduced.
+[`test_saturation_matches_piecewise_flux_current_and_refines`](../tests/test_transformers.py) checks an independent piecewise λ–i
+reference and step refinement for one-way knee crossing under constant positive voltage, distinguishing it from linear current.
+This does not certify independent nonlinear energy, return paths/periodic operation, hysteresis or real inrush; neither this test
+nor linear regressions establish inrush accuracy. Full core hysteresis, remanence, loops and frequency-dependent losses are excluded.
 
 ## 8. Three-phase transformers
 

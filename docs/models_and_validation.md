@@ -26,9 +26,9 @@
 | L/LC/LCL 滤波器 | 参数拒绝、接线、独立 ODE、KCL、离散能量及步长收敛 | 被动线性网络；[电力电子测试](../tests/test_power_electronics.py) |
 | PWM 示例 12 | 门极、浮置星点、基波 RL 参考、细网格对照 | 细网格不构成器件参考，边沿不自动定位；同一电力电子测试 |
 | 三端两电平 VSC-HVDC 示例 18 | 单站开环/闭环、双站、三站 FAST 故障恢复、PLL/dq/P/Vdc/Vac、桥端口功率及 DC 离散能量 | 参考模型的教学重实现，含 RC 缓冲及控制调整；[系统测试](../tests/test_three_terminal_vsc_hvdc.py)、[步后回调与抽样](../tests/test_step_callback.py) |
-| `ThreePhasePiLine`、`ThreePhaseParallelRLCLoad` | 初值/第一步、输出字段；并联负荷另有额定功率换算检查 | 局部检查，未建立完整独立三相 AC/故障验证；三相/线路测试 |
+| `ThreePhasePiLine`、`ThreePhaseParallelRLCLoad` | 初值/第一步、输出字段及额定换算；平衡 AC 启动、三相接地故障投入/清除的六状态分段 DOP853 对照、两种积分与步长细化；并联负荷 KCL、π 线离散能量 | 独立相简化网络，不外推任意不平衡故障；[`test_three_phase_existing_models_match_independent_ac_fault_reference`](../tests/test_three_phase.py) |
 | 控制块与 SRF-PLL | 基础功能、采样时刻一致性、初始锁定保持、平衡输入的独立 ODE 与一阶收敛 | 功能及特定平衡工况检查；无闭环电网/弱网工程验证；[控制测试](../tests/test_controls.py) |
-| 饱和励磁近似 | 参数与线性磁链/电流关系回归 | **未完成独立饱和曲线、能量或涌流验证**；不能以线性测试替代 |
+| 饱和励磁近似 | 参数、线性磁链/电流关系，以及单向跨拐点的独立分段 λ–i 参考与步长细化 | **未完成独立非线性能量、回程/周期、磁滞或真实涌流认证**；[`test_saturation_matches_piecewise_flux_current_and_refines`](../tests/test_transformers.py) |
 
 指标、结果读写、绘图和线性求解器另有 [指标](../tests/test_analysis.py)、[读写](../tests/test_results_io.py)、
 [绘图/报告](../tests/test_visualization_reporting.py)、[求解器](../tests/test_solvers.py) 回归；它们验证工具行为，
@@ -72,8 +72,9 @@ uv run pytest tests/test_basic_components.py::test_rc_rl_analytic_error_converge
 uv run pytest tests/test_basic_components.py::test_rlc_whole_curve_matches_analytic_damped_response
 ```
 
-`文件::函数` 只选择该测试；项目配置已启用简洁输出。三条命令分别应显示 `12 passed`、`4 passed`、`1 passed`；
-一个函数会运行多组参数，是因为 `@pytest.mark.parametrize` 为积分方法、初值等列出了不同组合。
+`文件::函数` 只选择该测试；项目配置已启用简洁输出。
+一个函数会运行多组参数，是因为 `@pytest.mark.parametrize` 为积分方法、初值、求解策略等列出了不同组合；
+通过数量随这些组合变化，不等于函数数量。
 第一项核对初值和前两个积分区间；第二项在共同物理时刻比较 RC/RL 的解析误差，步长减半后梯形法误差约降至 1/4、后向欧拉约降至 1/2；
 第三项核对 RLC 整段电压、电流以及梯形法的误差收敛。
 测试使用各自的小电路和参数，未必与示例默认值相同。阅读时先找电路，再找独立参考公式，最后看误差与容差。
@@ -255,7 +256,9 @@ Iinput = Ileak + Imag + Vpri/Rcore   # 未设置铁耗电阻时省略末项
 
 线性 Lm 下应满足 `ψ(t)-ψ(0)=Lm·(im(t)-im(0))`；单相/三相、两种积分方法及非整步/终点事件已有回归。
 旧实现一律用后向欧拉积磁链，导致梯形法下磁链与电流不一致，现已修正。
-饱和电感仍按上一时刻磁链选择，不引入非线性迭代；该近似未通过独立饱和曲线或能量验证，不能由线性回归推断涌流准确性。
+饱和电感仍按上一时刻磁链选择，不引入非线性迭代。[`test_saturation_matches_piecewise_flux_current_and_refines`](../tests/test_transformers.py)
+以恒定正电压下的单向磁链验证跨拐点的独立分段 λ–i 参考及步长细化，并与线性电流对照区分。
+这不构成独立非线性能量、回程/周期、磁滞或真实涌流认证，不能由该测试或线性回归推断涌流准确性。
 不包含完整铁芯磁滞、剩磁、回线和频率相关损耗。
 
 ## 8. 三相变压器

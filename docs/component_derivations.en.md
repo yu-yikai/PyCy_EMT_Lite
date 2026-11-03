@@ -935,7 +935,12 @@ For matrix inspection, use Section 5's recording solver instead of repeatedly ca
 
 A fixed-h linear RLC network with fixed parameters has constant companion coefficients, so A can remain unchanged while history sources change b every step.
 Events that change conductances, inserted events that change h, saturation options changing effective L, and a Park machine's angle-dependent Zabc all change A; time-dependent sources also change b.
-The current implementation fully rebuilds and refactorizes on every solve. Although the solver offers a reusable-factorization interface, the simulation loop has no automatic matrix cache or incremental factorization; a possible optimization is not an implemented feature.
+All three strategies fully assemble A/b for every solve. Default `rebuild` refactorizes each time; optional `reuse` reuses LU
+only when the complete A exactly equals the previous one, and otherwise refactorizes. For admitted small networks, `precompute`
+factors the complete finite matrix family at startup, then checks actual A before using the lookup at runtime.
+Unknown states/h/coefficients raise without in-loop factorization or silent fallback. There is no incremental stamping or factorization.
+Initial/event augmented matrices follow the same strategy; the latest b and all state/control updates still execute.
+See [solver strategies and precomputation scope](numerical_conventions.en.md#network-precompute).
 
 `record_every` only reduces retained rows; integration, history updates and control callbacks still occur at every solution point.
 t=0, final time and explicit event points are retained. Output spacing may differ from the simulation step, so analysis must read the actual `time` column.

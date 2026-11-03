@@ -238,7 +238,10 @@ Augmented initial/event-right matrices use the same check; the existing single c
 An explicit custom `solver=` keeps its original behavior under `rebuild`; `reuse/precompute` currently accept only DenseLinearSolver instances and otherwise raise before claiming the circuit.
 `factorization_count` counts actual factorizations and `solve_count` counts actual solves. In Simulator, `reused_factorization=False` for a fresh factorization,
 and True for reuse of the previous one, including a consistent-state correction. Preparation factorizations in precompute also count, and every solve inside its loop reports True.
-Fewer factorizations do not establish an end-to-end speedup; preparation/loop/total time and peak process memory measurements for all three strategies remain a later stage.
+Fewer factorizations do not establish an end-to-end speedup. [N4 cost acceptance](audit_20261005/项目问题与改进计划.md#network-solver-n4)
+completed preparation/loop/total-time and process-lifetime peak-working-set measurements for three strategies on two small networks
+and two strategies on HVDC. These local results do not establish a general or stable end-to-end speedup. Networks with many
+switches still use rebuild/reuse; measurement does not enable HVDC precompute.
 
 <a id="network-precompute"></a>
 
