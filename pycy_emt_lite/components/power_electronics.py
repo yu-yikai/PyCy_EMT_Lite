@@ -10,11 +10,10 @@ from __future__ import annotations
 import math
 from collections.abc import Callable, Iterable
 from dataclasses import dataclass
-from numbers import Real
 
 import numpy as np
 
-from pycy_emt_lite.components.base import Component, _finite_real
+from pycy_emt_lite.components.base import Component, _binary_state, _finite_real
 from pycy_emt_lite.core.context import StampContext
 from pycy_emt_lite.core.stamping import _conductance_current, add_conductance
 
@@ -24,12 +23,7 @@ def _bool_at(value: BoolTimeValue, time: float, *, name: str) -> bool:
     """先验证布尔值或数值 0/1，再转换为开关状态。"""
 
     value = value(time) if callable(value) else value
-    if isinstance(value, (bool, np.bool_)) or (isinstance(value, Real) and value in (0, 1)):
-        return bool(value)
-    raise ValueError(
-        f"开关 {name!r} 在仿真时间 {time:g} 的 closed={value!r} 非法；"
-        "请使用布尔值或有限数值 0/1，门极时间函数也必须返回这样的标量。"
-    )
+    return _binary_state(value, f"开关 {name!r} 在仿真时间 {time:g} 的 closed")
 
 @dataclass(slots=True)
 class IdealSwitch(Component):

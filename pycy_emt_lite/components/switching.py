@@ -15,7 +15,7 @@ from dataclasses import dataclass
 
 import numpy as np
 
-from pycy_emt_lite.components.base import Component, _finite_real
+from pycy_emt_lite.components.base import Component, _binary_state, _finite_real
 from pycy_emt_lite.core.context import StampContext
 from pycy_emt_lite.core.stamping import _conductance_current, add_conductance
 
@@ -36,6 +36,7 @@ class Fault(Component):
     last_current: float = 0.0
 
     def __post_init__(self) -> None:
+        self.enabled = _binary_state(self.enabled, f"故障 {self.name!r} 的 enabled")
         self.resistance = _finite_real(self.resistance, f"故障 {self.name} 的 resistance")
         if not math.isfinite(self.resistance) or self.resistance <= 0:
             raise ValueError(f"故障 {self.name} 的故障电阻必须为有限正数。")
@@ -46,14 +47,14 @@ class Fault(Component):
     def stamp(self, context: StampContext, matrix: np.ndarray, rhs: np.ndarray) -> None:
         """故障投入时写入等效故障电导。"""
 
-        if not self.enabled:
+        if not _binary_state(self.enabled, f"故障 {self.name!r} 的 enabled"):
             return
         add_conductance(matrix, context.node_index(self.node), context.node_index(self.ground), 1.0 / self.resistance)
 
     def update_state(self, context: StampContext, solution: np.ndarray) -> None:
         """记录当前故障电流。"""
 
-        if not self.enabled:
+        if not _binary_state(self.enabled, f"故障 {self.name!r} 的 enabled"):
             self.last_current = 0.0
             return
         self.last_current = _conductance_current(solution, context.node_index(self.node), context.node_index(self.ground),
@@ -62,7 +63,8 @@ class Fault(Component):
     def outputs(self, context: StampContext, solution: np.ndarray) -> dict[str, float]:
         """记录故障电流和投入状态。"""
 
-        return {f"i:{self.name}": self.last_current, f"state:{self.name}": 1.0 if self.enabled else 0.0}
+        enabled = _binary_state(self.enabled, f"故障 {self.name!r} 的 enabled")
+        return {f"i:{self.name}": self.last_current, f"state:{self.name}": float(enabled)}
 
 @dataclass(slots=True)
 class Breaker(Component):
@@ -80,6 +82,7 @@ class Breaker(Component):
     last_current: float = 0.0
 
     def __post_init__(self) -> None:
+        self.closed = _binary_state(self.closed, f"断路器 {self.name!r} 的 closed")
         self.closed_resistance = _finite_real(self.closed_resistance, f"断路器 {self.name} 的 closed_resistance")
         if not math.isfinite(self.closed_resistance) or self.closed_resistance <= 0:
             raise ValueError(f"断路器 {self.name} 的闭合电阻必须为有限正数。")
@@ -90,7 +93,7 @@ class Breaker(Component):
     def stamp(self, context: StampContext, matrix: np.ndarray, rhs: np.ndarray) -> None:
         """断路器闭合时写入闭合电导。"""
 
-        if self.closed:
+        if _binary_state(self.closed, f"断路器 {self.name!r} 的 closed"):
             add_conductance(
                 matrix,
                 context.node_index(self.positive),
@@ -101,7 +104,7 @@ class Breaker(Component):
     def update_state(self, context: StampContext, solution: np.ndarray) -> None:
         """记录断路器电流。"""
 
-        if not self.closed:
+        if not _binary_state(self.closed, f"断路器 {self.name!r} 的 closed"):
             self.last_current = 0.0
             return
         self.last_current = _conductance_current(solution, context.node_index(self.positive), context.node_index(self.negative),
@@ -110,4 +113,5 @@ class Breaker(Component):
     def outputs(self, context: StampContext, solution: np.ndarray) -> dict[str, float]:
         """记录断路器电流和开合状态。"""
 
-        return {f"i:{self.name}": self.last_current, f"state:{self.name}": 1.0 if self.closed else 0.0}
+        closed = _binary_state(self.closed, f"断路器 {self.name!r} 的 closed")
+        return {f"i:{self.name}": self.last_current, f"state:{self.name}": float(closed)}

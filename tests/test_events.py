@@ -5,6 +5,7 @@
 
 from dataclasses import dataclass
 
+import numpy as np
 import pytest
 
 from pycy_emt_lite import (
@@ -25,6 +26,74 @@ from pycy_emt_lite import (
 )
 from pycy_emt_lite.core.solvers import DenseLinearSolver
 from pycy_emt_lite.events import SimulationEvent
+
+
+def _binary_component(kind, value):
+    if kind == "fault":
+        return Fault("S", "n", resistance=1.0, enabled=value)
+    return Breaker("S", "n", "0", closed_resistance=1.0, closed=value)
+
+
+@pytest.mark.parametrize("kind", ["fault", "breaker"])
+@pytest.mark.parametrize("value", [False, True, np.bool_(False), np.bool_(True), 0, 1,
+                                   0.0, 1.0, np.int64(0), np.float64(1)])
+def test_switching_binary_state_has_independent_ohmic_current(kind, value):
+    component = _binary_component(kind, value)
+    circuit = Circuit.from_components("binary", [VoltageSource("V", "n", "0", 10.0), component])
+    row = Simulator(circuit, SimulationConfig(0.1, 0.0)).run().rows[0]
+    assert row["state:S"] == float(value)
+    assert row["i:S"] == pytest.approx(10.0 * float(value), abs=1e-12)
+
+
+_INVALID_BINARY_STATES = ["False", "True", None, 2, -1, 0.5, np.nan, np.inf, -np.inf,
+                          [], np.array(0), np.array([0]), np.array([0, 1]), lambda: False]
+
+
+@pytest.mark.parametrize("kind,field", [("fault", "enabled"), ("breaker", "closed")])
+@pytest.mark.parametrize("value", _INVALID_BINARY_STATES)
+def test_switching_binary_state_rejected_at_construction(kind, field, value):
+    with pytest.raises(ValueError, match=rf"S.*{field}.*请"):
+        _binary_component(kind, value)
+
+
+@pytest.mark.parametrize("mode", ["rebuild", "reuse", "precompute"])
+@pytest.mark.parametrize("kind,field", [("fault", "enabled"), ("breaker", "closed")])
+@pytest.mark.parametrize("value", _INVALID_BINARY_STATES)
+def test_switching_binary_state_callback_rejected_before_next_solve(kind, field, value, mode):
+    component = _binary_component(kind, False)
+    circuit = Circuit.from_components("binary_callback", [VoltageSource("V", "n", "0", 10.0), component])
+    seen = []
+
+    def callback(row):
+        seen.append(dict(row))
+        setattr(component, field, value)
+        return {}
+
+    solver = DenseLinearSolver()
+    simulator = Simulator(circuit, SimulationConfig(0.1, 0.2, linear_solver_mode=mode),
+                          solver=solver, on_step=callback)
+    with pytest.raises(RuntimeError, match=rf"S.*0.1.*stamp.*{field}"):
+        simulator.run()
+    assert solver.solve_count == 1
+    assert len(seen) == 1
+    assert seen[0]["time"] == 0.0
+    assert seen[0]["state:S"] == 0.0
+    assert seen[0]["i:S"] == 0.0
+    assert simulator.event_log == []
+
+
+@pytest.mark.parametrize("kind,field", [("fault", "enabled"), ("breaker", "closed")])
+def test_switching_binary_state_legal_callback_controls_next_interval(kind, field):
+    component = _binary_component(kind, False)
+    circuit = Circuit.from_components("binary_toggle", [VoltageSource("V", "n", "0", 10.0), component])
+
+    def callback(row):
+        setattr(component, field, np.bool_(row["time"] == 0.0))
+        return {}
+
+    result = Simulator(circuit, SimulationConfig(0.1, 0.2), on_step=callback).run()
+    assert [r["state:S"] for r in result.rows] == [0.0, 1.0, 0.0]
+    assert [r["i:S"] for r in result.rows] == pytest.approx([0.0, 10.0, 0.0], abs=1e-12)
 
 
 @pytest.mark.parametrize("event_type", [BreakerOpenEvent, BreakerCloseEvent])

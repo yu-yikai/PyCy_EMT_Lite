@@ -22,6 +22,13 @@ from pycy_emt_lite.core.nodes import NodeManager
 from pycy_emt_lite.core.variables import VariableManager
 
 
+def _binary_state(value: object, label: str) -> bool:
+    """仅接受布尔标量或数值 0/1，避免字符串等对象隐式取真。"""
+    if isinstance(value, (bool, np.bool_)) or (isinstance(value, Real) and value in (0, 1)):
+        return bool(value)
+    raise ValueError(f"{label}={value!r} 非法；请使用布尔值或有限数值 0/1 标量。")
+
+
 def _finite_real(value: object, label: str) -> float:
     """只接受有限实数标量；转换后的范围也必须能用 float 表示。入参可为待校验的任意对象。"""
     try:
