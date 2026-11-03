@@ -733,8 +733,14 @@ Let control sampling interval be hc, using the actual difference between success
 | `FirstOrderLowPass` | `tau dy/dt=u−y` | Backward Euler: `y1=(y0+hc u1/tau)/(1+hc/tau)` |
 | `SampleDelay` | Delay by d calls in sample order | Pop the front and enqueue the input; d=0 passes the current input through |
 
-PI output uses the clipped candidate u*. The candidate integral is not saved if the raw output exceeds the upper limit with e>0, or falls below the lower limit with e<0; otherwise it is saved.
-This is the source's actual freeze condition. It is not back-calculation anti-windup, and does not imply that final output always equals `Kp e+saved xi`.
+Let the integral increment be `Δxi=Ki·e1·hc`. PI output uses the clipped candidate u*. The candidate integral is not saved
+if raw u* exceeds the upper limit with `Δxi>0`, or falls below the lower limit with `Δxi<0`; otherwise it is saved.
+The freeze direction follows the integral increment, not the error sign alone, so negative Ki follows its actual integration
+direction. With Ki=0 the increment is zero and the integral state stays unchanged, while the proportional output is still clipped.
+For example, Kp=0, Ki=−1, xi0=2, e1=1, hc=0.5 and an upper limit of 1 give `Δxi=−0.5` and `xi*=1.5`.
+Output is 1, but xi=1.5 is saved because integration is moving out of upper saturation.
+This is not back-calculation anti-windup, and does not imply that final output always equals `Kp e+saved xi`:
+when integration freezes, output still comes from candidate u*, while the saved integral remains xi0.
 `SampleDelay` delays by call count; changing hc does not automatically preserve a fixed delay in seconds.
 These blocks require a positive sampling interval. At t=0, observe/initialize directly instead of calling `step()` with zero interval.
 
