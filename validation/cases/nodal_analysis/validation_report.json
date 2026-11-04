@@ -1,7 +1,7 @@
 {
   "case_id": "nodal_analysis",
   "passed": true,
-  "run_id": "20261104T083014387804Z",
+  "run_id": "20261104T084249283215Z",
   "reference_platform": "MATLAB R2025a / Simulink / Simscape / Simscape Electrical (R2024a model)",
   "reference_provenance": {
     "schema_version": 1,
@@ -61,18 +61,24 @@
     "local_reference/nodal_analysis/raw_results/simscape_native.csv": "86cfee48f5a63efe7c1fddb998a710773773c63ade820d29bb12afae2c82b44e",
     "local_reference/nodal_analysis/raw_results/simulink_output.mat": "dc2d2bf588dd10dbec1ef79a9823b3716ccc50b6d13f97ee8077a28addaaeb7d"
   },
-  "git_head_at_run": "4c78c3893661a40885b0a80e21716988661a43a7",
+  "git_head_at_run": "f685ee76633b6bf78f94f8aee39bc69027516f79",
   "git_status_at_run": [
-    " M README.md",
-    " M README.zh-CN.md",
     " M docs/development_roadmap/02_reference_catalog.md",
+    " M docs/development_roadmap/decisions.md",
+    " M docs/development_roadmap/next_actions.md",
+    " M docs/development_roadmap/progress.md",
     " M docs/development_roadmap/reference_catalog.json",
-    " M validation/cases/nodal_analysis/manifest.json",
-    "?? examples/20_multi_source_nodal_network.py",
-    "?? tests/test_nodal_analysis.py",
-    "?? validation/cases/nodal_analysis/README.md",
-    "?? validation/cases/nodal_analysis/compare.py",
-    "?? validation/cases/nodal_analysis/export_reference.m"
+    " M docs/development_roadmap/tasks.json",
+    " M docs/development_roadmap/validation_status.md",
+    " M validation/cases/earthing/README.md",
+    " M validation/cases/earthing/manifest.json",
+    " M validation/common/runner.py",
+    "?? AGENTS.md",
+    "?? docs/development_roadmap/experiments/ci_68f2f8a.json",
+    "?? examples/21_earthing_neutral.py",
+    "?? tests/test_earthing_neutral.py",
+    "?? validation/cases/earthing/compare.py",
+    "?? validation/cases/earthing/export_reference.m"
   ],
   "package_source_sha256": {
     "pycy_emt_lite/__init__.py": "81980a448c4506c4a373d308339c490967a02938c2cb0f0f33a1360dec21d46e",
@@ -373,7 +379,7 @@
     }
   ],
   "artifacts": {
-    "directory": "local_reference/nodal_analysis/comparison_results/20261104T083014387804Z",
+    "directory": "local_reference/nodal_analysis/comparison_results/20261104T084249283215Z",
     "plot": "comparison.png",
     "candidate_data": [
       "pycy.csv",
@@ -381,7 +387,7 @@
       "pycy.npz"
     ]
   },
-  "comparison_plot_sha256": "382c76d2b7e7bc718f29141746e85c8444603889e4cfabcb59f47ef92dbea2f4",
+  "comparison_plot_sha256": "fde1a16b3c5a00b9043b2520918c4d47d5f19c4ac89fac661d4c39a79bcdfe21",
   "input_snapshot_sha256": {
     "20_multi_source_nodal_network.py": "eb363804ef256402bdc9298fc7380cbcd62adb85777d12b02b805b3094734fc9",
     "compare.py": "95d776209423bf38d75294d2ffe6ab161e785d1535c4b3a4fc128d1271ed3ec6",
@@ -392,6 +398,6 @@
     "parameters.json": "a23fe8244a193e54cc520b0e970c43b531a573702519467d8eb72b4fc808d5ce",
     "provenance.json": "fc805485b7eb6bf6e80e8fc1fc43db1b2a49e06cce43b79417320a497ed24702",
     "reference.csv": "86cfee48f5a63efe7c1fddb998a710773773c63ade820d29bb12afae2c82b44e",
-    "runner.py": "9128df87a805e47ed2865df6202dc6b41437c50258f0a3ef187d80b4812a54fc"
+    "runner.py": "c30832285ddb3f8e0706368c1f017b95af0dcca09599e6a084eed3b8669e50b5"
   }
 }

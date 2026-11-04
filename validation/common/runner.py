@@ -87,16 +87,31 @@ def run_comparison(case: CaseDefinition, manifest_file: Path, example_file: Path
         "artifacts": {"directory": str(destination.relative_to(root)).replace("\\", "/"),
                       "plot": "comparison.png", "candidate_data": ["pycy.csv", "pycy.json", "pycy.npz"]},
     }
-    figure, axes = plt.subplots(len(specs), 1, figsize=(10, 2.4 * len(specs)), sharex=True, squeeze=False)
-    for axis, spec in zip(axes[:, 0], specs, strict=True):
+    columns = 1 if len(specs) <= 6 else 2
+    rows = (len(specs) + columns - 1) // columns
+    figure, axes = plt.subplots(rows, columns, figsize=(10 if columns == 1 else 13, 2.4 * rows), sharex=True, squeeze=False)
+    for index, (axis, spec) in enumerate(zip(axes.flat, specs, strict=False)):
         axis.plot(reference.series("time"), reference.series(spec.reference), label="Simscape", linewidth=1.8)
         axis.plot(candidate.series("time"), candidate.series(spec.candidate), label="PyCy", linestyle="--", linewidth=1)
         axis.set_ylabel(f"{spec.candidate} ({spec.unit})")
+        axis.ticklabel_format(axis="y", useOffset=False)
+        low = min(np.min(reference.series(spec.reference)), np.min(candidate.series(spec.candidate)))
+        high = max(np.max(reference.series(spec.reference)), np.max(candidate.series(spec.candidate)))
+        # Static networks have tiny LU rounding variations. Keep their physical
+        # magnitudes readable instead of magnifying a 1e-14 A axis offset.
+        half_span = 0.05 * max(abs(low), abs(high), 0.01 * spec.scale)
+        if high - low < 2 * half_span:
+            center = (low + high) / 2
+            axis.set_ylim(center - half_span, center + half_span)
         axis.grid(True, alpha=0.3)
         for start, end in manifest["windows_seconds"]:
             axis.axvspan(start, end, color="green", alpha=0.04)
         axis.legend()
-    axes[-1, 0].set_xlabel("Time (s), absolute; no shift")
+        if index >= len(specs) - columns:
+            axis.set_xlabel("Time (s), absolute; no shift")
+            axis.tick_params(labelbottom=True)
+    for axis in list(axes.flat)[len(specs):]:
+        axis.set_visible(False)
     figure.tight_layout()
     figure.savefig(destination / "comparison.png", dpi=150)
     plt.close(figure)
