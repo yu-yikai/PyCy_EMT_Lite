@@ -1,0 +1,298 @@
+{
+  "schema_version": 1,
+  "updated_date": "2026-11-04",
+  "timezone": "Asia/Shanghai",
+  "branch": "codex/emt-examples-longterm",
+  "checkpoint_head": "08096f0",
+  "current_task": "V1",
+  "formal_new_examples_completed": 0,
+  "status_values": [
+    "planned",
+    "ready",
+    "in_progress",
+    "blocked",
+    "validated",
+    "completed"
+  ],
+  "tasks": [
+    {
+      "id": "R1",
+      "phase": "research",
+      "title": "能力重评和实际基线",
+      "priority": 0,
+      "dependencies": [],
+      "new_capabilities": [],
+      "references": [],
+      "validation": "ruff, mypy, full pytest including slow, 14 existing examples",
+      "acceptance": "实际结果与源码证据形成01并提交",
+      "status": "completed",
+      "files": [
+        "docs/development_roadmap/01_capability_assessment.md"
+      ],
+      "commits": [
+        "8d5d15d"
+      ],
+      "blockers": []
+    },
+    {
+      "id": "R2",
+      "phase": "research",
+      "title": "可获取外部参考目录",
+      "priority": 0,
+      "dependencies": [
+        "R1"
+      ],
+      "new_capabilities": [],
+      "references": [
+        "mw-cascaded-rc-r2025a",
+        "pscad-cookbook-ch3"
+      ],
+      "validation": "实际下载、XML/版本/许可核对与运行状态分离",
+      "acceptance": "02和JSON目录、合法本地模型、已知依赖与来源可追溯并提交",
+      "status": "completed",
+      "files": [
+        "docs/development_roadmap/02_reference_catalog.md",
+        "docs/development_roadmap/reference_catalog.json"
+      ],
+      "commits": [
+        "08096f0"
+      ],
+      "blockers": []
+    },
+    {
+      "id": "R3",
+      "phase": "research",
+      "title": "可行性探针与最终实施路线",
+      "priority": 0,
+      "dependencies": [
+        "R1",
+        "R2"
+      ],
+      "new_capabilities": [],
+      "references": [
+        "mw-cascaded-rc-r2025a"
+      ],
+      "validation": "独立expm、TR/BE细化、KCL、真实参考运行",
+      "acceptance": "03/04、任务状态与恢复机制、预设验收提交推送",
+      "status": "validated",
+      "files": [
+        "docs/development_roadmap/03_verified_feasibility.md",
+        "docs/development_roadmap/04_long_term_roadmap.md"
+      ],
+      "commits": [],
+      "blockers": []
+    },
+    {
+      "id": "V1",
+      "phase": "validation",
+      "title": "独立对比工具与验证规范",
+      "priority": 0,
+      "dependencies": [
+        "R3"
+      ],
+      "new_capabilities": [
+        "fixed-window time-weighted error reports"
+      ],
+      "references": [],
+      "validation": "独立积分数值与非法数据/功率反向拒绝测试",
+      "acceptance": "common工具与10测试通过、规范、分支双平台CI配置、提交",
+      "status": "in_progress",
+      "files": [
+        "validation/common/comparison.py",
+        "tests/test_reference_comparison.py",
+        "validation/README.md"
+      ],
+      "commits": [],
+      "blockers": []
+    },
+    {
+      "id": "A1",
+      "phase": "foundation",
+      "title": "新增级联RC负载耦合例",
+      "priority": 0,
+      "dependencies": [
+        "V1"
+      ],
+      "new_capabilities": [],
+      "references": [
+        "mw-cascaded-rc-r2025a"
+      ],
+      "validation": "独立状态方程、显式边沿、KCL、细化、真实Simscape四信号比较",
+      "acceptance": "manifest固定阈值全窗通过、图/数值报告/自动测试/教学文档/独立执行/Git提交",
+      "status": "ready",
+      "files": [
+        "validation/cases/cascaded_rc/manifest.json",
+        "validation/cases/cascaded_rc/parameters.json"
+      ],
+      "commits": [],
+      "blockers": []
+    },
+    {
+      "id": "A2",
+      "phase": "foundation",
+      "title": "既有02 RC补真实参考",
+      "priority": 1,
+      "dependencies": [
+        "V1"
+      ],
+      "new_capabilities": [],
+      "references": [
+        "mw-rc-r2025a"
+      ],
+      "validation": "实际Simscape波形，公开参数与初值映射",
+      "acceptance": "固定判据对比、保存图/报告、可复现导出脚本、提交；不计新增数量",
+      "status": "planned",
+      "files": [],
+      "commits": [],
+      "blockers": []
+    },
+    {
+      "id": "A3",
+      "phase": "foundation",
+      "title": "Bergeron行波反射参考先行",
+      "priority": 1,
+      "dependencies": [
+        "A1"
+      ],
+      "new_capabilities": [],
+      "references": [
+        "pscad-cookbook-ch3"
+      ],
+      "validation": "整步传播时间、反射系数、物理一致的商业参考",
+      "acceptance": "先确认可运行参考，再固定教学与验收；无真实数据不完成",
+      "status": "planned",
+      "files": [],
+      "commits": [],
+      "blockers": []
+    },
+    {
+      "id": "A4",
+      "phase": "foundation",
+      "title": "三相不平衡与变压器线路组合",
+      "priority": 2,
+      "dependencies": [
+        "A1"
+      ],
+      "new_capabilities": [],
+      "references": [],
+      "validation": "逐相KCL/接线、初值、真实商业数据",
+      "acceptance": "分成可独立验收算例，每个有真实对标后完成",
+      "status": "planned",
+      "files": [],
+      "commits": [],
+      "blockers": []
+    },
+    {
+      "id": "B1",
+      "phase": "power_electronics",
+      "title": "既有12 SPWM参考对齐",
+      "priority": 1,
+      "dependencies": [
+        "A1"
+      ],
+      "new_capabilities": [],
+      "references": [
+        "mw-vsc-spwm-r2025a"
+      ],
+      "validation": "载波/采样/桥臂/Ron/换流/初值逐项映射",
+      "acceptance": "模型一致性解释、预设基波RMS/功率方向/纹波判据和真实波形比较",
+      "status": "planned",
+      "files": [],
+      "commits": [],
+      "blockers": []
+    },
+    {
+      "id": "B2",
+      "phase": "power_electronics",
+      "title": "半全桥、同步DC/DC与滤波候选",
+      "priority": 2,
+      "dependencies": [
+        "B1"
+      ],
+      "new_capabilities": [
+        "only proven small controllers if needed"
+      ],
+      "references": [],
+      "validation": "受控开关物理边界、真实参考先行",
+      "acceptance": "每项先有参考与固定判据再实施，禁止冒充自动二极管",
+      "status": "planned",
+      "files": [],
+      "commits": [],
+      "blockers": []
+    },
+    {
+      "id": "C1",
+      "phase": "single_station",
+      "title": "单站VSC教学链",
+      "priority": 2,
+      "dependencies": [
+        "B1"
+      ],
+      "new_capabilities": [
+        "small measured naming/timing fixes only if proven"
+      ],
+      "references": [],
+      "validation": "开环到PLL/dq/PQ/Vdc逐层探针和商业对标",
+      "acceptance": "局部、可独立运行验证的教学例逐项验收",
+      "status": "planned",
+      "files": [],
+      "commits": [],
+      "blockers": []
+    },
+    {
+      "id": "D1",
+      "phase": "interfaces_networks",
+      "title": "等效新能源/HVDC/小网",
+      "priority": 3,
+      "dependencies": [
+        "C1",
+        "A4"
+      ],
+      "new_capabilities": [],
+      "references": [],
+      "validation": "范围命名准确、真实参考和阶段复审",
+      "acceptance": "不将直流等效称完整PV，不将拓扑称完整标准EMT",
+      "status": "planned",
+      "files": [],
+      "commits": [],
+      "blockers": []
+    },
+    {
+      "id": "F1",
+      "phase": "engineering",
+      "title": "阶段回归与跨操作系统验收",
+      "priority": 1,
+      "dependencies": [
+        "A1",
+        "A2"
+      ],
+      "new_capabilities": [],
+      "references": [],
+      "validation": "ruff/mypy/full pytest/examples/Windows+Linux CI",
+      "acceptance": "本批测试与真实CI记录、教学导航、里程碑推送和恢复指令",
+      "status": "planned",
+      "files": [
+        ".github/workflows/ci.yml"
+      ],
+      "commits": [],
+      "blockers": []
+    },
+    {
+      "id": "G1",
+      "phase": "future_research_only",
+      "title": "自动换流、非线性及独立稀疏研究储备",
+      "priority": 9,
+      "dependencies": [],
+      "new_capabilities": [],
+      "references": [],
+      "validation": "当前只定义边界",
+      "acceptance": "仅规划，不在近期实施大型框架",
+      "status": "planned",
+      "files": [
+        "docs/development_roadmap/04_long_term_roadmap.md"
+      ],
+      "commits": [],
+      "blockers": []
+    }
+  ]
+}

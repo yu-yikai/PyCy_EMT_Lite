@@ -1,0 +1,14 @@
+{
+  "R1_ohm": 10.0,
+  "R2_ohm": 10.0,
+  "C1_farad": 0.0001,
+  "C2_farad": 0.0001,
+  "source_amplitude_volt": 5.0,
+  "pulse_period_second": 0.01,
+  "pulse_delay_second": 0.001,
+  "pulse_width_percent": 50,
+  "initial_capacitor_voltages_volt": [0.0, 0.0],
+  "pycy_step_second": 0.000002,
+  "stop_second": 0.02,
+  "reference_capacitor_ESR_ohm": 0.000001
+}
