@@ -1,0 +1,953 @@
+{
+  "schema_version": 1,
+  "assessed_on": "2026-11-04",
+  "repository_baseline": "a03a450340797771099fceb5ec77137bc7f681c2",
+  "state_semantics": {
+    "discovered": "source only",
+    "downloaded": "local original retained",
+    "inspected": "content/parameters inspected; native open may still be false",
+    "runnable": "native simulation succeeded",
+    "reference_ready": "real numeric data retained with provenance",
+    "blocked": "cannot advance; preserve last achieved evidence separately"
+  },
+  "scoring": {
+    "scale": "0 to 5; all dimensions higher is better",
+    "hard_gates": [
+      "physical compatibility",
+      "traceable real reference data",
+      "within current technical scope"
+    ],
+    "weights": {
+      "teaching": 15,
+      "representation": 10,
+      "model_available": 15,
+      "data_available": 15,
+      "current_fit": 15,
+      "development_ease": 8,
+      "validation_ease": 8,
+      "novelty": 5,
+      "reuse": 5,
+      "maintenance_ease": 4
+    },
+    "candidates": [
+      {
+        "candidate": "cascaded_rc",
+        "ratings": {
+          "teaching": 5,
+          "representation": 5,
+          "model_available": 5,
+          "data_available": 5,
+          "current_fit": 5,
+          "development_ease": 5,
+          "validation_ease": 5,
+          "novelty": 4,
+          "reuse": 5,
+          "maintenance_ease": 5
+        },
+        "score_100": 99.0
+      },
+      {
+        "candidate": "earthing",
+        "ratings": {
+          "teaching": 5,
+          "representation": 5,
+          "model_available": 4,
+          "data_available": 1,
+          "current_fit": 5,
+          "development_ease": 4,
+          "validation_ease": 4,
+          "novelty": 5,
+          "reuse": 4,
+          "maintenance_ease": 5
+        },
+        "score_100": 80.8
+      },
+      {
+        "candidate": "multi_source_resistive",
+        "ratings": {
+          "teaching": 4,
+          "representation": 4,
+          "model_available": 5,
+          "data_available": 1,
+          "current_fit": 5,
+          "development_ease": 4,
+          "validation_ease": 5,
+          "novelty": 4,
+          "reuse": 4,
+          "maintenance_ease": 5
+        },
+        "score_100": 79.4
+      },
+      {
+        "candidate": "spwm_rl",
+        "ratings": {
+          "teaching": 5,
+          "representation": 5,
+          "model_available": 4,
+          "data_available": 1,
+          "current_fit": 4,
+          "development_ease": 4,
+          "validation_ease": 3,
+          "novelty": 5,
+          "reuse": 5,
+          "maintenance_ease": 4
+        },
+        "score_100": 76.4
+      },
+      {
+        "candidate": "ac_rl_point_on_wave",
+        "ratings": {
+          "teaching": 4,
+          "representation": 4,
+          "model_available": 5,
+          "data_available": 0,
+          "current_fit": 5,
+          "development_ease": 5,
+          "validation_ease": 5,
+          "novelty": 4,
+          "reuse": 3,
+          "maintenance_ease": 5
+        },
+        "score_100": 77.0
+      },
+      {
+        "candidate": "segmented_lc_line",
+        "ratings": {
+          "teaching": 4,
+          "representation": 5,
+          "model_available": 4,
+          "data_available": 1,
+          "current_fit": 4,
+          "development_ease": 3,
+          "validation_ease": 3,
+          "novelty": 5,
+          "reuse": 4,
+          "maintenance_ease": 4
+        },
+        "score_100": 70.8
+      },
+      {
+        "candidate": "single_station_gfl",
+        "ratings": {
+          "teaching": 5,
+          "representation": 5,
+          "model_available": 4,
+          "data_available": 0,
+          "current_fit": 4,
+          "development_ease": 2,
+          "validation_ease": 2,
+          "novelty": 5,
+          "reuse": 5,
+          "maintenance_ease": 3
+        },
+        "score_100": 67.8
+      },
+      {
+        "candidate": "gfm_three_bus",
+        "ratings": {
+          "teaching": 4,
+          "representation": 5,
+          "model_available": 3,
+          "data_available": 0,
+          "current_fit": 2,
+          "development_ease": 1,
+          "validation_ease": 1,
+          "novelty": 5,
+          "reuse": 4,
+          "maintenance_ease": 2
+        },
+        "score_100": 50.8
+      }
+    ]
+  },
+  "references": [
+    {
+      "id": "mw-cascaded-rc-r2025a",
+      "short_code": "MW-RC2",
+      "name": "Cascaded RC Circuit in Simulink and Simscape",
+      "source_url": "https://www.mathworks.com/help/simscape/ug/cascaded-rc-circuit-in-simulink-and-simscape.html",
+      "files": [
+        "CascadedRCCircuitInSimulinkAndSimscape.slx",
+        "CascadedRCCircuitInSimulinkAndSimscapePlotIR.m"
+      ],
+      "file_formats": [
+        ".m",
+        ".slx"
+      ],
+      "model_version": "R2025a Update 1",
+      "status": "reference_ready",
+      "software_requirements": [
+        "MATLAB R2025a Update 1",
+        "Simulink",
+        "Simscape"
+      ],
+      "dependencies": [
+        "Simscape Foundation library",
+        "bundled plot script (not needed for numerical export)"
+      ],
+      "download_available": true,
+      "downloaded": true,
+      "content_inspected": true,
+      "opened_in_native_software": true,
+      "simulation_succeeded": true,
+      "reference_numeric_data_obtained": true,
+      "local_path": "local_reference/cascaded_rc",
+      "allows_local_save": "public_download_for_local_study",
+      "allows_redistribution": "not_asserted",
+      "mathematical_compatibility": "Same two-stage RC ladder; R1=R2=10 ohm, C1=C2=100 uF, capacitor ESR=1 uohm, zero initial voltage; 5 V, 10 ms period, 50% pulse, delay 1 ms. PyCy ideal-capacitor approximation must be documented.",
+      "blockers": [],
+      "sha256": {
+        "simulink/CascadedRCCircuitInSimulinkAndSimscape.slx": "54422f5f100c220c0bea9e396d1d1cd3fd015bb923b9ba48f555e054ddf29a06"
+      },
+      "example_id": "simscape/CascadedRCCircuitInSimulinkAndSimscapeExample",
+      "reference_data": "local_reference/cascaded_rc/normalized_results/reference.csv",
+      "samples": 10052,
+      "provenance": "local_reference/cascaded_rc/provenance.json",
+      "validation_case": "validation/cases/cascaded_rc",
+      "solver": {
+        "name": "ode15s",
+        "relative_tolerance": 1e-08,
+        "absolute_tolerance": 1e-10,
+        "max_step_s": 2e-06,
+        "stop_s": 0.02
+      },
+      "license_notes": "Downloaded with licensed MATLAB openExample; original model and numerical data remain local, no redistribution permission asserted.",
+      "aliases": [
+        "MW-RC2"
+      ]
+    },
+    {
+      "id": "mw-rc-r2025a",
+      "short_code": "MW-RC",
+      "name": "RC Circuit in Simulink and Simscape",
+      "source_url": "https://www.mathworks.com/help/simscape/ug/rc-circuit-in-simulink-and-simscape.html",
+      "files": [
+        "RCCircuitInSimulinkAndSimscape.slx",
+        "RCCircuitInSimulinkAndSimscapePlotIR.m"
+      ],
+      "file_formats": [
+        ".m",
+        ".slx"
+      ],
+      "model_version": "R2025a Update 1",
+      "status": "reference_ready",
+      "software_requirements": [
+        "MATLAB",
+        "Simulink",
+        "Simscape"
+      ],
+      "dependencies": [],
+      "download_available": true,
+      "downloaded": true,
+      "content_inspected": true,
+      "opened_in_native_software": true,
+      "simulation_succeeded": true,
+      "reference_numeric_data_obtained": true,
+      "local_path": "local_reference/rc_charging",
+      "allows_local_save": "public_download_for_local_study",
+      "allows_redistribution": "not_asserted",
+      "mathematical_compatibility": "Existing example 02: R=1000 ohm C=1 uF source 1 V zero capacitor voltage. Planned SimulationInput overrides retain original topology; ESR=1 uohm retained.",
+      "blockers": [],
+      "sha256": {
+        "simulink/RCCircuitInSimulinkAndSimscape.slx": "2b9eed6b681a0ffeac7623b99ac3506d13777fbe3a2ffd162ad5d3988e73fde7"
+      },
+      "example_id": "simscape/RCCircuitInSimulinkAndSimscapeExample",
+      "validation_case": "validation/cases/rc_charging",
+      "reference_data": "local_reference/rc_charging/normalized_results/reference.csv",
+      "samples": 5013,
+      "provenance": "local_reference/rc_charging/provenance.json",
+      "solver": {
+        "name": "ode15s",
+        "relative_tolerance": 1e-08,
+        "absolute_tolerance": 1e-10,
+        "max_step_s": 1e-06,
+        "stop_s": 0.005
+      },
+      "aliases": [
+        "MW-RC"
+      ]
+    },
+    {
+      "id": "pscad-cookbook-ch3-01",
+      "short_code": "PSCAD-RLDC",
+      "name": "Series RL connected to DC source",
+      "source_url": "https://www.pscad.com/knowledge-base/article/46",
+      "files": [
+        "03_CircuitResponse.pswx",
+        "Circuit_Response_study_01.pscx"
+      ],
+      "file_formats": [
+        ".pscx",
+        ".pswx"
+      ],
+      "model_version": "4.6.0",
+      "status": "inspected",
+      "software_requirements": [
+        "PSCAD compatible with model version",
+        "EMTDC",
+        "supported Fortran compiler"
+      ],
+      "dependencies": [
+        "PSCAD master library"
+      ],
+      "download_available": true,
+      "downloaded": true,
+      "content_inspected": true,
+      "opened_in_native_software": false,
+      "simulation_succeeded": false,
+      "reference_numeric_data_obtained": false,
+      "local_path": "local_reference/pscad_cookbook_ch3",
+      "allows_local_save": "public_download_for_local_study",
+      "allows_redistribution": "not_asserted",
+      "mathematical_compatibility": "XML: R=1 ohm L=0.1 H, breaker at 1s; source Vm says 10[kV], while cookbook prose says 10V: must resolve unit/display discrepancy in actual PSCAD before mapping. Ron=0, Roff=1e6 ohm.",
+      "blockers": [
+        "No native PSCAD open/run performed; no time-domain numeric output included."
+      ],
+      "sha256": {
+        "Cookbook-Chapter-03.zip": "476310dd9d376ceec9441e95343a11b47bc626f3af6e521e5a2f89d995ae2eef"
+      },
+      "download_url": "https://www.pscad.com/knowledge-base/download/Cookbook-Chapter-03.zip",
+      "license_notes": "Official public download intended for local study; copyright retained, redistribution permission not found.",
+      "aliases": [
+        "PSCAD-RLDC"
+      ]
+    },
+    {
+      "id": "pscad-cookbook-ch3-02",
+      "short_code": "PSCAD-RLAC",
+      "name": "Series RL connected to AC source",
+      "source_url": "https://www.pscad.com/knowledge-base/article/46",
+      "files": [
+        "03_CircuitResponse.pswx",
+        "Circuit_Response_study_02.pscx"
+      ],
+      "file_formats": [
+        ".pscx",
+        ".pswx"
+      ],
+      "model_version": "4.6.0",
+      "status": "inspected",
+      "software_requirements": [
+        "PSCAD compatible with model version",
+        "EMTDC",
+        "supported Fortran compiler"
+      ],
+      "dependencies": [
+        "PSCAD master library"
+      ],
+      "download_available": true,
+      "downloaded": true,
+      "content_inspected": true,
+      "opened_in_native_software": false,
+      "simulation_succeeded": false,
+      "reference_numeric_data_obtained": false,
+      "local_path": "local_reference/pscad_cookbook_ch3",
+      "allows_local_save": "public_download_for_local_study",
+      "allows_redistribution": "not_asserted",
+      "mathematical_compatibility": "XML: R=1.963 ohm L=74mH Ron=0.005ohm; point-on-wave offset study. Map phase, source convention and preclose leakage before comparison.",
+      "blockers": [
+        "No native PSCAD open/run performed; no time-domain numeric output included."
+      ],
+      "sha256": {
+        "Cookbook-Chapter-03.zip": "476310dd9d376ceec9441e95343a11b47bc626f3af6e521e5a2f89d995ae2eef"
+      },
+      "download_url": "https://www.pscad.com/knowledge-base/download/Cookbook-Chapter-03.zip",
+      "license_notes": "Official public download intended for local study; copyright retained, redistribution permission not found.",
+      "aliases": [
+        "PSCAD-RLAC"
+      ]
+    },
+    {
+      "id": "pscad-cookbook-ch3-03",
+      "short_code": "PSCAD-RLC",
+      "name": "Series RLC connected to AC source",
+      "source_url": "https://www.pscad.com/knowledge-base/article/46",
+      "files": [
+        "03_CircuitResponse.pswx",
+        "Circuit_Response_study_03.pscx"
+      ],
+      "file_formats": [
+        ".pscx",
+        ".pswx"
+      ],
+      "model_version": "4.6.0",
+      "status": "inspected",
+      "software_requirements": [
+        "PSCAD compatible with model version",
+        "EMTDC",
+        "supported Fortran compiler"
+      ],
+      "dependencies": [
+        "PSCAD master library"
+      ],
+      "download_available": true,
+      "downloaded": true,
+      "content_inspected": true,
+      "opened_in_native_software": false,
+      "simulation_succeeded": false,
+      "reference_numeric_data_obtained": false,
+      "local_path": "local_reference/pscad_cookbook_ch3",
+      "allows_local_save": "public_download_for_local_study",
+      "allows_redistribution": "not_asserted",
+      "mathematical_compatibility": "XML: R=1.392ohm L=26mH C=3.761uF, source Vm=132.7905619[kV] f=60Hz, Ron=0.0005ohm Roff=1Mohm, breaker closes 0.1s. Do not infer RMS/peak semantics from XML name alone.",
+      "blockers": [
+        "No native PSCAD open/run performed; no time-domain numeric output included."
+      ],
+      "sha256": {
+        "Cookbook-Chapter-03.zip": "476310dd9d376ceec9441e95343a11b47bc626f3af6e521e5a2f89d995ae2eef"
+      },
+      "download_url": "https://www.pscad.com/knowledge-base/download/Cookbook-Chapter-03.zip",
+      "license_notes": "Official public download intended for local study; copyright retained, redistribution permission not found.",
+      "aliases": [
+        "PSCAD-RLC"
+      ]
+    },
+    {
+      "id": "pscad-cookbook-ch3-04",
+      "short_code": "PSCAD-LC",
+      "name": "LC switching circuit",
+      "source_url": "https://www.pscad.com/knowledge-base/article/46",
+      "files": [
+        "03_CircuitResponse.pswx",
+        "Circuit_Response_study_04.pscx"
+      ],
+      "file_formats": [
+        ".pscx",
+        ".pswx"
+      ],
+      "model_version": "4.5.3",
+      "status": "inspected",
+      "software_requirements": [
+        "PSCAD compatible with model version",
+        "EMTDC",
+        "supported Fortran compiler"
+      ],
+      "dependencies": [
+        "PSCAD master library"
+      ],
+      "download_available": true,
+      "downloaded": true,
+      "content_inspected": true,
+      "opened_in_native_software": false,
+      "simulation_succeeded": false,
+      "reference_numeric_data_obtained": false,
+      "local_path": "local_reference/pscad_cookbook_ch3",
+      "allows_local_save": "public_download_for_local_study",
+      "allows_redistribution": "not_asserted",
+      "mathematical_compatibility": "XML: L=353mH C=3.2nF plus a 15mH branch, source Vm=79.674[kV], breaker closes 0.0174s. Full connectivity and high-frequency resolution still require inspection in PSCAD.",
+      "blockers": [
+        "No native PSCAD open/run performed; no time-domain numeric output included."
+      ],
+      "sha256": {
+        "Cookbook-Chapter-03.zip": "476310dd9d376ceec9441e95343a11b47bc626f3af6e521e5a2f89d995ae2eef"
+      },
+      "download_url": "https://www.pscad.com/knowledge-base/download/Cookbook-Chapter-03.zip",
+      "license_notes": "Official public download intended for local study; copyright retained, redistribution permission not found.",
+      "aliases": [
+        "PSCAD-LC"
+      ]
+    },
+    {
+      "id": "pnnl-i2x-pscad",
+      "short_code": "PNNL-IBR",
+      "name": "PNNL i2X EMT Bootcamp PSCAD models",
+      "source_url": "https://github.com/pnnl/i2x/tree/master/emt-bootcamp",
+      "files": [
+        "PSCAD.zip",
+        "EMT_Boot_Camp_WS.pswx",
+        "Solar_SMIB_S0_FLAT.pscx",
+        "Solar3avm.pscx",
+        "Solar3dm.pscx",
+        "Solar_Lib.pslx"
+      ],
+      "file_formats": [
+        ".pscx",
+        ".pslx",
+        ".pswx",
+        ".zip"
+      ],
+      "model_version": "PSCAD projects 5.0.1 / 5.0.2",
+      "status": "inspected",
+      "software_requirements": [
+        "PSCAD 5",
+        "EMTDC",
+        "supported Fortran compiler"
+      ],
+      "dependencies": [
+        "Solar_Lib.pslx",
+        "V50 compiler-specific dynamic_models.lib",
+        "master library"
+      ],
+      "download_available": true,
+      "downloaded": true,
+      "content_inspected": true,
+      "opened_in_native_software": false,
+      "simulation_succeeded": false,
+      "reference_numeric_data_obtained": false,
+      "local_path": "local_reference/pnnl_i2x",
+      "allows_local_save": "public_download_for_local_study",
+      "allows_redistribution": "conditional_root_license; audit bundled libraries separately",
+      "mathematical_compatibility": "100MW switching and average IBR plant models; topology, controller scaling, sequence, limiter and semiconductor differences require a documented reduced single-station mapping. Not a direct reference for existing Python VSC.",
+      "blockers": [
+        "No PSCAD runtime verification.",
+        "Current PSCAD.zip contains no usable numeric waveform data.",
+        "Dynamic model compiled libraries require compiler/version compatibility checks."
+      ],
+      "sha256": {
+        "PSCAD.zip": "cf154f0c83f3611323c4890659f19be9b81ca5d251e60344f78076bdd46145c4"
+      },
+      "download_url": "https://raw.githubusercontent.com/pnnl/i2x/master/emt-bootcamp/PSCAD.zip",
+      "license_url": "https://github.com/pnnl/i2x/blob/master/license.txt",
+      "license_notes": "Battelle permission grants use/copy/modify/redistribute subject to retained notices and disclaimers. Original bundle remains local.",
+      "inspected_projects": 17,
+      "aliases": [
+        "PNNL-IBR"
+      ]
+    },
+    {
+      "id": "nlr-pypscad-gfl-gfm",
+      "short_code": "NLR-GFLGFM",
+      "name": "PyPSCAD GFL/GFM nine-bus zero-inertia system",
+      "source_url": "https://github.com/NatLabRockies/PyPSCAD",
+      "files": [
+        "9_Bus_Zero_Inertia.pscx",
+        "GM_Zero_Inertia.pswx",
+        "Kenyon_Library.pslx"
+      ],
+      "file_formats": [
+        ".pscx",
+        ".pslx",
+        ".pswx"
+      ],
+      "model_version": "PSCAD 4.6.3",
+      "status": "inspected",
+      "software_requirements": [
+        "PSCAD 4.6.3 compatible",
+        "EMTDC",
+        "Fortran compiler"
+      ],
+      "dependencies": [
+        "Kenyon_Library.pslx",
+        "PSCAD master library"
+      ],
+      "download_available": true,
+      "downloaded": true,
+      "content_inspected": true,
+      "opened_in_native_software": false,
+      "simulation_succeeded": false,
+      "reference_numeric_data_obtained": false,
+      "local_path": "local_reference/pypscad/gfl_gfm",
+      "allows_local_save": "public_download_for_local_study",
+      "allows_redistribution": "not_asserted",
+      "mathematical_compatibility": "Generic average-switch GFL/GFM and full nine-bus controls; does not validate switching-level SPWM ripple or an IEEE9 machine model. Six .out files are LINE CONSTANTS PROGRAM reports, not transient waveforms.",
+      "blockers": [
+        "No PSCAD run.",
+        "No suitable time-domain waveform data.",
+        "No standard license file; redistribution terms not established."
+      ],
+      "sha256": {
+        "../GFL-GFM.zip": "6ada771417ce8230b49e53ed414cdf0d99f6ba7556abe496566552c8ea2b88b4"
+      },
+      "download_url": "https://raw.githubusercontent.com/NatLabRockies/PyPSCAD/main/GFM-GFL%20Models/Kenyon%20PSCAD%20GFL-GFM%20Models.zip",
+      "license_notes": "Repository README explicitly permits use/modification with requested publication citation. No broad redistribution permission inferred; old bundled executable not executed.",
+      "time_step_s": 2e-05,
+      "output_step_s": 0.0005,
+      "aliases": [
+        "NLR-GFLGFM"
+      ]
+    },
+    {
+      "id": "nlr-pypscad-three-bus",
+      "short_code": "NLR-3BUS",
+      "name": "PyPSCAD controller-order three-bus archive",
+      "source_url": "https://github.com/NatLabRockies/PyPSCAD/tree/main/Controller_Order",
+      "files": [
+        "Kenyon_PSCC_3bus.zip",
+        "SC_Testing/SyncCon_Tests.pscx"
+      ],
+      "file_formats": [
+        ".pscx",
+        ".zip"
+      ],
+      "model_version": "PSCAD 5.0.0",
+      "status": "inspected",
+      "software_requirements": [
+        "PSCAD 5",
+        "EMTDC",
+        "Fortran compiler"
+      ],
+      "dependencies": [
+        "ETRAN",
+        "PRSIM",
+        "Wallace_201004_Lib",
+        "master library"
+      ],
+      "download_available": true,
+      "downloaded": true,
+      "content_inspected": true,
+      "opened_in_native_software": false,
+      "simulation_succeeded": false,
+      "reference_numeric_data_obtained": false,
+      "local_path": "local_reference/pypscad/three_bus",
+      "allows_local_save": "public_download_for_local_study",
+      "allows_redistribution": "not_asserted",
+      "mathematical_compatibility": "Actual main filename is SyncCon_Tests; presence of named three-bus archive does not establish a self-contained linear three-node teaching reference.",
+      "blockers": [
+        "ETRAN/PRSIM dependency availability and licensing unresolved.",
+        "No PSCAD run or waveform data."
+      ],
+      "sha256": {
+        "../Kenyon_PSCC_3bus.zip": "d6c790250df13afbee427ba86c7689cf6bdf668dc61371de2a0736baebfc5025"
+      },
+      "download_url": "https://raw.githubusercontent.com/NatLabRockies/PyPSCAD/main/Controller_Order/Kenyon_PSCC_3bus.zip",
+      "license_notes": "Same README use/modification statement as GFL/GFM archive; no third-party dependency redistribution inferred.",
+      "aliases": [
+        "NLR-3BUS"
+      ]
+    },
+    {
+      "id": "mw-dc-circuit-analysis-2.2.2",
+      "short_code": "MW-DC",
+      "name": "MathWorks DC Circuit Analysis curriculum models",
+      "source_url": "https://github.com/MathWorks-Teaching-Resources/DC-Circuit-Analysis",
+      "files": [
+        "NodalAnalysisExample.slx",
+        "RLCCircuit.slx"
+      ],
+      "file_formats": [
+        ".slx"
+      ],
+      "model_version": "v2.2.2; SLX R2024a exported from R2024b",
+      "status": "inspected",
+      "software_requirements": [
+        "MATLAB",
+        "Simulink",
+        "Simscape",
+        "Simscape Electrical"
+      ],
+      "dependencies": [
+        "Curriculum uses additional DSP/Control/Symbolic toolboxes; per-model dependencies not yet resolved."
+      ],
+      "download_available": true,
+      "downloaded": true,
+      "content_inspected": true,
+      "opened_in_native_software": false,
+      "simulation_succeeded": false,
+      "reference_numeric_data_obtained": false,
+      "local_path": "local_reference/mathworks_dc_analysis",
+      "allows_local_save": "public_download_for_local_study",
+      "allows_redistribution": "current_repository_BSD3; fixed_tag_license_retrieval_pending",
+      "mathematical_compatibility": "Nodal example includes seven resistors and both current/voltage sources; suitable multi-source linear network candidate after exact connectivity and measurement inspection. RLC curriculum overlaps existing examples.",
+      "blockers": [
+        "Not opened/run in MATLAB.",
+        "Fixed-tag LICENSE download returned transport EOF; current release-branch BSD3 license inspected only."
+      ],
+      "sha256": {
+        "NodalAnalysisExample.slx": "9dd139df62546dab31ecd73d591fbdf432ce43eb2f508f8f4a6ee6b053bc28d0",
+        "RLCCircuit.slx": "26b7204cbea99d2835c3c53faeaee3c293ac29f2ec144ef1a9db999287d8b3bd"
+      },
+      "download_urls": [
+        "https://raw.githubusercontent.com/MathWorks-Teaching-Resources/DC-Circuit-Analysis/v2.2.2/Models/NodalAnalysisExample.slx",
+        "https://raw.githubusercontent.com/MathWorks-Teaching-Resources/DC-Circuit-Analysis/v2.2.2/Models/RLCCircuit.slx"
+      ],
+      "license_url": "https://github.com/MathWorks-Teaching-Resources/DC-Circuit-Analysis/blob/release/LICENSE.md",
+      "license_notes": "Current default branch release is BSD3; do not redistribute fixed-tag files until exact license evidence is retained.",
+      "aliases": [
+        "MW-DC"
+      ]
+    },
+    {
+      "id": "mw-spwm-r2025a",
+      "short_code": "MW-SPWM",
+      "name": "Three-Phase Voltage-Sourced Converter (SPWM)",
+      "source_url": "https://www.mathworks.com/help/simscape-electrical/ug/three-phase-voltage-sourced-converter-spwm.html",
+      "files": [
+        "VSCSinusoidalPWM.slx",
+        "VSCSinusoidalPWMPlotCurrents.m",
+        "simlogNeedsUpdate.m"
+      ],
+      "file_formats": [
+        ".m",
+        ".slx"
+      ],
+      "model_version": "R2025a local example catalog; model file not acquired in this entry",
+      "status": "discovered",
+      "software_requirements": [
+        "MATLAB",
+        "Simulink",
+        "Simscape",
+        "Simscape Electrical"
+      ],
+      "dependencies": [],
+      "download_available": true,
+      "downloaded": false,
+      "content_inspected": false,
+      "opened_in_native_software": false,
+      "simulation_succeeded": false,
+      "reference_numeric_data_obtained": false,
+      "local_path": null,
+      "allows_local_save": "check_software_terms_on_download",
+      "allows_redistribution": "not_asserted",
+      "mathematical_compatibility": "Carrier-based sine/triangle comparison; verify diode/protection behavior, switch resistance, load neutral and filter before mapping to externally controlled PyCy switches.",
+      "blockers": [
+        "Native model open/run and data export not yet verified."
+      ],
+      "sha256": {},
+      "example_id": "simscapeelectrical/VSCSinusoidalPWMExample",
+      "availability_evidence": "R2025a local help/docCatalog/exampleapi/sps.zip fsroot/sps.json and official documentation.",
+      "aliases": [
+        "MW-SPWM"
+      ]
+    },
+    {
+      "id": "mw-two-level-pwm-r2025a",
+      "short_code": "MW-PWM",
+      "name": "Three-Phase Two-Level PWM Generator",
+      "source_url": "https://www.mathworks.com/help/simscape-electrical/ug/three-phase-two-level-pwm-generator.html",
+      "files": [
+        "TwoLevelPWMGenerator.slx",
+        "TwoLevelPWMGeneratorPlotResults.m",
+        "simlogNeedsUpdate.m"
+      ],
+      "file_formats": [
+        ".m",
+        ".slx"
+      ],
+      "model_version": "R2025a local example catalog; model file not acquired in this entry",
+      "status": "discovered",
+      "software_requirements": [
+        "MATLAB",
+        "Simulink",
+        "Simscape",
+        "Simscape Electrical"
+      ],
+      "dependencies": [],
+      "download_available": true,
+      "downloaded": false,
+      "content_inspected": false,
+      "opened_in_native_software": false,
+      "simulation_succeeded": false,
+      "reference_numeric_data_obtained": false,
+      "local_path": null,
+      "allows_local_save": "check_software_terms_on_download",
+      "allows_redistribution": "not_asserted",
+      "mathematical_compatibility": "400V DC example; verify actual PWM sample/gating-time algorithm rather than treating it as identical to sample-by-sample carrier comparison.",
+      "blockers": [
+        "Native model open/run and data export not yet verified."
+      ],
+      "sha256": {},
+      "example_id": "simscapeelectrical/TwoLevelPWMGeneratorExample",
+      "availability_evidence": "R2025a local help/docCatalog/exampleapi/sps.zip fsroot/sps.json and official documentation.",
+      "aliases": [
+        "MW-PWM"
+      ]
+    },
+    {
+      "id": "mw-lc-line-r2025a",
+      "short_code": "MW-LCLINE",
+      "name": "LC Transmission Line and Test Bridge",
+      "source_url": "https://www.mathworks.com/help/simscape-electrical/ug/lc-transmission-line-and-test-bridge.html",
+      "files": [
+        "LCLineTestBridge.slx",
+        "LCLineTestBridgePlotBode.m",
+        "LCLineTestBridgePlotSignals.m",
+        "LCLineTestBridgeSetDirection.m"
+      ],
+      "file_formats": [
+        ".m",
+        ".slx"
+      ],
+      "model_version": "R2025a local example catalog; model file not acquired in this entry",
+      "status": "discovered",
+      "software_requirements": [
+        "MATLAB",
+        "Simulink",
+        "Simscape",
+        "Simscape Electrical"
+      ],
+      "dependencies": [],
+      "download_available": true,
+      "downloaded": false,
+      "content_inspected": false,
+      "opened_in_native_software": false,
+      "simulation_succeeded": false,
+      "reference_numeric_data_obtained": false,
+      "local_path": null,
+      "allows_local_save": "check_software_terms_on_download",
+      "allows_redistribution": "not_asserted",
+      "mathematical_compatibility": "Segmented LC line with bidirectional test bridge. Active bridge cannot be assumed equivalent to passive PyCy line; finite LC chain is not Bergeron.",
+      "blockers": [
+        "Native model open/run and data export not yet verified."
+      ],
+      "sha256": {},
+      "example_id": "simscapeelectrical/LCLineTestBridgeExample",
+      "availability_evidence": "R2025a local help/docCatalog/exampleapi/sps.zip fsroot/sps.json and official documentation.",
+      "aliases": [
+        "MW-LCLINE"
+      ]
+    },
+    {
+      "id": "mw-earthing-r2025a",
+      "short_code": "MW-EARTH",
+      "name": "Earthing Effects with Unbalanced Load",
+      "source_url": "https://www.mathworks.com/help/simscape-electrical/ug/earthing-effects.html",
+      "files": [
+        "EarthingEffects.slx",
+        "EarthingEffectsPlotResults.m",
+        "simlogNeedsUpdate.m"
+      ],
+      "file_formats": [
+        ".m",
+        ".slx"
+      ],
+      "model_version": "R2025a local example catalog; model file not acquired in this entry",
+      "status": "discovered",
+      "software_requirements": [
+        "MATLAB",
+        "Simulink",
+        "Simscape",
+        "Simscape Electrical"
+      ],
+      "dependencies": [],
+      "download_available": true,
+      "downloaded": false,
+      "content_inspected": false,
+      "opened_in_native_software": false,
+      "simulation_succeeded": false,
+      "reference_numeric_data_obtained": false,
+      "local_path": null,
+      "allows_local_save": "check_software_terms_on_download",
+      "allows_redistribution": "not_asserted",
+      "mathematical_compatibility": "Grounded/floating/open neutral networks, initially balanced; phase-a R 1 to3ohm at .05s, phase-c 1 to1.5ohm at .07s. Verify local release and neutral convention.",
+      "blockers": [
+        "Native model open/run and data export not yet verified."
+      ],
+      "sha256": {},
+      "example_id": "simscapeelectrical/EarthingEffectsExample",
+      "availability_evidence": "R2025a local help/docCatalog/exampleapi/sps.zip fsroot/sps.json and official documentation.",
+      "aliases": [
+        "MW-EARTH"
+      ]
+    },
+    {
+      "id": "mw-grid-tied-r2025a",
+      "short_code": "MW-GRID",
+      "name": "Three-Phase Grid-Tied Inverter",
+      "source_url": "https://www.mathworks.com/help/simscape-electrical/ug/grid-tied-inverter.html",
+      "files": [
+        "GridTiedInverter.slx",
+        "GridTiedInverterData.m",
+        "GridTiedInverterPlotVoltage.m",
+        "simlogNeedsUpdate.m"
+      ],
+      "file_formats": [
+        ".m",
+        ".slx"
+      ],
+      "model_version": "R2025a local example catalog; model file not acquired in this entry",
+      "status": "discovered",
+      "software_requirements": [
+        "MATLAB",
+        "Simulink",
+        "Simscape",
+        "Simscape Electrical"
+      ],
+      "dependencies": [],
+      "download_available": true,
+      "downloaded": false,
+      "content_inspected": false,
+      "opened_in_native_software": false,
+      "simulation_succeeded": false,
+      "reference_numeric_data_obtained": false,
+      "local_path": null,
+      "allows_local_save": "check_software_terms_on_download",
+      "allows_redistribution": "not_asserted",
+      "mathematical_compatibility": "Grid closes .15s; PI voltage controller with IGBTs. Not directly equivalent to PyCy dq-current controlled GFL; controller and protection simplifications need explicit mapping.",
+      "blockers": [
+        "Native model open/run and data export not yet verified."
+      ],
+      "sha256": {},
+      "example_id": "simscapeelectrical/GridTiedInverterExample",
+      "availability_evidence": "R2025a local help/docCatalog/exampleapi/sps.zip fsroot/sps.json and official documentation.",
+      "aliases": [
+        "MW-GRID"
+      ]
+    },
+    {
+      "id": "pscad-line-energizing",
+      "short_code": "PSCAD-LINE",
+      "name": "Cookbook Chapter 6 Line Energizing Studies",
+      "source_url": "https://www.pscad.com/knowledge-base/article/272",
+      "files": [],
+      "file_formats": [],
+      "model_version": "Official applicability v4.5.x through v5.1.0; project version uninspected",
+      "status": "discovered",
+      "software_requirements": [
+        "PSCAD",
+        "EMTDC",
+        "Fortran compiler"
+      ],
+      "dependencies": [],
+      "download_available": true,
+      "downloaded": false,
+      "content_inspected": false,
+      "opened_in_native_software": false,
+      "simulation_succeeded": false,
+      "reference_numeric_data_obtained": false,
+      "local_path": null,
+      "allows_local_save": "check_software_terms_on_download",
+      "allows_redistribution": "not_asserted",
+      "mathematical_compatibility": "Official line/re-energization and transformer resonance examples; frequency-dependent line and trapped-charge behavior need model-boundary checks. Not automatically a Bergeron validation.",
+      "blockers": [
+        "Not downloaded/opened/run."
+      ],
+      "sha256": {},
+      "download_url": "https://www.pscad.com/knowledge-base/download/Cookbook-Chapter-06-1.zip",
+      "license_notes": "Public official download found; redistribution permission not established.",
+      "aliases": [
+        "PSCAD-LINE"
+      ]
+    },
+    {
+      "id": "pscad-ac-faults",
+      "short_code": "PSCAD-FAULT",
+      "name": "Cookbook Chapter 1 AC Fault Studies",
+      "source_url": "https://www.pscad.com/knowledge-base/article/44",
+      "files": [],
+      "file_formats": [],
+      "model_version": "Official applicability v4.5.x through v5.1.0; project version uninspected",
+      "status": "discovered",
+      "software_requirements": [
+        "PSCAD",
+        "EMTDC",
+        "Fortran compiler"
+      ],
+      "dependencies": [],
+      "download_available": true,
+      "downloaded": false,
+      "content_inspected": false,
+      "opened_in_native_software": false,
+      "simulation_succeeded": false,
+      "reference_numeric_data_obtained": false,
+      "local_path": null,
+      "allows_local_save": "check_software_terms_on_download",
+      "allows_redistribution": "not_asserted",
+      "mathematical_compatibility": "Public projects cover line faults and COMTRADE export. Exact network, fault-on/clear timing and line model must be inspected before replacing existing fault examples.",
+      "blockers": [
+        "Not downloaded/opened/run."
+      ],
+      "sha256": {},
+      "download_url": "https://www.pscad.com/knowledge-base/download/Cookbook-Chapter-01.zip",
+      "license_notes": "Public official download found; redistribution permission not established.",
+      "aliases": [
+        "PSCAD-FAULT"
+      ]
+    }
+  ],
+  "scope_notes": [
+    "No full IEEE9 dynamics, MMC, IEEE39/118, nonlinear MNA or sparse architecture planned for current implementation.",
+    "No automatic diode commutation equivalence inferred from externally controlled switches.",
+    "Original third-party models/results stay local unless redistribution terms are explicitly verified."
+  ],
+  "version_source": "https://www.mathworks.com/help/simscape-electrical/release-notes.html"
+}

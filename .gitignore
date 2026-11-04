@@ -14,6 +14,9 @@ __pycache__/
 # generated simulation outputs
 outputs/
 
+# Third-party models, raw reference data and local comparison artifacts
+local_reference/
+
 # local-only audit evidence attachments (kept on this machine, not for Git)
 docs/audit_20261005/*.json
 docs/audit_20261005/*.txt
