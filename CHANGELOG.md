@@ -5,11 +5,13 @@ These entries describe local package versions; publishing and Git tags are separ
 
 ## Unreleased — 2026-11-04
 
-- Add cascaded RC (19), multi-source nodal analysis (20), and grounded/floating neutral loads (21), with independent physical tests and real MATLAB R2025a Simscape comparisons. Add a real reference comparison for existing RC example 02.
+- Add cascaded RC (19), multi-source nodal analysis (20), grounded/floating neutral loads (21), and finite T-ladder propagation (22), with independent physical tests and real MATLAB R2025a Simscape comparisons. Add a real reference comparison for existing RC example 02.
+- Preserve the existing PWM example's failed waveform comparison alongside passing fundamental/power checks, with unchanged predefined limits and no fitted alignment.
 - Separate teaching scripts from reference export/comparison tools; preserve fixed acceptance windows, time-weighted metrics, input snapshots and hashes. Third-party models and raw data remain local.
 - Record verified capabilities, reference availability, task dependencies and recovery instructions; enable this development branch's Linux/Windows CI without changing package APIs or solver equations.
 
-- 新增19级联RC、20多源节点网络、21接地/浮动中性点负荷，均有独立物理测试与真实R2025a Simscape对比；既有02补真实参考。
+- 新增19级联RC、20多源节点网络、21接地/浮动中性点负荷、22有限T梯级传播，均有独立物理测试与真实R2025a Simscape对比；既有02补真实参考。
+- 既有PWM保留波形未通过、基波/功率特征通过的真实结论，保持预设阈值，不拟合对齐。
 - 教学与参考导出/对比分离，固定窗口和阈值、时间加权指标、输入快照及hash可追溯；第三方模型与原始数据保留本地。
 - 建立实测能力/参考目录、依赖任务与恢复指令，开放本分支Linux/Windows CI，保持包API与核心方程。
 

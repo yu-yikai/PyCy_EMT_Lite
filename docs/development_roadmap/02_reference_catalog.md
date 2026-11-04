@@ -19,6 +19,7 @@
 | NLR-GFLGFM | `GFL-GFM.zip`：`9_Bus_Zero_Inertia.pscx`、`Kenyon_Library.pslx` | **inspected**；v4.6.3，20 µs计算、500 µs输出；含生成Fortran和二进制 | 长期控制研究；包内6个 `.out` 均为线路常数报告，**不是时域波形** |
 | NLR-3BUS | `Kenyon_PSCC_3bus.zip`：实际主文件 `SC_Testing/SyncCon_Tests.pscx` | **inspected**；v5.0.0，依赖 ETRAN/PRSIM/Wallace_201004_Lib | 延后；文件名有“3bus”不能证明是最小无依赖三节点例 |
 | MW-DC | 官方教学库 v2.2.2 的 `NodalAnalysisExample.slx`、`RLCCircuit.slx` | Nodal已**reference_ready**；101点、14个电气信号；RLC仅**inspected**且未运行；metadata R2024a | 线性多源网络已就绪；批量仿真临时禁用孤立未接万用表，主电路不改 |
+| MW-TLINE | `simscape/TransmissionLineExample` / `TransmissionLine.slx` | **reference_ready**；50段纯线性T形RLCG；真实10 ps/5 ps细化通过，5066点标准数据 | 对标边界为有限T梯级，官方第25段图例实指第15段；PyCy新例另行验收 |
 
 官方来源：[MathWorks 两级 RC](https://www.mathworks.com/help/simscape/ug/cascaded-rc-circuit-in-simulink-and-simscape.html)、[PSCAD 第3章](https://www.pscad.com/knowledge-base/article/46)、[PNNL Bootcamp](https://github.com/pnnl/i2x/tree/master/emt-bootcamp)、[PyPSCAD](https://github.com/NatLabRockies/PyPSCAD)、[MathWorks DC Circuit Analysis](https://github.com/MathWorks-Teaching-Resources/DC-Circuit-Analysis)。具体下载 URL、文件哈希、依赖和许可判断均在 JSON 中逐项记录。
 
@@ -109,3 +110,16 @@ MATLAB `openExample('simscape/CascadedRCCircuitInSimulinkAndSimscapeExample')` �
 原SLX的SHA256为`ad8ddf5e46dd633b4853d7694067528d5d20ce78a24059a2847c6a97dbc2ea34`；最终`raw_results/simscape_native.csv`与`normalized_results/reference.csv`均为`6ef09d6e4197ebe603d3cc437bf466154aa8e151e214a0c6fcb24f0e7a0db010`。MAT、原生门极、功率审计、provenance及全部实际字节哈希见JSON对应entry，原件与真实数据保留在忽略的`local_reference/two_level_pwm/`。参考资源因此提升为reference_ready。
 
 既有12依据146a279预先固定的0.1–0.2 s窗口和2% NRMSE限值，首次完整波形比较仍为**FAIL**：A/B/C分别2.6995%、2.6577%、2.7167%；RMS、基波幅值/相位及平均电阻功率特征通过。失败报告及其不可变输入快照保留在本地比较目录，[公开case说明](../../validation/cases/two_level_pwm/README.md)记录边界。官方Natural PWM开关时间算法与PyCy载波逐点比较存在门极差异，IGBT/自动二极管也与双向Ron/Goff开关不同，尚未隔离各项贡献。没有平移时间、拟合幅值或放宽判据，资源数据就绪不代表PyCy对标完成。
+
+
+### 50段T形线路真实参考与标签核对
+
+新增第18项`mw-transmission-line-r2025a`，来源为[官方Transmission Line](https://www.mathworks.com/help/simscape/ug/transmission-line.html)，精确ID为`simscape/TransmissionLineExample`。原SLX metadata为R2025a，在MATLAB R2025a Update 1、Simulink、Simscape中实际运行。原件SHA256=`844a8501b9e25a4fe881ecfc7ea14d7d1b0e9bdba38986572ba1a910551d86fe`。安装的TransmissionLine库及T段SSC源文件也分别留存依赖哈希，不能将组件库通用默认值冒作模型实际参数。
+
+原模型五个子系统各10个T段，共50段、总长5 m。主模型实际每米R=0.0067 Ω、L=250 nH、G=5 µS、C=100 pF；每段0.1 m，两侧各R=0.000335 Ω及L=12.5 nH，中点对地并联2 MΩ和10 pF，电容ESR为0。10 V峰值、200 MHz、零相位理想正弦源，无源串联电阻，终端50 Ω。100个电感和50个电容的实际初始电流/电压严格为0。无半导体或自动续流依赖，原电气拓扑、参数、初值均未修改。
+
+默认daessc运行留作独立原始probe；正式参考只通过SimulationInput收紧求解器到ode15s，RelTol=1e-8、AbsTol=1e-10、MaxStep=10 ps，0–50 ns共5066个原生时间点；独立5 ps细化得到10041点。六信号最大电压差0.0002272013421 V、最大电流差0.000009981355328 A，均通过参考自身0.5 mV/10 µA及NRMSE 3e-5限制。两次均未拟合时移或幅值，标准化保留原生时刻和值；细化检查的绝对时间插值仅用于比较两次不同原生网格。
+
+官方`TransmissionLinePlotV.m`把`S2.T_5.p2.v`标成Segment 25，原接线却说明它是第15段边界；真正第25段是`S3.T_5.p2.v`。原脚本和原图例映射证据保留，标准六信号同时导出源、第15/25段、负载电压及方向核定的源/负载电流。正式`raw_results/simscape_native.csv`和`normalized_results/reference.csv`均为SHA256=`2fc60e7440aaa4b51d351d7e536c21bf884a22a3fd4a9993c35ac3f433bba89f`，provenance、细化数据、原MAT与完整哈希见JSON对应entry及本地`local_reference/transmission_line/`。
+
+PyCy在3761a21预先冻结的验收下，已完成独立8项物理测试、独立运行及六量真实比较，结果全部通过；新增22的实现提交为80ba91c，[正式报告](../../validation/cases/transmission_line/validation_report.json)最大电压/电流误差为8.0124 mV/0.160248 mA，最大NRMSE为0.000272268。参考只覆盖同一有限50T梯级，不能据此宣称π形离散线路、Bergeron或精确分布参数电缆已通过商业平台验证。

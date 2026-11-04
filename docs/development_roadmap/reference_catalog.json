@@ -958,7 +958,9 @@
         "passed": false,
         "waveform_passed": false,
         "features_passed": true,
-        "report": "local_reference/two_level_pwm/comparison_results/20261104T085924156568Z/report.json",
+        "report": "local_reference/two_level_pwm/comparison_results/20261104T090604904612Z/report.json",
+        "public_report": "validation/cases/two_level_pwm/validation_report.json",
+        "report_sha256": "6369d2a97066454f7013128b4e143f34d514101c17a93ff4a8be9edd854fc4e1",
         "public_summary": "validation/cases/two_level_pwm/README.md",
         "predeclared_manifest": "validation/cases/two_level_pwm/manifest.json",
         "criteria_commit": "146a279",
@@ -1210,6 +1212,172 @@
       "aliases": [
         "PSCAD-FAULT"
       ]
+    },
+    {
+      "id": "mw-transmission-line-r2025a",
+      "short_code": "MW-TLINE",
+      "name": "Transmission Line (finite 50-T RLCG ladder)",
+      "source_url": "https://www.mathworks.com/help/simscape/ug/transmission-line.html",
+      "example_id": "simscape/TransmissionLineExample",
+      "files": [
+        "TransmissionLine.slx",
+        "TransmissionLinePlotV.m"
+      ],
+      "file_formats": [
+        ".slx",
+        ".m"
+      ],
+      "model_version": "Original SLX metadata R2025a; executed in MATLAB 25.1.0.2973910 (R2025a) Update 1",
+      "status": "reference_ready",
+      "software_requirements": [
+        "MATLAB",
+        "Simulink",
+        "Simscape"
+      ],
+      "dependencies": [
+        "Installed TransmissionLine_lib.slx and TransmissionLine.t_section source from Simscape example_libraries; exact hashes recorded in provenance."
+      ],
+      "download_available": true,
+      "downloaded": true,
+      "content_inspected": true,
+      "opened_in_native_software": true,
+      "simulation_succeeded": true,
+      "reference_numeric_data_obtained": true,
+      "local_path": "local_reference/transmission_line",
+      "allows_local_save": "downloaded_with_licensed_MATLAB_openExample",
+      "allows_redistribution": "not_asserted",
+      "mathematical_compatibility": "Original finite 50-cell symmetric RLCG T ladder, 5m total. Each T has two series half-R/half-L arms and a middle shunt G/C, no semiconductors. All voltages reference common n=0. Source is ideal 10V peak, 200MHz sine; termination is 50ohm. Actual model PreLoadFcn overrides generic library defaults. Reference/solver changes are explicit, no electrical/controller/topology changes. This is not a Bergeron model, pi ladder, pure propagation-delay model or exact distributed cable reference.",
+      "blockers": [],
+      "sha256": {
+        "simulink/TransmissionLine.slx": "844a8501b9e25a4fe881ecfc7ea14d7d1b0e9bdba38986572ba1a910551d86fe",
+        "raw_results/simscape_native.csv": "2fc60e7440aaa4b51d351d7e536c21bf884a22a3fd4a9993c35ac3f433bba89f",
+        "normalized_results/reference.csv": "2fc60e7440aaa4b51d351d7e536c21bf884a22a3fd4a9993c35ac3f433bba89f",
+        "raw_results/simulink_output.mat": "ee1c095bd9cf7073db84ade1d24962b24c01593325eb03d1ba29ed39ba9b3c3d",
+        "refined_results/simscape_native.csv": "4af5fd4e05bd1422521ecad22da2f1cd1e94eb94956471158a1fbd41bbe89a28",
+        "refined_results/reference.csv": "4af5fd4e05bd1422521ecad22da2f1cd1e94eb94956471158a1fbd41bbe89a28",
+        "refined_results/simulink_output.mat": "eadd53b8196664d7960075b61c66f878ad6c573ff659bb6c207d192cdf83f8c7",
+        "raw_results/TransmissionLinePlotV_original.m": "c366e2c89abab08722e5ba3513e91219130f8cf417d590f7a89954a0e341d126",
+        "raw_results/official_plot_label_evidence.csv": "feefe17c840b5edfbd6860b43c72f978497bedeaa214fcba9739c9d47c8dd311",
+        "provenance.json": "7489098eae669c74a124df5bd3a44cfba8241983b538460e836f57508ff6c327",
+        "reference_convergence.json": "57b7af901042a7316ebf915832efdc3593dcc14dceb6a4485d1db9a7b3400212",
+        "initial_state_inspection.json": "45f831352806b73d0a2aed99ce92e3dc432687b50e6f9a21345dbc8c4ca079de"
+      },
+      "aliases": [
+        "MW-TLINE"
+      ],
+      "raw_numeric_data_obtained": true,
+      "comparison_reference_ready": true,
+      "reference_data": "local_reference/transmission_line/normalized_results/reference.csv",
+      "raw_numeric_data": "local_reference/transmission_line/raw_results/simscape_native.csv",
+      "samples": 5066,
+      "refined_samples": 10041,
+      "signal_columns_excluding_time": 6,
+      "stop_s": 5e-08,
+      "provenance": "local_reference/transmission_line/provenance.json",
+      "export_time_utc": "2026-11-04 09:27:10 +0000",
+      "validation_case": "validation/cases/transmission_line",
+      "active_parameters": {
+        "source": {
+          "waveform": "10*sin(2*pi*200e6*t)",
+          "amplitude_v": 10,
+          "frequency_hz": 200000000.0,
+          "phase_rad": 0,
+          "series_resistance_ohm": 0
+        },
+        "load_resistance_ohm": 50,
+        "segments": 50,
+        "total_length_m": 5,
+        "segment_length_m": 0.1,
+        "per_m": {
+          "R_ohm": 0.0067,
+          "L_h": 2.5e-07,
+          "G_s": 5e-06,
+          "C_f": 1e-10
+        },
+        "each_T": {
+          "half_arm_R_ohm": 0.000335,
+          "half_arm_L_h": 1.25e-08,
+          "shunt_R_ohm": 2000000.0,
+          "shunt_C_f": 1e-11,
+          "capacitor_ESR_ohm": 0
+        },
+        "initial_state": {
+          "inductors": 100,
+          "capacitors": 50,
+          "current_max_abs_a": 0,
+          "voltage_max_abs_v": 0,
+          "DoDC": "off"
+        }
+      },
+      "solver": {
+        "name": "ode15s",
+        "relative_tolerance": 1e-08,
+        "absolute_tolerance": 1e-10,
+        "max_step_s": 1e-11,
+        "refined_max_step_s": 5e-12,
+        "local_solver": "off",
+        "stop_s": 5e-08
+      },
+      "solver_change_scope": "Default daessc/0.5ns-max-step probe retained separately. Formal reference applies ode15s 10ps/5ps and logging overrides through SimulationInput; explicitly binds the seven inspected original default workspace variables (length=5, nSegments=50, segmentLength=0.1, R=0.0067, C=1e-10, Z=50, G=5e-6) to prevent loaded-workspace contamination. Original electrical parameters/topology and SLX remain unchanged. Loaded model and same-named TransmissionLine_lib must resolve to inspected canonical paths, match hashes and have Dirty=off. Guarded re-export retained identical canonical/refined CSV bytes.",
+      "external_dependency_sha256": {
+        "TransmissionLine_lib.slx": "c9de97cb0b86024c03fe16ec4f1ba979be896b4a0ccda8fac066fdb84c899444",
+        "TransmissionLine.t_section.ssc": "e6bae69228f1b4c2d568097ca973ff2b13e8ab2cccdb07cfbaeae7b22492ae73"
+      },
+      "signal_mapping": {
+        "v_source": "AC_Voltage.v",
+        "v_boundary_15": "S2.T_5.p2.v",
+        "v_boundary_25": "S3.T_5.p2.v",
+        "v_load": "Load.v",
+        "i_source_to_line": "-AC_Voltage.i",
+        "i_load": "Load.i"
+      },
+      "signal_direction": "Source to first line section; output line to 50-ohm load.",
+      "official_plot_label_correction": {
+        "original": "S2.T_5.p2.v is labelled Segment 25 in TransmissionLinePlotV.m",
+        "actual": "S2.T_5.p2.v is boundary 15; true boundary 25 is S3.T_5.p2.v",
+        "evidence": "local_reference/transmission_line/raw_results/official_plot_label_evidence.csv",
+        "original_plot_script": "local_reference/transmission_line/raw_results/TransmissionLinePlotV_original.m",
+        "original_preserved": true
+      },
+      "reference_self_refinement": {
+        "report": "local_reference/transmission_line/reference_convergence.json",
+        "passed": true,
+        "method": "Absolute-time linear interpolation on union of native timestamps, no shift or amplitude fitting",
+        "max_steps_s": [
+          1e-11,
+          5e-12
+        ],
+        "window_s": [
+          0,
+          5e-08
+        ],
+        "max_voltage_difference_v": 0.00022720134210452159,
+        "max_current_difference_a": 9.981355327657107e-06,
+        "native_refinement_limits": {
+          "voltage_abs_v": 0.0005,
+          "current_abs_a": 1e-05,
+          "nrmse": 3e-05
+        },
+        "interpretation": "Reference-only self-refinement passed independently of the PyCy candidate; this does not establish candidate acceptance."
+      },
+      "formal_pycy_validation": {
+        "status": "validated",
+        "passed": true,
+        "predeclared_criteria_commit": "3761a21",
+        "manifest": "validation/cases/transmission_line/manifest.json",
+        "implementation_commit": "80ba91c",
+        "report": "validation/cases/transmission_line/validation_report.json",
+        "run_id": "20261104T093204620394Z",
+        "report_sha256": "694b0ead13571f6014d03b5163b1d19153f40001b2158b2a3476887b463ac68a",
+        "max_voltage_error_v": 0.008012402218880998,
+        "max_current_error_a": 0.00016024804437764044,
+        "max_nrmse": 0.00027226776332001844,
+        "note": "All six fixed waveform criteria passed after eight independent physical tests and standalone execution. Applies only to this finite 50-T zero-initial-state ladder; no Bergeron or exact distributed-line certification."
+      },
+      "normalization": "Native timestamps/values retained, last at duplicate times; no fitted shifts, scaling or resampling.",
+      "license_notes": "Original MathWorks model/scripts, installed source and generated data remain local under licensed use. No redistribution permission asserted.",
+      "export_script": "validation/cases/transmission_line/export_reference.m",
+      "export_script_sha256": "acd788c278e135af040ad402b9fe47d9aaa05daf39595c5d623f788d35448f71"
     }
   ],
   "scope_notes": [

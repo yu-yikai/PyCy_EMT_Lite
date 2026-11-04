@@ -3,9 +3,9 @@
   "updated_date": "2026-11-04",
   "timezone": "Asia/Shanghai",
   "branch": "codex/emt-examples-longterm",
-  "checkpoint_head": "146a279",
-  "current_task": "B2",
-  "formal_new_examples_completed": 3,
+  "checkpoint_head": "80ba91c",
+  "current_task": "F1",
+  "formal_new_examples_completed": 4,
   "status_values": [
     "planned",
     "ready",
@@ -233,9 +233,24 @@
       "blockers": []
     },
     {
+      "id": "A7",
+      "phase": "foundation",
+      "title": "有限50段T形RLCG线路传播",
+      "priority": 0,
+      "dependencies": ["A1", "V1"],
+      "new_capabilities": [],
+      "references": ["mw-transmission-line-r2025a"],
+      "validation": "8项独立101物理状态+sin/cos增广expm、ABCD、KCL/能量/TR/BE细化通过339.16s；独立Agg通过；真实六信号全部通过，maxV.0080124V/maxI.000160248A/maxNRMSE.000272268",
+      "acceptance": "3761a21在候选前冻结完整0..50ns、TR10ps、双限值；实际参考/内部检查/独立运行/测试/教学/提交全部通过后完成；非Bergeron验证",
+      "status": "completed",
+      "files": ["examples/22_t_section_transmission_line.py", "tests/test_t_section_transmission_line.py", "validation/cases/transmission_line/manifest.json", "validation/cases/transmission_line/parameters.json", "validation/cases/transmission_line/validation_report.json"],
+      "commits": ["3761a21", "80ba91c"],
+      "blockers": []
+    },
+    {
       "id": "A4",
       "phase": "foundation",
-      "title": "三相不平衡与变压器线路组合",
+      "title": "线性变压器/互感参考与组合",
       "priority": 2,
       "dependencies": [
         "A1"
@@ -244,7 +259,7 @@
       "references": [],
       "validation": "逐相KCL/接线、初值、真实商业数据",
       "acceptance": "分成可独立验收算例，每个有真实对标后完成",
-      "status": "planned",
+      "status": "in_progress",
       "files": [],
       "commits": [],
       "blockers": []
@@ -267,10 +282,13 @@
       "status": "blocked",
       "files": [
         "validation/cases/two_level_pwm/manifest.json",
-        "validation/cases/two_level_pwm/parameters.json"
+        "validation/cases/two_level_pwm/parameters.json",
+        "validation/cases/two_level_pwm/validation_report.json",
+        "docs/development_roadmap/experiments/spwm_feasibility.md"
       ],
       "commits": [
-        "146a279"
+        "146a279",
+        "8a65b6e"
       ],
       "blockers": [
         "既有12的载波比较/参考保持与官方自然PWM计算时序不逐点一致，器件压降/反并联二极管也不同；各项贡献尚未隔离。现有默认参考未满足预设波形判据，不能记作完成。"
@@ -291,8 +309,8 @@
       "references": [],
       "validation": "受控开关物理边界、真实参考先行",
       "acceptance": "每项先有参考与固定判据再实施，禁止冒充自动二极管",
-      "status": "in_progress",
-      "files": [],
+      "status": "planned",
+      "files": ["docs/development_roadmap/experiments/next_reference_candidates.md"],
       "commits": [],
       "blockers": []
     },
@@ -344,7 +362,7 @@
       ],
       "new_capabilities": [],
       "references": [],
-      "validation": "本地到21全量1144 passed158.14s；Ruff/mypy通过；5c595e2 Ubuntu/Windows全部步骤成功，run41801829262；B1后续代码需另测",
+      "validation": "本地到A7完整1162 passed412.17s，Ruff/mypy通过；18教学脚本均独立通过；8a65b6e双平台成功。80ba91c代码已推送但未观察到CI run；必要阶段文档正常push后对新HEAD单独验证",
       "acceptance": "本批测试与真实CI记录、教学导航、里程碑推送和恢复指令",
       "status": "in_progress",
       "files": [

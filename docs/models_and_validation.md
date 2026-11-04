@@ -14,7 +14,7 @@
 综合示例的模式、运行结果及模型差异见[专项说明](three_terminal_vsc_hvdc.md)。
 这些是本地证据，不是远端 CI 状态，也没有声称完成实验数据或商业 EMT 软件全模型对标。
 
-2026-11-04新增专项证据：[19级联RC](../validation/cases/cascaded_rc/README.md)、[20多源节点](../validation/cases/nodal_analysis/README.md)、[21中性点不平衡](../validation/cases/earthing/README.md)及[既有02 RC](../validation/cases/rc_charging/README.md)已与实际R2025a Simscape波形按预设判据比较。每例分别记录数学边界、参数/方向、差异、原始数据hash和可复现脚本，不将这些局部结果扩大为全部元件商业认证。当前回归/远端CI及待验证项统一见[长期验证状态](development_roadmap/validation_status.md)。
+2026-11-04新增专项证据：[19级联RC](../validation/cases/cascaded_rc/README.md)、[20多源节点](../validation/cases/nodal_analysis/README.md)、[21中性点不平衡](../validation/cases/earthing/README.md)、[22有限T梯级传播](../validation/cases/transmission_line/README.md)及[既有02 RC](../validation/cases/rc_charging/README.md)均已与实际R2025a Simscape波形按预设判据比较通过。每例分别记录数学边界、参数/方向、差异、原始数据hash和可复现脚本。[既有12 PWM](../validation/cases/two_level_pwm/README.md)保留波形失败、基波/功率特征通过的真实结论。这些局部结果不扩大为全部元件商业认证。当前回归/远端CI及待验证项统一见[长期验证状态](development_roadmap/validation_status.md)。
 
 | 范围 | 已有证据 | 证据边界与测试入口 |
 |---|---|---|
