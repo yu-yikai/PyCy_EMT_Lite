@@ -1,0 +1,134 @@
+{
+  "case_id": "earthing",
+  "reference_id": "mw-earthing-r2025a",
+  "acceptance_defined": "2026-11-04 before examples/21_earthing_neutral.py implementation",
+  "reference_source": "https://www.mathworks.com/help/simscape-electrical/ug/earthing-effects.html",
+  "reference_model": "EarthingEffects.slx",
+  "reference_model_sha256": "326ccda2fb0eabe11de7d9511714da076726c0f1b82b6f60abddb8f15e7df84f",
+  "reference_platform": "MATLAB R2025a Update 1 / Simulink / Simscape / Simscape Electrical",
+  "reference_state": "runnable",
+  "windows_seconds": [
+    [
+      0.0,
+      0.0498
+    ],
+    [
+      0.0502,
+      0.0698
+    ],
+    [
+      0.0702,
+      0.1
+    ]
+  ],
+  "edge_guard_seconds": 0.0002,
+  "time_shift_seconds": 0,
+  "criteria": "All thirteen signals must meet both fixed limits in all three windows. Independently verify piecewise resistive KCL, weighted floating-neutral voltage, source/load power and exact right-side resistance changes. No time, amplitude or phase fitting.",
+  "known_difference": "PyCy reproduces the independent grounded-neutral and floating-neutral networks only; the official third open-return network is omitted, not modeled as floating. Both retained sources are ideal, grounded at their source neutral, identical positive-sequence 100 V peak / 60 Hz sine waves. Loads are pure resistances; no dynamic integration accuracy is claimed. Official default local solver is backward Euler at 100 us; PyCy uses the same 100 us output grid and explicit resistor events. A 200 us guard on each side excludes event intervals from continuous interpolation. The official PlotResults script interchanges grounded/floating CURRENT labels: XML connects Sensing_vi to the grounded branch and Sensing_vi2 to the floating branch; this mapping, not the plot legend, defines reference currents. v_neutral is reconstructed from grounded phase-a voltage minus floating load phase-a voltage using the identical sources. Original model, raw log and original-label CSV remain local.",
+  "signals": [
+    {
+      "candidate": "v:grounded:a",
+      "reference": "v_grounded_1",
+      "unit": "V",
+      "scale": 100.0,
+      "max_nrmse": 0.0002,
+      "max_abs_error": 0.05
+    },
+    {
+      "candidate": "v:grounded:b",
+      "reference": "v_grounded_2",
+      "unit": "V",
+      "scale": 100.0,
+      "max_nrmse": 0.0002,
+      "max_abs_error": 0.05
+    },
+    {
+      "candidate": "v:grounded:c",
+      "reference": "v_grounded_3",
+      "unit": "V",
+      "scale": 100.0,
+      "max_nrmse": 0.0002,
+      "max_abs_error": 0.05
+    },
+    {
+      "candidate": "v:floating_load:a",
+      "reference": "v_floating_1",
+      "unit": "V",
+      "scale": 100.0,
+      "max_nrmse": 0.0002,
+      "max_abs_error": 0.05
+    },
+    {
+      "candidate": "v:floating_load:b",
+      "reference": "v_floating_2",
+      "unit": "V",
+      "scale": 100.0,
+      "max_nrmse": 0.0002,
+      "max_abs_error": 0.05
+    },
+    {
+      "candidate": "v:floating_load:c",
+      "reference": "v_floating_3",
+      "unit": "V",
+      "scale": 100.0,
+      "max_nrmse": 0.0002,
+      "max_abs_error": 0.05
+    },
+    {
+      "candidate": "i:Rg:a",
+      "reference": "i_grounded_1",
+      "unit": "A",
+      "scale": 100.0,
+      "max_nrmse": 0.0002,
+      "max_abs_error": 0.05
+    },
+    {
+      "candidate": "i:Rg:b",
+      "reference": "i_grounded_2",
+      "unit": "A",
+      "scale": 100.0,
+      "max_nrmse": 0.0002,
+      "max_abs_error": 0.05
+    },
+    {
+      "candidate": "i:Rg:c",
+      "reference": "i_grounded_3",
+      "unit": "A",
+      "scale": 100.0,
+      "max_nrmse": 0.0002,
+      "max_abs_error": 0.05
+    },
+    {
+      "candidate": "i:Rf:a",
+      "reference": "i_floating_1",
+      "unit": "A",
+      "scale": 100.0,
+      "max_nrmse": 0.0002,
+      "max_abs_error": 0.05
+    },
+    {
+      "candidate": "i:Rf:b",
+      "reference": "i_floating_2",
+      "unit": "A",
+      "scale": 100.0,
+      "max_nrmse": 0.0002,
+      "max_abs_error": 0.05
+    },
+    {
+      "candidate": "i:Rf:c",
+      "reference": "i_floating_3",
+      "unit": "A",
+      "scale": 100.0,
+      "max_nrmse": 0.0002,
+      "max_abs_error": 0.05
+    },
+    {
+      "candidate": "v:floating:n",
+      "reference": "v_neutral",
+      "unit": "V",
+      "scale": 100.0,
+      "max_nrmse": 0.0002,
+      "max_abs_error": 0.05
+    }
+  ]
+}
