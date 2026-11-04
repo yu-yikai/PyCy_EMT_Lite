@@ -51,8 +51,8 @@
         "ratings": {
           "teaching": 5,
           "representation": 5,
-          "model_available": 4,
-          "data_available": 1,
+          "model_available": 5,
+          "data_available": 5,
           "current_fit": 5,
           "development_ease": 4,
           "validation_ease": 4,
@@ -60,7 +60,8 @@
           "reuse": 4,
           "maintenance_ease": 5
         },
-        "score_100": 80.8
+        "score_100": 95.8,
+        "evidence_update": "2026-11-04: real source data and fixed case mapping now ready; accepted PyCy case status is separately recorded in validation/cases/earthing."
       },
       {
         "candidate": "multi_source_resistive",
@@ -68,7 +69,7 @@
           "teaching": 4,
           "representation": 4,
           "model_available": 5,
-          "data_available": 1,
+          "data_available": 5,
           "current_fit": 5,
           "development_ease": 4,
           "validation_ease": 5,
@@ -76,7 +77,8 @@
           "reuse": 4,
           "maintenance_ease": 5
         },
-        "score_100": 79.4
+        "score_100": 91.4,
+        "evidence_update": "2026-11-04: NodalAnalysisExample native run and 101-point data now ready."
       },
       {
         "candidate": "spwm_rl",
@@ -197,7 +199,8 @@
       "mathematical_compatibility": "Same two-stage RC ladder; R1=R2=10 ohm, C1=C2=100 uF, capacitor ESR=1 uohm, zero initial voltage; 5 V, 10 ms period, 50% pulse, delay 1 ms. PyCy ideal-capacitor approximation must be documented.",
       "blockers": [],
       "sha256": {
-        "simulink/CascadedRCCircuitInSimulinkAndSimscape.slx": "54422f5f100c220c0bea9e396d1d1cd3fd015bb923b9ba48f555e054ddf29a06"
+        "simulink/CascadedRCCircuitInSimulinkAndSimscape.slx": "54422f5f100c220c0bea9e396d1d1cd3fd015bb923b9ba48f555e054ddf29a06",
+        "normalized_results/reference.csv": "e3c1633a52634edc968964603a1328c607fc966a43d7080c0ce5b79b08938948"
       },
       "example_id": "simscape/CascadedRCCircuitInSimulinkAndSimscapeExample",
       "reference_data": "local_reference/cascaded_rc/normalized_results/reference.csv",
@@ -246,10 +249,11 @@
       "local_path": "local_reference/rc_charging",
       "allows_local_save": "public_download_for_local_study",
       "allows_redistribution": "not_asserted",
-      "mathematical_compatibility": "Existing example 02: R=1000 ohm C=1 uF source 1 V zero capacitor voltage. Planned SimulationInput overrides retain original topology; ESR=1 uohm retained.",
+      "mathematical_compatibility": "Existing example 02: R=1000 ohm C=1 uF source 1 V zero capacitor voltage. Executed SimulationInput overrides retain original topology; ESR=1 uohm retained.",
       "blockers": [],
       "sha256": {
-        "simulink/RCCircuitInSimulinkAndSimscape.slx": "2b9eed6b681a0ffeac7623b99ac3506d13777fbe3a2ffd162ad5d3988e73fde7"
+        "simulink/RCCircuitInSimulinkAndSimscape.slx": "2b9eed6b681a0ffeac7623b99ac3506d13777fbe3a2ffd162ad5d3988e73fde7",
+        "normalized_results/reference.csv": "b382b509ce9b714c45469d268958df3c87d12cbbfbc476970724030330aa2528"
       },
       "example_id": "simscape/RCCircuitInSimulinkAndSimscapeExample",
       "validation_case": "validation/cases/rc_charging",
@@ -618,7 +622,7 @@
         ".slx"
       ],
       "model_version": "v2.2.2; SLX R2024a exported from R2024b",
-      "status": "inspected",
+      "status": "reference_ready",
       "software_requirements": [
         "MATLAB",
         "Simulink",
@@ -626,35 +630,132 @@
         "Simscape Electrical"
       ],
       "dependencies": [
-        "Curriculum uses additional DSP/Control/Symbolic toolboxes; per-model dependencies not yet resolved."
+        "NodalAnalysisExample: MATLAB + Simulink + Simscape + Simscape Electrical; Images/multimeterLeads.png downloaded for GUI tool mask.",
+        "RLC/full curriculum per-model DSP/Control/Symbolic dependencies still unverified."
       ],
       "download_available": true,
       "downloaded": true,
       "content_inspected": true,
-      "opened_in_native_software": false,
-      "simulation_succeeded": false,
-      "reference_numeric_data_obtained": false,
+      "opened_in_native_software": true,
+      "simulation_succeeded": true,
+      "reference_numeric_data_obtained": true,
       "local_path": "local_reference/mathworks_dc_analysis",
       "allows_local_save": "public_download_for_local_study",
-      "allows_redistribution": "current_repository_BSD3; fixed_tag_license_retrieval_pending",
-      "mathematical_compatibility": "Nodal example includes seven resistors and both current/voltage sources; suitable multi-source linear network candidate after exact connectivity and measurement inspection. RLC curriculum overlaps existing examples.",
-      "blockers": [
-        "Not opened/run in MATLAB.",
-        "Fixed-tag LICENSE download returned transport EOF; current release-branch BSD3 license inspected only."
-      ],
+      "allows_redistribution": "yes_under_BSD-3-Clause; original models still retained locally",
+      "mathematical_compatibility": "NodalAnalysisExample main seven-resistor network is unchanged and maps exactly to a linear multi-source PyCy circuit. Is setpoint +0.2A flows d->c, hence p(c)->n(d) logged current -0.2A. The original unconnected Virtual Multimeter SID204 forms an isolated physical network with no Solver Configuration and blocks compilation; SimulationInput temporarily comments out only this tool. Original SLX is not saved or changed. RLCCircuit has not been run.",
+      "blockers": [],
       "sha256": {
         "NodalAnalysisExample.slx": "9dd139df62546dab31ecd73d591fbdf432ce43eb2f508f8f4a6ee6b053bc28d0",
-        "RLCCircuit.slx": "26b7204cbea99d2835c3c53faeaee3c293ac29f2ec144ef1a9db999287d8b3bd"
+        "RLCCircuit.slx": "26b7204cbea99d2835c3c53faeaee3c293ac29f2ec144ef1a9db999287d8b3bd",
+        "LICENSE-v2.2.2.md": "129423cdd0e66b615de1ee96a192cbf2fe3a8eb4251bba6577e3464630c4e972",
+        "../nodal_analysis/normalized_results/reference.csv": "86cfee48f5a63efe7c1fddb998a710773773c63ade820d29bb12afae2c82b44e",
+        "../nodal_analysis/raw_results/simscape_native.csv": "86cfee48f5a63efe7c1fddb998a710773773c63ade820d29bb12afae2c82b44e"
       },
       "download_urls": [
         "https://raw.githubusercontent.com/MathWorks-Teaching-Resources/DC-Circuit-Analysis/v2.2.2/Models/NodalAnalysisExample.slx",
         "https://raw.githubusercontent.com/MathWorks-Teaching-Resources/DC-Circuit-Analysis/v2.2.2/Models/RLCCircuit.slx"
       ],
-      "license_url": "https://github.com/MathWorks-Teaching-Resources/DC-Circuit-Analysis/blob/release/LICENSE.md",
-      "license_notes": "Current default branch release is BSD3; do not redistribute fixed-tag files until exact license evidence is retained.",
+      "license_url": "https://github.com/MathWorks-Teaching-Resources/DC-Circuit-Analysis/blob/v2.2.2/LICENSE.md",
+      "license_notes": "Fixed-tag v2.2.2 LICENSE.md actually downloaded and inspected 2026-11-04; Copyright (c) 2023 The MathWorks Inc., BSD three-clause terms. Retain notices, conditions and disclaimers; no endorsement rights.",
       "aliases": [
         "MW-DC"
-      ]
+      ],
+      "license_local_path": "local_reference/mathworks_dc_analysis/LICENSE-v2.2.2.md",
+      "license_spdx": "BSD-3-Clause",
+      "tag_readme_local_path": "local_reference/mathworks_dc_analysis/README-v2.2.2.md",
+      "source_tag_url": "https://github.com/MathWorks-Teaching-Resources/DC-Circuit-Analysis/tree/v2.2.2",
+      "topology_inspection": {
+        "model": "NodalAnalysisExample.slx",
+        "nodes": {
+          "s": [
+            "Vs.p",
+            "R1.p",
+            "R2.p"
+          ],
+          "g": [
+            "Vs.n",
+            "R6.n",
+            "R7.n"
+          ],
+          "a": [
+            "R2.n",
+            "R3.p",
+            "R4.p"
+          ],
+          "b": [
+            "R1.n",
+            "R3.n",
+            "R5.p",
+            "R6.p"
+          ],
+          "c": [
+            "R4.n",
+            "Is.p"
+          ],
+          "d": [
+            "Is.n",
+            "R5.n",
+            "R7.p"
+          ]
+        },
+        "resistance_ohm": {
+          "R1": 200,
+          "R2": 140,
+          "R3": 330,
+          "R4": 2000,
+          "R5": 330,
+          "R6": 50,
+          "R7": 50
+        },
+        "voltage_source_v": 3,
+        "current_source_setpoint_a": 0.2,
+        "source_positive_current_direction": "Is.n(d) -> Is.p(c); opposite to PyCy c->d branch orientation",
+        "current_source_documentation": "https://www.mathworks.com/help/simscape-electrical/ref/currentsource.html",
+        "callbacks": "No PreLoadFcn/InitFcn/StartFcn found in XML; isolated unused multimeter SID204 must be disabled for batch compilation.",
+        "stop_time_default": "inf; override to finite duration for reproducible export",
+        "independent_exact_solution": "docs/development_roadmap/experiments/nodal_analysis_exact.json"
+      },
+      "status_scope": "NodalAnalysisExample.slx only; RLCCircuit.slx remains inspected and unrun",
+      "reference_ready_files": [
+        "NodalAnalysisExample.slx"
+      ],
+      "unrun_files": [
+        "RLCCircuit.slx"
+      ],
+      "raw_numeric_data_obtained": true,
+      "reference_data": "local_reference/nodal_analysis/normalized_results/reference.csv",
+      "raw_numeric_data": "local_reference/nodal_analysis/raw_results/simscape_native.csv",
+      "run_directory": "local_reference/nodal_analysis",
+      "samples": 101,
+      "signal_columns_excluding_time": 14,
+      "provenance": "local_reference/nodal_analysis/provenance.json",
+      "validation_case": "validation/cases/nodal_analysis",
+      "simulation_elapsed_seconds": 1.8524821,
+      "solver": {
+        "name": "ode15s",
+        "relative_tolerance": 1e-09,
+        "absolute_tolerance": 1e-11,
+        "max_step_s": 0.0001,
+        "stop_s": 0.01
+      },
+      "simulation_overrides": {
+        "commented_block_sid": 204,
+        "commented_block_name": "isolated unused Virtual Multimeter (leads)",
+        "main_network_changes": "none",
+        "electrical_parameter_changes": "none",
+        "other_overrides": [
+          "finite stop time",
+          "simulation pacing disabled",
+          "solver tolerances",
+          "Simscape logging"
+        ]
+      },
+      "native_physics_check": {
+        "evidence": "local_reference/nodal_analysis/physics_check.json",
+        "kcl_max_abs_residual_a": 5.273559366969494e-16,
+        "power_balance_w": 1.4210854715202004e-14,
+        "i_is_p_to_n_a": -0.2
+      }
     },
     {
       "id": "mw-spwm-r2025a",
@@ -670,8 +771,8 @@
         ".m",
         ".slx"
       ],
-      "model_version": "R2025a local example catalog; model file not acquired in this entry",
-      "status": "discovered",
+      "model_version": "R2025a; native MATLAB R2025a Update 1 run",
+      "status": "runnable",
       "software_requirements": [
         "MATLAB",
         "Simulink",
@@ -680,24 +781,70 @@
       ],
       "dependencies": [],
       "download_available": true,
-      "downloaded": false,
-      "content_inspected": false,
-      "opened_in_native_software": false,
-      "simulation_succeeded": false,
+      "downloaded": true,
+      "content_inspected": true,
+      "opened_in_native_software": true,
+      "simulation_succeeded": true,
       "reference_numeric_data_obtained": false,
-      "local_path": null,
-      "allows_local_save": "check_software_terms_on_download",
+      "local_path": "local_reference/vsc_spwm",
+      "allows_local_save": "downloaded_with_licensed_MATLAB_openExample",
       "allows_redistribution": "not_asserted",
-      "mathematical_compatibility": "Carrier-based sine/triangle comparison; verify diode/protection behavior, switch resistance, load neutral and filter before mapping to externally controlled PyCy switches.",
+      "mathematical_compatibility": "Native MATLAB enumeration ee.enum.converters.switchingdevice resolves device_type=1 to GTO (gto=1, ideal=2, igbt=3), with active switch Ron=0.001ohm and Vf=0.6V, plus enabled protection diode (diode_Vf=0.8V, diode_Ron=0.001ohm, diode_Goff=1e-5S). Converter.Q1.ideal_switch in native simlog is an internal device implementation, not evidence of the top-level ideal-switch variant; static TypeOptions position is also insufficient. Actual DC side is 100V, series R0.1ohm, shunt C5000uF; each phase filter structure=2 is L-only 500uH, load structure=1 is R-only 1ohm (load L200uH mask value inactive). Six gate controls apply offsets to both sine and carrier and include both-off intervals, requiring automatic diode current paths; not identical to PyCy example12 complementary digital PWM.",
       "blockers": [
-        "Native model open/run and data export not yet verified."
+        "Existing example12 is a gate generator with no electrical network; default official output currents cannot alone validate it.",
+        "Six offset gate controls include both-off intervals and automatic protection diode commutation, while PyCy externally controlled complementary switches do not implement automatic diode state selection.",
+        "Define legitimate topology, source, active mask and gate-sequence mapping before choosing this source for a formal SPWM comparison."
       ],
-      "sha256": {},
+      "sha256": {
+        "simulink/VSCSinusoidalPWM.slx": "5190cbf17c30578d7611f012186a4c736529b8d15c3eab94ffa86bb4f061d81e",
+        "raw_results/simscape_native.csv": "df4d3aa175b965891df952896b51f887e8ffd1be971dcdb318ca4b00b1256c48"
+      },
       "example_id": "simscapeelectrical/VSCSinusoidalPWMExample",
       "availability_evidence": "R2025a local help/docCatalog/exampleapi/sps.zip fsroot/sps.json and official documentation.",
       "aliases": [
-        "MW-SPWM"
-      ]
+        "MW-SPWM",
+        "mw-vsc-spwm-r2025a"
+      ],
+      "raw_numeric_data_obtained": true,
+      "comparison_reference_ready": false,
+      "raw_numeric_data": "local_reference/vsc_spwm/raw_results/simscape_native.csv",
+      "raw_samples": 8037,
+      "stop_s": 0.03333333333333333,
+      "enabled_parameters": {
+        "switch_model": "device_type=1, GTO; native ee.enum.converters.switchingdevice enumeration is decisive",
+        "switch_on_resistance_ohm": 0.001,
+        "protection_diode_present": true,
+        "diode_forward_voltage_v": 0.8,
+        "diode_on_resistance_ohm": 0.001,
+        "diode_off_conductance_s": 1e-05,
+        "dc_source_v": 100,
+        "dc_source_series_resistance_ohm": 0.1,
+        "dc_link_capacitance_f": 0.005,
+        "phase_filter_component_structure": 2,
+        "phase_filter_description": "L only",
+        "phase_filter_inductance_h": 0.0005,
+        "load_component_structure": 1,
+        "load_description": "R only",
+        "load_resistance_ohm": 1,
+        "switch_forward_voltage_v": 0.6
+      },
+      "inactive_mask_values": {
+        "load_inductance_h": 0.0002,
+        "reason": "Load structure=1 selects R only; the stored inductance parameter does not create an active inductor."
+      },
+      "parameter_evidence": [
+        "local_reference/vsc_spwm/inspect_gates.log",
+        "local_reference/vsc_spwm/parameter_probes.log",
+        "local_reference/vsc_spwm/inspected_xml/simulink/systems/system_root.xml",
+        "local_reference/two_level_pwm/enum.log",
+        "local_reference/two_level_pwm/inspect_enum.m",
+        "docs/development_roadmap/experiments/switchingdevice_enum_r2025a.json"
+      ],
+      "probe_results": {
+        "noninteger_triangle_multiplier": "Native simulation fails: repmat repeat factor must be integer.",
+        "zero_source_resistance": "Native simulation succeeded; do not falsely assert strictly positive source R is mandatory.",
+        "zero_deadband_ts_100us": "Native simulation succeeded; does not remove inherent six-control sine/carrier offset differences."
+      }
     },
     {
       "id": "mw-two-level-pwm-r2025a",
@@ -713,34 +860,123 @@
         ".m",
         ".slx"
       ],
-      "model_version": "R2025a local example catalog; model file not acquired in this entry",
-      "status": "discovered",
+      "model_version": "R2025a Update 1; native MATLAB 25.1.0.2973910 export 2026-11-04 09:03:44 UTC",
+      "status": "reference_ready",
       "software_requirements": [
         "MATLAB",
         "Simulink",
         "Simscape",
-        "Simscape Electrical"
+        "Simscape Electrical",
+        "DSP System Toolbox (original Spectrum Analyzer display)"
       ],
-      "dependencies": [],
+      "dependencies": [
+        "Original Spectrum Analyzer display requires DSP System Toolbox; electrical model uses MATLAB/Simulink/Simscape/Simscape Electrical."
+      ],
       "download_available": true,
-      "downloaded": false,
-      "content_inspected": false,
-      "opened_in_native_software": false,
-      "simulation_succeeded": false,
-      "reference_numeric_data_obtained": false,
-      "local_path": null,
-      "allows_local_save": "check_software_terms_on_download",
+      "downloaded": true,
+      "content_inspected": true,
+      "opened_in_native_software": true,
+      "simulation_succeeded": true,
+      "reference_numeric_data_obtained": true,
+      "local_path": "local_reference/two_level_pwm",
+      "allows_local_save": "downloaded_with_licensed_MATLAB_openExample",
       "allows_redistribution": "not_asserted",
-      "mathematical_compatibility": "400V DC example; verify actual PWM sample/gating-time algorithm rather than treating it as identical to sample-by-sample carrier comparison.",
+      "mathematical_compatibility": "Original circuit/controller retained: stiff 400V DC, 60Hz reference, modulation 0.8, 1kHz switching, 100us reference hold and 5us local Backward Euler, floating wye load 1ohm+1mH per phase. Native enumeration resolves device_type=3 to IGBT with active Vf=0.8V, Ron=0.001ohm and Goff=1e-5S; enabled no-dynamics antiparallel diodes have the same Vf/Ron/Goff. Logged Q1/Q2, Q3/Q4, Q5/Q6 map A/B/C upper/lower gates and are strictly complementary. Official Natural PWM computes switching times; example12 uses pointwise sampled carrier comparison. IGBT forward drop, unidirectional device conduction and automatic diode current paths differ from PyCy bilateral Ron/Goff switches. No fitted time/amplitude adjustment. Resource data readiness does not imply PyCy validation passed.",
       "blockers": [
-        "Native model open/run and data export not yet verified."
+        "Existing example12 fails the predeclared 2% waveform NRMSE limit (A 2.6995%, B 2.6577%, C 2.7167%); RMS/fundamental/phase/resistor-power features pass. Preserve the failed report and frozen limits.",
+        "Gate-sequence differences and IGBT/diode physical differences have not been isolated; do not claim device equivalence or automatically commutating diode validation."
       ],
-      "sha256": {},
+      "sha256": {
+        "simulink/TwoLevelPWMGenerator.slx": "ad8ddf5e46dd633b4853d7694067528d5d20ce78a24059a2847c6a97dbc2ea34",
+        "raw_results/simscape_native.csv": "6ef09d6e4197ebe603d3cc437bf466154aa8e151e214a0c6fcb24f0e7a0db010",
+        "normalized_results/reference.csv": "6ef09d6e4197ebe603d3cc437bf466154aa8e151e214a0c6fcb24f0e7a0db010",
+        "raw_results/simulink_output.mat": "b5aa316823d39a7373f6c8ffdcfb609a47ebae28206aa7ba87fe73ee0e0915cb",
+        "provenance.json": "6ae18cdafd77026d0912b4208ff00f3b2cdd0409b8273db45691518945a2ac98",
+        "raw_results/physical_device_gates.csv": "7f46e19f63d781c549d612f82a76e2be67c2f06c65d5cc87a4769fb898b64e61",
+        "raw_results/load_power_audit.csv": "470c3e00e1f9000451e1eeb115a343890502fd64a9d0b4fc0b083f9ad0973287"
+      },
       "example_id": "simscapeelectrical/TwoLevelPWMGeneratorExample",
       "availability_evidence": "R2025a local help/docCatalog/exampleapi/sps.zip fsroot/sps.json and official documentation.",
       "aliases": [
         "MW-PWM"
-      ]
+      ],
+      "device_enumeration_evidence": [
+        "local_reference/two_level_pwm/enum.log",
+        "local_reference/two_level_pwm/default_probe.log",
+        "docs/development_roadmap/experiments/switchingdevice_enum_r2025a.json"
+      ],
+      "reference_data": "local_reference/two_level_pwm/normalized_results/reference.csv",
+      "raw_numeric_data": "local_reference/two_level_pwm/raw_results/simscape_native.csv",
+      "samples": 40001,
+      "stop_s": 0.2,
+      "provenance": "local_reference/two_level_pwm/provenance.json",
+      "validation_case": "validation/cases/two_level_pwm",
+      "raw_numeric_data_obtained": true,
+      "comparison_reference_ready": true,
+      "solver": {
+        "name": "FixedStepAuto",
+        "local_solver": "Backward Euler",
+        "local_step_s": 5e-06,
+        "stop_s": 0.2
+      },
+      "active_physical_parameters": {
+        "dc_voltage_v": 400,
+        "dc_source_connection": "stiff ideal directly across converter",
+        "frequency_hz": 60,
+        "switching_frequency_hz": 1000,
+        "modulation_index": 0.8,
+        "reference_hold_s": 0.0001,
+        "load": {
+          "structure": "Series RL, floating wye",
+          "resistance_ohm": 1,
+          "inductance_h": 0.001,
+          "initial_current_a": [
+            0,
+            0,
+            0
+          ],
+          "G_parasitic_parameter_s": 1e-06
+        },
+        "converter": {
+          "enum_value": 3,
+          "device": "IGBT (ideal, switching)",
+          "forward_voltage_v": 0.8,
+          "on_resistance_ohm": 0.001,
+          "off_conductance_s": 1e-05,
+          "gate_threshold_v": 0.5,
+          "protection_diode": "No dynamics",
+          "diode_forward_voltage_v": 0.8,
+          "diode_on_resistance_ohm": 0.001,
+          "diode_off_conductance_s": 1e-05,
+          "snubber": "none",
+          "thermal": "off"
+        },
+        "gate_mapping": "Q1/Q2 = A upper/lower; Q3/Q4 = B upper/lower; Q5/Q6 = C upper/lower. Native 0/1V gate pairs are strictly complementary at every logged time."
+      },
+      "reference_ready_scope": "Real 40001-point time/current reference with original model, raw MAT, native physical gates, power audit and provenance retained locally. Electrical/controller topology and physical parameters unchanged. This is resource readiness only; existing PyCy example12 has not passed complete validation.",
+      "formal_pycy_validation": {
+        "passed": false,
+        "waveform_passed": false,
+        "features_passed": true,
+        "report": "local_reference/two_level_pwm/comparison_results/20261104T085924156568Z/report.json",
+        "public_summary": "validation/cases/two_level_pwm/README.md",
+        "predeclared_manifest": "validation/cases/two_level_pwm/manifest.json",
+        "criteria_commit": "146a279",
+        "window_s": [
+          0.1,
+          0.2
+        ],
+        "nrmse_limit": 0.02,
+        "phase_nrmse": {
+          "i:La": 0.02699521554990243,
+          "i:Lb": 0.02657726545385628,
+          "i:Lc": 0.027167151984347448
+        },
+        "time_shift_s": 0,
+        "amplitude_fitting": false,
+        "note": "Failed comparison retains immutable input snapshots from its own run. Later repeated reference export preserves canonical CSV bytes; raw MAT serialization and provenance timestamps need not equal those captured in the earlier report."
+      },
+      "license_notes": "Licensed MathWorks openExample acquisition. Original model, scripts and generated data remain local; no redistribution permission asserted."
     },
     {
       "id": "mw-lc-line-r2025a",
@@ -800,8 +1036,8 @@
         ".m",
         ".slx"
       ],
-      "model_version": "R2025a local example catalog; model file not acquired in this entry",
-      "status": "discovered",
+      "model_version": "R2025a Update 1",
+      "status": "reference_ready",
       "software_requirements": [
         "MATLAB",
         "Simulink",
@@ -810,24 +1046,56 @@
       ],
       "dependencies": [],
       "download_available": true,
-      "downloaded": false,
-      "content_inspected": false,
-      "opened_in_native_software": false,
-      "simulation_succeeded": false,
-      "reference_numeric_data_obtained": false,
-      "local_path": null,
-      "allows_local_save": "check_software_terms_on_download",
+      "downloaded": true,
+      "content_inspected": true,
+      "opened_in_native_software": true,
+      "simulation_succeeded": true,
+      "reference_numeric_data_obtained": true,
+      "local_path": "local_reference/earthing",
+      "allows_local_save": "downloaded_with_licensed_MATLAB_openExample",
       "allows_redistribution": "not_asserted",
-      "mathematical_compatibility": "Grounded/floating/open neutral networks, initially balanced; phase-a R 1 to3ohm at .05s, phase-c 1 to1.5ohm at .07s. Verify local release and neutral convention.",
-      "blockers": [
-        "Native model open/run and data export not yet verified."
-      ],
-      "sha256": {},
+      "mathematical_compatibility": "Official ideal 100V peak/60Hz grounded/floating/open-return resistive networks; retained first two networks map to existing source, resistor and event components without core changes. A1->3ohm at .05s; C1->1.5ohm at .07s; B1ohm. Correct grounded/floating current naming established from physical connectivity and independent formulas; original main network unchanged. Third open-return network is intentionally outside PyCy candidate scope.",
+      "blockers": [],
+      "sha256": {
+        "simulink/EarthingEffects.slx": "326ccda2fb0eabe11de7d9511714da076726c0f1b82b6f60abddb8f15e7df84f",
+        "raw_results/simscape_native.csv": "6ffc26aee7609e0a5e05af65ce97fa87a3521db11ca21e9d385f5f88be50e1c8",
+        "raw_results/official_plot_label_mapping.csv": "4b706b6859006925c117073ddd15dea263c02ca8e07b6107778c40d9974af125",
+        "normalized_results/reference.csv": "6ffc26aee7609e0a5e05af65ce97fa87a3521db11ca21e9d385f5f88be50e1c8"
+      },
       "example_id": "simscapeelectrical/EarthingEffectsExample",
       "availability_evidence": "R2025a local help/docCatalog/exampleapi/sps.zip fsroot/sps.json and official documentation.",
       "aliases": [
         "MW-EARTH"
-      ]
+      ],
+      "raw_numeric_data_obtained": true,
+      "comparison_reference_ready": true,
+      "raw_numeric_data": "local_reference/earthing/raw_results/simscape_native.csv",
+      "normalized_data": "local_reference/earthing/normalized_results/reference.csv",
+      "provenance": "local_reference/earthing/provenance.json",
+      "raw_samples": 1001,
+      "stop_s": 0.1,
+      "signal_mapping": {
+        "v_grounded": "Sensing_vi1.Phase_Voltage_Sensor.V_output",
+        "v_floating": "Sensing_vi3.Phase_Voltage_Sensor.V_output",
+        "i_grounded": "Sensing_vi.Current_Sensor.I_output",
+        "i_floating": "Sensing_vi2.Current_Sensor.I_output"
+      },
+      "plot_script_issue": "EarthingEffectsPlotResults.m assigns Igrounding from Sensing_vi2 and Ifloating from Sensing_vi; these are reversed relative to actual physical connectivity. Raw original-label CSV retained; normalized CSV headers corrected after XML and independent Ohm-law/neutral-voltage verification.",
+      "solver": {
+        "global": "VariableStepAuto",
+        "relative_tolerance": 0.001,
+        "absolute_tolerance": 0.001,
+        "local_enabled": true,
+        "local_method": "Backward Euler",
+        "local_step_s": 0.0001
+      },
+      "reference_data": "local_reference/earthing/normalized_results/reference.csv",
+      "samples": 1001,
+      "validation_case": "validation/cases/earthing",
+      "validation_report": "validation/cases/earthing/validation_report.json",
+      "comparison_scope": "Grounded-neutral and floating-neutral networks retained; third independent open-return reference network omitted. Thirteen mapped signals across three predeclared windows, no time/amplitude/phase fitting. Resource reference_ready does not itself certify PyCy implementation; see independent case report.",
+      "data_revision_note": "Final raw and normalized CSVs include v_neutral reconstructed as grounded-a voltage minus floating-a load voltage. Their final byte hash is recorded here; earlier 12-signal CSV hash is historical only. Original native MAT and original-label CSV remain separately retained.",
+      "signal_columns_excluding_time": 13
     },
     {
       "id": "mw-grid-tied-r2025a",
