@@ -6,7 +6,7 @@
   "reference_source": "https://www.mathworks.com/help/simscape/ug/transmission-line.html",
   "reference_model": "TransmissionLine.slx",
   "reference_platform": "MATLAB R2025a Update 1 / Simulink / Simscape",
-  "reference_state": "runnable",
+  "reference_state": "reference_ready",
   "windows_seconds": [[0.0, 5e-8]],
   "time_shift_seconds": 0,
   "known_difference": "Same finite 50-cell symmetric RLCG T ladder and zero storage initial state. Reference solver is independently refined before candidate comparison; PyCy uses trapezoidal integration at 10 ps. This is a lumped T-ladder validation, not Bergeron, a pi ladder, or an exact distributed cable. The official plot's S2.T_5.p2.v is boundary 15, not 25; true boundary 25 is S3.T_5.p2.v. No time, phase, amplitude or propagation-delay fitting.",

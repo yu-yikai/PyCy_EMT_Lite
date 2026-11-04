@@ -93,10 +93,11 @@ uv run --locked pytest -o addopts= -q -p no:cacheprovider --basetemp=.tmp/pytest
 | 三相与故障 | [05](examples/05_three_phase_steady_state.py)、[06](examples/06_three_phase_short_circuit.py)、[07](examples/07_single_phase_ground_fault.py) | 观察平衡 RL、三相短路和单相接地；用固定时间窗比较故障相与健全相。 |
 | 中性点与不平衡 | [21](examples/21_earthing_neutral.py) | 在05之后比较接地/浮动星点、负荷相电压和回线电流；附[真实Simscape对标](validation/cases/earthing/README.md)。 |
 | 线路 | [08](examples/08_pi_line_transient.py) | 区分 π 型线路的串联电流和端部电容电流；再选读分段与 Bergeron 模型。 |
+| 有限梯级传播 | [22](examples/22_t_section_transmission_line.py) | 在08与17之后学习50T梯级的启动与色散；结合[真实参考和独立状态验证](validation/cases/transmission_line/README.md)区分有限梯级与纯延时。 |
 | 变压器 | [09](examples/09_single_phase_transformer.py) | 核对变比，观察漏阻抗和励磁的影响；三相接法见模型说明。 |
 | 同步机 | [10](examples/10_park_generator_avr_governor.py) | 从平衡初值出发，观察负荷阶跃后电压和转速的变化，区分 AVR 与调速器的作用。 |
 | 离散控制 | [11](examples/11_pll_dynamic_response.py) | 观察独立 SRF-PLL 控制循环的 q 轴电压和角频率，说明何时接近锁定。 |
-| PWM | [12](examples/12_two_level_pwm_generator.py) | 对照理想开关的 SPWM 门极与 RL 电流，区分开关纹波和基波。 |
+| PWM | [12](examples/12_two_level_pwm_generator.py) | 对照理想开关的 SPWM 门极与 RL 电流，区分开关纹波和基波；[真实参考研究](validation/cases/two_level_pwm/README.md)保留尚未通过的波形判据。 |
 | VSC-HVDC 综合仿真 | [18](examples/18_three_terminal_vsc_hvdc.py) | 沿三个两电平桥、独立 PLL/dq 闭环和双极 DC 网络，跟踪交流故障后的电压、功率变化。 |
 
 [19级联RC真实Simscape对标](validation/cases/cascaded_rc/README.md)给出参数、固定验收、结果和复现命令。教学程序只绘制自身波形，独立验证程序读取真实参考。

@@ -94,10 +94,11 @@ Complete 01 first, then study storage in 02 and 03 before moving to 04 and 17. O
 | Three-phase and faults | [05](examples/05_three_phase_steady_state.py), [06](examples/06_three_phase_short_circuit.py), [07](examples/07_single_phase_ground_fault.py) | Observe balanced RL, three-phase short circuits and single-phase grounding; compare faulted and healthy phases over fixed time windows. |
 | Load neutral and imbalance | [21](examples/21_earthing_neutral.py) | After 05, compare grounded and floating star points, phase voltages and return currents. [Real Simscape comparison](validation/cases/earthing/README.md). |
 | Lines | [08](examples/08_pi_line_transient.py) | Distinguish Pi-line series current from terminal capacitor currents; optionally study segmented and Bergeron models next. |
+| Finite ladder propagation | [22](examples/22_t_section_transmission_line.py) | After 08 and 17, study startup and dispersion in a 50-cell T ladder. Read the [reference and independent state validation](validation/cases/transmission_line/README.md) to distinguish it from a pure delay. |
 | Transformers | [09](examples/09_single_phase_transformer.py) | Check the turns ratio and observe leakage and magnetization effects; see the model document for three-phase connections. |
 | Synchronous machines | [10](examples/10_park_generator_avr_governor.py) | Start at equilibrium, observe voltage and speed after a load step, and distinguish the roles of the AVR and governor. |
 | Discrete control | [11](examples/11_pll_dynamic_response.py) | Observe q-axis voltage and angular frequency in the standalone SRF-PLL loop and explain when it approaches lock. |
-| PWM | [12](examples/12_two_level_pwm_generator.py) | Compare ideal-switch SPWM gates with RL current and distinguish switching ripple from the fundamental. |
+| PWM | [12](examples/12_two_level_pwm_generator.py) | Compare ideal-switch SPWM gates with RL current and distinguish switching ripple from the fundamental. The [real reference study](validation/cases/two_level_pwm/README.md) records a remaining waveform mismatch. |
 | Integrated VSC-HVDC | [18](examples/18_three_terminal_vsc_hvdc.py) | Follow voltage and power after an AC fault through three two-level bridges, independent PLL/dq loops and a bipolar DC network. |
 
 [The cascaded-RC reference guide](validation/cases/cascaded_rc/README.md) records the real Simscape run, fixed acceptance criteria and reproduction commands. Teaching scripts plot their own waveforms; independent validation reads vendor reference data.
