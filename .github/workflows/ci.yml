@@ -2,8 +2,9 @@ name: ci
 
 on:
   push:
-    branches: [main]
+    branches: [main, codex/emt-examples-longterm]
   pull_request:
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -42,7 +43,7 @@ jobs:
 
       - name: Check lint and package types
         run: |
-          uv run --locked ruff check pycy_emt_lite examples tests
+          uv run --locked ruff check pycy_emt_lite examples tests validation
           uv run --locked mypy
 
       - name: Run all tests with coverage (including slow)

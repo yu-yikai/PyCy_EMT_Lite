@@ -17,6 +17,10 @@ outputs/
 # Third-party models, raw reference data and local comparison artifacts
 local_reference/
 
+# Local MATLAB/Simulink generated cache
+*.slxc
+slprj/
+
 # local-only audit evidence attachments (kept on this machine, not for Git)
 docs/audit_20261005/*.json
 docs/audit_20261005/*.txt
