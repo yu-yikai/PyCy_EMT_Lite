@@ -3,9 +3,9 @@
   "updated_date": "2026-11-04",
   "timezone": "Asia/Shanghai",
   "branch": "codex/emt-examples-longterm",
-  "checkpoint_head": "08096f0",
-  "current_task": "V1",
-  "formal_new_examples_completed": 0,
+  "checkpoint_head": "68f2f8a",
+  "current_task": "A5",
+  "formal_new_examples_completed": 1,
   "status_values": [
     "planned",
     "ready",
@@ -45,7 +45,11 @@
       "new_capabilities": [],
       "references": [
         "mw-cascaded-rc-r2025a",
-        "pscad-cookbook-ch3"
+        "mw-rc-r2025a",
+        "pscad-cookbook-ch3-01",
+        "pscad-cookbook-ch3-02",
+        "pscad-cookbook-ch3-03",
+        "pscad-cookbook-ch3-04"
       ],
       "validation": "实际下载、XML/版本/许可核对与运行状态分离",
       "acceptance": "02和JSON目录、合法本地模型、已知依赖与来源可追溯并提交",
@@ -74,12 +78,14 @@
       ],
       "validation": "独立expm、TR/BE细化、KCL、真实参考运行",
       "acceptance": "03/04、任务状态与恢复机制、预设验收提交推送",
-      "status": "validated",
+      "status": "completed",
       "files": [
         "docs/development_roadmap/03_verified_feasibility.md",
         "docs/development_roadmap/04_long_term_roadmap.md"
       ],
-      "commits": [],
+      "commits": [
+        "f462cde"
+      ],
       "blockers": []
     },
     {
@@ -96,13 +102,16 @@
       "references": [],
       "validation": "独立积分数值与非法数据/功率反向拒绝测试",
       "acceptance": "common工具与10测试通过、规范、分支双平台CI配置、提交",
-      "status": "in_progress",
+      "status": "completed",
       "files": [
         "validation/common/comparison.py",
         "tests/test_reference_comparison.py",
         "validation/README.md"
       ],
-      "commits": [],
+      "commits": [
+        "207dea7",
+        "dbe9b13"
+      ],
       "blockers": []
     },
     {
@@ -119,12 +128,14 @@
       ],
       "validation": "独立状态方程、显式边沿、KCL、细化、真实Simscape四信号比较",
       "acceptance": "manifest固定阈值全窗通过、图/数值报告/自动测试/教学文档/独立执行/Git提交",
-      "status": "ready",
+      "status": "completed",
       "files": [
         "validation/cases/cascaded_rc/manifest.json",
         "validation/cases/cascaded_rc/parameters.json"
       ],
-      "commits": [],
+      "commits": [
+        "290a8ea"
+      ],
       "blockers": []
     },
     {
@@ -141,9 +152,11 @@
       ],
       "validation": "实际Simscape波形，公开参数与初值映射",
       "acceptance": "固定判据对比、保存图/报告、可复现导出脚本、提交；不计新增数量",
-      "status": "planned",
+      "status": "completed",
       "files": [],
-      "commits": [],
+      "commits": [
+        "68f2f8a"
+      ],
       "blockers": []
     },
     {
@@ -156,12 +169,38 @@
       ],
       "new_capabilities": [],
       "references": [
-        "pscad-cookbook-ch3"
+        "pscad-line-energizing"
       ],
       "validation": "整步传播时间、反射系数、物理一致的商业参考",
       "acceptance": "先确认可运行参考，再固定教学与验收；无真实数据不完成",
       "status": "planned",
       "files": [],
+      "commits": [],
+      "blockers": [
+        "尚未取得数学一致的Bergeron商业运行数据；线路投切参考不等同于Bergeron"
+      ]
+    },
+    {
+      "id": "A5",
+      "phase": "foundation",
+      "title": "多源七电阻节点分析教学例",
+      "priority": 0,
+      "dependencies": [
+        "A1",
+        "A2"
+      ],
+      "new_capabilities": [],
+      "references": [
+        "mw-dc-circuit-analysis-2.2.2"
+      ],
+      "validation": "独立Fraction精确KCL/功率与真实Simscape14信号",
+      "acceptance": "候选前固定manifest；实际参考、全部信号双限值、自动物理测试、独立运行、教学和Git提交",
+      "status": "ready",
+      "files": [
+        "validation/cases/nodal_analysis/manifest.json",
+        "validation/cases/nodal_analysis/parameters.json",
+        "docs/development_roadmap/experiments/nodal_analysis_exact.json"
+      ],
       "commits": [],
       "blockers": []
     },
@@ -192,7 +231,7 @@
       ],
       "new_capabilities": [],
       "references": [
-        "mw-vsc-spwm-r2025a"
+        "mw-spwm-r2025a"
       ],
       "validation": "载波/采样/桥臂/Ron/换流/初值逐项映射",
       "acceptance": "模型一致性解释、预设基波RMS/功率方向/纹波判据和真实波形比较",
@@ -270,7 +309,7 @@
       "references": [],
       "validation": "ruff/mypy/full pytest/examples/Windows+Linux CI",
       "acceptance": "本批测试与真实CI记录、教学导航、里程碑推送和恢复指令",
-      "status": "planned",
+      "status": "in_progress",
       "files": [
         ".github/workflows/ci.yml"
       ],

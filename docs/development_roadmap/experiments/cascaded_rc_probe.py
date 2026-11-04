@@ -9,7 +9,14 @@ from pathlib import Path
 import numpy as np
 from scipy.linalg import expm
 
-from pycy_emt_lite import Capacitor, Circuit, Resistor, SimulationConfig, Simulator, VoltageSource
+from pycy_emt_lite import (
+    Capacitor,
+    Circuit,
+    Resistor,
+    SimulationConfig,
+    Simulator,
+    VoltageSource,
+)
 
 
 def main():

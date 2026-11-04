@@ -1,0 +1,131 @@
+{
+  "case_id": "nodal_analysis",
+  "reference_id": "mw-dc-circuit-analysis-2.2.2",
+  "acceptance_defined": "2026-11-04 before PyCy candidate implementation",
+  "reference_source": "https://github.com/MathWorks-Teaching-Resources/DC-Circuit-Analysis/tree/v2.2.2",
+  "reference_model": "NodalAnalysisExample.slx",
+  "reference_platform": "MATLAB R2025a / Simulink / Simscape (R2024a model)",
+  "reference_state": "reference_ready",
+  "windows_seconds": [
+    [
+      0.0,
+      0.01
+    ]
+  ],
+  "time_shift_seconds": 0,
+  "known_difference": "No electrical topology/parameter change. Unconnected Virtual Multimeter teaching subsystem is omitted. Official current source parameter +0.2 A flows d to c; mapped PyCy CurrentSource Is uses positive=c negative=d current=-0.2 A. Reference i_is must be c to d. Original official model failed to compile because the disconnected Virtual Multimeter leads have no solver. SimulationInput comments only that disconnected SID204 subsystem; main electrical circuit is unchanged, and original SLX is not saved.",
+  "signals": [
+    {
+      "candidate": "v:src",
+      "reference": "v_src",
+      "unit": "V",
+      "scale": 100.0,
+      "max_nrmse": 1e-08,
+      "max_abs_error": 1e-07
+    },
+    {
+      "candidate": "v:a",
+      "reference": "v_a",
+      "unit": "V",
+      "scale": 100.0,
+      "max_nrmse": 1e-08,
+      "max_abs_error": 1e-07
+    },
+    {
+      "candidate": "v:b",
+      "reference": "v_b",
+      "unit": "V",
+      "scale": 100.0,
+      "max_nrmse": 1e-08,
+      "max_abs_error": 1e-07
+    },
+    {
+      "candidate": "v:c",
+      "reference": "v_c",
+      "unit": "V",
+      "scale": 100.0,
+      "max_nrmse": 1e-08,
+      "max_abs_error": 1e-07
+    },
+    {
+      "candidate": "v:d",
+      "reference": "v_d",
+      "unit": "V",
+      "scale": 100.0,
+      "max_nrmse": 1e-08,
+      "max_abs_error": 1e-07
+    },
+    {
+      "candidate": "i:R1",
+      "reference": "i_r1",
+      "unit": "A",
+      "scale": 0.2,
+      "max_nrmse": 1e-08,
+      "max_abs_error": 1e-09
+    },
+    {
+      "candidate": "i:R2",
+      "reference": "i_r2",
+      "unit": "A",
+      "scale": 0.2,
+      "max_nrmse": 1e-08,
+      "max_abs_error": 1e-09
+    },
+    {
+      "candidate": "i:R3",
+      "reference": "i_r3",
+      "unit": "A",
+      "scale": 0.2,
+      "max_nrmse": 1e-08,
+      "max_abs_error": 1e-09
+    },
+    {
+      "candidate": "i:R4",
+      "reference": "i_r4",
+      "unit": "A",
+      "scale": 0.2,
+      "max_nrmse": 1e-08,
+      "max_abs_error": 1e-09
+    },
+    {
+      "candidate": "i:R5",
+      "reference": "i_r5",
+      "unit": "A",
+      "scale": 0.2,
+      "max_nrmse": 1e-08,
+      "max_abs_error": 1e-09
+    },
+    {
+      "candidate": "i:R6",
+      "reference": "i_r6",
+      "unit": "A",
+      "scale": 0.2,
+      "max_nrmse": 1e-08,
+      "max_abs_error": 1e-09
+    },
+    {
+      "candidate": "i:R7",
+      "reference": "i_r7",
+      "unit": "A",
+      "scale": 0.2,
+      "max_nrmse": 1e-08,
+      "max_abs_error": 1e-09
+    },
+    {
+      "candidate": "i:Vs",
+      "reference": "i_vs",
+      "unit": "A",
+      "scale": 0.2,
+      "max_nrmse": 1e-08,
+      "max_abs_error": 1e-09
+    },
+    {
+      "candidate": "i:Is",
+      "reference": "i_is",
+      "unit": "A",
+      "scale": 0.2,
+      "max_nrmse": 1e-08,
+      "max_abs_error": 1e-09
+    }
+  ]
+}
