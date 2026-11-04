@@ -6,7 +6,7 @@
   "reference_model": "EarthingEffects.slx",
   "reference_model_sha256": "326ccda2fb0eabe11de7d9511714da076726c0f1b82b6f60abddb8f15e7df84f",
   "reference_platform": "MATLAB R2025a Update 1 / Simulink / Simscape / Simscape Electrical",
-  "reference_state": "runnable",
+  "reference_state": "validated",
   "windows_seconds": [
     [
       0.0,

@@ -91,6 +91,7 @@ uv run --locked pytest -o addopts= -q -p no:cacheprovider --basetemp=.tmp/pytest
 | 动态 RLC | [02 RC](examples/02_rc_transient.py)、[03 RL](examples/03_rl_transient.py)、[04 RLC](examples/04_rlc_transient.py)、[17 交流 RLC](examples/17_single_phase_ac_rlc.py) | 核对储能初值和时间常数，区分暂态与稳态相量，比较减小步长后的整段波形误差。 |
 | 耦合 RC | [19](examples/19_cascaded_rc.py) | 在02之后学习后级负载如何影响前级，以及源下降后后级为何还能短时充电。 |
 | 三相与故障 | [05](examples/05_three_phase_steady_state.py)、[06](examples/06_three_phase_short_circuit.py)、[07](examples/07_single_phase_ground_fault.py) | 观察平衡 RL、三相短路和单相接地；用固定时间窗比较故障相与健全相。 |
+| 中性点与不平衡 | [21](examples/21_earthing_neutral.py) | 在05之后比较接地/浮动星点、负荷相电压和回线电流；附[真实Simscape对标](validation/cases/earthing/README.md)。 |
 | 线路 | [08](examples/08_pi_line_transient.py) | 区分 π 型线路的串联电流和端部电容电流；再选读分段与 Bergeron 模型。 |
 | 变压器 | [09](examples/09_single_phase_transformer.py) | 核对变比，观察漏阻抗和励磁的影响；三相接法见模型说明。 |
 | 同步机 | [10](examples/10_park_generator_avr_governor.py) | 从平衡初值出发，观察负荷阶跃后电压和转速的变化，区分 AVR 与调速器的作用。 |
