@@ -143,6 +143,68 @@ def test_vsc_voltage_vector_limit_freezes_both_integrals_and_preserves_direction
         held_modulation = modulation
 
 
+@pytest.mark.parametrize("dc_voltage", [0.1, 1.0, 100.0, 400e3])
+@pytest.mark.parametrize("fraction", [0.0, 0.4, 1.0, 1.5], ids=["zero", "inside", "boundary", "outside"])
+def test_vsc_voltage_vector_limit_preserves_unsaturated_vectors_at_every_scale(dc_voltage, fraction) -> None:
+    # The requested dq vector has direction (3,4)/5. Its radius is a known fraction
+    # of the available voltage, so the expected normalized radius is scale independent.
+    limit = 0.8
+    radius = fraction * limit * dc_voltage / 2
+    controller = VSCController("S", 50.0, 100.0, 100.0, 0.0, 1000.0,
+                               VSCControlConfig(dc_voltage=dc_voltage, modulation_limit=limit))
+    traces = controller.sample(_vsc_row(0.0, voltage_dq=(0.6 * radius, 0.8 * radius), vdc=dc_voltage))
+    normalized_radius = limit * min(fraction, 1.0)
+    expected = tuple(normalized_radius * (0.6 * math.cos(angle) - 0.8 * math.sin(angle))
+                     for angle in (0.0, -2 * math.pi / 3, 2 * math.pi / 3))
+    actual = tuple(traces[f"S:m{phase}_next"] for phase in "abc")
+    assert actual == pytest.approx(expected, abs=1e-12)
+    assert math.sqrt(2 / 3 * sum(value**2 for value in actual)) == pytest.approx(normalized_radius, abs=1e-12)
+    assert max(abs(value) for value in actual) <= limit + 1e-12
+    assert tuple(traces[f"S:m{phase}"] for phase in "abc") == (0.0, 0.0, 0.0)
+
+
+def test_vsc_subvolt_unsaturated_command_commits_integrals_for_the_next_interval() -> None:
+    step = 1e-3
+    config = VSCControlConfig(dc_voltage=1.0, current_limit=10.0, modulation_limit=0.8,
+                              current_kp=0.1, current_ki=1.0, ac_kp=0.5, ac_ki=0.5,
+                              ramp_start=0.0, ramp_duration=step / 2)
+    # At Vd=.2 V, P*=.03 W requests Id=.1 A. Vac=.9 pu requests a small positive Iq.
+    controller = VSCController("S", 50.0, 100.0, 0.1, 0.03, 1000.0, config)
+    initial = controller.sample(_vsc_row(0.0, vac=0.9, voltage_dq=(0.2, 0.1), vdc=1.0))
+    held = tuple(initial[f"S:m{phase}_next"] for phase in "abc")
+    for index in (1, 2):
+        traces = controller.sample(_vsc_row(index * step, vac=0.9, voltage_dq=(0.2, 0.1), vdc=1.0))
+        iq_reference = 0.05 + index * 0.00005
+        integral_d = index * 0.1 * step
+        integral_q = step * (index * 0.05 + 0.00005 * index * (index + 1) / 2)
+        expected_voltage = (0.2 - 0.1 * 0.1 - integral_d,
+                            0.1 - 0.1 * iq_reference - integral_q)
+        assert math.hypot(*expected_voltage) < 0.4  # The 0.4 V allowance never saturates.
+        assert traces["S:Id_ref"] == pytest.approx(0.1, abs=1e-12)
+        assert traces["S:Iq_ref"] == pytest.approx(iq_reference, abs=1e-12)
+        assert (controller.d_pi.integrator, controller.q_pi.integrator) == pytest.approx((integral_d, integral_q), abs=1e-12)
+        assert tuple(traces[f"S:m{phase}"] for phase in "abc") == held
+        angles = tuple(2 * math.pi * 50 * index * step + angle for angle in (0, -2 * math.pi / 3, 2 * math.pi / 3))
+        expected_modulation = tuple(2 * (expected_voltage[0] * math.cos(angle) - expected_voltage[1] * math.sin(angle))
+                                    for angle in angles)
+        held = tuple(traces[f"S:m{phase}_next"] for phase in "abc")
+        assert held == pytest.approx(expected_modulation, abs=1e-12)
+
+
+@pytest.mark.parametrize("current_limit", [20.0, np.int8(20), np.int64(20), np.float32(20)])
+def test_vsc_current_circle_accepts_numpy_scalar_configuration_without_integer_overflow(current_limit) -> None:
+    controller = VSCController("S", 50.0, 100.0, 100.0, 0.0, 1000.0,
+                               VSCControlConfig(dc_voltage=400.0, current_limit=current_limit,
+                                                ac_kp=10.0, ac_ki=1.0))
+    controller.sample(_vsc_row(0.0, vac=0.9))
+    traces = controller.sample(_vsc_row(0.001, vac=0.9))
+    # Id=0 leaves a full 20 A q margin. The independent PI candidate 10*.1+1*.1*.001
+    # is only 1.0001 A, so neither the PI limit nor the circular limit should clip it.
+    assert traces["S:Id_ref"] == pytest.approx(0.0, abs=1e-12)
+    assert traces["S:Iq_ref"] == pytest.approx(1.0001, abs=1e-12)
+    assert controller.ac_pi.integrator == pytest.approx(0.0001, abs=1e-12)
+
+
 def test_limiter_clamps_value() -> None:
     limiter = Limiter(-1.0, 1.0)
 

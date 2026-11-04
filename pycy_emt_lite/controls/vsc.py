@@ -38,7 +38,8 @@ class VSCControlConfig:
 
     def __post_init__(self) -> None:
         for name in self.__dataclass_fields__:
-            _finite_real(getattr(self, name), f"VSCControlConfig.{name}", positive=name != "ramp_start")
+            value = _finite_real(getattr(self, name), f"VSCControlConfig.{name}", positive=name != "ramp_start")
+            object.__setattr__(self, name, value)
         if self.ramp_start < 0 or self.modulation_limit > 1:
             raise ValueError("ramp_start 必须非负，modulation_limit 必须在 (0, 1] 内。")
 
@@ -151,7 +152,8 @@ class VSCController:
         vcq = vq_control - self.pll.frequency * cfg.reactor_inductance * id_control - uq
         # 用当前真实 Vdc 归一化并按 dq 矢量限幅，避免逐相削顶改变电压角度。
         available = cfg.modulation_limit * max(vdc, 0.1 * cfg.dc_voltage) / 2
-        scale = min(1.0, available / max(math.hypot(vcd, vcq), 1.0))
+        voltage_magnitude = math.hypot(vcd, vcq)
+        scale = available / voltage_magnitude if voltage_magnitude > available else 1.0
         if scale < 1:
             # 最终电压饱和时也冻结电流积分；现有 PI 本身只知道自身输出限制。
             self.d_pi.integrator, self.q_pi.integrator = previous_integrators
