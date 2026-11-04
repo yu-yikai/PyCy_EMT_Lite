@@ -1,0 +1,57 @@
+{
+  "case_id": "two_level_pwm",
+  "reference_id": "mw-two-level-pwm-r2025a",
+  "example": "examples/12_two_level_pwm_generator.py",
+  "acceptance_defined": "2026-11-04 before first PyCy-to-vendor numerical comparison; existing example unchanged",
+  "reference_source": "https://www.mathworks.com/help/simscape-electrical/ug/three-phase-two-level-pwm-generator.html",
+  "reference_model": "TwoLevelPWMGenerator.slx",
+  "reference_platform": "MATLAB R2025a Update 1 / Simulink / Simscape / Simscape Electrical",
+  "reference_state": "inspected",
+  "windows_seconds": [
+    [
+      0.1,
+      0.2
+    ]
+  ],
+  "time_shift_seconds": 0,
+  "known_difference": "Official default converter uses switching devices with antiparallel diodes; PyCy uses externally controlled bidirectional Ron/Goff switches. This is a waveform/fundamental steady-state validation under zero-dead-time complementary gating, not device equivalence or automatic-diode certification. Exact native gates, carrier phase, RateTransition and sign mapping must be inspected first; no fitted delay or amplitude compensation is allowed. Preserve detailed active-device parameters in provenance.",
+  "signals": [
+    {
+      "candidate": "i:La",
+      "reference": "i_a",
+      "unit": "A",
+      "scale": 150.0,
+      "max_nrmse": 0.02,
+      "max_abs_error": 10.0
+    },
+    {
+      "candidate": "i:Lb",
+      "reference": "i_b",
+      "unit": "A",
+      "scale": 150.0,
+      "max_nrmse": 0.02,
+      "max_abs_error": 10.0
+    },
+    {
+      "candidate": "i:Lc",
+      "reference": "i_c",
+      "unit": "A",
+      "scale": 150.0,
+      "max_nrmse": 0.02,
+      "max_abs_error": 10.0
+    }
+  ],
+  "feature_criteria": {
+    "window_seconds": [
+      0.1,
+      0.2
+    ],
+    "fundamental_hz": 60.0,
+    "max_relative_rms_error": 0.05,
+    "max_relative_fundamental_rms_error": 0.05,
+    "max_fundamental_phase_error_degrees": 3.0,
+    "max_relative_load_mean_power_error": 0.05,
+    "required_power_direction": "positive absorption by RL load; current direction verified by fundamental phase",
+    "additional_requirement": "All waveform and feature limits apply to all phases, no time/amplitude fitting. Gate/topology differences must be physically explained before a pass is accepted."
+  }
+}
