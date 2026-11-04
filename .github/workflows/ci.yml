@@ -13,7 +13,7 @@ jobs:
   ci:
     name: ci (${{ matrix.os }})
     runs-on: ${{ matrix.os }}
-    timeout-minutes: 30
+    timeout-minutes: 40
     strategy:
       fail-fast: false
       matrix:
@@ -47,7 +47,9 @@ jobs:
           uv run --locked mypy
 
       - name: Run all tests with coverage (including slow)
-        timeout-minutes: 15
+        # The 50-T physical/convergence tests also run here (339 s locally
+        # without coverage). Keep the full suite bounded with enough headroom.
+        timeout-minutes: 25
         run: |
           mkdir -p .tmp/ci
           uv run --locked pytest -p pytest_cov --basetemp=.tmp/ci/pytest --junitxml=.tmp/ci/tests.xml --cov --cov-report=term-missing --cov-report=xml:.tmp/ci/coverage.xml --cov-report=html:.tmp/ci/htmlcov
