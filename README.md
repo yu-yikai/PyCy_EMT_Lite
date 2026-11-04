@@ -88,6 +88,7 @@ Complete 01 first, then study storage in 02 and 03 before moving to 04 and 17. O
 | Unit | Scripts | What you can check after studying it |
 |---|---|---|
 | R and MNA | [01](examples/01_r_circuit.py) | Run the object workflow, predict current with Ohm's law and explain source-current direction; read about matrix assembly afterward. |
+| Multiple sources and nodes | [20](examples/20_multi_source_nodal_network.py) | After 01, check KCL, negative node voltages and a voltage source absorbing power in a seven-resistor network. [Real Simscape comparison](validation/cases/nodal_analysis/README.md). |
 | Dynamic RLC | [02 RC](examples/02_rc_transient.py), [03 RL](examples/03_rl_transient.py), [04 RLC](examples/04_rlc_transient.py), [17 AC RLC](examples/17_single_phase_ac_rlc.py) | Check storage initial conditions and time constants, distinguish transients from steady-state phasors, and compare whole-waveform errors after reducing the time step. |
 | Coupled RC | [19](examples/19_cascaded_rc.py) | Study how the second stage loads the first and why charging may continue briefly after the source falls. Study this after 02. |
 | Three-phase and faults | [05](examples/05_three_phase_steady_state.py), [06](examples/06_three_phase_short_circuit.py), [07](examples/07_single_phase_ground_fault.py) | Observe balanced RL, three-phase short circuits and single-phase grounding; compare faulted and healthy phases over fixed time windows. |

@@ -87,6 +87,7 @@ uv run --locked pytest -o addopts= -q -p no:cacheprovider --basetemp=.tmp/pytest
 | 单元 | 脚本 | 学完后可以检查的事情 |
 |---|---|---|
 | R 与 MNA | [01](examples/01_r_circuit.py) | 沿对象式流程运行电路，用欧姆定律预测电流，解释电源电流方向；之后再读矩阵组装。 |
+| 多源多节点 | [20](examples/20_multi_source_nodal_network.py) | 在01之后检查七电阻网络的KCL、负节点电压和电压源吸收功率；附[真实Simscape对标](validation/cases/nodal_analysis/README.md)。 |
 | 动态 RLC | [02 RC](examples/02_rc_transient.py)、[03 RL](examples/03_rl_transient.py)、[04 RLC](examples/04_rlc_transient.py)、[17 交流 RLC](examples/17_single_phase_ac_rlc.py) | 核对储能初值和时间常数，区分暂态与稳态相量，比较减小步长后的整段波形误差。 |
 | 耦合 RC | [19](examples/19_cascaded_rc.py) | 在02之后学习后级负载如何影响前级，以及源下降后后级为何还能短时充电。 |
 | 三相与故障 | [05](examples/05_three_phase_steady_state.py)、[06](examples/06_three_phase_short_circuit.py)、[07](examples/07_single_phase_ground_fault.py) | 观察平衡 RL、三相短路和单相接地；用固定时间窗比较故障相与健全相。 |

@@ -1,0 +1,397 @@
+{
+  "case_id": "nodal_analysis",
+  "passed": true,
+  "run_id": "20261104T083014387804Z",
+  "reference_platform": "MATLAB R2025a / Simulink / Simscape / Simscape Electrical (R2024a model)",
+  "reference_provenance": {
+    "schema_version": 1,
+    "origin": "MathWorks official teaching resource",
+    "export_time_utc": "2026-11-04 08:22:05 +0000",
+    "simulation_elapsed_seconds": 1.8524821,
+    "source_url": "https://raw.githubusercontent.com/MathWorks-Teaching-Resources/DC-Circuit-Analysis/v2.2.2/Models/NodalAnalysisExample.slx",
+    "repository_url": "https://github.com/MathWorks-Teaching-Resources/DC-Circuit-Analysis",
+    "source_tag": "v2.2.2",
+    "model_name": "NodalAnalysisExample",
+    "matlab_version": "25.1.0.2973910 (R2025a) Update 1",
+    "model_release": "R2024a (exported from R2024b)",
+    "required_products": [
+      "MATLAB",
+      "Simulink",
+      "Simscape",
+      "Simscape Electrical"
+    ],
+    "solver": "ode15s",
+    "relative_tolerance": 1e-09,
+    "absolute_tolerance": 1e-11,
+    "maximum_step_s": 0.0001,
+    "stop_time_s": 0.01,
+    "source_voltage_v": 3,
+    "current_source_n_to_p_a": 0.2,
+    "resistances_ohm": [
+      200,
+      140,
+      330,
+      2000,
+      330,
+      50,
+      50
+    ],
+    "branch_current_convention": "p to n; Is i=-0.2 A from c to d",
+    "normalization": "Absolute time; final sample at duplicate native times; node voltages reconstructed from exact branch-voltage identities.",
+    "topology_changes": "No change to the main electrical network; isolated unused Virtual Multimeter (SID 204) commented out in SimulationInput.",
+    "parameter_changes": "No electrical parameters changed; finite stop time, pacing disabled and logging/solver overrides.",
+    "measurement_note": "The original unconnected virtual multimeter has no Solver Configuration and blocks compilation. It is disabled only in the simulation input; original SLX remains unchanged.",
+    "samples": 101,
+    "license": "BSD-3-Clause at source tag v2.2.2",
+    "redistribution": "Third-party source model stays local; reproduce using the fixed-tag download URL."
+  },
+  "reference_sha256": "86cfee48f5a63efe7c1fddb998a710773773c63ade820d29bb12afae2c82b44e",
+  "model_sha256": "9dd139df62546dab31ecd73d591fbdf432ce43eb2f508f8f4a6ee6b053bc28d0",
+  "provenance_sha256": "fc805485b7eb6bf6e80e8fc1fc43db1b2a49e06cce43b79417320a497ed24702",
+  "manifest_sha256": "f8a781d298c04f9fceba3499711ae412428600d697ddad46e721553991d22c63",
+  "example_sha256": "eb363804ef256402bdc9298fc7380cbcd62adb85777d12b02b805b3094734fc9",
+  "export_script_sha256": "26e51f7da03d68f61c3456426ab39eecbcce1ca0bc3b9d3955818342f53ac57f",
+  "parameters_sha256": "a23fe8244a193e54cc520b0e970c43b531a573702519467d8eb72b4fc808d5ce",
+  "candidate_data_sha256": {
+    "pycy.csv": "8546d462f6843958544f9ef105e960b4186ca26b17cccbc31469fa6ee03accfc",
+    "pycy.json": "c71ede1b9d403e9eef45d4b1a56971f0579828073c78d0390457b499f377ff06",
+    "pycy.npz": "4dcef5257a1c67319dc04efce963c0395302e009ddd2c42f260d47982b31257c"
+  },
+  "raw_reference_sha256": {
+    "local_reference/nodal_analysis/raw_results/simscape_native.csv": "86cfee48f5a63efe7c1fddb998a710773773c63ade820d29bb12afae2c82b44e",
+    "local_reference/nodal_analysis/raw_results/simulink_output.mat": "dc2d2bf588dd10dbec1ef79a9823b3716ccc50b6d13f97ee8077a28addaaeb7d"
+  },
+  "git_head_at_run": "4c78c3893661a40885b0a80e21716988661a43a7",
+  "git_status_at_run": [
+    " M README.md",
+    " M README.zh-CN.md",
+    " M docs/development_roadmap/02_reference_catalog.md",
+    " M docs/development_roadmap/reference_catalog.json",
+    " M validation/cases/nodal_analysis/manifest.json",
+    "?? examples/20_multi_source_nodal_network.py",
+    "?? tests/test_nodal_analysis.py",
+    "?? validation/cases/nodal_analysis/README.md",
+    "?? validation/cases/nodal_analysis/compare.py",
+    "?? validation/cases/nodal_analysis/export_reference.m"
+  ],
+  "package_source_sha256": {
+    "pycy_emt_lite/__init__.py": "81980a448c4506c4a373d308339c490967a02938c2cb0f0f33a1360dec21d46e",
+    "pycy_emt_lite/analysis/__init__.py": "20f635eec36432d84d6bf2ed666ecf45230962c7b4aa875838a2b9a65c5aa8a0",
+    "pycy_emt_lite/analysis/metrics.py": "14407925b79d9c3ea98c1cf3e4f9208f7820a22a862d70e067632f301aa9b143",
+    "pycy_emt_lite/cases.py": "f6c710cbbf2306752bd2345c1f5fc9a8d74b6738f30dd15fcfeb4452a192e986",
+    "pycy_emt_lite/components/__init__.py": "7cdac999206ef73c505ae8f29d9b531355d79bca9dcba02dd6f2c1b332ab4801",
+    "pycy_emt_lite/components/base.py": "d640819f5fddc223f7626059f8a4e309b4502851afcdeb8d5809e2e798fc6c1a",
+    "pycy_emt_lite/components/basic.py": "b2a092b07a15a1145cc582c47b1df6f6124d65c972f46b9450faa8c0acb5cc0b",
+    "pycy_emt_lite/components/lines.py": "dd4a0e5d4ee71ef7a655e31064c002536ea994aa185c0e6a47398d1cbac8c74b",
+    "pycy_emt_lite/components/power_electronics.py": "7b28e0c56436fcbf6ad357ee1336c1a3538fd5668a953e7487de6aedd30a1fab",
+    "pycy_emt_lite/components/switching.py": "6a422186320def189dcf360083c017715c80e34df769dbd14cca2c58e810a9d6",
+    "pycy_emt_lite/components/three_phase.py": "9cddd858ba4d27572218dc3a6790b8aa92ac0b71c703c9b7ddec82ddcd60c025",
+    "pycy_emt_lite/components/transformers.py": "632617a185bb69441535bdff552f0b4473566d64f6a78211622962cbb3d66609",
+    "pycy_emt_lite/controls/__init__.py": "f9685f649e794aba54a8cec566390ee8e9a992b7baf41d7a592a74d12980a069",
+    "pycy_emt_lite/controls/blocks.py": "e862509d8dceb31a1151ff710d4f861267e23e9dccd1843f98f774fb07684a7b",
+    "pycy_emt_lite/controls/pll.py": "7eca0fb9c6f6464bb36f82d7cad1b27be5bd1b6455b046b5ad3279c075a36efa",
+    "pycy_emt_lite/controls/pwm.py": "6a2469d7957c74ce9ff25e13020541e7c169f38820538e8a71467919ce9391d1",
+    "pycy_emt_lite/controls/transforms.py": "c48dbe02a1cd4b1c12a8fd29439038b76ada81d68f71f7b1183eec2bdc98ab99",
+    "pycy_emt_lite/controls/vsc.py": "1d12cc5a728f4085f1e723ac48b055e16e305cf91aafd130bf530f6c790dc635",
+    "pycy_emt_lite/converters/__init__.py": "9f94cc67b26700a8bf1f022c5c806b5e5415ecaf8743d36b2ddceddb6ec70ba6",
+    "pycy_emt_lite/converters/filters.py": "11112e0bc233809fc37c3fcf39cce41dab692a704a711d113bff31aa450a6be2",
+    "pycy_emt_lite/core/__init__.py": "3d0e3034e589c19e37746a909832f2b47780ea9793b011bb2bdf6141dd445ee5",
+    "pycy_emt_lite/core/circuit.py": "ee628295a1477c334d66e366ed594f8b824ca66ce36e8c17980972a7f485b0ac",
+    "pycy_emt_lite/core/context.py": "9886feeb12b4c30e115f4ada5594c504cb196ecdb491699a2b7a89fa16902c4e",
+    "pycy_emt_lite/core/nodes.py": "71167de688ff341bf99f6fb0beedd05946db4d83eeb9301a387a021ca6f0cffd",
+    "pycy_emt_lite/core/simulation.py": "b6fdb849172830cff51bfa31af87028524072adabaeeda580ab02c4e4751087d",
+    "pycy_emt_lite/core/solvers.py": "031f3d2f118d1d88f34d712bdeeb864ecc13a3fa7d89c7288b984b2b2c31571a",
+    "pycy_emt_lite/core/stamping.py": "9f23c65cbaa7d33ea0406bd0d33fe3b5fd007192fd60dbe78399586a35f02f87",
+    "pycy_emt_lite/core/variables.py": "6567e110c6b1aedc7faf713ae05d3297b5f70cca98ebf4bc28fcb2f7d05ea0b8",
+    "pycy_emt_lite/events/__init__.py": "5af09c087d751859ff97c6b4a01670312d5618aed864ea042fccf736d660c032",
+    "pycy_emt_lite/events/base.py": "9cc671d975b5ea60780b29e7a11042f3b39f2bb93454dc2cc72bacfee4bb6663",
+    "pycy_emt_lite/events/standard.py": "638e17b7d7601cd901e96cec99c5238c330780e31711c3d5e92e06d56b32d46d",
+    "pycy_emt_lite/io/__init__.py": "1eaf1526eecf1d41982a3e2b6685b0a653c233e9b57546d437e1dc4ae582f93e",
+    "pycy_emt_lite/io/results.py": "aa02511777508c2f048aae9d459dfd354d0e0d9b539a10af8f0684d66018a915",
+    "pycy_emt_lite/machines/__init__.py": "9f16d3bf2e00d27f4d8d1bacf35d8ef968f2f79dc5d758af581b04bd9f40232e",
+    "pycy_emt_lite/machines/park_generator.py": "e1f5f5c3b26ab2aaab4db9234954c50913c7890135da4f933b0afc9202e43caa",
+    "pycy_emt_lite/machines/synchronous.py": "a6add8058a9788daba21a1dfac986bef6e4a4c698ec4f8e21fdcb07e1426b06f",
+    "pycy_emt_lite/visualization/__init__.py": "23a5988f06bd7d833a9d7a0358a55a3d6a57ed96f5e1812c178c0d8ae29267ea",
+    "pycy_emt_lite/visualization/plotting.py": "6645d31b1c6ae11be45f5652f222a36576dab075c336788d25d15a788c64e346",
+    "pycy_emt_lite/visualization/reporting.py": "5ae8a1642303cef26f6c425c36eb49256b318d9773f9bbeb792ca8bcded264d0"
+  },
+  "python_version": "3.14.5",
+  "numpy_version": "2.5.2",
+  "candidate_method": "trapezoidal",
+  "candidate_step_seconds": 0.0001,
+  "candidate_samples": 101,
+  "reference_samples": 101,
+  "known_difference": "No electrical topology/parameter change. Unconnected Virtual Multimeter teaching subsystem is omitted. Official current source parameter +0.2 A flows d to c; mapped PyCy CurrentSource Is uses positive=c negative=d current=-0.2 A. Reference i_is must be c to d. Original official model failed to compile because the disconnected Virtual Multimeter leads have no solver. SimulationInput comments only that disconnected SID204 subsystem; main electrical circuit is unchanged, and original SLX is not saved. Candidate i:Is is a trace of the prescribed constant input; physical action is independently verified through node and resistor-current KCL.",
+  "windows": [
+    {
+      "window_seconds": [
+        0.0,
+        0.01
+      ],
+      "alignment": "absolute_time_linear_interpolation",
+      "passed": true,
+      "signals": {
+        "v:src": {
+          "reference": "v_src",
+          "unit": "V",
+          "scale": 100.0,
+          "rmse": 0.0,
+          "nrmse": 0.0,
+          "max_abs_error": 0.0,
+          "candidate_mean": 3.0,
+          "reference_mean": 3.0,
+          "candidate_rms": 2.9999999999999996,
+          "reference_rms": 2.9999999999999996,
+          "limits": {
+            "max_nrmse": 1e-08,
+            "max_abs_error": 1e-07
+          },
+          "passed": true
+        },
+        "v:a": {
+          "reference": "v_a",
+          "unit": "V",
+          "scale": 100.0,
+          "rmse": 7.105427357601001e-15,
+          "nrmse": 7.105427357601001e-17,
+          "max_abs_error": 7.105427357601002e-15,
+          "candidate_mean": 22.312888052681092,
+          "reference_mean": 22.3128880526811,
+          "candidate_rms": 22.31288805268109,
+          "reference_rms": 22.312888052681096,
+          "limits": {
+            "max_nrmse": 1e-08,
+            "max_abs_error": 1e-07
+          },
+          "passed": true
+        },
+        "v:b": {
+          "reference": "v_b",
+          "unit": "V",
+          "scale": 100.0,
+          "rmse": 6.661338147750938e-16,
+          "nrmse": 6.661338147750938e-18,
+          "max_abs_error": 6.661338147750939e-16,
+          "candidate_mean": 1.836124176857949,
+          "reference_mean": 1.8361241768579497,
+          "candidate_rms": 1.836124176857949,
+          "reference_rms": 1.8361241768579497,
+          "limits": {
+            "max_nrmse": 1e-08,
+            "max_abs_error": 1e-07
+          },
+          "passed": true
+        },
+        "v:c": {
+          "reference": "v_c",
+          "unit": "V",
+          "scale": 100.0,
+          "rmse": 1.1368683772161602e-13,
+          "nrmse": 1.1368683772161601e-15,
+          "max_abs_error": 1.1368683772161603e-13,
+          "candidate_mean": 422.31288805268116,
+          "reference_mean": 422.312888052681,
+          "candidate_rms": 422.31288805268105,
+          "reference_rms": 422.31288805268093,
+          "limits": {
+            "max_nrmse": 1e-08,
+            "max_abs_error": 1e-07
+          },
+          "passed": true
+        },
+        "v:d": {
+          "reference": "v_d",
+          "unit": "V",
+          "scale": 100.0,
+          "rmse": 3.5527136788005005e-15,
+          "nrmse": 3.5527136788005004e-17,
+          "max_abs_error": 3.552713678800501e-15,
+          "candidate_mean": -8.442615239887115,
+          "reference_mean": -8.442615239887111,
+          "candidate_rms": 8.442615239887111,
+          "reference_rms": 8.442615239887107,
+          "limits": {
+            "max_nrmse": 1e-08,
+            "max_abs_error": 1e-07
+          },
+          "passed": true
+        },
+        "i:R1": {
+          "reference": "i_r1",
+          "unit": "A",
+          "scale": 0.2,
+          "rmse": 3.4694469519536138e-18,
+          "nrmse": 1.7347234759768068e-17,
+          "max_abs_error": 3.469446951953614e-18,
+          "candidate_mean": 0.005819379115710253,
+          "reference_mean": 0.00581937911571025,
+          "candidate_rms": 0.0058193791157102525,
+          "reference_rms": 0.005819379115710249,
+          "limits": {
+            "max_nrmse": 1e-08,
+            "max_abs_error": 1e-09
+          },
+          "passed": true
+        },
+        "i:R2": {
+          "reference": "i_r2",
+          "unit": "A",
+          "scale": 0.2,
+          "rmse": 5.273559366969493e-16,
+          "nrmse": 2.636779683484746e-15,
+          "max_abs_error": 5.273559366969494e-16,
+          "candidate_mean": -0.13794920037629355,
+          "reference_mean": -0.137949200376293,
+          "candidate_rms": 0.1379492003762935,
+          "reference_rms": 0.13794920037629296,
+          "limits": {
+            "max_nrmse": 1e-08,
+            "max_abs_error": 1e-09
+          },
+          "passed": true
+        },
+        "i:R3": {
+          "reference": "i_r3",
+          "unit": "A",
+          "scale": 0.2,
+          "rmse": 6.9388939039072276e-18,
+          "nrmse": 3.4694469519536136e-17,
+          "max_abs_error": 6.938893903907228e-18,
+          "candidate_mean": 0.06205079962370649,
+          "reference_mean": 0.06205079962370651,
+          "candidate_rms": 0.062050799623706486,
+          "reference_rms": 0.06205079962370649,
+          "limits": {
+            "max_nrmse": 1e-08,
+            "max_abs_error": 1e-09
+          },
+          "passed": true
+        },
+        "i:R4": {
+          "reference": "i_r4",
+          "unit": "A",
+          "scale": 0.2,
+          "rmse": 0.0,
+          "nrmse": 0.0,
+          "max_abs_error": 0.0,
+          "candidate_mean": -0.2,
+          "reference_mean": -0.2,
+          "candidate_rms": 0.19999999999999998,
+          "reference_rms": 0.19999999999999998,
+          "limits": {
+            "max_nrmse": 1e-08,
+            "max_abs_error": 1e-09
+          },
+          "passed": true
+        },
+        "i:R5": {
+          "reference": "i_r5",
+          "unit": "A",
+          "scale": 0.2,
+          "rmse": 3.816391647148975e-17,
+          "nrmse": 1.9081958235744873e-16,
+          "max_abs_error": 3.8163916471489756e-17,
+          "candidate_mean": 0.031147695202257762,
+          "reference_mean": 0.031147695202257797,
+          "candidate_rms": 0.03114769520225776,
+          "reference_rms": 0.031147695202257797,
+          "limits": {
+            "max_nrmse": 1e-08,
+            "max_abs_error": 1e-09
+          },
+          "passed": true
+        },
+        "i:R6": {
+          "reference": "i_r6",
+          "unit": "A",
+          "scale": 0.2,
+          "rmse": 1.3877787807814455e-17,
+          "nrmse": 6.938893903907227e-17,
+          "max_abs_error": 1.3877787807814457e-17,
+          "candidate_mean": 0.036722483537158984,
+          "reference_mean": 0.036722483537159,
+          "candidate_rms": 0.03672248353715898,
+          "reference_rms": 0.03672248353715899,
+          "limits": {
+            "max_nrmse": 1e-08,
+            "max_abs_error": 1e-09
+          },
+          "passed": true
+        },
+        "i:R7": {
+          "reference": "i_r7",
+          "unit": "A",
+          "scale": 0.2,
+          "rmse": 2.775557561562891e-16,
+          "nrmse": 1.3877787807814453e-15,
+          "max_abs_error": 2.7755575615628914e-16,
+          "candidate_mean": -0.16885230479774227,
+          "reference_mean": -0.168852304797742,
+          "candidate_rms": 0.16885230479774224,
+          "reference_rms": 0.16885230479774196,
+          "limits": {
+            "max_nrmse": 1e-08,
+            "max_abs_error": 1e-09
+          },
+          "passed": true
+        },
+        "i:Vs": {
+          "reference": "i_vs",
+          "unit": "A",
+          "scale": 0.2,
+          "rmse": 2.4980018054066017e-16,
+          "nrmse": 1.2490009027033007e-15,
+          "max_abs_error": 2.498001805406602e-16,
+          "candidate_mean": 0.13212982126058326,
+          "reference_mean": 0.132129821260583,
+          "candidate_rms": 0.13212982126058323,
+          "reference_rms": 0.13212982126058298,
+          "limits": {
+            "max_nrmse": 1e-08,
+            "max_abs_error": 1e-09
+          },
+          "passed": true
+        },
+        "i:Is": {
+          "reference": "i_is",
+          "unit": "A",
+          "scale": 0.2,
+          "rmse": 0.0,
+          "nrmse": 0.0,
+          "max_abs_error": 0.0,
+          "candidate_mean": -0.2,
+          "reference_mean": -0.2,
+          "candidate_rms": 0.19999999999999998,
+          "reference_rms": 0.19999999999999998,
+          "limits": {
+            "max_nrmse": 1e-08,
+            "max_abs_error": 1e-09
+          },
+          "passed": true
+        }
+      }
+    }
+  ],
+  "artifacts": {
+    "directory": "local_reference/nodal_analysis/comparison_results/20261104T083014387804Z",
+    "plot": "comparison.png",
+    "candidate_data": [
+      "pycy.csv",
+      "pycy.json",
+      "pycy.npz"
+    ]
+  },
+  "comparison_plot_sha256": "382c76d2b7e7bc718f29141746e85c8444603889e4cfabcb59f47ef92dbea2f4",
+  "input_snapshot_sha256": {
+    "20_multi_source_nodal_network.py": "eb363804ef256402bdc9298fc7380cbcd62adb85777d12b02b805b3094734fc9",
+    "compare.py": "95d776209423bf38d75294d2ffe6ab161e785d1535c4b3a4fc128d1271ed3ec6",
+    "comparison.py": "8545b5e8fba8abdc2f20cdc2006342bb428765110c5bf9052103dfb0e349affe",
+    "export_reference.m": "26e51f7da03d68f61c3456426ab39eecbcce1ca0bc3b9d3955818342f53ac57f",
+    "manifest.json": "f8a781d298c04f9fceba3499711ae412428600d697ddad46e721553991d22c63",
+    "NodalAnalysisExample.slx": "9dd139df62546dab31ecd73d591fbdf432ce43eb2f508f8f4a6ee6b053bc28d0",
+    "parameters.json": "a23fe8244a193e54cc520b0e970c43b531a573702519467d8eb72b4fc808d5ce",
+    "provenance.json": "fc805485b7eb6bf6e80e8fc1fc43db1b2a49e06cce43b79417320a497ed24702",
+    "reference.csv": "86cfee48f5a63efe7c1fddb998a710773773c63ade820d29bb12afae2c82b44e",
+    "runner.py": "9128df87a805e47ed2865df6202dc6b41437c50258f0a3ef187d80b4812a54fc"
+  }
+}
