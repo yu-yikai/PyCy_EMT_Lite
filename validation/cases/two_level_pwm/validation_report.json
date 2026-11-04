@@ -1,0 +1,358 @@
+{
+  "case_id": "two_level_pwm",
+  "passed": false,
+  "run_id": "20261104T090604904612Z",
+  "reference_platform": "MATLAB R2025a Update 1 / Simulink / Simscape / Simscape Electrical",
+  "reference_provenance": {
+    "schema_version": 1,
+    "origin": "MathWorks official example, unmodified circuit and controller",
+    "export_time_utc": "2026-11-04 09:03:44 +0000",
+    "source_url": "https://www.mathworks.com/help/simscape-electrical/ug/three-phase-two-level-pwm-generator.html",
+    "example_id": "simscapeelectrical/TwoLevelPWMGeneratorExample",
+    "model_name": "TwoLevelPWMGenerator",
+    "matlab_version": "25.1.0.2973910 (R2025a) Update 1",
+    "simulation_elapsed_seconds": 10.4908187,
+    "model_release": "R2025a Update 1 (downloaded by R2025a openExample)",
+    "required_products": [
+      "MATLAB",
+      "Simulink",
+      "Simscape",
+      "Simscape Electrical",
+      "DSP System Toolbox (original Spectrum Analyzer display)"
+    ],
+    "model_md5": "25E788641980F1BE793E05ABD041156E",
+    "model_sha256": "ad8ddf5e46dd633b4853d7694067528d5d20ce78a24059a2847c6a97dbc2ea34",
+    "solver": "FixedStepAuto",
+    "local_solver": "Backward Euler",
+    "local_solver_step_s": 5e-06,
+    "local_solver_residual_tolerance": 1e-09,
+    "stop_time_s": 0.2,
+    "dc_voltage_v": 400,
+    "dc_connection": "Stiff ideal source directly across converter DC terminals; no series DC resistor, capacitor or filter.",
+    "frequency_hz": 60,
+    "switching_frequency_hz": 1000,
+    "modulation_index": 0.8,
+    "reference_phase_offsets_rad": [
+      1.5707963267948966,
+      -0.5235987755982987,
+      3.665191429188092
+    ],
+    "reference_hold_s": 0.0001,
+    "rate_transition": {
+      "Integrity": "on",
+      "Deterministic": "on",
+      "InitialCondition": "0",
+      "OutPortSampleTime": 0.0001
+    },
+    "pwm": {
+      "mode": "CPWM/SPWM",
+      "sampling": "Natural",
+      "sample_s": 5e-06,
+      "algorithm": "Official block calculates switching times; it is not a direct carrier comparator. Native physical gate logs preserved."
+    },
+    "load": {
+      "structure": "Series RL, floating wye",
+      "resistance_ohm": 1,
+      "inductance_h": 0.001,
+      "initial_current_a": [
+        0,
+        0,
+        0
+      ],
+      "G_parasitic_parameter_s": 1e-06
+    },
+    "converter": {
+      "enum_value": 3,
+      "device": "IGBT (ideal, switching)",
+      "forward_voltage_v": 0.8,
+      "on_resistance_ohm": 0.001,
+      "off_conductance_s": 1e-05,
+      "gate_threshold_v": 0.5,
+      "protection_diode": "No dynamics",
+      "diode_forward_voltage_v": 0.8,
+      "diode_on_resistance_ohm": 0.001,
+      "diode_off_conductance_s": 1e-05,
+      "snubber": "none",
+      "thermal": "off"
+    },
+    "gate_mapping": "Q1/Q2 = A upper/lower; Q3/Q4 = B upper/lower; Q5/Q6 = C upper/lower. Native 0/1V gate pairs are strictly complementary at every logged time.",
+    "signal_mapping": {
+      "i_a": "Converter.phase_splitter.i_a",
+      "i_b": "Converter.phase_splitter.i_b",
+      "i_c": "Converter.phase_splitter.i_c"
+    },
+    "current_convention": "Converter/source to RL load; positive absorption.",
+    "equivalence_boundary": "IGBT forward drop, unidirectional channel and reverse-current diodes differ from PyCy bilateral Ron switches. This is a fixed-criteria steady-state waveform/fundamental comparison, not device/diode validation.",
+    "normalization": "Native timestamps and currents retained; last sample at duplicate times, no fitting, shift, scaling or resampling.",
+    "topology_changes": "none",
+    "parameter_changes": "No physical/control changes; Ts, fsw and stop time explicitly equal original defaults.",
+    "samples": 40001,
+    "redistribution": "MathWorks model/scripts and generated data remain local; no redistribution permission asserted."
+  },
+  "reference_sha256": "6ef09d6e4197ebe603d3cc437bf466154aa8e151e214a0c6fcb24f0e7a0db010",
+  "model_sha256": "ad8ddf5e46dd633b4853d7694067528d5d20ce78a24059a2847c6a97dbc2ea34",
+  "provenance_sha256": "6ae18cdafd77026d0912b4208ff00f3b2cdd0409b8273db45691518945a2ac98",
+  "manifest_sha256": "956f61d5e3b41522c3eb9d35dc743772a450529675003b0254c071fa202d9272",
+  "example_sha256": "f90e6aa87b73b448c5b00e146f7d85070e01b724302cb2861fcd993a783a47e7",
+  "export_script_sha256": "3a44a6f707c426d21564c363a153542dfc5cf1ecb094cf8eb9a2c577d9c2dfce",
+  "parameters_sha256": "b51abbc578d0ef496a5a83224cd63e66bbc67f51dad292faf7e5ad048ccc2208",
+  "candidate_data_sha256": {
+    "pycy.csv": "5cd8abe64d9084ca465fb4a961eca03f180137323153d8d9acedf820ebcbfe9f",
+    "pycy.json": "a6ebb79727d37df5007065d51d7f53ad7b342aefdb5f77b358203c50fe0dcc7b",
+    "pycy.npz": "d2200f7fa1d81eed6e346e8a19c66b134a94c4aaf1049e5f61bdbc72537870dd"
+  },
+  "raw_reference_sha256": {
+    "local_reference/two_level_pwm/raw_results/default_native.csv": "f86ab695f568b79b9823a7e97b5f53624317745aa45717eb22c9f2b1996f1273",
+    "local_reference/two_level_pwm/raw_results/default_simulink_output.mat": "225804244ee071a1808f87cc7606dcd70638d5a5c796801e4d41576c8fa3d9c5",
+    "local_reference/two_level_pwm/raw_results/gate_mapping_inspection.json": "a5c60e49f90377dc21e995b4532e814ecb4887b1cd0e2ae2f476124e00d5b4bb",
+    "local_reference/two_level_pwm/raw_results/load_power_audit.csv": "470c3e00e1f9000451e1eeb115a343890502fd64a9d0b4fc0b083f9ad0973287",
+    "local_reference/two_level_pwm/raw_results/physical_device_gates.csv": "7f46e19f63d781c549d612f82a76e2be67c2f06c65d5cc87a4769fb898b64e61",
+    "local_reference/two_level_pwm/raw_results/simscape_native.csv": "6ef09d6e4197ebe603d3cc437bf466154aa8e151e214a0c6fcb24f0e7a0db010",
+    "local_reference/two_level_pwm/raw_results/simulink_output.mat": "b5aa316823d39a7373f6c8ffdcfb609a47ebae28206aa7ba87fe73ee0e0915cb",
+    "local_reference/two_level_pwm/raw_results/unshifted_gate_audit.json": "f691959ca7a2d802f9e3a8c334f301a78ce38f2fed9c16b406967a0f733a0575"
+  },
+  "git_head_at_run": "528923832a49627de99f5798c444a9491df70502",
+  "git_status_at_run": [
+    " M docs/development_roadmap/02_reference_catalog.md",
+    " M docs/development_roadmap/reference_catalog.json",
+    " M validation/cases/two_level_pwm/manifest.json",
+    "?? docs/development_roadmap/experiments/next_reference_candidates.md",
+    "?? docs/development_roadmap/experiments/spwm_feasibility.md",
+    "?? docs/development_roadmap/experiments/switchingdevice_enum_r2025a.json",
+    "?? tests/test_pwm_reference_features.py",
+    "?? validation/cases/two_level_pwm/README.md",
+    "?? validation/cases/two_level_pwm/compare.py",
+    "?? validation/cases/two_level_pwm/export_reference.m"
+  ],
+  "package_source_sha256": {
+    "pycy_emt_lite/__init__.py": "81980a448c4506c4a373d308339c490967a02938c2cb0f0f33a1360dec21d46e",
+    "pycy_emt_lite/analysis/__init__.py": "20f635eec36432d84d6bf2ed666ecf45230962c7b4aa875838a2b9a65c5aa8a0",
+    "pycy_emt_lite/analysis/metrics.py": "14407925b79d9c3ea98c1cf3e4f9208f7820a22a862d70e067632f301aa9b143",
+    "pycy_emt_lite/cases.py": "f6c710cbbf2306752bd2345c1f5fc9a8d74b6738f30dd15fcfeb4452a192e986",
+    "pycy_emt_lite/components/__init__.py": "7cdac999206ef73c505ae8f29d9b531355d79bca9dcba02dd6f2c1b332ab4801",
+    "pycy_emt_lite/components/base.py": "d640819f5fddc223f7626059f8a4e309b4502851afcdeb8d5809e2e798fc6c1a",
+    "pycy_emt_lite/components/basic.py": "b2a092b07a15a1145cc582c47b1df6f6124d65c972f46b9450faa8c0acb5cc0b",
+    "pycy_emt_lite/components/lines.py": "dd4a0e5d4ee71ef7a655e31064c002536ea994aa185c0e6a47398d1cbac8c74b",
+    "pycy_emt_lite/components/power_electronics.py": "7b28e0c56436fcbf6ad357ee1336c1a3538fd5668a953e7487de6aedd30a1fab",
+    "pycy_emt_lite/components/switching.py": "6a422186320def189dcf360083c017715c80e34df769dbd14cca2c58e810a9d6",
+    "pycy_emt_lite/components/three_phase.py": "9cddd858ba4d27572218dc3a6790b8aa92ac0b71c703c9b7ddec82ddcd60c025",
+    "pycy_emt_lite/components/transformers.py": "632617a185bb69441535bdff552f0b4473566d64f6a78211622962cbb3d66609",
+    "pycy_emt_lite/controls/__init__.py": "f9685f649e794aba54a8cec566390ee8e9a992b7baf41d7a592a74d12980a069",
+    "pycy_emt_lite/controls/blocks.py": "e862509d8dceb31a1151ff710d4f861267e23e9dccd1843f98f774fb07684a7b",
+    "pycy_emt_lite/controls/pll.py": "7eca0fb9c6f6464bb36f82d7cad1b27be5bd1b6455b046b5ad3279c075a36efa",
+    "pycy_emt_lite/controls/pwm.py": "6a2469d7957c74ce9ff25e13020541e7c169f38820538e8a71467919ce9391d1",
+    "pycy_emt_lite/controls/transforms.py": "c48dbe02a1cd4b1c12a8fd29439038b76ada81d68f71f7b1183eec2bdc98ab99",
+    "pycy_emt_lite/controls/vsc.py": "1d12cc5a728f4085f1e723ac48b055e16e305cf91aafd130bf530f6c790dc635",
+    "pycy_emt_lite/converters/__init__.py": "9f94cc67b26700a8bf1f022c5c806b5e5415ecaf8743d36b2ddceddb6ec70ba6",
+    "pycy_emt_lite/converters/filters.py": "11112e0bc233809fc37c3fcf39cce41dab692a704a711d113bff31aa450a6be2",
+    "pycy_emt_lite/core/__init__.py": "3d0e3034e589c19e37746a909832f2b47780ea9793b011bb2bdf6141dd445ee5",
+    "pycy_emt_lite/core/circuit.py": "ee628295a1477c334d66e366ed594f8b824ca66ce36e8c17980972a7f485b0ac",
+    "pycy_emt_lite/core/context.py": "9886feeb12b4c30e115f4ada5594c504cb196ecdb491699a2b7a89fa16902c4e",
+    "pycy_emt_lite/core/nodes.py": "71167de688ff341bf99f6fb0beedd05946db4d83eeb9301a387a021ca6f0cffd",
+    "pycy_emt_lite/core/simulation.py": "b6fdb849172830cff51bfa31af87028524072adabaeeda580ab02c4e4751087d",
+    "pycy_emt_lite/core/solvers.py": "031f3d2f118d1d88f34d712bdeeb864ecc13a3fa7d89c7288b984b2b2c31571a",
+    "pycy_emt_lite/core/stamping.py": "9f23c65cbaa7d33ea0406bd0d33fe3b5fd007192fd60dbe78399586a35f02f87",
+    "pycy_emt_lite/core/variables.py": "6567e110c6b1aedc7faf713ae05d3297b5f70cca98ebf4bc28fcb2f7d05ea0b8",
+    "pycy_emt_lite/events/__init__.py": "5af09c087d751859ff97c6b4a01670312d5618aed864ea042fccf736d660c032",
+    "pycy_emt_lite/events/base.py": "9cc671d975b5ea60780b29e7a11042f3b39f2bb93454dc2cc72bacfee4bb6663",
+    "pycy_emt_lite/events/standard.py": "638e17b7d7601cd901e96cec99c5238c330780e31711c3d5e92e06d56b32d46d",
+    "pycy_emt_lite/io/__init__.py": "1eaf1526eecf1d41982a3e2b6685b0a653c233e9b57546d437e1dc4ae582f93e",
+    "pycy_emt_lite/io/results.py": "aa02511777508c2f048aae9d459dfd354d0e0d9b539a10af8f0684d66018a915",
+    "pycy_emt_lite/machines/__init__.py": "9f16d3bf2e00d27f4d8d1bacf35d8ef968f2f79dc5d758af581b04bd9f40232e",
+    "pycy_emt_lite/machines/park_generator.py": "e1f5f5c3b26ab2aaab4db9234954c50913c7890135da4f933b0afc9202e43caa",
+    "pycy_emt_lite/machines/synchronous.py": "a6add8058a9788daba21a1dfac986bef6e4a4c698ec4f8e21fdcb07e1426b06f",
+    "pycy_emt_lite/visualization/__init__.py": "23a5988f06bd7d833a9d7a0358a55a3d6a57ed96f5e1812c178c0d8ae29267ea",
+    "pycy_emt_lite/visualization/plotting.py": "6645d31b1c6ae11be45f5652f222a36576dab075c336788d25d15a788c64e346",
+    "pycy_emt_lite/visualization/reporting.py": "5ae8a1642303cef26f6c425c36eb49256b318d9773f9bbeb792ca8bcded264d0"
+  },
+  "python_version": "3.14.5",
+  "numpy_version": "2.5.2",
+  "candidate_method": "trapezoidal",
+  "candidate_step_seconds": 5e-06,
+  "candidate_samples": 40001,
+  "reference_samples": 40001,
+  "known_difference": "Official default converter uses switching devices with antiparallel diodes; PyCy uses externally controlled bidirectional Ron/Goff switches. This is a waveform/fundamental steady-state validation under zero-dead-time complementary gating, not device equivalence or automatic-diode certification. Exact native gates, carrier phase, RateTransition and sign mapping must be inspected first; no fitted delay or amplitude compensation is allowed. Preserve detailed active-device parameters in provenance.",
+  "windows": [
+    {
+      "window_seconds": [
+        0.1,
+        0.2
+      ],
+      "alignment": "absolute_time_linear_interpolation",
+      "passed": false,
+      "signals": {
+        "i:La": {
+          "reference": "i_a",
+          "unit": "A",
+          "scale": 150.0,
+          "rmse": 4.049282332485364,
+          "nrmse": 0.02699521554990243,
+          "max_abs_error": 8.763988456688466,
+          "candidate_mean": 1.8740564655672642e-13,
+          "reference_mean": 0.12883129238425006,
+          "candidate_rms": 105.99588039125169,
+          "reference_rms": 105.32830510178152,
+          "limits": {
+            "max_nrmse": 0.02,
+            "max_abs_error": 10.0
+          },
+          "passed": false
+        },
+        "i:Lb": {
+          "reference": "i_b",
+          "unit": "A",
+          "scale": 150.0,
+          "rmse": 3.9865898180784423,
+          "nrmse": 0.02657726545385628,
+          "max_abs_error": 8.680225944754937,
+          "candidate_mean": -0.07992007992034722,
+          "reference_mean": -0.06377628493960774,
+          "candidate_rms": 105.92506968504861,
+          "reference_rms": 105.32064526455369,
+          "limits": {
+            "max_nrmse": 0.02,
+            "max_abs_error": 10.0
+          },
+          "passed": false
+        },
+        "i:Lc": {
+          "reference": "i_c",
+          "unit": "A",
+          "scale": 150.0,
+          "rmse": 4.075072797652117,
+          "nrmse": 0.027167151984347448,
+          "max_abs_error": 9.0961685364152,
+          "candidate_mean": 0.07992007992015715,
+          "reference_mean": -0.06505500744465031,
+          "candidate_rms": 105.9905336055366,
+          "reference_rms": 105.39493357483488,
+          "limits": {
+            "max_nrmse": 0.02,
+            "max_abs_error": 10.0
+          },
+          "passed": false
+        }
+      }
+    }
+  ],
+  "artifacts": {
+    "directory": "local_reference/two_level_pwm/comparison_results/20261104T090604904612Z",
+    "plot": "comparison.png",
+    "candidate_data": [
+      "pycy.csv",
+      "pycy.json",
+      "pycy.npz"
+    ]
+  },
+  "comparison_plot_sha256": "dde0a9f7c0d9911609a83cad8204d895a404a765ea36803e1c8f6cac79d4c24f",
+  "input_snapshot_sha256": {
+    "12_two_level_pwm_generator.py": "f90e6aa87b73b448c5b00e146f7d85070e01b724302cb2861fcd993a783a47e7",
+    "compare.py": "58b8b93c570f9ea047c18ff18a4ba8eed54b72ed14335d34da8f733d7911ebc9",
+    "comparison.py": "8545b5e8fba8abdc2f20cdc2006342bb428765110c5bf9052103dfb0e349affe",
+    "export_reference.m": "3a44a6f707c426d21564c363a153542dfc5cf1ecb094cf8eb9a2c577d9c2dfce",
+    "manifest.json": "956f61d5e3b41522c3eb9d35dc743772a450529675003b0254c071fa202d9272",
+    "parameters.json": "b51abbc578d0ef496a5a83224cd63e66bbc67f51dad292faf7e5ad048ccc2208",
+    "provenance.json": "6ae18cdafd77026d0912b4208ff00f3b2cdd0409b8273db45691518945a2ac98",
+    "reference.csv": "6ef09d6e4197ebe603d3cc437bf466154aa8e151e214a0c6fcb24f0e7a0db010",
+    "runner.py": "c30832285ddb3f8e0706368c1f017b95af0dcca09599e6a084eed3b8669e50b5",
+    "TwoLevelPWMGenerator.slx": "ad8ddf5e46dd633b4853d7694067528d5d20ce78a24059a2847c6a97dbc2ea34"
+  },
+  "waveform_passed": false,
+  "features": {
+    "window_seconds": [
+      0.1,
+      0.2
+    ],
+    "fundamental_hz": 60.0,
+    "fundamental_cycles": 6.0,
+    "projection": "exact piecewise-linear integral against fixed-frequency sin/cos at absolute time",
+    "phase_convention": "i(t) = sqrt(2)*I_rms*sin(2*pi*f*t + phase); wrapped phase difference",
+    "time_shift_seconds": 0,
+    "amplitude_fitting": false,
+    "phases": {
+      "i:La": {
+        "reference": "i_a",
+        "candidate_features": {
+          "total_rms_ampere": 105.99588039125169,
+          "mean_ampere": 1.8472357387035693e-13,
+          "fundamental_rms_ampere": 105.6091827712206,
+          "fundamental_phase_degrees": 68.32689851060393
+        },
+        "reference_features": {
+          "total_rms_ampere": 105.32830510178154,
+          "mean_ampere": 0.12883129238424887,
+          "fundamental_rms_ampere": 104.94174272663152,
+          "fundamental_phase_degrees": 66.22993459708029
+        },
+        "relative_rms_error": 0.006338042645090081,
+        "relative_fundamental_rms_error": 0.00636010063533754,
+        "fundamental_phase_error_degrees": 2.0969639135236378,
+        "limits": {
+          "relative_rms_error": 0.05,
+          "relative_fundamental_rms_error": 0.05,
+          "fundamental_phase_error_degrees": 3.0
+        },
+        "passed": true
+      },
+      "i:Lb": {
+        "reference": "i_b",
+        "candidate_features": {
+          "total_rms_ampere": 105.92506968504863,
+          "mean_ampere": -0.07992007992034443,
+          "fundamental_rms_ampere": 105.53868011510691,
+          "fundamental_phase_degrees": -51.65345547644204
+        },
+        "reference_features": {
+          "total_rms_ampere": 105.3206452645537,
+          "mean_ampere": -0.06377628493960619,
+          "fundamental_rms_ampere": 104.93329878942252,
+          "fundamental_phase_degrees": -53.725074158726486
+        },
+        "relative_rms_error": 0.005738897810364518,
+        "relative_fundamental_rms_error": 0.0057692013180605795,
+        "fundamental_phase_error_degrees": 2.071618682284452,
+        "limits": {
+          "relative_rms_error": 0.05,
+          "relative_fundamental_rms_error": 0.05,
+          "fundamental_phase_error_degrees": 3.0
+        },
+        "passed": true
+      },
+      "i:Lc": {
+        "reference": "i_c",
+        "candidate_features": {
+          "total_rms_ampere": 105.99053360553663,
+          "mean_ampere": 0.07992007992015632,
+          "fundamental_rms_ampere": 105.60529765209823,
+          "fundamental_phase_degrees": -171.63015545231428
+        },
+        "reference_features": {
+          "total_rms_ampere": 105.39493357483488,
+          "mean_ampere": -0.06505500744464955,
+          "fundamental_rms_ampere": 105.00887488782075,
+          "fundamental_phase_degrees": -173.7435806914782
+        },
+        "relative_rms_error": 0.005651125822654812,
+        "relative_fundamental_rms_error": 0.005679736735724639,
+        "fundamental_phase_error_degrees": 2.1134252391639166,
+        "limits": {
+          "relative_rms_error": 0.05,
+          "relative_fundamental_rms_error": 0.05,
+          "fundamental_phase_error_degrees": 3.0
+        },
+        "passed": true
+      }
+    },
+    "load_mean_power": {
+      "candidate_watt": 33689.24026168533,
+      "reference_watt": 33294.5821977998,
+      "resistance_per_phase_ohm": 1.0,
+      "definition": "R * sum(time-weighted phase-current RMS squared); resistor absorption only",
+      "relative_error": 0.011853522039739328,
+      "max_relative_error": 0.05,
+      "positive_absorption": true,
+      "passed": true
+    },
+    "passed": true
+  }
+}

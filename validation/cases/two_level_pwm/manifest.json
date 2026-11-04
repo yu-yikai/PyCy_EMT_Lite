@@ -6,7 +6,7 @@
   "reference_source": "https://www.mathworks.com/help/simscape-electrical/ug/three-phase-two-level-pwm-generator.html",
   "reference_model": "TwoLevelPWMGenerator.slx",
   "reference_platform": "MATLAB R2025a Update 1 / Simulink / Simscape / Simscape Electrical",
-  "reference_state": "inspected",
+  "reference_state": "reference_ready",
   "windows_seconds": [
     [
       0.1,
