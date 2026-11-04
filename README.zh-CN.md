@@ -81,13 +81,14 @@ uv run --locked pytest -o addopts= -q -p no:cacheprovider --basetemp=.tmp/pytest
 
 ## 2. 学习顺序
 
-13 个基础脚本和 1 个综合示例组成九个学习单元。编号 13–16 的平均新能源/变流器及 HVDC/MMC 综合候选已移除，现有命令沿用原编号。
+基础脚本和综合示例组成以下学习单元。编号 13–16 的平均新能源/变流器及 HVDC/MMC 综合候选已移除，现有命令沿用原编号。
 先完成 01，再学习 02、03 的储能过程，然后进入 04、17。能解释这些波形后，可阅读[元件推导](docs/component_derivations.md)第 1–5 节，核对一个完整 RLC 矩阵。电机、控制和 HVDC 可留到后面按需学习。
 
 | 单元 | 脚本 | 学完后可以检查的事情 |
 |---|---|---|
 | R 与 MNA | [01](examples/01_r_circuit.py) | 沿对象式流程运行电路，用欧姆定律预测电流，解释电源电流方向；之后再读矩阵组装。 |
 | 动态 RLC | [02 RC](examples/02_rc_transient.py)、[03 RL](examples/03_rl_transient.py)、[04 RLC](examples/04_rlc_transient.py)、[17 交流 RLC](examples/17_single_phase_ac_rlc.py) | 核对储能初值和时间常数，区分暂态与稳态相量，比较减小步长后的整段波形误差。 |
+| 耦合 RC | [19](examples/19_cascaded_rc.py) | 在02之后学习后级负载如何影响前级，以及源下降后后级为何还能短时充电。 |
 | 三相与故障 | [05](examples/05_three_phase_steady_state.py)、[06](examples/06_three_phase_short_circuit.py)、[07](examples/07_single_phase_ground_fault.py) | 观察平衡 RL、三相短路和单相接地；用固定时间窗比较故障相与健全相。 |
 | 线路 | [08](examples/08_pi_line_transient.py) | 区分 π 型线路的串联电流和端部电容电流；再选读分段与 Bergeron 模型。 |
 | 变压器 | [09](examples/09_single_phase_transformer.py) | 核对变比，观察漏阻抗和励磁的影响；三相接法见模型说明。 |
@@ -95,6 +96,8 @@ uv run --locked pytest -o addopts= -q -p no:cacheprovider --basetemp=.tmp/pytest
 | 离散控制 | [11](examples/11_pll_dynamic_response.py) | 观察独立 SRF-PLL 控制循环的 q 轴电压和角频率，说明何时接近锁定。 |
 | PWM | [12](examples/12_two_level_pwm_generator.py) | 对照理想开关的 SPWM 门极与 RL 电流，区分开关纹波和基波。 |
 | VSC-HVDC 综合仿真 | [18](examples/18_three_terminal_vsc_hvdc.py) | 沿三个两电平桥、独立 PLL/dq 闭环和双极 DC 网络，跟踪交流故障后的电压、功率变化。 |
+
+[19级联RC真实Simscape对标](validation/cases/cascaded_rc/README.md)给出参数、固定验收、结果和复现命令。教学程序只绘制自身波形，独立验证程序读取真实参考。
 
 从 12 进入 18 前，可沿[现有 HVDC 测试模块](tests/test_three_terminal_vsc_hvdc.py)逐步阅读：
 `test_single_bridge_open_loop_power_identity` 核对单桥开环功率账；

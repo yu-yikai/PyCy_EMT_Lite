@@ -1,0 +1,454 @@
+{
+  "case_id": "cascaded_rc",
+  "passed": true,
+  "run_id": "20261104T082134393345Z",
+  "reference_platform": "MATLAB R2025a / Simulink / Simscape",
+  "reference_provenance": {
+    "schema_version": 1,
+    "origin": "MathWorks official example",
+    "export_time_utc": "2026-11-04 08:16:24 +0000",
+    "simulation_elapsed_seconds": 6.8439966,
+    "source_url": "https://www.mathworks.com/help/simscape/ug/cascaded-rc-circuit-in-simulink-and-simscape.html",
+    "example_id": "simscape/CascadedRCCircuitInSimulinkAndSimscapeExample",
+    "model_name": "CascadedRCCircuitInSimulinkAndSimscape",
+    "matlab_version": "25.1.0.2973910 (R2025a) Update 1",
+    "model_release": "R2025a Update 1 (downloaded by R2025a openExample)",
+    "required_products": [
+      "MATLAB",
+      "Simulink",
+      "Simscape"
+    ],
+    "solver": "ode15s",
+    "relative_tolerance": 1e-08,
+    "absolute_tolerance": 1e-10,
+    "maximum_step_s": 2e-06,
+    "stop_time_s": 0.02,
+    "resistance_ohm": 10,
+    "capacitance_f": 0.0001,
+    "capacitor_esr_ohm": 1e-06,
+    "pulse_amplitude_v": 5,
+    "pulse_period_s": 0.01,
+    "pulse_width_percent": 50,
+    "pulse_delay_s": 0.001,
+    "capacitor_initial_voltage_v": 0,
+    "samples": 10052,
+    "normalization": "No time shift; duplicate native times use final post-event sample.",
+    "topology_changes": "none",
+    "parameter_changes": "none",
+    "redistribution": "Original MathWorks model and generated data remain local; no redistribution permission asserted."
+  },
+  "reference_sha256": "e3c1633a52634edc968964603a1328c607fc966a43d7080c0ce5b79b08938948",
+  "model_sha256": "54422f5f100c220c0bea9e396d1d1cd3fd015bb923b9ba48f555e054ddf29a06",
+  "provenance_sha256": "da59f3cb03ac9d22398ced2d3e799a3dd1b89ae064a7be6390cc4c383ac31b7b",
+  "manifest_sha256": "3eeaf6c24f0819f6951efd07387d877497fb41378bc003f1e3956570349ff968",
+  "example_sha256": "1221e2615056b1ea4fb8a032231a805d84ee91a699f319c3533efce8f3a66e39",
+  "export_script_sha256": "abc49f6527c96aa4e31de1bff082d7364f16e965530ad5299ae99327c153ec45",
+  "parameters_sha256": "5ffd654c138f6fb598605f0ec7581aae024d0397e00eebb795b0193685605c41",
+  "candidate_data_sha256": {
+    "pycy.csv": "6199b57b10b5be454eb67ad376a657c6f8ee8cf6fea01c1f615c3d81668b6306",
+    "pycy.json": "a43ee3ef39c6a12626d79422c9e0946efdb1e6a3212736a1ba0ec6d9764d4cdd",
+    "pycy.npz": "1beb7deebb459d4bd2c4bd4d1f11ca9830e3ed03ea6abe6353c1d37d7bcb6dd7"
+  },
+  "raw_reference_sha256": {
+    "local_reference/cascaded_rc/raw_results/simscape_native.csv": "e3c1633a52634edc968964603a1328c607fc966a43d7080c0ce5b79b08938948",
+    "local_reference/cascaded_rc/raw_results/simulink_output.mat": "448a518b9dc9343d469f2773f2148a88380fa1dd6e94548cac17f58caa0b96b7"
+  },
+  "git_head_at_run": "dbe9b13357ce4f040117f109a49e03843a6d85f7",
+  "git_status_at_run": [
+    " M docs/development_roadmap/02_reference_catalog.md",
+    " M docs/development_roadmap/experiments/cascaded_rc_probe.py",
+    " M docs/development_roadmap/reference_catalog.json",
+    "?? docs/development_roadmap/experiments/nodal_analysis_exact.json",
+    "?? examples/19_cascaded_rc.py",
+    "?? tests/test_cascaded_rc.py",
+    "?? validation/cases/cascaded_rc/compare.py",
+    "?? validation/cases/cascaded_rc/export_reference.m",
+    "?? validation/cases/nodal_analysis/",
+    "?? validation/cases/rc_charging/compare.py",
+    "?? validation/cases/rc_charging/export_reference.m"
+  ],
+  "package_source_sha256": {
+    "pycy_emt_lite/__init__.py": "81980a448c4506c4a373d308339c490967a02938c2cb0f0f33a1360dec21d46e",
+    "pycy_emt_lite/analysis/__init__.py": "20f635eec36432d84d6bf2ed666ecf45230962c7b4aa875838a2b9a65c5aa8a0",
+    "pycy_emt_lite/analysis/metrics.py": "14407925b79d9c3ea98c1cf3e4f9208f7820a22a862d70e067632f301aa9b143",
+    "pycy_emt_lite/cases.py": "f6c710cbbf2306752bd2345c1f5fc9a8d74b6738f30dd15fcfeb4452a192e986",
+    "pycy_emt_lite/components/__init__.py": "7cdac999206ef73c505ae8f29d9b531355d79bca9dcba02dd6f2c1b332ab4801",
+    "pycy_emt_lite/components/base.py": "d640819f5fddc223f7626059f8a4e309b4502851afcdeb8d5809e2e798fc6c1a",
+    "pycy_emt_lite/components/basic.py": "b2a092b07a15a1145cc582c47b1df6f6124d65c972f46b9450faa8c0acb5cc0b",
+    "pycy_emt_lite/components/lines.py": "dd4a0e5d4ee71ef7a655e31064c002536ea994aa185c0e6a47398d1cbac8c74b",
+    "pycy_emt_lite/components/power_electronics.py": "7b28e0c56436fcbf6ad357ee1336c1a3538fd5668a953e7487de6aedd30a1fab",
+    "pycy_emt_lite/components/switching.py": "6a422186320def189dcf360083c017715c80e34df769dbd14cca2c58e810a9d6",
+    "pycy_emt_lite/components/three_phase.py": "9cddd858ba4d27572218dc3a6790b8aa92ac0b71c703c9b7ddec82ddcd60c025",
+    "pycy_emt_lite/components/transformers.py": "632617a185bb69441535bdff552f0b4473566d64f6a78211622962cbb3d66609",
+    "pycy_emt_lite/controls/__init__.py": "f9685f649e794aba54a8cec566390ee8e9a992b7baf41d7a592a74d12980a069",
+    "pycy_emt_lite/controls/blocks.py": "e862509d8dceb31a1151ff710d4f861267e23e9dccd1843f98f774fb07684a7b",
+    "pycy_emt_lite/controls/pll.py": "7eca0fb9c6f6464bb36f82d7cad1b27be5bd1b6455b046b5ad3279c075a36efa",
+    "pycy_emt_lite/controls/pwm.py": "6a2469d7957c74ce9ff25e13020541e7c169f38820538e8a71467919ce9391d1",
+    "pycy_emt_lite/controls/transforms.py": "c48dbe02a1cd4b1c12a8fd29439038b76ada81d68f71f7b1183eec2bdc98ab99",
+    "pycy_emt_lite/controls/vsc.py": "1d12cc5a728f4085f1e723ac48b055e16e305cf91aafd130bf530f6c790dc635",
+    "pycy_emt_lite/converters/__init__.py": "9f94cc67b26700a8bf1f022c5c806b5e5415ecaf8743d36b2ddceddb6ec70ba6",
+    "pycy_emt_lite/converters/filters.py": "11112e0bc233809fc37c3fcf39cce41dab692a704a711d113bff31aa450a6be2",
+    "pycy_emt_lite/core/__init__.py": "3d0e3034e589c19e37746a909832f2b47780ea9793b011bb2bdf6141dd445ee5",
+    "pycy_emt_lite/core/circuit.py": "ee628295a1477c334d66e366ed594f8b824ca66ce36e8c17980972a7f485b0ac",
+    "pycy_emt_lite/core/context.py": "9886feeb12b4c30e115f4ada5594c504cb196ecdb491699a2b7a89fa16902c4e",
+    "pycy_emt_lite/core/nodes.py": "71167de688ff341bf99f6fb0beedd05946db4d83eeb9301a387a021ca6f0cffd",
+    "pycy_emt_lite/core/simulation.py": "b6fdb849172830cff51bfa31af87028524072adabaeeda580ab02c4e4751087d",
+    "pycy_emt_lite/core/solvers.py": "031f3d2f118d1d88f34d712bdeeb864ecc13a3fa7d89c7288b984b2b2c31571a",
+    "pycy_emt_lite/core/stamping.py": "9f23c65cbaa7d33ea0406bd0d33fe3b5fd007192fd60dbe78399586a35f02f87",
+    "pycy_emt_lite/core/variables.py": "6567e110c6b1aedc7faf713ae05d3297b5f70cca98ebf4bc28fcb2f7d05ea0b8",
+    "pycy_emt_lite/events/__init__.py": "5af09c087d751859ff97c6b4a01670312d5618aed864ea042fccf736d660c032",
+    "pycy_emt_lite/events/base.py": "9cc671d975b5ea60780b29e7a11042f3b39f2bb93454dc2cc72bacfee4bb6663",
+    "pycy_emt_lite/events/standard.py": "638e17b7d7601cd901e96cec99c5238c330780e31711c3d5e92e06d56b32d46d",
+    "pycy_emt_lite/io/__init__.py": "1eaf1526eecf1d41982a3e2b6685b0a653c233e9b57546d437e1dc4ae582f93e",
+    "pycy_emt_lite/io/results.py": "aa02511777508c2f048aae9d459dfd354d0e0d9b539a10af8f0684d66018a915",
+    "pycy_emt_lite/machines/__init__.py": "9f16d3bf2e00d27f4d8d1bacf35d8ef968f2f79dc5d758af581b04bd9f40232e",
+    "pycy_emt_lite/machines/park_generator.py": "e1f5f5c3b26ab2aaab4db9234954c50913c7890135da4f933b0afc9202e43caa",
+    "pycy_emt_lite/machines/synchronous.py": "a6add8058a9788daba21a1dfac986bef6e4a4c698ec4f8e21fdcb07e1426b06f",
+    "pycy_emt_lite/visualization/__init__.py": "23a5988f06bd7d833a9d7a0358a55a3d6a57ed96f5e1812c178c0d8ae29267ea",
+    "pycy_emt_lite/visualization/plotting.py": "6645d31b1c6ae11be45f5652f222a36576dab075c336788d25d15a788c64e346",
+    "pycy_emt_lite/visualization/reporting.py": "5ae8a1642303cef26f6c425c36eb49256b318d9773f9bbeb792ca8bcded264d0"
+  },
+  "python_version": "3.14.5",
+  "numpy_version": "2.5.2",
+  "candidate_method": "trapezoidal",
+  "candidate_step_seconds": 2e-06,
+  "candidate_samples": 10001,
+  "reference_samples": 10052,
+  "known_difference": "Official capacitors include 1 microohm ESR each. PyCy uses ideal capacitors. This is far below the 0.02 V / 0.002 A limits for this 10 ohm network. Windows exclude 20 microseconds around source edges; full waveforms and actual event times remain in artifacts.",
+  "windows": [
+    {
+      "window_seconds": [
+        0.00102,
+        0.00598
+      ],
+      "alignment": "absolute_time_linear_interpolation",
+      "passed": true,
+      "signals": {
+        "v:n1": {
+          "reference": "v_n1",
+          "unit": "V",
+          "scale": 5.0,
+          "rmse": 6.872202182115572e-07,
+          "nrmse": 1.3744404364231143e-07,
+          "max_abs_error": 4.850900944652903e-06,
+          "candidate_mean": 3.2888403734058542,
+          "reference_mean": 3.288840096672089,
+          "candidate_rms": 3.4515064375054796,
+          "reference_rms": 3.451506250190094,
+          "limits": {
+            "max_nrmse": 0.003,
+            "max_abs_error": 0.02
+          },
+          "passed": true
+        },
+        "v:n2": {
+          "reference": "v_n2",
+          "unit": "V",
+          "scale": 5.0,
+          "rmse": 4.0195134835547727e-07,
+          "nrmse": 8.039026967109546e-08,
+          "max_abs_error": 2.3748728630909165e-06,
+          "candidate_mean": 2.4571170045394135,
+          "reference_mean": 2.457117102908111,
+          "candidate_rms": 2.7693803218574136,
+          "reference_rms": 2.769380280179225,
+          "limits": {
+            "max_nrmse": 0.003,
+            "max_abs_error": 0.02
+          },
+          "passed": true
+        },
+        "i:R1": {
+          "reference": "i_r1",
+          "unit": "A",
+          "scale": 0.5,
+          "rmse": 6.872202179568557e-08,
+          "nrmse": 1.3744404359137113e-07,
+          "max_abs_error": 4.850900941488767e-07,
+          "candidate_mean": 0.1711159626594146,
+          "reference_mean": 0.17111599033279107,
+          "candidate_rms": 0.20061138935970765,
+          "reference_rms": 0.20061142610480578,
+          "limits": {
+            "max_nrmse": 0.003,
+            "max_abs_error": 0.002
+          },
+          "passed": true
+        },
+        "i:R2": {
+          "reference": "i_r2",
+          "unit": "A",
+          "scale": 0.5,
+          "rmse": 1.0533216281139885e-07,
+          "nrmse": 2.106643256227977e-07,
+          "max_abs_error": 6.985468801578437e-07,
+          "candidate_mean": 0.0831723368866441,
+          "reference_mean": 0.08317229937639772,
+          "candidate_rms": 0.09003613685796634,
+          "reference_rms": 0.09003608653738361,
+          "limits": {
+            "max_nrmse": 0.003,
+            "max_abs_error": 0.002
+          },
+          "passed": true
+        }
+      }
+    },
+    {
+      "window_seconds": [
+        0.00602,
+        0.01098
+      ],
+      "alignment": "absolute_time_linear_interpolation",
+      "passed": true,
+      "signals": {
+        "v:n1": {
+          "reference": "v_n1",
+          "unit": "V",
+          "scale": 5.0,
+          "rmse": 4.528235952465774e-07,
+          "nrmse": 9.056471904931548e-08,
+          "max_abs_error": 1.8749961006037097e-06,
+          "candidate_mean": 1.4726850997687422,
+          "reference_mean": 1.4726853465668155,
+          "candidate_rms": 1.7374373602879047,
+          "reference_rms": 1.7374377080215306,
+          "limits": {
+            "max_nrmse": 0.003,
+            "max_abs_error": 0.02
+          },
+          "passed": true
+        },
+        "v:n2": {
+          "reference": "v_n2",
+          "unit": "V",
+          "scale": 5.0,
+          "rmse": 3.8708647541015207e-07,
+          "nrmse": 7.741729508203041e-08,
+          "max_abs_error": 1.3583736730993223e-06,
+          "candidate_mean": 2.1570235720322573,
+          "reference_mean": 2.15702340083909,
+          "candidate_rms": 2.409193903601711,
+          "reference_rms": 2.409193612810581,
+          "limits": {
+            "max_nrmse": 0.003,
+            "max_abs_error": 0.02
+          },
+          "passed": true
+        },
+        "i:R1": {
+          "reference": "i_r1",
+          "unit": "A",
+          "scale": 0.5,
+          "rmse": 4.528235953292602e-08,
+          "nrmse": 9.056471906585204e-08,
+          "max_abs_error": 1.8749961000485982e-07,
+          "candidate_mean": -0.14726850997687424,
+          "reference_mean": -0.1472685346566816,
+          "candidate_rms": 0.1737437360287905,
+          "reference_rms": 0.17374377080215306,
+          "limits": {
+            "max_nrmse": 0.003,
+            "max_abs_error": 0.002
+          },
+          "passed": true
+        },
+        "i:R2": {
+          "reference": "i_r2",
+          "unit": "A",
+          "scale": 0.5,
+          "rmse": 8.270383037181909e-08,
+          "nrmse": 1.6540766074363818e-07,
+          "max_abs_error": 3.2304043535991145e-07,
+          "candidate_mean": -0.06843384722635154,
+          "reference_mean": -0.0684338054272274,
+          "candidate_rms": 0.07456605559516849,
+          "reference_rms": 0.07456600404864226,
+          "limits": {
+            "max_nrmse": 0.003,
+            "max_abs_error": 0.002
+          },
+          "passed": true
+        }
+      }
+    },
+    {
+      "window_seconds": [
+        0.01102,
+        0.01598
+      ],
+      "alignment": "absolute_time_linear_interpolation",
+      "passed": true,
+      "signals": {
+        "v:n1": {
+          "reference": "v_n1",
+          "unit": "V",
+          "scale": 5.0,
+          "rmse": 4.933643164752565e-07,
+          "nrmse": 9.867286329505129e-08,
+          "max_abs_error": 2.7666477050436455e-06,
+          "candidate_mean": 3.4919955324778473,
+          "reference_mean": 3.4919952864927835,
+          "candidate_rms": 3.616407842036478,
+          "reference_rms": 3.6164076682758606,
+          "limits": {
+            "max_nrmse": 0.003,
+            "max_abs_error": 0.02
+          },
+          "passed": true
+        },
+        "v:n2": {
+          "reference": "v_n2",
+          "unit": "V",
+          "scale": 5.0,
+          "rmse": 3.7846254661765445e-07,
+          "nrmse": 7.569250932353089e-08,
+          "max_abs_error": 1.5346036813523867e-06,
+          "candidate_mean": 2.7858284904826593,
+          "reference_mean": 2.785828641576621,
+          "candidate_rms": 2.996359848503038,
+          "reference_rms": 2.996359880704217,
+          "limits": {
+            "max_nrmse": 0.003,
+            "max_abs_error": 0.02
+          },
+          "passed": true
+        },
+        "i:R1": {
+          "reference": "i_r1",
+          "unit": "A",
+          "scale": 0.5,
+          "rmse": 4.933643161719713e-08,
+          "nrmse": 9.867286323439426e-08,
+          "max_abs_error": 2.7666477098176046e-07,
+          "candidate_mean": 0.15080044675221532,
+          "reference_mean": 0.15080047135072164,
+          "candidate_rms": 0.17772029583490084,
+          "reference_rms": 0.17772032968224574,
+          "limits": {
+            "max_nrmse": 0.003,
+            "max_abs_error": 0.002
+          },
+          "passed": true
+        },
+        "i:R2": {
+          "reference": "i_r2",
+          "unit": "A",
+          "scale": 0.5,
+          "rmse": 8.525910863216146e-08,
+          "nrmse": 1.7051821726432292e-07,
+          "max_abs_error": 3.850425582957451e-07,
+          "candidate_mean": 0.07061670419951876,
+          "reference_mean": 0.07061666449161619,
+          "candidate_rms": 0.07682500753002115,
+          "reference_rms": 0.07682495725848897,
+          "limits": {
+            "max_nrmse": 0.003,
+            "max_abs_error": 0.002
+          },
+          "passed": true
+        }
+      }
+    },
+    {
+      "window_seconds": [
+        0.01602,
+        0.02
+      ],
+      "alignment": "absolute_time_linear_interpolation",
+      "passed": true,
+      "signals": {
+        "v:n1": {
+          "reference": "v_n1",
+          "unit": "V",
+          "scale": 5.0,
+          "rmse": 4.969187792160813e-07,
+          "nrmse": 9.938375584321625e-08,
+          "max_abs_error": 1.7095779978326675e-06,
+          "candidate_mean": 1.73241149566448,
+          "reference_mean": 1.732411802850253,
+          "candidate_rms": 1.9568169563867244,
+          "reference_rms": 1.9568173568706253,
+          "limits": {
+            "max_nrmse": 0.003,
+            "max_abs_error": 0.02
+          },
+          "passed": true
+        },
+        "v:n2": {
+          "reference": "v_n2",
+          "unit": "V",
+          "scale": 5.0,
+          "rmse": 4.1252864176415966e-07,
+          "nrmse": 8.250572835283194e-08,
+          "max_abs_error": 1.2369494051256424e-06,
+          "candidate_mean": 2.521670838105152,
+          "reference_mean": 2.52167062403649,
+          "candidate_rms": 2.7121728026583485,
+          "reference_rms": 2.7121724855009925,
+          "limits": {
+            "max_nrmse": 0.003,
+            "max_abs_error": 0.02
+          },
+          "passed": true
+        },
+        "i:R1": {
+          "reference": "i_r1",
+          "unit": "A",
+          "scale": 0.5,
+          "rmse": 4.9691877929114446e-08,
+          "nrmse": 9.938375585822889e-08,
+          "max_abs_error": 1.7095779974996006e-07,
+          "candidate_mean": -0.173241149566448,
+          "reference_mean": -0.17324118028502533,
+          "candidate_rms": 0.19568169563867246,
+          "reference_rms": 0.19568173568706257,
+          "limits": {
+            "max_nrmse": 0.003,
+            "max_abs_error": 0.002
+          },
+          "passed": true
+        },
+        "i:R2": {
+          "reference": "i_r2",
+          "unit": "A",
+          "scale": 0.5,
+          "rmse": 8.98807524154771e-08,
+          "nrmse": 1.797615048309542e-07,
+          "max_abs_error": 2.9434074196033055e-07,
+          "candidate_mean": -0.07892593424406719,
+          "reference_mean": -0.07892588211862371,
+          "candidate_rms": 0.08355850220290746,
+          "reference_rms": 0.08355844322391504,
+          "limits": {
+            "max_nrmse": 0.003,
+            "max_abs_error": 0.002
+          },
+          "passed": true
+        }
+      }
+    }
+  ],
+  "artifacts": {
+    "directory": "local_reference/cascaded_rc/comparison_results/20261104T082134393345Z",
+    "plot": "comparison.png",
+    "candidate_data": [
+      "pycy.csv",
+      "pycy.json",
+      "pycy.npz"
+    ]
+  },
+  "comparison_plot_sha256": "cd97c45477ec768fa6f3e724a8a631f0b98e10ab7999bdda2313c065a91fc9fd",
+  "input_snapshot_sha256": {
+    "19_cascaded_rc.py": "1221e2615056b1ea4fb8a032231a805d84ee91a699f319c3533efce8f3a66e39",
+    "CascadedRCCircuitInSimulinkAndSimscape.slx": "54422f5f100c220c0bea9e396d1d1cd3fd015bb923b9ba48f555e054ddf29a06",
+    "compare.py": "4e56c3a31c674b7413c5e9fd4bf616e2a8ae8c44110b4ac88156d078aff7454a",
+    "comparison.py": "8545b5e8fba8abdc2f20cdc2006342bb428765110c5bf9052103dfb0e349affe",
+    "export_reference.m": "abc49f6527c96aa4e31de1bff082d7364f16e965530ad5299ae99327c153ec45",
+    "manifest.json": "3eeaf6c24f0819f6951efd07387d877497fb41378bc003f1e3956570349ff968",
+    "parameters.json": "5ffd654c138f6fb598605f0ec7581aae024d0397e00eebb795b0193685605c41",
+    "provenance.json": "da59f3cb03ac9d22398ced2d3e799a3dd1b89ae064a7be6390cc4c383ac31b7b",
+    "reference.csv": "e3c1633a52634edc968964603a1328c607fc966a43d7080c0ce5b79b08938948",
+    "runner.py": "9128df87a805e47ed2865df6202dc6b41437c50258f0a3ef187d80b4812a54fc"
+  }
+}
