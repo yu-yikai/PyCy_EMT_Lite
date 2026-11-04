@@ -243,6 +243,7 @@ RMS、均值、三相功率、采样峰值和跌落统计的窗口/方向规则�
 | [数值约定](docs/numerical_conventions.md) | MNA/stamp、单位、初值、时间、事件、指标和错误诊断 |
 | [元件推导](docs/component_derivations.md) | 各元件物理方程、TR/BE 离散式、局部 MNA 矩阵、历史更新与完整 EMT 循环 |
 | [模型与验证](docs/models_and_validation.md) | 保留模型方程、算例参数、验证证据及未验证范围 |
+| [长期开发路线](docs/development_roadmap/04_long_term_roadmap.md) | 实测优先级、参考目录、任务状态和恢复指令 |
 | [三端 VSC-HVDC](docs/three_terminal_vsc_hvdc.md) | 参考映射、开关网络、闭环控制、模式、故障与验证 |
 
 顶层保留 `CaseDefinition`、`Circuit`、`Simulator`、`SimulationResult`，基础 RLC/独立源、开关/故障/事件、

@@ -244,6 +244,7 @@ Window and direction rules for RMS, mean, three-phase power, sampled peaks and s
 | [Numerical conventions](docs/numerical_conventions.en.md) | MNA/stamps, units, initialization, time, events, metrics and diagnostics |
 | [Component derivations](docs/component_derivations.en.md) | Physical equations, TR/BE discretization, local MNA matrices, history updates and the complete EMT loop |
 | [Models and validation](docs/models_and_validation.en.md) | Retained equations, example parameters, evidence and unvalidated scope |
+| [Development roadmap](docs/development_roadmap/04_long_term_roadmap.md) | Evidence-based priorities, reference catalog, task state and recovery instructions |
 | [Three-terminal VSC-HVDC](docs/three_terminal_vsc_hvdc.en.md) | Reference mapping, switching network, closed-loop control, modes, fault and validation |
 
 The root exposes `CaseDefinition`, `Circuit`, `Simulator`, `SimulationResult`, basic RLC/independent sources, switches/faults/events,

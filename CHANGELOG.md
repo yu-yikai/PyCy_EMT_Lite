@@ -3,6 +3,16 @@
 These entries describe local package versions; publishing and Git tags are separate actions.
 以下记录对应本地包版本；发布与 Git 标签另行执行。
 
+## Unreleased — 2026-11-04
+
+- Add cascaded RC (19), multi-source nodal analysis (20), and grounded/floating neutral loads (21), with independent physical tests and real MATLAB R2025a Simscape comparisons. Add a real reference comparison for existing RC example 02.
+- Separate teaching scripts from reference export/comparison tools; preserve fixed acceptance windows, time-weighted metrics, input snapshots and hashes. Third-party models and raw data remain local.
+- Record verified capabilities, reference availability, task dependencies and recovery instructions; enable this development branch's Linux/Windows CI without changing package APIs or solver equations.
+
+- 新增19级联RC、20多源节点网络、21接地/浮动中性点负荷，均有独立物理测试与真实R2025a Simscape对比；既有02补真实参考。
+- 教学与参考导出/对比分离，固定窗口和阈值、时间加权指标、输入快照及hash可追溯；第三方模型与原始数据保留本地。
+- 建立实测能力/参考目录、依赖任务与恢复指令，开放本分支Linux/Windows CI，保持包API与核心方程。
+
 ## 0.1.1 — 2026-10-14
 
 - Add locked Ruff, package mypy checks, and pytest-cov development dependencies. Clean up imports and existing type annotations without adding a modeling API.

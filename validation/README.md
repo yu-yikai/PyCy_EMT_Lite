@@ -41,6 +41,8 @@ local_reference/<case_id>/         默认由 .gitignore 排除
 
 仅创建本例实际需要的文件和子目录。不为所有例强制增加空导出器；若 `manifest.json` 已包含完整映射，则不重复维护第二份映射。上述记录格式先采用简单 JSON/Markdown；当前公共工具不等于通用 manifest 校验器，也不自动证明来源或许可。
 
+各例MATLAB导出函数同名 `export_reference`。同一会话切换案例时先 `clear export_reference`，再 `addpath('validation/cases/<case>')` 将目标置于路径最前，防止调用前一个案例的缓存函数；运行日志必须核对模型名。
+
 PyCy 默认保存仍可使用 `outputs/<case_name>/`。开始一次正式比较时，将本次候选结果复制到唯一的本地运行目录，记录 hash 和源码提交，避免后续教学运行覆盖证据。参考原件、导出副本和报告应有可区分的运行编号。
 
 ## 3. 真实证据状态

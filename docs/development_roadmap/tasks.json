@@ -3,9 +3,9 @@
   "updated_date": "2026-11-04",
   "timezone": "Asia/Shanghai",
   "branch": "codex/emt-examples-longterm",
-  "checkpoint_head": "68f2f8a",
-  "current_task": "A5",
-  "formal_new_examples_completed": 1,
+  "checkpoint_head": "146a279",
+  "current_task": "B2",
+  "formal_new_examples_completed": 3,
   "status_values": [
     "planned",
     "ready",
@@ -195,13 +195,41 @@
       ],
       "validation": "独立Fraction精确KCL/功率与真实Simscape14信号",
       "acceptance": "候选前固定manifest；实际参考、全部信号双限值、自动物理测试、独立运行、教学和Git提交",
-      "status": "ready",
+      "status": "completed",
       "files": [
         "validation/cases/nodal_analysis/manifest.json",
         "validation/cases/nodal_analysis/parameters.json",
         "docs/development_roadmap/experiments/nodal_analysis_exact.json"
       ],
-      "commits": [],
+      "commits": [
+        "4c78c38",
+        "d481c57"
+      ],
+      "blockers": []
+    },
+    {
+      "id": "A6",
+      "phase": "foundation",
+      "title": "接地与浮动中性点不平衡负荷",
+      "priority": 0,
+      "dependencies": [
+        "A5"
+      ],
+      "new_capabilities": [],
+      "references": [
+        "mw-earthing-r2025a"
+      ],
+      "validation": "解析加权星点/KCL/功率、真实Simscape13信号、保留官方错标签证据",
+      "acceptance": "f685ee7预设三窗与双限值通过，内部测试/独立运行/教学/Git提交",
+      "status": "completed",
+      "files": [
+        "examples/21_earthing_neutral.py",
+        "validation/cases/earthing/manifest.json"
+      ],
+      "commits": [
+        "f685ee7",
+        "5c595e2"
+      ],
       "blockers": []
     },
     {
@@ -231,14 +259,22 @@
       ],
       "new_capabilities": [],
       "references": [
-        "mw-spwm-r2025a"
+        "mw-spwm-r2025a",
+        "mw-two-level-pwm-r2025a"
       ],
-      "validation": "载波/采样/桥臂/Ron/换流/初值逐项映射",
+      "validation": "TwoLevel真实40001点；首次比较waveform FAIL：三相NRMSE 0.02658–0.02717>0.02；RMS/基波/相位/电阻功率features通过；实测门极稳态约1%样本不同，未拟合/未改阈值",
       "acceptance": "模型一致性解释、预设基波RMS/功率方向/纹波判据和真实波形比较",
-      "status": "planned",
-      "files": [],
-      "commits": [],
-      "blockers": []
+      "status": "blocked",
+      "files": [
+        "validation/cases/two_level_pwm/manifest.json",
+        "validation/cases/two_level_pwm/parameters.json"
+      ],
+      "commits": [
+        "146a279"
+      ],
+      "blockers": [
+        "既有12的载波比较/参考保持与官方自然PWM计算时序不逐点一致，器件压降/反并联二极管也不同；各项贡献尚未隔离。现有默认参考未满足预设波形判据，不能记作完成。"
+      ]
     },
     {
       "id": "B2",
@@ -246,7 +282,8 @@
       "title": "半全桥、同步DC/DC与滤波候选",
       "priority": 2,
       "dependencies": [
-        "B1"
+        "R2",
+        "V1"
       ],
       "new_capabilities": [
         "only proven small controllers if needed"
@@ -254,7 +291,7 @@
       "references": [],
       "validation": "受控开关物理边界、真实参考先行",
       "acceptance": "每项先有参考与固定判据再实施，禁止冒充自动二极管",
-      "status": "planned",
+      "status": "in_progress",
       "files": [],
       "commits": [],
       "blockers": []
@@ -307,7 +344,7 @@
       ],
       "new_capabilities": [],
       "references": [],
-      "validation": "ruff/mypy/full pytest/examples/Windows+Linux CI",
+      "validation": "本地到21全量1144 passed158.14s；Ruff/mypy通过；5c595e2 Ubuntu/Windows全部步骤成功，run41801829262；B1后续代码需另测",
       "acceptance": "本批测试与真实CI记录、教学导航、里程碑推送和恢复指令",
       "status": "in_progress",
       "files": [

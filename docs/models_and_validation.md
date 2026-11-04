@@ -14,6 +14,8 @@
 综合示例的模式、运行结果及模型差异见[专项说明](three_terminal_vsc_hvdc.md)。
 这些是本地证据，不是远端 CI 状态，也没有声称完成实验数据或商业 EMT 软件全模型对标。
 
+2026-11-04新增专项证据：[19级联RC](../validation/cases/cascaded_rc/README.md)、[20多源节点](../validation/cases/nodal_analysis/README.md)、[21中性点不平衡](../validation/cases/earthing/README.md)及[既有02 RC](../validation/cases/rc_charging/README.md)已与实际R2025a Simscape波形按预设判据比较。每例分别记录数学边界、参数/方向、差异、原始数据hash和可复现脚本，不将这些局部结果扩大为全部元件商业认证。当前回归/远端CI及待验证项统一见[长期验证状态](development_roadmap/validation_status.md)。
+
 | 范围 | 已有证据 | 证据边界与测试入口 |
 |---|---|---|
 | R、RC、RL、RLC | 解析初值/暂态、AC 相量、KCL/KVL、无损 LC 能量、共同时间点收敛 | 声明的线性集中参数电路；[基础测试](../tests/test_basic_components.py) |

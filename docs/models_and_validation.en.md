@@ -14,6 +14,8 @@ The local regression after R5 on 2026-10-05 contains 832 passing tests; all 14 d
 The integrated example's modes, results and deviations are in its [dedicated guide](three_terminal_vsc_hvdc.en.md).
 This is local evidence, not remote CI status. No full-model comparison with experimental data or commercial EMT software is claimed.
 
+New scoped evidence on 2026-11-04: [cascaded RC (19)](../validation/cases/cascaded_rc/README.md), [multi-source nodal analysis (20)](../validation/cases/nodal_analysis/README.md), [neutral imbalance (21)](../validation/cases/earthing/README.md), and [existing RC (02)](../validation/cases/rc_charging/README.md) were compared against actual R2025a Simscape waveforms using predefined criteria. Each guide records model boundaries, parameters, signs, differences, raw-data hashes and reproduction scripts. These results do not certify every component. See [current validation status](development_roadmap/validation_status.md) for regression, remote CI and remaining work.
+
 | Scope | Existing evidence | Boundary and test entry point |
 |---|---|---|
 | R, RC, RL, RLC | Analytic initialization/transients, AC phasors, KCL/KVL, lossless LC energy, common-time convergence | Stated linear lumped circuits; [basic tests](../tests/test_basic_components.py) |
