@@ -99,6 +99,7 @@ Complete 01 first, then study storage in 02 and 03 before moving to 04 and 17. O
 | Integrated VSC-HVDC | [18](examples/18_three_terminal_vsc_hvdc.py) | Follow voltage and power after an AC fault through three two-level bridges, independent PLL/dq loops and a bipolar DC network. |
 
 [The cascaded-RC reference guide](validation/cases/cascaded_rc/README.md) records the real Simscape run, fixed acceptance criteria and reproduction commands. Teaching scripts plot their own waveforms; independent validation reads vendor reference data.
+[The existing RC charging example](validation/cases/rc_charging/README.md) also has a reproducible Simscape comparison.
 
 Before moving from 12 to 18, follow the existing tests in [the HVDC test module](tests/test_three_terminal_vsc_hvdc.py):
 `test_single_bridge_open_loop_power_identity` checks one bridge's power accounting;
