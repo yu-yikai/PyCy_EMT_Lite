@@ -1,0 +1,32 @@
+{
+  "case_id": "transmission_line",
+  "reference_id": "mw-transmission-line-r2025a",
+  "example": "examples/22_t_section_transmission_line.py",
+  "acceptance_defined": "2026-11-04 before PyCy candidate implementation or numerical comparison",
+  "reference_source": "https://www.mathworks.com/help/simscape/ug/transmission-line.html",
+  "reference_model": "TransmissionLine.slx",
+  "reference_platform": "MATLAB R2025a Update 1 / Simulink / Simscape",
+  "reference_state": "runnable",
+  "windows_seconds": [[0.0, 5e-8]],
+  "time_shift_seconds": 0,
+  "known_difference": "Same finite 50-cell symmetric RLCG T ladder and zero storage initial state. Reference solver is independently refined before candidate comparison; PyCy uses trapezoidal integration at 10 ps. This is a lumped T-ladder validation, not Bergeron, a pi ladder, or an exact distributed cable. The official plot's S2.T_5.p2.v is boundary 15, not 25; true boundary 25 is S3.T_5.p2.v. No time, phase, amplitude or propagation-delay fitting.",
+  "signals": [
+    {"candidate": "v:n0", "reference": "v_source", "unit": "V", "scale": 10.0, "max_nrmse": 0.003, "max_abs_error": 0.05},
+    {"candidate": "v:n15", "reference": "v_boundary_15", "unit": "V", "scale": 10.0, "max_nrmse": 0.003, "max_abs_error": 0.05},
+    {"candidate": "v:n25", "reference": "v_boundary_25", "unit": "V", "scale": 10.0, "max_nrmse": 0.003, "max_abs_error": 0.05},
+    {"candidate": "v:n50", "reference": "v_load", "unit": "V", "scale": 10.0, "max_nrmse": 0.003, "max_abs_error": 0.05},
+    {"candidate": "i:L1_left", "reference": "i_source_to_line", "unit": "A", "scale": 0.2, "max_nrmse": 0.003, "max_abs_error": 0.001},
+    {"candidate": "i:Rload", "reference": "i_load", "unit": "A", "scale": 0.2, "max_nrmse": 0.003, "max_abs_error": 0.001}
+  ],
+  "internal_acceptance": {
+    "independent_solution": "101 physical states (51 combined RL currents plus 50 shunt capacitor voltages), augmented by fixed 200 MHz sine/cosine; matrix-exponential response from zero physical state, independent of MNA stamps",
+    "max_voltage_error_versus_exact_volt": 0.05,
+    "max_current_error_versus_exact_ampere": 0.001,
+    "trapezoidal_step_refinement_seconds": [2e-11, 1e-11, 5e-12],
+    "minimum_refinement_error_ratio": 3.0,
+    "kcl_abs_tolerance_ampere": 1e-8,
+    "energy_balance_relative_tolerance": 0.005,
+    "reference_self_refinement": "10 ps and 5 ps maximum-step native runs must differ by less than one tenth of each waveform absolute error limit, with RelTol 1e-8 and AbsTol 1e-10",
+    "required_checks": ["zero initial capacitor voltage and inductor current", "same 50 T cells and source/termination", "source/load current direction", "KCL and positive dissipative power", "stored energy plus integrated resistive loss versus source work", "exact finite-ladder response rather than a 25 ns pure-delay approximation"]
+  }
+}
