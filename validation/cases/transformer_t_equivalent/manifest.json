@@ -1,0 +1,35 @@
+{
+  "case_id": "transformer_t_equivalent",
+  "reference_id": "mw-mutual-transformer-t-r2025a",
+  "example": "examples/23_transformer_t_equivalent.py",
+  "acceptance_defined": "2026-11-04 before PyCy candidate implementation or numerical comparison; official Live Script physical parameter set",
+  "reference_source": "https://www.mathworks.com/help/simscape/ug/comparison-of-mutual-inductor-and-ideal-transformer.html",
+  "reference_model": "CompareCircuits.slx",
+  "reference_platform": "MATLAB R2025a Update 1 / Simulink / Simscape",
+  "reference_state": "runnable",
+  "windows_seconds": [[0.0, 1.999], [2.001, 8.0]],
+  "event_guard_seconds": 0.001,
+  "time_shift_seconds": 0,
+  "known_difference": "Same third pure electrical T-equivalent network of the original five-network CompareCircuits model, using the official Live Script parameter set (step at 2s, Rc=1e5 inverse henry). Same ideal ratio and three separate lossless inductors, zero initial currents; magnetizing branch is after primary leakage. Reference solver is independently refined. Linear DC-step experiment does not certify physical DC transformer operation, saturation, hysteresis, or the different aggregate model of existing example 09. No fitted time/phase/amplitude alignment.",
+  "signals": [
+    {"candidate": "v:src", "reference": "v_source", "unit": "V", "scale": 1.0, "max_nrmse": 0.001, "max_abs_error": 0.005},
+    {"candidate": "v:core_p", "reference": "v_primary_core", "unit": "V", "scale": 1.0, "max_nrmse": 0.001, "max_abs_error": 0.005},
+    {"candidate": "v:sec_p", "reference": "v_secondary_core", "unit": "V", "scale": 5.0, "max_nrmse": 0.001, "max_abs_error": 0.025},
+    {"candidate": "v:load", "reference": "v_load", "unit": "V", "scale": 0.2, "max_nrmse": 0.001, "max_abs_error": 0.001},
+    {"candidate": "i:L1", "reference": "i_source_to_transformer", "unit": "A", "scale": 1.0, "max_nrmse": 0.001, "max_abs_error": 0.001},
+    {"candidate": "i:L2", "reference": "i_load", "unit": "A", "scale": 0.2, "max_nrmse": 0.001, "max_abs_error": 0.0002},
+    {"candidate": "i:Lm", "reference": "i_magnetizing", "unit": "A", "scale": 1.0, "max_nrmse": 0.001, "max_abs_error": 0.001}
+  ],
+  "internal_acceptance": {
+    "independent_solution": "Two-state coupled equation [[.11,-.5],[-.5,2.75]]*d[i_source,i_load]/dt + diag(1,1)*[i_source,i_load] = [u,0], exact step response via matrix exponential; i_magnetizing=i_source-i_load/.2",
+    "max_source_current_error_ampere": 0.001,
+    "max_load_current_error_ampere": 0.0002,
+    "max_magnetizing_current_error_ampere": 0.001,
+    "trapezoidal_step_refinement_seconds": [0.002, 0.001, 0.0005],
+    "minimum_refinement_error_ratio": 3.0,
+    "kcl_abs_tolerance_ampere": 1e-9,
+    "energy_balance_relative_tolerance": 0.001,
+    "reference_self_refinement": "1ms/0.5ms native maximum-step runs, ode15s RelTol1e-9 AbsTol1e-11; union-time differences in both frozen windows below one tenth of each signal absolute limit",
+    "required_checks": ["all three initial inductor currents zero", "inductor currents continuous through the explicit source event", "ideal voltage ratio and zero transformer power loss", "magnetizing KCL with secondary sign", "positive winding-external resistor losses and stored energy", "energy plus losses versus source work with explicit event sides", "finite 8s response versus exact solution; DC limit is a separate asymptotic check"]
+  }
+}
