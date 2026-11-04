@@ -1,11 +1,13 @@
 """Independent arithmetic and failure cases for cross-platform comparison tools."""
 
+import json
 import math
 
 import pytest
 
 from pycy_emt_lite.io.results import SimulationResult
 from validation.common.comparison import SignalSpec, compare_signals
+from validation.common.runner import run_comparison
 
 
 def result(times, values, events=()):
@@ -56,3 +58,10 @@ def test_rejects_extrapolation_and_cross_event_interpolation():
 def test_rejects_invalid_engineering_scales_and_limits(scale, limit):
     with pytest.raises(ValueError):
         SignalSpec("x", "x", "V", scale, limit, 0.1)
+
+
+def test_runner_rejects_empty_acceptance_instead_of_vacuous_pass(tmp_path):
+    manifest = tmp_path / "manifest.json"
+    manifest.write_text(json.dumps({"case_id": "empty", "time_shift_seconds": 0, "windows_seconds": []}), encoding="utf-8")
+    with pytest.raises(ValueError, match="acceptance window"):
+        run_comparison(None, manifest, tmp_path / "example.py")
