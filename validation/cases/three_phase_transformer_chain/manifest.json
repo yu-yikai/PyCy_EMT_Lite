@@ -1,0 +1,222 @@
+{
+  "case_id": "three_phase_transformer_chain",
+  "reference_id": "mw-three-phase-delta-reference-r2025a",
+  "example": "examples/24_three_phase_transformer_chain.py",
+  "acceptance_defined": "2026-11-06 before candidate implementation or numerical candidate comparison; original default physical parameters and independently derived cold-start/TR error bound",
+  "reference_source": "https://www.mathworks.com/help/simscape-electrical/ug/transmission-system-with-delta-reference.html",
+  "reference_model": "ee_delta_transmission.slx",
+  "reference_platform": "MATLAB R2025a Update 1 / Simulink / Simscape / Simscape Electrical",
+  "reference_state": "runnable",
+  "windows_seconds": [
+    [
+      0,
+      4e-05
+    ],
+    [
+      4e-05,
+      0.05
+    ]
+  ],
+  "event_guard_seconds": 0,
+  "time_shift_seconds": 0,
+  "known_difference": "Same original eight-block physical network without any transmission line section. Existing transformers combine two positive winding resistances on primary via the exact ideal current ratio because leakage/magnetizing/core-loss branches are excluded. Two wye neutrals remain floating. A case-local mean-voltage constraint represents the delta vector-triangle center; no physical grounding or leakage resistor is added. Source X/R-derived R/L and zero current initialization retained. Native source I/IL are entering the source, so normalized supply current is their negative. Reference solver independently tightened/refined; absolute times preserved, no shift, phase or amplitude fit. This does not validate saturation, zero-sequence faults or other connection groups.",
+  "signals": [
+    {
+      "candidate": "v:lv_a",
+      "reference": "v_source_a",
+      "unit": "V",
+      "scale": 13000,
+      "max_nrmse": 0.002,
+      "max_abs_error": 50
+    },
+    {
+      "candidate": "v:hv_a",
+      "reference": "v_delta_a",
+      "unit": "V",
+      "scale": 115000,
+      "max_nrmse": 0.002,
+      "max_abs_error": 500
+    },
+    {
+      "candidate": "v:load_a",
+      "reference": "v_load_a",
+      "unit": "V",
+      "scale": 13000,
+      "max_nrmse": 0.002,
+      "max_abs_error": 50
+    },
+    {
+      "candidate": "i:Ls_a",
+      "reference": "i_source_a",
+      "unit": "A",
+      "scale": 0.1,
+      "max_nrmse": 0.002,
+      "max_abs_error": 0.0003
+    },
+    {
+      "candidate": "i:Tup:secondary:a",
+      "reference": "i_up_secondary_a",
+      "unit": "A",
+      "scale": 0.01,
+      "max_nrmse": 0.002,
+      "max_abs_error": 2e-05
+    },
+    {
+      "candidate": "i:Rload_a",
+      "reference": "i_load_a",
+      "unit": "A",
+      "scale": 0.1,
+      "max_nrmse": 0.002,
+      "max_abs_error": 0.0003
+    },
+    {
+      "candidate": "v:lv_b",
+      "reference": "v_source_b",
+      "unit": "V",
+      "scale": 13000,
+      "max_nrmse": 0.002,
+      "max_abs_error": 50
+    },
+    {
+      "candidate": "v:hv_b",
+      "reference": "v_delta_b",
+      "unit": "V",
+      "scale": 115000,
+      "max_nrmse": 0.002,
+      "max_abs_error": 500
+    },
+    {
+      "candidate": "v:load_b",
+      "reference": "v_load_b",
+      "unit": "V",
+      "scale": 13000,
+      "max_nrmse": 0.002,
+      "max_abs_error": 50
+    },
+    {
+      "candidate": "i:Ls_b",
+      "reference": "i_source_b",
+      "unit": "A",
+      "scale": 0.1,
+      "max_nrmse": 0.002,
+      "max_abs_error": 0.0003
+    },
+    {
+      "candidate": "i:Tup:secondary:b",
+      "reference": "i_up_secondary_b",
+      "unit": "A",
+      "scale": 0.01,
+      "max_nrmse": 0.002,
+      "max_abs_error": 2e-05
+    },
+    {
+      "candidate": "i:Rload_b",
+      "reference": "i_load_b",
+      "unit": "A",
+      "scale": 0.1,
+      "max_nrmse": 0.002,
+      "max_abs_error": 0.0003
+    },
+    {
+      "candidate": "v:lv_c",
+      "reference": "v_source_c",
+      "unit": "V",
+      "scale": 13000,
+      "max_nrmse": 0.002,
+      "max_abs_error": 50
+    },
+    {
+      "candidate": "v:hv_c",
+      "reference": "v_delta_c",
+      "unit": "V",
+      "scale": 115000,
+      "max_nrmse": 0.002,
+      "max_abs_error": 500
+    },
+    {
+      "candidate": "v:load_c",
+      "reference": "v_load_c",
+      "unit": "V",
+      "scale": 13000,
+      "max_nrmse": 0.002,
+      "max_abs_error": 50
+    },
+    {
+      "candidate": "i:Ls_c",
+      "reference": "i_source_c",
+      "unit": "A",
+      "scale": 0.1,
+      "max_nrmse": 0.002,
+      "max_abs_error": 0.0003
+    },
+    {
+      "candidate": "i:Tup:secondary:c",
+      "reference": "i_up_secondary_c",
+      "unit": "A",
+      "scale": 0.01,
+      "max_nrmse": 0.002,
+      "max_abs_error": 2e-05
+    },
+    {
+      "candidate": "i:Rload_c",
+      "reference": "i_load_c",
+      "unit": "A",
+      "scale": 0.1,
+      "max_nrmse": 0.002,
+      "max_abs_error": 0.0003
+    },
+    {
+      "candidate": "i:DeltaCenter",
+      "reference": "i_delta_reference_total",
+      "unit": "A",
+      "scale": 0.1,
+      "max_nrmse": 1e-07,
+      "max_abs_error": 1e-08
+    }
+  ],
+  "internal_acceptance": {
+    "independent_solution": "Ls*di/dt+(Rs+.0676+169000)*i = 13000*sin(2*pi*60*t+phi), phi=[0,-120,+120]deg, i(0)=0. Exact sin+exp solution and fixed AB/BC/CA algebra reconstruct all ports and losses; no MNA reuse or fitted parameters.",
+    "max_supply_or_load_current_error_ampere": 0.0003,
+    "max_up_secondary_winding_current_error_ampere": 2e-05,
+    "max_low_side_voltage_error_volt": 50,
+    "max_delta_voltage_error_volt": 500,
+    "kcl_abs_tolerance_ampere": 1e-08,
+    "mean_delta_voltage_abs_tolerance_volt": 1e-06,
+    "reference_total_current_abs_tolerance_ampere": 1e-08,
+    "energy_balance_relative_tolerance": 0.001,
+    "trapezoidal_startup_refinement_seconds": [
+      2e-06,
+      1e-06,
+      5e-07
+    ],
+    "refinement_window_seconds": [
+      0,
+      4e-05
+    ],
+    "minimum_refinement_error_ratio": 3,
+    "steady_feature_window_seconds": [
+      0.016666666666666666,
+      0.05
+    ],
+    "steady_rms_relative_tolerance": 0.001,
+    "intermediate_phase_shift_degree": -30,
+    "terminal_phase_shift_degree": 0,
+    "phase_tolerance_degree": 0.05,
+    "reference_self_refinement": "ode15s baseline RelTol1e-9 AbsTol1e-11 MaxStep25us; refined RelTol1e-10 AbsTol1e-12 MaxStep12.5us; both InitialStep1e-10s; all 19 signals in both fixed windows must differ by less than one tenth each formal absolute limit and one tenth each NRMSE limit",
+    "required_checks": [
+      "actual three source currents initially zero; finite initial voltages consistent with source emf",
+      "same two floating wye neutrals and delta AB/BC/CA pairing",
+      "delta center mean voltage zero and total reference current zero; reference is not physical return path",
+      "winding versus line current C-transpose mapping and signed source supply current",
+      "positive copper/source/load losses and exact port power balance",
+      "total source work = source L energy + all resistor losses over whole startup/steady waveform",
+      "full transient comparison with independent sin+exp solution, plus TR startup refinement",
+      "steady phase shift at intermediate bus and cancellation at load; load is fixed impedance, not constant power"
+    ],
+    "phase_reference": "Corresponding v:lv_a,b,c at Tup primary terminal, not internal source emf",
+    "energy_balance_relative_denominator": "max(abs(total source work), abs(total integrated resistor loss), 1e-12 J); whole interval",
+    "trapezoidal_discrete_energy_identity": "Each step: delta(.5*Ls*sum(i^2)) = h*(mean_endpoint_emf dot mean_endpoint_i - (Rs+.0676+169000)*sum(mean_endpoint_i^2)); physical trapezoidal integration of instantaneous power checked separately",
+    "trapezoidal_discrete_energy_relative_tolerance": 1e-07,
+    "delta_reference_current_definition": "i:DeltaCenter is total lambda; each nodal reference current lambda/3; lambda must be zero for the isolated island"
+  }
+}
