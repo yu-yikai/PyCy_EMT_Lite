@@ -1770,7 +1770,7 @@
         ".slx"
       ],
       "model_version": "Saved R2025a Prerelease Update 2 (25.1.0.2839344); run using R2025a Update 1 (25.1.0.2973910)",
-      "status": "runnable",
+      "status": "reference_ready",
       "software_requirements": [
         "MATLAB R2025a Update 1",
         "Simulink",
@@ -1793,13 +1793,9 @@
       "local_path": "local_reference/d0_research",
       "allows_local_save": "Installed official example under licensed software for local study",
       "allows_redistribution": "not_asserted",
-      "mathematical_compatibility": "Independent physical impedance/phasor derivation agrees with all 17 native RLC branches, 12 state phasors, six output phasors and checked transformer derivative rows. Preserve actual source-line-transformer order, all compensation/equivalent branches, corrected shunt conductance and nonzero steady-state initialization. Explicit existing basic R/L/C plus ideal transformer appear sufficient; no PyCy candidate yet.",
+      "mathematical_compatibility": "Complete unchanged source→two-pi line→linear transformer→fixed RC/Zs load network delivered as case25. Existing public R/L/C initial states and ideal transformer suffice; all corrected G, compensation and core-loss branches retained, exact unbranched R2+Rz1 folding only. Independent physical nodal oracle, both native runs and full time-domain comparison passed; no core/dependency/framework changes.",
       "blockers": [],
-      "remaining_work": [
-        "Freeze physical parameters, phasor initialization, directions and time-domain acceptance before candidate creation.",
-        "Generate real refined reference and quantify its numerical/interpolation accuracy.",
-        "Implement, independently test, compare, plot, explain and commit candidate before counting completion."
-      ],
+      "remaining_work": [],
       "sha256": {
         "simulink/power_gui.slx": "a46b7c34658c65ce58c6e51a6d167244c06f4e839063c00bd1ff75c78bdc5a08",
         "default_runs/20261106T044524416Z/simulink_output.mat": "5e41fb2de7cd7a9d5ae88e892d3d612ab56a19943bdbe830148373fe64109e1f",
@@ -1843,9 +1839,60 @@
         "reference_inventory_files": 74
       },
       "formal_pycy_validation": {
-        "status": "not_started",
-        "implementation_commit": null,
-        "note": "No candidate, frozen acceptance or refined commercial comparison yet; formal completed-example count remains six."
+        "status": "completed",
+        "acceptance_commits": [
+          "65d89bb577c07656142f13c062907a5d7d600aba",
+          "436c26642aff420d9e209b19bbf6043ca8e5b55c"
+        ],
+        "implementation_commit": "9e2513dd98c12ee4f50d94261318ef56fd475aa4",
+        "report": "validation/cases/source_line_transformer/validation_report.json",
+        "run_id": "20261106T054356596388Z",
+        "report_sha256_raw": "67a49999c4959a601c786401d3415d1bf69e095d4e5b84faeb662baf75ea03ad",
+        "report_sha256_git_lf": "a7a7d0556f6bd3e3b6b761f2465bfb118accfc73d6345df1ba1e82b4d12cb88b",
+        "candidate_step_s": 1e-05,
+        "candidate_samples": 5001,
+        "note": "All28 real comparisons,11 independent physical tests,Agg,1190 full regression including slow,teaching/plot/hash audit and feature commit complete. First state-block guard failure and original baseline preserved; all physical parameters/windows/limits unchanged. Cross-OS CI remains separate.",
+        "os_ci": {
+          "head_sha": "9e2513dd98c12ee4f50d94261318ef56fd475aa4",
+          "run_id": 42170878293,
+          "status": "blocked_before_runner",
+          "reason": "GitHub account billing lock",
+          "execution_started": false,
+          "test_count": null,
+          "evidence": "docs/development_roadmap/experiments/ci_9e2513d.json"
+        }
+      },
+      "formal_reference": {
+        "local_path": "local_reference/source_line_transformer",
+        "export_run_id": "20261106T054135322Z",
+        "acceptance_commit": "65d89bb577c07656142f13c062907a5d7d600aba",
+        "native_state_guard_commit": "436c26642aff420d9e209b19bbf6043ca8e5b55c",
+        "native_samples": [
+          5023,
+          10023
+        ],
+        "time_s": [
+          0,
+          0.05
+        ],
+        "solver": "ode15s; baseline RelTol/AbsTol1e-9 MaxStep10us, refined1e-10 MaxStep5us; InitialStep1ns, AutoScaleAbsTol off",
+        "self_refinement": "28 checks passed both original one-tenth budgets; both runs also passed 56 independent sample/PWL accuracy checks. Independent Python audit recomputed all28 self and56 PWL bounds.",
+        "baseline_source": {
+          "reused_read_only": true,
+          "original_run_id": "20261106T052652719Z",
+          "original_mat_sha256": "15a9a5c9d1acf78415346a549d1964c0c948fd786d1df9699679caa550c039ba",
+          "original_exporter_sha256": "47d39e6c2cd3a1edf2dbb04f8f0781ced3c887ef55559fb05ffe28b1477f1217",
+          "note": "Original full native baseline retained after extraction-guard failure; no repeated baseline simulation. Refined is a new full native run."
+        },
+        "sha256": {
+          "simulink/power_gui.slx": "a46b7c34658c65ce58c6e51a6d167244c06f4e839063c00bd1ff75c78bdc5a08",
+          "normalized_results/reference.csv": "735206b2de6af08f162d35ac2a40f7986d266269ffd6d1e6d0f18dafc9af22f3",
+          "provenance.json": "d96f571c89494109d805c8ab09e2b3c01d8043479f1de73bbc08e5764899eccd",
+          "self_refinement.json": "7e0a1e6a99249c5148b2ae1644a8749b952e8f39c38f807ac09d86ab2565c699",
+          "raw_results/simulink_output.mat": "15a9a5c9d1acf78415346a549d1964c0c948fd786d1df9699679caa550c039ba",
+          "refined_results/simulink_output.mat": "9324cdf6a6274f060a92e71dfa29a3e0815d4971eb7a3d0481ff494fbdd250c0",
+          "export_runs/20261106T054135322Z/inputs/export_reference.m": "44683fa2c96ec1cbba8c028a828aaf41faf3223c8005f9196b3fd738282b12c8"
+        }
       }
     }
   ],

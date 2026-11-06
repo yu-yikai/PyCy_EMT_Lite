@@ -29,4 +29,4 @@
 
 2026-11-06状态：本地最终1179 passed490.61s（含slow），核心源码相对原main未改。到22的双系统CI已通过；23/24的精确CI因GitHub账户账单锁在runner启动前失败，F1局部受阻，不能借旧CI扩大结论。12仍按146a279固定标准保留波形FAIL；24原1µs startupFAIL也保留，0.5µs在原限值下重验通过。
 
-D0目前优先核查本机官方 `power_gui` 原完整线性网络，其实际顺序为源→两π段线路→T→固定阻抗负荷。先核原生修正参数、非零初值和可观测性，再决定候选；详见[专项调查](experiments/source_line_transformer_reference_probe.md)。B2原同步Buck虽可运行，二极管、初始化及连续控制相容性尚未充分证明，暂不增加候选或框架。历史实施经过留在progress和Git，当前任务状态以tasks为准。
+D0已交付25完整 `power_gui` 线性网络：源→两π段线路→T→固定阻抗负荷，保留所有补偿/修正G和非零初值；真实双run精化、28项商业比较及1190全量回归通过，无核心或依赖改动。见[教学与验证指南](../../validation/cases/source_line_transformer/README.md)及[前置调查](experiments/source_line_transformer_reference_probe.md)。下一步B2原同步Buck虽可运行，二极管、初始化及连续控制相容性尚未充分证明，继续参考核验，暂不增加候选或框架。历史实施经过留在progress和Git，当前任务状态以tasks为准。

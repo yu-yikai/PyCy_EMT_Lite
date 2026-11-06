@@ -104,7 +104,8 @@ B3为`load_bus`，电流表后的`load`与它等电位。参考官方模型的�
 11项独立物理测试、独立Agg运行5001点、锁定同步27包、全范围Ruff、mypy39源文件及两个新Python入口均通过。
 完整回归为**1190 passed，478.96 s（含slow）**；XML记录1190项、零失败/错误/跳过。
 日志及XML位于`.tmp/longterm/d0-final-full-pytest.log`和`d0-final-full-tests.xml`。
-本地结果不代替双操作系统CI：最近实查的1423c7d作业因GitHub账单锁未启动，25还没有远端执行结论。
+本地结果不代替双操作系统CI：精确9e2513d的[run42170878293](https://github.com/yu-yikai/PyCy_EMT_Lite/actions/runs/42170878293)
+两job均因GitHub账单锁在runner启动前失败，步骤为空，没有执行测试；25跨OS尚未验证。
 
 | 证据 | SHA-256 |
 | --- | --- |
