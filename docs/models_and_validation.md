@@ -24,6 +24,7 @@
 | 单相 π 线、分段线 | 相量/二端口参考、KCL、能量、时间或空间收敛 | 无宽频、相间耦合；[线路测试](../tests/test_line_models.py) |
 | 单相/三相 Bergeron | 整步时延、到达前无响应、匹配传输、开路/短路反射、事件右侧历史 | 固定网格、独立相；同一线路测试 |
 | 线性单相/三相变压器 | 相量、启动解析解、接线相移、端口功/储能、磁链一致性、时间收敛 | 四种声明接法；无共同铁芯耦合；[变压器测试](../tests/test_transformers.py) |
+| 23线性变压器T等效 | 独立两状态矩阵指数、KCL/能量、事件电流连续、TR细化及真实Simscape七量通过 | 外置三电感、漏感后的励磁支路；无饱和/磁滞；[专项证据](../validation/cases/transformer_t_equivalent/README.md)、[测试](../tests/test_transformer_t_equivalent.py) |
 | 两种同步机及示例 10 | 端口方程、功率方向、平衡点、独立连续 ODE、机电状态一阶收敛 | 声明的简化方程；[经典模型](../tests/test_synchronous_machine.py)、[Park 模型](../tests/test_park_synchronous_generator.py) |
 | L/LC/LCL 滤波器 | 参数拒绝、接线、独立 ODE、KCL、离散能量及步长收敛 | 被动线性网络；[电力电子测试](../tests/test_power_electronics.py) |
 | PWM 示例 12 | 门极、浮置星点、基波 RL 参考、细网格对照 | 细网格不构成器件参考，边沿不自动定位；同一电力电子测试 |
