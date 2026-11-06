@@ -3,7 +3,7 @@
   "updated_date": "2026-11-06",
   "timezone": "Asia/Shanghai",
   "branch": "codex/emt-examples-longterm",
-  "checkpoint_head": "54374d5d9caf480d765b18faacea763054304f27",
+  "checkpoint_head": "8dc040f8c777773e3c081450367872839e9ee627",
   "current_task": "D0",
   "formal_new_examples_completed": 6,
   "status_values": [
@@ -442,11 +442,14 @@
       "references": [
         "mw-source-line-transformer-r2025a"
       ],
-      "validation": "原power_gui完整网默认50ms真实成功219点/12态/7.2005767s；Dirty off、原件hash不变。17精确支路、12非零相量初值及6输出独立物理核验通过（最大状态相对差3.839e-13）。最终库存74项hash全核；仅runnable，无参考自身精化、候选协议或实现。下一步候选前固定物理/方向/完整窗/步长与双误差限。",
+      "validation": "原power_gui真实219点/12态及独立17支路/12态相量核验通过；实现前协议固定14量、完整双窗[0,1ms]/[1ms,50ms]、TR10us、maxabs=1e-4scale/NR5e-5，参考双run/独立物理精度预算为两限十分之一。候选与tests在冻结提交前不存在；待真实精化/内部与候选商业验收，不计完成。",
       "acceptance": "只在有独立教学价值且不引入新框架时实施；真实模型/独立物理/商业比较/图报告/测试/教学/提交全部完成。24无实际线路不能替代本项。",
       "status": "in_progress",
       "files": [
-        "docs/development_roadmap/experiments/source_line_transformer_reference_probe.md"
+        "docs/development_roadmap/experiments/source_line_transformer_reference_probe.md",
+        "validation/cases/source_line_transformer/manifest.json",
+        "validation/cases/source_line_transformer/parameters.json",
+        "validation/cases/source_line_transformer/acceptance_plan.md"
       ],
       "commits": [
         "54374d5d9caf480d765b18faacea763054304f27"
