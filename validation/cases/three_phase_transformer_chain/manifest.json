@@ -22,7 +22,7 @@
   "known_difference": "Same original eight-block physical network without any transmission line section. Existing transformers combine two positive winding resistances on primary via the exact ideal current ratio because leakage/magnetizing/core-loss branches are excluded. Two wye neutrals remain floating. A case-local mean-voltage constraint represents the delta vector-triangle center; no physical grounding or leakage resistor is added. Source X/R-derived R/L and zero current initialization retained. Native source I/IL are entering the source, so normalized supply current is their negative. Reference solver independently tightened/refined; absolute times preserved, no shift, phase or amplitude fit. This does not validate saturation, zero-sequence faults or other connection groups.",
   "signals": [
     {
-      "candidate": "v:lv_a",
+      "candidate": "v:lv:a",
       "reference": "v_source_a",
       "unit": "V",
       "scale": 13000,
@@ -30,7 +30,7 @@
       "max_abs_error": 50
     },
     {
-      "candidate": "v:hv_a",
+      "candidate": "v:hv:a",
       "reference": "v_delta_a",
       "unit": "V",
       "scale": 115000,
@@ -38,7 +38,7 @@
       "max_abs_error": 500
     },
     {
-      "candidate": "v:load_a",
+      "candidate": "v:load:a",
       "reference": "v_load_a",
       "unit": "V",
       "scale": 13000,
@@ -70,7 +70,7 @@
       "max_abs_error": 0.0003
     },
     {
-      "candidate": "v:lv_b",
+      "candidate": "v:lv:b",
       "reference": "v_source_b",
       "unit": "V",
       "scale": 13000,
@@ -78,7 +78,7 @@
       "max_abs_error": 50
     },
     {
-      "candidate": "v:hv_b",
+      "candidate": "v:hv:b",
       "reference": "v_delta_b",
       "unit": "V",
       "scale": 115000,
@@ -86,7 +86,7 @@
       "max_abs_error": 500
     },
     {
-      "candidate": "v:load_b",
+      "candidate": "v:load:b",
       "reference": "v_load_b",
       "unit": "V",
       "scale": 13000,
@@ -118,7 +118,7 @@
       "max_abs_error": 0.0003
     },
     {
-      "candidate": "v:lv_c",
+      "candidate": "v:lv:c",
       "reference": "v_source_c",
       "unit": "V",
       "scale": 13000,
@@ -126,7 +126,7 @@
       "max_abs_error": 50
     },
     {
-      "candidate": "v:hv_c",
+      "candidate": "v:hv:c",
       "reference": "v_delta_c",
       "unit": "V",
       "scale": 115000,
@@ -134,7 +134,7 @@
       "max_abs_error": 500
     },
     {
-      "candidate": "v:load_c",
+      "candidate": "v:load:c",
       "reference": "v_load_c",
       "unit": "V",
       "scale": 13000,
@@ -213,10 +213,11 @@
       "full transient comparison with independent sin+exp solution, plus TR startup refinement",
       "steady phase shift at intermediate bus and cancellation at load; load is fixed impedance, not constant power"
     ],
-    "phase_reference": "Corresponding v:lv_a,b,c at Tup primary terminal, not internal source emf",
+    "phase_reference": "Corresponding v:lv:a,b,c at Tup primary terminal, not internal source emf",
     "energy_balance_relative_denominator": "max(abs(total source work), abs(total integrated resistor loss), 1e-12 J); whole interval",
     "trapezoidal_discrete_energy_identity": "Each step: delta(.5*Ls*sum(i^2)) = h*(mean_endpoint_emf dot mean_endpoint_i - (Rs+.0676+169000)*sum(mean_endpoint_i^2)); physical trapezoidal integration of instantaneous power checked separately",
     "trapezoidal_discrete_energy_relative_tolerance": 1e-07,
     "delta_reference_current_definition": "i:DeltaCenter is total lambda; each nodal reference current lambda/3; lambda must be zero for the isolated island"
-  }
+  },
+  "signal_name_correction": "Before candidate exists or is run: use native ThreePhaseTransformer node fields v:lv:a/hv:a/load:a rather than underscore aliases; physics, windows and numerical limits unchanged."
 }

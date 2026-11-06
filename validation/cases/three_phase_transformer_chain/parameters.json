@@ -41,7 +41,7 @@
     "bc",
     "ca"
   ],
-  "delta_voltage_reference": "mean(v:hv_a,v:hv_b,v:hv_c)=0; one local linear constraint, equal lambda/3 nodal currents, total lambda must be zero for this isolated delta island",
+  "delta_voltage_reference": "mean(v:hv:a,v:hv:b,v:hv:c)=0; one local linear constraint, equal lambda/3 nodal currents, total lambda must be zero for this isolated delta island",
   "load_nominal_power_watt": 1000.0,
   "load_model": "grounded wye fixed resistors; rated power converts impedance, not constant power",
   "load_resistance_ohm_per_phase": 169000.0,
