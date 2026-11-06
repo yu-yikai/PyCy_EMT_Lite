@@ -68,3 +68,5 @@ A4b已取得新的独立真实证据：ee_delta_transmission原完整双三相�
 2026-11-06本批已正常push到1423c7d6dfbca10547cf856dc20faa5dadf935dc。一次有界公开API观察确认最新CI run42162705728终态failure：Windows127711904930/Ubuntu127711905228均runner_id=0、steps=[]，各自注释明确账户billing lock，未执行任何测试，远端test_count=null。证据experiments/ci_1423c7d.json，7份raw响应/hash全核；网络观察及所有本轮监控已终态。23/24跨OS仍未验证，F1局部受阻不改变本地1179/商业数值PASS。继续D0参考先行，不通过代码或空提交绕账单锁。
 
 2026-11-06 D0研究进展：核本地/真实远端4ce96cc且工作区干净后，找到本机官方power_gui原完整源→两π线路→线性T→固定阻抗负荷网。保留原顺序和全部RL补偿/等值支路，默认50ms实跑成功219点/12状态、sim7.2005767s，Dirty off、原件hash不变。原生状态初值全非零；双曲修正生成的三条shunt实际存在。原Scope无保存波形，仅有tout/xout及原生C/D可核映射。记录experiments/source_line_transformer_reference_probe.md；当前runnable而非reference_ready，无候选、正式新增仍6。独立17支路参数、12态相量/初值及6输出均核对通过，最终74项hash全核。复用基础R/L/C与理想T可望保持核心不改；下一步在候选前冻结协议。本轮也只读确认PSCAD可执行文件/现有AL存在，但工具链兼容及许可运行未证，不再声称已完成PSCAD环境验证。
+
+2026-11-06 D0研究检查点已提交54374d5d9caf480d765b18faacea763054304f27。主审复核catalog22项中的86个SHA及最终库存74项全部通过，旧21项资源记录未改；任务依赖/JSON/19处本地文档链接和Git whitespace检查通过。仅文档/研究证据，无候选和代码/依赖变动，未重复1179全量。所有本轮native/提取/审查已终态，无后台任务；下一步冻结D0实现前协议，再细化参考并开发。正常推送及实际远端HEAD在执行末核对，23/24跨OS仍按最近一次真实CI账单锁失败记录，不以本次文档提交声称补验。
