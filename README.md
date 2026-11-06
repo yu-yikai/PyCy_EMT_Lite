@@ -97,6 +97,7 @@ Complete 01 first, then study storage in 02 and 03 before moving to 04 and 17. O
 | Finite ladder propagation | [22](examples/22_t_section_transmission_line.py) | After 08 and 17, study startup and dispersion in a 50-cell T ladder. Read the [reference and independent state validation](validation/cases/transmission_line/README.md) to distinguish it from a pure delay. |
 | Transformers | [09](examples/09_single_phase_transformer.py) | Check the turns ratio and observe leakage and magnetization effects; see the model document for three-phase connections. |
 | Transformer T equivalent | [23](examples/23_transformer_t_equivalent.py) | After 03 and 09, place magnetization after primary leakage and check current continuity, two time constants and energy. [Real reference and reproduction guide](validation/cases/transformer_t_equivalent/README.md). |
+| Three-phase transformer chain | [24](examples/24_three_phase_transformer_chain.py) | After 09 and 21, distinguish winding and line ratios/currents, floating stars and the delta center reference; observe the intermediate phase shift and fast startup. [Real reference and retained initial step failure](validation/cases/three_phase_transformer_chain/README.md). |
 | Synchronous machines | [10](examples/10_park_generator_avr_governor.py) | Start at equilibrium, observe voltage and speed after a load step, and distinguish the roles of the AVR and governor. |
 | Discrete control | [11](examples/11_pll_dynamic_response.py) | Observe q-axis voltage and angular frequency in the standalone SRF-PLL loop and explain when it approaches lock. |
 | PWM | [12](examples/12_two_level_pwm_generator.py) | Compare ideal-switch SPWM gates with RL current and distinguish switching ripple from the fundamental. The [real reference study](validation/cases/two_level_pwm/README.md) records a remaining waveform mismatch. |
@@ -269,7 +270,7 @@ Run from the project root after `uv sync --locked`:
 New-Item -ItemType Directory -Force -Path .tmp | Out-Null
 $env:MPLBACKEND = "Agg"
 $env:OPENBLAS_NUM_THREADS = "1"
-uv run --locked ruff check pycy_emt_lite examples tests
+uv run --locked ruff check pycy_emt_lite examples tests validation
 uv run --locked mypy
 uv run --locked pytest -m "not slow" --basetemp=.tmp/pytest-fast
 uv run --locked pytest -m slow --basetemp=.tmp/pytest-slow
@@ -282,6 +283,6 @@ Ruff checks errors, imports, modernization and selected defect rules without imp
 
 Coverage includes branches. Open `.tmp/htmlcov/index.html` to inspect missed lines and branches; there is no percentage threshold yet. Coverage and green tests describe tested behavior, while physical accuracy still requires the checks in [Models and validation](docs/models_and_validation.en.md).
 
-[CI configuration](.github/workflows/ci.yml) defines Linux and Windows jobs with a 30-minute job timeout, 15-minute test timeout and 10-minute example timeout. Both jobs run the locked checks above, all examples, build distributions, and verify the installed wheel outside the checkout, including its version and `py.typed`. JUnit, coverage XML and HTML reports are uploaded as `test-coverage-Linux` and `test-coverage-Windows` with 14-day retention. A local pass does not establish that a remote Actions run succeeded.
+[CI configuration](.github/workflows/ci.yml) defines Linux and Windows jobs with a 40-minute job timeout, 25-minute test timeout and 10-minute example timeout. Both jobs run the locked checks above, all examples, build distributions, and verify the installed wheel outside the checkout, including its version and `py.typed`. JUnit, coverage XML and HTML reports are uploaded as `test-coverage-Linux` and `test-coverage-Windows` with 14-day retention. A local pass does not establish that a remote Actions run succeeded.
 
 Package versions in `pyproject.toml`, `uv.lock` and `pycy_emt_lite.__version__` must agree. Record changes in [CHANGELOG](CHANGELOG.md); version changes do not publish a release automatically.

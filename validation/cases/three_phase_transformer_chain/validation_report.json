@@ -1,0 +1,2076 @@
+{
+  "case_id": "three_phase_transformer_chain",
+  "passed": true,
+  "run_id": "20261106T041603177270Z",
+  "reference_platform": "MATLAB R2025a Update 1 / Simulink / Simscape / Simscape Electrical",
+  "reference_provenance": {
+    "schema_version": 1,
+    "case_id": "three_phase_transformer_chain",
+    "reference_id": "mw-three-phase-delta-reference-r2025a",
+    "origin": "Unmodified complete MathWorks R2025a ee_delta_transmission physical network",
+    "export_time_utc": "2026-11-06 04:14:17 +0000",
+    "export_run_id": "20261106T041347000Z",
+    "export_run_directory": "D:\\VibeCoding\\PyCy_EMT_Lite\\local_reference\\three_phase_transformer_chain\\export_runs\\20261106T041347000Z",
+    "source_url": "https://www.mathworks.com/help/simscape-electrical/ug/transmission-system-with-delta-reference.html",
+    "acquisition_url": "https://www.mathworks.com/help/releases/R2025a/exampledata/simscapeelectrical/main/ee_delta_transmission.slx",
+    "model_name": "ee_delta_transmission",
+    "model_path": "D:\\VibeCoding\\PyCy_EMT_Lite\\local_reference\\three_phase_transformer_chain\\simulink\\ee_delta_transmission.slx",
+    "model_sha256": "02be3b7168ed504a6a585c3aa29aba3369b294d6bed2a517d6408a1931abe4ca",
+    "original_model_path": "D:\\VibeCoding\\PyCy_EMT_Lite\\local_reference\\three_phase_transformer\\simulink\\ee_delta_transmission.slx",
+    "model_was_loaded_before_export": false,
+    "loaded_model_path": "D:\\VibeCoding\\PyCy_EMT_Lite\\local_reference\\three_phase_transformer_chain\\simulink\\ee_delta_transmission.slx",
+    "model_dirty_after_runs": "off",
+    "matlab_version": "25.1.0.2973910 (R2025a) Update 1",
+    "installed_products": [
+      {
+        "Name": "5G Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "AUTOSAR Blockset",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Aerospace Blockset",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Aerospace Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Antenna Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Audio Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Automated Driving Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Bioinformatics Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Bluetooth Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "C2000 Microcontroller Blockset",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Communications Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Computer Vision Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Control System Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Curve Fitting Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "DDS Blockset",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "DSP HDL Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "DSP System Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Data Acquisition Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Database Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Datafeed Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Deep Learning HDL Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Deep Learning Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Econometrics Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Embedded Coder",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Financial Instruments Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Financial Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Fixed-Point Designer",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Fuzzy Logic Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "GPU Coder",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Global Optimization Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "HDL Coder",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "HDL Verifier",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Image Acquisition Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Image Processing Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "26-Dec-2024"
+      },
+      {
+        "Name": "Industrial Communication Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Instrument Control Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "LTE Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Lidar Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "MATLAB",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "MATLAB Coder",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "MATLAB Compiler",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "MATLAB Compiler SDK",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "MATLAB Report Generator",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "MATLAB Test",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Mapping Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Medical Imaging Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Mixed-Signal Blockset",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Model Predictive Control Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Model-Based Calibration Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Motor Control Blockset",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Navigation Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Optimization Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Parallel Computing Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Partial Differential Equation Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Phased Array System Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Powertrain Blockset",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Predictive Maintenance Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "RF Blockset",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "RF PCB Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "RF Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "ROS Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Radar Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Reinforcement Learning Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Requirements Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Risk Management Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Robotics System Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Robust Control Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Satellite Communications Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Sensor Fusion and Tracking Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "SerDes Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Signal Integrity Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Signal Processing Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "SimBiology",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "SimEvents",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "02-May-2024"
+      },
+      {
+        "Name": "Simscape",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Simscape Battery",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Simscape Driveline",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Simscape Electrical",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Simscape Fluids",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Simscape Multibody",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Simulink",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Simulink 3D Animation",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Simulink Check",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Simulink Code Inspector",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Simulink Coder",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Simulink Compiler",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Simulink Control Design",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Simulink Coverage",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Simulink Design Optimization",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Simulink Design Verifier",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Simulink Desktop Real-Time",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Simulink Fault Analyzer",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Simulink PLC Coder",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Simulink Real-Time",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Simulink Report Generator",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Simulink Test",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "SoC Blockset",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Spreadsheet Link",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Stateflow",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Statistics and Machine Learning Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Symbolic Math Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "System Composer",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "System Identification Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Text Analytics Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "UAV Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Vehicle Dynamics Blockset",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Vehicle Network Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "28-Jan-2025"
+      },
+      {
+        "Name": "Vision HDL Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "WLAN Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Wavelet Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Wireless HDL Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Wireless Testbench",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      }
+    ],
+    "required_products": [
+      "MATLAB",
+      "Simulink",
+      "Simscape",
+      "Simscape Electrical"
+    ],
+    "freeze_commit": "4edd4a170c7630af81ec4bec44b4769aa176ffa8",
+    "signal_name_correction_commit": "c88c2bbe5f80430410707f20415d3cbb98924ec3",
+    "frozen_protocol_lf_sha256": {
+      "manifest": "69ce525611621836336e321975b8d0e8261042cdfc10a6e67290e1b1a3e5ffd5",
+      "parameters": "e9838207cf7bbd90cd7922269cdc0e5753de0ef89d7fc6356c7cf1a4ff851f69"
+    },
+    "manifest_sha256": "610cd3610bddd6001dbb22e712a67fa4a969f01456887a201da28a0bd656c37a",
+    "parameters_sha256": "1d0ee6cb7f848767a4bbd80f80bfbca50b3b387581dd9ca385256f08fbcb56d9",
+    "export_script_sha256": "6696c9ea17e24c4b3b0fbd323f7ed24ef0a06ad19f8932496a4a4800877d1067",
+    "solver_addendum": {
+      "file": "reference_solver_addendum.md",
+      "commit": "926138d43f5ee9091df782c461207b8eb0d6b8d5",
+      "lf_sha256": "10835fdcd754f5b9ef719e89c024eeb0e22e1a727dbcdf1ea93b6154f0d48968",
+      "raw_sha256": "10835fdcd754f5b9ef719e89c024eeb0e22e1a727dbcdf1ea93b6154f0d48968",
+      "text": "# 参考求解配置补充记录\n\n2026-11-06。在完整正式参考运行及任何候选商业比较之前单独提交本记录。\n原 `manifest.json`、`parameters.json` 的内容保持 c88c2bb：拓扑、参数、零初值、\n候选 TR 1 µs、完整 0–50 ms、19量、工程尺度、双限值及参考自身误差预算均不变。\n本补充只替代原定的商业参考求解器配置，明确保留原配置未完成的事实。\n\n## 原配置为什么不能用作完成证据\n\n原定 ode15s、RelTol=1e−9、AbsTol=1e−11 的完整运行\n`20261106T034732594Z` 未返回，独立 MATLAB 工作集持续增长至约13.5 GB，\n主机32 GB内存的空闲量曾降至约314200 KiB。仅终止该次独立进程，\n保留脚本、输入和日志；用户原有MATLAB会话未被操作。\n没有基准MAT/CSV发布，既不是数值PASS，也不能解释为候选数值FAIL。\n\n随后保持原物理网络的100 µs短诊断：\n\n| 诊断配置 | 真实结果 |\n|---|---|\n| daessc，Rel 1e−9 / Abs 1e−11 | 约2.93 ns处连续最小步长违规，步长降至约1.04e−23 s；停止本次探针 |\n| daessc，Rel 1e−9 / Abs 1e−8 | 7.930514 s完成，7289点，无最小步长警告 |\n| daessc，Rel 1e−10 / Abs 1e−9 | 约1.0697 µs处连续最小步长违规；监测器停止本次探针 |\n| daessc，Rel 1e−10 / Abs 1e−8 | 6.999934 s完成，13081点，无最小步长警告 |\n\n这支持选择一个可运行的绝对容差下限，但没有证明全部停滞的内部根因。\n不能把指定容差值当成实际输出误差，也不能把100 µs输出当成50 ms参考。\n[MathWorks求解器说明](https://www.mathworks.com/help/simscape/ug/making-optimal-solver-choices-for-physical-simulation.html)\n说明daessc专用于物理建模的DAE；本原件的默认探索运行本来也使用daessc。\n这只是选择依据，实际精度仍须用原冻结误差预算检验。\n\n## 替代配置及不变的验收门槛\n\n| 完整原网运行 | Solver | RelTol | AbsTol | MaxStep | InitialStep | StopTime |\n|---|---|---:|---:|---:|---:|---:|\n| 基准 | daessc | 1e−9 | 1e−8 | 25 µs | 1e−10 s | 50 ms |\n| 细化 | daessc | 1e−10 | 1e−8 | 12.5 µs | 1e−10 s | 50 ms |\n\n不修改原模型结构、活动参数、初值、初始化方法或日志采样。\n两个运行都保留完整原生MAT与时间网格。只用SimulationInput配置运行求解/日志。\n独立资源监测只可停止本次新建进程；出现持续最小步长警告、超时或内存压力时，\n保留未完成状态，不删点或发布部分时间窗作为成功参考。\n\n两份完整原生数据必须在 [0,40 µs]、[40 µs,50 ms] 两个原窗口，逐一满足原19量\n正式绝对误差限的十分之一和正式NRMSE限的十分之一。使用两个原生时间网格的并集，\n对分段线性差的平方作精确积分；不移时、不拟合、不剔除启动。\n未达到门槛就不能发布正式参考入口或宣称候选通过。\n\n两次成功短诊断已在 [0,40 µs]、[40 µs,100 µs] 自身比较：\n最大绝对差占上述预算的2.22059e−4，最大NRMSE占预算的1.19411e−4。\n网格7289→13081点，实际最大步长1.305→0.567 µs，证明收紧RelTol确实改变了网格；\n不是把同一份数据复制成“细化”。短窗的独立精确方程审计另存，仍属于内部数学检查。\n这些结果支持开始完整运行，不能提前证明100 µs之后的精度、成本或候选通过。\n\n上述证据位于忽略的 `local_reference/three_phase_transformer_chain/export_runs/`：\n`20261106T035841462Z_daessc_100us_abs1e8_diagnostic`、\n`20261106T040216835Z_daessc_100us_abs1e8_rel1e10_diagnostic`，\n及 `short_self_refinement.json`。失败探针与原ode15s输入另行保留。\n正式导出器须保存本补充全文、提交和hash；输入文件保留原字节，\n协议文本的冻结hash仅将CRLF规范为LF，以支持不同Git检出换行，二进制及波形hash不规范化。\n"
+    },
+    "candidate_step_addendum": {
+      "file": "candidate_step_addendum.md",
+      "commit": "08a01562d7e9dc557b472202f15e2b25894261a2",
+      "lf_sha256": "43d1085cb735fcf2347cdf6591cb786144ed3b5f37d7c672135118e41dfd815f",
+      "raw_sha256": "43d1085cb735fcf2347cdf6591cb786144ed3b5f37d7c672135118e41dfd815f",
+      "text": "# 候选时间步长细化\n\n2026-11-06。原验收协议4edd4a1/c88c2bb的物理网络、初值、19量、完整比较窗、\n工程尺度及所有绝对/NRMSE限值继续保持。本记录和更新的parameters.json先提交，\n之后才修改候选默认步长和重新比较；原manifest不改。\n\n首次真实比较 `20261106T040920668725Z` 使用TR 1 µs、50001点，结果为FAIL：\n启动窗11量超过绝对限，后续窗19量通过，所有NRMSE通过。\n低压最大73.28263 V（限50 V），高压747.91066 V（限500 V），\n源/负荷电流0.4336248 mA（限0.3 mA），升压副绕组28.30082 µA（限20 µA）。\n原始报告、全部输入和数据保留在该独立运行目录；\n[精简失败记录](initial_step_failure.json)保存报告hash和逐量结果，不用后续PASS覆盖这次事实。\n\n原因是原先的先验TR界只覆盖采样点，未覆盖比较器使用的采样间线性插值。\n独立闭式 `Htr=1/(R+j*2Ls/h*tan(ωh/2))` 和齐次项 `q^k`，\n在未读取商业或候选输出时已预测1 µs采样间的峰值约73.28270 V/747.91135 V；\n与实测一致。这是时间分辨率不足，不是调整物理参数或时间对齐的理由。\n\n默认步长细化到 **0.5 µs**，停止仍50 ms，共100001点，\n梯形法和reuse策略不变，不增加核心功能或插值框架。\n独立闭式给出的采样间峰值约20.17678 V/205.92091 V、源电流0.1193892 mA、\n副绕组7.792015 µA，低于原限；这些是选步长的数学依据，不能提前记作商业PASS。\n既有启动2/1/0.5 µs细化检查仍保留，完整默认运行改为0.5 µs。\n\n补一项自动测试，在最初40 µs的细时间网格上，把生产输出的分段线性插值与独立连续精确解比较，\n防止“采样点通过、采样间超限”的回归。随后必须重新执行内部测试、独立教学脚本和真实19量比较。\n不得扩大窗口保护区、减少信号、改变限值或拟合幅值/相位。\n\n`parameters.json`记录当前步长及原预设步长；原版仍可从c88c2bb及首次运行快照取得。\n参考物理参数完全相同，但导出器的参数身份随此提交更新，并重新产生可追溯原生参考。\n参考求解配置仍按926138d的补充协议，两份完整50 ms原生输出仍须通过原自身误差预算。\n具体数学审计保留在忽略的 `independent_review/tr_interpolation_audit.json`。\n"
+    },
+    "solver": "daessc",
+    "initial_step_s": 1e-10,
+    "stop_time_s": 0.05,
+    "runs": [
+      {
+        "name": "baseline",
+        "relative_tolerance": 1e-09,
+        "absolute_tolerance": 1e-08,
+        "max_step_s": 2.5e-05,
+        "elapsed_seconds": 9.9700049,
+        "actual_solver": {
+          "Type": "Variable-Step",
+          "Solver": "daessc",
+          "MaxStepSize": 2.5e-05
+        },
+        "native_audit": {
+          "initial_source_current_a": [
+            0,
+            0,
+            0
+          ],
+          "common_native_time": true,
+          "native_samples": 58899,
+          "duplicate_times_removed": 0,
+          "max_abs_delta_reference_total_a": 3.469446951953614e-18,
+          "max_abs_delta_mean_voltage_v": 4.850638409455617e-12
+        },
+        "samples": 58899,
+        "model_dirty": "off",
+        "loaded_model_path": "D:\\VibeCoding\\PyCy_EMT_Lite\\local_reference\\three_phase_transformer_chain\\simulink\\ee_delta_transmission.slx"
+      },
+      {
+        "name": "refined",
+        "relative_tolerance": 1e-10,
+        "absolute_tolerance": 1e-08,
+        "max_step_s": 1.25e-05,
+        "elapsed_seconds": 2.8086882,
+        "actual_solver": {
+          "Type": "Variable-Step",
+          "Solver": "daessc",
+          "MaxStepSize": 1.25e-05
+        },
+        "native_audit": {
+          "initial_source_current_a": [
+            0,
+            0,
+            0
+          ],
+          "common_native_time": true,
+          "native_samples": 76502,
+          "duplicate_times_removed": 0,
+          "max_abs_delta_reference_total_a": 3.469446951953614e-18,
+          "max_abs_delta_mean_voltage_v": 4.850638409455617e-12
+        },
+        "samples": 76502,
+        "model_dirty": "off",
+        "loaded_model_path": "D:\\VibeCoding\\PyCy_EMT_Lite\\local_reference\\three_phase_transformer_chain\\simulink\\ee_delta_transmission.slx"
+      }
+    ],
+    "comparison_windows_s": [
+      [
+        0,
+        4e-05
+      ],
+      [
+        4e-05,
+        0.05
+      ]
+    ],
+    "reference_self_refinement": {
+      "method": "Absolute-time union of both native grids and exact integral of squared piecewise-linear differences; no shift or fit",
+      "limit_fraction": 0.1,
+      "passed": true,
+      "windows": [
+        {
+          "window_s": [
+            0,
+            4e-05
+          ],
+          "passed": true,
+          "signals": {
+            "v_source_a": {
+              "rmse": 4.6465860980080905e-07,
+              "nrmse": 3.574296998467762e-11,
+              "max_abs_difference": 1.8775416836813719e-06,
+              "scale": 13000,
+              "max_abs_limit": 5,
+              "max_nrmse_limit": 0.0002,
+              "passed": true
+            },
+            "v_delta_a": {
+              "rmse": 0.0013767893858863919,
+              "nrmse": 1.1972081616403408e-08,
+              "max_abs_difference": 0.0055658626260992605,
+              "scale": 115000,
+              "max_abs_limit": 50,
+              "max_nrmse_limit": 0.0002,
+              "passed": true
+            },
+            "v_load_a": {
+              "rmse": 4.6460709993786224e-07,
+              "nrmse": 3.5739007687527864e-11,
+              "max_abs_difference": 1.8783090711682604e-06,
+              "scale": 13000,
+              "max_abs_limit": 5,
+              "max_nrmse_limit": 0.0002,
+              "passed": true
+            },
+            "i_source_a": {
+              "rmse": 2.74915444357118e-12,
+              "nrmse": 2.74915444357118e-11,
+              "max_abs_difference": 1.1114255256213412e-11,
+              "scale": 0.1,
+              "max_abs_limit": 2.9999999999999997e-05,
+              "max_nrmse_limit": 0.0002,
+              "passed": true
+            },
+            "i_up_secondary_a": {
+              "rmse": 1.7341275708704124e-13,
+              "nrmse": 1.7341275708704122e-11,
+              "max_abs_difference": 7.253769429852521e-13,
+              "scale": 0.01,
+              "max_abs_limit": 2.0000000000000003e-06,
+              "max_nrmse_limit": 0.0002,
+              "passed": true
+            },
+            "i_load_a": {
+              "rmse": 2.7491544377595182e-12,
+              "nrmse": 2.749154437759518e-11,
+              "max_abs_difference": 1.1114254856413861e-11,
+              "scale": 0.1,
+              "max_abs_limit": 2.9999999999999997e-05,
+              "max_nrmse_limit": 0.0002,
+              "passed": true
+            },
+            "v_source_b": {
+              "rmse": 0.0002686421870867085,
+              "nrmse": 2.0664783622054502e-08,
+              "max_abs_difference": 0.0010860223005693115,
+              "scale": 13000,
+              "max_abs_limit": 5,
+              "max_nrmse_limit": 0.0002,
+              "passed": true
+            },
+            "v_delta_b": {
+              "rmse": 0.0013696706806142695,
+              "nrmse": 1.1910179831428431e-08,
+              "max_abs_difference": 0.005537083186936798,
+              "scale": 115000,
+              "max_abs_limit": 50,
+              "max_nrmse_limit": 0.0002,
+              "passed": true
+            },
+            "v_load_b": {
+              "rmse": 0.0002686420291825957,
+              "nrmse": 2.0664771475584287e-08,
+              "max_abs_difference": 0.0010860226334443723,
+              "scale": 13000,
+              "max_abs_limit": 5,
+              "max_nrmse_limit": 0.0002,
+              "passed": true
+            },
+            "i_source_b": {
+              "rmse": 1.5895978058976072e-09,
+              "nrmse": 1.589597805897607e-08,
+              "max_abs_difference": 6.42616942991836e-09,
+              "scale": 0.1,
+              "max_abs_limit": 2.9999999999999997e-05,
+              "max_nrmse_limit": 0.0002,
+              "passed": true
+            },
+            "i_up_secondary_b": {
+              "rmse": 1.0372867434854775e-10,
+              "nrmse": 1.0372867434854774e-08,
+              "max_abs_difference": 4.194083318490027e-10,
+              "scale": 0.01,
+              "max_abs_limit": 2.0000000000000003e-06,
+              "max_nrmse_limit": 0.0002,
+              "passed": true
+            },
+            "i_load_b": {
+              "rmse": 1.5895978058443045e-09,
+              "nrmse": 1.5895978058443045e-08,
+              "max_abs_difference": 6.426169433387807e-09,
+              "scale": 0.1,
+              "max_abs_limit": 2.9999999999999997e-05,
+              "max_nrmse_limit": 0.0002,
+              "passed": true
+            },
+            "v_source_c": {
+              "rmse": 0.00026910669341361464,
+              "nrmse": 2.0700514877970358e-08,
+              "max_abs_difference": 0.001087902146991837,
+              "scale": 13000,
+              "max_abs_limit": 5,
+              "max_nrmse_limit": 0.0002,
+              "passed": true
+            },
+            "v_delta_c": {
+              "rmse": 0.002746460066481987,
+              "nrmse": 2.388226144766945e-08,
+              "max_abs_difference": 0.011102945820312016,
+              "scale": 115000,
+              "max_abs_limit": 50,
+              "max_nrmse_limit": 0.0002,
+              "passed": true
+            },
+            "v_load_c": {
+              "rmse": 0.00026910663625279434,
+              "nrmse": 2.070051048098418e-08,
+              "max_abs_difference": 0.0010879009432755993,
+              "scale": 13000,
+              "max_abs_limit": 5,
+              "max_nrmse_limit": 0.0002,
+              "passed": true
+            },
+            "i_source_c": {
+              "rmse": 1.592346960170925e-09,
+              "nrmse": 1.592346960170925e-08,
+              "max_abs_difference": 6.4372836817983e-09,
+              "scale": 0.1,
+              "max_abs_limit": 2.9999999999999997e-05,
+              "max_nrmse_limit": 0.0002,
+              "passed": true
+            },
+            "i_up_secondary_c": {
+              "rmse": 1.0394316002503421e-10,
+              "nrmse": 1.0394316002503421e-08,
+              "max_abs_difference": 4.20133716228302e-10,
+              "scale": 0.01,
+              "max_abs_limit": 2.0000000000000003e-06,
+              "max_nrmse_limit": 0.0002,
+              "passed": true
+            },
+            "i_load_c": {
+              "rmse": 1.5923469601178438e-09,
+              "nrmse": 1.5923469601178435e-08,
+              "max_abs_difference": 6.437283685267747e-09,
+              "scale": 0.1,
+              "max_abs_limit": 2.9999999999999997e-05,
+              "max_nrmse_limit": 0.0002,
+              "passed": true
+            },
+            "i_delta_reference_total": {
+              "rmse": 1.0149212624346447e-18,
+              "nrmse": 1.0149212624346446e-17,
+              "max_abs_difference": 4.336808689942018e-18,
+              "scale": 0.1,
+              "max_abs_limit": 1e-09,
+              "max_nrmse_limit": 1e-08,
+              "passed": true
+            }
+          }
+        },
+        {
+          "window_s": [
+            4e-05,
+            0.05
+          ],
+          "passed": true,
+          "signals": {
+            "v_source_a": {
+              "rmse": 8.632797920397573e-05,
+              "nrmse": 6.64061378492121e-09,
+              "max_abs_difference": 0.0009801667001738679,
+              "scale": 13000,
+              "max_abs_limit": 5,
+              "max_nrmse_limit": 0.0002,
+              "passed": true
+            },
+            "v_delta_a": {
+              "rmse": 0.0007723116204206421,
+              "nrmse": 6.715753221049062e-09,
+              "max_abs_difference": 0.009041120996698737,
+              "scale": 115000,
+              "max_abs_limit": 50,
+              "max_nrmse_limit": 0.0002,
+              "passed": true
+            },
+            "v_load_a": {
+              "rmse": 8.632794465429503e-05,
+              "nrmse": 6.6406111272534636e-09,
+              "max_abs_difference": 0.0009801663072721567,
+              "scale": 13000,
+              "max_abs_limit": 5,
+              "max_nrmse_limit": 0.0002,
+              "passed": true
+            },
+            "i_source_a": {
+              "rmse": 5.108162404864463e-10,
+              "nrmse": 5.108162404864463e-09,
+              "max_abs_difference": 5.7998006258719315e-09,
+              "scale": 0.1,
+              "max_abs_limit": 2.9999999999999997e-05,
+              "max_nrmse_limit": 0.0002,
+              "passed": true
+            },
+            "i_up_secondary_a": {
+              "rmse": 7.698526985795331e-11,
+              "nrmse": 7.69852698579533e-09,
+              "max_abs_difference": 3.8270963308162376e-10,
+              "scale": 0.01,
+              "max_abs_limit": 2.0000000000000003e-06,
+              "max_nrmse_limit": 0.0002,
+              "passed": true
+            },
+            "i_load_a": {
+              "rmse": 5.108162404815079e-10,
+              "nrmse": 5.108162404815079e-09,
+              "max_abs_difference": 5.799800653627507e-09,
+              "scale": 0.1,
+              "max_abs_limit": 2.9999999999999997e-05,
+              "max_nrmse_limit": 0.0002,
+              "passed": true
+            },
+            "v_source_b": {
+              "rmse": 8.231439326863386e-05,
+              "nrmse": 6.331876405279528e-09,
+              "max_abs_difference": 0.0007876814106566599,
+              "scale": 13000,
+              "max_abs_limit": 5,
+              "max_nrmse_limit": 0.0002,
+              "passed": true
+            },
+            "v_delta_b": {
+              "rmse": 0.0007416687331922458,
+              "nrmse": 6.449293332106485e-09,
+              "max_abs_difference": 0.008445054030744359,
+              "scale": 115000,
+              "max_abs_limit": 50,
+              "max_nrmse_limit": 0.0002,
+              "passed": true
+            },
+            "v_load_b": {
+              "rmse": 8.231436033444387e-05,
+              "nrmse": 6.331873871880297e-09,
+              "max_abs_difference": 0.0007876810941525036,
+              "scale": 13000,
+              "max_abs_limit": 5,
+              "max_nrmse_limit": 0.0002,
+              "passed": true
+            },
+            "i_source_b": {
+              "rmse": 4.870672208596257e-10,
+              "nrmse": 4.870672208596257e-09,
+              "max_abs_difference": 4.6608348708288005e-09,
+              "scale": 0.1,
+              "max_abs_limit": 2.9999999999999997e-05,
+              "max_nrmse_limit": 0.0002,
+              "passed": true
+            },
+            "i_up_secondary_b": {
+              "rmse": 7.851415195217065e-11,
+              "nrmse": 7.851415195217065e-09,
+              "max_abs_difference": 3.5065101343378924e-10,
+              "scale": 0.01,
+              "max_abs_limit": 2.0000000000000003e-06,
+              "max_nrmse_limit": 0.0002,
+              "passed": true
+            },
+            "i_load_b": {
+              "rmse": 4.870672209213695e-10,
+              "nrmse": 4.870672209213694e-09,
+              "max_abs_difference": 4.6608348708288005e-09,
+              "scale": 0.1,
+              "max_abs_limit": 2.9999999999999997e-05,
+              "max_nrmse_limit": 0.0002,
+              "passed": true
+            },
+            "v_source_c": {
+              "rmse": 8.583999223876923e-05,
+              "nrmse": 6.603076326059172e-09,
+              "max_abs_difference": 0.0009314663911936805,
+              "scale": 13000,
+              "max_abs_limit": 5,
+              "max_nrmse_limit": 0.0002,
+              "passed": true
+            },
+            "v_delta_c": {
+              "rmse": 0.0007372231076822806,
+              "nrmse": 6.410635718976353e-09,
+              "max_abs_difference": 0.007053068460663781,
+              "scale": 115000,
+              "max_abs_limit": 50,
+              "max_nrmse_limit": 0.0002,
+              "passed": true
+            },
+            "v_load_c": {
+              "rmse": 8.583995797161557e-05,
+              "nrmse": 6.603073690124275e-09,
+              "max_abs_difference": 0.0009314660273957998,
+              "scale": 13000,
+              "max_abs_limit": 5,
+              "max_nrmse_limit": 0.0002,
+              "passed": true
+            },
+            "i_source_c": {
+              "rmse": 5.079287453771949e-10,
+              "nrmse": 5.079287453771949e-09,
+              "max_abs_difference": 5.511633302535124e-09,
+              "scale": 0.1,
+              "max_abs_limit": 2.9999999999999997e-05,
+              "max_nrmse_limit": 0.0002,
+              "passed": true
+            },
+            "i_up_secondary_c": {
+              "rmse": 7.672457190960902e-11,
+              "nrmse": 7.672457190960902e-09,
+              "max_abs_difference": 3.8640998473865595e-10,
+              "scale": 0.01,
+              "max_abs_limit": 2.0000000000000003e-06,
+              "max_nrmse_limit": 0.0002,
+              "passed": true
+            },
+            "i_load_c": {
+              "rmse": 5.079287453860032e-10,
+              "nrmse": 5.079287453860032e-09,
+              "max_abs_difference": 5.511633302535124e-09,
+              "scale": 0.1,
+              "max_abs_limit": 2.9999999999999997e-05,
+              "max_nrmse_limit": 0.0002,
+              "passed": true
+            },
+            "i_delta_reference_total": {
+              "rmse": 8.598554109278668e-19,
+              "nrmse": 8.598554109278668e-18,
+              "max_abs_difference": 4.6988202621799304e-18,
+              "scale": 0.1,
+              "max_abs_limit": 1e-09,
+              "max_nrmse_limit": 1e-08,
+              "passed": true
+            }
+          }
+        }
+      ]
+    },
+    "signal_mapping": {
+      "v_source_a": "Voltage_Source.V phase 1",
+      "v_delta_a": "Wye_Delta_Transformer.N2.V phase 1",
+      "v_load_a": "Load.N.V phase 1",
+      "i_source_a": "-Voltage_Source.I phase 1",
+      "i_up_secondary_a": "Wye_Delta_Transformer.i2 phase 1",
+      "i_load_a": "-Delta_Wye_Transformer.i2 phase 1",
+      "v_source_b": "Voltage_Source.V phase 2",
+      "v_delta_b": "Wye_Delta_Transformer.N2.V phase 2",
+      "v_load_b": "Load.N.V phase 2",
+      "i_source_b": "-Voltage_Source.I phase 2",
+      "i_up_secondary_b": "Wye_Delta_Transformer.i2 phase 2",
+      "i_load_b": "-Delta_Wye_Transformer.i2 phase 2",
+      "v_source_c": "Voltage_Source.V phase 3",
+      "v_delta_c": "Wye_Delta_Transformer.N2.V phase 3",
+      "v_load_c": "Load.N.V phase 3",
+      "i_source_c": "-Voltage_Source.I phase 3",
+      "i_up_secondary_c": "Wye_Delta_Transformer.i2 phase 3",
+      "i_load_c": "-Delta_Wye_Transformer.i2 phase 3",
+      "i_delta_reference_total": "sum(Delta_Reference.I,2)"
+    },
+    "normalization": "Keep common native timestamps; last sample at duplicate times only. Source I negated into supply; T2 i2 negated into load; three Delta Reference I summed. No time/phase/amplitude fitting.",
+    "topology_changes": "none",
+    "physical_parameter_changes": "none",
+    "initial_state_changes": "none",
+    "runtime_changes": "SimulationInput solver tolerances/steps/stop time and existing full Simscape output logging only.",
+    "input_snapshot_files": [
+      {
+        "file": "candidate_step_addendum.md",
+        "bytes": 2396,
+        "sha256": "43d1085cb735fcf2347cdf6591cb786144ed3b5f37d7c672135118e41dfd815f"
+      },
+      {
+        "file": "ee_delta_transmission.slx",
+        "bytes": 54871,
+        "sha256": "02be3b7168ed504a6a585c3aa29aba3369b294d6bed2a517d6408a1931abe4ca"
+      },
+      {
+        "file": "export_reference.m",
+        "bytes": 19338,
+        "sha256": "6696c9ea17e24c4b3b0fbd323f7ed24ef0a06ad19f8932496a4a4800877d1067"
+      },
+      {
+        "file": "manifest.json",
+        "bytes": 8246,
+        "sha256": "610cd3610bddd6001dbb22e712a67fa4a969f01456887a201da28a0bd656c37a"
+      },
+      {
+        "file": "original_default_provenance.json",
+        "bytes": 11982,
+        "sha256": "edf3e31ab768b11a9b452287304039fd5016922772f9bd31bd7d361e117d529f"
+      },
+      {
+        "file": "parameters.json",
+        "bytes": 2626,
+        "sha256": "1d0ee6cb7f848767a4bbd80f80bfbca50b3b387581dd9ca385256f08fbcb56d9"
+      },
+      {
+        "file": "reference_solver_addendum.md",
+        "bytes": 3953,
+        "sha256": "10835fdcd754f5b9ef719e89c024eeb0e22e1a727dbcdf1ea93b6154f0d48968"
+      },
+      {
+        "file": "source_parameter_audit.md",
+        "bytes": 5627,
+        "sha256": "866611f0665b1502db041119762050e0784cbca6511fa4125a6b42692f8235a7"
+      },
+      {
+        "file": "source_parameter_audit_native.json",
+        "bytes": 16517,
+        "sha256": "6492862545d43d2bd23f1d8f83e4a0aa1f7be6d72bb096fb79d5340cc02b63f8"
+      },
+      {
+        "file": "winding_reference_audit.json",
+        "bytes": 8572,
+        "sha256": "851eb94f8f9c4bff707a8376b45b2ac59d5ac2d88be97a15eaae5170fc10df37"
+      },
+      {
+        "file": "winding_reference_audit.md",
+        "bytes": 7502,
+        "sha256": "aa04f0a6f39dc08f3283c8cfeb10bde9009aa15fea28ad5e97802c1bb6cd4dfb"
+      }
+    ],
+    "baseline_files": [
+      {
+        "file": "actual_physical_parameters.json",
+        "bytes": 10523,
+        "sha256": "12585829ddafd2a4191577397948b558bfef035faec178b8a52fbeed9ad8d82a"
+      },
+      {
+        "file": "reference.csv",
+        "bytes": 21877295.0,
+        "sha256": "d9e2a894d33c1f4d1c03faff3b062283ff0b2ca1fa59f174c52281a53282f0a7"
+      },
+      {
+        "file": "run_settings.json",
+        "bytes": 739,
+        "sha256": "f2eda9dd9826d7941a826f9ddda7fff0082c8914fe9a15fe494d3a4a81c0ec41"
+      },
+      {
+        "file": "simscape_native.csv",
+        "bytes": 22127315.0,
+        "sha256": "5a903b59845231588c1a99cf5af0be45547cd2ebfe34b1d6ec473a28142d8e99"
+      },
+      {
+        "file": "simulink_output.mat",
+        "bytes": 135948667.0,
+        "sha256": "fda2144d028d3a7eb997901bb21ac44227888fc5b52a81eea392e46e8cffc1bb"
+      }
+    ],
+    "refined_files": [
+      {
+        "file": "actual_physical_parameters.json",
+        "bytes": 10523,
+        "sha256": "12585829ddafd2a4191577397948b558bfef035faec178b8a52fbeed9ad8d82a"
+      },
+      {
+        "file": "reference.csv",
+        "bytes": 28438916.0,
+        "sha256": "74f7eac0e1ee350499a0cff97b7a76eb4ba73331aca8821ad2a8f2cbab35dae4"
+      },
+      {
+        "file": "run_settings.json",
+        "bytes": 741,
+        "sha256": "958dc30178aaadffcdb3a4dfb0276b2a8bb614b1626e5f47e4f4aa0453f298d5"
+      },
+      {
+        "file": "simscape_native.csv",
+        "bytes": 28771038.0,
+        "sha256": "8671bc51abcc24ca63d6e0c425500c3d635acd4c89c63b3ad895ac3053561dbc"
+      },
+      {
+        "file": "simulink_output.mat",
+        "bytes": 173863527.0,
+        "sha256": "ff9c8bfa9e5c8b1a3a3fb0694a24fe17412fe6dee9f92d1b46d771e24f1111b8"
+      }
+    ],
+    "redistribution": "Original model and generated vendor output remain ignored local data; no redistribution permission asserted."
+  },
+  "reference_sha256": "d9e2a894d33c1f4d1c03faff3b062283ff0b2ca1fa59f174c52281a53282f0a7",
+  "model_sha256": "02be3b7168ed504a6a585c3aa29aba3369b294d6bed2a517d6408a1931abe4ca",
+  "provenance_sha256": "84701fe264ec1a9de4eb81734622db5db9023d349da318a15e6db44b0aa1efbd",
+  "manifest_sha256": "610cd3610bddd6001dbb22e712a67fa4a969f01456887a201da28a0bd656c37a",
+  "example_sha256": "9203f58367e59fc6b00603013d418e7a19eb4f90ed1e4ed0aa71852c369c317c",
+  "export_script_sha256": "6696c9ea17e24c4b3b0fbd323f7ed24ef0a06ad19f8932496a4a4800877d1067",
+  "parameters_sha256": "1d0ee6cb7f848767a4bbd80f80bfbca50b3b387581dd9ca385256f08fbcb56d9",
+  "candidate_data_sha256": {
+    "pycy.csv": "d57c639de97165216ffa66717c1186529c2254d384920e4bbd777f0dd20c1ec7",
+    "pycy.json": "830c37951e0874ff1b7fe4e42516b4dd7ba553b1ed79c2bdbbbddec34e87a62d",
+    "pycy.npz": "795d38820b939f35645b4de73deb5adc1ab93e7b24b4728fa88659fce6bafdd8"
+  },
+  "raw_reference_sha256": {
+    "local_reference/three_phase_transformer_chain/raw_results/actual_physical_parameters.json": "12585829ddafd2a4191577397948b558bfef035faec178b8a52fbeed9ad8d82a",
+    "local_reference/three_phase_transformer_chain/raw_results/reference.csv": "d9e2a894d33c1f4d1c03faff3b062283ff0b2ca1fa59f174c52281a53282f0a7",
+    "local_reference/three_phase_transformer_chain/raw_results/run_settings.json": "f2eda9dd9826d7941a826f9ddda7fff0082c8914fe9a15fe494d3a4a81c0ec41",
+    "local_reference/three_phase_transformer_chain/raw_results/simscape_native.csv": "5a903b59845231588c1a99cf5af0be45547cd2ebfe34b1d6ec473a28142d8e99",
+    "local_reference/three_phase_transformer_chain/raw_results/simulink_output.mat": "fda2144d028d3a7eb997901bb21ac44227888fc5b52a81eea392e46e8cffc1bb"
+  },
+  "git_head_at_run": "08a01562d7e9dc557b472202f15e2b25894261a2",
+  "git_status_at_run": [
+    " M README.md",
+    " M README.zh-CN.md",
+    " M docs/development_roadmap/decisions.md",
+    " M docs/development_roadmap/experiments/three_phase_transformer_reference_candidates.md",
+    " M docs/development_roadmap/next_actions.md",
+    " M docs/development_roadmap/progress.md",
+    " M docs/development_roadmap/reference_catalog.json",
+    " M docs/development_roadmap/tasks.json",
+    " M docs/development_roadmap/validation_status.md",
+    "?? examples/24_three_phase_transformer_chain.py",
+    "?? tests/test_three_phase_transformer_chain.py",
+    "?? validation/cases/three_phase_transformer_chain/README.md",
+    "?? validation/cases/three_phase_transformer_chain/compare.py",
+    "?? validation/cases/three_phase_transformer_chain/export_reference.m"
+  ],
+  "package_source_sha256": {
+    "pycy_emt_lite/__init__.py": "81980a448c4506c4a373d308339c490967a02938c2cb0f0f33a1360dec21d46e",
+    "pycy_emt_lite/analysis/__init__.py": "20f635eec36432d84d6bf2ed666ecf45230962c7b4aa875838a2b9a65c5aa8a0",
+    "pycy_emt_lite/analysis/metrics.py": "14407925b79d9c3ea98c1cf3e4f9208f7820a22a862d70e067632f301aa9b143",
+    "pycy_emt_lite/cases.py": "f6c710cbbf2306752bd2345c1f5fc9a8d74b6738f30dd15fcfeb4452a192e986",
+    "pycy_emt_lite/components/__init__.py": "7cdac999206ef73c505ae8f29d9b531355d79bca9dcba02dd6f2c1b332ab4801",
+    "pycy_emt_lite/components/base.py": "d640819f5fddc223f7626059f8a4e309b4502851afcdeb8d5809e2e798fc6c1a",
+    "pycy_emt_lite/components/basic.py": "b2a092b07a15a1145cc582c47b1df6f6124d65c972f46b9450faa8c0acb5cc0b",
+    "pycy_emt_lite/components/lines.py": "dd4a0e5d4ee71ef7a655e31064c002536ea994aa185c0e6a47398d1cbac8c74b",
+    "pycy_emt_lite/components/power_electronics.py": "7b28e0c56436fcbf6ad357ee1336c1a3538fd5668a953e7487de6aedd30a1fab",
+    "pycy_emt_lite/components/switching.py": "6a422186320def189dcf360083c017715c80e34df769dbd14cca2c58e810a9d6",
+    "pycy_emt_lite/components/three_phase.py": "9cddd858ba4d27572218dc3a6790b8aa92ac0b71c703c9b7ddec82ddcd60c025",
+    "pycy_emt_lite/components/transformers.py": "632617a185bb69441535bdff552f0b4473566d64f6a78211622962cbb3d66609",
+    "pycy_emt_lite/controls/__init__.py": "f9685f649e794aba54a8cec566390ee8e9a992b7baf41d7a592a74d12980a069",
+    "pycy_emt_lite/controls/blocks.py": "e862509d8dceb31a1151ff710d4f861267e23e9dccd1843f98f774fb07684a7b",
+    "pycy_emt_lite/controls/pll.py": "7eca0fb9c6f6464bb36f82d7cad1b27be5bd1b6455b046b5ad3279c075a36efa",
+    "pycy_emt_lite/controls/pwm.py": "6a2469d7957c74ce9ff25e13020541e7c169f38820538e8a71467919ce9391d1",
+    "pycy_emt_lite/controls/transforms.py": "c48dbe02a1cd4b1c12a8fd29439038b76ada81d68f71f7b1183eec2bdc98ab99",
+    "pycy_emt_lite/controls/vsc.py": "1d12cc5a728f4085f1e723ac48b055e16e305cf91aafd130bf530f6c790dc635",
+    "pycy_emt_lite/converters/__init__.py": "9f94cc67b26700a8bf1f022c5c806b5e5415ecaf8743d36b2ddceddb6ec70ba6",
+    "pycy_emt_lite/converters/filters.py": "11112e0bc233809fc37c3fcf39cce41dab692a704a711d113bff31aa450a6be2",
+    "pycy_emt_lite/core/__init__.py": "3d0e3034e589c19e37746a909832f2b47780ea9793b011bb2bdf6141dd445ee5",
+    "pycy_emt_lite/core/circuit.py": "ee628295a1477c334d66e366ed594f8b824ca66ce36e8c17980972a7f485b0ac",
+    "pycy_emt_lite/core/context.py": "9886feeb12b4c30e115f4ada5594c504cb196ecdb491699a2b7a89fa16902c4e",
+    "pycy_emt_lite/core/nodes.py": "71167de688ff341bf99f6fb0beedd05946db4d83eeb9301a387a021ca6f0cffd",
+    "pycy_emt_lite/core/simulation.py": "b6fdb849172830cff51bfa31af87028524072adabaeeda580ab02c4e4751087d",
+    "pycy_emt_lite/core/solvers.py": "031f3d2f118d1d88f34d712bdeeb864ecc13a3fa7d89c7288b984b2b2c31571a",
+    "pycy_emt_lite/core/stamping.py": "9f23c65cbaa7d33ea0406bd0d33fe3b5fd007192fd60dbe78399586a35f02f87",
+    "pycy_emt_lite/core/variables.py": "6567e110c6b1aedc7faf713ae05d3297b5f70cca98ebf4bc28fcb2f7d05ea0b8",
+    "pycy_emt_lite/events/__init__.py": "5af09c087d751859ff97c6b4a01670312d5618aed864ea042fccf736d660c032",
+    "pycy_emt_lite/events/base.py": "9cc671d975b5ea60780b29e7a11042f3b39f2bb93454dc2cc72bacfee4bb6663",
+    "pycy_emt_lite/events/standard.py": "638e17b7d7601cd901e96cec99c5238c330780e31711c3d5e92e06d56b32d46d",
+    "pycy_emt_lite/io/__init__.py": "1eaf1526eecf1d41982a3e2b6685b0a653c233e9b57546d437e1dc4ae582f93e",
+    "pycy_emt_lite/io/results.py": "aa02511777508c2f048aae9d459dfd354d0e0d9b539a10af8f0684d66018a915",
+    "pycy_emt_lite/machines/__init__.py": "9f16d3bf2e00d27f4d8d1bacf35d8ef968f2f79dc5d758af581b04bd9f40232e",
+    "pycy_emt_lite/machines/park_generator.py": "e1f5f5c3b26ab2aaab4db9234954c50913c7890135da4f933b0afc9202e43caa",
+    "pycy_emt_lite/machines/synchronous.py": "a6add8058a9788daba21a1dfac986bef6e4a4c698ec4f8e21fdcb07e1426b06f",
+    "pycy_emt_lite/visualization/__init__.py": "23a5988f06bd7d833a9d7a0358a55a3d6a57ed96f5e1812c178c0d8ae29267ea",
+    "pycy_emt_lite/visualization/plotting.py": "6645d31b1c6ae11be45f5652f222a36576dab075c336788d25d15a788c64e346",
+    "pycy_emt_lite/visualization/reporting.py": "5ae8a1642303cef26f6c425c36eb49256b318d9773f9bbeb792ca8bcded264d0"
+  },
+  "python_version": "3.14.5",
+  "numpy_version": "2.5.2",
+  "candidate_method": "trapezoidal",
+  "candidate_step_seconds": 5e-07,
+  "candidate_samples": 100001,
+  "reference_samples": 58899,
+  "known_difference": "Same original eight-block physical network without any transmission line section. Existing transformers combine two positive winding resistances on primary via the exact ideal current ratio because leakage/magnetizing/core-loss branches are excluded. Two wye neutrals remain floating. A case-local mean-voltage constraint represents the delta vector-triangle center; no physical grounding or leakage resistor is added. Source X/R-derived R/L and zero current initialization retained. Native source I/IL are entering the source, so normalized supply current is their negative. Reference solver independently tightened/refined; absolute times preserved, no shift, phase or amplitude fit. This does not validate saturation, zero-sequence faults or other connection groups.",
+  "windows": [
+    {
+      "window_seconds": [
+        0,
+        4e-05
+      ],
+      "alignment": "absolute_time_linear_interpolation",
+      "passed": true,
+      "signals": {
+        "v:lv:a": {
+          "reference": "v_source_a",
+          "unit": "V",
+          "scale": 13000,
+          "rmse": 0.0047905783338024165,
+          "nrmse": 3.6850602567710897e-07,
+          "max_abs_error": 0.034835803746432074,
+          "candidate_mean": 80.48414910178843,
+          "reference_mean": 80.4841480587827,
+          "candidate_rms": 96.90739937550413,
+          "reference_rms": 96.90778164480909,
+          "limits": {
+            "max_nrmse": 0.002,
+            "max_abs_error": 50
+          },
+          "passed": true
+        },
+        "v:hv:a": {
+          "reference": "v_delta_a",
+          "unit": "V",
+          "scale": 115000,
+          "rmse": 14.195442170494387,
+          "nrmse": 0.0001234386275695164,
+          "max_abs_error": 103.22617498641375,
+          "candidate_mean": -51170.4331942439,
+          "reference_mean": -51170.4372955572,
+          "candidate_rms": 52383.862528272904,
+          "reference_rms": 52381.80783245221,
+          "limits": {
+            "max_nrmse": 0.002,
+            "max_abs_error": 500
+          },
+          "passed": true
+        },
+        "v:load:a": {
+          "reference": "v_load_a",
+          "unit": "V",
+          "scale": 13000,
+          "rmse": 0.004790576461306883,
+          "nrmse": 3.68505881638991e-07,
+          "max_abs_error": 0.03483579124188664,
+          "candidate_mean": 80.48411690813617,
+          "reference_mean": 80.48411586513436,
+          "candidate_rms": 96.90736061255635,
+          "reference_rms": 96.90774288172591,
+          "limits": {
+            "max_nrmse": 0.002,
+            "max_abs_error": 50
+          },
+          "passed": true
+        },
+        "i:Ls_a": {
+          "reference": "i_source_a",
+          "unit": "A",
+          "scale": 0.1,
+          "rmse": 2.834660627952664e-08,
+          "nrmse": 2.8346606279526636e-07,
+          "max_abs_error": 2.0612894225842878e-07,
+          "candidate_mean": 0.0004762373781546481,
+          "reference_mean": 0.00047623737198304334,
+          "candidate_rms": 0.0005734163349855499,
+          "reference_rms": 0.0005734185969332894,
+          "limits": {
+            "max_nrmse": 0.002,
+            "max_abs_error": 0.0003
+          },
+          "passed": true
+        },
+        "i:Tup:secondary:a": {
+          "reference": "i_up_secondary_a",
+          "unit": "A",
+          "scale": 0.01,
+          "rmse": 1.8500548199906448e-09,
+          "nrmse": 1.850054819990645e-07,
+          "max_abs_error": 1.3453146119906492e-08,
+          "candidate_mean": -3.1081957566824e-05,
+          "reference_mean": -3.1081957101935374e-05,
+          "candidate_rms": 3.7424408519141556e-05,
+          "reference_rms": 3.7424556068909024e-05,
+          "limits": {
+            "max_nrmse": 0.002,
+            "max_abs_error": 2e-05
+          },
+          "passed": true
+        },
+        "i:Rload_a": {
+          "reference": "i_load_a",
+          "unit": "A",
+          "scale": 0.1,
+          "rmse": 2.8346606279923348e-08,
+          "nrmse": 2.8346606279923344e-07,
+          "max_abs_error": 2.0612894225968432e-07,
+          "candidate_mean": 0.0004762373781546519,
+          "reference_mean": 0.00047623737198304345,
+          "candidate_rms": 0.0005734163349855405,
+          "reference_rms": 0.0005734185969332895,
+          "limits": {
+            "max_nrmse": 0.002,
+            "max_abs_error": 0.0003
+          },
+          "passed": true
+        },
+        "v:lv:b": {
+          "reference": "v_source_b",
+          "unit": "V",
+          "scale": 13000,
+          "rmse": 2.769845068492734,
+          "nrmse": 0.00021306500526867183,
+          "max_abs_error": 20.141712749773546,
+          "candidate_mean": -10179.990056708102,
+          "reference_mean": -10179.990857647288,
+          "candidate_rms": 10428.795991835317,
+          "reference_rms": 10428.397591934401,
+          "limits": {
+            "max_nrmse": 0.002,
+            "max_abs_error": 50
+          },
+          "passed": true
+        },
+        "v:hv:b": {
+          "reference": "v_delta_b",
+          "unit": "V",
+          "scale": 115000,
+          "rmse": 14.122041001452107,
+          "nrmse": 0.00012280035653436616,
+          "max_abs_error": 102.69242130732619,
+          "candidate_mean": -52403.61010734304,
+          "reference_mean": -52403.614192675406,
+          "candidate_rms": 53704.43755921672,
+          "reference_rms": 53702.41263198101,
+          "limits": {
+            "max_nrmse": 0.002,
+            "max_abs_error": 500
+          },
+          "passed": true
+        },
+        "v:load:b": {
+          "reference": "v_load_b",
+          "unit": "V",
+          "scale": 13000,
+          "rmse": 2.7698439605991694,
+          "nrmse": 0.00021306492004608996,
+          "max_abs_error": 20.141704694521536,
+          "candidate_mean": -10179.985984713714,
+          "reference_mean": -10179.986785652574,
+          "candidate_rms": 10428.791820318604,
+          "reference_rms": 10428.393420577038,
+          "limits": {
+            "max_nrmse": 0.002,
+            "max_abs_error": 50
+          },
+          "passed": true
+        },
+        "i:Ls_b": {
+          "reference": "i_source_b",
+          "unit": "A",
+          "scale": 0.1,
+          "rmse": 1.638960923431841e-05,
+          "nrmse": 0.00016389609234318412,
+          "max_abs_error": 0.00011918168458299261,
+          "candidate_mean": -0.06023660345984447,
+          "reference_mean": -0.060236608199127656,
+          "candidate_rms": 0.06170882733916334,
+          "reference_rms": 0.06170646994424283,
+          "limits": {
+            "max_nrmse": 0.002,
+            "max_abs_error": 0.0003
+          },
+          "passed": true
+        },
+        "i:Tup:secondary:b": {
+          "reference": "i_up_secondary_b",
+          "unit": "A",
+          "scale": 0.01,
+          "rmse": 1.0696790285071646e-06,
+          "nrmse": 0.00010696790285071646,
+          "max_abs_error": 7.77847399820804e-06,
+          "candidate_mean": 0.003931383042555907,
+          "reference_mean": 0.003931383351930554,
+          "candidate_rms": 0.004027468738985628,
+          "reference_rms": 0.004027314882064029,
+          "limits": {
+            "max_nrmse": 0.002,
+            "max_abs_error": 2e-05
+          },
+          "passed": true
+        },
+        "i:Rload_b": {
+          "reference": "i_load_b",
+          "unit": "A",
+          "scale": 0.1,
+          "rmse": 1.638960923431473e-05,
+          "nrmse": 0.00016389609234314728,
+          "max_abs_error": 0.0001191816845829692,
+          "candidate_mean": -0.06023660345984447,
+          "reference_mean": -0.060236608199127656,
+          "candidate_rms": 0.06170882733916334,
+          "reference_rms": 0.06170646994424283,
+          "limits": {
+            "max_nrmse": 0.002,
+            "max_abs_error": 0.0003
+          },
+          "passed": true
+        },
+        "v:lv:c": {
+          "reference": "v_source_c",
+          "unit": "V",
+          "scale": 13000,
+          "rmse": 2.7746356469395055,
+          "nrmse": 0.00021343351130303888,
+          "max_abs_error": 20.176548557807678,
+          "candidate_mean": 10099.505907606317,
+          "reference_mean": 10099.50670958851,
+          "candidate_rms": 10342.606175512212,
+          "reference_rms": 10342.205832796335,
+          "limits": {
+            "max_nrmse": 0.002,
+            "max_abs_error": 50
+          },
+          "passed": true
+        },
+        "v:hv:c": {
+          "reference": "v_delta_c",
+          "unit": "V",
+          "scale": 115000,
+          "rmse": 28.317483171946552,
+          "nrmse": 0.00024623898410388304,
+          "max_abs_error": 205.91859629373903,
+          "candidate_mean": 103574.04330158693,
+          "reference_mean": 103574.0514882326,
+          "candidate_rms": 106086.1285094671,
+          "reference_rms": 106082.04909149834,
+          "limits": {
+            "max_nrmse": 0.002,
+            "max_abs_error": 500
+          },
+          "passed": true
+        },
+        "v:load:c": {
+          "reference": "v_load_c",
+          "unit": "V",
+          "scale": 13000,
+          "rmse": 2.7746345370417935,
+          "nrmse": 0.0002134334259262918,
+          "max_abs_error": 20.176540485761166,
+          "candidate_mean": 10099.501867805566,
+          "reference_mean": 10099.502669787442,
+          "candidate_rms": 10342.602038471383,
+          "reference_rms": 10342.20169591565,
+          "limits": {
+            "max_nrmse": 0.002,
+            "max_abs_error": 50
+          },
+          "passed": true
+        },
+        "i:Ls_c": {
+          "reference": "i_source_c",
+          "unit": "A",
+          "scale": 0.1,
+          "rmse": 1.6417955840489914e-05,
+          "nrmse": 0.00016417955840489912,
+          "max_abs_error": 0.00011938781352525745,
+          "candidate_mean": 0.059760366081689796,
+          "reference_mean": 0.05976037082714461,
+          "candidate_rms": 0.06119882863000825,
+          "reference_rms": 0.06119645973914586,
+          "limits": {
+            "max_nrmse": 0.002,
+            "max_abs_error": 0.0003
+          },
+          "passed": true
+        },
+        "i:Tup:secondary:c": {
+          "reference": "i_up_secondary_c",
+          "unit": "A",
+          "scale": 0.01,
+          "rmse": 1.071529100676754e-06,
+          "nrmse": 0.0001071529100676754,
+          "max_abs_error": 7.791927144330704e-06,
+          "candidate_mean": -0.0039003010849890823,
+          "reference_mean": -0.003900301394642336,
+          "candidate_rms": 0.00399418332510544,
+          "reference_rms": 0.003994028717759405,
+          "limits": {
+            "max_nrmse": 0.002,
+            "max_abs_error": 2e-05
+          },
+          "passed": true
+        },
+        "i:Rload_c": {
+          "reference": "i_load_c",
+          "unit": "A",
+          "scale": 0.1,
+          "rmse": 1.6417955840484683e-05,
+          "nrmse": 0.0001641795584048468,
+          "max_abs_error": 0.00011938781352521842,
+          "candidate_mean": 0.059760366081689734,
+          "reference_mean": 0.05976037082714461,
+          "candidate_rms": 0.06119882863000818,
+          "reference_rms": 0.06119645973914586,
+          "limits": {
+            "max_nrmse": 0.002,
+            "max_abs_error": 0.0003
+          },
+          "passed": true
+        },
+        "i:DeltaCenter": {
+          "reference": "i_delta_reference_total",
+          "unit": "A",
+          "scale": 0.1,
+          "rmse": 1.7235986938557552e-18,
+          "nrmse": 1.7235986938557552e-17,
+          "max_abs_error": 5.236260511126651e-18,
+          "candidate_mean": 1.3730467940901024e-18,
+          "reference_mean": 2.6134370193434342e-21,
+          "candidate_rms": 1.583830238626045e-18,
+          "reference_rms": 7.074512012255883e-19,
+          "limits": {
+            "max_nrmse": 1e-07,
+            "max_abs_error": 1e-08
+          },
+          "passed": true
+        }
+      }
+    },
+    {
+      "window_seconds": [
+        4e-05,
+        0.05
+      ],
+      "alignment": "absolute_time_linear_interpolation",
+      "passed": true,
+      "signals": {
+        "v:lv:a": {
+          "reference": "v_source_a",
+          "unit": "V",
+          "scale": 13000,
+          "rmse": 0.00010405690149553329,
+          "nrmse": 8.004377038117945e-09,
+          "max_abs_error": 0.0009655595113144955,
+          "candidate_mean": -0.06289320639029938,
+          "reference_mean": -0.06289362065535897,
+          "candidate_rms": 9195.139108344212,
+          "reference_rms": 9195.13902432817,
+          "limits": {
+            "max_nrmse": 0.002,
+            "max_abs_error": 50
+          },
+          "passed": true
+        },
+        "v:hv:a": {
+          "reference": "v_delta_a",
+          "unit": "V",
+          "scale": 115000,
+          "rmse": 0.0009475801999878435,
+          "nrmse": 8.239827825981248e-09,
+          "max_abs_error": 0.03214903455955209,
+          "candidate_mean": 45.54926404747857,
+          "reference_mean": 45.549262372131125,
+          "candidate_rms": 81325.67126361489,
+          "reference_rms": 81325.67051573217,
+          "limits": {
+            "max_nrmse": 0.002,
+            "max_abs_error": 500
+          },
+          "passed": true
+        },
+        "v:load:a": {
+          "reference": "v_load_a",
+          "unit": "V",
+          "scale": 13000,
+          "rmse": 0.00010405683135720113,
+          "nrmse": 8.004371642861625e-09,
+          "max_abs_error": 0.0009654673085606191,
+          "candidate_mean": -0.06289318123322118,
+          "reference_mean": -0.06289359549850815,
+          "candidate_rms": 9195.135430290038,
+          "reference_rms": 9195.13534627403,
+          "limits": {
+            "max_nrmse": 0.002,
+            "max_abs_error": 50
+          },
+          "passed": true
+        },
+        "i:Ls_a": {
+          "reference": "i_source_a",
+          "unit": "A",
+          "scale": 0.1,
+          "rmse": 6.157209160690217e-10,
+          "nrmse": 6.1572091606902165e-09,
+          "max_abs_error": 5.7128242553217135e-09,
+          "candidate_mean": -3.721490013895712e-07,
+          "reference_mean": -3.7215145265619143e-07,
+          "candidate_rms": 0.05440908538633161,
+          "reference_rms": 0.05440908488919544,
+          "limits": {
+            "max_nrmse": 0.002,
+            "max_abs_error": 0.0003
+          },
+          "passed": true
+        },
+        "i:Tup:secondary:a": {
+          "reference": "i_up_secondary_a",
+          "unit": "A",
+          "scale": 0.01,
+          "rmse": 4.092686402276328e-11,
+          "nrmse": 4.092686402276328e-09,
+          "max_abs_error": 3.731954033997509e-10,
+          "candidate_mean": 2.428855860620721e-08,
+          "reference_mean": 2.428913585853735e-08,
+          "candidate_rms": 0.003551046097600683,
+          "reference_rms": 0.0035510460644512,
+          "limits": {
+            "max_nrmse": 0.002,
+            "max_abs_error": 2e-05
+          },
+          "passed": true
+        },
+        "i:Rload_a": {
+          "reference": "i_load_a",
+          "unit": "A",
+          "scale": 0.1,
+          "rmse": 6.157208957940623e-10,
+          "nrmse": 6.1572089579406234e-09,
+          "max_abs_error": 5.712824269199501e-09,
+          "candidate_mean": -3.7214900138089757e-07,
+          "reference_mean": -3.721514526544567e-07,
+          "candidate_rms": 0.05440908538633158,
+          "reference_rms": 0.05440908488919544,
+          "limits": {
+            "max_nrmse": 0.002,
+            "max_abs_error": 0.0003
+          },
+          "passed": true
+        },
+        "v:lv:b": {
+          "reference": "v_source_b",
+          "unit": "V",
+          "scale": 13000,
+          "rmse": 0.00010765570006989132,
+          "nrmse": 8.281207697683949e-09,
+          "max_abs_error": 0.006272932869251235,
+          "candidate_mean": 9.044199626976479,
+          "reference_mean": 9.044200127478916,
+          "candidate_rms": 9189.58241476859,
+          "reference_rms": 9189.582331712641,
+          "limits": {
+            "max_nrmse": 0.002,
+            "max_abs_error": 50
+          },
+          "passed": true
+        },
+        "v:hv:b": {
+          "reference": "v_delta_b",
+          "unit": "V",
+          "scale": 115000,
+          "rmse": 0.0009229544675680393,
+          "nrmse": 8.025691022330777e-09,
+          "max_abs_error": 0.03198192670970457,
+          "candidate_mean": 46.512912802885694,
+          "reference_mean": 46.512917474907226,
+          "candidate_rms": 81324.99002218172,
+          "reference_rms": 81324.98928553998,
+          "limits": {
+            "max_nrmse": 0.002,
+            "max_abs_error": 500
+          },
+          "passed": true
+        },
+        "v:load:b": {
+          "reference": "v_load_b",
+          "unit": "V",
+          "scale": 13000,
+          "rmse": 0.00010765553038656793,
+          "nrmse": 8.28119464512061e-09,
+          "max_abs_error": 0.006272871931287227,
+          "candidate_mean": 9.04419600929782,
+          "reference_mean": 9.044196509799576,
+          "candidate_rms": 9189.578738937096,
+          "reference_rms": 9189.578655881181,
+          "limits": {
+            "max_nrmse": 0.002,
+            "max_abs_error": 50
+          },
+          "passed": true
+        },
+        "i:Ls_b": {
+          "reference": "i_source_b",
+          "unit": "A",
+          "scale": 0.1,
+          "rmse": 6.370149951189134e-10,
+          "nrmse": 6.370149951189133e-09,
+          "max_abs_error": 3.711758538027521e-08,
+          "candidate_mean": 5.351595271773941e-05,
+          "reference_mean": 5.351595567928882e-05,
+          "candidate_rms": 0.05437620555584083,
+          "reference_rms": 0.05437620506438568,
+          "limits": {
+            "max_nrmse": 0.002,
+            "max_abs_error": 0.0003
+          },
+          "passed": true
+        },
+        "i:Tup:secondary:b": {
+          "reference": "i_up_secondary_b",
+          "unit": "A",
+          "scale": 0.01,
+          "rmse": 4.226068774006156e-11,
+          "nrmse": 4.226068774006156e-09,
+          "max_abs_error": 2.422357382389495e-09,
+          "candidate_mean": -3.4927551843288215e-06,
+          "reference_mean": -3.492754960347723e-06,
+          "candidate_rms": 0.0035489001730197975,
+          "reference_rms": 0.003548900140237294,
+          "limits": {
+            "max_nrmse": 0.002,
+            "max_abs_error": 2e-05
+          },
+          "passed": true
+        },
+        "i:Rload_b": {
+          "reference": "i_load_b",
+          "unit": "A",
+          "scale": 0.1,
+          "rmse": 6.370149726865755e-10,
+          "nrmse": 6.370149726865754e-09,
+          "max_abs_error": 3.7117585338641845e-08,
+          "candidate_mean": 5.3515952717736806e-05,
+          "reference_mean": 5.351595567928708e-05,
+          "candidate_rms": 0.05437620555584081,
+          "reference_rms": 0.05437620506438568,
+          "limits": {
+            "max_nrmse": 0.002,
+            "max_abs_error": 0.0003
+          },
+          "passed": true
+        },
+        "v:lv:c": {
+          "reference": "v_source_c",
+          "unit": "V",
+          "scale": 13000,
+          "rmse": 0.00011035546777531068,
+          "nrmse": 8.48888213656236e-09,
+          "max_abs_error": 0.00628372247228981,
+          "candidate_mean": -8.981306420584133,
+          "reference_mean": -8.981306506821738,
+          "candidate_rms": 9189.659455516769,
+          "reference_rms": 9189.659371189591,
+          "limits": {
+            "max_nrmse": 0.002,
+            "max_abs_error": 50
+          },
+          "passed": true
+        },
+        "v:hv:c": {
+          "reference": "v_delta_c",
+          "unit": "V",
+          "scale": 115000,
+          "rmse": 0.000978534348222802,
+          "nrmse": 8.508994332372192e-09,
+          "max_abs_error": 0.06413096157484688,
+          "candidate_mean": -92.06217685036427,
+          "reference_mean": -92.0621798470429,
+          "candidate_rms": 81276.50627428577,
+          "reference_rms": 81276.50553489492,
+          "limits": {
+            "max_nrmse": 0.002,
+            "max_abs_error": 500
+          },
+          "passed": true
+        },
+        "v:load:c": {
+          "reference": "v_load_c",
+          "unit": "V",
+          "scale": 13000,
+          "rmse": 0.00011035555240165485,
+          "nrmse": 8.488888646281142e-09,
+          "max_abs_error": 0.006283778429860831,
+          "candidate_mean": -8.981302828063235,
+          "reference_mean": -8.981302914301637,
+          "candidate_rms": 9189.655779654458,
+          "reference_rms": 9189.655695327314,
+          "limits": {
+            "max_nrmse": 0.002,
+            "max_abs_error": 50
+          },
+          "passed": true
+        },
+        "i:Ls_c": {
+          "reference": "i_source_c",
+          "unit": "A",
+          "scale": 0.1,
+          "rmse": 6.529914570211372e-10,
+          "nrmse": 6.529914570211372e-09,
+          "max_abs_error": 3.718212003567256e-08,
+          "candidate_mean": -5.3143803716347235e-05,
+          "reference_mean": -5.314380422663349e-05,
+          "candidate_rms": 0.05437666141807375,
+          "reference_rms": 0.05437666091909653,
+          "limits": {
+            "max_nrmse": 0.002,
+            "max_abs_error": 0.0003
+          },
+          "passed": true
+        },
+        "i:Tup:secondary:c": {
+          "reference": "i_up_secondary_c",
+          "unit": "A",
+          "scale": 0.01,
+          "rmse": 4.171714602923141e-11,
+          "nrmse": 4.171714602923141e-09,
+          "max_abs_error": 2.42686361371508e-09,
+          "candidate_mean": 3.4684666257226685e-06,
+          "reference_mean": 3.4684670762957868e-06,
+          "candidate_rms": 0.003548929925179602,
+          "reference_rms": 0.0035489298940248265,
+          "limits": {
+            "max_nrmse": 0.002,
+            "max_abs_error": 2e-05
+          },
+          "passed": true
+        },
+        "i:Rload_c": {
+          "reference": "i_load_c",
+          "unit": "A",
+          "scale": 0.1,
+          "rmse": 6.529914347318482e-10,
+          "nrmse": 6.529914347318482e-09,
+          "max_abs_error": 3.718212099323992e-08,
+          "candidate_mean": -5.314380371634897e-05,
+          "reference_mean": -5.314380422663349e-05,
+          "candidate_rms": 0.054376661418073714,
+          "reference_rms": 0.05437666091909653,
+          "limits": {
+            "max_nrmse": 0.002,
+            "max_abs_error": 0.0003
+          },
+          "passed": true
+        },
+        "i:DeltaCenter": {
+          "reference": "i_delta_reference_total",
+          "unit": "A",
+          "scale": 0.1,
+          "rmse": 1.1153825997547488e-18,
+          "nrmse": 1.1153825997547486e-17,
+          "max_abs_error": 6.4460875920053395e-18,
+          "candidate_mean": 2.5369551599807444e-19,
+          "reference_mean": -2.542179112201422e-21,
+          "candidate_rms": 9.371987805425593e-19,
+          "reference_rms": 6.086282736278687e-19,
+          "limits": {
+            "max_nrmse": 1e-07,
+            "max_abs_error": 1e-08
+          },
+          "passed": true
+        }
+      }
+    }
+  ],
+  "artifacts": {
+    "directory": "local_reference/three_phase_transformer_chain/comparison_results/20261106T041603177270Z",
+    "plot": "comparison.png",
+    "candidate_data": [
+      "pycy.csv",
+      "pycy.json",
+      "pycy.npz"
+    ]
+  },
+  "comparison_plot_sha256": "afbdf81a16256384df47878a6960c8c432a34c7fe2d03a0f1239239f1e8fae63",
+  "input_snapshot_sha256": {
+    "24_three_phase_transformer_chain.py": "9203f58367e59fc6b00603013d418e7a19eb4f90ed1e4ed0aa71852c369c317c",
+    "compare.py": "fbe72c8f6127fce3dabe1f941c816f3dc477b1793dcdbc5fbf5d83d337f73833",
+    "comparison.py": "8545b5e8fba8abdc2f20cdc2006342bb428765110c5bf9052103dfb0e349affe",
+    "ee_delta_transmission.slx": "02be3b7168ed504a6a585c3aa29aba3369b294d6bed2a517d6408a1931abe4ca",
+    "export_reference.m": "6696c9ea17e24c4b3b0fbd323f7ed24ef0a06ad19f8932496a4a4800877d1067",
+    "manifest.json": "610cd3610bddd6001dbb22e712a67fa4a969f01456887a201da28a0bd656c37a",
+    "parameters.json": "1d0ee6cb7f848767a4bbd80f80bfbca50b3b387581dd9ca385256f08fbcb56d9",
+    "provenance.json": "84701fe264ec1a9de4eb81734622db5db9023d349da318a15e6db44b0aa1efbd",
+    "reference.csv": "d9e2a894d33c1f4d1c03faff3b062283ff0b2ca1fa59f174c52281a53282f0a7",
+    "runner.py": "c30832285ddb3f8e0706368c1f017b95af0dcca09599e6a084eed3b8669e50b5"
+  }
+}

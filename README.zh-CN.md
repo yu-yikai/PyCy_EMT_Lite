@@ -96,6 +96,7 @@ uv run --locked pytest -o addopts= -q -p no:cacheprovider --basetemp=.tmp/pytest
 | 有限梯级传播 | [22](examples/22_t_section_transmission_line.py) | 在08与17之后学习50T梯级的启动与色散；结合[真实参考和独立状态验证](validation/cases/transmission_line/README.md)区分有限梯级与纯延时。 |
 | 变压器 | [09](examples/09_single_phase_transformer.py) | 核对变比，观察漏阻抗和励磁的影响；三相接法见模型说明。 |
 | 变压器T等效 | [23](examples/23_transformer_t_equivalent.py) | 在03和09之后学习漏感后的励磁支路、电流连续、双时间常数与能量；附[真实参考及复现说明](validation/cases/transformer_t_equivalent/README.md)。 |
+| 三相变压器链 | [24](examples/24_three_phase_transformer_chain.py) | 在09和21之后区分线量/绕组量、浮动星点与Δ参考点，观察中间相移及快速启动；附[真实对标与原步长失败记录](validation/cases/three_phase_transformer_chain/README.md)。 |
 | 同步机 | [10](examples/10_park_generator_avr_governor.py) | 从平衡初值出发，观察负荷阶跃后电压和转速的变化，区分 AVR 与调速器的作用。 |
 | 离散控制 | [11](examples/11_pll_dynamic_response.py) | 观察独立 SRF-PLL 控制循环的 q 轴电压和角频率，说明何时接近锁定。 |
 | PWM | [12](examples/12_two_level_pwm_generator.py) | 对照理想开关的 SPWM 门极与 RL 电流，区分开关纹波和基波；[真实参考研究](validation/cases/two_level_pwm/README.md)保留尚未通过的波形判据。 |
@@ -269,7 +270,7 @@ PyCy_EMT_Lite 源自 PyCy_EMT v0.6 的对象式工作流，保留适合小规模
 New-Item -ItemType Directory -Force -Path .tmp | Out-Null
 $env:MPLBACKEND = "Agg"
 $env:OPENBLAS_NUM_THREADS = "1"
-uv run --locked ruff check pycy_emt_lite examples tests
+uv run --locked ruff check pycy_emt_lite examples tests validation
 uv run --locked mypy
 uv run --locked pytest -m "not slow" --basetemp=.tmp/pytest-fast
 uv run --locked pytest -m slow --basetemp=.tmp/pytest-slow
@@ -282,6 +283,6 @@ Ruff 检查错误、导入顺序、现代化写法和选定缺陷规则，不强
 
 覆盖率包含分支。打开 `.tmp/htmlcov/index.html` 查看未执行的代码行和分支；当前不设覆盖率百分比阈值。覆盖率和测试通过只说明被验证的行为，物理精度仍需[模型与验证](docs/models_and_validation.md)中的检查。
 
-[CI 配置](.github/workflows/ci.yml)定义 Linux 和 Windows 两项任务：任务超时 30 分钟，测试步骤 15 分钟，示例步骤 10 分钟。两项任务均锁定环境，执行上述检查、全部示例、构建发行包，并在源码目录外验证安装 wheel 的版本及 `py.typed`。JUnit、覆盖率 XML 和 HTML 以 `test-coverage-Linux`、`test-coverage-Windows` 上传，保留 14 天。本地通过不代表远端 Actions 已运行成功。
+[CI 配置](.github/workflows/ci.yml)定义 Linux 和 Windows 两项任务：任务超时 40 分钟，测试步骤 25 分钟，示例步骤 10 分钟。两项任务均锁定环境，执行上述检查、全部示例、构建发行包，并在源码目录外验证安装 wheel 的版本及 `py.typed`。JUnit、覆盖率 XML 和 HTML 以 `test-coverage-Linux`、`test-coverage-Windows` 上传，保留 14 天。本地通过不代表远端 Actions 已运行成功。
 
 `pyproject.toml`、`uv.lock` 与 `pycy_emt_lite.__version__` 的版本必须一致。版本变更记入[CHANGELOG](CHANGELOG.md)；修改版本不会自动发布。
