@@ -11,6 +11,7 @@
 | 既有12 SPWM | 已有PWM/RL内部测试 | TwoLevel官方真实40001点；特征通过，波形NRMSE 2.66%–2.72%超2% | 首次对标FAIL；未完成，保留原判据 |
 | 新增22有限T梯级 | 3761a21先固定判据；101物理状态增广expm/ABCD/KCL/能量/TR/BE共8项通过；独立Agg通过 | 原50T零初值；10/5ps参考细化及六量真实比较均通过，最大8.01mV/0.160mA | 已完成80ba91c |
 | 新增23线性T等效 | 0ec7239先固定协议；独立两状态谱指数/KCL/能量/显式事件/TR细化8项通过，独立Agg8001点 | 原完整五网络真实8063/16042点自细化PASS，七量两窗全过，最大0.697mV/0.304mA | 已完成A4a `91dbad6bb77af24d1a548a6d0943930c4bcce40f`；三相/其余组合未推广 |
+| 新增24三相Y–Δ–Y链 | 9项精确启动/连续插值/KCL/功率/能量/TR/RMS/相位通过，独立Agg100001点；全量1179 passed490.61s含slow | 原完整58899/76502点自细化38项通过；最终商业两窗19量38项通过，初次1µs绝对FAIL保留 | 已完成02044768579ba083d1fb526786922e770cc2e7c6；不含线路/其他组别/零序/饱和，跨OS CI另待验 |
 | PSCAD cookbook | 工程XML已检查 | v4.6.0，无实跑数值 | inspected |
 
 到20的本地稳定Python3.14.5完整回归：1133 passed，154.47 s；Ruff/mypy通过。原14例及新增19/20均单独执行通过。
@@ -32,3 +33,7 @@ B1工具加入10项数学/失败测试后的完整回归：**1154 passed，144.2
 `90b2fcd`的[真实CI](https://github.com/yu-yikai/PyCy_EMT_Lite/actions/runs/41809969999)两系统全步骤success，在线复核日期2026-11-06；与80ba91c同代码，因此补齐22的跨操作系统验收。证据experiments/ci_90b2fcd.json，公开job日志403，远端测试数量未知。该旧HEAD不覆盖23；23在正常push后的精确HEAD另行等待CI，不把本地通过改称远端通过。
 
 2026-11-06最新远端e51c1f1的[CI run42154476032](https://github.com/yu-yikai/PyCy_EMT_Lite/actions/runs/42154476032)实际终态failure，但两job均未获runner、steps为空，check-run注释明确“The job was not started because your account is locked due to a billing issue.”，没有运行软件测试。证据experiments/ci_e51c1f1.json及归档annotations；远端测试数null。23商业平台数值比较和本地回归通过保持原结论，23跨OS CI仍待账户解锁后补验；不能以旧90b2fcd替代。
+
+2026-11-06 A4b候选：8项独立物理测试、Agg50001点、锁定同步/Ruff/mypy通过；新增后完整1178 passed474.63 s（含slow）。严格原ode15s资源中止，极小AbsTol的daessc短探针也出现最小步长停滞；两Abs1e-8短probe和自细化通过。参考配置补充926138d在正式full/候选商业比较前提交，固定19量/两窗/双限值及参考十分之一误差预算不变。正式50ms参考与候选商业验收仍待完成，正式新增仍5。
+
+2026-11-06到24最终：1179 passed490.61s（XML490.603，含slow），日志.tmp/longterm/a4b-final-full-pytest.log、a4b-final-full-tests.xml。锁定同步27包、Ruff全范围、mypy39通过，九专项76.926s、独立Agg100001点。最终真实比较run20261106T041603177270Z全部38项PASS，maxLV20.17655V/HV205.91860V/源电流119.38782µA/maxNR.000246239，图/输入/hash独立审计均完成，提交0204476。原始资源中止/最小步长/guard/1µs商业FAIL均保留，未降低窗口/限值。正式新增6；A4当前23/24范围完成，真实线路组合后置D0，F1新HEAD跨OS状态单独记录。

@@ -1664,7 +1664,7 @@
         ".m"
       ],
       "model_version": "R2025a Update 1",
-      "status": "runnable",
+      "status": "reference_ready",
       "software_requirements": [
         "MATLAB R2025a Update 1",
         "Simulink",
@@ -1683,17 +1683,17 @@
       "local_path": "local_reference/three_phase_transformer",
       "allows_local_save": "Official versioned exampledata under installed licensed software; local study",
       "allows_redistribution": "not_asserted",
-      "mathematical_compatibility": "Not yet established. Purely linear Y-delta1 / delta1-Y chain with positive winding resistances and excluded magnetic/leakage branches. Actual source impedance parameterization, winding/line current directions and Delta Reference constraint require direct interpretation before candidate.",
-      "blockers": [
-        "Source impedance_option string 1 not decoded; saved R/L cannot be assumed active. delta1 and gauge constraint not fully mapped. Default cold-start earliest native point 5.76235ns; timestep suitability must be independently derived, not inferred from 1ms max step."
-      ],
+      "mathematical_compatibility": "Validated only for original balanced Y-delta1 / delta1-Y chain, exact copper resistance folding, two floating wye stars and a zero-current mean-voltage gauge. Per-phase active source R/L directly resolved. No line section, magnetic branch, other clock group or zero-sequence fault is certified. No core/API change.",
+      "blockers": [],
       "sha256": {
         "simulink/ee_delta_transmission.slx": "02be3b7168ed504a6a585c3aa29aba3369b294d6bed2a517d6408a1931abe4ca",
         "simulink/ee_delta_transmission_plot.m": "7deef91850394ae29c5151280759c3fc7b8c1d2a2a3ec86b2d0e90cdd2c88ad9",
         "default_probe/simulink_output.mat": "1fc0ffec236473e919b7ace9b15965dd81274257274671bce3db44606830e18f",
         "default_probe/provenance.json": "edf3e31ab768b11a9b452287304039fd5016922772f9bd31bd7d361e117d529f",
         "default_probe/native_signal_inventory.json": "3f2be0dd982b122075d85b4d790f408676f4bca1bcb97824369bdf074c781f36",
-        "evidence_inventory.json": "bbc7229b9aaf78acf74025cb718da0c3c6bfeebeb8d6dc21ee0beca564ac8d67"
+        "evidence_inventory.json": "bbc7229b9aaf78acf74025cb718da0c3c6bfeebeb8d6dc21ee0beca564ac8d67",
+        "source_parameter_audit_native.json": "6492862545d43d2bd23f1d8f83e4a0aa1f7be6d72bb096fb79d5340cc02b63f8",
+        "winding_reference_audit.json": "851eb94f8f9c4bff707a8376b45b2ac59d5ac2d88be97a15eaae5170fc10df37"
       },
       "probe_record": "docs/development_roadmap/experiments/three_phase_transformer_reference_candidates.md",
       "native_probe": {
@@ -1719,9 +1719,41 @@
         "scope": "Original complete model; default solver and all physics retained. Native exploration only, no reference refinement or PyCy validation. No actual transmission line section."
       },
       "formal_pycy_validation": {
-        "status": "not_started",
-        "implementation_commit": null,
-        "note": "Resolve parameter/port/reference semantics and stiffness before freezing acceptance or writing candidate. No new framework planned."
+        "status": "completed",
+        "acceptance_commits": [
+          "4edd4a1",
+          "c88c2bb",
+          "926138d",
+          "08a0156"
+        ],
+        "implementation_commit": "02044768579ba083d1fb526786922e770cc2e7c6",
+        "report": "validation/cases/three_phase_transformer_chain/validation_report.json",
+        "run_id": "20261106T041603177270Z",
+        "report_sha256_raw": "e9f691859fa16185c4b44a8853f50113fe34b24596e2b7c81cbaf4415a270061",
+        "candidate_step_s": 5e-07,
+        "candidate_samples": 100001,
+        "note": "All38 real comparisons, nine physical tests, independent Agg, final1179 full regression including slow, teaching/plots/hash audit and feature commit complete. Initial1us FAIL retained; all original limits unchanged. OS CI remains a separate external verification."
+      },
+      "formal_reference": {
+        "local_path": "local_reference/three_phase_transformer_chain",
+        "export_run_id": "20261106T041347000Z",
+        "solver_protocol_commit": "926138d43f5ee9091df782c461207b8eb0d6b8d5",
+        "candidate_step_protocol_commit": "08a01562d7e9dc557b472202f15e2b25894261a2",
+        "native_samples": [
+          58899,
+          76502
+        ],
+        "time_s": [
+          0,
+          0.05
+        ],
+        "self_refinement": "38 checks passed original one-tenth absolute and NRMSE budgets; original complete physical network",
+        "sha256": {
+          "simulink/ee_delta_transmission.slx": "02be3b7168ed504a6a585c3aa29aba3369b294d6bed2a517d6408a1931abe4ca",
+          "normalized_results/reference.csv": "d9e2a894d33c1f4d1c03faff3b062283ff0b2ca1fa59f174c52281a53282f0a7",
+          "provenance.json": "84701fe264ec1a9de4eb81734622db5db9023d349da318a15e6db44b0aa1efbd",
+          "self_refinement.json": "994be02b79057d90759a60adb5392baf89526d83d23c79934d51a52754093498"
+        }
       }
     }
   ],

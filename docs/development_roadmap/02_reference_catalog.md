@@ -146,3 +146,16 @@ PyCy在3761a21预先冻结的验收下，已完成独立8项物理测试、独�
 ### 双三相变压器与Delta Reference
 
 第21项`mw-three-phase-delta-reference-r2025a`已从官方固定R2025a地址取得并真实运行原完整模型：daessc、0–50ms、449点，保留MAT与18份原生CSV。它只有源、两个线性变压器、母线、参考点和负荷，没有实际线路段。两T磁性及漏抗分支明确exclude，但源阻抗的活动分支仍需原生解释，不将保存R/L或模型标题当作证据。原始冷启动最早非零采样仅5.76235ns，不能按最大步长1ms猜PyCy合适步长。当前只记runnable，下一步核参数/端口/规范点后再决定是否冻结候选。[研究与最小恢复步骤](experiments/three_phase_transformer_reference_candidates.md)。
+
+
+2026-11-06 A4b更新：第21项的源活动R/L、绕组铜阻/方向和Delta参考规范已直接核清。
+原严格ode15s因资源中止、极小AbsTol的daessc亦曾最小步长停滞，全部日志保留。
+926138d补充先提交后，以原物理网络daessc Rel1e−9/1e−10、Abs均1e−8、MaxStep25/12.5µs
+真实运行完整50ms，58899/76502点，19量双窗自身误差均低于原正式双限值的十分之一。
+正式run20261106T041347000Z，参考就绪；原件SHA保持02be3b71…。
+
+候选首次1µs商业比较startup11量绝对超限，原始FAIL与输入保留。
+08a0156先提交0.5µs细化协议，物理/窗口/误差阈值均未放宽；最终run20261106T041603177270Z的38项真实比较通过，
+最大LV20.17655V/HV205.91860V/源电流119.38782µA、最大NRMSE0.000246239。
+[教学、失败保留和复现](../../validation/cases/three_phase_transformer_chain/README.md)。
+本例没有实际线路或磁性支路，不推广为其他接线/零序/饱和验证；完整回归与Git完成状态由tasks/validation_status同步。

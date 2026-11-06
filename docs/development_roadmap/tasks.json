@@ -3,9 +3,9 @@
   "updated_date": "2026-11-06",
   "timezone": "Asia/Shanghai",
   "branch": "codex/emt-examples-longterm",
-  "checkpoint_head": "d79e849ed82cea3aba32904d0813bf8040f7e73e",
-  "current_task": "A4b",
-  "formal_new_examples_completed": 5,
+  "checkpoint_head": "02044768579ba083d1fb526786922e770cc2e7c6",
+  "current_task": "D0",
+  "formal_new_examples_completed": 6,
   "status_values": [
     "planned",
     "ready",
@@ -264,7 +264,7 @@
     {
       "id": "A4",
       "phase": "foundation",
-      "title": "线性变压器/互感参考与组合",
+      "title": "线性变压器T等效与双三相接线组合（本阶段23/24）",
       "priority": 2,
       "dependencies": [
         "A1"
@@ -274,15 +274,18 @@
         "mw-mutual-transformer-t-r2025a",
         "mw-three-phase-delta-reference-r2025a"
       ],
-      "validation": "23线性T等效已作为A4a独立验收；三相接线及电源—变压器组合仍需各自真实参考，不由23结果推广",
-      "acceptance": "分成可独立验收算例，每个有真实对标后完成",
-      "status": "in_progress",
+      "validation": "23与24分别独立真实验收；仅覆盖外置三L单相T等效和原平衡Y–Δ–Y链，不推广到其他接线/零序/磁非线性。原源—变压器—线路—负荷整链未交付，明确后置D0。",
+      "acceptance": "完成本阶段23/24两个非重复教学交付；不为换Yy/Dd组别复制算例，不将24无线路网络冒充线路组合。",
+      "status": "completed",
       "files": [
-        "validation/cases/transformer_t_equivalent/README.md"
+        "validation/cases/transformer_t_equivalent/README.md",
+        "validation/cases/three_phase_transformer_chain/README.md"
       ],
       "commits": [
         "0ec7239",
-        "91dbad6bb77af24d1a548a6d0943930c4bcce40f"
+        "91dbad6bb77af24d1a548a6d0943930c4bcce40f",
+        "08a0156",
+        "02044768579ba083d1fb526786922e770cc2e7c6"
       ],
       "blockers": []
     },
@@ -317,7 +320,7 @@
     {
       "id": "A4b",
       "phase": "foundation",
-      "title": "双三相线性变压器接线与参考点调查",
+      "title": "双三相线性Y–Δ–Y变压器链",
       "priority": 1,
       "dependencies": [
         "A4a",
@@ -327,13 +330,27 @@
       "references": [
         "mw-three-phase-delta-reference-r2025a"
       ],
-      "validation": "官方原完整Y–delta1–Y链默认运行449点/50ms成功；18原生CSV/完整MAT/hash保留。活动源阻抗、绕组/线电流及参考点约束未充分核定；尚未冻结协议或实现候选。",
-      "acceptance": "先核实际参数、delta1端子及Gauge约束/初值/时间尺度，确认无需不必要框架；候选前独立推导并冻结协议，后续逐项内部/真实对标/教学/提交，不计数凑接法。",
-      "status": "in_progress",
+      "validation": "最终0.5us/100001点对真实58899点19量两窗38项全过，最大LV20.17655V/HV205.91860V/源电流119.38782uA/maxNR.000246239；9专项76.926s、独立Agg、全量1179 passed490.61s含slow、锁定/Ruff/mypy均通过；图/独立审计/教学/Git0204476完成。初始1us启动绝对FAIL及所有参考失败保持。",
+      "acceptance": "4edd4a1/c88c2bb原协议；926138d求解器补充、08a0156步长细化均先于各自正式重验，原物理/窗/19量/误差限不变；真实参考、内部/独立运行、图报告、9测试、教学及提交全部完成。跨OS CI仍单独待验证。",
+      "status": "completed",
       "files": [
-        "docs/development_roadmap/experiments/three_phase_transformer_reference_candidates.md"
+        "docs/development_roadmap/experiments/three_phase_transformer_reference_candidates.md",
+        "validation/cases/three_phase_transformer_chain/manifest.json",
+        "validation/cases/three_phase_transformer_chain/acceptance_plan.md",
+        "validation/cases/three_phase_transformer_chain/reference_solver_addendum.md",
+        "validation/cases/three_phase_transformer_chain/candidate_step_addendum.md",
+        "validation/cases/three_phase_transformer_chain/initial_step_failure.json",
+        "examples/24_three_phase_transformer_chain.py",
+        "tests/test_three_phase_transformer_chain.py",
+        "validation/cases/three_phase_transformer_chain/validation_report.json"
       ],
-      "commits": [],
+      "commits": [
+        "4edd4a1",
+        "c88c2bb",
+        "926138d",
+        "08a0156",
+        "02044768579ba083d1fb526786922e770cc2e7c6"
+      ],
       "blockers": []
     },
     {
@@ -413,6 +430,24 @@
       "blockers": []
     },
     {
+      "id": "D0",
+      "phase": "interfaces_networks",
+      "title": "线性电源—变压器—线路—负荷组合参考先行",
+      "priority": 2,
+      "dependencies": [
+        "A4b",
+        "A7"
+      ],
+      "new_capabilities": [],
+      "references": [],
+      "validation": "先取得/核验真实可运行且数学一致的完整含线路参考，复用现有元件，候选前固定拓扑/参数/初值/方向/完整窗与阈值；无参考不写候选或计数。",
+      "acceptance": "只在有独立教学价值且不引入新框架时实施；真实模型/独立物理/商业比较/图报告/测试/教学/提交全部完成。24无实际线路不能替代本项。",
+      "status": "planned",
+      "files": [],
+      "commits": [],
+      "blockers": []
+    },
+    {
       "id": "D1",
       "phase": "interfaces_networks",
       "title": "等效新能源/HVDC/小网",
@@ -441,7 +476,7 @@
       ],
       "new_capabilities": [],
       "references": [],
-      "validation": "本地1170 passed384.08s（含slow）、锁定/Ruff/mypy通过。90b2fcd双平台成功覆盖22；新e51c1f1 run42154476032终态failure，两job因账户billing lock未启动（steps空/runner0），不代表代码断言失败，23的跨OS CI仍未验证。",
+      "validation": "最新本地1179 passed490.61s（含slow）、锁定/Ruff/mypy通过，覆盖24。90b2fcd双OS成功只覆盖22；23/24跨OS CI仍未验证，已确认的旧run因账户billing lock未获runner。新里程碑推送后仅据实际HEAD记录CI。",
       "acceptance": "本批测试与真实CI记录、教学导航、里程碑推送和恢复指令",
       "status": "blocked",
       "files": [
