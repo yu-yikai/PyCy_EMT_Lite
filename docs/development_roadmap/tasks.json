@@ -3,8 +3,8 @@
   "updated_date": "2026-11-06",
   "timezone": "Asia/Shanghai",
   "branch": "codex/emt-examples-longterm",
-  "checkpoint_head": "e51c1f1881edcc4f4d53c5f9b166814c9dd8e3f8",
-  "current_task": "B2",
+  "checkpoint_head": "d79e849ed82cea3aba32904d0813bf8040f7e73e",
+  "current_task": "A4b",
   "formal_new_examples_completed": 5,
   "status_values": [
     "planned",
@@ -271,7 +271,8 @@
       ],
       "new_capabilities": [],
       "references": [
-        "mw-mutual-transformer-t-r2025a"
+        "mw-mutual-transformer-t-r2025a",
+        "mw-three-phase-delta-reference-r2025a"
       ],
       "validation": "23线性T等效已作为A4a独立验收；三相接线及电源—变压器组合仍需各自真实参考，不由23结果推广",
       "acceptance": "分成可独立验收算例，每个有真实对标后完成",
@@ -311,6 +312,28 @@
         "0ec7239",
         "91dbad6bb77af24d1a548a6d0943930c4bcce40f"
       ],
+      "blockers": []
+    },
+    {
+      "id": "A4b",
+      "phase": "foundation",
+      "title": "双三相线性变压器接线与参考点调查",
+      "priority": 1,
+      "dependencies": [
+        "A4a",
+        "V1"
+      ],
+      "new_capabilities": [],
+      "references": [
+        "mw-three-phase-delta-reference-r2025a"
+      ],
+      "validation": "官方原完整Y–delta1–Y链默认运行449点/50ms成功；18原生CSV/完整MAT/hash保留。活动源阻抗、绕组/线电流及参考点约束未充分核定；尚未冻结协议或实现候选。",
+      "acceptance": "先核实际参数、delta1端子及Gauge约束/初值/时间尺度，确认无需不必要框架；候选前独立推导并冻结协议，后续逐项内部/真实对标/教学/提交，不计数凑接法。",
+      "status": "in_progress",
+      "files": [
+        "docs/development_roadmap/experiments/three_phase_transformer_reference_candidates.md"
+      ],
+      "commits": [],
       "blockers": []
     },
     {
@@ -365,7 +388,9 @@
         "docs/development_roadmap/experiments/next_reference_candidates.md",
         "docs/development_roadmap/experiments/synchronous_buck_reference_probe.md"
       ],
-      "commits": [],
+      "commits": [
+        "d79e849"
+      ],
       "blockers": []
     },
     {
@@ -427,7 +452,8 @@
       "commits": [
         "90b2fcd",
         "91dbad6bb77af24d1a548a6d0943930c4bcce40f",
-        "e51c1f1"
+        "e51c1f1",
+        "d79e849"
       ],
       "blockers": [
         "GitHub check-run两项注释：The job was not started because your account is locked due to a billing issue. 账户解除外部账单锁后才能补跑；不通过重复push或改代码绕过。"

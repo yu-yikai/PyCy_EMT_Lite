@@ -1647,6 +1647,82 @@
         "implementation_commit": null,
         "note": "Prefer a simpler compatible reference until device/control semantics and initialization are verified."
       }
+    },
+    {
+      "id": "mw-three-phase-delta-reference-r2025a",
+      "short_code": "MW-3PH-T",
+      "name": "Transmission System with Delta Reference (two-transformer chain; no line section)",
+      "example_id": "simscapeelectrical/TransmissionDeltaReferenceExample",
+      "source_url": "https://www.mathworks.com/help/simscape-electrical/ug/transmission-system-with-delta-reference.html",
+      "download_url": "https://www.mathworks.com/help/releases/R2025a/exampledata/simscapeelectrical/main/ee_delta_transmission.slx",
+      "files": [
+        "ee_delta_transmission.slx",
+        "ee_delta_transmission_plot.m"
+      ],
+      "file_formats": [
+        ".slx",
+        ".m"
+      ],
+      "model_version": "R2025a Update 1",
+      "status": "runnable",
+      "software_requirements": [
+        "MATLAB R2025a Update 1",
+        "Simulink",
+        "Simscape",
+        "Simscape Electrical"
+      ],
+      "dependencies": [
+        "Simscape Electrical three-phase source, two winding transformers and Delta Reference"
+      ],
+      "download_available": true,
+      "downloaded": true,
+      "content_inspected": true,
+      "opened_in_native_software": true,
+      "simulation_succeeded": true,
+      "reference_numeric_data_obtained": true,
+      "local_path": "local_reference/three_phase_transformer",
+      "allows_local_save": "Official versioned exampledata under installed licensed software; local study",
+      "allows_redistribution": "not_asserted",
+      "mathematical_compatibility": "Not yet established. Purely linear Y-delta1 / delta1-Y chain with positive winding resistances and excluded magnetic/leakage branches. Actual source impedance parameterization, winding/line current directions and Delta Reference constraint require direct interpretation before candidate.",
+      "blockers": [
+        "Source impedance_option string 1 not decoded; saved R/L cannot be assumed active. delta1 and gauge constraint not fully mapped. Default cold-start earliest native point 5.76235ns; timestep suitability must be independently derived, not inferred from 1ms max step."
+      ],
+      "sha256": {
+        "simulink/ee_delta_transmission.slx": "02be3b7168ed504a6a585c3aa29aba3369b294d6bed2a517d6408a1931abe4ca",
+        "simulink/ee_delta_transmission_plot.m": "7deef91850394ae29c5151280759c3fc7b8c1d2a2a3ec86b2d0e90cdd2c88ad9",
+        "default_probe/simulink_output.mat": "1fc0ffec236473e919b7ace9b15965dd81274257274671bce3db44606830e18f",
+        "default_probe/provenance.json": "edf3e31ab768b11a9b452287304039fd5016922772f9bd31bd7d361e117d529f",
+        "default_probe/native_signal_inventory.json": "3f2be0dd982b122075d85b4d790f408676f4bca1bcb97824369bdf074c781f36",
+        "evidence_inventory.json": "bbc7229b9aaf78acf74025cb718da0c3c6bfeebeb8d6dc21ee0beca564ac8d67"
+      },
+      "probe_record": "docs/development_roadmap/experiments/three_phase_transformer_reference_candidates.md",
+      "native_probe": {
+        "samples": 449,
+        "time_s": [
+          0,
+          0.05
+        ],
+        "solver": {
+          "Type": "Variable-Step",
+          "Solver": "daessc",
+          "MaxStepSize": 0.001
+        },
+        "elapsed_seconds": 9.8071364,
+        "csv_files": 18,
+        "initial_source_il_a": [
+          0,
+          0,
+          0
+        ],
+        "earliest_positive_time_s": 5.76234962644974e-09,
+        "model_dirty": "off",
+        "scope": "Original complete model; default solver and all physics retained. Native exploration only, no reference refinement or PyCy validation. No actual transmission line section."
+      },
+      "formal_pycy_validation": {
+        "status": "not_started",
+        "implementation_commit": null,
+        "note": "Resolve parameter/port/reference semantics and stiffness before freezing acceptance or writing candidate. No new framework planned."
+      }
     }
   ],
   "scope_notes": [
