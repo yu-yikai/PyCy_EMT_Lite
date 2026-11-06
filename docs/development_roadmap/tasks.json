@@ -3,7 +3,7 @@
   "updated_date": "2026-11-06",
   "timezone": "Asia/Shanghai",
   "branch": "codex/emt-examples-longterm",
-  "checkpoint_head": "72e255c41c332d944054330ea672a82fade593cb",
+  "checkpoint_head": "f36c06362244efb43285e2725bc6b6db975c86ec",
   "current_task": "B2",
   "formal_new_examples_completed": 7,
   "status_values": [
@@ -169,15 +169,18 @@
       ],
       "new_capabilities": [],
       "references": [
-        "pscad-line-energizing"
+        "pscad-line-energizing",
+        "pscad-installed-scalar-bergeron-v5"
       ],
-      "validation": "整步传播时间、反射系数、物理一致的商业参考",
+      "validation": "127个安装pscx/53个显式线路定义已查，5个手工标量Bergeron均有限R；两无损半线+三R等效有独立解析证明及97频点互核，不是商业验证。真实PSCAD5.0.0启动/许可true，但整包settings查询挂起、原生自行退出；自有Python身份核对后结束，无工程加载/build/sim。",
       "acceptance": "先确认可运行参考，再固定教学与验收；无真实数据不完成",
-      "status": "planned",
-      "files": [],
+      "status": "in_progress",
+      "files": [
+        "docs/development_roadmap/experiments/bergeron_reference_followup.md"
+      ],
       "commits": [],
       "blockers": [
-        "尚未取得数学一致的Bergeron商业运行数据；线路投切参考不等同于Bergeron"
+        "尚未取得有限R同数学Bergeron的真实商业波形；工具链实际选择/build/run未证，需先做有界编译环境检查。"
       ]
     },
     {
@@ -407,7 +410,8 @@
         "docs/development_roadmap/experiments/synchronous_buck_state_followup.md"
       ],
       "commits": [
-        "d79e849"
+        "d79e849",
+        "f36c06362244efb43285e2725bc6b6db975c86ec"
       ],
       "blockers": []
     },

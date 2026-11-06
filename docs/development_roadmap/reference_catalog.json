@@ -1913,6 +1913,63 @@
           "export_runs/20261106T054135322Z/inputs/export_reference.m": "44683fa2c96ec1cbba8c028a828aaf41faf3223c8005f9196b3fd738282b12c8"
         }
       }
+    },
+    {
+      "id": "pscad-installed-scalar-bergeron-v5",
+      "short_code": "PSCAD-BERGERON",
+      "name": "Installed scalar finite-resistance Bergeron definitions and environment probe",
+      "source_url": "https://www.pscad.com/webhelp-v5-ol/EMTDC/Transmission_Lines/The_Bergeron_Model.htm",
+      "files": [
+        "ENI/Cigre_BM.pscx",
+        "ENI/Cigre_BM1.pscx",
+        "Lightning/Steep_Front.pscx",
+        "Multi-Instance Modules/LightningCoord.pscx"
+      ],
+      "file_formats": [
+        ".pscx"
+      ],
+      "model_version": "Installed PSCAD 5.0 examples; executable reports 5.0.0",
+      "status": "inspected",
+      "software_requirements": [
+        "PSCAD 5.0",
+        "EMTDC",
+        "compatible Fortran compiler"
+      ],
+      "dependencies": [
+        "master.pslx",
+        "actual project compiler selection and EMTDC libraries"
+      ],
+      "download_available": null,
+      "downloaded": false,
+      "content_inspected": true,
+      "opened_in_native_software": false,
+      "simulation_succeeded": false,
+      "reference_numeric_data_obtained": false,
+      "local_path": "local_reference/a3_followup",
+      "allows_local_save": "Installed example metadata and local research evidence inspected; no redistribution permission asserted",
+      "allows_redistribution": "not_asserted",
+      "mathematical_compatibility": "Five manual scalar Bergeron definitions have nonzero active R. Published undamped constant-parameter finite-R model equals R/4 + two lossless half-lines separated by R/2 + R/4, by independent analytic elimination; 97 complex-frequency checks supplement it. Existing single attenuation factor is insufficient. Original HVDC/lightning host networks are not directly small PyCy cases. Actual parameters, initial histories, native interpolation/events and finite-R numerical comparison remain pending.",
+      "blockers": [
+        "No native project load, build or simulation. No reference waveform or candidate.",
+        "Actual compiler selection unknown; missing ATS discovery file makes fortran_versions empty. Whole-settings RPC hung; owned native instance subsequently exited itself, cause unknown."
+      ],
+      "probe_record": "docs/development_roadmap/experiments/bergeron_reference_followup.md",
+      "native_environment_probe": {
+        "run_id": "20261106T061600Z_startup",
+        "actual_version": "5.0.0",
+        "licensed_observed": true,
+        "fortran_available_via_ATS_codec": [],
+        "build_or_simulation": false,
+        "terminal_record": "startup/20261106T061600Z_startup/terminal_summary.json",
+        "owned_processes_absent": true
+      },
+      "sha256": {
+        "analysis_manifest.json": "9f3f5090a98e9d4ac71484f8423ed9d199d1d15cad15f0f4916e29b9d82205a5",
+        "installed_examples_inventory.json": "104fd10fea6a32067cd931072828e26e245a6ef2d0ee1b4bdf37c40bf423eb4d",
+        "startup/20261106T061600Z_startup/terminal_summary.json": "aecb6c82b0755ab6dc6fbae25d7ca4667551cae2f08e91bd113f78380c10891d",
+        "independent_review/physics_audit_review.md": "eda8af3fd639ba70090f6fba170ffb62e87ae799add44184b0fd919d4725bbea"
+      },
+      "license_notes": "Installed original projects, library sources, official figures and all probe evidence remain local. Startup did not request login, acquire a certificate, change settings or bypass licensing."
     }
   ],
   "scope_notes": [

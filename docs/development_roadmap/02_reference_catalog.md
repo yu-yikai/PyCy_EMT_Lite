@@ -175,3 +175,7 @@ PyCy在3761a21预先冻结的验收下，已完成独立8项物理测试、独�
 当前为runnable，尚未参考自身精化或候选验收，不增加正式算例数。
 原件、MAT/CSV、native分析及独立物理审查均在忽略目录，
 [调查与恢复](experiments/source_line_transformer_reference_probe.md)说明下一步；优先基础R/L/C与理想T，暂不增加核心能力。
+
+### 有限电阻Bergeron与PSCAD原生环境
+
+第23项`pscad-installed-scalar-bergeron-v5`为**inspected**，与未下载的Chapter6线路投切资源分开。127个安装pscx中查到5个手工标量Bergeron定义，均有有限R；两无损半线和三R组合与官方基础方程有独立解析等价，但尚无商业工程加载、build/sim或波形。原生PSCAD5.0.0已实际启动并返回licensed=true，整包settings读取挂起，已选编译器未知；原生自行退出，阻塞的自有Python经身份核验后结束。许可启动不等于完整环境可运行。见[调查、边界和恢复步骤](experiments/bergeron_reference_followup.md)，不新增线路核心类或提升为reference_ready。
