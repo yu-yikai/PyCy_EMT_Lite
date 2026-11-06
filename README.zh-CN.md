@@ -97,6 +97,7 @@ uv run --locked pytest -o addopts= -q -p no:cacheprovider --basetemp=.tmp/pytest
 | 变压器 | [09](examples/09_single_phase_transformer.py) | 核对变比，观察漏阻抗和励磁的影响；三相接法见模型说明。 |
 | 变压器T等效 | [23](examples/23_transformer_t_equivalent.py) | 在03和09之后学习漏感后的励磁支路、电流连续、双时间常数与能量；附[真实参考及复现说明](validation/cases/transformer_t_equivalent/README.md)。 |
 | 三相变压器链 | [24](examples/24_three_phase_transformer_chain.py) | 在09和21之后区分线量/绕组量、浮动星点与Δ参考点，观察中间相移及快速启动；附[真实对标与原步长失败记录](validation/cases/three_phase_transformer_chain/README.md)。 |
+| 电源、线路、变压器与负荷 | [25](examples/25_source_line_transformer_network.py) | 在08、17和23之后学习完整网络的正弦稳态初始化、充电和补偿导致的电流差，并核实际负荷功率及损耗；附[接线、初值与验证说明](validation/cases/source_line_transformer/README.md)。 |
 | 同步机 | [10](examples/10_park_generator_avr_governor.py) | 从平衡初值出发，观察负荷阶跃后电压和转速的变化，区分 AVR 与调速器的作用。 |
 | 离散控制 | [11](examples/11_pll_dynamic_response.py) | 观察独立 SRF-PLL 控制循环的 q 轴电压和角频率，说明何时接近锁定。 |
 | PWM | [12](examples/12_two_level_pwm_generator.py) | 对照理想开关的 SPWM 门极与 RL 电流，区分开关纹波和基波；[真实参考研究](validation/cases/two_level_pwm/README.md)保留尚未通过的波形判据。 |

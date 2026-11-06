@@ -1,0 +1,2923 @@
+{
+  "case_id": "source_line_transformer",
+  "passed": true,
+  "run_id": "20261106T054356596388Z",
+  "reference_platform": "MATLAB R2025a Update 1 / Simulink / Simscape Electrical Specialized Power Systems; saved model metadata R2025a Prerelease Update 2",
+  "reference_provenance": {
+    "schema_version": 1,
+    "case_id": "source_line_transformer",
+    "reference_id": "mw-source-line-transformer-r2025a",
+    "origin": "Unmodified complete MathWorks R2025a installed SPS power_gui network",
+    "export_run_id": "20261106T054135322Z",
+    "export_run_directory": "D:\\VibeCoding\\PyCy_EMT_Lite\\local_reference\\source_line_transformer\\export_runs\\20261106T054135322Z",
+    "export_time_utc": "2026-11-06 05:42:33 +0000",
+    "source_url": "https://www.mathworks.com/help/releases/R2025a/sps/powersys/ug/analyzing-a-simple-circuit.html",
+    "model_name": "power_gui",
+    "model_path": "D:\\VibeCoding\\PyCy_EMT_Lite\\local_reference\\source_line_transformer\\simulink\\power_gui.slx",
+    "original_model_path": "D:\\VibeCoding\\PyCy_EMT_Lite\\local_reference\\d0_research\\simulink\\power_gui.slx",
+    "model_sha256": "a46b7c34658c65ce58c6e51a6d167244c06f4e839063c00bd1ff75c78bdc5a08",
+    "loaded_model_path": "D:\\VibeCoding\\PyCy_EMT_Lite\\local_reference\\source_line_transformer\\simulink\\power_gui.slx",
+    "model_dirty_after_runs": "off",
+    "research_inventory_sha256": "9297e7ef3f59aed86f9791c9e4ee7c98f15f0a09dc467481947d6e2e2a8c6e4f",
+    "freeze_commit": "65d89bb577c07656142f13c062907a5d7d600aba",
+    "frozen_protocol": [
+      {
+        "file": "manifest.json",
+        "raw_sha256": "e6703a6ba3e186e2a128d4442b9df9bd2e94ad24b0cbd2d202af858e92214800",
+        "lf_sha256": "b95012206a51341838fdfc580e1b665577e0ca39c823330f7cde1cc2ed120174",
+        "text": "{\r\n  \"case_id\": \"source_line_transformer\",\r\n  \"reference_id\": \"mw-source-line-transformer-r2025a\",\r\n  \"example\": \"examples/25_source_line_transformer_network.py\",\r\n  \"acceptance_defined\": \"2026-11-06 before candidate creation, execution or numerical commercial comparison; based on original complete network and independent physical/TR+interpolation analysis\",\r\n  \"reference_source\": \"https://www.mathworks.com/help/releases/R2025a/sps/powersys/ug/analyzing-a-simple-circuit.html\",\r\n  \"reference_model\": \"power_gui.slx\",\r\n  \"reference_platform\": \"MATLAB R2025a Update 1 / Simulink / Simscape Electrical Specialized Power Systems; saved model metadata R2025a Prerelease Update 2\",\r\n  \"reference_state\": \"runnable\",\r\n  \"windows_seconds\": [\r\n    [\r\n      0,\r\n      0.001\r\n    ],\r\n    [\r\n      0.001,\r\n      0.05\r\n    ]\r\n  ],\r\n  \"event_guard_seconds\": 0,\r\n  \"time_shift_seconds\": 0,\r\n  \"known_difference\": \"Same complete single-phase source-line-transformer-fixed-impedance-load network, same nonzero sinusoidal steady-state initialization and all compensation/equivalent branches. Two finite pi sections retain native 60Hz hyperbolic R/L/C/G correction. Exact R2+Rz1 series folding only. Existing zero-volt source represents original ideal load CurrentMeasurement. Reference signals are original commercial native states plus native-grid Cx+Du measurement projection, not direct Scope logs; no Python ODE substituted for native simulation. Normalized sending compensation and Zs currents are bus-to-ground, opposite native signs. Physical steady state from t0; first window checks numerical initialization, not a cold-start transient or broadband distributed-line propagation. No fitted shift, phase, amplitude, initial state or parameter.\",\r\n  \"signals\": [\r\n    {\r\n      \"candidate\": \"v:send\",\r\n      \"reference\": \"v_sending\",\r\n      \"unit\": \"V\",\r\n      \"scale\": 600000,\r\n      \"max_nrmse\": 5e-05,\r\n      \"max_abs_error\": 60.0\r\n    },\r\n    {\r\n      \"candidate\": \"v:mid\",\r\n      \"reference\": \"v_middle\",\r\n      \"unit\": \"V\",\r\n      \"scale\": 600000,\r\n      \"max_nrmse\": 5e-05,\r\n      \"max_abs_error\": 60.0\r\n    },\r\n    {\r\n      \"candidate\": \"v:recv\",\r\n      \"reference\": \"v_receiving\",\r\n      \"unit\": \"V\",\r\n      \"scale\": 600000,\r\n      \"max_nrmse\": 5e-05,\r\n      \"max_abs_error\": 60.0\r\n    },\r\n    {\r\n      \"candidate\": \"v:load\",\r\n      \"reference\": \"v_load\",\r\n      \"unit\": \"V\",\r\n      \"scale\": 200000,\r\n      \"max_nrmse\": 5e-05,\r\n      \"max_abs_error\": 20.0\r\n    },\r\n    {\r\n      \"candidate\": \"i:Lz1\",\r\n      \"reference\": \"i_z1\",\r\n      \"unit\": \"A\",\r\n      \"scale\": 2000,\r\n      \"max_nrmse\": 5e-05,\r\n      \"max_abs_error\": 0.2\r\n    },\r\n    {\r\n      \"candidate\": \"i:Lzs\",\r\n      \"reference\": \"i_zs\",\r\n      \"unit\": \"A\",\r\n      \"scale\": 2000,\r\n      \"max_nrmse\": 5e-05,\r\n      \"max_abs_error\": 0.2\r\n    },\r\n    {\r\n      \"candidate\": \"i:Lcomp_s\",\r\n      \"reference\": \"i_comp_sending\",\r\n      \"unit\": \"A\",\r\n      \"scale\": 400,\r\n      \"max_nrmse\": 5e-05,\r\n      \"max_abs_error\": 0.04\r\n    },\r\n    {\r\n      \"candidate\": \"i:Lcomp_r\",\r\n      \"reference\": \"i_comp_receiving\",\r\n      \"unit\": \"A\",\r\n      \"scale\": 400,\r\n      \"max_nrmse\": 5e-05,\r\n      \"max_abs_error\": 0.04\r\n    },\r\n    {\r\n      \"candidate\": \"i:Lline1\",\r\n      \"reference\": \"i_line1\",\r\n      \"unit\": \"A\",\r\n      \"scale\": 1000,\r\n      \"max_nrmse\": 5e-05,\r\n      \"max_abs_error\": 0.1\r\n    },\r\n    {\r\n      \"candidate\": \"i:Lline2\",\r\n      \"reference\": \"i_line2\",\r\n      \"unit\": \"A\",\r\n      \"scale\": 1200,\r\n      \"max_nrmse\": 5e-05,\r\n      \"max_abs_error\": 0.12000000000000001\r\n    },\r\n    {\r\n      \"candidate\": \"i:Lm\",\r\n      \"reference\": \"i_magnetizing\",\r\n      \"unit\": \"A\",\r\n      \"scale\": 2,\r\n      \"max_nrmse\": 5e-05,\r\n      \"max_abs_error\": 0.0002\r\n    },\r\n    {\r\n      \"candidate\": \"i:Lp\",\r\n      \"reference\": \"i_primary\",\r\n      \"unit\": \"A\",\r\n      \"scale\": 1000,\r\n      \"max_nrmse\": 5e-05,\r\n      \"max_abs_error\": 0.1\r\n    },\r\n    {\r\n      \"candidate\": \"i:Rs\",\r\n      \"reference\": \"i_source\",\r\n      \"unit\": \"A\",\r\n      \"scale\": 1200,\r\n      \"max_nrmse\": 5e-05,\r\n      \"max_abs_error\": 0.12000000000000001\r\n    },\r\n    {\r\n      \"candidate\": \"i:Iload\",\r\n      \"reference\": \"i_load\",\r\n      \"unit\": \"A\",\r\n      \"scale\": 1500,\r\n      \"max_nrmse\": 5e-05,\r\n      \"max_abs_error\": 0.15\r\n    }\r\n  ],\r\n  \"internal_acceptance\": {\r\n    \"independent_solution\": \"Physical complex nodal/impedance equations with original source phase, independent of candidate initialization recursion and runtime MNA; exact sinusoidal whole-window solution for all 12 states and two port currents.\",\r\n    \"sample_and_piecewise_linear_abs_budget_fraction\": 0.5,\r\n    \"trapezoidal_step_refinement_seconds\": [\r\n      2e-05,\r\n      1e-05,\r\n      5e-06\r\n    ],\r\n    \"minimum_refinement_error_ratio\": 3,\r\n    \"kcl_abs_tolerance_ampere\": 1e-07,\r\n    \"ideal_transformer_relative_tolerance\": 1e-09,\r\n    \"continuous_energy_balance_relative_tolerance\": 0.0001,\r\n    \"trapezoidal_average_endpoint_energy_relative_tolerance\": 1e-08,\r\n    \"power_rms_phase_relative_tolerance\": 0.0001,\r\n    \"phase_abs_tolerance_degrees\": 0.01,\r\n    \"reference_self_refinement\": \"Both complete windows, every signal <=0.1 of BOTH formal max-abs and NRMSE limits; also compare native samples and their PWL curves against independent exact physical phasors to the same reference budgets.\",\r\n    \"required_checks\": [\r\n      \"all actual R/L/C/G and fixed impedance conversions including every small shunt and Rm\",\r\n      \"all 12 nonzero initial states and original source phase from independent physical equations\",\r\n      \"all state and port current PWL curves over complete windows; no discarded first interval\",\r\n      \"all relevant KCL and transformer ratio/current including magnetizing/core-loss input total\",\r\n      \"all positive winding, line, shunt, compensation, equivalent and load losses; zero ideal-T/meter power\",\r\n      \"source work = all resistor losses + 12-state stored-energy change, continuous and TR-average discrete identities separately\",\r\n      \"source/load RMS, phase and P/Q derived from independent single-phase phasors; nominal power fields are impedance ratings\",\r\n      \"TR second-order refinement against independent exact solution; do not use commercial data to tune h\"\r\n    ],\r\n    \"energy_normalization\": \"max(initial stored energy, integral(abs(source_power)), integral(all resistor losses), 1 joule); never nearly-zero net energy change\"\r\n  }\r\n}\r\n"
+      },
+      {
+        "file": "parameters.json",
+        "raw_sha256": "fc4810294a19089283c3d35732febcaf5a5769ec83aae7d216f9d2b5899e8d9b",
+        "lf_sha256": "a8ce291205ad8dc6a4bd4882be690853ab956597f708619da3851429da215d37",
+        "text": "{\r\n  \"reference_id\": \"mw-source-line-transformer-r2025a\",\r\n  \"reference_model_sha256\": \"a46b7c34658c65ce58c6e51a6d167244c06f4e839063c00bd1ff75c78bdc5a08\",\r\n  \"physical_parameters\": {\r\n    \"source\": {\r\n      \"frequency_hz\": 60.0,\r\n      \"peak_voltage_v\": 600124.9869818786,\r\n      \"phase_degrees\": 0.0,\r\n      \"series_resistance_ohm\": 2.0\r\n    },\r\n    \"line\": {\r\n      \"phases\": 1,\r\n      \"length_km\": 150.0,\r\n      \"pi_sections\": 2,\r\n      \"nominal_frequency_hz\": 60.0,\r\n      \"r_ohm_per_km\": 0.011,\r\n      \"l_h_per_km\": 0.0008674,\r\n      \"c_f_per_km\": 1.341e-08,\r\n      \"specified_conductance_s_per_km\": 0.0,\r\n      \"actual_section_r_ohm\": 0.8224445766062685,\r\n      \"actual_section_l_h\": 0.06495433715369778,\r\n      \"actual_section_total_c_f\": 1.0065300911250024e-06,\r\n      \"actual_section_total_g_s\": 9.902004195214437e-09,\r\n      \"corrected_shunt_resistances_ohm\": [\r\n        201979312.5281228,\r\n        100989656.2640614,\r\n        201979312.5281228\r\n      ],\r\n      \"formula\": \"z=r+j*w*l; y=j*w*c; gamma=sqrt(z*y); Zc=sqrt(z/y); d=75km; Z=Zc*sinh(gamma*d); Y=2/Zc*tanh(gamma*d/2); R=ReZ,L=ImZ/w,G=ReY,C=ImY/w; endpoints Y/2 and middle Y\"\r\n    },\r\n    \"transformer\": {\r\n      \"rating_va\": 250000000.0,\r\n      \"frequency_hz\": 60.0,\r\n      \"primary_rated_rms_v\": 424352.44785437494,\r\n      \"secondary_rated_rms_v\": 181865.33479473213,\r\n      \"turns_ratio_primary_to_secondary\": 2.3333333333333335,\r\n      \"winding_resistance_pu\": 0.001,\r\n      \"primary_leakage_pu\": 0.15,\r\n      \"secondary_leakage_pu\": 0.0,\r\n      \"magnetizing_resistance_pu\": 500.0,\r\n      \"magnetizing_inductance_pu\": 500.0,\r\n      \"primary_r_ohm\": 0.7203,\r\n      \"primary_l_h\": 0.28659826377273057,\r\n      \"secondary_r_ohm\": 0.13230000000000003,\r\n      \"secondary_l_h\": 0.0,\r\n      \"magnetizing_r_ohm\": 360150,\r\n      \"magnetizing_l_h\": 955.3275459091019,\r\n      \"magnetizing_location\": \"after primary R1/L1, before ideal ratio\",\r\n      \"saturation\": false\r\n    },\r\n    \"each_compensation\": {\r\n      \"nominal_rms_v\": 424352.44785437494,\r\n      \"nominal_active_power_w\": 366666.6666666667,\r\n      \"nominal_inductive_var\": 110000000.0,\r\n      \"series_r_ohm\": 5.456757551178724,\r\n      \"series_l_h\": 4.342349687620599\r\n    },\r\n    \"z1\": {\r\n      \"series_r_ohm\": 0.734,\r\n      \"series_l_h\": 0.02085,\r\n      \"orientation\": \"transformer secondary toward load_bus\"\r\n    },\r\n    \"zs\": {\r\n      \"series_r_ohm\": 11.0,\r\n      \"series_l_h\": 0.2925,\r\n      \"orientation\": \"load_bus toward ground; opposite native Il_Zs\"\r\n    },\r\n    \"load\": {\r\n      \"nominal_rms_v\": 181865.33479473213,\r\n      \"nominal_active_power_w\": 200000000.0,\r\n      \"nominal_capacitive_var\": 50000000.0,\r\n      \"parallel_r_ohm\": 165.37500000000003,\r\n      \"parallel_c_f\": 4.0099506951850675e-06,\r\n      \"type\": \"constant impedance; not constant P/Q\"\r\n    }\r\n  },\r\n  \"topology\": \"src--Rs--send--Rline1--Lline1--mid--Rline2--Lline2--recv--Rp--Lp--core; core has Rm||Lm||idealT(n); secondary--(R2+Rz1)--Lz1--load_bus--0Vammeter--load; load R||C to ground; send/mid/recv have corrected C||G; send/recv have series Rcomp/Lcomp to ground; load_bus has series Rzs/Lzs to ground\",\r\n  \"exact_reduction\": \"R2 and Rz1 combined only because in the same unbranched series path; retain both parameters and separate loss accounting. The eliminated transformer external secondary terminal voltage is not the ideal secondary voltage.\",\r\n  \"initialization\": {\r\n    \"method\": \"All 12 physical L/C states initialized by independent sinusoidal phasors q: x(0)=Im(q), convention Im(q*exp(j*2*pi*60*t)). Compute from physical impedances, not hardcoded commercial states or native A/B.\",\r\n    \"native_state_order_for_audit\": [\r\n      \"Il_Z1\",\r\n      \"Il_Zs\",\r\n      \"Il_110 Mvar\",\r\n      \"Il_110 Mvar2\",\r\n      \"Il_section 1: 150 km Line\",\r\n      \"Il_section 2: 150 km Line\",\r\n      \"Il_Lm: Linear Transformer\",\r\n      \"Il_winding_1: Linear Transformer\",\r\n      \"Uc_Load\",\r\n      \"Uc_input: 150 km Line\",\r\n      \"Uc_section_2: 150 km Line\",\r\n      \"Uc_output: 150 km Line\"\r\n    ],\r\n    \"native_x0_audit_only_not_candidate_input\": [\r\n      -1676.1385611824408,\r\n      1748.8906115987725,\r\n      366.0314893585058,\r\n      -340.36210306471156,\r\n      -734.1107675775241,\r\n      -954.5229785120378,\r\n      -1.3300575800916816,\r\n      -719.8623044210544,\r\n      -35768.863694024374,\r\n      1972.9099533064864,\r\n      -8492.973607929822,\r\n      -18698.524975024862\r\n    ],\r\n    \"candidate_current_signs\": \"Compensation sending and Zs are bus-to-ground, negative of the corresponding native states. All other normalized states keep native signs.\",\r\n    \"meter\": \"Existing 0V VoltageSource Iload from load_bus to load reproduces original ideal CurrentMeasurement; only Rload/Cload downstream, Zs upstream; power zero.\"\r\n  },\r\n  \"time_step_second\": 1e-05,\r\n  \"stop_second\": 0.05,\r\n  \"integration_method\": \"trapezoidal\",\r\n  \"linear_solver_mode\": \"reuse\",\r\n  \"reference_solver\": {\r\n    \"solver\": \"ode15s\",\r\n    \"initial_step_s\": 1e-09,\r\n    \"automatic_absolute_tolerance_scaling\": false,\r\n    \"baseline\": {\r\n      \"relative_tolerance\": 1e-09,\r\n      \"absolute_tolerance\": 1e-09,\r\n      \"maximum_step_s\": 1e-05\r\n    },\r\n    \"refined\": {\r\n      \"relative_tolerance\": 1e-10,\r\n      \"absolute_tolerance\": 1e-10,\r\n      \"maximum_step_s\": 5e-06\r\n    },\r\n    \"generated_state_space_absolute_tolerance\": \"auto; explicitly verify and record, fail rather than silently overriding physical block properties\"\r\n  },\r\n  \"preimplementation_evidence_sha256\": {\r\n    \"native_parameter_audit.json\": \"8d41e66f320b48bb1c0d492fe7a679ad3c50384a499173fd5520a9ce2e5abf58\",\r\n    \"power_gui_independent_feasibility.json\": \"4ec7e01336eb321c4dd2e6d71c2959e08adea0df6f43acd37071ea5696808234\",\r\n    \"evidence_inventory_final.json\": \"9297e7ef3f59aed86f9791c9e4ee7c98f15f0a09dc467481947d6e2e2a8c6e4f\"\r\n  },\r\n  \"independent_reference_accuracy_oracle\": {\r\n    \"purpose\": \"Reference accuracy audit only; not candidate initialization input. Derived before candidate from original physical impedances, with no native A/B or waveform fitting. Exact sine is Im(q*exp(j*omega*t)). Candidate tests separately solve physical nodal equations.\",\r\n    \"source_report_sha256\": \"4ec7e01336eb321c4dd2e6d71c2959e08adea0df6f43acd37071ea5696808234\",\r\n    \"peak_phasors\": {\r\n      \"v_sending\": {\r\n        \"real\": 599216.7622413585,\r\n        \"imag\": 1972.9099533063195\r\n      },\r\n      \"v_middle\": {\r\n        \"real\": 580868.6460193035,\r\n        \"imag\": -8492.973607931035\r\n      },\r\n      \"v_receiving\": {\r\n        \"real\": 557125.9053050365,\r\n        \"imag\": -18698.524975027114\r\n      },\r\n      \"v_load\": {\r\n        \"real\": 191200.93612649295,\r\n        \"imag\": -35768.86369400455\r\n      },\r\n      \"i_z1\": {\r\n        \"real\": 1060.3236706411087,\r\n        \"imag\": -1676.1385611822445\r\n      },\r\n      \"i_zs\": {\r\n        \"real\": -149.91458816460005,\r\n        \"imag\": -1748.8906115986842\r\n      },\r\n      \"i_comp_sending\": {\r\n        \"real\": 2.425283396837576,\r\n        \"imag\": -366.0314893585074\r\n      },\r\n      \"i_comp_receiving\": {\r\n        \"real\": -10.287703727008944,\r\n        \"imag\": -340.362103064713\r\n      },\r\n      \"i_line1\": {\r\n        \"real\": 452.058433346113,\r\n        \"imag\": -734.1107675774429\r\n      },\r\n      \"i_line2\": {\r\n        \"real\": 448.82999807653056,\r\n        \"imag\": -954.5229785119484\r\n      },\r\n      \"i_magnetizing\": {\r\n        \"real\": -0.18714919134541505,\r\n        \"imag\": -1.330057580091166\r\n      },\r\n      \"i_primary\": {\r\n        \"real\": 455.56733866350646,\r\n        \"imag\": -719.8623044209698\r\n      },\r\n      \"i_source\": {\r\n        \"real\": 454.11237026005983,\r\n        \"imag\": -986.4549766531597\r\n      },\r\n      \"i_load\": {\r\n        \"real\": 1210.2382588057087,\r\n        \"imag\": 72.75205041643954\r\n      }\r\n    }\r\n  }\r\n}\r\n"
+      },
+      {
+        "file": "acceptance_plan.md",
+        "raw_sha256": "4b301512d3292657945be5d37028dea8b439b5520c9fd6ea5013bac40568c608",
+        "lf_sha256": "4b301512d3292657945be5d37028dea8b439b5520c9fd6ea5013bac40568c608",
+        "text": "# 25 完整线性供电网络：实现前验收协议\n\n2026-11-06。在候选及其测试文件创建、运行或数值商业比较之前固定本协议、manifest和parameters，单独Git提交。\n保留官方 `power_gui.slx` 全网；原件SHA256为\n`a46b7c34658c65ce58c6e51a6d167244c06f4e839063c00bd1ff75c78bdc5a08`。\n保存元数据为R2025a Prerelease Update 2，实际运行软件为R2025a Update 1。\n来源及原网运行证据见[前置调查](../../../docs/development_roadmap/experiments/source_line_transformer_reference_probe.md)。\n\n## 物理与最小表示\n\n原顺序为电源→2 Ω源电阻→B1→150 km、两π段线路→B2→线性T→Z1→B3负荷。\nB1/B2各有有损串联RL补偿，B3另有Zs串联RL对地；负荷为固定R∥C。\n两π保留60 Hz双曲修正后的R/L/C/G，包括两端各约202 MΩ、中点约101 MΩ的并联电阻。\nT的R1/L1在励磁Rm∥Lm之前；副边R2与Z1电阻在同一无分流串联支路，可精确合并为Rsec，\n两者参数及分项损耗仍保留。合并后的理想副边节点不能称作原变压器外端电压。\n完整原始输入、SI参数、折算与方向固定于parameters，不能据波形调整。\n\n沿用CaseDefinition→Circuit→Simulator→SimulationResult，\n仅用现有VoltageSource、Resistor、Inductor、Capacitor和理想SinglePhaseTransformer。\n一个0 V源表示原理想CurrentMeasurement，正向load_bus→load；只有负荷R/C接在表后，Zs在表前。\n其电压/功率为零，直接读取i:Iload；源总流直接读取i:Rs。\n不增加核心类、依赖、通用交流初始化器、拓扑构建器、回调或重复结果别名。\n\n全部12个储能初值来自原网正弦稳态：以峰值相量q表示 `x(t)=Im(q exp(jωt))`，`x(0)=Im(q)`。\n候选用该小网络的复阻抗递推计算初值；测试另用物理复数节点方程求解，避免共用初始化算法作为唯一依据。\nparameters中的原生x0只供审计，不能当作候选输入常量。所有支路参数、额定功率和源相位均保留。\n单相负荷P/Q额定值用于阻抗换算，不额外除3，也不称作实际恒功率。\n\n## 商业参考与方向\n\n原Scope没有保存输出。本参考由原商业仿真的12态xout和原生C/D测量矩阵获得，\n明确标为**商业原生状态及其线性投影**，不称为直接Scope日志。\n在每个原生时刻先用实际输入u(tk)计算 `y=Cx+Du`，再标准化和比较；\n不能先插值x后再混入连续解析源，否则 `(Vs−VB1)/2 Ω` 的大数相减会产生不同的插值误差。\n完整12态、输入、原MAT、C/D、17支路表、版本、路径及hash一并保存。\n\n14量为4个电容节点电压、8个电感电流，再加源和RC负荷总流；B1/B2电压不重复列。\n送端补偿和Zs规范为从母线向地的吸收方向，是原生对应电流的负值；其他状态保持原方向。\n`i_source=(Vs−VB1)/2 Ω`，`i_load=原生Il_Z1+原生Il_Zs`。\n线路端口流包含端部C/G，区别于线路串联电流；外置补偿另影响源/变压器母线总流。\nT一次绕组流与励磁/铁损分流分别核验。\n\n## 固定数值标准\n\n- 候选TR、reuse、h=10 µs、停止50 ms，共5001点。全网从t=0稳态开始；没有物理冷启动或人为事件。\n- 两连续窗[0,1 ms]、[1 ms,50 ms]完整覆盖；首窗检查数值初始化，不删首段，不设event guard。\n  时间偏移恒0，不拟合相位、幅值、初值或物理参数，不外推。\n- 14量固定工程尺度见manifest。绝对限为尺度的1e-4，时间加权NRMSE≤5e-5；两者分别约束峰值和持续误差。\n  工程尺度按预定量级取整，小励磁电流单独用2 A尺度；不由候选运行峰值归一化。\n- 参考原物理/初始化不变，仅SimulationInput配置ode15s、InitialStep=1 ns、AutoScaleAbsTol=off。\n  baseline RelTol/AbsTol均1e-9、MaxStep=10 µs；refined均1e-10、MaxStep=5 µs。\n  核生成State-Space块AbsoluteTolerance为auto，记录实际求解器；未满足守卫即停止，不悄改原块参数。\n- 两完整窗、全部14量的参考自身细化须同时低于正式绝对与NRMSE限的十分之一。\n  另以独立物理相量核两组原生样本及PWL曲线，同样满足参考预算；可用严格曲率上界证明PWL误差预算，须标明是上界。\n  容差数字、样本数或baseline/refined相互接近都不能单独证明参考绝对准确性。\n- parameters另固定14个实现前独立物理峰值相量，专供参考绝对精度审计及来源追溯，\n  不作为候选初值输入。导出可逐区间求正弦误差的驻点，用全窗L∞/scale严格上界NRMSE；\n  应明确其为保证上界，不伪称计算了连续NRMSE积分。\n- 每次商业运行和候选比较使用独立UTC目录、输入快照及hash；两完整参考通过前不发布reference_ready。\n  保存失败，不用内部TR、解析正弦或Python ODE冒充商业数据。case适配器拒绝与当前协议/模型/导出脚本身份不一致的旧参考。\n\n## 实现前步长依据\n\n独立物理12态线性方程的TR递推已保留连续稳态与离散特解的初始化差，\n并逐区间寻找PWL误差驻点；未导入PyCy或运行候选。\n最短衰减时间约0.226/1.007 µs，TR快速模态乘子约−0.914/−0.665，不能只按60 Hz猜启动误差。\nh=10 µs时，按本14量/尺度，首窗最大绝对误差/尺度约1.64731e-6，NRMSE约1.22655e-6；\n后窗分别4.69458e-6、2.31159e-6，均不到正式限额5%。这是TR与插值**合计**先验数值分析，不是商业验收。\n首端电压采样点误差约0.00742 V，但区间最大约1.06728 V，故内部检查也覆盖PWL曲线。\n\n固定先验记录保留在忽略的 `local_reference/d0_protocol/`：\n\n| 文件 | SHA256 |\n| --- | --- |\n| root_selection_crosscheck.json | 67b6b465807bd3e71b8132449c80bd1bc93f866e65303c4a4638453fd0ae499a |\n| tr_prior_analysis.json | cb0160df308921abeb23ca92d465c358e98c5d6ef43fedb6ac22c53cd020d1dd |\n| independent_protocol_review.md | 7f895a60e332424901a6070f0674417b575a30d93c31360de6ea7be8fb8d87be |\n\n## 内部与最终交付门槛\n\n全部参数、非零初值、14量独立物理解、各节点KCL、T电压比/电流/功率、零伏表功率均须通过。\n连续总能量采用8L+4C并保留E(0)，核源功、全部电阻损耗及ΔE；\n相对分母取 `max(E(0), integral(abs(source_power)), integral(all_resistor_losses),1 J)`，不能用接近0的ΔE。\n连续能量相对限1e-4；TR平均端点的离散能量恒等式另限1e-8。\n后者每步用Vbar=(Vn+Vn-1)/2、Ibar同理，源功为h·Vbar·Ibar，\n电阻/电导损耗为h·R·Ibar²或h·G·Vbar²；它与端点瞬时功率的梯形积分是不同检查。\n三只线路G与Rm的小功率可能藏在波形限内，必须逐参数核定并单独验证正耗散和独立平均功率。\nR2/Rz1即使合并，也按各自参数与同一支流分别记账。\n\nTR以20/10/5 µs对独立解作二阶细化，误差每次缩小至少3倍；RMS、相位和单相P/Q另核。\n具体物理容差见manifest；测试不得依赖本机忽略参考文件或商业软件。\n独立Agg运行、真实参考精化及14量双窗28项比较、图/机器报告、教学说明、必要全量回归和Git提交全部完成后，\n才增加正式算例计数。双操作系统CI状态独立记录，不能从本地或旧CI扩大结论。\n\n教学聚焦整体稳态初始化、线路充电/补偿导致的电流差、跨变压器的电压/实际负荷功率及能量账本。\n这不验证线路合闸、宽频传播、故障、控制、三相/零序、饱和或新的求解能力。\n"
+      },
+      {
+        "file": "native_state_guard_addendum.md",
+        "raw_sha256": "86929b4960c62e6403c888b57fe14508855ada98a93dfbe57e44f454a7aa041b",
+        "lf_sha256": "86929b4960c62e6403c888b57fe14508855ada98a93dfbe57e44f454a7aa041b",
+        "text": "# 原生状态块守卫勘误\n\n2026-11-06，65d89bb之后、首次候选商业数值比较之前。原manifest、parameters和acceptance_plan保持原字节，\n本补充只替代其中“生成StateSpace块的AbsoluteTolerance应为auto”的实现类型假设。\n物理参数、初值、求解器设置、步长、比较窗、14量映射及所有误差限均不改变。\n\n## 新证据及原失败\n\n正式baseline运行20261106T052652719Z已完成原网50 ms，保存5023个原生时刻、12态和完整SimulationInput/Output。\n随后守卫读取不存在的AbsoluteTolerance字段而停止，尚未运行refined或发布正式参考，也没有候选商业比较。\n原MAT SHA-256为`15a9a5c9d1acf78415346a549d1964c0c948fd786d1df9699679caa550c039ba`。\n原运行目录、输入/脚本快照和错误日志保留；这次是抽取守卫失败，不能改写成仿真数值失败。\n\n只读compile查询发现路径`power_gui/powergui/EquivalentModel1/State-Space`实际为`S-Function`，\n函数是`sfun_spid_contc`，没有AbsoluteTolerance块参数。RuntimeObject确认12个连续状态，\nCompiledSampleTime=[0,0]；4个函数参数与3个UI字段是不同计数。块路径名不能证明其实现类型。\n安装实现身份为：\n\n| 文件 | SHA-256 |\n| --- | --- |\n| sfun_spid_contc.mexw64 | a87689e01299106db2e40956dcd024f770a309663bf91cd18a94aeb75c6976dd |\n| sfun_spid_contc.c | eeddbcc6613837f74a8cbaf238d79d7c8ea6fe0094b8e845ef5f3fc558052074 |\n\n它声明连续状态，安装C源码没有逐态AbsTol设置调用；其中UNDET_ABSTOL用于未定量及状态依赖的一致性检查，\n不能当成连续积分误差控制。早先查看的`sfun_spssw_contc`不是本模型实际运行函数，不作为本守卫依据。\n[R2025a AbsTol文档](https://www.mathworks.com/help/releases/R2025a/simulink/gui/absolutetolerance.html)说明模型容差与块覆盖的关系。\n由安装源码及文档推断它使用模型级容差，但本证据不声称已读取MEX运行时的逐态AbsTol数组。\n参考绝对精度仍必须由固定物理相量审计和真实双次细化同时证明，不能只凭这个推断放行。\n\n## 修正后的严格守卫\n\n导出核实际状态块路径、S-Function类型、函数名、无AbsoluteTolerance字段、安装MEX/C身份，\n并记录实际参数表达式和12态证据；若身份不同即停止。禁止向原块添加字段或修改块属性。\n保存实际SimulationInput及SolverInfo，核ode15s、原RelTol/AbsTol、AutoScaleAbsTol=off、InitialStep和MaxStep。\n完整网络分析、所有物理对话参数、初值、原模型字节和依赖身份继续核验，不能仅核函数名。\ncompile和只读掩码回调可能使内存模型Dirty=on；须如实记录、终止编译并不保存，另核磁盘SLX字节未变。\n\n允许在新的独立导出目录**只读复用上述已完成baseline MAT**，因为本勘误没有改变其任何运行设置。\n必须核其原MAT/hash、原输入/脚本快照、实际求解配置、完整50 ms及原初值，再重新抽取和审计；\n新provenance同时记录原运行来源及本次抽取脚本/补充协议，不能称为重新仿真。\nrefined仍需按原冻结设置真实运行完整50 ms；两组全部14量、两完整窗的自身细化和独立sample/PWL预算全过，才发布。\n原生重复时间点仅在对应全部归一化信号精确相同时可合并，记录数量并保留原始状态；异值重复点停止处理。\n\n本补充须单独Git提交后才继续正式导出；导出与比较适配器同时核原三文件及本补充的LF文本身份。\n"
+      }
+    ],
+    "native_state_guard_addendum": {
+      "file": "native_state_guard_addendum.md",
+      "commit": "436c26642aff420d9e209b19bbf6043ca8e5b55c",
+      "lf_sha256": "86929b4960c62e6403c888b57fe14508855ada98a93dfbe57e44f454a7aa041b",
+      "raw_sha256": "86929b4960c62e6403c888b57fe14508855ada98a93dfbe57e44f454a7aa041b",
+      "text": "# 原生状态块守卫勘误\n\n2026-11-06，65d89bb之后、首次候选商业数值比较之前。原manifest、parameters和acceptance_plan保持原字节，\n本补充只替代其中“生成StateSpace块的AbsoluteTolerance应为auto”的实现类型假设。\n物理参数、初值、求解器设置、步长、比较窗、14量映射及所有误差限均不改变。\n\n## 新证据及原失败\n\n正式baseline运行20261106T052652719Z已完成原网50 ms，保存5023个原生时刻、12态和完整SimulationInput/Output。\n随后守卫读取不存在的AbsoluteTolerance字段而停止，尚未运行refined或发布正式参考，也没有候选商业比较。\n原MAT SHA-256为`15a9a5c9d1acf78415346a549d1964c0c948fd786d1df9699679caa550c039ba`。\n原运行目录、输入/脚本快照和错误日志保留；这次是抽取守卫失败，不能改写成仿真数值失败。\n\n只读compile查询发现路径`power_gui/powergui/EquivalentModel1/State-Space`实际为`S-Function`，\n函数是`sfun_spid_contc`，没有AbsoluteTolerance块参数。RuntimeObject确认12个连续状态，\nCompiledSampleTime=[0,0]；4个函数参数与3个UI字段是不同计数。块路径名不能证明其实现类型。\n安装实现身份为：\n\n| 文件 | SHA-256 |\n| --- | --- |\n| sfun_spid_contc.mexw64 | a87689e01299106db2e40956dcd024f770a309663bf91cd18a94aeb75c6976dd |\n| sfun_spid_contc.c | eeddbcc6613837f74a8cbaf238d79d7c8ea6fe0094b8e845ef5f3fc558052074 |\n\n它声明连续状态，安装C源码没有逐态AbsTol设置调用；其中UNDET_ABSTOL用于未定量及状态依赖的一致性检查，\n不能当成连续积分误差控制。早先查看的`sfun_spssw_contc`不是本模型实际运行函数，不作为本守卫依据。\n[R2025a AbsTol文档](https://www.mathworks.com/help/releases/R2025a/simulink/gui/absolutetolerance.html)说明模型容差与块覆盖的关系。\n由安装源码及文档推断它使用模型级容差，但本证据不声称已读取MEX运行时的逐态AbsTol数组。\n参考绝对精度仍必须由固定物理相量审计和真实双次细化同时证明，不能只凭这个推断放行。\n\n## 修正后的严格守卫\n\n导出核实际状态块路径、S-Function类型、函数名、无AbsoluteTolerance字段、安装MEX/C身份，\n并记录实际参数表达式和12态证据；若身份不同即停止。禁止向原块添加字段或修改块属性。\n保存实际SimulationInput及SolverInfo，核ode15s、原RelTol/AbsTol、AutoScaleAbsTol=off、InitialStep和MaxStep。\n完整网络分析、所有物理对话参数、初值、原模型字节和依赖身份继续核验，不能仅核函数名。\ncompile和只读掩码回调可能使内存模型Dirty=on；须如实记录、终止编译并不保存，另核磁盘SLX字节未变。\n\n允许在新的独立导出目录**只读复用上述已完成baseline MAT**，因为本勘误没有改变其任何运行设置。\n必须核其原MAT/hash、原输入/脚本快照、实际求解配置、完整50 ms及原初值，再重新抽取和审计；\n新provenance同时记录原运行来源及本次抽取脚本/补充协议，不能称为重新仿真。\nrefined仍需按原冻结设置真实运行完整50 ms；两组全部14量、两完整窗的自身细化和独立sample/PWL预算全过，才发布。\n原生重复时间点仅在对应全部归一化信号精确相同时可合并，记录数量并保留原始状态；异值重复点停止处理。\n\n本补充须单独Git提交后才继续正式导出；导出与比较适配器同时核原三文件及本补充的LF文本身份。\n"
+    },
+    "cached_baseline_source": {
+      "reused": true,
+      "source_run_id": "20261106T052652719Z",
+      "source_mat": "D:\\VibeCoding\\PyCy_EMT_Lite\\local_reference\\source_line_transformer\\export_runs\\20261106T052652719Z\\baseline\\simulink_output.mat",
+      "source_mat_sha256": "15a9a5c9d1acf78415346a549d1964c0c948fd786d1df9699679caa550c039ba",
+      "generation_script_sha256": "47d39e6c2cd3a1edf2dbb04f8f0781ced3c887ef55559fb05ffe28b1477f1217",
+      "description": "Completed original native baseline reused read-only; no repeated baseline simulation"
+    },
+    "matlab_version": "25.1.0.2973910 (R2025a) Update 1",
+    "installed_products": [
+      {
+        "Name": "5G Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "AUTOSAR Blockset",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Aerospace Blockset",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Aerospace Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Antenna Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Audio Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Automated Driving Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Bioinformatics Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Bluetooth Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "C2000 Microcontroller Blockset",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Communications Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Computer Vision Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Control System Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Curve Fitting Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "DDS Blockset",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "DSP HDL Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "DSP System Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Data Acquisition Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Database Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Datafeed Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Deep Learning HDL Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Deep Learning Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Econometrics Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Embedded Coder",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Financial Instruments Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Financial Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Fixed-Point Designer",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Fuzzy Logic Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "GPU Coder",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Global Optimization Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "HDL Coder",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "HDL Verifier",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Image Acquisition Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Image Processing Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "26-Dec-2024"
+      },
+      {
+        "Name": "Industrial Communication Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Instrument Control Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "LTE Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Lidar Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "MATLAB",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "MATLAB Coder",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "MATLAB Compiler",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "MATLAB Compiler SDK",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "MATLAB Report Generator",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "MATLAB Test",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Mapping Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Medical Imaging Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Mixed-Signal Blockset",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Model Predictive Control Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Model-Based Calibration Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Motor Control Blockset",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Navigation Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Optimization Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Parallel Computing Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Partial Differential Equation Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Phased Array System Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Powertrain Blockset",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Predictive Maintenance Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "RF Blockset",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "RF PCB Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "RF Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "ROS Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Radar Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Reinforcement Learning Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Requirements Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Risk Management Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Robotics System Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Robust Control Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Satellite Communications Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Sensor Fusion and Tracking Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "SerDes Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Signal Integrity Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Signal Processing Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "SimBiology",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "SimEvents",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "02-May-2024"
+      },
+      {
+        "Name": "Simscape",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Simscape Battery",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Simscape Driveline",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Simscape Electrical",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Simscape Fluids",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Simscape Multibody",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Simulink",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Simulink 3D Animation",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Simulink Check",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Simulink Code Inspector",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Simulink Coder",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Simulink Compiler",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Simulink Control Design",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Simulink Coverage",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Simulink Design Optimization",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Simulink Design Verifier",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Simulink Desktop Real-Time",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Simulink Fault Analyzer",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Simulink PLC Coder",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Simulink Real-Time",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Simulink Report Generator",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Simulink Test",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "SoC Blockset",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Spreadsheet Link",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Stateflow",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Statistics and Machine Learning Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Symbolic Math Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "System Composer",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "System Identification Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Text Analytics Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "UAV Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Vehicle Dynamics Blockset",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Vehicle Network Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "28-Jan-2025"
+      },
+      {
+        "Name": "Vision HDL Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "WLAN Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Wavelet Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Wireless HDL Toolbox",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      },
+      {
+        "Name": "Wireless Testbench",
+        "Version": "25.1",
+        "Release": "(R2025a)",
+        "Date": "21-Nov-2024"
+      }
+    ],
+    "direct_library_dependencies": [
+      {
+        "name": "spsSeriesRLCLoadLib",
+        "resolved_path": "C:\\Program Files\\MATLAB\\R2025a\\toolbox\\physmod\\powersys\\library\\passives\\spsSeriesRLCLoadLib.slx",
+        "sha256": "47763ce112ad1df18c62610d11cbe0046dd09fdae2d36b8740acba9f626787f8"
+      },
+      {
+        "name": "spsPiSectionLineLib",
+        "resolved_path": "C:\\Program Files\\MATLAB\\R2025a\\toolbox\\physmod\\powersys\\library\\powergridelements\\spsPiSectionLineLib.slx",
+        "sha256": "a55bf1f1b0112085cf362c544f5f6efe37df97de463536583222f5221a811f6d"
+      },
+      {
+        "name": "spsGroundLib",
+        "resolved_path": "C:\\Program Files\\MATLAB\\R2025a\\toolbox\\physmod\\powersys\\library\\utilities\\spsGroundLib.slx",
+        "sha256": "4e9170af712fbd9c36a5d1d3538eb6f6dd4bcd56b1f2afcb37a7cec2d8d70120"
+      },
+      {
+        "name": "spsImpedanceMeasurementLib",
+        "resolved_path": "C:\\Program Files\\MATLAB\\R2025a\\toolbox\\physmod\\powersys\\library\\sensorsandmeasurements\\spsImpedanceMeasurementLib.slx",
+        "sha256": "06ed9b5cd4dc2274f4cb64fbc756efb61ff9f241e8a646cf9934f94f340f25ec"
+      },
+      {
+        "name": "spsLinearTransformerLib",
+        "resolved_path": "C:\\Program Files\\MATLAB\\R2025a\\toolbox\\physmod\\powersys\\library\\powergridelements\\spsLinearTransformerLib.slx",
+        "sha256": "0ac1d928ac913a8aa589d801a2d0a593883c4426281256fca82b86c39b92b1c0"
+      },
+      {
+        "name": "spsParallelRLCLoadLib",
+        "resolved_path": "C:\\Program Files\\MATLAB\\R2025a\\toolbox\\physmod\\powersys\\library\\passives\\spsParallelRLCLoadLib.slx",
+        "sha256": "47392d2fc24749ac7b3f1bf326db3dc4cca04576bdb1b3512fdce56e5b258a15"
+      },
+      {
+        "name": "spsSeriesRLCBranchLib",
+        "resolved_path": "C:\\Program Files\\MATLAB\\R2025a\\toolbox\\physmod\\powersys\\library\\passives\\spsSeriesRLCBranchLib.slx",
+        "sha256": "1403070d262f65f66546d70cb149a46f72df1739242118cab6e74a57bc840f37"
+      },
+      {
+        "name": "spsVoltageMeasurementLib",
+        "resolved_path": "C:\\Program Files\\MATLAB\\R2025a\\toolbox\\physmod\\powersys\\library\\sensorsandmeasurements\\spsVoltageMeasurementLib.slx",
+        "sha256": "5f5ae47e62bf6658892543dca06aebe959c77c9a46831a4bcbb7e90c86c13e81"
+      },
+      {
+        "name": "spsACVoltageSourceLib",
+        "resolved_path": "C:\\Program Files\\MATLAB\\R2025a\\toolbox\\physmod\\powersys\\library\\sources\\spsACVoltageSourceLib.slx",
+        "sha256": "8152132b28e90a419c1444b0cdfb3d73742d5094b3e4450c7a5200e7e847ea0d"
+      },
+      {
+        "name": "spsCurrentMeasurementLib",
+        "resolved_path": "C:\\Program Files\\MATLAB\\R2025a\\toolbox\\physmod\\powersys\\library\\sensorsandmeasurements\\spsCurrentMeasurementLib.slx",
+        "sha256": "9b6a61f6093fadab3864a8e9a86bf304a241ab51df180cd51eafd9fa0db786e7"
+      },
+      {
+        "name": "spspowerguiLib",
+        "resolved_path": "C:\\Program Files\\MATLAB\\R2025a\\toolbox\\physmod\\powersys\\library\\spspowerguiLib.slx",
+        "sha256": "030a973a3ea88b50a005b4e10e53f9f9d97a82af452c5220dc35b512535bbf3a"
+      }
+    ],
+    "dependency_scope": "Direct root-block SPS libraries pinned to inspected bytes; not an exhaustive MATLAB distribution inventory",
+    "export_script_sha256": "44683fa2c96ec1cbba8c028a828aaf41faf3223c8005f9196b3fd738282b12c8",
+    "export_script_lf_sha256": "d7be4984cd717acce78a09253ea9f79415db4d472e3d9d44359a987c51c9aefe",
+    "solver": "ode15s",
+    "initial_step_s": 1e-09,
+    "auto_scale_absolute_tolerance": "off",
+    "start_time_s": 0,
+    "stop_time_s": 0.05,
+    "runs": [
+      {
+        "name": "baseline",
+        "relative_tolerance": 1e-09,
+        "absolute_tolerance": 1e-09,
+        "max_step_s": 1e-05,
+        "elapsed_seconds": 4.271839000000001,
+        "native_generation": {
+          "reused": true,
+          "source_run_id": "20261106T052652719Z",
+          "source_mat": "D:\\VibeCoding\\PyCy_EMT_Lite\\local_reference\\source_line_transformer\\export_runs\\20261106T052652719Z\\baseline\\simulink_output.mat",
+          "source_mat_sha256": "15a9a5c9d1acf78415346a549d1964c0c948fd786d1df9699679caa550c039ba",
+          "generation_script_sha256": "47d39e6c2cd3a1edf2dbb04f8f0781ced3c887ef55559fb05ffe28b1477f1217",
+          "description": "Completed original native baseline reused read-only; no repeated baseline simulation"
+        },
+        "actual_solver": {
+          "Type": "Variable-Step",
+          "Solver": "ode15s",
+          "MaxStepSize": 1e-05
+        },
+        "audit": {
+          "native_state_block": {
+            "path": [
+              "power_gui/powergui/EquivalentModel1/State-Space"
+            ],
+            "block_type": "S-Function",
+            "function_name": "sfun_spid_contc",
+            "function_file": "C:\\Program Files\\MATLAB\\R2025a\\toolbox\\physmod\\powersys\\powersys\\sfun_spid_contc.mexw64",
+            "function_sha256": "a87689e01299106db2e40956dcd024f770a309663bf91cd18a94aeb75c6976dd",
+            "source_file": "C:\\Program Files\\MATLAB\\R2025a\\toolbox\\physmod\\powersys\\powersys\\sfun_spid_contc.c",
+            "source_sha256": "eeddbcc6613837f74a8cbaf238d79d7c8ea6fe0094b8e845ef5f3fc558052074",
+            "parameter_expression": "S.Mg, [S.nb.x S.nb.u S.nb.y S.nb.s], S.x0, S.MgColNames",
+            "sfunction_argument_count": 4,
+            "compiled_continuous_states": 12,
+            "has_absolute_tolerance_field": false,
+            "compiled_sample_time": [
+              0,
+              0
+            ],
+            "dirty_before_query": "off",
+            "dirty_after_compile": "off",
+            "tolerance_evidence": "No per-state override setter in inspected installed C; model-tolerance inheritance inferred from source/documentation, not a runtime per-state AbsTol read",
+            "status_after_term": "stopped",
+            "dirty_after_term": "off"
+          },
+          "native_state_names": [
+            "Il_Z1",
+            "Il_Zs",
+            "Il_110 Mvar",
+            "Il_110 Mvar2",
+            "Il_section 1: 150 km Line",
+            "Il_section 2: 150 km Line",
+            "Il_Lm: Linear Transformer",
+            "Il_winding_1: Linear Transformer",
+            "Uc_Load",
+            "Uc_input: 150 km Line",
+            "Uc_section_2: 150 km Line",
+            "Uc_output: 150 km Line"
+          ],
+          "native_samples": 5023,
+          "duplicates_removed": 0,
+          "max_native_step_s": 1.0000000000003062e-05,
+          "duplicate_values_verified_exactly_equal": true,
+          "actual_initial_state": [
+            -1676.1385611824408,
+            1748.8906115987725,
+            366.0314893585058,
+            -340.36210306471156,
+            -734.1107675775241,
+            -954.5229785120378,
+            -1.3300575800916816,
+            -719.8623044210544,
+            -35768.863694024374,
+            1972.9099533064864,
+            -8492.973607929822,
+            -18698.524975024862
+          ],
+          "native_initial_state": [
+            -1676.1385611824408,
+            1748.8906115987725,
+            366.0314893585058,
+            -340.36210306471156,
+            -734.1107675775241,
+            -954.5229785120378,
+            -1.3300575800916816,
+            -719.8623044210544,
+            -35768.863694024374,
+            1972.9099533064864,
+            -8492.973607929822,
+            -18698.524975024862
+          ],
+          "actual_t0_matches_native_x0": true,
+          "source_current_initial_a": -986.4549766532432,
+          "load_current_initial_a": 72.75205041633171,
+          "normalized_columns": [
+            "time",
+            "v_sending",
+            "v_middle",
+            "v_receiving",
+            "v_load",
+            "i_z1",
+            "i_zs",
+            "i_comp_sending",
+            "i_comp_receiving",
+            "i_line1",
+            "i_line2",
+            "i_magnetizing",
+            "i_primary",
+            "i_source",
+            "i_load"
+          ]
+        },
+        "independent_accuracy": {
+          "method": "Native knots and exact PWL-minus-sine stationary points; L-infinity/scale bounds NRMSE",
+          "limit_fraction": 0.1,
+          "continuous_nrmse_integral_evaluated": false,
+          "passed": true,
+          "windows": [
+            {
+              "window_s": [
+                0,
+                0.001
+              ],
+              "passed": true,
+              "signals": {
+                "v_sending": {
+                  "sample_max_abs_error": 6.075679948480683e-06,
+                  "sample_nrmse_upper_bound": 1.0126133247467805e-11,
+                  "pwl_max_abs_error_bound": 0.3943086244985352,
+                  "pwl_nrmse_upper_bound": 6.57181040830892e-07,
+                  "pwl_stationary_points": 122,
+                  "floating_roundoff_guard": 7.450580596923828e-09,
+                  "scale": 600000,
+                  "absolute_limit": 6,
+                  "nrmse_bound_limit": 5e-06,
+                  "passed": true
+                },
+                "v_middle": {
+                  "sample_max_abs_error": 9.941695861925837e-05,
+                  "sample_nrmse_upper_bound": 1.6569493103209728e-10,
+                  "pwl_max_abs_error_bound": 0.3650442753350944,
+                  "pwl_nrmse_upper_bound": 6.084071255584907e-07,
+                  "pwl_stationary_points": 123,
+                  "floating_roundoff_guard": 7.450580596923828e-09,
+                  "scale": 600000,
+                  "absolute_limit": 6,
+                  "nrmse_bound_limit": 5e-06,
+                  "passed": true
+                },
+                "v_receiving": {
+                  "sample_max_abs_error": 0.00013567720088758506,
+                  "sample_nrmse_upper_bound": 2.261286681459751e-10,
+                  "pwl_max_abs_error_bound": 0.3326817728811875,
+                  "pwl_nrmse_upper_bound": 5.544696214686458e-07,
+                  "pwl_stationary_points": 123,
+                  "floating_roundoff_guard": 7.450580596923828e-09,
+                  "scale": 600000,
+                  "absolute_limit": 6,
+                  "nrmse_bound_limit": 5e-06,
+                  "passed": true
+                },
+                "v_load": {
+                  "sample_max_abs_error": 8.0644924310036e-05,
+                  "sample_nrmse_upper_bound": 4.0322462155018003e-10,
+                  "pwl_max_abs_error_bound": 0.06572827180934837,
+                  "pwl_nrmse_upper_bound": 3.2864135904674184e-07,
+                  "pwl_stationary_points": 122,
+                  "floating_roundoff_guard": 1.862645149230957e-09,
+                  "scale": 200000,
+                  "absolute_limit": 2,
+                  "nrmse_bound_limit": 5e-06,
+                  "passed": true
+                },
+                "i_z1": {
+                  "sample_max_abs_error": 3.8007626699254615e-06,
+                  "sample_nrmse_upper_bound": 1.900381334962731e-09,
+                  "pwl_max_abs_error_bound": 0.0029321793329017964,
+                  "pwl_nrmse_upper_bound": 1.4660896664508983e-06,
+                  "pwl_stationary_points": 122,
+                  "floating_roundoff_guard": 1.4551915228366852e-11,
+                  "scale": 2000,
+                  "absolute_limit": 0.02,
+                  "nrmse_bound_limit": 5e-06,
+                  "passed": true
+                },
+                "i_zs": {
+                  "sample_max_abs_error": 3.969186309404904e-06,
+                  "sample_nrmse_upper_bound": 1.984593154702452e-09,
+                  "pwl_max_abs_error_bound": 0.0031218170779538923,
+                  "pwl_nrmse_upper_bound": 1.5609085389769462e-06,
+                  "pwl_stationary_points": 122,
+                  "floating_roundoff_guard": 1.4551915228366852e-11,
+                  "scale": 2000,
+                  "absolute_limit": 0.02,
+                  "nrmse_bound_limit": 5e-06,
+                  "passed": true
+                },
+                "i_comp_sending": {
+                  "sample_max_abs_error": 8.306553809234174e-07,
+                  "sample_nrmse_upper_bound": 2.0766384523085435e-09,
+                  "pwl_max_abs_error_bound": 0.0006507334571210777,
+                  "pwl_nrmse_upper_bound": 1.6268336428026943e-06,
+                  "pwl_stationary_points": 122,
+                  "floating_roundoff_guard": 3.637978807091713e-12,
+                  "scale": 400,
+                  "absolute_limit": 0.004,
+                  "nrmse_bound_limit": 5e-06,
+                  "passed": true
+                },
+                "i_comp_receiving": {
+                  "sample_max_abs_error": 7.724356692051515e-07,
+                  "sample_nrmse_upper_bound": 1.931089173012879e-09,
+                  "pwl_max_abs_error_bound": 0.000605667858110337,
+                  "pwl_nrmse_upper_bound": 1.5141696452758424e-06,
+                  "pwl_stationary_points": 122,
+                  "floating_roundoff_guard": 3.637978807091713e-12,
+                  "scale": 400,
+                  "absolute_limit": 0.004,
+                  "nrmse_bound_limit": 5e-06,
+                  "passed": true
+                },
+                "i_line1": {
+                  "sample_max_abs_error": 2.3162970137491357e-06,
+                  "sample_nrmse_upper_bound": 2.316297013749136e-09,
+                  "pwl_max_abs_error_bound": 0.0012848072528868215,
+                  "pwl_nrmse_upper_bound": 1.2848072528868215e-06,
+                  "pwl_stationary_points": 122,
+                  "floating_roundoff_guard": 7.275957614183426e-12,
+                  "scale": 1000,
+                  "absolute_limit": 0.01,
+                  "nrmse_bound_limit": 5e-06,
+                  "passed": true
+                },
+                "i_line2": {
+                  "sample_max_abs_error": 2.164882175748062e-06,
+                  "sample_nrmse_upper_bound": 1.8040684797900516e-09,
+                  "pwl_max_abs_error_bound": 0.0016768522423262766,
+                  "pwl_nrmse_upper_bound": 1.3973768686052306e-06,
+                  "pwl_stationary_points": 122,
+                  "floating_roundoff_guard": 1.4551915228366852e-11,
+                  "scale": 1200,
+                  "absolute_limit": 0.012,
+                  "nrmse_bound_limit": 5e-06,
+                  "passed": true
+                },
+                "i_magnetizing": {
+                  "sample_max_abs_error": 3.01837221883261e-09,
+                  "sample_nrmse_upper_bound": 1.509186109416305e-09,
+                  "pwl_max_abs_error_bound": 2.3888144999872907e-06,
+                  "pwl_nrmse_upper_bound": 1.1944072499936453e-06,
+                  "pwl_stationary_points": 122,
+                  "floating_roundoff_guard": 1.4210854715202004e-14,
+                  "scale": 2,
+                  "absolute_limit": 2e-05,
+                  "nrmse_bound_limit": 5e-06,
+                  "passed": true
+                },
+                "i_primary": {
+                  "sample_max_abs_error": 1.6323377849403187e-06,
+                  "sample_nrmse_upper_bound": 1.6323377849403186e-09,
+                  "pwl_max_abs_error_bound": 0.0012592941153570791,
+                  "pwl_nrmse_upper_bound": 1.2592941153570791e-06,
+                  "pwl_stationary_points": 122,
+                  "floating_roundoff_guard": 7.275957614183426e-12,
+                  "scale": 1000,
+                  "absolute_limit": 0.01,
+                  "nrmse_bound_limit": 5e-06,
+                  "passed": true
+                },
+                "i_source": {
+                  "sample_max_abs_error": 3.0378330393432407e-06,
+                  "sample_nrmse_upper_bound": 2.531527532786034e-09,
+                  "pwl_max_abs_error_bound": 0.0017336403882382,
+                  "pwl_nrmse_upper_bound": 1.4447003235318335e-06,
+                  "pwl_stationary_points": 122,
+                  "floating_roundoff_guard": 1.4551915228366852e-11,
+                  "scale": 1200,
+                  "absolute_limit": 0.012,
+                  "nrmse_bound_limit": 5e-06,
+                  "passed": true
+                },
+                "i_load": {
+                  "sample_max_abs_error": 6.559712062426115e-07,
+                  "sample_nrmse_upper_bound": 4.3731413749507433e-10,
+                  "pwl_max_abs_error_bound": 0.000910517235766406,
+                  "pwl_nrmse_upper_bound": 6.070114905109373e-07,
+                  "pwl_stationary_points": 122,
+                  "floating_roundoff_guard": 1.4551915228366852e-11,
+                  "scale": 1500,
+                  "absolute_limit": 0.015,
+                  "nrmse_bound_limit": 5e-06,
+                  "passed": true
+                }
+              }
+            },
+            {
+              "window_s": [
+                0.001,
+                0.05
+              ],
+              "passed": true,
+              "signals": {
+                "v_sending": {
+                  "sample_max_abs_error": 6.102455586187716e-06,
+                  "sample_nrmse_upper_bound": 1.017075931031286e-11,
+                  "pwl_max_abs_error_bound": 1.0645366420210722,
+                  "pwl_nrmse_upper_bound": 1.774227736701787e-06,
+                  "pwl_stationary_points": 4902,
+                  "floating_roundoff_guard": 7.450580596923828e-09,
+                  "scale": 600000,
+                  "absolute_limit": 6,
+                  "nrmse_bound_limit": 5e-06,
+                  "passed": true
+                },
+                "v_middle": {
+                  "sample_max_abs_error": 7.671783441765001e-05,
+                  "sample_nrmse_upper_bound": 1.2786305736275001e-10,
+                  "pwl_max_abs_error_bound": 1.0321019763419486,
+                  "pwl_nrmse_upper_bound": 1.7201699605699142e-06,
+                  "pwl_stationary_points": 4901,
+                  "floating_roundoff_guard": 7.450580596923828e-09,
+                  "scale": 600000,
+                  "absolute_limit": 6,
+                  "nrmse_bound_limit": 5e-06,
+                  "passed": true
+                },
+                "v_receiving": {
+                  "sample_max_abs_error": 9.964952550944872e-05,
+                  "sample_nrmse_upper_bound": 1.6608254251574788e-10,
+                  "pwl_max_abs_error_bound": 0.9903719638782604,
+                  "pwl_nrmse_upper_bound": 1.6506199397971007e-06,
+                  "pwl_stationary_points": 4901,
+                  "floating_roundoff_guard": 7.450580596923828e-09,
+                  "scale": 600000,
+                  "absolute_limit": 6,
+                  "nrmse_bound_limit": 5e-06,
+                  "passed": true
+                },
+                "v_load": {
+                  "sample_max_abs_error": 5.7692832342581823e-05,
+                  "sample_nrmse_upper_bound": 2.884641617129091e-10,
+                  "pwl_max_abs_error_bound": 0.34557608413433627,
+                  "pwl_nrmse_upper_bound": 1.7278804206716814e-06,
+                  "pwl_stationary_points": 4902,
+                  "floating_roundoff_guard": 1.862645149230957e-09,
+                  "scale": 200000,
+                  "absolute_limit": 2,
+                  "nrmse_bound_limit": 5e-06,
+                  "passed": true
+                },
+                "i_z1": {
+                  "sample_max_abs_error": 3.442224397076643e-06,
+                  "sample_nrmse_upper_bound": 1.7211121985383215e-09,
+                  "pwl_max_abs_error_bound": 0.0035254352092124464,
+                  "pwl_nrmse_upper_bound": 1.7627176046062232e-06,
+                  "pwl_stationary_points": 4902,
+                  "floating_roundoff_guard": 1.4551915228366852e-11,
+                  "scale": 2000,
+                  "absolute_limit": 0.02,
+                  "nrmse_bound_limit": 5e-06,
+                  "passed": true
+                },
+                "i_zs": {
+                  "sample_max_abs_error": 3.332159849378513e-06,
+                  "sample_nrmse_upper_bound": 1.6660799246892567e-09,
+                  "pwl_max_abs_error_bound": 0.003120235662890991,
+                  "pwl_nrmse_upper_bound": 1.5601178314454956e-06,
+                  "pwl_stationary_points": 4902,
+                  "floating_roundoff_guard": 1.4551915228366852e-11,
+                  "scale": 2000,
+                  "absolute_limit": 0.02,
+                  "nrmse_bound_limit": 5e-06,
+                  "passed": true
+                },
+                "i_comp_sending": {
+                  "sample_max_abs_error": 7.21560127203702e-07,
+                  "sample_nrmse_upper_bound": 1.803900318009255e-09,
+                  "pwl_max_abs_error_bound": 0.0006509695630256829,
+                  "pwl_nrmse_upper_bound": 1.6274239075642073e-06,
+                  "pwl_stationary_points": 4902,
+                  "floating_roundoff_guard": 3.637978807091713e-12,
+                  "scale": 400,
+                  "absolute_limit": 0.004,
+                  "nrmse_bound_limit": 5e-06,
+                  "passed": true
+                },
+                "i_comp_receiving": {
+                  "sample_max_abs_error": 6.616872383347072e-07,
+                  "sample_nrmse_upper_bound": 1.654218095836768e-09,
+                  "pwl_max_abs_error_bound": 0.0006055741592945196,
+                  "pwl_nrmse_upper_bound": 1.513935398236299e-06,
+                  "pwl_stationary_points": 4902,
+                  "floating_roundoff_guard": 3.637978807091713e-12,
+                  "scale": 400,
+                  "absolute_limit": 0.004,
+                  "nrmse_bound_limit": 5e-06,
+                  "passed": true
+                },
+                "i_line1": {
+                  "sample_max_abs_error": 2.3333711851591943e-06,
+                  "sample_nrmse_upper_bound": 2.333371185159194e-09,
+                  "pwl_max_abs_error_bound": 0.0015332088119066611,
+                  "pwl_nrmse_upper_bound": 1.5332088119066612e-06,
+                  "pwl_stationary_points": 4902,
+                  "floating_roundoff_guard": 7.275957614183426e-12,
+                  "scale": 1000,
+                  "absolute_limit": 0.01,
+                  "nrmse_bound_limit": 5e-06,
+                  "passed": true
+                },
+                "i_line2": {
+                  "sample_max_abs_error": 2.1175877691348433e-06,
+                  "sample_nrmse_upper_bound": 1.764656474279036e-09,
+                  "pwl_max_abs_error_bound": 0.0018753455454998402,
+                  "pwl_nrmse_upper_bound": 1.5627879545832002e-06,
+                  "pwl_stationary_points": 4902,
+                  "floating_roundoff_guard": 1.4551915228366852e-11,
+                  "scale": 1200,
+                  "absolute_limit": 0.012,
+                  "nrmse_bound_limit": 5e-06,
+                  "passed": true
+                },
+                "i_magnetizing": {
+                  "sample_max_abs_error": 2.748968941368446e-09,
+                  "sample_nrmse_upper_bound": 1.374484470684223e-09,
+                  "pwl_max_abs_error_bound": 2.3888988569531477e-06,
+                  "pwl_nrmse_upper_bound": 1.1944494284765739e-06,
+                  "pwl_stationary_points": 4902,
+                  "floating_roundoff_guard": 1.4210854715202004e-14,
+                  "scale": 2,
+                  "absolute_limit": 2e-05,
+                  "nrmse_bound_limit": 5e-06,
+                  "passed": true
+                },
+                "i_primary": {
+                  "sample_max_abs_error": 1.4777854175918037e-06,
+                  "sample_nrmse_upper_bound": 1.4777854175918036e-09,
+                  "pwl_max_abs_error_bound": 0.0015142670873729003,
+                  "pwl_nrmse_upper_bound": 1.5142670873729003e-06,
+                  "pwl_stationary_points": 4902,
+                  "floating_roundoff_guard": 7.275957614183426e-12,
+                  "scale": 1000,
+                  "absolute_limit": 0.01,
+                  "nrmse_bound_limit": 5e-06,
+                  "passed": true
+                },
+                "i_source": {
+                  "sample_max_abs_error": 3.0512091484524717e-06,
+                  "sample_nrmse_upper_bound": 2.5426742903770597e-09,
+                  "pwl_max_abs_error_bound": 0.0019315318282906446,
+                  "pwl_nrmse_upper_bound": 1.6096098569088706e-06,
+                  "pwl_stationary_points": 4902,
+                  "floating_roundoff_guard": 1.4551915228366852e-11,
+                  "scale": 1200,
+                  "absolute_limit": 0.012,
+                  "nrmse_bound_limit": 5e-06,
+                  "passed": true
+                },
+                "i_load": {
+                  "sample_max_abs_error": 5.133187386263671e-07,
+                  "sample_nrmse_upper_bound": 3.4221249241757806e-10,
+                  "pwl_max_abs_error_bound": 0.0021539851402021526,
+                  "pwl_nrmse_upper_bound": 1.4359900934681018e-06,
+                  "pwl_stationary_points": 4902,
+                  "floating_roundoff_guard": 1.4551915228366852e-11,
+                  "scale": 1500,
+                  "absolute_limit": 0.015,
+                  "nrmse_bound_limit": 5e-06,
+                  "passed": true
+                }
+              }
+            }
+          ],
+          "run_name": "baseline"
+        },
+        "samples": 5023,
+        "model_dirty": "off",
+        "loaded_path": "D:\\VibeCoding\\PyCy_EMT_Lite\\local_reference\\source_line_transformer\\simulink\\power_gui.slx",
+        "output_names": [
+          "tout",
+          "xout"
+        ],
+        "native_files": [
+          {
+            "file": "actual_dialog_parameters.json",
+            "bytes": 4840,
+            "sha256": "5065b36e5da4d9b9d5003b077be8095c5bc79d70a58c62c5003eee16e7d1b62a"
+          },
+          {
+            "file": "independent_accuracy.json",
+            "bytes": 14204,
+            "sha256": "b6e06a5c957701a767b0deb0e9239d188fa0854de7b6025090102ac436342167"
+          },
+          {
+            "file": "native_analysis.mat",
+            "bytes": 226640,
+            "sha256": "d556c62535836a6bc7776ae43b80e3193efbfeda83ec951a78e5c567c759ca65"
+          },
+          {
+            "file": "native_mapping.json",
+            "bytes": 4483,
+            "sha256": "b9cebdd87a25ff8910cd063cc05c95522795665d57aa319bbe539544d4b7b306"
+          },
+          {
+            "file": "native_projected_outputs.csv",
+            "bytes": 625162,
+            "sha256": "86ec1b91754f08b16342a96d83d5525b42f57911c2a9b58eeaf1960283b607b8"
+          },
+          {
+            "file": "native_source_inputs.csv",
+            "bytes": 208443,
+            "sha256": "931ac37d958cd601f2bf2dcc20beb928b815fa68acf403151b5a8cd70f15b662"
+          },
+          {
+            "file": "native_states.csv",
+            "bytes": 1152397.0,
+            "sha256": "c7e2a7d6b86e0c75163ad1f9c9f4dbdda25a422b5b916050dca6f6d8a96f72a0"
+          },
+          {
+            "file": "reference.csv",
+            "bytes": 1327182.0,
+            "sha256": "735206b2de6af08f162d35ac2a40f7986d266269ffd6d1e6d0f18dafc9af22f3"
+          },
+          {
+            "file": "simulink_output.mat",
+            "bytes": 744194,
+            "sha256": "15a9a5c9d1acf78415346a549d1964c0c948fd786d1df9699679caa550c039ba"
+          }
+        ]
+      },
+      {
+        "name": "refined",
+        "relative_tolerance": 1e-10,
+        "absolute_tolerance": 1e-10,
+        "max_step_s": 5e-06,
+        "elapsed_seconds": 1.8050915,
+        "native_generation": {
+          "reused": false,
+          "source_run_id": "20261106T054135322Z",
+          "generation_script_sha256": "44683fa2c96ec1cbba8c028a828aaf41faf3223c8005f9196b3fd738282b12c8"
+        },
+        "actual_solver": {
+          "Type": "Variable-Step",
+          "Solver": "ode15s",
+          "MaxStepSize": 5e-06
+        },
+        "audit": {
+          "native_state_block": {
+            "path": [
+              "power_gui/powergui/EquivalentModel1/State-Space"
+            ],
+            "block_type": "S-Function",
+            "function_name": "sfun_spid_contc",
+            "function_file": "C:\\Program Files\\MATLAB\\R2025a\\toolbox\\physmod\\powersys\\powersys\\sfun_spid_contc.mexw64",
+            "function_sha256": "a87689e01299106db2e40956dcd024f770a309663bf91cd18a94aeb75c6976dd",
+            "source_file": "C:\\Program Files\\MATLAB\\R2025a\\toolbox\\physmod\\powersys\\powersys\\sfun_spid_contc.c",
+            "source_sha256": "eeddbcc6613837f74a8cbaf238d79d7c8ea6fe0094b8e845ef5f3fc558052074",
+            "parameter_expression": "S.Mg, [S.nb.x S.nb.u S.nb.y S.nb.s], S.x0, S.MgColNames",
+            "sfunction_argument_count": 4,
+            "compiled_continuous_states": 12,
+            "has_absolute_tolerance_field": false,
+            "compiled_sample_time": [
+              0,
+              0
+            ],
+            "dirty_before_query": "off",
+            "dirty_after_compile": "off",
+            "tolerance_evidence": "No per-state override setter in inspected installed C; model-tolerance inheritance inferred from source/documentation, not a runtime per-state AbsTol read",
+            "status_after_term": "stopped",
+            "dirty_after_term": "off"
+          },
+          "native_state_names": [
+            "Il_Z1",
+            "Il_Zs",
+            "Il_110 Mvar",
+            "Il_110 Mvar2",
+            "Il_section 1: 150 km Line",
+            "Il_section 2: 150 km Line",
+            "Il_Lm: Linear Transformer",
+            "Il_winding_1: Linear Transformer",
+            "Uc_Load",
+            "Uc_input: 150 km Line",
+            "Uc_section_2: 150 km Line",
+            "Uc_output: 150 km Line"
+          ],
+          "native_samples": 10023,
+          "duplicates_removed": 0,
+          "max_native_step_s": 5.000000000001531e-06,
+          "duplicate_values_verified_exactly_equal": true,
+          "actual_initial_state": [
+            -1676.1385611824408,
+            1748.8906115987725,
+            366.0314893585058,
+            -340.36210306471156,
+            -734.1107675775241,
+            -954.5229785120378,
+            -1.3300575800916816,
+            -719.8623044210544,
+            -35768.863694024374,
+            1972.9099533064864,
+            -8492.973607929822,
+            -18698.524975024862
+          ],
+          "native_initial_state": [
+            -1676.1385611824408,
+            1748.8906115987725,
+            366.0314893585058,
+            -340.36210306471156,
+            -734.1107675775241,
+            -954.5229785120378,
+            -1.3300575800916816,
+            -719.8623044210544,
+            -35768.863694024374,
+            1972.9099533064864,
+            -8492.973607929822,
+            -18698.524975024862
+          ],
+          "actual_t0_matches_native_x0": true,
+          "source_current_initial_a": -986.4549766532432,
+          "load_current_initial_a": 72.75205041633171,
+          "normalized_columns": [
+            "time",
+            "v_sending",
+            "v_middle",
+            "v_receiving",
+            "v_load",
+            "i_z1",
+            "i_zs",
+            "i_comp_sending",
+            "i_comp_receiving",
+            "i_line1",
+            "i_line2",
+            "i_magnetizing",
+            "i_primary",
+            "i_source",
+            "i_load"
+          ]
+        },
+        "independent_accuracy": {
+          "method": "Native knots and exact PWL-minus-sine stationary points; L-infinity/scale bounds NRMSE",
+          "limit_fraction": 0.1,
+          "continuous_nrmse_integral_evaluated": false,
+          "passed": true,
+          "windows": [
+            {
+              "window_s": [
+                0,
+                0.001
+              ],
+              "passed": true,
+              "signals": {
+                "v_sending": {
+                  "sample_max_abs_error": 3.2625098356220406e-07,
+                  "sample_nrmse_upper_bound": 5.437516392703401e-13,
+                  "pwl_max_abs_error_bound": 0.09875742273288779,
+                  "pwl_nrmse_upper_bound": 1.6459570455481297e-07,
+                  "pwl_stationary_points": 221,
+                  "floating_roundoff_guard": 7.450580596923828e-09,
+                  "scale": 600000,
+                  "absolute_limit": 6,
+                  "nrmse_bound_limit": 5e-06,
+                  "passed": true
+                },
+                "v_middle": {
+                  "sample_max_abs_error": 6.36280674370937e-07,
+                  "sample_nrmse_upper_bound": 1.0604677906182283e-12,
+                  "pwl_max_abs_error_bound": 0.09143758282880299,
+                  "pwl_nrmse_upper_bound": 1.5239597138133832e-07,
+                  "pwl_stationary_points": 221,
+                  "floating_roundoff_guard": 7.450580596923828e-09,
+                  "scale": 600000,
+                  "absolute_limit": 6,
+                  "nrmse_bound_limit": 5e-06,
+                  "passed": true
+                },
+                "v_receiving": {
+                  "sample_max_abs_error": 6.50063157081604e-07,
+                  "sample_nrmse_upper_bound": 1.0834385951360066e-12,
+                  "pwl_max_abs_error_bound": 0.08334363317771931,
+                  "pwl_nrmse_upper_bound": 1.3890605529619885e-07,
+                  "pwl_stationary_points": 221,
+                  "floating_roundoff_guard": 7.450580596923828e-09,
+                  "scale": 600000,
+                  "absolute_limit": 6,
+                  "nrmse_bound_limit": 5e-06,
+                  "passed": true
+                },
+                "v_load": {
+                  "sample_max_abs_error": 1.2409145710989833e-06,
+                  "sample_nrmse_upper_bound": 6.2045728554949165e-12,
+                  "pwl_max_abs_error_bound": 0.016486231063026935,
+                  "pwl_nrmse_upper_bound": 8.243115531513468e-08,
+                  "pwl_stationary_points": 222,
+                  "floating_roundoff_guard": 1.862645149230957e-09,
+                  "scale": 200000,
+                  "absolute_limit": 2,
+                  "nrmse_bound_limit": 5e-06,
+                  "passed": true
+                },
+                "i_z1": {
+                  "sample_max_abs_error": 5.9076455727336e-08,
+                  "sample_nrmse_upper_bound": 2.9538227863668e-11,
+                  "pwl_max_abs_error_bound": 0.0007418005309318687,
+                  "pwl_nrmse_upper_bound": 3.709002654659344e-07,
+                  "pwl_stationary_points": 221,
+                  "floating_roundoff_guard": 1.4551915228366852e-11,
+                  "scale": 2000,
+                  "absolute_limit": 0.02,
+                  "nrmse_bound_limit": 5e-06,
+                  "passed": true
+                },
+                "i_zs": {
+                  "sample_max_abs_error": 6.178811418067198e-08,
+                  "sample_nrmse_upper_bound": 3.089405709033599e-11,
+                  "pwl_max_abs_error_bound": 0.0007795953247295984,
+                  "pwl_nrmse_upper_bound": 3.897976623647992e-07,
+                  "pwl_stationary_points": 221,
+                  "floating_roundoff_guard": 1.4551915228366852e-11,
+                  "scale": 2000,
+                  "absolute_limit": 0.02,
+                  "nrmse_bound_limit": 5e-06,
+                  "passed": true
+                },
+                "i_comp_sending": {
+                  "sample_max_abs_error": 1.2950692962476751e-08,
+                  "sample_nrmse_upper_bound": 3.2376732406191876e-11,
+                  "pwl_max_abs_error_bound": 0.00016257018012311164,
+                  "pwl_nrmse_upper_bound": 4.064254503077791e-07,
+                  "pwl_stationary_points": 221,
+                  "floating_roundoff_guard": 3.637978807091713e-12,
+                  "scale": 400,
+                  "absolute_limit": 0.004,
+                  "nrmse_bound_limit": 5e-06,
+                  "passed": true
+                },
+                "i_comp_receiving": {
+                  "sample_max_abs_error": 1.2042733033013064e-08,
+                  "sample_nrmse_upper_bound": 3.010683258253266e-11,
+                  "pwl_max_abs_error_bound": 0.0001512408623511874,
+                  "pwl_nrmse_upper_bound": 3.7810215587796846e-07,
+                  "pwl_stationary_points": 221,
+                  "floating_roundoff_guard": 3.637978807091713e-12,
+                  "scale": 400,
+                  "absolute_limit": 0.004,
+                  "nrmse_bound_limit": 5e-06,
+                  "passed": true
+                },
+                "i_line1": {
+                  "sample_max_abs_error": 2.587864855740918e-08,
+                  "sample_nrmse_upper_bound": 2.587864855740918e-11,
+                  "pwl_max_abs_error_bound": 0.00032492306365838886,
+                  "pwl_nrmse_upper_bound": 3.2492306365838883e-07,
+                  "pwl_stationary_points": 221,
+                  "floating_roundoff_guard": 7.275957614183426e-12,
+                  "scale": 1000,
+                  "absolute_limit": 0.01,
+                  "nrmse_bound_limit": 5e-06,
+                  "passed": true
+                },
+                "i_line2": {
+                  "sample_max_abs_error": 3.366835699125659e-08,
+                  "sample_nrmse_upper_bound": 2.8056964159380488e-11,
+                  "pwl_max_abs_error_bound": 0.00042282920981051575,
+                  "pwl_nrmse_upper_bound": 3.5235767484209643e-07,
+                  "pwl_stationary_points": 221,
+                  "floating_roundoff_guard": 1.4551915228366852e-11,
+                  "scale": 1200,
+                  "absolute_limit": 0.012,
+                  "nrmse_bound_limit": 5e-06,
+                  "passed": true
+                },
+                "i_magnetizing": {
+                  "sample_max_abs_error": 4.654410190596536e-11,
+                  "sample_nrmse_upper_bound": 2.327205095298268e-11,
+                  "pwl_max_abs_error_bound": 5.965464424662059e-07,
+                  "pwl_nrmse_upper_bound": 2.9827322123310296e-07,
+                  "pwl_stationary_points": 221,
+                  "floating_roundoff_guard": 1.4210854715202004e-14,
+                  "scale": 2,
+                  "absolute_limit": 2e-05,
+                  "nrmse_bound_limit": 5e-06,
+                  "passed": true
+                },
+                "i_primary": {
+                  "sample_max_abs_error": 2.5371377887495328e-08,
+                  "sample_nrmse_upper_bound": 2.537137788749533e-11,
+                  "pwl_max_abs_error_bound": 0.0003185855152878503,
+                  "pwl_nrmse_upper_bound": 3.185855152878503e-07,
+                  "pwl_stationary_points": 221,
+                  "floating_roundoff_guard": 7.275957614183426e-12,
+                  "scale": 1000,
+                  "absolute_limit": 0.01,
+                  "nrmse_bound_limit": 5e-06,
+                  "passed": true
+                },
+                "i_source": {
+                  "sample_max_abs_error": 1.6312549178110203e-07,
+                  "sample_nrmse_upper_bound": 1.3593790981758503e-10,
+                  "pwl_max_abs_error_bound": 0.0004370032687575076,
+                  "pwl_nrmse_upper_bound": 3.6416939063125636e-07,
+                  "pwl_stationary_points": 221,
+                  "floating_roundoff_guard": 1.4551915228366852e-11,
+                  "scale": 1200,
+                  "absolute_limit": 0.012,
+                  "nrmse_bound_limit": 5e-06,
+                  "passed": true
+                },
+                "i_load": {
+                  "sample_max_abs_error": 3.900154865732475e-09,
+                  "sample_nrmse_upper_bound": 2.60010324382165e-12,
+                  "pwl_max_abs_error_bound": 0.00022784874454373494,
+                  "pwl_nrmse_upper_bound": 1.5189916302915663e-07,
+                  "pwl_stationary_points": 221,
+                  "floating_roundoff_guard": 1.4551915228366852e-11,
+                  "scale": 1500,
+                  "absolute_limit": 0.015,
+                  "nrmse_bound_limit": 5e-06,
+                  "passed": true
+                }
+              }
+            },
+            {
+              "window_s": [
+                0.001,
+                0.05
+              ],
+              "passed": true,
+              "signals": {
+                "v_sending": {
+                  "sample_max_abs_error": 1.0676808415155392e-07,
+                  "sample_nrmse_upper_bound": 1.7794680691925653e-13,
+                  "pwl_max_abs_error_bound": 0.2661328922275752,
+                  "pwl_nrmse_upper_bound": 4.4355482037929197e-07,
+                  "pwl_stationary_points": 9803,
+                  "floating_roundoff_guard": 7.450580596923828e-09,
+                  "scale": 600000,
+                  "absolute_limit": 6,
+                  "nrmse_bound_limit": 5e-06,
+                  "passed": true
+                },
+                "v_middle": {
+                  "sample_max_abs_error": 1.5853038348723203e-06,
+                  "sample_nrmse_upper_bound": 2.642173058120534e-12,
+                  "pwl_max_abs_error_bound": 0.2580101449204193,
+                  "pwl_nrmse_upper_bound": 4.3001690820069883e-07,
+                  "pwl_stationary_points": 9803,
+                  "floating_roundoff_guard": 7.450580596923828e-09,
+                  "scale": 600000,
+                  "absolute_limit": 6,
+                  "nrmse_bound_limit": 5e-06,
+                  "passed": true
+                },
+                "v_receiving": {
+                  "sample_max_abs_error": 2.0654006220865995e-06,
+                  "sample_nrmse_upper_bound": 3.4423343701443323e-12,
+                  "pwl_max_abs_error_bound": 0.24757708201866535,
+                  "pwl_nrmse_upper_bound": 4.1262847003110894e-07,
+                  "pwl_stationary_points": 9803,
+                  "floating_roundoff_guard": 7.450580596923828e-09,
+                  "scale": 600000,
+                  "absolute_limit": 6,
+                  "nrmse_bound_limit": 5e-06,
+                  "passed": true
+                },
+                "v_load": {
+                  "sample_max_abs_error": 9.174400474876165e-07,
+                  "sample_nrmse_upper_bound": 4.587200237438083e-12,
+                  "pwl_max_abs_error_bound": 0.08639166785269481,
+                  "pwl_nrmse_upper_bound": 4.3195833926347407e-07,
+                  "pwl_stationary_points": 9802,
+                  "floating_roundoff_guard": 1.862645149230957e-09,
+                  "scale": 200000,
+                  "absolute_limit": 2,
+                  "nrmse_bound_limit": 5e-06,
+                  "passed": true
+                },
+                "i_z1": {
+                  "sample_max_abs_error": 5.692822924174834e-08,
+                  "sample_nrmse_upper_bound": 2.846411462087417e-11,
+                  "pwl_max_abs_error_bound": 0.0008809187020233367,
+                  "pwl_nrmse_upper_bound": 4.4045935101166835e-07,
+                  "pwl_stationary_points": 9803,
+                  "floating_roundoff_guard": 1.4551915228366852e-11,
+                  "scale": 2000,
+                  "absolute_limit": 0.02,
+                  "nrmse_bound_limit": 5e-06,
+                  "passed": true
+                },
+                "i_zs": {
+                  "sample_max_abs_error": 5.827610038977582e-08,
+                  "sample_nrmse_upper_bound": 2.913805019488791e-11,
+                  "pwl_max_abs_error_bound": 0.0007795911499215435,
+                  "pwl_nrmse_upper_bound": 3.897955749607718e-07,
+                  "pwl_stationary_points": 9803,
+                  "floating_roundoff_guard": 1.4551915228366852e-11,
+                  "scale": 2000,
+                  "absolute_limit": 0.02,
+                  "nrmse_bound_limit": 5e-06,
+                  "passed": true
+                },
+                "i_comp_sending": {
+                  "sample_max_abs_error": 1.3422379652183736e-08,
+                  "sample_nrmse_upper_bound": 3.355594913045934e-11,
+                  "pwl_max_abs_error_bound": 0.00016258241885225289,
+                  "pwl_nrmse_upper_bound": 4.0645604713063224e-07,
+                  "pwl_stationary_points": 9803,
+                  "floating_roundoff_guard": 3.637978807091713e-12,
+                  "scale": 400,
+                  "absolute_limit": 0.004,
+                  "nrmse_bound_limit": 5e-06,
+                  "passed": true
+                },
+                "i_comp_receiving": {
+                  "sample_max_abs_error": 1.2419832273735665e-08,
+                  "sample_nrmse_upper_bound": 3.104958068433916e-11,
+                  "pwl_max_abs_error_bound": 0.00015123625496471504,
+                  "pwl_nrmse_upper_bound": 3.780906374117876e-07,
+                  "pwl_stationary_points": 9803,
+                  "floating_roundoff_guard": 3.637978807091713e-12,
+                  "scale": 400,
+                  "absolute_limit": 0.004,
+                  "nrmse_bound_limit": 5e-06,
+                  "passed": true
+                },
+                "i_line1": {
+                  "sample_max_abs_error": 3.969626050093211e-08,
+                  "sample_nrmse_upper_bound": 3.9696260500932115e-11,
+                  "pwl_max_abs_error_bound": 0.00038292988392640837,
+                  "pwl_nrmse_upper_bound": 3.8292988392640835e-07,
+                  "pwl_stationary_points": 9803,
+                  "floating_roundoff_guard": 7.275957614183426e-12,
+                  "scale": 1000,
+                  "absolute_limit": 0.01,
+                  "nrmse_bound_limit": 5e-06,
+                  "passed": true
+                },
+                "i_line2": {
+                  "sample_max_abs_error": 3.615912191889947e-08,
+                  "sample_nrmse_upper_bound": 3.0132601599082895e-11,
+                  "pwl_max_abs_error_bound": 0.00046849053273945174,
+                  "pwl_nrmse_upper_bound": 3.9040877728287647e-07,
+                  "pwl_stationary_points": 9803,
+                  "floating_roundoff_guard": 1.4551915228366852e-11,
+                  "scale": 1200,
+                  "absolute_limit": 0.012,
+                  "nrmse_bound_limit": 5e-06,
+                  "passed": true
+                },
+                "i_magnetizing": {
+                  "sample_max_abs_error": 4.9266812851556097e-11,
+                  "sample_nrmse_upper_bound": 2.4633406425778048e-11,
+                  "pwl_max_abs_error_bound": 5.965460396772926e-07,
+                  "pwl_nrmse_upper_bound": 2.982730198386463e-07,
+                  "pwl_stationary_points": 9803,
+                  "floating_roundoff_guard": 1.4210854715202004e-14,
+                  "scale": 2,
+                  "absolute_limit": 2e-05,
+                  "nrmse_bound_limit": 5e-06,
+                  "passed": true
+                },
+                "i_primary": {
+                  "sample_max_abs_error": 2.4444830160064157e-08,
+                  "sample_nrmse_upper_bound": 2.4444830160064158e-11,
+                  "pwl_max_abs_error_bound": 0.00037837743491309084,
+                  "pwl_nrmse_upper_bound": 3.7837743491309086e-07,
+                  "pwl_stationary_points": 9803,
+                  "floating_roundoff_guard": 7.275957614183426e-12,
+                  "scale": 1000,
+                  "absolute_limit": 0.01,
+                  "nrmse_bound_limit": 5e-06,
+                  "passed": true
+                },
+                "i_source": {
+                  "sample_max_abs_error": 5.338335995475063e-08,
+                  "sample_nrmse_upper_bound": 4.4486133295625527e-11,
+                  "pwl_max_abs_error_bound": 0.0004823488650345098,
+                  "pwl_nrmse_upper_bound": 4.019573875287582e-07,
+                  "pwl_stationary_points": 9803,
+                  "floating_roundoff_guard": 1.4551915228366852e-11,
+                  "scale": 1200,
+                  "absolute_limit": 0.012,
+                  "nrmse_bound_limit": 5e-06,
+                  "passed": true
+                },
+                "i_load": {
+                  "sample_max_abs_error": 1.0014531426350004e-08,
+                  "sample_nrmse_upper_bound": 6.676354284233336e-12,
+                  "pwl_max_abs_error_bound": 0.0005384767233147514,
+                  "pwl_nrmse_upper_bound": 3.5898448220983426e-07,
+                  "pwl_stationary_points": 9803,
+                  "floating_roundoff_guard": 1.4551915228366852e-11,
+                  "scale": 1500,
+                  "absolute_limit": 0.015,
+                  "nrmse_bound_limit": 5e-06,
+                  "passed": true
+                }
+              }
+            }
+          ],
+          "run_name": "refined"
+        },
+        "samples": 10023,
+        "model_dirty": "off",
+        "loaded_path": "D:\\VibeCoding\\PyCy_EMT_Lite\\local_reference\\source_line_transformer\\simulink\\power_gui.slx",
+        "output_names": [
+          "tout",
+          "xout"
+        ],
+        "native_files": [
+          {
+            "file": "actual_dialog_parameters.json",
+            "bytes": 4840,
+            "sha256": "5065b36e5da4d9b9d5003b077be8095c5bc79d70a58c62c5003eee16e7d1b62a"
+          },
+          {
+            "file": "independent_accuracy.json",
+            "bytes": 14251,
+            "sha256": "993372ddc76e51066b6fbdb69e3f66cb3fee6f1baa9ca9a6d9dbbf7a6899b081"
+          },
+          {
+            "file": "native_analysis.mat",
+            "bytes": 226640,
+            "sha256": "83cd92db8e78cf80ae1bc0ebb69ec9b57ca5fb9aa472c0c1402aca6010617c2e"
+          },
+          {
+            "file": "native_mapping.json",
+            "bytes": 4483,
+            "sha256": "b9cebdd87a25ff8910cd063cc05c95522795665d57aa319bbe539544d4b7b306"
+          },
+          {
+            "file": "native_projected_outputs.csv",
+            "bytes": 1247463.0,
+            "sha256": "f90d5e8b006bbafbc8761f65d5ade8517a32eefe7a9e6510981d66637f79e1a5"
+          },
+          {
+            "file": "native_source_inputs.csv",
+            "bytes": 415961,
+            "sha256": "3a4e9d6c7661669477a1c1ad60b06848139fc0f668a795888500fec0686627cf"
+          },
+          {
+            "file": "native_states.csv",
+            "bytes": 2299205.0,
+            "sha256": "df237c8a8befb775de5a8dbd815c0cb18e10f4bd346c34bbc3b05e6a7a07d08a"
+          },
+          {
+            "file": "reference.csv",
+            "bytes": 2647894.0,
+            "sha256": "2065e2beff85ea42f088a8615af1178923e8275395fefeb1c4e57840a1442c36"
+          },
+          {
+            "file": "simulink_output.mat",
+            "bytes": 1298467.0,
+            "sha256": "9324cdf6a6274f060a92e71dfa29a3e0815d4971eb7a3d0481ff494fbdd250c0"
+          }
+        ]
+      }
+    ],
+    "measurement_origin": "Native xout state trajectories projected using actual verified native C/D and immutable original source input; not direct Scope logs",
+    "normalization": "Original common native time; last duplicate time only; declared current sign changes; no shift, amplitude fit or uniform resampling",
+    "source_inputs": "Two diagnostic current inputs are identically zero; AC source is its actual amplitude*sin(2*pi*frequency*time+phase*pi/180)",
+    "initialization": "Original native steady-state initialization; no model or block initial values changed",
+    "topology_changes": "none",
+    "physical_parameter_changes": "none",
+    "initial_state_changes": "none",
+    "runtime_changes": "SimulationInput stiff solver settings, time/state Dataset output capture only",
+    "comparison_windows_s": [
+      [
+        0,
+        0.001
+      ],
+      [
+        0.001,
+        0.05
+      ]
+    ],
+    "reference_self_refinement": {
+      "method": "Exact squared-error integral of piecewise-linear native grid union; no shift or fit",
+      "limit_fraction": 0.1,
+      "passed": true,
+      "windows": [
+        {
+          "window_s": [
+            0,
+            0.001
+          ],
+          "passed": true,
+          "signals": {
+            "v_sending": {
+              "rmse": 0.13405464545929213,
+              "nrmse": 2.2342440909882021e-07,
+              "max_abs_difference": 0.3935328804946039,
+              "absolute_limit": 6,
+              "nrmse_limit": 5e-06,
+              "passed": true
+            },
+            "v_middle": {
+              "rmse": 0.12111888081287396,
+              "nrmse": 2.0186480135478992e-07,
+              "max_abs_difference": 0.3643250761379022,
+              "absolute_limit": 6,
+              "nrmse_limit": 5e-06,
+              "passed": true
+            },
+            "v_receiving": {
+              "rmse": 0.10743219762868304,
+              "nrmse": 1.7905366271447174e-07,
+              "max_abs_difference": 0.3320250242832117,
+              "absolute_limit": 6,
+              "nrmse_limit": 5e-06,
+              "passed": true
+            },
+            "v_load": {
+              "rmse": 0.02080341074518285,
+              "nrmse": 1.0401705372591425e-07,
+              "max_abs_difference": 0.0655939761272748,
+              "absolute_limit": 2,
+              "nrmse_limit": 5e-06,
+              "passed": true
+            },
+            "i_z1": {
+              "rmse": 0.001455497517207424,
+              "nrmse": 7.27748758603712e-07,
+              "max_abs_difference": 0.0029266419287523604,
+              "absolute_limit": 0.02,
+              "nrmse_limit": 5e-06,
+              "passed": true
+            },
+            "i_zs": {
+              "rmse": 0.0017561202061569887,
+              "nrmse": 8.780601030784944e-07,
+              "max_abs_difference": 0.003115889436003272,
+              "absolute_limit": 0.02,
+              "nrmse_limit": 5e-06,
+              "passed": true
+            },
+            "i_comp_sending": {
+              "rmse": 0.0003610265822749332,
+              "nrmse": 9.025664556873331e-07,
+              "max_abs_difference": 0.0006494929735367805,
+              "absolute_limit": 0.004,
+              "nrmse_limit": 5e-06,
+              "passed": true
+            },
+            "i_comp_receiving": {
+              "rmse": 0.00033811798424650025,
+              "nrmse": 8.452949606162506e-07,
+              "max_abs_difference": 0.0006045126930303013,
+              "absolute_limit": 0.004,
+              "nrmse_limit": 5e-06,
+              "passed": true
+            },
+            "i_line1": {
+              "rmse": 0.000640228965485675,
+              "nrmse": 6.40228965485675e-07,
+              "max_abs_difference": 0.0012823794813812128,
+              "absolute_limit": 0.01,
+              "nrmse_limit": 5e-06,
+              "passed": true
+            },
+            "i_line2": {
+              "rmse": 0.000857692666893608,
+              "nrmse": 7.147438890780066e-07,
+              "max_abs_difference": 0.001673677707231036,
+              "absolute_limit": 0.012,
+              "nrmse_limit": 5e-06,
+              "passed": true
+            },
+            "i_magnetizing": {
+              "rmse": 1.3497561333982514e-06,
+              "nrmse": 6.748780666991257e-07,
+              "max_abs_difference": 2.3842790026762373e-06,
+              "absolute_limit": 2e-05,
+              "nrmse_limit": 5e-06,
+              "passed": true
+            },
+            "i_primary": {
+              "rmse": 0.0006250685179372469,
+              "nrmse": 6.250685179372469e-07,
+              "max_abs_difference": 0.001256915954172655,
+              "absolute_limit": 0.01,
+              "nrmse_limit": 5e-06,
+              "passed": true
+            },
+            "i_source": {
+              "rmse": 0.0008887316862846203,
+              "nrmse": 7.406097385705169e-07,
+              "max_abs_difference": 0.00173035729642379,
+              "absolute_limit": 0.012,
+              "nrmse_limit": 5e-06,
+              "passed": true
+            },
+            "i_load": {
+              "rmse": 0.0003321245509148078,
+              "nrmse": 2.2141636727653853e-07,
+              "max_abs_difference": 0.0009087363876005838,
+              "absolute_limit": 0.015,
+              "nrmse_limit": 5e-06,
+              "passed": true
+            }
+          }
+        },
+        {
+          "window_s": [
+            0.001,
+            0.05
+          ],
+          "passed": true,
+          "signals": {
+            "v_sending": {
+              "rmse": 0.43896887121597933,
+              "nrmse": 7.316147853599656e-07,
+              "max_abs_difference": 1.062515936093405,
+              "absolute_limit": 6,
+              "nrmse_limit": 5e-06,
+              "passed": true
+            },
+            "v_middle": {
+              "rmse": 0.4256240070914782,
+              "nrmse": 7.093733451524636e-07,
+              "max_abs_difference": 1.0301429245155305,
+              "absolute_limit": 6,
+              "nrmse_limit": 5e-06,
+              "passed": true
+            },
+            "v_receiving": {
+              "rmse": 0.40846190239094005,
+              "nrmse": 6.807698373182334e-07,
+              "max_abs_difference": 0.9884923971258104,
+              "absolute_limit": 6,
+              "nrmse_limit": 5e-06,
+              "passed": true
+            },
+            "v_load": {
+              "rmse": 0.14259839000161864,
+              "nrmse": 7.129919500080932e-07,
+              "max_abs_difference": 0.34492008583038114,
+              "absolute_limit": 2,
+              "nrmse_limit": 5e-06,
+              "passed": true
+            },
+            "i_z1": {
+              "rmse": 0.0014384820643983016,
+              "nrmse": 7.192410321991508e-07,
+              "max_abs_difference": 0.0035187422097351373,
+              "absolute_limit": 0.02,
+              "nrmse_limit": 5e-06,
+              "passed": true
+            },
+            "i_zs": {
+              "rmse": 0.001261433724527382,
+              "nrmse": 6.30716862263691e-07,
+              "max_abs_difference": 0.003114312371963024,
+              "absolute_limit": 0.02,
+              "nrmse_limit": 5e-06,
+              "passed": true
+            },
+            "i_comp_sending": {
+              "rmse": 0.0002631891677218936,
+              "nrmse": 6.57972919304734e-07,
+              "max_abs_difference": 0.0006497335468225174,
+              "absolute_limit": 0.004,
+              "nrmse_limit": 5e-06,
+              "passed": true
+            },
+            "i_comp_receiving": {
+              "rmse": 0.000244775086199647,
+              "nrmse": 6.119377154991175e-07,
+              "max_abs_difference": 0.0006044243846190511,
+              "absolute_limit": 0.004,
+              "nrmse_limit": 5e-06,
+              "passed": true
+            },
+            "i_line1": {
+              "rmse": 0.0006251198277057808,
+              "nrmse": 6.251198277057808e-07,
+              "max_abs_difference": 0.0015302982046705438,
+              "absolute_limit": 0.01,
+              "nrmse_limit": 5e-06,
+              "passed": true
+            },
+            "i_line2": {
+              "rmse": 0.0007631348381510555,
+              "nrmse": 6.359456984592129e-07,
+              "max_abs_difference": 0.0018717855941758899,
+              "absolute_limit": 0.012,
+              "nrmse_limit": 5e-06,
+              "passed": true
+            },
+            "i_magnetizing": {
+              "rmse": 9.650625933091141e-07,
+              "nrmse": 4.825312966545571e-07,
+              "max_abs_difference": 2.384363984697657e-06,
+              "absolute_limit": 2e-05,
+              "nrmse_limit": 5e-06,
+              "passed": true
+            },
+            "i_primary": {
+              "rmse": 0.0006178677498872449,
+              "nrmse": 6.178677498872448e-07,
+              "max_abs_difference": 0.0015113922745513264,
+              "absolute_limit": 0.01,
+              "nrmse_limit": 5e-06,
+              "passed": true
+            },
+            "i_source": {
+              "rmse": 0.0007855583615363913,
+              "nrmse": 6.546319679469928e-07,
+              "max_abs_difference": 0.001927865269863105,
+              "absolute_limit": 0.012,
+              "nrmse_limit": 5e-06,
+              "passed": true
+            },
+            "i_load": {
+              "rmse": 0.0008877555252623547,
+              "nrmse": 5.918370168415698e-07,
+              "max_abs_difference": 0.0021498961391444027,
+              "absolute_limit": 0.015,
+              "nrmse_limit": 5e-06,
+              "passed": true
+            }
+          }
+        }
+      ]
+    },
+    "input_snapshot_files": [
+      {
+        "file": "acceptance_plan.md",
+        "bytes": 7575,
+        "sha256": "4b301512d3292657945be5d37028dea8b439b5520c9fd6ea5013bac40568c608"
+      },
+      {
+        "file": "baseline_generation_acceptance_plan.md",
+        "bytes": 7575,
+        "sha256": "4b301512d3292657945be5d37028dea8b439b5520c9fd6ea5013bac40568c608"
+      },
+      {
+        "file": "baseline_generation_export_reference.m",
+        "bytes": 25806,
+        "sha256": "47d39e6c2cd3a1edf2dbb04f8f0781ced3c887ef55559fb05ffe28b1477f1217"
+      },
+      {
+        "file": "baseline_generation_manifest.json",
+        "bytes": 6379,
+        "sha256": "e6703a6ba3e186e2a128d4442b9df9bd2e94ad24b0cbd2d202af858e92214800"
+      },
+      {
+        "file": "baseline_generation_parameters.json",
+        "bytes": 7701,
+        "sha256": "fc4810294a19089283c3d35732febcaf5a5769ec83aae7d216f9d2b5899e8d9b"
+      },
+      {
+        "file": "export_reference.m",
+        "bytes": 31661,
+        "sha256": "44683fa2c96ec1cbba8c028a828aaf41faf3223c8005f9196b3fd738282b12c8"
+      },
+      {
+        "file": "independent_feasibility.json",
+        "bytes": 42147,
+        "sha256": "4ec7e01336eb321c4dd2e6d71c2959e08adea0df6f43acd37071ea5696808234"
+      },
+      {
+        "file": "manifest.json",
+        "bytes": 6379,
+        "sha256": "e6703a6ba3e186e2a128d4442b9df9bd2e94ad24b0cbd2d202af858e92214800"
+      },
+      {
+        "file": "native_state_guard_addendum.md",
+        "bytes": 3575,
+        "sha256": "86929b4960c62e6403c888b57fe14508855ada98a93dfbe57e44f454a7aa041b"
+      },
+      {
+        "file": "original_default_provenance.json",
+        "bytes": 1506,
+        "sha256": "479b636ecdffaceaf9ac04a6820b8f20fbd49e8fff257275a9c1f5de6b9f7420"
+      },
+      {
+        "file": "original_dialog_parameters.json",
+        "bytes": 6911,
+        "sha256": "695d523009bf0772b4215635175c50166ed92876fbe2dac1c23c5bc45ac1e8ae"
+      },
+      {
+        "file": "original_native_analysis.mat",
+        "bytes": 226640,
+        "sha256": "60d9615b972e4e46178cbfd4f95c501259d21e77aa7235ff7fa3234f3eca28c7"
+      },
+      {
+        "file": "original_native_detailed.json",
+        "bytes": 38601,
+        "sha256": "7980706e382fd7dea9d59f79f5213c8c2bab17159cb7f03e5614ba7f3da9226a"
+      },
+      {
+        "file": "original_static_audit.json",
+        "bytes": 66326,
+        "sha256": "1f233d681cbf4b256b6da375b8b6270b85fef3bfe64cd6ee1814a61dc3908693"
+      },
+      {
+        "file": "parameters.json",
+        "bytes": 7701,
+        "sha256": "fc4810294a19089283c3d35732febcaf5a5769ec83aae7d216f9d2b5899e8d9b"
+      },
+      {
+        "file": "power_gui.slx",
+        "bytes": 40466,
+        "sha256": "a46b7c34658c65ce58c6e51a6d167244c06f4e839063c00bd1ff75c78bdc5a08"
+      },
+      {
+        "file": "research_inventory.json",
+        "bytes": 19290,
+        "sha256": "9297e7ef3f59aed86f9791c9e4ee7c98f15f0a09dc467481947d6e2e2a8c6e4f"
+      }
+    ],
+    "baseline_files": [
+      {
+        "file": "actual_dialog_parameters.json",
+        "bytes": 4840,
+        "sha256": "5065b36e5da4d9b9d5003b077be8095c5bc79d70a58c62c5003eee16e7d1b62a"
+      },
+      {
+        "file": "independent_accuracy.json",
+        "bytes": 14204,
+        "sha256": "b6e06a5c957701a767b0deb0e9239d188fa0854de7b6025090102ac436342167"
+      },
+      {
+        "file": "native_analysis.mat",
+        "bytes": 226640,
+        "sha256": "d556c62535836a6bc7776ae43b80e3193efbfeda83ec951a78e5c567c759ca65"
+      },
+      {
+        "file": "native_mapping.json",
+        "bytes": 4483,
+        "sha256": "b9cebdd87a25ff8910cd063cc05c95522795665d57aa319bbe539544d4b7b306"
+      },
+      {
+        "file": "native_projected_outputs.csv",
+        "bytes": 625162,
+        "sha256": "86ec1b91754f08b16342a96d83d5525b42f57911c2a9b58eeaf1960283b607b8"
+      },
+      {
+        "file": "native_source_inputs.csv",
+        "bytes": 208443,
+        "sha256": "931ac37d958cd601f2bf2dcc20beb928b815fa68acf403151b5a8cd70f15b662"
+      },
+      {
+        "file": "native_states.csv",
+        "bytes": 1152397.0,
+        "sha256": "c7e2a7d6b86e0c75163ad1f9c9f4dbdda25a422b5b916050dca6f6d8a96f72a0"
+      },
+      {
+        "file": "reference.csv",
+        "bytes": 1327182.0,
+        "sha256": "735206b2de6af08f162d35ac2a40f7986d266269ffd6d1e6d0f18dafc9af22f3"
+      },
+      {
+        "file": "run_settings.json",
+        "bytes": 20347,
+        "sha256": "7d4f79f41d26de71bb6030bafb005288630d17bd434211b5122e47696128e58d"
+      },
+      {
+        "file": "simulink_output.mat",
+        "bytes": 744194,
+        "sha256": "15a9a5c9d1acf78415346a549d1964c0c948fd786d1df9699679caa550c039ba"
+      }
+    ],
+    "refined_files": [
+      {
+        "file": "actual_dialog_parameters.json",
+        "bytes": 4840,
+        "sha256": "5065b36e5da4d9b9d5003b077be8095c5bc79d70a58c62c5003eee16e7d1b62a"
+      },
+      {
+        "file": "independent_accuracy.json",
+        "bytes": 14251,
+        "sha256": "993372ddc76e51066b6fbdb69e3f66cb3fee6f1baa9ca9a6d9dbbf7a6899b081"
+      },
+      {
+        "file": "native_analysis.mat",
+        "bytes": 226640,
+        "sha256": "83cd92db8e78cf80ae1bc0ebb69ec9b57ca5fb9aa472c0c1402aca6010617c2e"
+      },
+      {
+        "file": "native_mapping.json",
+        "bytes": 4483,
+        "sha256": "b9cebdd87a25ff8910cd063cc05c95522795665d57aa319bbe539544d4b7b306"
+      },
+      {
+        "file": "native_projected_outputs.csv",
+        "bytes": 1247463.0,
+        "sha256": "f90d5e8b006bbafbc8761f65d5ade8517a32eefe7a9e6510981d66637f79e1a5"
+      },
+      {
+        "file": "native_source_inputs.csv",
+        "bytes": 415961,
+        "sha256": "3a4e9d6c7661669477a1c1ad60b06848139fc0f668a795888500fec0686627cf"
+      },
+      {
+        "file": "native_states.csv",
+        "bytes": 2299205.0,
+        "sha256": "df237c8a8befb775de5a8dbd815c0cb18e10f4bd346c34bbc3b05e6a7a07d08a"
+      },
+      {
+        "file": "reference.csv",
+        "bytes": 2647894.0,
+        "sha256": "2065e2beff85ea42f088a8615af1178923e8275395fefeb1c4e57840a1442c36"
+      },
+      {
+        "file": "run_settings.json",
+        "bytes": 20040,
+        "sha256": "dce97069728db19cf85158428ca0b4193f6bc993f80d3652e416fbb19e99e545"
+      },
+      {
+        "file": "simulink_output.mat",
+        "bytes": 1298467.0,
+        "sha256": "9324cdf6a6274f060a92e71dfa29a3e0815d4971eb7a3d0481ff494fbdd250c0"
+      }
+    ],
+    "redistribution": "Original model and generated vendor outputs remain ignored local data; no redistribution permission asserted"
+  },
+  "reference_sha256": "735206b2de6af08f162d35ac2a40f7986d266269ffd6d1e6d0f18dafc9af22f3",
+  "model_sha256": "a46b7c34658c65ce58c6e51a6d167244c06f4e839063c00bd1ff75c78bdc5a08",
+  "provenance_sha256": "d96f571c89494109d805c8ab09e2b3c01d8043479f1de73bbc08e5764899eccd",
+  "manifest_sha256": "e6703a6ba3e186e2a128d4442b9df9bd2e94ad24b0cbd2d202af858e92214800",
+  "example_sha256": "4c414237cedff546685a84d5b171da6879eba66963f48a0675b25573c9864c26",
+  "export_script_sha256": "44683fa2c96ec1cbba8c028a828aaf41faf3223c8005f9196b3fd738282b12c8",
+  "parameters_sha256": "fc4810294a19089283c3d35732febcaf5a5769ec83aae7d216f9d2b5899e8d9b",
+  "candidate_data_sha256": {
+    "pycy.csv": "1b51c9c41c8e720e6ce8539741e2fe48c9228145fb8578ec4008d3ae1a7e7e88",
+    "pycy.json": "37eaabc70041d25a26ab82ea674b2af43fd133538493e1b5e025cb59b1e916a9",
+    "pycy.npz": "cf9feb94ba37719de73da6f078452c0787de927d445984811fb481968e212973"
+  },
+  "raw_reference_sha256": {
+    "local_reference/source_line_transformer/raw_results/actual_dialog_parameters.json": "5065b36e5da4d9b9d5003b077be8095c5bc79d70a58c62c5003eee16e7d1b62a",
+    "local_reference/source_line_transformer/raw_results/independent_accuracy.json": "b6e06a5c957701a767b0deb0e9239d188fa0854de7b6025090102ac436342167",
+    "local_reference/source_line_transformer/raw_results/native_analysis.mat": "d556c62535836a6bc7776ae43b80e3193efbfeda83ec951a78e5c567c759ca65",
+    "local_reference/source_line_transformer/raw_results/native_mapping.json": "b9cebdd87a25ff8910cd063cc05c95522795665d57aa319bbe539544d4b7b306",
+    "local_reference/source_line_transformer/raw_results/native_projected_outputs.csv": "86ec1b91754f08b16342a96d83d5525b42f57911c2a9b58eeaf1960283b607b8",
+    "local_reference/source_line_transformer/raw_results/native_source_inputs.csv": "931ac37d958cd601f2bf2dcc20beb928b815fa68acf403151b5a8cd70f15b662",
+    "local_reference/source_line_transformer/raw_results/native_states.csv": "c7e2a7d6b86e0c75163ad1f9c9f4dbdda25a422b5b916050dca6f6d8a96f72a0",
+    "local_reference/source_line_transformer/raw_results/reference.csv": "735206b2de6af08f162d35ac2a40f7986d266269ffd6d1e6d0f18dafc9af22f3",
+    "local_reference/source_line_transformer/raw_results/run_settings.json": "7d4f79f41d26de71bb6030bafb005288630d17bd434211b5122e47696128e58d",
+    "local_reference/source_line_transformer/raw_results/simulink_output.mat": "15a9a5c9d1acf78415346a549d1964c0c948fd786d1df9699679caa550c039ba"
+  },
+  "git_head_at_run": "436c26642aff420d9e209b19bbf6043ca8e5b55c",
+  "git_status_at_run": [
+    " M README.md",
+    " M README.zh-CN.md",
+    "?? examples/25_source_line_transformer_network.py",
+    "?? tests/test_source_line_transformer_network.py",
+    "?? validation/cases/source_line_transformer/README.md",
+    "?? validation/cases/source_line_transformer/compare.py",
+    "?? validation/cases/source_line_transformer/export_reference.m"
+  ],
+  "package_source_sha256": {
+    "pycy_emt_lite/__init__.py": "81980a448c4506c4a373d308339c490967a02938c2cb0f0f33a1360dec21d46e",
+    "pycy_emt_lite/analysis/__init__.py": "20f635eec36432d84d6bf2ed666ecf45230962c7b4aa875838a2b9a65c5aa8a0",
+    "pycy_emt_lite/analysis/metrics.py": "14407925b79d9c3ea98c1cf3e4f9208f7820a22a862d70e067632f301aa9b143",
+    "pycy_emt_lite/cases.py": "f6c710cbbf2306752bd2345c1f5fc9a8d74b6738f30dd15fcfeb4452a192e986",
+    "pycy_emt_lite/components/__init__.py": "7cdac999206ef73c505ae8f29d9b531355d79bca9dcba02dd6f2c1b332ab4801",
+    "pycy_emt_lite/components/base.py": "d640819f5fddc223f7626059f8a4e309b4502851afcdeb8d5809e2e798fc6c1a",
+    "pycy_emt_lite/components/basic.py": "b2a092b07a15a1145cc582c47b1df6f6124d65c972f46b9450faa8c0acb5cc0b",
+    "pycy_emt_lite/components/lines.py": "dd4a0e5d4ee71ef7a655e31064c002536ea994aa185c0e6a47398d1cbac8c74b",
+    "pycy_emt_lite/components/power_electronics.py": "7b28e0c56436fcbf6ad357ee1336c1a3538fd5668a953e7487de6aedd30a1fab",
+    "pycy_emt_lite/components/switching.py": "6a422186320def189dcf360083c017715c80e34df769dbd14cca2c58e810a9d6",
+    "pycy_emt_lite/components/three_phase.py": "9cddd858ba4d27572218dc3a6790b8aa92ac0b71c703c9b7ddec82ddcd60c025",
+    "pycy_emt_lite/components/transformers.py": "632617a185bb69441535bdff552f0b4473566d64f6a78211622962cbb3d66609",
+    "pycy_emt_lite/controls/__init__.py": "f9685f649e794aba54a8cec566390ee8e9a992b7baf41d7a592a74d12980a069",
+    "pycy_emt_lite/controls/blocks.py": "e862509d8dceb31a1151ff710d4f861267e23e9dccd1843f98f774fb07684a7b",
+    "pycy_emt_lite/controls/pll.py": "7eca0fb9c6f6464bb36f82d7cad1b27be5bd1b6455b046b5ad3279c075a36efa",
+    "pycy_emt_lite/controls/pwm.py": "6a2469d7957c74ce9ff25e13020541e7c169f38820538e8a71467919ce9391d1",
+    "pycy_emt_lite/controls/transforms.py": "c48dbe02a1cd4b1c12a8fd29439038b76ada81d68f71f7b1183eec2bdc98ab99",
+    "pycy_emt_lite/controls/vsc.py": "1d12cc5a728f4085f1e723ac48b055e16e305cf91aafd130bf530f6c790dc635",
+    "pycy_emt_lite/converters/__init__.py": "9f94cc67b26700a8bf1f022c5c806b5e5415ecaf8743d36b2ddceddb6ec70ba6",
+    "pycy_emt_lite/converters/filters.py": "11112e0bc233809fc37c3fcf39cce41dab692a704a711d113bff31aa450a6be2",
+    "pycy_emt_lite/core/__init__.py": "3d0e3034e589c19e37746a909832f2b47780ea9793b011bb2bdf6141dd445ee5",
+    "pycy_emt_lite/core/circuit.py": "ee628295a1477c334d66e366ed594f8b824ca66ce36e8c17980972a7f485b0ac",
+    "pycy_emt_lite/core/context.py": "9886feeb12b4c30e115f4ada5594c504cb196ecdb491699a2b7a89fa16902c4e",
+    "pycy_emt_lite/core/nodes.py": "71167de688ff341bf99f6fb0beedd05946db4d83eeb9301a387a021ca6f0cffd",
+    "pycy_emt_lite/core/simulation.py": "b6fdb849172830cff51bfa31af87028524072adabaeeda580ab02c4e4751087d",
+    "pycy_emt_lite/core/solvers.py": "031f3d2f118d1d88f34d712bdeeb864ecc13a3fa7d89c7288b984b2b2c31571a",
+    "pycy_emt_lite/core/stamping.py": "9f23c65cbaa7d33ea0406bd0d33fe3b5fd007192fd60dbe78399586a35f02f87",
+    "pycy_emt_lite/core/variables.py": "6567e110c6b1aedc7faf713ae05d3297b5f70cca98ebf4bc28fcb2f7d05ea0b8",
+    "pycy_emt_lite/events/__init__.py": "5af09c087d751859ff97c6b4a01670312d5618aed864ea042fccf736d660c032",
+    "pycy_emt_lite/events/base.py": "9cc671d975b5ea60780b29e7a11042f3b39f2bb93454dc2cc72bacfee4bb6663",
+    "pycy_emt_lite/events/standard.py": "638e17b7d7601cd901e96cec99c5238c330780e31711c3d5e92e06d56b32d46d",
+    "pycy_emt_lite/io/__init__.py": "1eaf1526eecf1d41982a3e2b6685b0a653c233e9b57546d437e1dc4ae582f93e",
+    "pycy_emt_lite/io/results.py": "aa02511777508c2f048aae9d459dfd354d0e0d9b539a10af8f0684d66018a915",
+    "pycy_emt_lite/machines/__init__.py": "9f16d3bf2e00d27f4d8d1bacf35d8ef968f2f79dc5d758af581b04bd9f40232e",
+    "pycy_emt_lite/machines/park_generator.py": "e1f5f5c3b26ab2aaab4db9234954c50913c7890135da4f933b0afc9202e43caa",
+    "pycy_emt_lite/machines/synchronous.py": "a6add8058a9788daba21a1dfac986bef6e4a4c698ec4f8e21fdcb07e1426b06f",
+    "pycy_emt_lite/visualization/__init__.py": "23a5988f06bd7d833a9d7a0358a55a3d6a57ed96f5e1812c178c0d8ae29267ea",
+    "pycy_emt_lite/visualization/plotting.py": "6645d31b1c6ae11be45f5652f222a36576dab075c336788d25d15a788c64e346",
+    "pycy_emt_lite/visualization/reporting.py": "5ae8a1642303cef26f6c425c36eb49256b318d9773f9bbeb792ca8bcded264d0"
+  },
+  "python_version": "3.14.5",
+  "numpy_version": "2.5.2",
+  "candidate_method": "trapezoidal",
+  "candidate_step_seconds": 1e-05,
+  "candidate_samples": 5001,
+  "reference_samples": 5023,
+  "known_difference": "Same complete single-phase source-line-transformer-fixed-impedance-load network, same nonzero sinusoidal steady-state initialization and all compensation/equivalent branches. Two finite pi sections retain native 60Hz hyperbolic R/L/C/G correction. Exact R2+Rz1 series folding only. Existing zero-volt source represents original ideal load CurrentMeasurement. Reference signals are original commercial native states plus native-grid Cx+Du measurement projection, not direct Scope logs; no Python ODE substituted for native simulation. Normalized sending compensation and Zs currents are bus-to-ground, opposite native signs. Physical steady state from t0; first window checks numerical initialization, not a cold-start transient or broadband distributed-line propagation. No fitted shift, phase, amplitude, initial state or parameter.",
+  "windows": [
+    {
+      "window_seconds": [
+        0,
+        0.001
+      ],
+      "alignment": "absolute_time_linear_interpolation",
+      "passed": true,
+      "signals": {
+        "v:send": {
+          "reference": "v_sending",
+          "unit": "V",
+          "scale": 600000,
+          "rmse": 0.10680405870483888,
+          "nrmse": 1.780067645080648e-07,
+          "max_abs_error": 0.3152526943013072,
+          "candidate_mean": 113544.6706773226,
+          "reference_mean": 113544.67132048712,
+          "candidate_rms": 130237.4810930588,
+          "reference_rms": 130237.48145957178,
+          "limits": {
+            "max_nrmse": 5e-05,
+            "max_abs_error": 60.0
+          },
+          "passed": true
+        },
+        "v:mid": {
+          "reference": "v_middle",
+          "unit": "V",
+          "scale": 600000,
+          "rmse": 0.10864608789193404,
+          "nrmse": 1.810768131532234e-07,
+          "max_abs_error": 0.3014212023699656,
+          "candidate_mean": 99907.13738788357,
+          "reference_mean": 99907.18307886692,
+          "candidate_rms": 117607.74794633481,
+          "reference_rms": 117607.78638996558,
+          "limits": {
+            "max_nrmse": 5e-05,
+            "max_abs_error": 60.0
+          },
+          "passed": true
+        },
+        "v:recv": {
+          "reference": "v_receiving",
+          "unit": "V",
+          "scale": 600000,
+          "rmse": 0.11177661265503278,
+          "nrmse": 1.8629435442505463e-07,
+          "max_abs_error": 0.28363786230329424,
+          "candidate_mean": 85518.96398506516,
+          "reference_mean": 85519.0287144627,
+          "candidate_rms": 104311.26633894033,
+          "reference_rms": 104311.32406323,
+          "limits": {
+            "max_nrmse": 5e-05,
+            "max_abs_error": 60.0
+          },
+          "passed": true
+        },
+        "v:load": {
+          "reference": "v_load",
+          "unit": "V",
+          "scale": 200000,
+          "rmse": 0.05040679519929547,
+          "nrmse": 2.520339759964774e-07,
+          "max_abs_error": 0.1258834163963911,
+          "candidate_mean": 688.050101982557,
+          "reference_mean": 688.0904571959509,
+          "candidate_rms": 21104.92966180436,
+          "reference_rms": 21104.95504601619,
+          "limits": {
+            "max_nrmse": 5e-05,
+            "max_abs_error": 20.0
+          },
+          "passed": true
+        },
+        "i:Lz1": {
+          "reference": "i_z1",
+          "unit": "A",
+          "scale": 2000,
+          "rmse": 0.001250269287481832,
+          "nrmse": 6.25134643740916e-07,
+          "max_abs_error": 0.002960005133672894,
+          "candidate_mean": -1439.2051546163711,
+          "reference_mean": -1439.2049344487607,
+          "candidate_rms": 1446.7137390847593,
+          "reference_rms": 1446.7135419712197,
+          "limits": {
+            "max_nrmse": 5e-05,
+            "max_abs_error": 0.2
+          },
+          "passed": true
+        },
+        "i:Lzs": {
+          "reference": "i_zs",
+          "unit": "A",
+          "scale": 2000,
+          "rmse": 0.001451332009688392,
+          "nrmse": 7.25666004844196e-07,
+          "max_abs_error": 0.0031041959355206927,
+          "candidate_mean": -1735.6810819521793,
+          "reference_mean": -1735.6810637798872,
+          "candidate_rms": 1735.8158960906387,
+          "reference_rms": 1735.8158792244137,
+          "limits": {
+            "max_nrmse": 5e-05,
+            "max_abs_error": 0.2
+          },
+          "passed": true
+        },
+        "i:Lcomp_s": {
+          "reference": "i_comp_sending",
+          "unit": "A",
+          "scale": 400,
+          "rmse": 0.00029841258694792187,
+          "nrmse": 7.460314673698047e-07,
+          "max_abs_error": 0.0006491317973313926,
+          "candidate_mean": -356.9705079767393,
+          "reference_mean": -356.97050671258194,
+          "candidate_rms": 357.05849994466763,
+          "reference_rms": 357.0584991761382,
+          "limits": {
+            "max_nrmse": 5e-05,
+            "max_abs_error": 0.04
+          },
+          "passed": true
+        },
+        "i:Lcomp_r": {
+          "reference": "i_comp_receiving",
+          "unit": "A",
+          "scale": 400,
+          "rmse": 0.0002796885118607343,
+          "nrmse": 6.992212796518357e-07,
+          "max_abs_error": 0.0006038115585624837,
+          "candidate_mean": -334.27297251038704,
+          "reference_mean": -334.2729671318799,
+          "candidate_rms": 334.32835923192255,
+          "reference_rms": 334.3283542731636,
+          "limits": {
+            "max_nrmse": 5e-05,
+            "max_abs_error": 0.04
+          },
+          "passed": true
+        },
+        "i:Lline1": {
+          "reference": "i_line1",
+          "unit": "A",
+          "scale": 1000,
+          "rmse": 0.0006039125166967549,
+          "nrmse": 6.039125166967549e-07,
+          "max_abs_error": 0.001296576439585806,
+          "candidate_mean": -632.6374395491495,
+          "reference_mean": -632.6376911932027,
+          "candidate_rms": 635.7824960841829,
+          "reference_rms": 635.7827335876576,
+          "limits": {
+            "max_nrmse": 5e-05,
+            "max_abs_error": 0.1
+          },
+          "passed": true
+        },
+        "i:Lline2": {
+          "reference": "i_line2",
+          "unit": "A",
+          "scale": 1200,
+          "rmse": 0.0007135364088982222,
+          "nrmse": 5.946136740818518e-07,
+          "max_abs_error": 0.0016865456249206545,
+          "candidate_mean": -848.4670734233471,
+          "reference_mean": -848.4670850419567,
+          "candidate_rms": 851.136484613014,
+          "reference_rms": 851.1364975507821,
+          "limits": {
+            "max_nrmse": 5e-05,
+            "max_abs_error": 0.12000000000000001
+          },
+          "passed": true
+        },
+        "i:Lm": {
+          "reference": "i_magnetizing",
+          "unit": "A",
+          "scale": 2,
+          "rmse": 1.1134572345874494e-06,
+          "nrmse": 5.567286172937247e-07,
+          "max_abs_error": 2.362006402023553e-06,
+          "candidate_mean": -1.3336349765097069,
+          "reference_mean": -1.3336349812694213,
+          "candidate_rms": 1.3336726635164617,
+          "reference_rms": 1.3336726685068556,
+          "limits": {
+            "max_nrmse": 5e-05,
+            "max_abs_error": 0.0002
+          },
+          "passed": true
+        },
+        "i:Lp": {
+          "reference": "i_primary",
+          "unit": "A",
+          "scale": 1000,
+          "rmse": 0.00053694633590432,
+          "nrmse": 5.369463359043201e-07,
+          "max_abs_error": 0.0012712523324580616,
+          "candidate_mean": -618.0708373051114,
+          "reference_mean": -618.070742712797,
+          "candidate_rms": 621.2977573348724,
+          "reference_rms": 621.2976726499476,
+          "limits": {
+            "max_nrmse": 5e-05,
+            "max_abs_error": 0.1
+          },
+          "passed": true
+        },
+        "i:Rs": {
+          "reference": "i_source",
+          "unit": "A",
+          "scale": 1200,
+          "rmse": 0.0008355957928760054,
+          "nrmse": 6.963298273966711e-07,
+          "max_abs_error": 0.0018934529496164032,
+          "candidate_mean": -878.6636846584572,
+          "reference_mean": -878.6640627141668,
+          "candidate_rms": 881.3356990918785,
+          "reference_rms": 881.3360676967485,
+          "limits": {
+            "max_nrmse": 5e-05,
+            "max_abs_error": 0.12000000000000001
+          },
+          "passed": true
+        },
+        "i:Iload": {
+          "reference": "i_load",
+          "unit": "A",
+          "scale": 1500,
+          "rmse": 0.0003434196587868933,
+          "nrmse": 2.2894643919126218e-07,
+          "max_abs_error": 0.0009281616440830476,
+          "candidate_mean": 296.4759273357851,
+          "reference_mean": 296.4761293311268,
+          "candidate_rms": 322.7084469370147,
+          "reference_rms": 322.70866040576425,
+          "limits": {
+            "max_nrmse": 5e-05,
+            "max_abs_error": 0.15
+          },
+          "passed": true
+        }
+      }
+    },
+    {
+      "window_seconds": [
+        0.001,
+        0.05
+      ],
+      "alignment": "absolute_time_linear_interpolation",
+      "passed": true,
+      "signals": {
+        "v:send": {
+          "reference": "v_sending",
+          "unit": "V",
+          "scale": 600000,
+          "rmse": 0.3506685333177112,
+          "nrmse": 5.844475555295186e-07,
+          "max_abs_error": 0.8543038852512836,
+          "candidate_mean": -2317.235750675827,
+          "reference_mean": -2317.238190508302,
+          "candidate_rms": 427609.21646442433,
+          "reference_rms": 427609.216234026,
+          "limits": {
+            "max_nrmse": 5e-05,
+            "max_abs_error": 60.0
+          },
+          "passed": true
+        },
+        "v:mid": {
+          "reference": "v_middle",
+          "unit": "V",
+          "scale": 600000,
+          "rmse": 0.3407522088159233,
+          "nrmse": 5.679203480265388e-07,
+          "max_abs_error": 0.8641264643520117,
+          "candidate_mean": -2038.9196131032659,
+          "reference_mean": -2038.9221113600797,
+          "candidate_rms": 414609.7714276328,
+          "reference_rms": 414609.7571882326,
+          "limits": {
+            "max_nrmse": 5e-05,
+            "max_abs_error": 60.0
+          },
+          "passed": true
+        },
+        "v:recv": {
+          "reference": "v_receiving",
+          "unit": "V",
+          "scale": 600000,
+          "rmse": 0.32783389786073136,
+          "nrmse": 5.463898297678856e-07,
+          "max_abs_error": 0.8389558991184458,
+          "candidate_mean": -1745.283950190329,
+          "reference_mean": -1745.2863147084354,
+          "candidate_rms": 397891.7457383375,
+          "reference_rms": 397891.7265409815,
+          "limits": {
+            "max_nrmse": 5e-05,
+            "max_abs_error": 60.0
+          },
+          "passed": true
+        },
+        "v:load": {
+          "reference": "v_load",
+          "unit": "V",
+          "scale": 200000,
+          "rmse": 0.1184604909264253,
+          "nrmse": 5.923024546321265e-07,
+          "max_abs_error": 0.30155509017640725,
+          "candidate_mean": -14.042947513335093,
+          "reference_mean": -14.04268500415128,
+          "candidate_rms": 138908.48330851324,
+          "reference_rms": 138908.4693474428,
+          "limits": {
+            "max_nrmse": 5e-05,
+            "max_abs_error": 20.0
+          },
+          "passed": true
+        },
+        "i:Lz1": {
+          "reference": "i_z1",
+          "unit": "A",
+          "scale": 2000,
+          "rmse": 0.0021378302332843648,
+          "nrmse": 1.0689151166421823e-06,
+          "max_abs_error": 0.006234513885829074,
+          "candidate_mean": 29.370562480648033,
+          "reference_mean": 29.371529781171603,
+          "candidate_rms": 1401.5280882195539,
+          "reference_rms": 1401.5294579301126,
+          "limits": {
+            "max_nrmse": 5e-05,
+            "max_abs_error": 0.2
+          },
+          "passed": true
+        },
+        "i:Lzs": {
+          "reference": "i_zs",
+          "unit": "A",
+          "scale": 2000,
+          "rmse": 0.0020394355117523692,
+          "nrmse": 1.0197177558761845e-06,
+          "max_abs_error": 0.0059078671060888155,
+          "candidate_mean": 35.42110190236177,
+          "reference_mean": 35.42206298014088,
+          "candidate_rms": 1229.0191629053604,
+          "reference_rms": 1229.020514709815,
+          "limits": {
+            "max_nrmse": 5e-05,
+            "max_abs_error": 0.2
+          },
+          "passed": true
+        },
+        "i:Lcomp_s": {
+          "reference": "i_comp_sending",
+          "unit": "A",
+          "scale": 400,
+          "rmse": 0.0005553084926816094,
+          "nrmse": 1.3882712317040236e-06,
+          "max_abs_error": 0.0013769204346658626,
+          "candidate_mean": 7.284698962101867,
+          "reference_mean": 7.285112825291204,
+          "candidate_rms": 256.43222012810037,
+          "reference_rms": 256.4325360934742,
+          "limits": {
+            "max_nrmse": 5e-05,
+            "max_abs_error": 0.04
+          },
+          "passed": true
+        },
+        "i:Lcomp_r": {
+          "reference": "i_comp_receiving",
+          "unit": "A",
+          "scale": 400,
+          "rmse": 0.0005079397938742421,
+          "nrmse": 1.2698494846856052e-06,
+          "max_abs_error": 0.0012615894041232423,
+          "candidate_mean": 6.82151614761451,
+          "reference_mean": 6.821897695326154,
+          "candidate_rms": 238.49083513496237,
+          "reference_rms": 238.49111753632891,
+          "limits": {
+            "max_nrmse": 5e-05,
+            "max_abs_error": 0.04
+          },
+          "passed": true
+        },
+        "i:Lline1": {
+          "reference": "i_line1",
+          "unit": "A",
+          "scale": 1000,
+          "rmse": 0.001520631671364728,
+          "nrmse": 1.520631671364728e-06,
+          "max_abs_error": 0.00395720188987525,
+          "candidate_mean": 12.910168421179833,
+          "reference_mean": 12.9109741348163,
+          "candidate_rms": 609.0735528482725,
+          "reference_rms": 609.0746158305764,
+          "limits": {
+            "max_nrmse": 5e-05,
+            "max_abs_error": 0.1
+          },
+          "passed": true
+        },
+        "i:Lline2": {
+          "reference": "i_line2",
+          "unit": "A",
+          "scale": 1200,
+          "rmse": 0.0014218177314918872,
+          "nrmse": 1.1848481095765726e-06,
+          "max_abs_error": 0.003911383224931342,
+          "candidate_mean": 17.314855152455593,
+          "reference_mean": 17.31565549361804,
+          "candidate_rms": 743.5366900629775,
+          "reference_rms": 743.537640703638,
+          "limits": {
+            "max_nrmse": 5e-05,
+            "max_abs_error": 0.12000000000000001
+          },
+          "passed": true
+        },
+        "i:Lm": {
+          "reference": "i_magnetizing",
+          "unit": "A",
+          "scale": 2,
+          "rmse": 2.104970600156628e-06,
+          "nrmse": 1.052485300078314e-06,
+          "max_abs_error": 5.049711024218695e-06,
+          "candidate_mean": 0.027215388753729253,
+          "reference_mean": 0.027217042291782692,
+          "candidate_rms": 0.940289359787048,
+          "reference_rms": 0.9402904474425368,
+          "limits": {
+            "max_nrmse": 5e-05,
+            "max_abs_error": 0.0002
+          },
+          "passed": true
+        },
+        "i:Lp": {
+          "reference": "i_primary",
+          "unit": "A",
+          "scale": 1000,
+          "rmse": 0.0009181418905426686,
+          "nrmse": 9.181418905426686e-07,
+          "max_abs_error": 0.002677241650758333,
+          "candidate_mean": 12.613272631742547,
+          "reference_mean": 12.613688845695222,
+          "candidate_rms": 601.994898329786,
+          "reference_rms": 601.995486058175,
+          "limits": {
+            "max_nrmse": 5e-05,
+            "max_abs_error": 0.1
+          },
+          "passed": true
+        },
+        "i:Rs": {
+          "reference": "i_source",
+          "unit": "A",
+          "scale": 1200,
+          "rmse": 0.0020970695655439693,
+          "nrmse": 1.7475579712866411e-06,
+          "max_abs_error": 0.005249924649433524,
+          "candidate_mean": 17.930698725610938,
+          "reference_mean": 17.931921012518643,
+          "candidate_rms": 765.3977420997044,
+          "reference_rms": 765.3992370474728,
+          "limits": {
+            "max_nrmse": 5e-05,
+            "max_abs_error": 0.12000000000000001
+          },
+          "passed": true
+        },
+        "i:Iload": {
+          "reference": "i_load",
+          "unit": "A",
+          "scale": 1500,
+          "rmse": 0.0007282718486264686,
+          "nrmse": 4.85514565750979e-07,
+          "max_abs_error": 0.002022208826701899,
+          "candidate_mean": -6.0505394217142765,
+          "reference_mean": -6.050533198969319,
+          "candidate_rms": 864.7876021889151,
+          "reference_rms": 864.7874537835323,
+          "limits": {
+            "max_nrmse": 5e-05,
+            "max_abs_error": 0.15
+          },
+          "passed": true
+        }
+      }
+    }
+  ],
+  "artifacts": {
+    "directory": "local_reference/source_line_transformer/comparison_results/20261106T054356596388Z",
+    "plot": "comparison.png",
+    "candidate_data": [
+      "pycy.csv",
+      "pycy.json",
+      "pycy.npz"
+    ]
+  },
+  "comparison_plot_sha256": "f5643f570df3a22ccb0c7aa367102d4d80b73e4e10c02758c16192f94179477f",
+  "input_snapshot_sha256": {
+    "25_source_line_transformer_network.py": "4c414237cedff546685a84d5b171da6879eba66963f48a0675b25573c9864c26",
+    "compare.py": "1678cf293e8a3f7c83276c3352e690604a5cd9cb30dcf95451cc92268e1a590d",
+    "comparison.py": "8545b5e8fba8abdc2f20cdc2006342bb428765110c5bf9052103dfb0e349affe",
+    "export_reference.m": "44683fa2c96ec1cbba8c028a828aaf41faf3223c8005f9196b3fd738282b12c8",
+    "manifest.json": "e6703a6ba3e186e2a128d4442b9df9bd2e94ad24b0cbd2d202af858e92214800",
+    "parameters.json": "fc4810294a19089283c3d35732febcaf5a5769ec83aae7d216f9d2b5899e8d9b",
+    "power_gui.slx": "a46b7c34658c65ce58c6e51a6d167244c06f4e839063c00bd1ff75c78bdc5a08",
+    "provenance.json": "d96f571c89494109d805c8ab09e2b3c01d8043479f1de73bbc08e5764899eccd",
+    "reference.csv": "735206b2de6af08f162d35ac2a40f7986d266269ffd6d1e6d0f18dafc9af22f3",
+    "runner.py": "c30832285ddb3f8e0706368c1f017b95af0dcca09599e6a084eed3b8669e50b5"
+  }
+}
