@@ -46,9 +46,11 @@
   "load_model": "grounded wye fixed resistors; rated power converts impedance, not constant power",
   "load_resistance_ohm_per_phase": 169000.0,
   "initialization": "Native default starts three source currents at zero; source emf b/c nonzero supported by inductor voltages. No event or steady-state preloading.",
-  "time_step_second": 1e-06,
+  "time_step_second": 5e-07,
   "stop_second": 0.05,
   "integration_method": "trapezoidal",
   "linear_solver_mode": "reuse",
-  "cold_start_time_constant_second": 3.969663325435047e-06
+  "cold_start_time_constant_second": 3.969663325435047e-06,
+  "initial_protocol_time_step_second": 1e-06,
+  "candidate_step_refinement": "candidate_step_addendum.md: keep physical network and all waveform limits; reduce step after preserved initial1us interpolation FAIL, using independent TR continuous interpolation audit; changes committed before revised candidate."
 }

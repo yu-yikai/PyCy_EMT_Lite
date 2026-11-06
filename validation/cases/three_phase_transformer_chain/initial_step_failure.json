@@ -1,0 +1,123 @@
+{
+  "case_id": "three_phase_transformer_chain",
+  "status": "FAIL retained; initial candidate step1us",
+  "run_id": "20261106T040920668725Z",
+  "report_sha256": "51b11057576d72cb1bcaa665c5f9736b1537e55931de5279a84f8100de3dc2d6",
+  "report_local_path": "local_reference/three_phase_transformer_chain/comparison_results/20261106T040920668725Z/report.json",
+  "example_sha256": "df92ba967849dbcaa2825dc781b99edc7f11d28aac470a0b527c3b4ff8521e49",
+  "manifest_sha256_raw": "610cd3610bddd6001dbb22e712a67fa4a969f01456887a201da28a0bd656c37a",
+  "parameters_sha256_raw": "1c953a4f13ce05bd9dc4f077675391e8906c246b1f74576a168d62ddfd25da25",
+  "candidate_step_seconds": 1e-06,
+  "candidate_samples": 50001,
+  "reference_samples": 58899,
+  "windows": [
+    {
+      "window_seconds": [
+        0,
+        4e-05
+      ],
+      "passed": false,
+      "signals_checked": 19,
+      "failed_signals": {
+        "v:lv:b": {
+          "max_abs_error": 73.15610168054923,
+          "nrmse": 0.0008510743803357741,
+          "limits": {
+            "max_nrmse": 0.002,
+            "max_abs_error": 50
+          }
+        },
+        "v:load:b": {
+          "max_abs_error": 73.15607242142096,
+          "nrmse": 0.0008510740399210752,
+          "limits": {
+            "max_nrmse": 0.002,
+            "max_abs_error": 50
+          }
+        },
+        "i:Ls_b": {
+          "max_abs_error": 0.0004328761681741079,
+          "nrmse": 0.0006546723384008601,
+          "limits": {
+            "max_nrmse": 0.002,
+            "max_abs_error": 0.0003
+          }
+        },
+        "i:Tup:secondary:b": {
+          "max_abs_error": 2.825195859889305e-05,
+          "nrmse": 0.00042727636989679785,
+          "limits": {
+            "max_nrmse": 0.002,
+            "max_abs_error": 2e-05
+          }
+        },
+        "i:Rload_b": {
+          "max_abs_error": 0.0004328761681740975,
+          "nrmse": 0.0006546723384008293,
+          "limits": {
+            "max_nrmse": 0.002,
+            "max_abs_error": 0.0003
+          }
+        },
+        "v:lv:c": {
+          "max_abs_error": 73.28262771943514,
+          "nrmse": 0.0008525463538821374,
+          "limits": {
+            "max_nrmse": 0.002,
+            "max_abs_error": 50
+          }
+        },
+        "v:hv:c": {
+          "max_abs_error": 747.910664377072,
+          "nrmse": 0.000983585692780653,
+          "limits": {
+            "max_nrmse": 0.002,
+            "max_abs_error": 500
+          }
+        },
+        "v:load:c": {
+          "max_abs_error": 73.28259840309283,
+          "nrmse": 0.0008525460128488243,
+          "limits": {
+            "max_nrmse": 0.002,
+            "max_abs_error": 50
+          }
+        },
+        "i:Ls_c": {
+          "max_abs_error": 0.00043362484262183826,
+          "nrmse": 0.0006558046252681549,
+          "limits": {
+            "max_nrmse": 0.002,
+            "max_abs_error": 0.0003
+          }
+        },
+        "i:Tup:secondary:c": {
+          "max_abs_error": 2.8300821347798785e-05,
+          "nrmse": 0.0004280153658105328,
+          "limits": {
+            "max_nrmse": 0.002,
+            "max_abs_error": 2e-05
+          }
+        },
+        "i:Rload_c": {
+          "max_abs_error": 0.00043362484262183046,
+          "nrmse": 0.0006558046252683344,
+          "limits": {
+            "max_nrmse": 0.002,
+            "max_abs_error": 0.0003
+          }
+        }
+      }
+    },
+    {
+      "window_seconds": [
+        4e-05,
+        0.05
+      ],
+      "passed": true,
+      "signals_checked": 19,
+      "failed_signals": {}
+    }
+  ],
+  "diagnosis": "Sample-point TR bound omitted candidate piecewise-linear interpolation error in the 4us startup. Independent closed-form TR interpolation audit predicted the observed errors without reading candidate or vendor outputs. No physics, time shift, window or tolerance is changed to remove the failure."
+}
