@@ -1,6 +1,6 @@
 # 恢复与下一步
 
-日期2026-11-06（Asia/Shanghai）。恢复先读tasks/progress/decisions/validation_status，核分支、HEAD、工作区、git log和真实远端。记录中的checkpoint `02044768579ba083d1fb526786922e770cc2e7c6` 是记录时已知提交，远端及后续文档须另核，须与后续历史交叉核对；不覆盖用户工作，不强推，不操作main。
+日期2026-11-06（Asia/Shanghai）。恢复先读tasks/progress/decisions/validation_status，核分支、HEAD、工作区、git log和真实远端。记录中的checkpoint `1423c7d6dfbca10547cf856dc20faa5dadf935dc` 是记录时已知提交，远端及后续文档须另核，须与后续历史交叉核对；不覆盖用户工作，不强推，不操作main。
 
 ## 当前事实
 
@@ -17,11 +17,13 @@
 
 90b2fcd真实双OS全步骤成功只覆盖22；23/24跨OS尚未验证。
 已确认e51c1f1与后续旧run因GitHub账户账单锁而在runner启动前失败，不能改称代码断言失败。
-本批实现及状态形成正常里程碑推送，精确HEAD的CI须据真实观察另记，不借旧HEAD成功。
+本批已正常推送到1423c7d；精确run42162705728两个job均runner0/steps空，实际billing lock启动前失败。
+证据experiments/ci_1423c7d.json，远端test_count=null；不是本地测试或数值断言失败。
 
 ## 本轮下一步
 
-1. e51c1f1已正常push，精确run42154476032因账户billing lock启动前失败，真实注释与raw见experiments/ci_e51c1f1.json；两job没有运行任何步骤。F1局部blocked，等待外部账户解锁，不通过改代码、空提交或重复push解决。确认解锁后，在授权Actions界面对同run选择Re-run all jobs（或有相应授权工具时调用POST /repos/yu-yikai/PyCy_EMT_Lite/actions/runs/42154476032/rerun），再按精确head/attempt核对两系统全步骤。当前环境无gh，公开API只读取证据，不擅自操作账单或提取凭据。未来正常必要开发提交仍按里程碑push；账户受限期间其CI也须准确记录，不能借旧HEAD成功。
+1. F1局部blocked：最新1423c7d精确run42162705728已真实终态failure，两job因账户billing lock未启动任何步骤，原始7份响应/hash及注释见experiments/ci_1423c7d.json。无后台CI监控，不继续轮询相同终态，不通过代码/空提交/重复push解决。外部账户确认解锁后，优先对这个覆盖24的run在授权Actions界面选择Re-run all jobs（或有相应授权工具时POST /repos/yu-yikai/PyCy_EMT_Lite/actions/runs/42162705728/rerun），再按精确head/attempt核两系统全步骤。旧e51c1f1记录保留但只覆盖到23；当前环境无gh，不擅自操作账单或提取凭据。正常必要开发里程碑仍可push，CI状态须真实分开记录。
+
 2. B2已取得并真实运行原SPS同步Buck，先读experiments/synchronous_buck_reference_probe.md。现仅有输出/源电流/占空比，储能初始化、实际门极和体二极管电流未核实；日志override不能新增未标记内部信号。building-simulink-models要求model_edit而当前无此工具，未改信号属性或结构。取得工具后在独立副本补日志，核完物理/控制一致性才考虑冻结协议。原连续PI/外部限幅/Natural PWM也与现离散控制不同，维护成本较高；继续寻找更简单的受控双向开关原参考，禁止用自动换流框架填补。普通MATLAB上下文的prefdir/5201启动失败已由正常许可上下文加独立MATLAB_PREFDIR解决，准确命令见probe，不反复重跑成功的默认结果。
 3. 当前下一任务D0：先实读04路线图、tasks.D0及24 README，明确24没有线路。只读本机R2025a示例目录与官方版本化来源，寻找“源—线性变压器—实际线路段—固定负荷”完整可运行网络；先核拓扑、源/线参数、绕组/线量、初值、物理尺度与工具依赖。优先复用当前源/T/Pi或现有分段线，不为数量拼接23/24或改变官方物理后伪称原参考。找到原网后按真实运行/精化/独立推导/实现前协议流程；尚无reference时不写候选或计数。结构编辑须使用building-simulink-models的model_edit，当前无该工具，不绕过。A3仍缺同数学Bergeron商业参考，50T不能代替。A4b已完成，无需重复任何成功sim/全量测试；若要复核其报告用原运行inputs，协议LF规范与原字节hash分开。
 

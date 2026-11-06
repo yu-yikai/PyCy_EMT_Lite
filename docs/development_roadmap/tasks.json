@@ -3,7 +3,7 @@
   "updated_date": "2026-11-06",
   "timezone": "Asia/Shanghai",
   "branch": "codex/emt-examples-longterm",
-  "checkpoint_head": "02044768579ba083d1fb526786922e770cc2e7c6",
+  "checkpoint_head": "1423c7d6dfbca10547cf856dc20faa5dadf935dc",
   "current_task": "D0",
   "formal_new_examples_completed": 6,
   "status_values": [
@@ -476,19 +476,21 @@
       ],
       "new_capabilities": [],
       "references": [],
-      "validation": "最新本地1179 passed490.61s（含slow）、锁定/Ruff/mypy通过，覆盖24。90b2fcd双OS成功只覆盖22；23/24跨OS CI仍未验证，已确认的旧run因账户billing lock未获runner。新里程碑推送后仅据实际HEAD记录CI。",
+      "validation": "最新本地1179 passed490.61s（含slow）、锁定/Ruff/mypy覆盖24。精确1423c7d run42162705728真实completed/failure，但两个job runner_id=0、steps=[]，各billing lock注释，未执行测试，远端test_count=null；23/24跨OS仍未验证，90b2fcd只覆盖22。",
       "acceptance": "本批测试与真实CI记录、教学导航、里程碑推送和恢复指令",
       "status": "blocked",
       "files": [
         ".github/workflows/ci.yml",
         "docs/development_roadmap/experiments/ci_90b2fcd.json",
-        "docs/development_roadmap/experiments/ci_e51c1f1.json"
+        "docs/development_roadmap/experiments/ci_e51c1f1.json",
+        "docs/development_roadmap/experiments/ci_1423c7d.json"
       ],
       "commits": [
         "90b2fcd",
         "91dbad6bb77af24d1a548a6d0943930c4bcce40f",
         "e51c1f1",
-        "d79e849"
+        "d79e849",
+        "1423c7d6dfbca10547cf856dc20faa5dadf935dc"
       ],
       "blockers": [
         "GitHub check-run两项注释：The job was not started because your account is locked due to a billing issue. 账户解除外部账单锁后才能补跑；不通过重复push或改代码绕过。"

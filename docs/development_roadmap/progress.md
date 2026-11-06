@@ -64,3 +64,5 @@ A4b已取得新的独立真实证据：ee_delta_transmission原完整双三相�
 2026-11-06 A4b正式交付0204476：最终1179 passed490.61s（XML490.603，含slow）、Ruff/mypy/锁定同步通过。9专项76.926s、独立Agg100001点，真实run20261106T041603177270Z的38项双限值全过；报告rawSHAe9f69185…/GitLFf473786f…，初次FAIL不覆盖。独立69项hash复核、完整native38项自细化、candidate38项重算、KCL/功率/能量/RMS/phase审计均通过，图已实际查看。核心源码相对main无变化。
 
 阶段复审：A4收尾范围固定为23外置三L T等效及24平衡Y–Δ–Y链；不为其他接线换参复制例。原用户源—变压器—线路—负荷目标尚未交付，作为独立D0参考先行任务保留，不因24的官方名称含Transmission而称已完成。D0不依赖未解的PWM控制，复用现有线性元件；无真实兼容参考则保持计划，不先造候选。正式新增当前6；本批已提交，接下来正常里程碑推送并核精确HEAD。
+
+2026-11-06本批已正常push到1423c7d6dfbca10547cf856dc20faa5dadf935dc。一次有界公开API观察确认最新CI run42162705728终态failure：Windows127711904930/Ubuntu127711905228均runner_id=0、steps=[]，各自注释明确账户billing lock，未执行任何测试，远端test_count=null。证据experiments/ci_1423c7d.json，7份raw响应/hash全核；网络观察及所有本轮监控已终态。23/24跨OS仍未验证，F1局部受阻不改变本地1179/商业数值PASS。继续D0参考先行，不通过代码或空提交绕账单锁。
