@@ -1,6 +1,6 @@
 # 恢复与下一步
 
-日期2026-11-06（Asia/Shanghai）。恢复先读tasks/progress/decisions/validation_status，核分支、HEAD、工作区、git log和真实远端。记录中的checkpoint `91dbad6bb77af24d1a548a6d0943930c4bcce40f` 是本次已知实现提交，须与后续历史交叉核对；不覆盖用户工作，不强推，不操作main。
+日期2026-11-06（Asia/Shanghai）。恢复先读tasks/progress/decisions/validation_status，核分支、HEAD、工作区、git log和真实远端。记录中的checkpoint `e51c1f1881edcc4f4d53c5f9b166814c9dd8e3f8` 是本次已知推送提交，须与后续历史交叉核对；不覆盖用户工作，不强推，不操作main。
 
 ## 当前事实
 
@@ -12,8 +12,8 @@
 
 ## 本轮下一步
 
-1. 如最新提交尚未push，先核远端确为祖先，然后正常push开发分支。再读取精确remote HEAD的GitHub run/jobs，等待两系统全步骤结束，固化summary；不从API元数据猜远端测试数量，不借旧HEAD成功。失败时按真实日志定位修复，原始证据保留。
-2. B2继续参考先行调查`simscapeelectricalsps/SynchronousBuckConverterExample`。先读experiments/next_reference_candidates.md与新的synchronous_buck_reference_probe.md（若已存在），检查本轮真实MATLAB启动/获取状态；没有实际SLX/波形不能写候选或宣称兼容。当前运行身份变化可能导致prefdir或许可启动失败，应使用仓库内独立偏好目录并保留实际退出结果，不绕过许可。默认模型若依赖自动二极管/死区不能冒充受控双向Switch；可继续其他独立参考。
+1. e51c1f1已正常push，精确run42154476032因账户billing lock启动前失败，真实注释与raw见experiments/ci_e51c1f1.json；两job没有运行任何步骤。F1局部blocked，等待外部账户解锁，不通过改代码、空提交或重复push解决。确认解锁后，在授权Actions界面对同run选择Re-run all jobs（或有相应授权工具时调用POST /repos/yu-yikai/PyCy_EMT_Lite/actions/runs/42154476032/rerun），再按精确head/attempt核对两系统全步骤。当前环境无gh，公开API只读取证据，不擅自操作账单或提取凭据。未来正常必要开发提交仍按里程碑push；账户受限期间其CI也须准确记录，不能借旧HEAD成功。
+2. B2已取得并真实运行原SPS同步Buck，先读experiments/synchronous_buck_reference_probe.md。现仅有输出/源电流/占空比，储能初始化、实际门极和体二极管电流未核实；日志override不能新增未标记内部信号。building-simulink-models要求model_edit而当前无此工具，未改信号属性或结构。取得工具后在独立副本补日志，核完物理/控制一致性才考虑冻结协议。原连续PI/外部限幅/Natural PWM也与现离散控制不同，维护成本较高；继续寻找更简单的受控双向开关原参考，禁止用自动换流框架填补。普通MATLAB上下文的prefdir/5201启动失败已由正常许可上下文加独立MATLAB_PREFDIR解决，准确命令见probe，不反复重跑成功的默认结果。
 3. A4a已验收，不为重规划重复修改它；A4其余三相/组合与A3 Bergeron须先取得同数学方程的商业参考。50T通过不能代替Bergeron。
 4. B1仍失败：146a279固定NRMSE2%限值，实际2.66%–2.72%，features通过。研究适配须先明确新的控制/器件协议，隔离时序、压降与积分差别，不拟合时移/幅值、不为现有失败放宽标准。C1依赖的控制链保持后置。
 

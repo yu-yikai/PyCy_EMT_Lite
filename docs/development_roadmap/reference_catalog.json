@@ -1577,6 +1577,76 @@
       "license_notes": "Original MathWorks model/script and generated data remain local; no redistribution permission asserted.",
       "export_script": "validation/cases/transformer_t_equivalent/export_reference.m",
       "export_script_sha256": "b88442743b686a7b9a92a3dc8dfa1b214a1465ce5cea4ecbcadc3fe2c3cfaa23"
+    },
+    {
+      "id": "mw-synchronous-buck-r2025a",
+      "short_code": "MW-BUCK",
+      "name": "SPS Synchronous Buck Converter",
+      "example_id": "simscapeelectricalsps/SynchronousBuckConverterExample",
+      "source_url": "https://www.mathworks.com/help/releases/R2025a/exampledata/simscapeelectricalsps/main/SynchronousBuckConverter.slx",
+      "files": [
+        "SynchronousBuckConverter.slx"
+      ],
+      "file_formats": [
+        ".slx"
+      ],
+      "model_version": "R2025a Update 1",
+      "status": "runnable",
+      "software_requirements": [
+        "MATLAB R2025a Update 1",
+        "Simulink",
+        "Simscape Electrical / Specialized Power Systems"
+      ],
+      "dependencies": [
+        "spsMosfetLib.slx",
+        "spsPWMGenerator2LevelLib.slx",
+        "powergui"
+      ],
+      "download_available": true,
+      "downloaded": true,
+      "content_inspected": true,
+      "opened_in_native_software": true,
+      "simulation_succeeded": true,
+      "reference_numeric_data_obtained": true,
+      "local_path": "local_reference/synchronous_buck",
+      "allows_local_save": "Installed licensed MathWorks example downloaded from official versioned exampledata for local study",
+      "allows_redistribution": "not_asserted",
+      "mathematical_compatibility": "Not established: MOSFET body-diode currents and actual gates not exported; continuous PI with external clamp and 1us lag differs from existing discrete PI semantics. No PyCy candidate or acceptance defined.",
+      "blockers": [
+        "DataLoggingOverride cannot mark new internal signals; model_edit currently unavailable. Actual initial L/C states not yet exported. Body-diode inactivity not established; no automatic-commutation framework permitted."
+      ],
+      "sha256": {
+        "simulink/SynchronousBuckConverter.slx": "ea8344f62e2a691456363f0391389cd1675bfe246bd71dc8f15a3b838ca6ab42",
+        "run_native_probe.m": "41fda26d2d8b248b85e63802eaa5b4694480d0a0a1971ef36371677b786bad21",
+        "default_probe/provenance.json": "2fce75843a7c430da62eefc942a94f4e8387f769836c50482dfd8ccfd0757f93",
+        "default_probe/simulink_output.mat": "9993f968df74a64c4fb55c6a0944e8ec0a7697e73ebe5e4b39b40f493c444e8d",
+        "default_probe/output_voltage_native.csv": "548a4fe47f3e6295e924481e828c2571be72172c20f5d5a71143143faee03947",
+        "evidence_inventory.json": "d13259268f5593eeae15b9973149e62fd50ad95256dc0835d3cb7b70d2b5e17b"
+      },
+      "probe_record": "docs/development_roadmap/experiments/synchronous_buck_reference_probe.md",
+      "native_probe": {
+        "samples": 3634,
+        "time_s": [
+          0,
+          0.01
+        ],
+        "solver": {
+          "Type": "Variable-Step",
+          "Solver": "ode23tb",
+          "MaxStepSize": 1e-05
+        },
+        "elapsed_seconds": 4.0101072,
+        "physical_scope": "Original power/control topology unchanged; existing Scope logging only",
+        "vout_initial_v": 0.00112491563132765,
+        "vout_final_v": 15.0315106628464,
+        "initial_states": "SetiL0/Setx0 off; zero saved mask fields do not prove zero actual storage initial states",
+        "evidence_scope": "Runnability and three existing Scope outputs only; no reference refinement, complete gate/diode current export or PyCy validation"
+      },
+      "formal_pycy_validation": {
+        "status": "not_started",
+        "implementation_commit": null,
+        "note": "Prefer a simpler compatible reference until device/control semantics and initialization are verified."
+      }
     }
   ],
   "scope_notes": [
