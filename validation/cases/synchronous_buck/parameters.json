@@ -1,0 +1,57 @@
+{
+  "reference_id": "mw-synchronous-buck-r2025a",
+  "reference_model_sha256": "ea8344f62e2a691456363f0391389cd1675bfe246bd71dc8f15a3b838ca6ab42",
+  "physical_parameters": {
+    "dc_voltage_v": 30.0,
+    "inductance_h": 0.001,
+    "inductor_parallel_resistance_ohm": 10000.0,
+    "capacitance_f": 0.000022,
+    "load_resistance_ohm": 3.75,
+    "switch_on_resistance_ohm": 0.1,
+    "each_snubber_resistance_ohm": 100000.0,
+    "diode_forward_voltage_v": 0.8,
+    "diode_on_resistance_ohm": 0.01,
+    "pulse_current_a": 2.0,
+    "pulse_period_s": 0.005,
+    "pulse_delay_s": 0.0025,
+    "pulse_width_s": 0.0025
+  },
+  "controller": {
+    "voltage_reference_v": 15.0,
+    "measurement_lag_s": 0.000001,
+    "proportional_gain": 0.5,
+    "integral_gain": 200.0,
+    "duty_limits": [0.01, 0.95],
+    "anti_windup": false,
+    "switching_frequency_hz": 50000.0,
+    "carrier_time_shift_s": 0.000005,
+    "comparison": "2*duty-1 >= triangular_carrier(t+5us,50000); lower is NOT upper for t>0"
+  },
+  "initialization": {
+    "method": "Both MOSFET channels and diodes blocked at t=0; solve DC snubber/load division. Rdown=1/(1/100000+1/3.75); UC0=30*Rdown/(100000+Rdown); iL0=UC0/3.75. L is DC short, so its 10k parallel branch has zero initial current.",
+    "native_iL_a_audit_only": 0.000299977501687373,
+    "native_UC_v_audit_only": 0.00112491563132765,
+    "filtered_error_v": 0.0,
+    "integral_contribution": 0.0,
+    "duty": 0.01,
+    "both_channels_off_at_t0": true,
+    "negative_time_storage_history_used": false
+  },
+  "topology": "Vdc(dc,0); upper channel(dc,mid) and lower channel(mid,0), each in parallel with 100k snubber; L(mid,out) in parallel with 10k; C(out,0) in parallel with 3.75ohm and pulsed current sink(out,0). No source/load or parasitic branch removed.",
+  "directions": "iL: mid to out; UC: out minus ground; Isrc: source dc terminal into network = -i:Vdc; load sink: out to ground; upper channel dc to mid and lower mid to ground",
+  "time_step_second": 0.00000005,
+  "stop_second": 0.01,
+  "integration_method": "trapezoidal",
+  "linear_solver_mode": "reuse",
+  "control_update": "At t0 observe initial conditions only. At each t_n>0, solve electrical network using held duty_(n-1) and carrier(t_n), then LP backward Euler using measured UC_n and actual dt, PI new integral with no internal limits, then external Limiter. Updated duty_n acts at subsequent stamps. No extra carrier hold.",
+  "pulse_events": [[0.0025, 2.0], [0.005, 0.0], [0.0075, 2.0], [0.01, 0.0]],
+  "pulse_event_semantics": "Explicit local SimulationEvent changes scalar current only after left integration; fixed L/C states determine right algebraic solution. Do not use a time-function jump as an unmarked source or a sloping interpolation of the pulse.",
+  "diode_inactivity_domain": {"abs_iL_a": 7.99, "abs_UC_v": 40.0},
+  "reference_solver": {
+    "solver": "ode23tb",
+    "auto_scale_abs_tol": "off",
+    "baseline": {"max_step_s": 0.0000001, "relative_tolerance": 0.0000001, "absolute_tolerance": 0.000000000001},
+    "refined": {"max_step_s": 0.00000005, "relative_tolerance": 0.00000005, "absolute_tolerance": 0.0000000000005},
+    "note": "Global positive scalar AbsTol; no physical/variant/logging-marker edits. SaveTime/SaveState Dataset and existing Scope logging only, with existing Scope point limits off and decimation 1 through SimulationInput; preserve native discrete-state axis separately. Each full run saved before extraction, no synthetic fallback."
+  }
+}

@@ -3,7 +3,7 @@
   "updated_date": "2026-11-06",
   "timezone": "Asia/Shanghai",
   "branch": "codex/emt-examples-longterm",
-  "checkpoint_head": "f36c06362244efb43285e2725bc6b6db975c86ec",
+  "checkpoint_head": "4385e2ea6941e693ac784c48a78e7074c803f4ed",
   "current_task": "B2",
   "formal_new_examples_completed": 7,
   "status_values": [
@@ -178,7 +178,9 @@
       "files": [
         "docs/development_roadmap/experiments/bergeron_reference_followup.md"
       ],
-      "commits": [],
+      "commits": [
+        "4385e2ea6941e693ac784c48a78e7074c803f4ed"
+      ],
       "blockers": [
         "尚未取得有限R同数学Bergeron的真实商业波形；工具链实际选择/build/run未证，需先做有界编译环境检查。"
       ]
@@ -401,13 +403,17 @@
       "references": [
         "mw-synchronous-buck-r2025a"
       ],
-      "validation": "原SPS同步Buck新state-save实跑10ms/3634点，旧四Scope逐字不变；非零L/C初值实测。3633点双mode唯一，体二极管不活动有条件区间证书；生效PI/selector/载波只读确认，预定状态映射全点/3192未限幅点残差2.35e-15。仍缺原生精化和离散控制/事件误差协议，无候选或商业比较。",
+      "validation": "真实初值/互补/PI坐标已核；本轮先于26及tests固定完整拓扑/50ns更新/显式负荷事件、两完整窗及全部500周期限值、100/50ns原生精化。独立先验发现旧源流PWL均值错误，改按实际状态+duty/解析载波/KCL分段物理重建并保留条件根预算；不是直接门极/源流日志。正式新参考及候选均未运行，不计完成。",
       "acceptance": "每项先有参考与固定判据再实施，禁止冒充自动二极管",
       "status": "in_progress",
       "files": [
         "docs/development_roadmap/experiments/next_reference_candidates.md",
         "docs/development_roadmap/experiments/synchronous_buck_reference_probe.md",
-        "docs/development_roadmap/experiments/synchronous_buck_state_followup.md"
+        "docs/development_roadmap/experiments/synchronous_buck_state_followup.md",
+        "validation/cases/synchronous_buck/manifest.json",
+        "validation/cases/synchronous_buck/parameters.json",
+        "validation/cases/synchronous_buck/acceptance_plan.md",
+        "validation/cases/synchronous_buck/export_reference.m"
       ],
       "commits": [
         "d79e849",

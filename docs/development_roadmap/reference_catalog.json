@@ -1665,6 +1665,18 @@
           "physics_audit/native_state_certificate.json": "959c48cf3a219a19a65d546ee6db52a250783635948da9a9c2b2f23cdfdd71ad",
           "physics_audit/control_coordinate_and_carrier.json": "c0078eebdd70675df81d70097d23ea616fbe278c73779df49fd0f0b927d89a8b"
         }
+      },
+      "acceptance_protocol": {
+        "directory": "validation/cases/synchronous_buck",
+        "defined_before_candidate_exists": true,
+        "lf_sha256": {
+          "manifest.json": "e75b8832cf76ffb4799b5757d38a3163da49126ddfd56d9303d23abae7076719",
+          "parameters.json": "a65d62ffa5fb01674a3932c3f89eac8485c7faa2d9b18f879f25808db570aa51",
+          "acceptance_plan.md": "068094050105f56b603e33ec077666af0c8bcd7002bdff25a0afa65befe7fd6d",
+          "export_reference.m": "2cc6cbc26e5e2e33883386f2840d5a7bf5087c4599778a9bb4b71cec9f80eda0"
+        },
+        "native_refinement": "pending",
+        "source_means": "Derived from measured native states/duty and resolved carrier/topology, never raw source PWL ramps; all500 cycles and conditional root budgets audited."
       }
     },
     {

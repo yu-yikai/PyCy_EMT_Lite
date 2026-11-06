@@ -1,7 +1,7 @@
 # 恢复与下一步
 
 日期2026-11-06（Asia/Shanghai）。恢复先读tasks/progress/decisions/validation_status，核分支、HEAD、工作区、git log和真实远端。
-checkpoint `f36c06362244efb43285e2725bc6b6db975c86ec` 是记录时最近已知提交，须与实际后续历史交叉核对；不覆盖用户工作、不强推、不操作main。
+checkpoint `4385e2ea6941e693ac784c48a78e7074c803f4ed` 是记录时最近已知提交，须与实际后续历史交叉核对；不覆盖用户工作、不强推、不操作main。
 
 ## 当前事实
 
@@ -24,8 +24,8 @@ candidate compare20261106T054356596388Z，TR10µs/5001点、28项PASS；maxV.864
    证据experiments/ci_9e2513d.json及7份raw/hash已全核；不再轮询该终态。外部账户真实解锁后，优先对这个覆盖25的run选择Re-run all jobs，再核精确head/attempt的Windows/Ubuntu全步骤。
    不改代码制造空提交、不操作账户账单。90b2fcd成功仅覆盖22；本地/商业结果不代替23/24/25跨OS验证。
 2. B2先读experiments/synchronous_buck_state_followup.md。新state-save运行与缓存提取已完成，原四Scope逐字不变；L/C非零初值、互补selector和固定PI坐标已核，原生状态误差/控制离散化仍待验证。
-   在26候选不存在时先固定完整参数/初值/方向、控制调用顺序、PWM与负荷事件、原生精化预算、比较窗/限值；再运行真实精化及内部步长分析。无内部限幅PI配外部Limiter，避免增加抗饱和；LP/PI动态误差不能由代数坐标残差替代。
-   根附近全点/不同浮点布尔结果保留，不用guard删点。保持现有Switch/控制器，禁止自动二极管/非线性扩展；教学入口只解释电路与运行。
+   实现前协议和exporter已写在validation/cases/synchronous_buck/，需核对应先行Git提交；26及tests仍不存在。下一步按冻结100/50ns配置顺序完成两次真实原生10ms运行，保留各自完整raw MAT/Scope/state后再提取/审计；不要重复已完成原始探针。无内部限幅PI配外部Limiter，避免增加抗饱和；LP/PI动态误差不能由代数坐标残差替代。
+   旧Isrc稀疏跳变PWL周期均值可错0.7136A，不能直接积分。按实际iL/UC/duty与解析carrier求全部根，再逐模式KCL精确积分；标为派生源流，原测量和根侧歧义全留。每个新run重核条件根/域预算及500周期真实自细化。根附近全点/不同浮点布尔结果保留，不用guard删点。保持现有Switch/控制器，禁止自动二极管/非线性扩展；教学入口只解释电路与运行。
 3. A3先读experiments/bergeron_reference_followup.md：127个安装工程/53线路定义已查，有限R两半线+三R数学等价经独立解析审查，不是商业结果。
    实际PSCAD5.0.0启动/许可true，但整包settings RPC挂起、原生自行退出，自有Python已安全终止。先有界读gfortran版本与公共API单项编译设置，避免重复整个settings；确认实际选择后才做隔离官方教程build/run烟雾验证。缺ATS ProductList导致发现列表为空不代表编译器不存在，不改ATS/私有映射/注册表。
    参考先冻结有限正R/关闭额外damping/双端标量、实际参数频率及LongLine结果、tau/(2dt)整数、零历史、方向/事件和阈值；无真实有限R波形不实施候选、不以lossless替代要求。simpleac的耦合三相线路只可检查环境。

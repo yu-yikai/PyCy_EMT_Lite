@@ -1,0 +1,34 @@
+{
+  "case_id": "synchronous_buck",
+  "reference_id": "mw-synchronous-buck-r2025a",
+  "example": "examples/26_synchronous_buck.py",
+  "acceptance_defined": "2026-11-06 before candidate26 or its tests exist or run",
+  "reference_source": "https://www.mathworks.com/help/releases/R2025a/exampledata/simscapeelectricalsps/main/SynchronousBuckConverter.slx",
+  "reference_model": "SynchronousBuckConverter.slx",
+  "reference_platform": "MATLAB R2025a Update 1 / Simulink / Simscape Electrical Specialized Power Systems",
+  "reference_state_at_definition": "runnable",
+  "windows_seconds": [[0.0, 0.0025], [0.0025, 0.01]],
+  "time_shift_seconds": 0,
+  "signals": [
+    {"candidate": "v:out", "reference": "vout", "unit": "V", "scale": 15.0, "max_nrmse": 0.005, "max_abs_error": 0.3},
+    {"candidate": "i:L", "reference": "iL", "unit": "A", "scale": 8.0, "max_nrmse": 0.01, "max_abs_error": 0.15}
+  ],
+  "cycle_features": {
+    "period_s": 0.00002,
+    "start_s": 0.0,
+    "end_s": 0.01,
+    "cycles": 500,
+    "all_cycles_required": true,
+    "max_absolute_mean_errors": {"vout_v": 0.15, "iL_a": 0.08, "duty": 0.015, "source_current_a": 0.1},
+    "maximum_reference_source_edge_interpolation_charge_budget_c_per_cycle": 0.00000002,
+    "source_current_normalization": "Derived from actual native iL/UC/duty and the independently resolved native selector/carrier plus midpoint KCL. Solve all PWL-duty/analytic-carrier crossings, integrate each physical mode separately. Native sparse source samples remain measured audit data; never integrate their switching jumps as PWL ramps or label reconstructed gates/current as directly logged.",
+    "source_power_direction": "30V times whole-record mean source current must be positive in both; finite losses and change of nonzero L/C energy must balance within declared internal numeric tolerances"
+  },
+  "reference_self_refinement": {
+    "max_error_fraction_of_candidate_limits": 0.1,
+    "require_both_full_native_runs": true,
+    "require_actual_initial_and_control_mapping": true,
+    "no_absolute_accuracy_claim_from_solver_tolerance_alone": true
+  },
+  "known_difference": "Reference has continuous PI/1us lag and natural PWM with two antiparallel MOSFET diodes; candidate uses existing discrete LP/PI, external limit and grid-sampled complementary IdealSwitch. Its 50ns timing is frozen, not fitted. Diodes may be omitted only within the independently checked inactivity domain and native-refinement evidence; no automatic diode or general device equivalence claimed. UC/iL are continuous across explicit load events; Isrc has switching jumps, so only edge-audited per-carrier-cycle means are acceptance metrics. All samples, including t0 and every root-near Boolean ambiguity, remain in raw artifacts. No fitted shifts, scale, phase or omitted cycles."
+}
