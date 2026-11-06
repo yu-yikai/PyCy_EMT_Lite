@@ -1,7 +1,7 @@
 # 恢复与下一步
 
 日期2026-11-06（Asia/Shanghai）。恢复先读tasks/progress/decisions/validation_status，核分支、HEAD、工作区、git log和真实远端。
-checkpoint `9e2513dd98c12ee4f50d94261318ef56fd475aa4` 是记录时最近已知提交，须与实际后续历史交叉核对；不覆盖用户工作、不强推、不操作main。
+checkpoint `72e255c41c332d944054330ea672a82fade593cb` 是记录时最近已知提交，须与实际后续历史交叉核对；不覆盖用户工作、不强推、不操作main。
 
 ## 当前事实
 
@@ -23,8 +23,9 @@ candidate compare20261106T054356596388Z，TR10µs/5001点、28项PASS；maxV.864
 1. F1局部blocked：精确9e2513d的run42170878293已真实终态failure，Ubuntu127738145863/Windows127738146164均runner0、steps空、billing lock注释，未执行测试/test_count=null。
    证据experiments/ci_9e2513d.json及7份raw/hash已全核；不再轮询该终态。外部账户真实解锁后，优先对这个覆盖25的run选择Re-run all jobs，再核精确head/attempt的Windows/Ubuntu全步骤。
    不改代码制造空提交、不操作账户账单。90b2fcd成功仅覆盖22；本地/商业结果不代替23/24/25跨OS验证。
-2. B2继续参考先行：先读experiments/synchronous_buck_reference_probe.md，复用已完成原native运行；核实际门极、储能初值、体二极管/连续控制语义。
-   未证明与现有受控开关兼容前不写候选，不新增通用二极管/非线性框架。用户要求整体精简、可读、初学者易懂。
+2. B2先读experiments/synchronous_buck_state_followup.md。新state-save运行与缓存提取已完成，原四Scope逐字不变；L/C非零初值、互补selector和固定PI坐标已核，原生状态误差/控制离散化仍待验证。
+   在26候选不存在时先固定完整参数/初值/方向、控制调用顺序、PWM与负荷事件、原生精化预算、比较窗/限值；再运行真实精化及内部步长分析。无内部限幅PI配外部Limiter，避免增加抗饱和；LP/PI动态误差不能由代数坐标残差替代。
+   根附近全点/不同浮点布尔结果保留，不用guard删点。保持现有Switch/控制器，禁止自动二极管/非线性扩展；教学入口只解释电路与运行。
 3. A3仍缺同数学Bergeron商业参考。PSCAD5.0及mhi.pscad可发现，但许可/编译/真实运行未证；simpleac为耦合/带事件原网，不能冒充相容参考。
 4. B1既有12固定2%波形限仍FAIL（2.66%–2.72%），不放宽标准/拟合时移；C1控制教学链保持后置。
 5. D0无需重复成功仿真/全量测试。以后仅真实新代码或失败触发必要验证；运行身份/许可环境迁移须重新审计，不绕过SFunction/MEX/source守卫。

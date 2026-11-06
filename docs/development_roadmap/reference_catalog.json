@@ -1611,9 +1611,10 @@
       "local_path": "local_reference/synchronous_buck",
       "allows_local_save": "Installed licensed MathWorks example downloaded from official versioned exampledata for local study",
       "allows_redistribution": "not_asserted",
-      "mathematical_compatibility": "Not established: MOSFET body-diode currents and actual gates not exported; continuous PI with external clamp and 1us lag differs from existing discrete PI semantics. No PyCy candidate or acceptance defined.",
+      "mathematical_compatibility": "Actual nonzero L/C initial states and active complementary selector/NOT structure now observed. Native states plus Isrc uniquely identify complementary linear modes at all 3633 post-initial samples; diode-inactivity interval certificate remains conditional on native absolute-state accuracy. Fixed PI coordinate scaling verified against existing duty without fitting. Continuous/discrete control and event-error protocol still pending; no PyCy candidate.",
       "blockers": [
-        "DataLoggingOverride cannot mark new internal signals; model_edit currently unavailable. Actual initial L/C states not yet exported. Body-diode inactivity not established; no automatic-commutation framework permitted."
+        "No reference self-refinement or certified native state-error budget yet; conditional diode-inactivity proof does not certify all operating conditions.",
+        "Discrete LP/PI sample/update order and PWM/step-load event comparison require a frozen numerical protocol before candidate implementation. Root-near Boolean ambiguities are retained; no direct dynamic gate/diode current logs."
       ],
       "sha256": {
         "simulink/SynchronousBuckConverter.slx": "ea8344f62e2a691456363f0391389cd1675bfe246bd71dc8f15a3b838ca6ab42",
@@ -1645,7 +1646,25 @@
       "formal_pycy_validation": {
         "status": "not_started",
         "implementation_commit": null,
-        "note": "Prefer a simpler compatible reference until device/control semantics and initialization are verified."
+        "note": "Initial-state/control observability gaps reduced by real follow-up; formal reference refinement, discrete semantics and acceptance must precede any candidate. No generic diode/nonlinear framework."
+      },
+      "state_control_followup": {
+        "record": "docs/development_roadmap/experiments/synchronous_buck_state_followup.md",
+        "local_path": "local_reference/b2_followup",
+        "native_state_run": "20261106T060137544Z",
+        "cache_extraction": "20261106T060649984Z",
+        "control_read_only_query": "20261106T062509113Z",
+        "initial_iL_A": 0.000299977501687373,
+        "initial_UC_V": 0.00112491563132765,
+        "old_four_scope_csv_byte_identical": true,
+        "PI_fixed_mapping_max_abs_residual": 2.3522850334245504e-15,
+        "PI_unclipped_samples": 3192,
+        "sha256": {
+          "observability/evidence_inventory.json": "b66702195a9e60eb5f56e1fbf8c6c2bd760050b12770a096b7bd8b3dfdbb7344",
+          "observability/control_query/supplemental_inventory.json": "e6f33518ca6c07aff5cd670b7ec0013ffb854061b75eef9854a997324391948a",
+          "physics_audit/native_state_certificate.json": "959c48cf3a219a19a65d546ee6db52a250783635948da9a9c2b2f23cdfdd71ad",
+          "physics_audit/control_coordinate_and_carrier.json": "c0078eebdd70675df81d70097d23ea616fbe278c73779df49fd0f0b927d89a8b"
+        }
       }
     },
     {

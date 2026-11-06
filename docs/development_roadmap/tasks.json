@@ -3,7 +3,7 @@
   "updated_date": "2026-11-06",
   "timezone": "Asia/Shanghai",
   "branch": "codex/emt-examples-longterm",
-  "checkpoint_head": "9e2513dd98c12ee4f50d94261318ef56fd475aa4",
+  "checkpoint_head": "72e255c41c332d944054330ea672a82fade593cb",
   "current_task": "B2",
   "formal_new_examples_completed": 7,
   "status_values": [
@@ -398,12 +398,13 @@
       "references": [
         "mw-synchronous-buck-r2025a"
       ],
-      "validation": "原SPS同步Buck真实3634点/10ms运行成功；体二极管/门极及储能初值仍未核实，连续PI/Natural时间语义与现有控制不同。此具体参考不进入候选；继续寻找较简单相容功率级，不扩通用框架。",
+      "validation": "原SPS同步Buck新state-save实跑10ms/3634点，旧四Scope逐字不变；非零L/C初值实测。3633点双mode唯一，体二极管不活动有条件区间证书；生效PI/selector/载波只读确认，预定状态映射全点/3192未限幅点残差2.35e-15。仍缺原生精化和离散控制/事件误差协议，无候选或商业比较。",
       "acceptance": "每项先有参考与固定判据再实施，禁止冒充自动二极管",
       "status": "in_progress",
       "files": [
         "docs/development_roadmap/experiments/next_reference_candidates.md",
-        "docs/development_roadmap/experiments/synchronous_buck_reference_probe.md"
+        "docs/development_roadmap/experiments/synchronous_buck_reference_probe.md",
+        "docs/development_roadmap/experiments/synchronous_buck_state_followup.md"
       ],
       "commits": [
         "d79e849"

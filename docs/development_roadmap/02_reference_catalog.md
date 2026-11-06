@@ -142,7 +142,7 @@ PyCy在3761a21预先冻结的验收下，已完成独立8项物理测试、独�
 
 ### 同步 Buck 原件及真实探针
 
-第20项`mw-synchronous-buck-r2025a`来自R2025a官方版本化exampledata，SPS原件已真实运行10ms/3634点，实际ode23tb；输出电压末值15.0315V。它是双MOSFET、体二极管、连续PI和Natural PWM闭环，初始储能状态尚未导出，不把保存的零初值字段当实际约束。原模型与已标记Scope输出说明runnable；尚无完整门极/体二极管电流、自细化或PyCy对标，不提升为正式算例。原件/运行/数据hash及失败日志恢复见[专项记录](experiments/synchronous_buck_reference_probe.md)。为保持项目精简，未引入自动二极管、连续控制器或通用框架；先核物理相容和维护成本，可继续更简单参考。
+第20项`mw-synchronous-buck-r2025a`保持**runnable**。原件及新state-save运行均真实到10ms/3634点，旧四Scope CSV逐字相同；实际L/C初值已导出，生效连续PI、互补selector与50kHz载波已读到。固定PI状态映射的全点/未限幅核对通过，体二极管不活动仍依赖原生精度条件；尚无真实自细化、离散控制误差协议或PyCy商业比较。见[原件初查](experiments/synchronous_buck_reference_probe.md)及[状态与控制补充](experiments/synchronous_buck_state_followup.md)。优先复用现有Switch、LP、无内部限幅PI及外部Limiter，保持精简，不扩自动二极管或连续控制框架。
 
 ### 双三相变压器与Delta Reference
 

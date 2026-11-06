@@ -6,7 +6,7 @@
 
 统一使用 [02参考目录](02_reference_catalog.md) 的0–5分、加权100分方法，详细向量仅保存在 `reference_catalog.json`，不维护第二套评分。维度覆盖教学/代表性/模型和数据可用性/适配/实现和验证难度/知识增量/复用/维护。**正式新增交付必须实际取得真实数据并通过对比**，总分不能替代门槛。
 
-当前正式新增19–24共6项已完成，既有02补参考另计。A4以23线性T等效、24平衡双T接线链收尾；24没有实际线路。下一项D0先调查完整电源、线路、变压器与固定负荷原网，B2保留较简单受控变流器备选研究。既有12的真实SPWM波形FAIL保留，依赖其时序对齐的单站控制后置。Bergeron、双端HVDC/GFM与小网均须另获物理一致的参考。
+当前正式新增19–25共7项已完成，既有02补参考另计。A4以23线性T等效、24平衡双T接线链收尾；24没有实际线路，D0的25另交付完整电源、两π线路、变压器与固定负荷原网。当前继续B2同步Buck参考相容性及A3同数学Bergeron参考调查。既有12的真实SPWM波形FAIL保留，依赖其时序对齐的单站控制后置。Bergeron、双端HVDC/GFM与小网均须另获物理一致的参考。
 
 ## 当前实施顺序与验收门槛
 
@@ -27,6 +27,6 @@
 
 恢复入口是 [next_actions.md](next_actions.md)，状态以 [tasks.json](tasks.json) 和实际Git历史为准。外部阻塞仅影响依赖它的任务；尚未完成真实对标的例不能记入正式完成数。
 
-2026-11-06状态：本地最终1179 passed490.61s（含slow），核心源码相对原main未改。到22的双系统CI已通过；23/24的精确CI因GitHub账户账单锁在runner启动前失败，F1局部受阻，不能借旧CI扩大结论。12仍按146a279固定标准保留波形FAIL；24原1µs startupFAIL也保留，0.5µs在原限值下重验通过。
+2026-11-06状态：到25的本地最终1190 passed478.96s（含slow），核心源码及依赖相对原main未改。到22的双系统CI已通过；23/24/25的精确CI因GitHub账户账单锁在runner启动前失败，F1局部受阻，不能借旧CI扩大结论。12仍按146a279固定标准保留波形FAIL；24原1µs startupFAIL也保留，0.5µs在原限值下重验通过。
 
-D0已交付25完整 `power_gui` 线性网络：源→两π段线路→T→固定阻抗负荷，保留所有补偿/修正G和非零初值；真实双run精化、28项商业比较及1190全量回归通过，无核心或依赖改动。见[教学与验证指南](../../validation/cases/source_line_transformer/README.md)及[前置调查](experiments/source_line_transformer_reference_probe.md)。下一步B2原同步Buck虽可运行，二极管、初始化及连续控制相容性尚未充分证明，继续参考核验，暂不增加候选或框架。历史实施经过留在progress和Git，当前任务状态以tasks为准。
+D0已交付25完整 `power_gui` 线性网络：源→两π段线路→T→固定阻抗负荷，保留所有补偿/修正G和非零初值；真实双run精化、28项商业比较及1190全量回归通过，无核心或依赖改动。见[教学与验证指南](../../validation/cases/source_line_transformer/README.md)及[前置调查](experiments/source_line_transformer_reference_probe.md)。B2已取得非零初值、生效互补结构和固定PI坐标映射，详见[研究补充](experiments/synchronous_buck_state_followup.md)；仍先固定原生精化及离散控制/事件协议，再决定候选，不扩框架。历史实施经过留在progress和Git，当前任务状态以tasks为准。

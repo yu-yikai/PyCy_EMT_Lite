@@ -80,3 +80,7 @@ A4b已取得新的独立真实证据：ee_delta_transmission原完整双三相�
 
 
 2026-11-06最新9e2513d代码里程碑已正常推送；[CI run42170878293](https://github.com/yu-yikai/PyCy_EMT_Lite/actions/runs/42170878293)已实查终态failure，Ubuntu127738145863/Windows127738146164均runner0、steps空，各注释确认GitHub账户billing lock，未执行测试/test_count=null。证据experiments/ci_9e2513d.json，7份raw响应/hash全核。F1局部受阻，23/24/25跨OS仍待账户外部恢复，不扩大本地/商业PASS结论；同终态不继续轮询。当前只做文档同步，代码/依赖与9e2513d一致，所有本轮监测已终态。
+
+2026-11-06 B2本轮新证据：原网state-save真实运行到10ms，旧四Scope逐字不变；缓存修复提取后保留4组/宽5状态，实际iL0=0.0002999775A、UC0=0.0011249156V。3633个后初始点双mode唯一，区间二极管充分条件有余量但仍依赖原生精度；compile/read/term确认生效连续PI、互补selector与载波。固定PI坐标3634点及3192未限幅点误差2.35e-15，无拟合；根附近PWM布尔歧义全保留，不称直接门极日志。20旧+41state+29query文件hash主审全核，首次提取/查询失败另存；没有26候选或框架。详见experiments/synchronous_buck_state_followup.md。
+
+用户重申精简/可读/初学者友好；独立教学检查仅修22指南的前置编号10→08及不受当前固定绘图支持的改段数练习，改为保持50段调整频率。核心/依赖相对原main仍无差异；本轮只有研究/文档，1190是前次真实全量，未机械重跑。恢复核本地72e255c与分支/工作区；checkpoint由旧功能提交更新到该已知实际文档提交，随后实际提交在Git历史交叉核对。
