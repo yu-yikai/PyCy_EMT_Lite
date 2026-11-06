@@ -1,11 +1,11 @@
 {
   "schema_version": 1,
-  "updated_date": "2026-11-04",
+  "updated_date": "2026-11-06",
   "timezone": "Asia/Shanghai",
   "branch": "codex/emt-examples-longterm",
-  "checkpoint_head": "80ba91c",
-  "current_task": "F1",
-  "formal_new_examples_completed": 4,
+  "checkpoint_head": "91dbad6bb77af24d1a548a6d0943930c4bcce40f",
+  "current_task": "B2",
+  "formal_new_examples_completed": 5,
   "status_values": [
     "planned",
     "ready",
@@ -237,14 +237,28 @@
       "phase": "foundation",
       "title": "有限50段T形RLCG线路传播",
       "priority": 0,
-      "dependencies": ["A1", "V1"],
+      "dependencies": [
+        "A1",
+        "V1"
+      ],
       "new_capabilities": [],
-      "references": ["mw-transmission-line-r2025a"],
+      "references": [
+        "mw-transmission-line-r2025a"
+      ],
       "validation": "8项独立101物理状态+sin/cos增广expm、ABCD、KCL/能量/TR/BE细化通过339.16s；独立Agg通过；真实六信号全部通过，maxV.0080124V/maxI.000160248A/maxNRMSE.000272268",
       "acceptance": "3761a21在候选前冻结完整0..50ns、TR10ps、双限值；实际参考/内部检查/独立运行/测试/教学/提交全部通过后完成；非Bergeron验证",
       "status": "completed",
-      "files": ["examples/22_t_section_transmission_line.py", "tests/test_t_section_transmission_line.py", "validation/cases/transmission_line/manifest.json", "validation/cases/transmission_line/parameters.json", "validation/cases/transmission_line/validation_report.json"],
-      "commits": ["3761a21", "80ba91c"],
+      "files": [
+        "examples/22_t_section_transmission_line.py",
+        "tests/test_t_section_transmission_line.py",
+        "validation/cases/transmission_line/manifest.json",
+        "validation/cases/transmission_line/parameters.json",
+        "validation/cases/transmission_line/validation_report.json"
+      ],
+      "commits": [
+        "3761a21",
+        "80ba91c"
+      ],
       "blockers": []
     },
     {
@@ -256,12 +270,47 @@
         "A1"
       ],
       "new_capabilities": [],
-      "references": [],
-      "validation": "逐相KCL/接线、初值、真实商业数据",
+      "references": [
+        "mw-mutual-transformer-t-r2025a"
+      ],
+      "validation": "23线性T等效已作为A4a独立验收；三相接线及电源—变压器组合仍需各自真实参考，不由23结果推广",
       "acceptance": "分成可独立验收算例，每个有真实对标后完成",
       "status": "in_progress",
-      "files": [],
-      "commits": [],
+      "files": [
+        "validation/cases/transformer_t_equivalent/README.md"
+      ],
+      "commits": [
+        "0ec7239",
+        "91dbad6bb77af24d1a548a6d0943930c4bcce40f"
+      ],
+      "blockers": []
+    },
+    {
+      "id": "A4a",
+      "phase": "foundation",
+      "title": "外置三电感线性变压器T等效",
+      "priority": 0,
+      "dependencies": [
+        "A1",
+        "V1"
+      ],
+      "new_capabilities": [],
+      "references": [
+        "mw-mutual-transformer-t-r2025a"
+      ],
+      "validation": "8专项物理/事件/谱指数/能量/TR细化通过，独立Agg8001点通过；真实Simscape两窗×七量通过，maxV0.000696717V/maxI0.000303740A/maxNRMSE7.29216e-6",
+      "acceptance": "0ec7239在候选前冻结拓扑/参数/初值/方向/两窗/双限值；真实参考8063/16042点自细化通过，内部/独立执行/真实比较/图报告/测试/教学/Git提交均完成",
+      "status": "completed",
+      "files": [
+        "examples/23_transformer_t_equivalent.py",
+        "tests/test_transformer_t_equivalent.py",
+        "validation/cases/transformer_t_equivalent/manifest.json",
+        "validation/cases/transformer_t_equivalent/validation_report.json"
+      ],
+      "commits": [
+        "0ec7239",
+        "91dbad6bb77af24d1a548a6d0943930c4bcce40f"
+      ],
       "blockers": []
     },
     {
@@ -309,8 +358,10 @@
       "references": [],
       "validation": "受控开关物理边界、真实参考先行",
       "acceptance": "每项先有参考与固定判据再实施，禁止冒充自动二极管",
-      "status": "planned",
-      "files": ["docs/development_roadmap/experiments/next_reference_candidates.md"],
+      "status": "in_progress",
+      "files": [
+        "docs/development_roadmap/experiments/next_reference_candidates.md"
+      ],
       "commits": [],
       "blockers": []
     },
@@ -362,13 +413,17 @@
       ],
       "new_capabilities": [],
       "references": [],
-      "validation": "本地到A7完整1162 passed412.17s，Ruff/mypy通过；18教学脚本均独立通过；8a65b6e双平台成功。80ba91c代码已推送但未观察到CI run；必要阶段文档正常push后对新HEAD单独验证",
+      "validation": "到23本地完整1170 passed，384.08 s（含slow），Ruff/mypy及锁定同步通过。原18教学脚本已有独立证据，23本轮独立Agg通过，共19。90b2fcd双平台全步骤成功覆盖22同代码；23的最新推送HEAD必须单独等待CI。",
       "acceptance": "本批测试与真实CI记录、教学导航、里程碑推送和恢复指令",
       "status": "in_progress",
       "files": [
-        ".github/workflows/ci.yml"
+        ".github/workflows/ci.yml",
+        "docs/development_roadmap/experiments/ci_90b2fcd.json"
       ],
-      "commits": [],
+      "commits": [
+        "90b2fcd",
+        "91dbad6bb77af24d1a548a6d0943930c4bcce40f"
+      ],
       "blockers": []
     },
     {

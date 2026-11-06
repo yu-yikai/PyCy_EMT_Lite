@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "assessed_on": "2026-11-04",
+  "assessed_on": "2026-11-06",
   "repository_baseline": "a03a450340797771099fceb5ec77137bc7f681c2",
   "state_semantics": {
     "discovered": "source only",
@@ -1378,6 +1378,205 @@
       "license_notes": "Original MathWorks model/scripts, installed source and generated data remain local under licensed use. No redistribution permission asserted.",
       "export_script": "validation/cases/transmission_line/export_reference.m",
       "export_script_sha256": "acd788c278e135af040ad402b9fe47d9aaa05daf39595c5d623f788d35448f71"
+    },
+    {
+      "id": "mw-mutual-transformer-t-r2025a",
+      "short_code": "MW-TXFMR-T",
+      "aliases": [
+        "MW-TXFMR-T"
+      ],
+      "name": "Comparison of Mutual Inductor and Ideal Transformer (third pure electrical T network)",
+      "source_url": "https://www.mathworks.com/help/simscape/ug/comparison-of-mutual-inductor-and-ideal-transformer.html",
+      "example_id": "simscape/ComparisonOfMutualInductorAndIdealTransformerExample",
+      "files": [
+        "CompareCircuits.slx",
+        "ComparisonOfMutualInductorAndIdealTransformerExample.mlx",
+        "ElectricalEquivalentCircuitMutualInductor.slx",
+        "ElectricalEquivalentCircuitSimplifiedMutualInductor.slx",
+        "ElectricalEquivalentCircuitTransformer.slx",
+        "MagneticEquivalentCircuit.slx",
+        "MagneticEquivalentCircuitIdealTransformer.slx"
+      ],
+      "file_formats": [
+        ".slx",
+        ".mlx"
+      ],
+      "model_version": "Original SLX metadata R2025a; executed in 25.1.0.2973910 (R2025a) Update 1",
+      "status": "reference_ready",
+      "software_requirements": [
+        "MATLAB",
+        "Simulink",
+        "Simscape"
+      ],
+      "dependencies": [
+        "Five original four-electrical-port Subsystem Reference SLX files, run inside the complete original CompareCircuits top model; Foundation Library linear electrical and magnetic components. Official MLX retained as the physical parameter source; its linmod frequency analysis is not needed or executed."
+      ],
+      "download_available": true,
+      "downloaded": true,
+      "content_inspected": true,
+      "opened_in_native_software": true,
+      "simulation_succeeded": true,
+      "reference_numeric_data_obtained": true,
+      "raw_numeric_data_obtained": true,
+      "comparison_reference_ready": true,
+      "local_path": "local_reference/transformer_t_equivalent",
+      "allows_local_save": "downloaded_with_licensed_MATLAB_openExample",
+      "allows_redistribution": "not_asserted",
+      "mathematical_compatibility": "Third original pure electrical T equivalent: source 0-to-1V step at 2s, source/load resistances each 1ohm, primary leakage .01H, secondary leakage .25H, ideal primary/secondary ratio .2, magnetizing .1H on core primary AFTER primary leakage. Three lossless inductors have verified zero native initial currents. Both winding negative terminals retain their explicit electrical references. Same network can be composed from existing ideal SinglePhaseTransformer and external inductors. Does not certify existing example09 aggregate topology, physical DC transformer operation, saturation, hysteresis or a new general mutual-inductor class.",
+      "blockers": [],
+      "sha256": {
+        "simulink/CompareCircuits.slx": "9df7b95e3d0c5b842c1699631e49a5587179088b6afe9281914c52b60964e07b",
+        "simulink/ComparisonOfMutualInductorAndIdealTransformerExample.mlx": "8a6e3f0f1f55dc015619d8462592be4c4ac1910a022fd7315fc6a6ef8ee877b6",
+        "simulink/ElectricalEquivalentCircuitMutualInductor.slx": "eb5ff69d07d15aed0e74183ec6c05c1fea57fad0937a65bbb1c2ab57166146cd",
+        "simulink/ElectricalEquivalentCircuitSimplifiedMutualInductor.slx": "0f47e478f52e4adee90f3ee35518e9dff2eda2232c213305cf8a75fcf0689cc3",
+        "simulink/ElectricalEquivalentCircuitTransformer.slx": "e64bffb228e8f11daf0ffb6475615a82f7e4e20668808bcd3d5edcfe921cf672",
+        "simulink/MagneticEquivalentCircuit.slx": "b6e4b137ee8405d9cf8333cb9d90133c70a15b0f1c1d05454fdcd8f20230706b",
+        "simulink/MagneticEquivalentCircuitIdealTransformer.slx": "6cb185d3d40bdf8974ca606018d9f5cf98e1780d8796abf24a671793204cbc55",
+        "raw_results/simscape_native.csv": "81cc392697bd03b67e5282dd9482996a8bc601ca08610a170c675c92ba0ae61e",
+        "normalized_results/reference.csv": "81cc392697bd03b67e5282dd9482996a8bc601ca08610a170c675c92ba0ae61e",
+        "raw_results/simulink_output.mat": "baa440bfbb51b2d7a58095e1a6e58afc1bf53b9699725000634c72ca4a223ed7",
+        "refined_results/simscape_native.csv": "7c51ed3187e7e4d76425bd316302cc491eec1108e024083cc4c8a7a6ff7a994f",
+        "refined_results/reference.csv": "7c51ed3187e7e4d76425bd316302cc491eec1108e024083cc4c8a7a6ff7a994f",
+        "refined_results/simulink_output.mat": "ab1d7e60b4b614fa0c1dadc83dd13308856ac39a67d6cf2eec51a25b8be3534e",
+        "provenance.json": "87747db5a63d7dd657a1ded86833ac8c512268b5b4a48334a0d861f10b9088f2",
+        "reference_convergence.json": "f5d4fa8b74450c78c7656612a5ddfcfb2846ae5765588c12e3c076575ea2608d",
+        "native_physics_audit.json": "985f803ec36ceeff3fda11391452c541ec4d4c04e70878f74d09944b52d83599"
+      },
+      "reference_data": "local_reference/transformer_t_equivalent/normalized_results/reference.csv",
+      "raw_numeric_data": "local_reference/transformer_t_equivalent/raw_results/simscape_native.csv",
+      "samples": 8063,
+      "refined_samples": 16042,
+      "signal_columns_excluding_time": 7,
+      "stop_s": 8,
+      "provenance": "local_reference/transformer_t_equivalent/provenance.json",
+      "export_time_utc": "2026-11-04 09:57:11 +0000",
+      "validation_case": "validation/cases/transformer_t_equivalent",
+      "physical_parameter_source": "Official MLX experiment, not SLX PostLoad fallback. Explicit case-sensitive SimulationInput bindings.",
+      "workspace_variable_bindings": {
+        "R1": 1000000.0,
+        "R2": 1000000.0,
+        "Rc": 100000,
+        "N1": 100,
+        "N2": 500,
+        "ratio": 0.2,
+        "l1": 0.01,
+        "l2": 0.25,
+        "Lm": 0.1,
+        "L1": 0.11000000000000001,
+        "L2": 2.7500000000000004,
+        "M": 0.5,
+        "k": 0.9090909090909091,
+        "r1": 1,
+        "r2": 1,
+        "vStep": 1,
+        "tStep": 2
+      },
+      "workspace_variable_binding_count": 17,
+      "active_parameters": {
+        "source": {
+          "before_v": 0,
+          "after_v": 1,
+          "step_s": 2,
+          "series_resistance_ohm": 1
+        },
+        "load_resistance_ohm": 1,
+        "turns_ratio_primary_to_secondary": 0.2,
+        "T_inductance_h": {
+          "primary_leakage": 0.01,
+          "secondary_leakage": 0.25,
+          "magnetizing": 0.1
+        },
+        "winding_resistance_ohm": 0,
+        "inductor_parallel_conductance_s": 0,
+        "initial_inductor_currents_a_baseline_and_refinement": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ]
+        ],
+        "magnetizing_branch_location": "Core primary after l1; connected core primary to primary electrical reference."
+      },
+      "default_fallback_trap": "SLX PostLoadFcn fills fallback variables only if R1 is absent: tStep=100s and Rc=1e4. The unchanged stop time is 8s, producing all-zero default outputs. Formal reference explicitly uses official MLX experiment tStep=2s and Rc=1e5; these are not mixed with the fallback values.",
+      "solver": {
+        "name": "ode15s",
+        "relative_tolerance": 1e-09,
+        "absolute_tolerance": 1e-11,
+        "max_step_s": 0.001,
+        "refined_max_step_s": 0.0005,
+        "local_solver": "off",
+        "stop_s": 8
+      },
+      "solver_change_scope": "All five original networks run unchanged. SimulationInput explicitly binds the 17 case-sensitive official MLX variables and tightens solver/logging only. Export refuses hash/path/Dirty discrepancies for all six loaded SLX files and verifies the official MLX hash. Does not edit structural models, initial conditions or physical circuit parameters relative to the official MLX experiment.",
+      "signal_mapping": {
+        "v_source": "Controlled_Voltage_Source3.v",
+        "v_primary_core": "Subsystem_Reference2.Ideal_Transformer.v1",
+        "v_secondary_core": "Subsystem_Reference2.Ideal_Transformer.v2",
+        "v_load": "Resistor5.v",
+        "i_source_to_transformer": "-Controlled_Voltage_Source3.i",
+        "i_load": "Resistor5.i",
+        "i_magnetizing": "Subsystem_Reference2.Lm.i_L"
+      },
+      "signal_direction": "Source toward l1/core; ideal secondary toward l2/load; Lm core toward ground. Native ideal-transformer secondary input current is -i_load.",
+      "voltage_reference": "Primary and secondary negative winding terminals are explicitly connected to their original electrical references.",
+      "native_physics_audit": {
+        "primary_kcl_max_abs_a": 2.220446049250313e-16,
+        "ideal_ratio_max_abs_v": 5.551115123125783e-17,
+        "load_ohm_max_abs_a": 0,
+        "initial_inductor_current_a": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ]
+        ]
+      },
+      "reference_self_refinement": {
+        "report": "local_reference/transformer_t_equivalent/reference_convergence.json",
+        "passed": true,
+        "method": "Absolute-time linear interpolation on native time union in both frozen windows; no shift or scaling",
+        "max_steps_s": [
+          0.001,
+          0.0005
+        ],
+        "windows_s": [
+          [
+            0,
+            1.999
+          ],
+          [
+            2.001,
+            8
+          ]
+        ],
+        "limits": "Every signal maximum absolute difference below one tenth of its predeclared candidate absolute-error limit, in both frozen windows.",
+        "max_voltage_difference_v": 0.00015595582051131096,
+        "max_current_difference_a": 6.799036491728083e-05,
+        "interpretation": "Reference-only self-refinement passed independently; it does not establish candidate completion."
+      },
+      "formal_pycy_validation": {
+        "status": "validated",
+        "predeclared_criteria_commit": "0ec7239",
+        "manifest": "validation/cases/transformer_t_equivalent/manifest.json",
+        "implementation_commit": "91dbad6bb77af24d1a548a6d0943930c4bcce40f",
+        "note": "All fourteen fixed window/signal checks, eight independent physical tests, standalone Agg, teaching docs and full local regression passed; implementation committed. Reference remains scoped to the third linear T network; exact new remote HEAD OS CI tracked separately.",
+        "report": "validation/cases/transformer_t_equivalent/validation_report.json",
+        "run_id": "20261106T025650374531Z"
+      },
+      "normalization": "Native timestamps and values preserved; last sample at duplicate times. No resampling, fitted time/phase shift or amplitude scaling.",
+      "license_notes": "Original MathWorks model/script and generated data remain local; no redistribution permission asserted.",
+      "export_script": "validation/cases/transformer_t_equivalent/export_reference.m",
+      "export_script_sha256": "b88442743b686a7b9a92a3dc8dfa1b214a1465ce5cea4ecbcadc3fe2c3cfaa23"
     }
   ],
   "scope_notes": [

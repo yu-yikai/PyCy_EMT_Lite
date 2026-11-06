@@ -2,7 +2,7 @@
 
 日期：2026-11-04（Asia/Shanghai）。起点 main=`a03a450340797771099fceb5ec77137bc7f681c2`，工作分支 `codex/emt-examples-longterm`，起始工作区干净。
 
-当前检查点：正式新增4（19/20/21/22）、既有02补参考完成；B1整体FAIL保留。最新全量1162 passed/412.17s、Ruff/mypy通过；8a65b6e双平台CI通过，新增22的80ba91c代码已正常推送但其CI需单独确认。当前F1完成本批跨操作系统验收，并行调查A4线性变压器参考。以下按实施阶段保留历史记录，早期数量和待推送状态以本段及最后更新为准。
+当前检查点（2026-11-06）：正式新增5（19/20/21/22/23），既有02补参考完成，B1总体FAIL保留。23已验收提交`91dbad6bb77af24d1a548a6d0943930c4bcce40f`；最新全量1170 passed，384.08 s、Ruff/mypy及锁定同步通过。到22的90b2fcd双平台CI已成功；23的CI须按本次正常push后的精确HEAD单独确认。当前并行推进F1与B2参考调查；A4其余三相/组合范围不因23通过而宣称完成。以下保留历史记录，数量和待推送状态以本段及最后更新为准。
 
 - 全量读取与能力重评已形成01；原环境1118测试（含slow）通过，14个原有例Agg执行全部通过。
 - 稳定Python3.14.5锁定27包同步通过；完整1128测试通过，160.97 s（原1118加比较工具10项）。
@@ -38,3 +38,10 @@ B1工具及失败报告已提交并推送 `8a65b6e`。新增10项解析数学/�
 A7已验收提交并推送 `80ba91c`：六量全窗均通过，maxV=0.0080124 V、maxI=0.000160248 A、maxNRMSE=0.000272268。内部8项通过339.16s，22独立Agg执行通过；最终完整回归 **1162 passed，412.17 s**，Ruff/mypy通过，本地日志为.tmp/longterm/a7-pytest.log和a7-tests.xml。当前正式新增4，共18个教学脚本。核心包/API/成熟方程仍未更改。
 
 80ba91c首次push遇GitHub内部500拒绝，只读核对远端后普通重试成功。其后API确认分支为80ba91c但暂未发现该HEAD的Actions run；本次push包含旧文档的skip指令，不把它误报为CI成功。必要阶段文档将正常提交推送，用新HEAD独立验证同一代码，不改写既有历史。
+
+
+2026-11-06恢复实查：分支codex/emt-examples-longterm，恢复HEAD为0ec7239，远端实查90b2fcde2eb450feff43d4cf5f64a601ce897a6e。原任务文件checkpoint80ba91c为旧记录，已与实际历史核对，未丢弃候选工作。实际执行身份改变导致Git ownership拒绝；仅为当前命令/子进程设置safe.directory=D:/VibeCoding/PyCy_EMT_Lite，不修改全局配置。
+
+90b2fcd的真实Actions run41809969999两系统及全部步骤均success，2026-11-06再次在线核实；与80ba91c的包/例/测试/验证/工作流/依赖Git对象相同。experiments/ci_90b2fcd.json保留精确scope，公开job日志403故test_count为null。
+
+A4a/23：0ec7239在候选前固定协议，原完整五网络Simscape真实8063/16042点参考自身细化通过。三个外置电感与理想T复用现有元件，独立两状态谱指数、能量、KCL、事件及TR细化8项通过。仅整理import换行后，新真实比较run20261106T025650374531Z两窗×七量全部通过；maxV=0.000696716699V、maxI=0.000303740264A、maxNRMSE=7.29215772e-6，报告SHA a64c0677349799eb0f3b7874b6cbedba071fd07c3e0498cc6933bc48ee71c0bc，已实际核图与全部hash。23独立Agg8001点通过；完整本地1170 passed，384.08 s（含slow），日志.tmp/longterm/a4-closeout-pytest.log/XML。代码、教学、导出及报告已提交`91dbad6bb77af24d1a548a6d0943930c4bcce40f`，正式新增5，共19教学脚本；核心包及成熟方程未改动。下一里程碑正常push后，单独验证其精确HEAD双平台CI，不能借用90b2fcd。

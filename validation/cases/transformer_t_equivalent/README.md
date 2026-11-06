@@ -109,3 +109,5 @@ uv run --locked python -m validation.cases.transformer_t_equivalent.compare
 | 外置励磁电流 | 2.57590e-5 A | 6.18340e-7 |
 
 完整逐量结果见 [validation_report.json](validation_report.json)，与最新运行目录中的报告逐字节一致，SHA-256为 `a64c0677349799eb0f3b7874b6cbedba071fd07c3e0498cc6933bc48ee71c0bc`。最新报告的全部输入快照、候选CSV/JSON/NPZ、原始参考、包源码和叠图hash已逐项核验。全量回归、提交及跨平台CI状态由主任务记录，不将旧HEAD结果扩展为未测试代码的验证。
+
+上述报告hash对应本机保留的CRLF原始归档。Git存储的LF版本SHA-256为 `7dd67fdca571764b8674322e9823adcd39eb202ad6e0640a639a810338617c8f`；两者JSON内容一致，核对其他系统的检出文件时应区分换行字节。

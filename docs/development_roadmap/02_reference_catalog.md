@@ -1,6 +1,6 @@
 # 参考模型目录与筛选依据
 
-调查日期：2026-11-04。机器可读记录见 [reference_catalog.json](reference_catalog.json)。本轮已下载的第三方原件仅保存在忽略 Git 的 `local_reference/`；下载不代表获得再分发许可。
+初查日期：2026-11-04；最近核验：2026-11-06。机器可读记录见 [reference_catalog.json](reference_catalog.json)。本轮已下载的第三方原件仅保存在忽略 Git 的 `local_reference/`；下载不代表获得再分发许可。
 
 ## 证据状态
 
@@ -20,6 +20,7 @@
 | NLR-3BUS | `Kenyon_PSCC_3bus.zip`：实际主文件 `SC_Testing/SyncCon_Tests.pscx` | **inspected**；v5.0.0，依赖 ETRAN/PRSIM/Wallace_201004_Lib | 延后；文件名有“3bus”不能证明是最小无依赖三节点例 |
 | MW-DC | 官方教学库 v2.2.2 的 `NodalAnalysisExample.slx`、`RLCCircuit.slx` | Nodal已**reference_ready**；101点、14个电气信号；RLC仅**inspected**且未运行；metadata R2024a | 线性多源网络已就绪；批量仿真临时禁用孤立未接万用表，主电路不改 |
 | MW-TLINE | `simscape/TransmissionLineExample` / `TransmissionLine.slx` | **reference_ready**；50段纯线性T形RLCG；真实10 ps/5 ps细化通过，5066点标准数据 | 对标边界为有限T梯级，官方第25段图例实指第15段；PyCy新例另行验收 |
+| MW-TXFMR-T | `simscape/ComparisonOfMutualInductorAndIdealTransformerExample` / `CompareCircuits.slx`及五个支持SLX | **reference_ready**；第三组纯电气T网络、七路真实输出；8063/16042点参考自身细化通过 | 采用官方MLX的2 s阶跃与0.1 H励磁，区别于全零备用参数；候选23的提交验收另计 |
 
 官方来源：[MathWorks 两级 RC](https://www.mathworks.com/help/simscape/ug/cascaded-rc-circuit-in-simulink-and-simscape.html)、[PSCAD 第3章](https://www.pscad.com/knowledge-base/article/46)、[PNNL Bootcamp](https://github.com/pnnl/i2x/tree/master/emt-bootcamp)、[PyPSCAD](https://github.com/NatLabRockies/PyPSCAD)、[MathWorks DC Circuit Analysis](https://github.com/MathWorks-Teaching-Resources/DC-Circuit-Analysis)。具体下载 URL、文件哈希、依赖和许可判断均在 JSON 中逐项记录。
 
@@ -72,7 +73,7 @@ MATLAB `openExample('simscape/CascadedRCCircuitInSimulinkAndSimscapeExample')` �
 | 小型GFM/三母线 | 50.8 | 控制差异与依赖多，延后至单站参考链稳定 |
 | 完整IEEE9动态、MMC、39/118节点 | 不评分 | 超出近期；不为追求数量实现 |
 
-各评分向量见JSON。单相RC/RL/RLC和现有故障例优先补参考验证，不重复新增同知识点。变压器优先现有线性两绕组模型；公开的饱和/磁滞/自动调压参考需要去除额外物理效应并留下修改说明，尚未取得可直接等价运行的两绕组参考，不虚列“可用”。同步Buck/Boost只能使用明确受控同步开关场景；普通二极管整流桥、自换流Buck/Boost列为模型能力依赖。固定直流源接口不命名为完整PV或电池系统。
+各评分向量见JSON。单相RC/RL/RLC和现有故障例优先补参考验证，不重复新增同知识点。变压器已取得可直接用现有理想变比与外置三电感组合的纯线性T参考，具体边界见下文；其余饱和/磁滞/自动调压参考仍不能直接作为等价物。同步Buck/Boost只能使用明确受控同步开关场景；普通二极管整流桥、自换流Buck/Boost列为模型能力依赖。固定直流源接口不命名为完整PV或电池系统。
 
 ## 本地复核
 
@@ -123,3 +124,17 @@ MATLAB `openExample('simscape/CascadedRCCircuitInSimulinkAndSimscapeExample')` �
 官方`TransmissionLinePlotV.m`把`S2.T_5.p2.v`标成Segment 25，原接线却说明它是第15段边界；真正第25段是`S3.T_5.p2.v`。原脚本和原图例映射证据保留，标准六信号同时导出源、第15/25段、负载电压及方向核定的源/负载电流。正式`raw_results/simscape_native.csv`和`normalized_results/reference.csv`均为SHA256=`2fc60e7440aaa4b51d351d7e536c21bf884a22a3fd4a9993c35ac3f433bba89f`，provenance、细化数据、原MAT与完整哈希见JSON对应entry及本地`local_reference/transmission_line/`。
 
 PyCy在3761a21预先冻结的验收下，已完成独立8项物理测试、独立运行及六量真实比较，结果全部通过；新增22的实现提交为80ba91c，[正式报告](../../validation/cases/transmission_line/validation_report.json)最大电压/电流误差为8.0124 mV/0.160248 mA，最大NRMSE为0.000272268。参考只覆盖同一有限50T梯级，不能据此宣称π形离散线路、Bergeron或精确分布参数电缆已通过商业平台验证。
+
+### 线性变压器T网络真实参考
+
+第19项为`mw-mutual-transformer-t-r2025a`，来源是[官方互感与理想变压器比较](https://www.mathworks.com/help/simscape/ug/comparison-of-mutual-inductor-and-ideal-transformer.html)。原始`CompareCircuits.slx`、五个支持SLX和官方MLX均已取得、核对SHA，并在MATLAB R2025a Update 1 / Simulink / Simscape实际运行。七个原件的哈希逐项保存在JSON；主模型SHA为`9df7b95e3d0c5b842c1699631e49a5587179088b6afe9281914c52b60964e07b`，T支持电路SHA为`e64bffb228e8f11daf0ffb6475615a82f7e4e20668808bcd3d5edcfe921cf672`。支持件仅提供四个电气端口，不能作为独立顶层仿真；参考保留原完整五网络运行，只从第三组提取七个量。
+
+物理参数采用官方MLX实验：0→1 V阶跃位于2 s，源串联与负载电阻各1 Ω；原边泄漏0.01 H、副边泄漏0.25 H、原副变比0.2，励磁0.1 H连接在原边泄漏之后的内部原边节点。三个电感r/g均为0，实际原生初始电流全部为0。SLX PostLoad备用参数却是tStep=100 s、Rc=1e4，在8 s仿真窗内五路全零；没有把这份默认结果当作有效暂态参考。两套参数及完整拓扑已在[前置调查](experiments/transformer_reference_probe.md)区分。
+
+验收协议在`0ec7239`预先冻结。导出通过SimulationInput显式绑定17个区分大小写的原MLX变量（R1/R2/Rc/N1/N2/ratio/l1/l2/Lm/L1/L2/M/k/r1/r2/vStep/tStep），仅收紧求解器与日志，未改原模型拓扑或MLX物理参数。六个加载SLX同时核对路径、hash和Dirty状态，MLX也核对hash，避免同名模型或工作区残留改变实验。`ode15s` RelTol=1e-9、AbsTol=1e-11，1 ms最大步长得到8063点，独立0.5 ms细化得到16042点。两次原生网格在冻结窗[0,1.999]及[2.001,8] s比较，七量最大差均小于各自候选绝对误差限的十分之一；最大电压差0.000155956 V，最大电流差0.0000679904 A。实际参考KCL残差2.22e-16 A、理想变比残差5.55e-17 V。
+
+标准参考与原生CSV的SHA均为`81cc392697bd03b67e5282dd9482996a8bc601ca08610a170c675c92ba0ae61e`，细化CSV的SHA均为`7c51ed3187e7e4d76425bd316302cc491eec1108e024083cc4c8a7a6ff7a994f`，provenance SHA为`87747db5a63d7dd657a1ded86833ac8c512268b5b4a48334a0d861f10b9088f2`。全部原件、MAT/CSV及审计留在忽略的`local_reference/transformer_t_equivalent/`，没有上传许可不明的第三方文件。
+
+这里的reference_ready只证明真实参考就绪。23的候选验收及提交状态见下方2026-11-06正式交付更新。验证范围仅为此零初值线性T网络阶跃响应，不证明实际变压器可用于直流、饱和/磁滞模型或既有09的不同励磁接点。2026-11-06已重新计算目录19项中的57个归档SHA，全部匹配；旧18项记录保持不变。
+
+2026-11-06 A4a正式交付更新：候选23全部14项真实比较与8项内部测试、独立Agg、教学说明及全量回归通过，已提交`91dbad6bb77af24d1a548a6d0943930c4bcce40f`。正式新增计数现为5；具体提交和任务范围以本更新和tasks.json为准。比较run20261106T025650374531Z，report SHA a64c0677349799eb0f3b7874b6cbedba071fd07c3e0498cc6933bc48ee71c0bc，[教学和复现](../../validation/cases/transformer_t_equivalent/README.md)。该结论只针对原第三T等效网络，三相、饱和/磁滞及持续直流设备应用不在认证范围。
