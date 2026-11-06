@@ -90,3 +90,5 @@ A4b已取得新的独立真实证据：ee_delta_transmission原完整双三相�
 B2研究/教学修订已单独提交f36c06362244efb43285e2725bc6b6db975c86ec；A3状态由planned推进in_progress，新增参考目录第23项保持inspected，正式新增仍7。next_actions已保留有界编译探针和有限R协议前置要求；1190全量仍是前次真实代码结果，本轮无候选/核心/依赖变动。F1账单锁的既知终态不重复轮询。
 
 2026-11-06 B2实现前协议：26与其tests不存在，先固定完整原网/非零DC初值、TR50ns及解后LPBE→PI新积分→外Limiter、显式2.5ms负荷事件。两连续状态全窗和500周期UC/iL/duty/源流限值、原生100/50ns及scalarAbs1e-12/5e-13、AutoScale off先行。独立发现原Isrc mode bracket最长5.6us，普通PWL周期均值可错.713646A；改用实际连续状态/duty、解析carrier和KCL逐模式重建，明确非直接源流/门极日志，每新run重核根/域/精化，不删首点或周期。源流条件根预算与50ns局部稳定性分析仅作先验，不冒称商业数据。新exporter先存raw后提取，已有Scope全点保存，无物理/结构编辑。准备提交协议后再启动正式参考，仍7项完成。
+
+B2协议先行提交167bb493c1405cd4edd4eaadd1b4cf2e0ad257a0。首次baseline尝试20261106T070625609Z在Scope日志API多name/value调用处终态exit1/42.486s，sim未调用、没有in/out MAT；11项原始输入/日志/终态清单保留，own PID均已退出。只拆setBlockParameter为单参数调用，勘误单独先行；原三协议/物理/solver/窗/限值未改，不算商业数值FAIL，不增加完成数。

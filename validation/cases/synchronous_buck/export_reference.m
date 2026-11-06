@@ -13,7 +13,7 @@ copyfile(source,fullfile(inputDirectory,[modelName '.slx']));
 copyfile([mfilename('fullpath') '.m'],fullfile(inputDirectory,'export_reference.m'));
 protocolDirectory=fullfile(repositoryRoot,'validation','cases','synchronous_buck');
 protocolSnapshots=struct('file',{},'sha256_raw',{},'sha256_lf',{});
-for name={'acceptance_plan.md','manifest.json','parameters.json'}
+for name={'acceptance_plan.md','manifest.json','parameters.json','native_logging_api_addendum.md'}
     protocolSource=fullfile(protocolDirectory,name{1});
     copyfile(protocolSource,fullfile(inputDirectory,name{1}));
     protocolSnapshots(end+1)=struct('file',name{1},'sha256_raw',sha256File(protocolSource), ...
@@ -77,8 +77,8 @@ in=in.setBlockParameter(scope25,'DataLogging','on');
 in=in.setBlockParameter(scope25,'DataLoggingSaveFormat','Dataset');
 in=in.setBlockParameter(scope123,'DataLogging','on');
 for k=1:numel(scopeInventory)
-    in=in.setBlockParameter(scopeInventory(k).path,'DataLoggingLimitDataPoints','off', ...
-        'DataLoggingDecimation','1');
+    in=in.setBlockParameter(scopeInventory(k).path,'DataLoggingLimitDataPoints','off');
+    in=in.setBlockParameter(scopeInventory(k).path,'DataLoggingDecimation','1');
 end
 before=struct('purpose','Original Buck full-window reference refinement; no candidate', ...
     'stage',stage,'protocol_source',protocolFile,'protocol_sha256',protocolHash, ...
@@ -117,7 +117,7 @@ close_system(modelName,0);
 extractNative(fullfile(runDirectory,'simulink_output.mat'),fullfile(runDirectory,'extracted'));
 writeJSON(fullfile(runDirectory,'completion.json'),struct('stage',stage, ...
     'simulation_and_extraction_complete',true,'closed_without_saving',true, ...
-    'candidate_created',false,'physical_or_control_parameters_changed',false));
+    'candidate_created_by_exporter',false,'physical_or_control_parameters_changed',false));
 end
 
 function result=modelConfiguration(modelName)

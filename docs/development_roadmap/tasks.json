@@ -3,7 +3,7 @@
   "updated_date": "2026-11-06",
   "timezone": "Asia/Shanghai",
   "branch": "codex/emt-examples-longterm",
-  "checkpoint_head": "4385e2ea6941e693ac784c48a78e7074c803f4ed",
+  "checkpoint_head": "167bb493c1405cd4edd4eaadd1b4cf2e0ad257a0",
   "current_task": "B2",
   "formal_new_examples_completed": 7,
   "status_values": [
@@ -413,11 +413,13 @@
         "validation/cases/synchronous_buck/manifest.json",
         "validation/cases/synchronous_buck/parameters.json",
         "validation/cases/synchronous_buck/acceptance_plan.md",
-        "validation/cases/synchronous_buck/export_reference.m"
+        "validation/cases/synchronous_buck/export_reference.m",
+        "validation/cases/synchronous_buck/native_logging_api_addendum.md"
       ],
       "commits": [
         "d79e849",
-        "f36c06362244efb43285e2725bc6b6db975c86ec"
+        "f36c06362244efb43285e2725bc6b6db975c86ec",
+        "167bb493c1405cd4edd4eaadd1b4cf2e0ad257a0"
       ],
       "blockers": []
     },
