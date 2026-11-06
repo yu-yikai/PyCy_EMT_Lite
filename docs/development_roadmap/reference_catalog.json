@@ -1755,6 +1755,98 @@
           "self_refinement.json": "994be02b79057d90759a60adb5392baf89526d83d23c79934d51a52754093498"
         }
       }
+    },
+    {
+      "id": "mw-source-line-transformer-r2025a",
+      "short_code": "MW-LINE-T",
+      "name": "Complete linear source-line-transformer-constant-impedance-load network",
+      "source_url": "https://www.mathworks.com/help/releases/R2025a/sps/powersys/ug/analyzing-a-simple-circuit.html",
+      "model_command": "power_gui",
+      "acquisition": "Copied unchanged from installed official MATLAB documentation_models; no model download performed.",
+      "files": [
+        "power_gui.slx"
+      ],
+      "file_formats": [
+        ".slx"
+      ],
+      "model_version": "Saved R2025a Prerelease Update 2 (25.1.0.2839344); run using R2025a Update 1 (25.1.0.2973910)",
+      "status": "runnable",
+      "software_requirements": [
+        "MATLAB R2025a Update 1",
+        "Simulink",
+        "Simscape Electrical / Specialized Power Systems"
+      ],
+      "dependencies": [
+        "powergui",
+        "SPS Pi Section Line",
+        "SPS Linear Transformer",
+        "SPS fixed RLC branches/loads and source"
+      ],
+      "download_available": null,
+      "downloaded": false,
+      "acquired_from_installation": true,
+      "download_note": "Official installed example used; remote model download availability was not probed.",
+      "content_inspected": true,
+      "opened_in_native_software": true,
+      "simulation_succeeded": true,
+      "reference_numeric_data_obtained": true,
+      "local_path": "local_reference/d0_research",
+      "allows_local_save": "Installed official example under licensed software for local study",
+      "allows_redistribution": "not_asserted",
+      "mathematical_compatibility": "Independent physical impedance/phasor derivation agrees with all 17 native RLC branches, 12 state phasors, six output phasors and checked transformer derivative rows. Preserve actual source-line-transformer order, all compensation/equivalent branches, corrected shunt conductance and nonzero steady-state initialization. Explicit existing basic R/L/C plus ideal transformer appear sufficient; no PyCy candidate yet.",
+      "blockers": [],
+      "remaining_work": [
+        "Freeze physical parameters, phasor initialization, directions and time-domain acceptance before candidate creation.",
+        "Generate real refined reference and quantify its numerical/interpolation accuracy.",
+        "Implement, independently test, compare, plot, explain and commit candidate before counting completion."
+      ],
+      "sha256": {
+        "simulink/power_gui.slx": "a46b7c34658c65ce58c6e51a6d167244c06f4e839063c00bd1ff75c78bdc5a08",
+        "default_runs/20261106T044524416Z/simulink_output.mat": "5e41fb2de7cd7a9d5ae88e892d3d612ab56a19943bdbe830148373fe64109e1f",
+        "default_runs/20261106T044524416Z/native_state_01.csv": "ff34ec9784847dcc97ddb6b45fcb64f0bab88a6334791786d4d857b1ae2371a1",
+        "default_runs/20261106T044524416Z/provenance.json": "479b636ecdffaceaf9ac04a6820b8f20fbd49e8fff257275a9c1f5de6b9f7420",
+        "default_runs/20261106T044524416Z/native_analysis.json": "fc09357db8a9ddd8080fbe6a3468fe45b978084b80a520e6e1ba3eff4433ccc2",
+        "default_runs/20261106T044524416Z/detailed_analysis/power_analyze_detailed.json": "7980706e382fd7dea9d59f79f5213c8c2bab17159cb7f03e5614ba7f3da9226a",
+        "native_parameter_audit.json": "8d41e66f320b48bb1c0d492fe7a679ad3c50384a499173fd5520a9ce2e5abf58",
+        "power_gui_independent_feasibility.py": "b3540b4b1d98de70c8930f249f74ae698bbb4c2d520005d995ad5531a6659ad2",
+        "power_gui_independent_feasibility.json": "4ec7e01336eb321c4dd2e6d71c2959e08adea0df6f43acd37071ea5696808234",
+        "pscad_environment_20261106.json": "edde15178e46dd4851f7406c19bc327fc59072a2e256516c6ac43c978e4d469f",
+        "evidence_inventory_final.json": "9297e7ef3f59aed86f9791c9e4ee7c98f15f0a09dc467481947d6e2e2a8c6e4f"
+      },
+      "probe_record": "docs/development_roadmap/experiments/source_line_transformer_reference_probe.md",
+      "native_probe": {
+        "run_id": "20261106T044524416Z",
+        "samples": 219,
+        "dynamic_states": 12,
+        "time_s": [
+          0,
+          0.05
+        ],
+        "solver": {
+          "Type": "Variable-Step",
+          "Solver": "ode23tb",
+          "RelTol": "1e-4",
+          "MaxStepSize": 0.001
+        },
+        "elapsed_seconds": 7.2005767,
+        "model_dirty": "off",
+        "output_capture": "SimulationInput enabled time/state capture only; out contains tout/xout, no Scope waveforms.",
+        "initialization": "All 12 actual states nonzero; actual xout(0) equals native analysis x0 and Im(xss). Independently confirmed from physical phasors.",
+        "scope": "Original complete network with default physical, solver and initial-state settings. Runnability probe, not refined reference or PyCy validation."
+      },
+      "independent_physics_audit": {
+        "script": "power_gui_independent_feasibility.py",
+        "report": "power_gui_independent_feasibility.json",
+        "max_state_relative_phasor_error": 3.838636405596085e-13,
+        "max_output_relative_phasor_error": 1.0969757576645277e-13,
+        "method": "Original XML/physical topology, published hyperbolic and pu equations, independent complex impedance recursion; native A/B not used to solve. Native matrix rows used only for separate derivative/mapping checks.",
+        "reference_inventory_files": 74
+      },
+      "formal_pycy_validation": {
+        "status": "not_started",
+        "implementation_commit": null,
+        "note": "No candidate, frozen acceptance or refined commercial comparison yet; formal completed-example count remains six."
+      }
     }
   ],
   "scope_notes": [

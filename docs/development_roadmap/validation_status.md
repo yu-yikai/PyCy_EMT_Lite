@@ -39,3 +39,7 @@ B1工具加入10项数学/失败测试后的完整回归：**1154 passed，144.2
 2026-11-06到24最终：1179 passed490.61s（XML490.603，含slow），日志.tmp/longterm/a4b-final-full-pytest.log、a4b-final-full-tests.xml。锁定同步27包、Ruff全范围、mypy39通过，九专项76.926s、独立Agg100001点。最终真实比较run20261106T041603177270Z全部38项PASS，maxLV20.17655V/HV205.91860V/源电流119.38782µA/maxNR.000246239，图/输入/hash独立审计均完成，提交0204476。原始资源中止/最小步长/guard/1µs商业FAIL均保留，未降低窗口/限值。正式新增6；A4当前23/24范围完成，真实线路组合后置D0，F1新HEAD跨OS状态单独记录。
 
 2026-11-06本批已正常push到1423c7d6dfbca10547cf856dc20faa5dadf935dc。一次有界公开API观察确认最新CI run42162705728终态failure：Windows127711904930/Ubuntu127711905228均runner_id=0、steps=[]，各自注释明确账户billing lock，未执行任何测试，远端test_count=null。证据experiments/ci_1423c7d.json，7份raw响应/hash全核；网络观察及所有本轮监控已终态。23/24跨OS仍未验证，F1局部受阻不改变本地1179/商业数值PASS。继续D0参考先行，不通过代码或空提交绕账单锁。
+
+2026-11-06 D0默认参考探针run20261106T044524416Z：真实R2025a Update1运行原power_gui50ms，219点/12动态状态，ode23tb、7.2005767s；监测exit0、Dirty off、原SLX SHA不变。12实际初值与native analysis x0完全相同且全非零；原始MAT、CSV、状态名/A/B/C/D与netlist保留。没有Scope输出；目前仅runnable，尚无精化、候选、商业比较或第7项正式交付。本轮仅研究与文档，1179全量结果仍属于此前已通过且未改变的代码，不记作重新执行。
+
+D0独立物理核验：17支路参数最大相对差6.994e-14，12状态相量3.839e-13、6输出1.097e-13；T接点/方向与原生导数行一致。最终74项库存hash由主审全核，入口evidence_inventory_final.json（9297e7ef…）；旧库存保留其并行收尾前两项身份。相量一致性不代替尚未完成的时间域精化与候选验证。

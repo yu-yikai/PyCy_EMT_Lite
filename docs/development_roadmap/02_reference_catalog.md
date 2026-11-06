@@ -21,6 +21,7 @@
 | MW-DC | 官方教学库 v2.2.2 的 `NodalAnalysisExample.slx`、`RLCCircuit.slx` | Nodal已**reference_ready**；101点、14个电气信号；RLC仅**inspected**且未运行；metadata R2024a | 线性多源网络已就绪；批量仿真临时禁用孤立未接万用表，主电路不改 |
 | MW-TLINE | `simscape/TransmissionLineExample` / `TransmissionLine.slx` | **reference_ready**；50段纯线性T形RLCG；真实10 ps/5 ps细化通过，5066点标准数据 | 对标边界为有限T梯级，官方第25段图例实指第15段；PyCy新例另行验收 |
 | MW-TXFMR-T | `simscape/ComparisonOfMutualInductorAndIdealTransformerExample` / `CompareCircuits.slx`及五个支持SLX | **reference_ready**；第三组纯电气T网络、七路真实输出；8063/16042点参考自身细化通过 | 采用官方MLX的2 s阶跃与0.1 H励磁，区别于全零备用参数；候选23的提交验收另计 |
+| MW-LINE-T | 安装目录中的官方 `power_gui.slx` 完整源→线路→T→固定阻抗负荷网 | **runnable**；默认50 ms、219点、12个非零初值动态状态，原件未改 | D0参考先行；保留双曲修正RLCG、稳态初始化及所有支路，尚无候选/正式比较 |
 
 官方来源：[MathWorks 两级 RC](https://www.mathworks.com/help/simscape/ug/cascaded-rc-circuit-in-simulink-and-simscape.html)、[PSCAD 第3章](https://www.pscad.com/knowledge-base/article/46)、[PNNL Bootcamp](https://github.com/pnnl/i2x/tree/master/emt-bootcamp)、[PyPSCAD](https://github.com/NatLabRockies/PyPSCAD)、[MathWorks DC Circuit Analysis](https://github.com/MathWorks-Teaching-Resources/DC-Circuit-Analysis)。具体下载 URL、文件哈希、依赖和许可判断均在 JSON 中逐项记录。
 
@@ -145,7 +146,7 @@ PyCy在3761a21预先冻结的验收下，已完成独立8项物理测试、独�
 
 ### 双三相变压器与Delta Reference
 
-第21项`mw-three-phase-delta-reference-r2025a`已从官方固定R2025a地址取得并真实运行原完整模型：daessc、0–50ms、449点，保留MAT与18份原生CSV。它只有源、两个线性变压器、母线、参考点和负荷，没有实际线路段。两T磁性及漏抗分支明确exclude，但源阻抗的活动分支仍需原生解释，不将保存R/L或模型标题当作证据。原始冷启动最早非零采样仅5.76235ns，不能按最大步长1ms猜PyCy合适步长。当前只记runnable，下一步核参数/端口/规范点后再决定是否冻结候选。[研究与最小恢复步骤](experiments/three_phase_transformer_reference_candidates.md)。
+第21项`mw-three-phase-delta-reference-r2025a`的原默认探针为daessc、0–50ms、449点，保留MAT与18份原生CSV；后续已完成源参数、端口和规范点核验，参考精化及24验收见下方更新。它只有源、两个线性变压器、母线、参考点和负荷，没有实际线路段。原始冷启动最早非零采样仅5.76235ns，不能按最大步长1ms猜PyCy合适步长。[前置研究](experiments/three_phase_transformer_reference_candidates.md)。
 
 
 2026-11-06 A4b更新：第21项的源活动R/L、绕组铜阻/方向和Delta参考规范已直接核清。
@@ -159,3 +160,18 @@ PyCy在3761a21预先冻结的验收下，已完成独立8项物理测试、独�
 最大LV20.17655V/HV205.91860V/源电流119.38782µA、最大NRMSE0.000246239。
 [教学、失败保留和复现](../../validation/cases/three_phase_transformer_chain/README.md)。
 本例没有实际线路或磁性支路，不推广为其他接线/零序/饱和验证；完整回归与Git完成状态由tasks/validation_status同步。
+
+### 完整源、线路、变压器与负荷原网
+
+第22项`mw-source-line-transformer-r2025a`来自本机官方 `power_gui.slx`，
+[R2025a教程](https://www.mathworks.com/help/releases/R2025a/sps/powersys/ug/analyzing-a-simple-circuit.html)
+明确引用该模型及150 km线路。原件保存元数据是R2025a Prerelease Update 2，
+本次实际运行软件为R2025a Update 1；原件SHA为`a46b7c34658c65ce58c6e51a6d167244c06f4e839063c00bd1ff75c78bdc5a08`。
+
+原完整网默认50 ms/ode23tb真实成功219点、12个动态状态，耗时7.2005767 s、Dirty off。
+线路双曲修正实际生成的三条并联电阻与全部非零初值均保留，不能用无G、零初值线路封装直接替代。
+本次只额外开启时间/状态捕获，Scope没有保存波形；后续C/D线性投影须明确来源。
+满精度支路表及独立物理相量核验已完成，12状态相量最大相对差3.839e-13。
+当前为runnable，尚未参考自身精化或候选验收，不增加正式算例数。
+原件、MAT/CSV、native分析及独立物理审查均在忽略目录，
+[调查与恢复](experiments/source_line_transformer_reference_probe.md)说明下一步；优先基础R/L/C与理想T，暂不增加核心能力。

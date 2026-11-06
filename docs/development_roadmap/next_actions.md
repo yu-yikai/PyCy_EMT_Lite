@@ -1,6 +1,6 @@
 # 恢复与下一步
 
-日期2026-11-06（Asia/Shanghai）。恢复先读tasks/progress/decisions/validation_status，核分支、HEAD、工作区、git log和真实远端。记录中的checkpoint `1423c7d6dfbca10547cf856dc20faa5dadf935dc` 是记录时已知提交，远端及后续文档须另核，须与后续历史交叉核对；不覆盖用户工作，不强推，不操作main。
+日期2026-11-06（Asia/Shanghai）。恢复先读tasks/progress/decisions/validation_status，核分支、HEAD、工作区、git log和真实远端。记录中的checkpoint `4ce96ccee56ea7973d2decfcbc20f97113835462` 是记录时已知提交，远端及后续文档须另核，须与后续历史交叉核对；不覆盖用户工作，不强推，不操作main。
 
 ## 当前事实
 
@@ -25,7 +25,9 @@
 1. F1局部blocked：最新1423c7d精确run42162705728已真实终态failure，两job因账户billing lock未启动任何步骤，原始7份响应/hash及注释见experiments/ci_1423c7d.json。无后台CI监控，不继续轮询相同终态，不通过代码/空提交/重复push解决。外部账户确认解锁后，优先对这个覆盖24的run在授权Actions界面选择Re-run all jobs（或有相应授权工具时POST /repos/yu-yikai/PyCy_EMT_Lite/actions/runs/42162705728/rerun），再按精确head/attempt核两系统全步骤。旧e51c1f1记录保留但只覆盖到23；当前环境无gh，不擅自操作账单或提取凭据。正常必要开发里程碑仍可push，CI状态须真实分开记录。
 
 2. B2已取得并真实运行原SPS同步Buck，先读experiments/synchronous_buck_reference_probe.md。现仅有输出/源电流/占空比，储能初始化、实际门极和体二极管电流未核实；日志override不能新增未标记内部信号。building-simulink-models要求model_edit而当前无此工具，未改信号属性或结构。取得工具后在独立副本补日志，核完物理/控制一致性才考虑冻结协议。原连续PI/外部限幅/Natural PWM也与现离散控制不同，维护成本较高；继续寻找更简单的受控双向开关原参考，禁止用自动换流框架填补。普通MATLAB上下文的prefdir/5201启动失败已由正常许可上下文加独立MATLAB_PREFDIR解决，准确命令见probe，不反复重跑成功的默认结果。
-3. 当前下一任务D0：先实读04路线图、tasks.D0及24 README，明确24没有线路。只读本机R2025a示例目录与官方版本化来源，寻找“源—线性变压器—实际线路段—固定负荷”完整可运行网络；先核拓扑、源/线参数、绕组/线量、初值、物理尺度与工具依赖。优先复用当前源/T/Pi或现有分段线，不为数量拼接23/24或改变官方物理后伪称原参考。找到原网后按真实运行/精化/独立推导/实现前协议流程；尚无reference时不写候选或计数。结构编辑须使用building-simulink-models的model_edit，当前无该工具，不绕过。A3仍缺同数学Bergeron商业参考，50T不能代替。A4b已完成，无需重复任何成功sim/全量测试；若要复核其报告用原运行inputs，协议LF规范与原字节hash分开。
+3. 当前D0已找到并真实运行本机官方power_gui完整网，先读[专项调查](experiments/source_line_transformer_reference_probe.md)。实际顺序是源→150km/两π段线路→线性T→固定阻抗负荷，另保留全部RL补偿/等值支路。默认run20261106T044524416Z：50ms/219点/12状态，ode23tb、7.2005767s、exit0、Dirty off，原件hash不变；只记runnable，不计第7例。原始MAT/CSV/analysis/net及输入快照保留local_reference/d0_research/default_runs/20261106T044524416Z，不重跑默认sim。
+
+   精确detailed支路表及独立物理相量/初值已核：12态相量最大相对差3.839e-13；线路双曲修正实际生成三条约202M/101M/202MΩ shunt，不能按SpecifyConductance=off省略。优先基础R/L/C与理想T，保持励磁接点/所有支路及公开初值参数。原网Scope无保存波形，本次仅开启tout/xout捕获；C/D明确了Ub1/Ub2/i_eq/i_Load映射，后续状态线性投影须如实标注。接下来在候选前冻结协议，再做参考自身精化和实现；相量核验不替代时间域商业比较，当前没有候选。A3同数学Bergeron参考仍缺，PSCAD simpleac为耦合/带事件原网，不能凭取得原件替代相容性。A4b已完成，无需重复成功sim或全量测试。
 
 4. B1仍失败：146a279固定NRMSE2%限值，实际2.66%–2.72%，features通过。研究适配须先明确新的控制/器件协议，隔离时序、压降与积分差别，不拟合时移/幅值、不为现有失败放宽标准。C1依赖的控制链保持后置。
 

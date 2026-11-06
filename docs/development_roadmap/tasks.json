@@ -3,7 +3,7 @@
   "updated_date": "2026-11-06",
   "timezone": "Asia/Shanghai",
   "branch": "codex/emt-examples-longterm",
-  "checkpoint_head": "1423c7d6dfbca10547cf856dc20faa5dadf935dc",
+  "checkpoint_head": "4ce96ccee56ea7973d2decfcbc20f97113835462",
   "current_task": "D0",
   "formal_new_examples_completed": 6,
   "status_values": [
@@ -432,18 +432,22 @@
     {
       "id": "D0",
       "phase": "interfaces_networks",
-      "title": "线性电源—变压器—线路—负荷组合参考先行",
+      "title": "线性电源、线路、变压器与负荷组合参考先行",
       "priority": 2,
       "dependencies": [
         "A4b",
         "A7"
       ],
       "new_capabilities": [],
-      "references": [],
-      "validation": "先取得/核验真实可运行且数学一致的完整含线路参考，复用现有元件，候选前固定拓扑/参数/初值/方向/完整窗与阈值；无参考不写候选或计数。",
+      "references": [
+        "mw-source-line-transformer-r2025a"
+      ],
+      "validation": "原power_gui完整网默认50ms真实成功219点/12态/7.2005767s；Dirty off、原件hash不变。17精确支路、12非零相量初值及6输出独立物理核验通过（最大状态相对差3.839e-13）。最终库存74项hash全核；仅runnable，无参考自身精化、候选协议或实现。下一步候选前固定物理/方向/完整窗/步长与双误差限。",
       "acceptance": "只在有独立教学价值且不引入新框架时实施；真实模型/独立物理/商业比较/图报告/测试/教学/提交全部完成。24无实际线路不能替代本项。",
-      "status": "planned",
-      "files": [],
+      "status": "in_progress",
+      "files": [
+        "docs/development_roadmap/experiments/source_line_transformer_reference_probe.md"
+      ],
       "commits": [],
       "blockers": []
     },
