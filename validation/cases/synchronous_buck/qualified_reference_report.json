@@ -1,0 +1,203 @@
+{
+  "case_id": "synchronous_buck",
+  "scope": "Real native reference self-refinement only; not candidate acceptance",
+  "passed": true,
+  "original_failed_reference_report": "initial_reference_failure.json",
+  "frozen_solver_addendum": "reference_solver_addendum.md",
+  "platform": "MATLAB R2025a Update 1 / Simulink / Simscape Electrical Specialized Power Systems",
+  "model_sha256": "ea8344f62e2a691456363f0391389cd1675bfe246bd71dc8f15a3b838ca6ab42",
+  "runs": {
+    "baseline": {
+      "directory": "local_reference/b2_protocol_research/native_refinement_identity_v2/20261109T0842314439381Z/runs/20261109T085422260Z-baseline",
+      "samples": 406263,
+      "raw_mat_sha256": "ae68060d41e963c867453a1753955f6da63b15f2c48df0d9cffd319e91c70181",
+      "actual_solver": {
+        "Type": "Variable-Step",
+        "Solver": "ode23tb",
+        "MaxStepSize": 2.5e-08
+      },
+      "requested_solver_settings": {
+        "max_step_s": 2.5e-08,
+        "relative_tolerance": 2.5e-08,
+        "absolute_tolerance": 2.5e-13
+      },
+      "completion_sha256": "e714bd46e69f946b719aace42fbb8df48248afcb4708d5376f28290e18659ae2",
+      "resource_summary_sha256": "16220407fad69e0ae1d25f37b7a877d4623a36013a755cd8b86502741a56ffbe"
+    },
+    "refined": {
+      "directory": "local_reference/b2_protocol_research/native_refinement_identity_v2/20261109T0842314439381Z/runs/20261109T085726994Z-refined",
+      "samples": 809567,
+      "raw_mat_sha256": "1da52957d0e8ba9c1d072196f8baf7850132ee4e8615597fdb7094ba23d5a0fc",
+      "actual_solver": {
+        "Type": "Variable-Step",
+        "Solver": "ode23tb",
+        "MaxStepSize": 1.25e-08
+      },
+      "requested_solver_settings": {
+        "max_step_s": 1.25e-08,
+        "relative_tolerance": 1.25e-08,
+        "absolute_tolerance": 1.25e-13
+      },
+      "completion_sha256": "634c80979c079c47d64e1a7679ae9917aacd1e0c23daee6f1f5a7282e08b5114",
+      "resource_summary_sha256": "68b77626fde14d79cfa32de189810f3db122d086df119c54b537d345fe8c07f4"
+    }
+  },
+  "comparison": {
+    "continuous": [
+      {
+        "window_seconds": [
+          0.0,
+          0.0025
+        ],
+        "alignment": "absolute_time_linear_interpolation",
+        "passed": true,
+        "signals": {
+          "vout": {
+            "reference": "vout",
+            "unit": "V",
+            "scale": 15.0,
+            "rmse": 0.0006016512288803496,
+            "nrmse": 4.011008192535664e-05,
+            "max_abs_error": 0.0019135234363325537,
+            "candidate_mean": 14.072163951971305,
+            "reference_mean": 14.072071304138108,
+            "candidate_rms": 14.3797653725461,
+            "reference_rms": 14.379712901035939,
+            "limits": {
+              "max_nrmse": 0.0005,
+              "max_abs_error": 0.03
+            },
+            "passed": true
+          },
+          "iL": {
+            "reference": "iL",
+            "unit": "A",
+            "scale": 8.0,
+            "rmse": 0.00031808695887932086,
+            "nrmse": 3.976086985991511e-05,
+            "max_abs_error": 0.001053285298397988,
+            "candidate_mean": 3.8835881713393747,
+            "reference_mean": 3.8835661085592768,
+            "candidate_rms": 3.930302719578298,
+            "reference_rms": 3.930285441058077,
+            "limits": {
+              "max_nrmse": 0.001,
+              "max_abs_error": 0.015
+            },
+            "passed": true
+          }
+        }
+      },
+      {
+        "window_seconds": [
+          0.0025,
+          0.01
+        ],
+        "alignment": "absolute_time_linear_interpolation",
+        "passed": true,
+        "signals": {
+          "vout": {
+            "reference": "vout",
+            "unit": "V",
+            "scale": 15.0,
+            "rmse": 0.00024545817289122965,
+            "nrmse": 1.6363878192748643e-05,
+            "max_abs_error": 0.0008565140673510996,
+            "candidate_mean": 14.947807682837585,
+            "reference_mean": 14.947839110808815,
+            "candidate_rms": 14.963414036023226,
+            "reference_rms": 14.963439635849605,
+            "limits": {
+              "max_nrmse": 0.0005,
+              "max_abs_error": 0.03
+            },
+            "passed": true
+          },
+          "iL": {
+            "reference": "iL",
+            "unit": "A",
+            "scale": 8.0,
+            "rmse": 0.00022579049152591092,
+            "nrmse": 2.8223811440738865e-05,
+            "max_abs_error": 0.0007904905056053124,
+            "candidate_mean": 5.319783051106167,
+            "reference_mean": 5.31979041176257,
+            "candidate_rms": 5.4085621134454875,
+            "reference_rms": 5.408569261208059,
+            "limits": {
+              "max_nrmse": 0.001,
+              "max_abs_error": 0.015
+            },
+            "passed": true
+          }
+        }
+      }
+    ],
+    "period_features": {
+      "columns": [
+        "uC",
+        "iL",
+        "duty",
+        "reconstructed_source_current"
+      ],
+      "cycles": 500,
+      "all_absolute_cycles_included": true,
+      "period_seconds": 2e-05,
+      "max_abs_errors": [
+        0.0018490298482749523,
+        0.0009789057240454646,
+        0.0009017167603091458,
+        0.006819142066127881
+      ],
+      "rms_errors": [
+        0.0003655859742982058,
+        0.00017549393322514504,
+        0.00012944119641037562,
+        0.0006814172892024497
+      ],
+      "max_abs_limits": [
+        0.015,
+        0.008,
+        0.0015,
+        0.010000000000000002
+      ],
+      "worst_cycle_indices_zero_based": [
+        18,
+        21,
+        18,
+        12
+      ],
+      "passed": true
+    },
+    "passed": true
+  },
+  "pair_identity": {
+    "passed": true,
+    "matched_fields": [
+      "solver_protocol",
+      "selected_protocol",
+      "selected_protocol_sha256",
+      "selected_protocol_lf_sha256",
+      "protocol_snapshots_lf_sha256",
+      "matlab_version"
+    ]
+  },
+  "explicit_duty_error_assumption": 1e-06,
+  "assumptions": [
+    "Diode-inactivity model and physical equations apply",
+    "Explicit anchor duty error bound holds",
+    "Native UC/filtered-error anchor errors preserve local derivative/clipping bounds; duty error alone is insufficient",
+    "No hidden physical roots; both full native runs require checks"
+  ],
+  "accuracy_claim": "Conditional numerical evidence, not an absolute global error proof",
+  "source_current_label": "Derived from actual native storage states/duty, analytic carrier and physical KCL; raw measured samples remain in NPZ",
+  "full_report": "local_reference/b2_protocol_research/20261109T085912755Z-refinement-25-12p5ns-audit/report.json",
+  "full_report_sha256": "973dcb1874ae5afae6f97e601d7f36dc563a116ebf517fa075c77b13d955e947",
+  "independent_review": {
+    "report": "local_reference/b2_protocol_research/postrun_pair_review/20261109T0856259740829Z/report.md",
+    "report_sha256": "4de55b20428b79bf6fde5a2461ade6152ba324cba0326bdfb0fdbc449f1e64a9",
+    "inventory": "local_reference/b2_protocol_research/postrun_pair_review/20261109T0856259740829Z/evidence_inventory.json",
+    "inventory_sha256": "ae5790722b0aa9ce13b10e1f931b3ffe2e184916c560e69ee3846300b77bb797"
+  },
+  "canonical_provenance_sha256": "85a5163a7eb95f647cbae1ce39771abce767a7e7982bfb0db68ec2f55b0ad859"
+}
