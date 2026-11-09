@@ -1,0 +1,62 @@
+{
+  "status": "REFERENCE_SELF_REFINEMENT_QUALIFIED",
+  "reference_id": "pscad-installed-scalar-bergeron-v5",
+  "candidate_created_run_or_compared": false,
+  "all_16_signal_window_view_checks_passed": true,
+  "max_common_sample_error_all_4_signals_SI": 0.0,
+  "max_merged_knots_error_by_signal": {
+    "Vk_V": 5.4001247917767614e-12,
+    "Vm_V": 9.663381206337363e-12,
+    "Ik_A": 5.1514348342607263e-14,
+    "Im_out_A": 5.10702591327572e-14
+  },
+  "max_nrmse_any_window_signal_view": 2.7474478381156035e-15,
+  "Vs_input_max_error_V": 1.3713474800169934e-12,
+  "project_parameter_diff": {
+    "time_step": [
+      1.0,
+      0.5
+    ],
+    "sample_step": [
+      1.0,
+      0.5
+    ]
+  },
+  "run_summary": {
+    "baseline_1us": {
+      "manifest_count": 65,
+      "elapsed_s": 35.5043994000298,
+      "Vs_max_error_V": 1.3713474800169934e-12,
+      "Mag_max_error_V": 1.3713474800169934e-12,
+      "zero_history_max_abs_SI": 0.0,
+      "raw_count": 6001
+    },
+    "refined_halfus": {
+      "manifest_count": 65,
+      "elapsed_s": 50.288396599993575,
+      "Vs_max_error_V": 1.3713474800169934e-12,
+      "Mag_max_error_V": 1.3713474800169934e-12,
+      "zero_history_max_abs_SI": 0.0,
+      "raw_count": 12001
+    }
+  },
+  "complete_receipt": {
+    "path": "local_reference/a3_followup/integrity_review/20261109_a3_refpair_qualification_a8d36e/qualification.json",
+    "bytes": 63725,
+    "sha256": "638fd6607f703a1799831a274f98088108a28f72a74c0d5b253e9cce25359cd8"
+  },
+  "complete_manifest": {
+    "path": "local_reference/a3_followup/integrity_review/20261109_a3_refpair_qualification_a8d36e/manifest.json",
+    "bytes": 22228,
+    "sha256": "cb538d8af2ff5d4624bf6acd212db601899e4bcb68a3f5274f98c09108efcdca"
+  },
+  "plot": {
+    "path": "local_reference/a3_followup/integrity_review/20261109_a3_refpair_qualification_a8d36e/reference_self_refinement.png",
+    "bytes": 115340,
+    "sha256": "b338efb672309e1b38c8097f4703638260c320fe4e24b7508d410a1ed74deba7"
+  },
+  "case_id": "finite_r_bergeron",
+  "scope": "Genuine 1/0.5 us PSCAD reference qualification before candidate implementation; not a candidate comparison or absolute error proof for a physical cable.",
+  "normalized_reference_sha256": "2964bfefac80761097ae6e1a416c4d01c7cfec6a1d2e513b68b9d80b5fd8850b",
+  "initialization_boundary": "STANDARD/no snapshot and zero observed pre-excitation/causal arrivals support zero histories; hidden delay buffers were not directly exported."
+}

@@ -1,0 +1,221 @@
+{
+  "case_id": "finite_r_bergeron",
+  "passed": true,
+  "status": "numerical_comparison_passed",
+  "protocol_commit": "44d1436df5714060176998ea1ce94c6d6eaf7d48",
+  "reference_platform": "PSCAD 5.0.0 / EMTDC 5.00 R#93051001 / GF46 x86",
+  "candidate_samples": 6001,
+  "reference_samples": 12001,
+  "candidate_step_seconds": 1e-06,
+  "reference_step_seconds": 5e-07,
+  "time_shift_seconds": 0,
+  "excluded_time_seconds": 0,
+  "source_input_max_abs_error_V": 1.4139800441625994e-12,
+  "source_input_limit_V": 1e-08,
+  "windows": [
+    {
+      "window_seconds": [
+        0.0,
+        0.0012
+      ],
+      "alignment": "absolute_time_linear_interpolation",
+      "passed": true,
+      "signals": {
+        "v:send": {
+          "reference": "Vk_V",
+          "unit": "V",
+          "scale": 1000.0,
+          "rmse": 1.291554147266845e-12,
+          "nrmse": 1.2915541472668452e-15,
+          "max_abs_error": 5.9117155615240335e-12,
+          "candidate_mean": 392.13144556915734,
+          "reference_mean": 392.13144556915705,
+          "candidate_rms": 527.1248929459409,
+          "reference_rms": 527.1248929459406,
+          "limits": {
+            "max_nrmse": 0.001,
+            "max_abs_error": 1.0
+          },
+          "passed": true
+        },
+        "v:recv": {
+          "reference": "Vm_V",
+          "unit": "V",
+          "scale": 1000.0,
+          "rmse": 1.3974932725499684e-12,
+          "nrmse": 1.3974932725499684e-15,
+          "max_abs_error": 5.229594535194337e-12,
+          "candidate_mean": 204.7969572836853,
+          "reference_mean": 204.7969572836857,
+          "candidate_rms": 370.1104475646209,
+          "reference_rms": 370.11044756462167,
+          "limits": {
+            "max_nrmse": 0.001,
+            "max_abs_error": 1.0
+          },
+          "passed": true
+        },
+        "i:Rs": {
+          "reference": "Ik_A",
+          "unit": "A",
+          "scale": 5.0,
+          "rmse": 1.2225636736593866e-14,
+          "nrmse": 2.445127347318773e-15,
+          "max_abs_error": 5.10702591327572e-14,
+          "candidate_mean": 1.4953522109750927,
+          "reference_mean": 1.4953522109750959,
+          "candidate_rms": 2.015751136701426,
+          "reference_rms": 2.0157511367014305,
+          "limits": {
+            "max_nrmse": 0.001,
+            "max_abs_error": 0.005
+          },
+          "passed": true
+        },
+        "i:Rload": {
+          "reference": "Im_out_A",
+          "unit": "A",
+          "scale": 5.0,
+          "rmse": 1.1294358379495701e-14,
+          "nrmse": 2.25887167589914e-15,
+          "max_abs_error": 5.129230373768223e-14,
+          "candidate_mean": 0.5119923932092132,
+          "reference_mean": 0.5119923932092102,
+          "candidate_rms": 0.9252761189115521,
+          "reference_rms": 0.9252761189115465,
+          "limits": {
+            "max_nrmse": 0.001,
+            "max_abs_error": 0.005
+          },
+          "passed": true
+        }
+      }
+    },
+    {
+      "window_seconds": [
+        0.0012,
+        0.006
+      ],
+      "alignment": "absolute_time_linear_interpolation",
+      "passed": true,
+      "signals": {
+        "v:send": {
+          "reference": "Vk_V",
+          "unit": "V",
+          "scale": 1000.0,
+          "rmse": 2.9444029831940394e-12,
+          "nrmse": 2.9444029831940396e-15,
+          "max_abs_error": 5.115907697472721e-12,
+          "candidate_mean": 834.0926223002876,
+          "reference_mean": 834.0926223002884,
+          "candidate_rms": 834.0956375358312,
+          "reference_rms": 834.095637535832,
+          "limits": {
+            "max_nrmse": 0.001,
+            "max_abs_error": 1.0
+          },
+          "passed": true
+        },
+        "v:recv": {
+          "reference": "Vm_V",
+          "unit": "V",
+          "scale": 1000.0,
+          "rmse": 2.885318925478053e-12,
+          "nrmse": 2.8853189254780528e-15,
+          "max_abs_error": 5.343281372915953e-12,
+          "candidate_mean": 668.6819104848842,
+          "reference_mean": 668.6819104848845,
+          "candidate_rms": 668.7486466220755,
+          "reference_rms": 668.7486466220759,
+          "limits": {
+            "max_nrmse": 0.001,
+            "max_abs_error": 1.0
+          },
+          "passed": true
+        },
+        "i:Rs": {
+          "reference": "Ik_A",
+          "unit": "A",
+          "scale": 5.0,
+          "rmse": 2.956172148735653e-14,
+          "nrmse": 5.912344297471306e-15,
+          "max_abs_error": 5.1514348342607263e-14,
+          "candidate_mean": 1.6590737769971236,
+          "reference_mean": 1.659073776997115,
+          "candidate_rms": 1.6592253600921578,
+          "reference_rms": 1.6592253600921496,
+          "limits": {
+            "max_nrmse": 0.001,
+            "max_abs_error": 0.005
+          },
+          "passed": true
+        },
+        "i:Rload": {
+          "reference": "Im_out_A",
+          "unit": "A",
+          "scale": 5.0,
+          "rmse": 3.024438926978276e-14,
+          "nrmse": 6.048877853956552e-15,
+          "max_abs_error": 5.084821452783217e-14,
+          "candidate_mean": 1.6717047762122104,
+          "reference_mean": 1.671704776212208,
+          "candidate_rms": 1.6718716165551888,
+          "reference_rms": 1.6718716165551866,
+          "limits": {
+            "max_nrmse": 0.001,
+            "max_abs_error": 0.005
+          },
+          "passed": true
+        }
+      }
+    }
+  ],
+  "scope": "Same scalar finite-R Bergeron approximation: two lossless Z=201 ohm, tau=150 us half-lines separated by R/2=50 ohm, with R/4=25 ohm at each terminal. Attenuation is 1; resistance is explicit. This validates the documented lumped-loss Bergeron model, not broadband cable physics or a general frequency-dependent line. Native hidden delay buffers are not directly exported; STANDARD/no snapshot, zero observed pre-excitation and causal arrivals are the stated initialization evidence. Runtime TLI/TLO parameters are distinct from LCP frequency-domain diagnostics. No fitted time, delay, amplitude, impedance, resistance or initial history.",
+  "initialization_evidence": "STANDARD/no snapshot, all six observable channels zero before excitation and causal arrivals; hidden delay buffers not directly logged.",
+  "interpretation": "Agreement of the same constant-parameter lumped-loss Bergeron approximation to floating-point precision; not absolute accuracy of a broadband physical cable.",
+  "complete_report": {
+    "path": "local_reference/finite_r_bergeron/comparison_results/20261109T120632310271Z/report.json",
+    "sha256": "1961582edfe26d9db3497cee3a3b7a884b977ac0596826c63998c433cffaed56"
+  },
+  "plot": {
+    "path": "local_reference/finite_r_bergeron/comparison_results/20261109T120632310271Z/comparison.png",
+    "sha256": "bd52d33261d3a7d8201aef918007b78389f97d5bb6949a79f9b6833eb2f75279"
+  },
+  "input_snapshot_count": 153,
+  "candidate_source_sha256": "ab2e3e6cdcd3c799f9ae1952db8c4e2aab711c520443fcf5f529d7a31ba55ee0",
+  "comparison_code_sha256": "7aac6a30ef823653d91ab3b7798a8acca210ab417b2486cc3da919695290fe8c",
+  "manifest_sha256": "b8b45e468e54fc0c7bfb5fe56d23f42442bfbd826c72f71cbbc1c52b8ead947f",
+  "parameters_sha256": "559e58a2580b90889d15c1f925f4bf06f19e5f7a3c6f3f6e7c912713ca06120f",
+  "normalized_reference_sha256": "2964bfefac80761097ae6e1a416c4d01c7cfec6a1d2e513b68b9d80b5fd8850b",
+  "reference_qualification_report_sha256": "638fd6607f703a1799831a274f98088108a28f72a74c0d5b253e9cce25359cd8",
+  "independent_code_and_data_review": {
+    "path": "local_reference/native_static_reviews/20261109T1207201487924Z_a3_public_review/actual_comparison_receipt.json",
+    "sha256": "a75905ec83e2d92a2a8690f6afc8bfd6566600223f08894b57596a2bffdbc8c9"
+  },
+  "independent_raw_data_review": {
+    "path": "local_reference/a3_followup/integrity_review/20261109_a3_commercial_independent_bef0ad/report.json",
+    "sha256": "a38fad05833cbdff7a73e6ea3af42dd1d5efbf94607d6431617f6d0fa3228689"
+  },
+  "local_verification": {
+    "physical_test_items": 8,
+    "standalone_samples": 6001,
+    "full_test_items": 1244,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "includes_slow": true,
+    "xml_duration_seconds": 469.778,
+    "locked_environment_packages": 27,
+    "ruff": "passed",
+    "mypy_source_files": 39,
+    "source_files_unchanged_during_full_run": 109,
+    "evidence": {
+      ".tmp/longterm/a3-27-full-20261109T1207.xml": "61b384b3c804f088e06ab4ed8fa4e32d5c67b815bdc106decee4a38a9b19525a",
+      ".tmp/longterm/a3-27-full-20261109T1207-source-hashes.json": "11812b021f7dcdb9620353c1175769e7175ae807c99afe91d4d3ee3140c8f5ec",
+      ".tmp/longterm/a3-27-full-20261109T1207.log": "0ce77d9cd7626f807036a909b4491fc047362a5f8c8d91cb0638bbe32e833e12",
+      ".tmp/longterm/a3-27-special-20261109T1210.xml": "35523c7ac66182bf4fbd0c71022b87f8e7a54f7647dc34c34cf50112926afdae",
+      ".tmp/longterm/a3-27-standalone-20261109T1210.log": "cb91d6d60a9c353cb2b7177d5437a65a1eca2614d826b64c18522b8f303891b9"
+    },
+    "cross_os_ci": "separately recorded; local verification does not certify remote runners"
+  }
+}

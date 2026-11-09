@@ -94,6 +94,7 @@ uv run --locked pytest -o addopts= -q -p no:cacheprovider --basetemp=.tmp/pytest
 | 中性点与不平衡 | [21](examples/21_earthing_neutral.py) | 在05之后比较接地/浮动星点、负荷相电压和回线电流；附[真实Simscape对标](validation/cases/earthing/README.md)。 |
 | 线路 | [08](examples/08_pi_line_transient.py) | 区分 π 型线路的串联电流和端部电容电流；再选读分段与 Bergeron 模型。 |
 | 有限梯级传播 | [22](examples/22_t_section_transmission_line.py) | 在08与17之后学习50T梯级的启动与色散；结合[真实参考和独立状态验证](validation/cases/transmission_line/README.md)区分有限梯级与纯延时。 |
+| Bergeron行波与有限电阻 | [27](examples/27_finite_r_bergeron_line.py) | 在08与22之后组合两条现有延时线和三只电阻，解释到波、反射及线路损耗；附[接线、能量平衡与真实PSCAD对标](validation/cases/finite_r_bergeron/README.md)。 |
 | 变压器 | [09](examples/09_single_phase_transformer.py) | 核对变比，观察漏阻抗和励磁的影响；三相接法见模型说明。 |
 | 变压器T等效 | [23](examples/23_transformer_t_equivalent.py) | 在03和09之后学习漏感后的励磁支路、电流连续、双时间常数与能量；附[真实参考及复现说明](validation/cases/transformer_t_equivalent/README.md)。 |
 | 三相变压器链 | [24](examples/24_three_phase_transformer_chain.py) | 在09和21之后区分线量/绕组量、浮动星点与Δ参考点，观察中间相移及快速启动；附[真实对标与原步长失败记录](validation/cases/three_phase_transformer_chain/README.md)。 |
