@@ -3,7 +3,7 @@
   "updated_date": "2026-11-09",
   "timezone": "Asia/Shanghai",
   "branch": "codex/emt-examples-longterm",
-  "checkpoint_head": "03a913ed52bacd6a07083fe4dbc7ae45c7b78fee",
+  "checkpoint_head": "34c3b6b10638ac07022e32a18194e894e92dd38d",
   "current_task": "A3",
   "formal_new_examples_completed": 7,
   "status_values": [
@@ -172,7 +172,7 @@
         "pscad-line-energizing",
         "pscad-installed-scalar-bergeron-v5"
       ],
-      "validation": "有限R两半线+三R解析等价仍仅数学证据。独立官方vdiv原参数实跑：PSCAD5.0.0许可true、公共宏gf46/x86、16正常build消息/零警错、实际编译Station.f/Main.f并EMTDC链接，运行输出completed；0.2s/50us原配置，PlotType0无波形。原件/profile/父环境不变，自有进程正常退出。原settings挂起保留，有限R波形仍缺。 新选Steep_Front:SrvcCbl完整原定义，仅实例.01→10km，名义R100/Z201/tau300us；独立解析/全组件codec及公开API静态审查通过，保留原稿另加保存一致性硬守卫。仅prepare-only快照，freecommit2.7181GiB<3GiB，未启动native/执行builder/调用sim；实际tlo/源电压/完整波形仍待核。",
+      "validation": "有限R两半线+三R解析等价仍仅数学证据。独立官方vdiv原参数实跑：PSCAD5.0.0许可true、公共宏gf46/x86、16正常build消息/零警错、实际编译Station.f/Main.f并EMTDC链接，运行输出completed；0.2s/50us原配置，PlotType0无波形。原件/profile/父环境不变，自有进程正常退出。原settings挂起保留，有限R波形仍缺。 新选Steep_Front:SrvcCbl完整原定义，仅实例.01→10km，名义R100/Z201/tau300us；独立解析/全组件codec及公开API静态审查通过，保留原稿另加保存一致性硬守卫。仅prepare-only快照，freecommit2.7181GiB<3GiB，未启动native/执行builder/调用sim；实际tlo/源电压/完整波形仍待核。 新独立审计核20个catalog pins、8静态输入及准备库存；profile守卫v2要求真实LOCALAPPDATA与实际存在的配置文件，9种缺失/hash不等/exists标记矛盾场景通过。08:22UTC可用提交2392828KiB<3GiB，driver未调用，原生启动数0。",
       "acceptance": "先确认可运行参考，再固定教学与验收；无真实数据不完成",
       "status": "in_progress",
       "files": [
@@ -182,10 +182,11 @@
       ],
       "commits": [
         "4385e2ea6941e693ac784c48a78e7074c803f4ed",
-        "03a913ed52bacd6a07083fe4dbc7ae45c7b78fee"
+        "03a913ed52bacd6a07083fe4dbc7ae45c7b78fee",
+        "34c3b6b10638ac07022e32a18194e894e92dd38d"
       ],
       "blockers": [
-        "工具链已由独立vdiv实证；有限R参考仅完成来源/解析/静态设计。准备时2.7181GiB、收尾2.331GiB可用提交量均低于3GiB启动门槛，未原生执行；实际参数/历史/通道/波形与正式协议仍待，不能创建候选。"
+        "有限R实际tlo/参数/初值/波形仍缺；最新可用提交约2.282GiB低于3GiB启动门槛。资源恢复后只运行已审查的profile_guard_v2，保留2GiB动态保护；不触用户MATLAB或等待prepare-only目录。"
       ]
     },
     {
@@ -372,25 +373,27 @@
       "new_capabilities": [],
       "references": [
         "mw-spwm-r2025a",
-        "mw-two-level-pwm-r2025a"
+        "mw-two-level-pwm-r2025a",
+        "pscad-derived-bilateral-spwm-v5"
       ],
-      "validation": "原固定2%波形FAIL保持。独立RL回放两边全40001点误差约1e-11A；四因素16组合/24顺序均保存。只换结构推导门极，稳态NRMSE2.66%–2.72%→0.503%–0.505%；再TR→BE约0.449%–0.452%，1uS约0.000153A RMS。器件项为观测电压残差条件诊断，非预测模型/商业验收；27项库存与独立总电流递推/积分审计通过，12和阈值未改。",
+      "validation": "原固定2%波形FAIL保持。独立RL回放两边全40001点误差约1e-11A；四因素16组合/24顺序均保存。只换结构推导门极，稳态NRMSE2.66%–2.72%→0.503%–0.505%；再TR→BE约0.449%–0.452%，1uS约0.000153A RMS。器件项为观测电压残差条件诊断，非预测模型/商业验收；27项库存与独立总电流递推/积分审计通过，12和阈值未改。 已另立同数学PSCAD短探针设计：400V、六双向外控R、浮星1Ω+1mH、0–1ms/5µs；静态库与独立40001点控制算术、22定义codec/端口已核。native TIME驱动并保存网格观察量，不拟合/删边界；codec接受字符串不证明原生表达式支持，控制用标准块连线。没有原生建模/运行或新商业比较。 最终未执行builder e93e70ab，69控制/31电气/46通道；局部ground和整数实体线去除已知静态歧义，独立40001固定网格图解释零差。builder/独立审阅库存5/7项均核；无B1运行器、无实际native拓扑/时序认证。",
       "acceptance": "模型一致性解释、预设基波RMS/功率方向/纹波判据和真实波形比较",
-      "status": "blocked",
+      "status": "in_progress",
       "files": [
         "validation/cases/two_level_pwm/manifest.json",
         "validation/cases/two_level_pwm/parameters.json",
         "validation/cases/two_level_pwm/validation_report.json",
         "docs/development_roadmap/experiments/spwm_feasibility.md",
         "docs/development_roadmap/experiments/spwm_timing_followup.md",
-        "docs/development_roadmap/experiments/spwm_error_isolation.md"
+        "docs/development_roadmap/experiments/spwm_error_isolation.md",
+        "docs/development_roadmap/experiments/spwm_matched_reference_design.md"
       ],
       "commits": [
         "146a279",
         "8a65b6e"
       ],
       "blockers": [
-        "默认12数学意图与原生跨任务时序/器件模型不同，原2%仍FAIL。门极为主要影响已有条件定量诊断；后续先另冻有教学意义的同数学参考/验证协议，不凭观测残差闭合认证器件、不直接把供应商调度写入12、不扩自动二极管框架。"
+        "原MathWorks2%波形FAIL保持；同数学PSCAD参考仍仅静态设计，须先实测时间映射、全部门极/有效R/源/单位/TR历史，再另冻完整0.2s协议与自细化。最新约2.282GiB<3GiB，未启动原生程序；12/原报告/阈值不变。"
       ]
     },
     {

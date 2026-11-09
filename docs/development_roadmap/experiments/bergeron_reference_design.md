@@ -51,8 +51,10 @@ e(t)在0–0.5ms为0，0.5–0.6ms从0连续升至1000V，之后保持1000V；�
 
 忽略目录`local_reference/a3_followup/native_reference_design/20261109T074056761817Z/native_probe/20261109T075010503354Z/`为**仅准备**记录：5项清单和5个协议文件引用均独立核对。2918506496bytes（2.7181GiB）可用提交量低于3GiB启动门槛；`native_started/builder_executed/sim_called`均false，输入快照未被原生软件消费。没有worker或project目录，不存在可等待的原生任务。
 
-资源恢复后先核脚本与输入hash，再用本机Python3.13运行`local_reference/a3_followup/finite_r_native_probe.py`；无参数才会尝试一次原生探针，`--prepare-only`始终只保存快照。每次新目录，不恢复或覆盖此准备目录。
+资源恢复后先核脚本与输入hash，再用本机Python3.13运行`local_reference/a3_followup/finite_r_native_probe_profile_guard_v2.py`；无参数才会尝试一次原生探针，`--prepare-only`始终只保存快照。每次新目录，不恢复或覆盖此准备目录。
 沿用新会话归属核验、原件/profile/父环境核对、3GiB启动门槛、2GiB动态余量、普通RPC20s、build180s/run120s、总420s和精确自有进程清理，不修改全局PATH/ATS/设置，也不触用户MATLAB。
+
+后续独立审计发现沙箱可能重定向LOCALAPPDATA；缺失文件的两个空hash不能证明profile未变。v2在启动前要求真实用户路径和实际文件，结束前要求两侧均可观测且hash相同。9种缺失/hash不等/exists标记矛盾场景已核；v2 SHA`8441fe2c7cb00a272cbafc7d5976db287046cbc376b7664c14df3504ba5c6228`。原driver保留；无v2后缀的中间草稿存在未执行的静态TypeError，不得使用。08:22UTC新门槛检查为2392828KiB（约2.282GiB）<3GiB，未调用driver，也没有新原生失败或波形。
 
 下一步必须先取得实际参数、完整原生波形、初末时间、零历史及源电压/方向证据，再在候选出现前固定正式窗、误差限、参考自细化和候选步长。两无损半线加三R的数学等价仍见[原调查](bergeron_reference_followup.md)；不创建新线路核心类。
 

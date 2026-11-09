@@ -184,3 +184,7 @@ PyCy在3761a21预先冻结的验收下，已完成独立8项物理测试、独�
 ### 有限电阻Bergeron与PSCAD原生环境
 
 第23项`pscad-installed-scalar-bergeron-v5`为**inspected**，与未下载的Chapter6线路投切资源分开。127个安装pscx中查到5个手工标量Bergeron定义，均有有限R；两无损半线和三R组合与官方基础方程有独立解析等价，但尚无有限R商业工程加载、仿真或波形。2026-11-09独立未改官方vdiv教程已完成PSCAD5.0.0编译、EMTDC链接/运行，活动宏gf46/x86，原件/profile不变、自有进程正常退出；这是工具链证据，不提升有限R参考状态。先前整包settings挂起与自行退出记录仍保留。见[调查、边界和恢复步骤](experiments/bergeron_reference_followup.md)，不新增线路核心类或提升为reference_ready。
+
+### 双向开关SPWM独立派生参考
+
+第24项`pscad-derived-bilateral-spwm-v5`仅为**inspected**，来自安装的PSCAD5.0标准元件及独立控制设计，并非未改的官方整例。目标是核验默认12的双向Ron/Goff、浮星RL与采样控制数学；来源、22定义codec/端口及独立控制算术已核，尚无原生建模或波形。先执行[0–1ms短探针设计](experiments/spwm_matched_reference_design.md)，实测门极、有效电阻、时钟与TR历史后再另冻完整协议。原MathWorks资源及2%波形FAIL保持，不因新目录项提升验证或完成数；原件、脚本和摘录仅留本地。

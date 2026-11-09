@@ -61,3 +61,5 @@ uv run --locked python -m validation.cases.two_level_pwm.compare
 原二极管实际导通、额外器件压降及负荷1µS/后退欧拉差异也已有独立代数证据。默认12和原报告不变，以上2%波形FAIL继续保留。
 
 2026-11-09[独立误差隔离](../../../docs/development_roadmap/experiments/spwm_error_isolation.md)已全点回放两边并保存16组合/24顺序：仅换结构门极后稳态NRMSE约0.503%–0.505%，再用BE约0.449%–0.452%。1µS影响很小，器件项只用观测电压残差作条件诊断；这些数值不替代默认12的商业比较，原FAIL保持。
+
+后续[同数学PSCAD短探针](../../../docs/development_roadmap/experiments/spwm_matched_reference_design.md)采用独立标准块控制和双向外控电阻，当前仅有静态设计与审计。尚无新原生波形或完整验收；本目录原manifest、参数与失败报告保持。

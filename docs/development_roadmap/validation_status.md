@@ -66,3 +66,7 @@ B1原2%波形FAIL保持；本轮结构重建六路真实门极全40001点一致�
 2026-11-09后续研究：PSCAD官方vdiv原参数0.2s/50µs实跑完成，16正常build消息/零警错，实际EMTDC链接/运行；PlotType0无磁盘波形，有限R仍未验收，详见experiments/pscad_toolchain_smoke.json。B1独立四因素16组合及24顺序审计确认门极为主影响，原12/2% FAIL不变；观测器件残差不算预测器件模型。本轮无生产源码/测试/依赖变化，1223是前次最终代码实测，不机械重跑。
 
 2026-11-09 A3设计检查：15项物理库存、8输入、8 API输入、所有组件codec/端口、精确首个平台/DC及名义稳定性已独立复核。prepared目录5项库存与5引用全核，2.7181GiB<3GiB，native/builder/sim均未执行，有限R参考仍inspected/无数值验收；详见[设计](experiments/bergeron_reference_design.md)。B2 callback审计11产物/37输入和235记录保存，但无语义等价/内存增益实测。本轮仅研究文档，无生产/test/依赖修改，沿用前次1223实测而不称新回归。
+
+2026-11-09 B1[同数学短探针设计](experiments/spwm_matched_reference_design.md)完成静态来源/控制/codec审查；独立核三库存26/39/29文件及全部输入，审计manifest SHA105b1a9dba0e14f042d97aa12797b937a055d0e7648732def247a962a77bd1d5。没有原生建模、波形、新商业比较或完整协议，原MathWorks2%波形FAIL和完成数7保持。A3 profile_guard_v2的9种exists/hash守卫用例通过，其他运行/物理逻辑不变；08:22UTC资源约2.282GiB<3GiB，driver未调用。本轮只新增研究说明与证据索引，没有生产/教学/测试/依赖改动；1223仍是41a6685代码的既有全量实测，不宣称重跑或新跨OS通过。
+
+B1最终未执行builder SHAe93e70ab…，69/31/46图已独立核；40001原固定网格ref/carrier/门极及R值、保持/观察步号零差，仅为条件算术。新增builder/独立审阅库存5/7项主审全核，manifest分别9f101941…/00c212fb…；真实原生拓扑、时间、源、有效R和TR初始化仍待，无B1运行器。上述脚本均忽略且不进入教学执行路径。

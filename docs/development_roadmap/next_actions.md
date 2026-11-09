@@ -1,15 +1,15 @@
 # 恢复与下一步
 
 2026-11-09（Asia/Shanghai）。先读tasks/progress/decisions/validation_status，核实际分支、HEAD、工作区和远端。
-记录时checkpoint为03a913ed52bacd6a07083fe4dbc7ae45c7b78fee；后续提交须与Git历史核对。
+记录时checkpoint为34c3b6b10638ac07022e32a18194e894e92dd38d；后续提交须与Git历史核对。
 分支codex/emt-examples-longterm；不操作main、不强推、不覆盖未提交文件。
 
 ## 当前事实
 
 正式新增19–25共7项完成，02补参考另计；12商业波形仍FAIL。25完整供电网络交付为9e2513d。
-恢复时本地dda8deb、远端4385e2e；本批候选已提交41a6685并正常push，实核远端一致。26仍未商业验收，不计正式完成。
+历史恢复记录为本地dda8deb、远端4385e2e；候选代码41a6685已提交推送。最新恢复时本地与真实远端均34c3b6b，后续提交另核Git。26仍未商业验收，不计正式完成。
 核心包、pyproject.toml和uv.lock相对原main没有改动；教学入口复用既有元件/控制器，不扩框架。
-本次最终完整回归1223 passed 475.864s（XML，含slow，零失败/错误/跳过）；锁定27包/Ruff/mypy39及3新入口通过。
+前次代码最终完整回归1223 passed 475.864s（XML，含slow，零失败/错误/跳过）；锁定27包/Ruff/mypy39及3新入口通过。
 26独立Agg200001点、12内部物理及21参考数学/原始点/配对测试通过。商业验收仍未完成，当前候选提交/推送身份须核实际Git。
 
 ## 执行顺序
@@ -30,11 +30,11 @@
    完整内部物理/独立执行/真实比较/图报告/自动测试/教学/常规检查/Git验收齐备才完成26。
 3. **A3有限R参考先行。** [Bergeron记录](experiments/bergeron_reference_followup.md)及[工具链结果](experiments/pscad_toolchain_smoke.json)：未改官方vdiv已真实build/EMTDC链接/run，活动宏gf46/x86，正常退出且原件/profile/父环境不变；无磁盘波形，不能算有限R参考。
    新[有限R设计](experiments/bergeron_reference_design.md)：保留SrvcCbl完整定义，仅实例长度.01→10km，名义R100Ω/Z201Ω/tau300us；1kV斜坡.5–.6ms、Rs100Ω/RL400Ω、1us/6ms。来源/解析/codec/端口/公开API已核，未实际建模或仿真。
-   仅prepare-only目录20261109T075010503354Z；2918506496bytes可用提交量<3GiB，未启动native、没有可等待的worker/进程。资源恢复再核新脚本/input hash，使用Python313运行local_reference/a3_followup/finite_r_native_probe.py无参数；--prepare-only绝不启动。新唯一目录、2GiB动态保护/普通RPC20s/build180s/run120s/总420s不变，不连续重试、不关用户程序。
+   仅prepare-only目录20261109T075010503354Z；未启动native、没有可等待的worker/进程。08:22UTC真实环境读2392828KiB可用提交量（约2.282GiB）<3GiB，driver未调用。资源恢复先核新脚本/input hash，使用Python313运行local_reference/a3_followup/finite_r_native_probe_profile_guard_v2.py无参数，SHA8441fe2c7cb00a272cbafc7d5976db287046cbc376b7664c14df3504ba5c6228；--prepare-only绝不启动。v2必须观察真实用户LOCALAPPDATA和实际存在的profile，9种缺失/hash不等/exists标记矛盾守卫场景已独立核；原driver保留不再作为恢复入口，中间无v2后缀的草稿有静态TypeError，禁止运行。新唯一目录、2GiB动态保护/普通RPC20s/build180s/run120s/总420s不变，不连续重试、不关用户程序。
    先确认实际.tlo/参数频率/flags、Vs与Mag时序、全时间轴/原生kV-kA及方向、零历史；PSCAD后续版本修过手工线路flags，不能只看XML。再冻正式窗/限值/自细化及候选步长，不创建候选迎合未经核定的参考。不重跑整包settings/空ATS范围或已成功小教程。
 4. **F1外部依赖。** 最新实查41a6685的CI run42576654146终态failure，两个job均runner0/steps空，注释明确billing lock，未执行测试。
    不重复轮询该终态；账户真实恢复后补跑覆盖26候选及此前代码的run，核精确HEAD/attempt的双OS全步骤。旧90b2fcd只覆盖22，本地通过不等于跨OS通过。
-5. B1先读[独立误差隔离](experiments/spwm_error_isolation.md)：全点回放/16组合/24顺序已审计，门极为主要影响，BE/器件仍有可见影响，1µS很小。观测电压残差闭合只作诊断。后续另冻有明确教学意图的同数学验证协议；不把供应商跨任务调度直接写入12、不拟合时移/放宽2%或扩二极管框架。C1后置；D0不重复成功仿真。
+5. B1先读[独立误差隔离](experiments/spwm_error_isolation.md)和[同数学短探针设计](experiments/spwm_matched_reference_design.md)。独立标准块生成控制、六双向外控R与浮星RL，先测0–1ms/5µs；native TIME直接驱动，j/t_grid仅观察，所有边界点保留。已核静态源、独立40001点控制算术和22定义codec/端口；codec保留字符串不证明表达式可用。最终未执行builder为e93e70ab…，69控制/31电气/46通道，有独立固定网格图解释；当前无B1运行器，须先单独准备/复核，不能只改A3路径。原生时间/全部g与有效R/源/单位/TR历史核定后才另冻完整协议和细化控制网格。原MathWorks FAIL、12、2%与其余限值均保留；不引入二极管框架。C1后置；D0不重复成功仿真。
 
 ## 本机命令
 

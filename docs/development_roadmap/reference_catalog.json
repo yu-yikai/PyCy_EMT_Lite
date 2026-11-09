@@ -2056,7 +2056,10 @@
         "native_reference_design/20261109T074056761817Z/native_probe/20261109T075010503354Z/manifest.json": "3fde7192efae9f8e0f8b8d3eb004cc76d7890f7f7da091c5469f8dec3b87e7d7",
         "native_reference_design/20261109T075227277184Z_independent_prepared_review/review.json": "d8e28703d2455427b427b63ec796b89ba1d9520704f1bbf0a1da21d279c47a79",
         "root_design_audit/20261109T075249916256Z/report.json": "cb65650be243b93c28906a98b1e90528f8808db48a128a742daaeca56e8b780e",
-        "finite_r_native_probe.py": "bdcd63cd7febc7c182d096a9d3937c13ced03b63b66b3c216eddbc376d9f288b"
+        "finite_r_native_probe.py": "bdcd63cd7febc7c182d096a9d3937c13ced03b63b66b3c216eddbc376d9f288b",
+        "finite_r_native_probe_profile_guard_v2.py": "8441fe2c7cb00a272cbafc7d5976db287046cbc376b7664c14df3504ba5c6228",
+        "integrity_review/20261109_readonly_34c3b6b_8f2a6d/manifest.json": "18032eba542e824e74c8a9696f0fe4dcf79acb599ff8532af740fd8d6afa6df6",
+        "integrity_review/20261109_profile_guard_v2_8441fe2c_6d18a9/manifest.json": "ce25d489c23bb2a325e0daa18aeaa244bf0eb1d93dea4f9ef21ea619d1ac8524"
       },
       "license_notes": "Installed original projects, library sources, official figures and all probe evidence remain local. Startup did not request login, acquire a certificate, change settings or bypass licensing.",
       "standalone_compiler_probe": {
@@ -2107,7 +2110,75 @@
         "free_commit_bytes": 2918506496,
         "preflight_min_bytes": 3221225472,
         "same_native_instance_waiting": false,
-        "candidate_created": false
+        "candidate_created": false,
+        "profile_guard_followup": {
+          "driver": "local_reference/a3_followup/finite_r_native_probe_profile_guard_v2.py",
+          "actual_profile_required": true,
+          "redirected_environment_rejected": true,
+          "independent_predicate_cases_passed": 9,
+          "latest_resource_gate_utc": "2026-11-09T08:22:08.5396818Z",
+          "free_virtual_kib": 2392828,
+          "driver_invoked": false,
+          "native_started": false,
+          "scope": "static guard audit and real-user resource gate only; original prepared-only record unchanged"
+        }
+      }
+    },
+    {
+      "id": "pscad-derived-bilateral-spwm-v5",
+      "short_code": "PSCAD-SPWM-DERIVED",
+      "name": "Prospective bilateral SPWM reference built from installed PSCAD standard components",
+      "source_path": "C:/Program Files (x86)/PSCAD50/master.pslx",
+      "source_sha256": "2940ddce6fe1fae56cb6be70bbaf0210a7e36059bfcad1e78b0ddbfd4d2a7c77",
+      "source_scope": "independent derived circuit/control design; not an unchanged official benchmark or the original MathWorks circuit",
+      "model_version": "PSCAD application 5.0.0; installed master.pslx XML version5.0.0.2; prospective native run not executed",
+      "status": "inspected",
+      "content_inspected": true,
+      "opened_in_native_software": false,
+      "simulation_succeeded": false,
+      "reference_numeric_data_obtained": false,
+      "comparison_reference_ready": false,
+      "local_path": "local_reference/two_level_pwm",
+      "design_record": "docs/development_roadmap/experiments/spwm_matched_reference_design.md",
+      "short_probe": {
+        "stop_s": 0.001,
+        "step_s": 5e-06,
+        "full_acceptance_protocol_frozen": false,
+        "candidate_modified": false
+      },
+      "mathematical_compatibility": "Target default12 bilateral Ron/Goff switches and floating RL load. Native TIME directly drives shortprobe; grid observers, complete gates/effective R, source, TR history and actual output precision must be measured before formal full-run protocol.",
+      "blockers": [
+        "No native construction or waveform yet; latest freecommit about2.282GiB below unchanged3GiB gate.",
+        "Opaque compiled routines, Type6 source with use_ideal_branchFalse, clock/ties/units/TR initialization remain actual-run questions. Original MathWorks FAIL and frozen criteria retained."
+      ],
+      "sha256": {
+        "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/report.md": "2ef092f9ad188cd2b63155ddbf9623317631f2a6ce98935e77cf34c0212d5906",
+        "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/evidence_inventory.json": "5539edc3888f73437e39c83325608df51ba76af68789953c3dd6b2fdac45bbad",
+        "matched_control_research/20261109T0804578518774Z_control_audit/report.md": "b9c2c5152581ce9d50cb8b81d4cbb2cc7905f4afb93fb9e3505b94a85a37d84d",
+        "matched_control_research/20261109T0804578518774Z_control_audit/evidence_inventory.json": "dd59bde97b91f46fbc044bba3ea52f5a6a8fe962d1939c8e022a162b227610c5",
+        "matched_control_research/20261109T0817292323073Z_codec_audit/report.md": "c67b5a68e909aef80fa63fa1ca0be5a3cadb7148689309ff76a16a65bbc7a7db",
+        "matched_control_research/20261109T0817292323073Z_codec_audit/evidence_inventory.json": "c76f809bbb5260d8780bc8977dd2418545870127aa69691ebc4e5089dbb7e939",
+        "matched_evidence_audit/20261109_compact_b1_1a0c92/manifest.json": "105b1a9dba0e14f042d97aa12797b937a055d0e7648732def247a962a77bd1d5",
+        "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/builder_probe.py": "e93e70abf3640b52cdc9c16957124ec9fb4b4e731048b7905be01b3d5ab2dc12",
+        "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/builder_inventory.json": "9f101941bb4e8c7fed2e6d3a8f62026cfcaf4fcf345bcc42814eb536f13acaac",
+        "matched_control_research/20261109T0828140915684Z_builder_review/evidence_inventory.json": "00c212fbd2fca30b3d714306d1f7ec3b68694a5c0a9db0ba8911112e3c6682e3",
+        "matched_control_research/20261109T0828140915684Z_builder_review/report.md": "250128b68424ae4964d423b9ca9776a466a6fe2c0d2ef9f667167a6751c8fb8e",
+        "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/builder_design_report.md": "62eb308945c0a32f81b07b487356dab69deaeaeab301359b4ece820903254dae",
+        "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/builder_static_audit.json": "e66108bbf4869474ff2e37604ba355376fe0dc69845dcc8f1a717d70f3b09705",
+        "matched_control_research/20261109T0828140915684Z_builder_review/control_review_final.json": "96246f19f109ec67da90694a5325433a268b0fc3843b3dc2dae377f9cb3ffe2b"
+      },
+      "license_notes": "Installed library excerpts, donor original, scripts and raw evidence remain ignored locally; redistribution permission not asserted.",
+      "builder_preparation": {
+        "builder": "local_reference/two_level_pwm/matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/builder_probe.py",
+        "builder_executed": false,
+        "native_started": false,
+        "B1_runner_created": false,
+        "control_blocks": 69,
+        "electrical_components": 31,
+        "output_channels": 46,
+        "offline_fixed_grid_points_checked": 40001,
+        "formula_mismatches": 0,
+        "scope": "conditional scalar graph/FormCodec/port/type review only; actual native topology, time, source, effective resistance and TR history unverified"
       }
     }
   ],
