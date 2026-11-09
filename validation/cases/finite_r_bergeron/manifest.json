@@ -1,0 +1,65 @@
+{
+  "case_id": "finite_r_bergeron",
+  "reference_id": "pscad-installed-scalar-bergeron-v5",
+  "example": "examples/27_finite_r_bergeron_line.py",
+  "acceptance_defined": "2026-11-09 after native input/logging probes, before candidate creation, execution or commercial numerical comparison; thresholds fixed independently of candidate errors",
+  "reference_source": "https://www.pscad.com/webhelp-v5-ol/EMTDC/Transmission_Lines/The_Bergeron_Model.htm",
+  "reference_model": "Derived scalar SrvcCbl case from installed Examples/Lightning/Steep_Front.pscx; original RowDefn retained, outer circuit explicitly replaced",
+  "reference_platform": "PSCAD 5.0.0 / EMTDC 5.00 R#93051001 / GF46 x86",
+  "reference_state": "runnable",
+  "reference_qualification": "pending independent 1 us versus 0.5 us self-refinement; successful run completion alone does not qualify the reference",
+  "windows_seconds": [[0.0, 0.0012], [0.0012, 0.006]],
+  "event_guard_seconds": 0,
+  "time_shift_seconds": 0,
+  "known_difference": "Same scalar finite-R Bergeron approximation: two lossless Z=201 ohm, tau=150 us half-lines separated by R/2=50 ohm, with R/4=25 ohm at each terminal. Attenuation is 1; resistance is explicit. This validates the documented lumped-loss Bergeron model, not broadband cable physics or a general frequency-dependent line. Native hidden delay buffers are not directly exported; STANDARD/no snapshot, zero observed pre-excitation and causal arrivals are the stated initialization evidence. Runtime TLI/TLO parameters are distinct from LCP frequency-domain diagnostics. No fitted time, delay, amplitude, impedance, resistance or initial history.",
+  "signals": [
+    {"candidate": "v:send", "reference": "Vk_V", "unit": "V", "scale": 1000.0, "max_nrmse": 0.001, "max_abs_error": 1.0},
+    {"candidate": "v:recv", "reference": "Vm_V", "unit": "V", "scale": 1000.0, "max_nrmse": 0.001, "max_abs_error": 1.0},
+    {"candidate": "i:Rs", "reference": "Ik_A", "unit": "A", "scale": 5.0, "max_nrmse": 0.001, "max_abs_error": 0.005},
+    {"candidate": "i:Rload", "reference": "Im_out_A", "unit": "A", "scale": 5.0, "max_nrmse": 0.001, "max_abs_error": 0.005}
+  ],
+  "reference_normalization": {
+    "time": "raw seconds, unchanged",
+    "raw_channels_in_order": ["Mag_native_kV", "Vs_native_kV", "Vk_native_kV", "Vm_native_kV", "Ik_native_kA", "Im_out_native_kA"],
+    "SI_columns_in_order": ["Mag_V", "Vs_V", "Vk_V", "Vm_V", "Ik_A", "Im_out_A"],
+    "SI_multiplier_all_six_channels": 1000.0,
+    "current_sign_multiplier": 1.0,
+    "Vs_input_gate_max_abs_error_V": 1e-8,
+    "Mag_role": "reference input/ramp audit only; not a fifth candidate acceptance signal"
+  },
+  "reference_self_refinement": {
+    "time_steps_seconds": [1e-6, 5e-7],
+    "expected_point_counts": [6001, 12001],
+    "stop_second": 0.006,
+    "same_complete_windows": true,
+    "comparison_views": ["every common 1 us sample", "continuous piecewise-linear views on the union of both native grids including all endpoints"],
+    "max_nrmse_all_four_signals": 0.0001,
+    "max_abs_voltage_error_V": 0.1,
+    "max_abs_current_error_A": 0.0005,
+    "budget_fraction_of_candidate_limits": 0.1,
+    "require_both_limits_each_signal_each_window_each_view": true,
+    "required_before_candidate_creation_or_comparison": true
+  },
+  "baseline_evidence": {
+    "run": "local_reference/a3_followup/native_reference_design/20261109T074056761817Z/native_probe/20261109T114121456591Z",
+    "run_manifest_sha256": "cc6c4e3bb2df9b8352e5a46cc6a3ca29e3f6afc374bab58e7ffbc3262b5f714c",
+    "raw_waveform_sha256": "7e50c201f9b2c346b3d70437851ba95969b5a000e4d2b9a06b4b280ee25a10bb",
+    "runtime_tlo_sha256": "d018f1b279a64186c69d837de1b154ba5f350603570d75448f54ccf29118a14d",
+    "runtime_tli_sha256": "9ce201718ccf5f5e0c76cf19175757ab82bcf7b1626e1c7bd0683e2fba9163db",
+    "independent_actual_audit": "local_reference/native_static_reviews/20261109T114650Z_a3_actual/report.json",
+    "independent_actual_audit_sha256": "09a27b0d33b7b2cc0ba31ef5ba79d52eff34b3de0282ebe58e6644908a952ab1",
+    "refined_run_pending_qualification": "local_reference/a3_followup/native_reference_design/20261109T074056761817Z/native_probe/20261109T115004933156Z"
+  },
+  "internal_acceptance": {
+    "independent_solution": "Two lossless-line travelling-wave port recurrences and three explicit line resistors, solved from physical boundary equations independently of Circuit/MNA stamps and candidate delay-buffer code",
+    "max_voltage_error_versus_independent_V": 1e-7,
+    "max_current_error_versus_independent_A": 1e-9,
+    "kcl_abs_tolerance_A": 1e-9,
+    "kvl_abs_tolerance_V": 1e-7,
+    "energy_balance_relative_tolerance": 1e-8,
+    "energy_balance_abs_tolerance_J": 1e-9,
+    "candidate_step_refinement_seconds": [2e-6, 1e-6, 5e-7],
+    "refinement_rule": "Compare each grid against the independent recurrence; exact commensurate-grid agreement is allowed and no artificial second-order ratio is required",
+    "required_checks": ["zero negative-time histories and t0", "first launch and first arrival", "all port current directions and KCL/KVL", "positive resistor losses", "both lossless-line stored energies plus all resistor losses versus source work", "all full windows and endpoints", "illegal fixed-grid rejection before first solve"]
+  }
+}
