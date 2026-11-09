@@ -1,8 +1,7 @@
 # A3：有限电阻Bergeron参考与PSCAD环境核验
 
-2026-11-09：独立官方vdiv教程已真实完成PSCAD编译、EMTDC链接与运行，工具链验证通过。
-有限R标量参考仍停留在调查/解析等价阶段；尚无其商业波形或PyCy候选，不计正式完成。
-下文保留2026-11-06启动挂起及裸编译失败，最新受控教程结果见末节。
+2026-11-09当前：派生SrvcCbl有限R参考已真实运行1/0.5µs全6ms并通过16项自细化，27首次商业八项比较PASS；双独审和完整1244项回归通过，27以ae9fe362独立交付，正式新增19–27共9项，当前B1。
+下文保留2026-11-06启动挂起、裸编译失败及后续工具链历史；最新有限R证据见末节与[设计](bergeron_reference_design.md)。
 
 ## 参考调查与可复用的等效网络
 
@@ -32,9 +31,9 @@ Jk(t) = -a*[vm(t-tau)/Z + H*im(t-tau)]
 独立审查给出了时域解析证明，另有97个复频率点ABCD互核，最大相对差7.35e-13。
 后者只是数学交叉检查，既不是PyCy运行，也不是PSCAD波形。
 该等价仅覆盖常数标量Z0/tau、集中有限R、关闭额外高频damping的双端模型。
-参数频率、LongLine预处理、实际R/Z0/tau仍须由真正的参考导出；反射消除设置、频变与相间耦合不包含其中。
+本次SrvcCbl的参数频率、LongLine和实际R/Z0/tau已由生成文件核定；其他四定义尚未实测，反射消除设置、频变与相间耦合不包含其中。
 现有离散实现要求`tau/(2*dt)`为正整数，两半线负时间零历史；R=0时直接复用全长无损线，不实例化零欧Resistor。
-参考插值、初值、事件和探针方向仍未实测，因此当前只是**待原生验证的等效网络方案**。
+下述早期调查时插值、初值和方向尚未实测；本次SrvcCbl已获完整实际波形及自细化，仍保留未直接导出隐藏缓冲的边界。
 
 ## 原生环境探针的实际结果
 
@@ -121,4 +120,10 @@ PSCAD5.0.0/许可true，16条正常build消息、零警告/错误；Station.f和
 
 独立审计逐项核25个文件的hash/size及清单无遗漏，并读取PE确认vdiv.exe为x86（0x014c）；原生、worker及实际运行exe均已退出。生成map只能证明运行配置，不能代替末采样时间或数值精度。审计为`local_reference/a3_followup/native_toolchain_audit/20261109_readonly_e41b7d/audit_result.json`，SHA`9edaac84d2ea930c66f2b545e216deb38e7b388710d5d7cb7bc85346cd3451cb`。
 
-2026-11-09后续[有限R参考设计](bergeron_reference_design.md)已选择SrvcCbl完整定义和明确的派生外网，解析/原生API/codec审查完成。最新prepare-only记录可用提交量2.7181GiB<3GiB，未启动PSCAD或执行builder，无实际有限R波形；下一步须资源恢复后核原生.tlo/源电压/通道和时间轴，再固定正式协议，A3仍未验收。
+## 2026-11-09：有限R真实波形与参考资格
+
+[有限R参考设计](bergeron_reference_design.md)的早期资源门槛、库存/API和CRC拒绝均保留历史。v6实际113500保存后恢复原CRC，旧CRC0基线严格拒绝；v7编辑期严格守卫、保存后核原生/磁盘/完整原source定义一致，114121真实build/run成功。0.5µs副本115004也正常完成，6001/12001点均覆盖0–6ms，source/profile/父环境未变、自有进程为空。
+
+运行TLI/TLO确认R100Ω/Z201Ω/τ300µs，六通道单位、源斜坡/方向、零可观测前史和首次到达已核；LCP频域诊断单独留存。1/0.5µs参考四量两窗两视图16项通过原十分之一预算，资格完整报告位于`local_reference/a3_followup/integrity_review/20261109_a3_refpair_qualification_a8d36e/qualification.json`，SHA`638fd6607f703a1799831a274f98088108a28f72a74c0d5b253e9cce25359cd8`。这只提升明确派生SrvcCbl参考，不推广原四宿主/五定义。
+
+协议44d1436先于候选27；当前八项商业比较PASS，最大5.9117e-12V/5.1514e-14A、NR6.0489e-15，Vs gate1.414e-12V。独立原始数据双重复核和完整1244项回归已通过，27以ae9fe362独立交付，正式新增共9项，当前B1；actual run/hash/图及旧失败集中见[本轮索引](native_reference_attempts_20261109.md)。

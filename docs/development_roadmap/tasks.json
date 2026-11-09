@@ -3,9 +3,9 @@
   "updated_date": "2026-11-09",
   "timezone": "Asia/Shanghai",
   "branch": "codex/emt-examples-longterm",
-  "checkpoint_head": "9269350887a867aee2740fed04155ade8f8757be",
-  "current_task": "A3",
-  "formal_new_examples_completed": 8,
+  "checkpoint_head": "ae9fe3629ad9617853979b0ef58d4d8319239592",
+  "current_task": "B1",
+  "formal_new_examples_completed": 9,
   "status_values": [
     "planned",
     "ready",
@@ -162,7 +162,7 @@
     {
       "id": "A3",
       "phase": "foundation",
-      "title": "Bergeron行波反射参考先行",
+      "title": "有限R Bergeron行波反射（本阶段27）",
       "priority": 1,
       "dependencies": [
         "A1"
@@ -172,23 +172,32 @@
         "pscad-line-energizing",
         "pscad-installed-scalar-bergeron-v5"
       ],
-      "validation": "有限R两半线+三R解析仅数学证据；官方vdiv工具链已真实GF46/x86编译/链接/run，无磁盘波形。有限R四次实际探针依次在top77/native85库存、未限定defn_name、v4通用parameters API及v5 RowDefn前后一致性守卫停止。最新20261109T105927241384Z已过Wire库存，Native SrvcCbl definition changed during Main-only editing导致未保存修改工程，无build/sim。异常后正常quit、自有进程清空，原件/profile/父环境不变；实际数值仍缺。 最小分阶段CRC诊断20261109T111545271892Z在删除其余76个Main顶层对象后首次观察根CRC变0，此前0–34快照不变；预期DiagnosticStop，未编辑线路位置/Length，无save/build/run，正常quit/自有进程空/源profile不变。",
-      "acceptance": "先确认可运行参考，再固定教学与验收；无真实数据不完成",
-      "status": "in_progress",
+      "validation": "PSCAD派生完整SrvcCbl有限R参考真实1/0.5us运行6001/12001点，16项自细化检查在候选前通过。协议44d1436先于候选；27以两个既有无损半线及三R实现R/4+R/2+R/4。八项独立行波/守恒/能量/细化测试、Agg独立6001点通过；真实PSCAD四量双完整窗八项全过，maxV5.91172e-12V/maxI5.15144e-14A/maxNR6.04888e-15。153输入快照、原始12001点换算、比较指标及图经两路独审；完整1244 passed469.79s含slow，零失败/错误/跳过，109个Python文件全程不变，锁定27包/Ruff/mypy39通过。验收提交ae9fe36已正常推送；跨OS CI单列F1。",
+      "acceptance": "27的真实参考/独立物理/独立运行/商业比较/图报告/自动测试/教学/Git提交已全部完成。结论限已冻结常参数集总损耗Bergeron近似，不推广为宽带电缆精度；原生隐藏延迟缓冲未直接导出。CRC仅允许已观察的单次删除转0及save完整恢复源定义，不泛化官方CRC语义；旧失败全部保留。",
+      "status": "completed",
       "files": [
         "docs/development_roadmap/experiments/bergeron_reference_followup.md",
         "docs/development_roadmap/experiments/pscad_toolchain_smoke.json",
         "docs/development_roadmap/experiments/bergeron_reference_design.md",
-        "docs/development_roadmap/experiments/native_reference_attempts_20261109.md"
+        "docs/development_roadmap/experiments/native_reference_attempts_20261109.md",
+        "examples/27_finite_r_bergeron_line.py",
+        "tests/test_finite_r_bergeron.py",
+        "validation/cases/finite_r_bergeron/manifest.json",
+        "validation/cases/finite_r_bergeron/parameters.json",
+        "validation/cases/finite_r_bergeron/acceptance_plan.md",
+        "validation/cases/finite_r_bergeron/README.md",
+        "validation/cases/finite_r_bergeron/compare.py",
+        "validation/cases/finite_r_bergeron/qualified_reference_report.json",
+        "validation/cases/finite_r_bergeron/validation_report.json"
       ],
       "commits": [
         "4385e2ea6941e693ac784c48a78e7074c803f4ed",
         "03a913ed52bacd6a07083fe4dbc7ae45c7b78fee",
-        "34c3b6b10638ac07022e32a18194e894e92dd38d"
+        "34c3b6b10638ac07022e32a18194e894e92dd38d",
+        "44d1436df5714060176998ea1ce94c6d6eaf7d48",
+        "ae9fe3629ad9617853979b0ef58d4d8319239592"
       ],
-      "blockers": [
-        "CRC唯一变化已定位于delete_other_main_objects批量删除之后，但单对象原因与官方CRC语义仍未证，不能放松定义守卫。实际tlo/参数/源时序/方向/零历史/波形/正式协议仍缺；最小诊断已终态，不重复等待旧worker。 后续仅拟v6对该唯一删除边界强核一次CRC转换，其后完整CRC0 XML为严格基线、任何再变含save新CRC即停；尚未写代码，须另存独审，不推广一般CRC含义。"
-      ]
+      "blockers": []
     },
     {
       "id": "A5",
@@ -377,7 +386,7 @@
         "mw-two-level-pwm-r2025a",
         "pscad-derived-bilateral-spwm-v5"
       ],
-      "validation": "原MathWorks固定2%波形FAIL及12保持。40001点离线控制/电流误差隔离、69控制/31电气/46通道静态审查完成。已独立准备B1自有runner并严格核donor全部25ID/类型，仅删除top21；实际依次发生日志/旧cleanup失败、262字符路径加载失败。最新短路径170字符run20261109T091917405572Z成功加载并创建组件，实际端口坐标守卫拒绝，无build/run。异常后正常quit，自有进程清空，源/profile/父环境不变。 仅端口抓取run20261109T111717200520Z保存31组件/53项检查，23坐标不符；按设计在所有wire/save/build/run前停止，正常quit/自有进程空/源profile不变。",
+      "validation": "原MathWorks固定2%波形FAIL及12保持。实际端口重连已通过独立660检查；PSCAD同数学短探针20261109T114236896235Z真实build/run成功，201点/46通道/完整1ms。400V源、1206门极值、六开关R、RL/TR残差和实际拓扑经独立原始数据复核。原生branch1理想化警告属于零内阻源；开关不是该分支。DSD/DSO支路电流日志次序另作有名诊断，未修改原时间点/移相候选。短探针仅使参考runnable，完整0.2s与控制保持细化尚未验证。",
       "acceptance": "模型一致性解释、预设基波RMS/功率方向/纹波判据和真实波形比较",
       "status": "in_progress",
       "files": [
@@ -395,7 +404,7 @@
         "8a65b6e"
       ],
       "blockers": [
-        "实际源NA/NB=(6,4)/(10,4)，ground仍(11,4)，原重合假设不成立；R/L/varrlc/电流表跨度2格、差分电压端口也不同。逐个按实际端口重连并核图/正交性/源probe和ground，不全局缩放，另存独审后再probe。原MathWorksFAIL/12/阈值保持；正式0.2s协议仍待时基/门极/有效R/源单位/TR历史。"
+        "电气步长2.5us时须先实测门极保持原5us周期：标准sampler/impulse的t0、连续脉冲及同tick有效R次序尚未证。先20us再1ms有界原生探针，保留原69控制数学/native TIME和全部边界；通过后才冻结完整0.2s/控制网格细化协议。原12/MathWorks FAIL/2%阈值不改，不拟合时钟或增加自动二极管框架。"
       ]
     },
     {
@@ -539,7 +548,7 @@
       ],
       "new_capabilities": [],
       "references": [],
-      "validation": "最新本地完整1236 passed478.786s含slow、零失败/错误/跳过，锁定27包/Ruff/mypy及B2商业独立审查通过。26验收9269350已正常推送，真实远端一致。精确新CI42606454705终态failure，Ubuntu129123587852/Windows129123588150均runner0/steps空，两个check注释确认billing lock，未运行测试/test_count=null。23/24/25/26跨OS仍未验证，旧90b2fcd只覆盖22；不轮询同终态。",
+      "validation": "最新本地完整1244 passed469.79s含slow，零失败/错误/跳过；锁定27包/Ruff/mypy39及27独审通过。验收ae9fe36已正常push且真实远端一致；精确CI42616684547终态failure，Ubuntu129158174490/Windows129158174768均runner0/steps空，两个check注释确认billing lock，未执行测试/test_count=null。23–27跨OS仍未验证，旧90b2fcd只覆盖22；不轮询同终态。",
       "acceptance": "本批测试与真实CI记录、教学导航、里程碑推送和恢复指令",
       "status": "blocked",
       "files": [
@@ -549,7 +558,8 @@
         "docs/development_roadmap/experiments/ci_1423c7d.json",
         "docs/development_roadmap/experiments/ci_9e2513d.json",
         "docs/development_roadmap/experiments/ci_41a6685.json",
-        "docs/development_roadmap/experiments/ci_9269350.json"
+        "docs/development_roadmap/experiments/ci_9269350.json",
+        "docs/development_roadmap/experiments/ci_ae9fe36.json"
       ],
       "commits": [
         "90b2fcd",
@@ -558,7 +568,8 @@
         "d79e849",
         "1423c7d6dfbca10547cf856dc20faa5dadf935dc",
         "41a6685da241b5a759786963b81e236728afbd98",
-        "9269350887a867aee2740fed04155ade8f8757be"
+        "9269350887a867aee2740fed04155ade8f8757be",
+        "ae9fe3629ad9617853979b0ef58d4d8319239592"
       ],
       "blockers": [
         "GitHub check-run两项注释：The job was not started because your account is locked due to a billing issue. 账户解除外部账单锁后才能补跑；不通过重复push或改代码绕过。"
@@ -583,5 +594,5 @@
     }
   ],
   "execution_status": "active",
-  "pause_checkpoint": "2026-11-09 user pause preserved in .tmp/longterm/paused-20261109T0925.json; goal resumed; interrupted full pytest is not a PASS"
+  "pause_checkpoint": "2026-11-09 pause preserved in .tmp/longterm/paused-20261109T0925.json as history; goal resumed; interrupted run is not a PASS. Separate later full run completed1244 tests; current acceptance checkpoint ae9fe36, subsequent documentation commits are checked against actual Git history."
 }

@@ -1,6 +1,6 @@
 # A3：有限电阻线路的参考设计
 
-2026-11-09。来源、独立解析和原生API静态核查后，已实际加载并创建派生网络；最新v5已过Wire库存，再被SrvcCbl编辑前/后RowDefn一致性守卫拒绝，未保存修改工程/build/sim。**尚无有限R波形或PyCy候选。**
+2026-11-09。派生SrvcCbl已真实完成1/0.5µs、6ms运行及16项参考自细化，状态reference_ready仅覆盖本派生标量电路。协议44d1436先于候选27，四量两窗首次商业比较PASS；双独审和完整1244项回归已通过，27以ae9fe362独立交付，正式新增19–27共9项，当前B1。
 前次[工具链实跑](pscad_toolchain_smoke.json)只验证了官方电压分压教程，不代替本线路参考。
 
 ## 来源和明确的改动
@@ -18,7 +18,7 @@
 | LONGLN | 0；不自行再作长线修正 |
 | BDamp / Interp1 / Inflen | 0 / 1 / 0 |
 
-据此得到的**名义值**为R=100Ω、Z0=201Ω、τ=300µs。它们仍需由原生生成的`.tlo`、源码和运行记录确认。
+原生生成的TLI/TLO、10000m长度、源码和完整波形已确认**实际运行值**R=100Ω、Z0=201Ω、τ=300µs。LCP频域复Z≈201.000175−j0.265258008Ω及τ≈0.300000261ms只作频域诊断，不代换运行参数。
 [官方版本记录](https://www.pscad.com/webhelp-pscad-v5.1.0-ol/Log.htm)列有手工YZ/长线修正、损耗频率及插值/无反射选项的后续修复，不能从本机5.0模型字段直接推断运行行为。
 
 ## 探针的输入和观察量
@@ -44,16 +44,19 @@ e(t)在0–0.5ms为0，0.5–0.6ms从0连续升至1000V，之后保持1000V；�
 
 首个接收波前名义上在0.8ms；中间R的同端反射也在此时返回，负荷反射约1.1ms返回发送端。这说明单一衰减系数不能代替有限R模型。名义误差递推谱半径约0.25488，仅说明所选窗口足以观察收敛，不证明原生精度或最后采样点。
 
-## 实际尝试与当前阻塞
+## 实际运行与验收边界
 
-只用公开API，在独立副本保留TLine实例2024913992。原top77与native85差异来自Frame的4Graph+4Curve，严格完整库存核对后只删除顶层；原库存守卫失败不删。第二次未限定库名的definition身份守卫失败后，另存v4核实际master/项目定义和XML，保持原RowDefn不变。
-最新run`20261109T092018312571Z`完成库/定义身份、网络创建、14次接线调用和6ms/1µs配置回读，在最终库存`final_10_parameters`报`ValueError: Component has no parameters`。未保存修改工程、没有build/sim，不能从配置回读推断实际求解或连通性。
+旧库存、definition名、Wire参数接口和v5 CRC守卫失败均保留在[实际尝试索引](native_reference_attempts_20261109.md)。诊断111545将唯一CRC变化定位在删除其余76个Main顶层对象后。v6在这一边界严格核唯一36752239→0及其余字节相同，并以完整CRC0定义继续守卫；实际113500保存成功后原生/磁盘恢复完整原CRC，因此正确地在build前拒绝，不能把它改记成功。
 
-该次driver为`local_reference/a3_followup/finite_r_native_probe_owned_guard_v4.py` SHA362fa0b5…，builder为本设计目录的`builder_checked_v4.py` SHA5182eec4…；完整hash/终态入口见[实际尝试索引](native_reference_attempts_20261109.md)。v5已将参数例外严格限定于本轮create_wire返回的精确Wire/已知iid并核全集，其他参数错误继续抛出，控制/物理/接线/保护不变；新driver SHA6beca649…/builder SHAce894fec…经独立静态复核后实际运行`20261109T105927241384Z`，过Wire库存后触发`Native SrvcCbl definition changed during Main-only editing`。未保存修改工程/build/run，正常异常后quit/自有进程清空/源和profile不变。当前已核唯一根CRC 36752239→0，其余64参数/ID/内部CRC/布局/拓扑一致；公共Definition.xml返回新的客户端Element，XSD/wizard仅支持required long/初值0，官方未证明缓存失效语义。最小分阶段CRC诊断`20261109T111545271892Z`已将首次唯一CRC变化定位于删除其余76个Main顶层对象之后（snapshot35，此前0–34不变），未编辑line vertices/Length即按设计停止；无save/build/run，正常quit/自有进程空/源profile不变。单对象原因/官方语义仍未证，不放松守卫；研究/计划/实际pins见索引。当前无等待中的worker。
+v7保持编辑期严格边界，保存后改为强制`nativeAfterSave == diskSaved == 完整原source定义（含CRC）`，并核原生序列化与编辑前逐字节相同；没有忽略CRC。114121真实GF46/x86 build/run，worker0/35.5044s、6001点×6通道；同物理0.5µs副本115004真实worker0/50.2884s、12001点。均正常退出、自有进程空、源/profile/父环境不变。原0.01Ω/m与3e-8s/m单位、源kV和电流kA方向已从安装定义及生成源码核定。
 
-初次`20261109T075010503354Z`仅prepare-only、2.7181GiB<3GiB及08:22UTC约2.282GiB检查保持为历史。随后资源恢复才顺序运行；当前不是内存阻塞。仍保持3GiB启动、2GiB动态余量、RPC20s/build180s/run120s/监控总420s、真实用户profile双侧存在/hash核对和精确自有进程清理。新公共守卫修复日志共享冲突与WMI清理/finally，实际验证的边界见索引，不改全局PATH/ATS/设置。
+实际Vs−Mag恒零；源斜坡残差1.37e-12V，Rs/RL欧姆关系残差约1e-11/2e-11V。六通道在0.5ms前为0，送/收首个非零点分别0.501/0.801ms，首波系数与两半线加三R一致。原生STANDARD/无快照和这些可观测结果支持零历史解释，但内部延迟缓冲未直接导出；最终结论须保留这一边界。
 
-下一步须先取得实际`.tlo`/参数频率/flags、Vs与Mag时序、完整原生时间轴/单位/方向和零历史，再在候选出现前冻结正式窗、误差限、自细化与候选步长。两无损半线加三R数学等价仍仅是候选依据，不新增线路核心类。
+[正式协议](../../../validation/cases/finite_r_bergeron/acceptance_plan.md)由44d1436预先提交：四量Vk/Vm/Ik/Im_out，工程尺度1000V/5A，完整[0,1.2ms]/[1.2,6ms]，NRMSE0.001和maxabs1V/0.005A，无删点/时移；Vs单列1e-8V输入gate。1/0.5µs参考在共同1µs点及原生网格并集的PWL连续视图16项全通过十分之一预算，最大9.6634e-12V/5.1514e-14A、NR2.7474e-15。qualification SHA`638fd6607f703a1799831a274f98088108a28f72a74c0d5b253e9cce25359cd8`，manifest SHA`cb538d8af2ff5d4624bf6acd212db601899e4bcb68a3f5274f98c09108efcdca`。
+
+27只组合现有8元件、两个attenuation1半线，不增核心类。新源ab2e3e6c…独立Agg6001点和8项物理测试已过，首次真实商业比较八项PASS（report SHA`1961582edfe26d9db3497cee3a3b7a884b977ac0596826c63998c433cffaed56`）；双独审和完整1244项回归通过，27以ae9fe362独立验收提交，正式新增共9项，当前B1。
+
+资源门槛中止属历史；3GiB启动、2GiB动态余量、RPC20s/build180s/run120s/监控总420s、真实profile和精确进程身份守卫保持。所有原件、生成码、原始波形和失败留本地，完整run/pins集中见索引。
 
 ## 证据入口
 

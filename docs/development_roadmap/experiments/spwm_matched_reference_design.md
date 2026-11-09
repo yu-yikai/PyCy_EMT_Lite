@@ -1,7 +1,7 @@
 # B1：保留12数学意图的独立参考探针
 
 2026-11-09。原MathWorks对标的2%波形FAIL及全部原报告、参数、窗口不改。[离线诊断](spwm_error_isolation.md)已说明跨任务门极时序、器件和积分差异；本设计改为独立构建与12教学数学相符的PSCAD参考，不把原IGBT网络称为理想双向开关。
-目前已实际加载并创建短探针组件，但原生端口坐标守卫拒绝，未build/run或取得波形。完整运行前须另冻结正式比较协议；短探针不能关闭B1。
+A3/27已以ae9fe362完成验收，当前任务B1。最新实际端口重连稿已完成0–1ms真实build/run，201×46原生点的连通图、源/门极/有效R与TR诊断已核。完整0.2s及保持5µs控制输入的电气细化协议仍未冻结；短探针不能关闭B1。
 
 ## 探针边界与预定输入
 
@@ -43,7 +43,7 @@ R_switch = 0.001*g_closed + 1e9*(1-g_closed)
 这些编译例程内部不可见，静态字段不能证明实际有效电阻/初始化/离散历史。因此探针必须逐点核对六支路直接电压、电流和电阻输入，电流可正可负；原生ASCII精度须据实际格式计入残差界，不能对舍入后的列强行使用机器精度阈值。API数值字段的codec可能原样保留不支持的字符串；控制量用标准块的数据线连接，不以codec成功证明原生表达式可用。
 
 独立关闭项目`detect_chatter`、`remove_chatter`、`interpolate_switching`，并设置`use_ideal_branch=False`、保留其他位，保存设置前后字典/XML/生成配置。只关detect并不保证无半步处理。核全部TR边沿和首步电感方程，不凭波形小于2%就认证方法一致。
-早期静态报告曾建议`use_ideal_branch=True`并设阈值0.0005Ω；本短探针显式改为False，避免理想支路替代影响0.001Ω开关。旧建议保留，Type6理想源在此配置下是否仍按预期工作须由实际Vs与生成配置核定，不能仅凭参数标签确认。
+早期静态报告曾建议`use_ideal_branch=True`并设阈值0.0005Ω；本短探针显式改为False，避免理想支路替代影响0.001Ω开关。旧建议保留；实际Vs全201点均为400V，Main.dta/f确认Type6的源支路为RE0，六varR为独立支路。运行时Branch1理想化消息属于源，不能误认为六开关Ron被置零。
 
 原生通道至少包括TIME/控制步号/保持步号、载波、三相ref、六门极/电阻、实际Vs、六支路电压电流、三相负荷电流、三极点/中性点电压。保存原生kV/kA/Ω，不用显示单位或名称猜SI值；明确一次性转换和方向。
 独立检查`sum(i_phase)=0`、逐相R/L方程、端口KCL、DC源和负荷功率方向，以及有效Ron/Goff和前后步历史。不得从已观测电流反推控制或加入观测电压残差后声称预测成功。
@@ -61,10 +61,20 @@ R_switch = 0.001*g_closed + 1e9*(1-g_closed)
 现已独立准备/审查B1自有runner，接受既有唯一run契约，严格核vdiv donor全部25ID/类型（top21+2Graph+2Curve），仅删除top21。不是把A3路径直接替换后运行；全部输入快照、编译路径/资源/归属/真实用户profile守卫均单独核查。
 第一轮创建过程中原子日志replace遇WinError5，旧cleanup动态WMI调用又报TypeError，无完整terminal；事后进程清空证据独立保留，不称正常quit。公共守卫另存有界写retry、及时关闭的共享reader及显式ExecMethod_/finally；旧失败和真实强用例FAIL保留。
 
-修订后262字符工程路径加载报FileNotFoundError，Python副本存在且hash匹配；另派生新唯一`D/n/UTC`短路径并在mkdir前拒绝工程路径>230字符。最新`D/n/20261109T091917405572Z`的170字符路径实际加载成功、创建组件后，守卫报`Installed native port coordinates differ; re-route before build`。未build/run；终态观察到异常后正常quit、自有进程清空、源/profile/父环境不变。D、实际run和完整hash见[本轮证据索引](native_reference_attempts_20261109.md)。
+修订后262字符工程路径加载报FileNotFoundError，Python副本存在且hash匹配；另派生新唯一`D/n/UTC`短路径并在mkdir前拒绝工程路径>230字符。历史`D/n/20261109T091917405572Z`的170字符路径实际加载成功、创建组件后，守卫报`Installed native port coordinates differ; re-route before build`。未build/run；终态观察到异常后正常quit、自有进程清空、源/profile/父环境不变。D、实际run和完整hash见[本轮证据索引](native_reference_attempts_20261109.md)。
 
-该次driver`b1_native_probe_short_path_v4.py` SHA8d596142…与`builder_inventory_v2.py` SHAa113419d…固定本次失败身份；须按实际端口另存重连修订并独立审查，不能略过坐标守卫或直接重跑。原08:22UTC资源不足是历史；3GiB启动/2GiB动态余量/RPC20s/build180s/run120s/监控总420s和真实profile守卫不降。
+该次driver`b1_native_probe_short_path_v4.py` SHA8d596142…与`builder_inventory_v2.py` SHAa113419d…固定本次失败身份；当时须按实际端口另存重连并独审，后续实际重连保持了该守卫；不能把旧拒绝改记成功。原08:22UTC资源不足是历史；3GiB启动/2GiB动态余量/RPC20s/build180s/run120s/监控总420s和真实profile守卫不降。
 
-没有实际波形，源Type6/use_ideal_branchFalse、电阻生效时序、完整g/有效R、单位/方向和首步TR历史仍未核定。完整0.2s协议继续待定，原MathWorksFAIL和默认12/全部原限值不变。研究脚本不加入初学者教学执行路径。
+此前上述问题没有实际波形证据；现已由后述114236短探针核定其1ms范围。完整0.2s协议继续待定，原MathWorksFAIL和默认12/全部原限值不变。研究脚本不加入初学者教学执行路径。
 
-补充仅端口抓取`D/n/20261109T111717200520Z`按设计在所有wire/save/build/run前停止，31组件/53项检查有23坐标不符。源NA/NB实际(6,4)/(10,4)、ground仍(11,4)，静态重合假设无效；R/L/varrlc/电流表跨度2格、差分电压端口也不同。下一稿须逐端口核图/正交性/源probe和ground，不能整体缩放；尚无重连稿或新波形。完整实际hash见证据索引。
+补充仅端口抓取`D/n/20261109T111717200520Z`按设计在所有wire/save/build/run前停止，31组件/53项检查有23坐标不符。源NA/NB实际(6,4)/(10,4)、ground仍(11,4)，静态重合假设无效；R/L/varrlc/电流表跨度2格、差分电压端口也不同。下一稿须逐端口核图/正交性/源probe和ground，不能整体缩放。该次预期拒绝保留历史，随后重连稿的实际结果如下；完整hash见证据索引。
+
+## 实际端口重连后的1ms结果与下一步
+
+重连builder SHA`2e83146221683fe5c54398432c48902d212da9b786bcb0a460fa3d8cc273e3f5`、driver SHA`317192dfbc5858a65a52aa9b7f30a9b558179b7211921f8e033414bdf22a6b91`经静态图审后，实际run`D/n/20261109T114236896235Z`正常完成：worker0/209.4687s，自有进程空，源/profile/父环境不变。48项manifest、320组件、163条实际wire顶点、422端口/102预期网络均核，无开短接。原坐标拒绝和抓取证据保留，未略过任何坐标/类型/图守卫。
+
+全201×46原生行均保留；Vs=400V、三相t0电流0，1206门极值与原12公式在原生TIME处全部相同，六R输入均为0.001或1e9Ω。KCL最大5.01e-12A、相负荷TR残差最大1.563e-9V。生成相位/角频率常量只保留约12位有效数字，ASCII TIME也有精度边界；1ms一致不证明完整0.2s逐位相同，近比较边界的原行继续保存。
+
+生成DSD先记录六支路电流、DSO再从CBR赋值，因此原行同一时间V/R与支路I不能直接相乘；按生成顺序诊断`V[k],R[k],I_record[k+1]`的1200对残差最大5.55e-17kV。首行零I和末行无下一I均保留。这只解释日志次序，不移动物理电压/时间、相负荷电流或任何候选波形。Branch1=理想源RE0，六varR实际支路为2/3/5/6/8/9。
+
+下一步先审标准sampler+共享impulse/INT的20µs时钟/保持小探针，再做1ms网络核对；原生TIME保持原样，不回放PyCy门极。必须实证t0、连续高Pulse、同刻sampler→R→varrlc次序和细电气步长中间点保持，才能冻结完整0.2s/5与2.5µs方案。原69块上游算术仍随电气步长执行，方案只拟保持施加到电路的门极；不能声称标准库已暂停整个控制图。图/波形审计和设计入口/hash见[证据索引](native_reference_attempts_20261109.md)。

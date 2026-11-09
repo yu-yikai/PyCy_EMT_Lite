@@ -52,7 +52,7 @@ MATLAB `openExample('simscape/CascadedRCCircuitInSimulinkAndSimscapeExample')` �
 ## 版本、许可与数据障碍
 
 1. 网页默认版本目前是R2026b，本地是R2025a。SPS在R2026a移除，旧SPS与原生Simscape工程不能混用；优先选择原生Simscape，保留确切示例ID和运行版本。[MathWorks官方发布说明](https://www.mathworks.com/help/simscape-electrical/release-notes.html)
-2. PSCAD Cookbook 提供公开下载入口，适合本地学习检查；原文版权保留，没有查到宽松再分发许可，原件不上传。PSCAD应用/编译器运行未完成，不能记为runnable。
+2. PSCAD Cookbook 提供公开下载入口，适合本地学习检查；原文版权保留，没有查到宽松再分发许可，原件不上传。此Cookbook包的四工程尚未实跑；独立vdiv和派生SrvcCbl的成功不提升本包状态。
 3. PNNL根目录 `license.txt`允许使用、修改和再分发且要求保留版权、条款及免责声明；压缩包含不同编译器版本的二进制库，未证明跨版本可运行，也没有验证每个附带库的许可。当前仅本地检查。
 4. PyPSCAD README明确允许使用和修改并要求引用相关论文；未见标准LICENSE，也未核定生成二进制的授权。仅保留本地，研究时引用作者指定论文。不要执行包内旧 `.exe` 来代替受许可的PSCAD参考运行。
 5. MathWorks DC教学库固定标签v2.2.2的[LICENSE](https://github.com/MathWorks-Teaching-Resources/DC-Circuit-Analysis/blob/v2.2.2/LICENSE.md)已实际下载并检查，明确为BSD三条款，版权2023 MathWorks；SHA256为`129423cdd0e66b615de1ee96a192cbf2fe3a8eb4251bba6577e3464630c4e972`，本地保存`LICENSE-v2.2.2.md`。可在保留版权、条款及免责声明且不作名称背书的条件下再分发；本轮原模型仍保留本地。Nodal模型已真实运行并导出101点数值结果；同条目的RLC模型仍未运行。
@@ -143,7 +143,7 @@ PyCy在3761a21预先冻结的验收下，已完成独立8项物理测试、独�
 ### 同步 Buck 原件及真实探针
 
 第20项`mw-synchronous-buck-r2025a`现为**reference_ready**。原100/50ns完整参考的500周期duty/派生源流FAIL保留；先行25/12.5ns补充随后真实运行完整10ms，406263/809567点，两连续窗及全部500周期通过原预算，见[合格参考报告](../../validation/cases/synchronous_buck/qualified_reference_report.json)。
-26复用现有Switch/LP/PI/Limiter，首次50ns候选商业报告及独立原始数据复核PASS，最新1236全量含slow及锁定/Ruff/mypy通过，已独立交付9269350887a867aee2740fed04155ade8f8757be，26正式完成；总数8；该交付只覆盖26，其他半/全桥、Boost和滤波候选仍未验证。体二极管不活动、重建源流和根预算的原生状态/导数条件保持；参考就绪不代表候选正式验收。run及hash集中见[本轮证据](experiments/native_reference_attempts_20261109.md)。
+26复用现有Switch/LP/PI/Limiter，首次50ns候选商业报告及独立原始数据复核PASS，该次1236全量含slow及锁定/Ruff/mypy通过，已独立交付9269350887a867aee2740fed04155ade8f8757be，26正式完成；该次交付时总数8，本轮27后总数9；该交付只覆盖26，其他半/全桥、Boost和滤波候选仍未验证。体二极管不活动、重建源流和根预算的原生状态/导数条件保持；参考就绪不代表候选正式验收。run及hash集中见[本轮证据](experiments/native_reference_attempts_20261109.md)。
 
 ### 双三相变压器与Delta Reference
 
@@ -180,8 +180,12 @@ PyCy在3761a21预先冻结的验收下，已完成独立8项物理测试、独�
 
 ### 有限电阻Bergeron与PSCAD原生环境
 
-第23项`pscad-installed-scalar-bergeron-v5`仍为**inspected**。官方未改vdiv教程真实GF46/x86编译/EMTDC链接/run仅证明工具链。有限R派生参考现已实际加载/创建网络；v4通用参数API问题窄修后，最新v5 `20261109T105927241384Z`已过Wire库存，再被SrvcCbl编辑前/后RowDefn一致性守卫拒绝，未保存修改工程/build/sim。当前须独立核定义XML差异来源，不放松守卫，资源不足已为历史；实际.tlo/波形/正式协议仍缺，不创建候选或新增线路核心类。见[设计](experiments/bergeron_reference_design.md)和[实际尝试索引](experiments/native_reference_attempts_20261109.md)，旧库存/定义身份守卫失败均保留。
+第23项`pscad-installed-scalar-bergeron-v5`现为**reference_ready**，仅覆盖从安装示例派生的SrvcCbl标量电路。它不是原雷电/HVDC宿主整网，也不将另四个线路定义一并提升。真实1/0.5µs、完整6ms运行保留6001/12001点，TLI/TLO确认R=100Ω、Z=201Ω、τ=300µs；源/方向/零前史及完整定义保存均已审。两完整窗、四量、共同网格与合并原生网格PWL的16项参考自细化通过原十分之一双限值，完整资格报告SHA`638fd6607f703a1799831a274f98088108a28f72a74c0d5b253e9cce25359cd8`。
+
+协议`44d1436`先于候选27。候选八项商业比较已通过，maxV=5.9117e-12V、maxI=5.1514e-14A、maxNR=6.0489e-15；独立原始数据双重复核及完整1244项回归已通过，27已独立验收提交`ae9fe3629ad9617853979b0ef58d4d8319239592`，正式新增19–27共9项，当前B1。原生隐藏延迟缓冲未直接导出，结论保留可观测零历史边界；频域LCP诊断不替代运行TLO。CRC、库存/API等旧失败保留历史，不再作当前阻塞。见[设计](experiments/bergeron_reference_design.md)、[冻结协议](../../validation/cases/finite_r_bergeron/acceptance_plan.md)及[实际证据索引](experiments/native_reference_attempts_20261109.md)。
 
 ### 双向开关SPWM独立派生参考
 
-第24项`pscad-derived-bilateral-spwm-v5`仍为**inspected**，是PSCAD5.0安装标准元件组成的独立派生参考。69控制/31电气/46通道仅有静态数学/codec证据；最新170字符短路径实际加载并创建组件后，原生端口坐标守卫拒绝，无build/run或波形。需先按实际端口重核布线，再执行[短探针](experiments/spwm_matched_reference_design.md)量时基、门极、有效R、源/单位/TR历史后另冻完整协议。原MathWorks资源、2%波形FAIL及完成数保持；脚本/摘录留本地，实际失败和入口hash见[本轮索引](experiments/native_reference_attempts_20261109.md)。
+第24项`pscad-derived-bilateral-spwm-v5`现为**runnable**，完整0–1ms/5µs短探针真实build/run成功，保存201×46原生数据。实际320组件/163wire/422端口形成102预期网络，无开短接；Vs=400V、六支路R输入0.001/1e9Ω，全部1206门极值与原公式在原生TIME处一致，三相零初流/KCL/TR关系已核。
+
+这仍不是完整0.2s合格参考：生成相位/角频率常量12位舍入、ASCII时间边界及DSD/DSO支路电流日志错开一拍均明确保留，未移动任何物理时间或候选波形。下一步先审标准采样保持的20µs/1ms小探针，证明细电气步长下独立5µs控制输入，再冻结完整协议。原MathWorks2%波形FAIL、默认12及原全部限值不变，B1仍in_progress。见[设计](experiments/spwm_matched_reference_design.md)及[实际证据索引](experiments/native_reference_attempts_20261109.md)。

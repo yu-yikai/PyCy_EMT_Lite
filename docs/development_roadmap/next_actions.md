@@ -1,51 +1,85 @@
 # 恢复与下一步
 
-2026-11-09（Asia/Shanghai）。长期目标已恢复active；先读tasks/progress/decisions/validation_status并核实际Git。当前本地HEAD为`9269350887a867aee2740fed04155ade8f8757be`，26验收已单独提交；正常push及真实ls-remote已核相同；精确新CI42606454705已终态billing lock启动前failure，未执行测试。分支`codex/emt-examples-longterm`；不操作main、不强推、不覆盖未提交文件。暂停记录`.tmp/longterm/paused-20261109T0925.json`属于历史，暂停中断的全量不记通过。
+2026-11-09（Asia/Shanghai）。长期目标active，分支`codex/emt-examples-longterm`。
+先读tasks/progress/decisions/validation_status，并核实际分支、HEAD、工作区和远端。
+任务检查点为最新功能验收`ae9fe3629ad9617853979b0ef58d4d8319239592`；已正常push且真实远端核同。
+后续文档提交在其后，以实际Git历史交叉核对，不把checkpoint当成实时HEAD。
+不操作main、不强推、不覆盖未提交文件；开发分支常规提交及里程碑推送已获授权。
 
 ## 当前事实
 
-正式新增19–26共8项完成，02补参考另计；26交付提交9269350，12原MathWorks2%波形FAIL保持。核心包/pyproject.toml/uv.lock相对原main未改，教学入口沿用既有元件/控制器。
-B2合格参考和首次候选PASS分开：25/12.5ns真实完整10ms自细化已通过；首次50ns候选商业比较及独立原始数据/输入/周期/两窗复核PASS；13项比较工具测试、锁定27包、Ruff/mypy、恢复后完整1236 passed478.786s含slow零失败/错误/跳过通过。26已完成独立验收并提交9269350，前次暂停中断不作通过；新XML见证据索引。
-A3/B1已经实际加载/建模，但最新均在build前停止；无有限R或同数学SPWM波形。两最新run终态均正常异常后quit、自有进程清空，原件/profile/父环境不变。旧资源门槛中止和失败均保留，资源不足不再是当前阻塞。完整run与hash只在[本轮证据索引](experiments/native_reference_attempts_20261109.md)集中列出。
+正式新增19–27共9项完成，02补参考另计，当前任务B1。26提交`9269350`、27提交`ae9fe36`均已验收。
+核心包、pyproject.toml和uv.lock相对起点main没有变化；教学入口继续复用现有元件和统一建例流程。
+27只有8个元件：源、源阻、两半线、三只线路电阻和负载；先看参数/接线，再看波前、反射和直流极限。
+
+27真实PSCAD参考1/0.5 µs先过16项自细化，`44d1436`先冻结协议再创建候选。
+四量双完整窗八项比较、8项独立物理测试、Agg独立6001点和两路原始数据审查均通过。
+完整1244 passed469.79s（XML469.778，含slow），零失败/错误/跳过；109个Python文件集合/hash与运行前一致。
+锁定27包、Ruff全范围和mypy39通过；证据`.tmp/longterm/a3-27-full-20261109T1207.*`。
+所有本轮native、仿真、测试和CI观察已终态，不恢复旧worker或无故重跑已合格参考/回归。
+
+B1按真实端口重连后已真实build/run：完整1 ms、201点、46通道，400V源及1206门极值经独审。
+当前参考仅`runnable`；电气细化时5 µs控制保持和完整0.2 s尚未验收。
+原12及MathWorks2%波形FAIL保持，不以新短探针覆盖原失败。
+全部run、脚本身份与完整hash集中在[本轮证据索引](experiments/native_reference_attempts_20261109.md)。
 
 ## 执行顺序
 
-1. **保存本批研究状态。** 26商业比较/独立原始数据复核、1236全量、图/报告/教学已验收，独立交付提交`9269350887a867aee2740fed04155ade8f8757be`；正式新增8。9269350已正常推送且真实远端一致，精确新CI已一次有界观察终态；单独提交/正常推送本轮路线图研究状态，不重复观察同CI。不重复合格参考、独立执行或完整回归，除非有新改动/失败。
-   原100/50ns参考FAIL、原物理/窗/500周期/全部限值保持。26只覆盖已冻结同步控制/事件与二极管不活动域，派生源流和条件精度边界不扩大。核心/pyproject.toml/uv.lock相对原main仍无改动。
-2. **A3先核定义前后差异。** [有限R设计](experiments/bergeron_reference_design.md)的v4库存API问题已窄修为仅本轮精确Wire/已知iid省略parameters，完整集合强核。v5实际run`20261109T105927241384Z`已过全部Wire库存，在SrvcCbl编辑前/后RowDefn一致性守卫停止；未保存修改工程/build/sim。已核唯一根CRC 36752239→0，其余定义相同；官方语义未证明。最小分阶段诊断`20261109T111545271892Z`已定位snapshot35紧接删除其余76个Main顶层对象后首次变CRC，其前0–34快照无差异；未编辑线路位置/Length、无save/build/run，按设计停止。单对象原因与一般CRC语义仍未证。下一步仅拟v6：在这一个批量删除边界强核唯一CRC转换/其余完整定义相同，再以删除后完整CRC0 XML严格作基线；此后任何变化含save新CRC仍停止。v6未写代码，须另存独审，不能泛化放松守卫；实际/研究/计划pins见证据索引。
-   `finite_r_native_probe_owned_guard_v5.py` SHA6beca649…/`builder_checked_v5.py` SHAce894fec…固定最新失败身份；v4及旧失败保留。实际6ms/1us回读仅为配置，`.tlo`、Vs/Mag时序、方向、零历史/波形仍缺。保持3GiB启动、2GiB动态余量、RPC20s/build180s/run120s/监控总420s。参数/波形核定后才冻正式协议和候选，不扩线路核心类或重跑已成功vdiv教程/整包settings。
-3. **B1先修实际端口布线。** [短探针设计](experiments/spwm_matched_reference_design.md)为0–1ms/5µs、native TIME直接驱动、网格仅观察。`D/n/20261109T091917405572Z`的170字符路径已加载，创建组件后实际端口坐标守卫拒绝；未build/run。补充端口抓取`D/n/20261109T111717200520Z`已保存31组件/53项检查、23坐标不符，按设计在所有wire/save/build/run前停止。source NA/NB实际(6,4)/(10,4)、ground仍(11,4)，旧重合假设失效；R/L/varrlc/电流表跨度2格。逐个按实际端口另存重连稿，核图/正交性/源probe与ground并独立审查，不统一缩放或略过守卫。D的完整路径见证据索引。
-   六双向外控R/浮星RL、69/31/46规格和原控制数学不变；实测时基、全部g/有效R、源/单位/TR历史后才另冻完整0.2s及控制网格细化协议。默认12、原MathWorksFAIL和原全部限值保持，C1后置，不引入自动二极管框架。
-4. **F1仍是外部账单锁。** 精确验收9269350的[CI42606454705](https://github.com/yu-yikai/PyCy_EMT_Lite/actions/runs/42606454705)终态failure，Ubuntu129123587852/Windows129123588150均runner0/steps空，注释确认billing lock、未执行测试，test_count=null。证据[ci_9269350.json](experiments/ci_9269350.json)，7份raw/hash已核。不轮询同终态；账户恢复后补验精确HEAD双OS全部步骤，旧90b2fcd仅覆盖22。D0不重复已成功参考。
+1. **B1先实测控制保持。** 见[同数学参考设计](experiments/spwm_matched_reference_design.md)。
+   从已成功短探针的隔离副本出发，保持69控制数学及native TIME，先用20 µs小探针核标准sampler/impulse的
+   t0、脉冲连续为1的语义、同tick有效R次序；通过后再运行完整1 ms，比较电气5/2.5 µs时门极输入均保持5 µs。
+   6个sampler加公共脉冲只是已审查设计，尚无原生运行证据；不能提前称成立。
+   保存原始时间/全部边界/原始及保持门极，不量化时钟、拟合相位、删点或回放候选门极。
+   先copy再load隔离工程，不重试已知PSCAD5.0跨目录save_as挂起路径。
+2. **B1通过短探针后再冻完整协议。** 先固定0.2 s、控制周期与细化方式、初值、有效R、源单位、
+   TR历史、比较窗和误差预算，再准备参考自细化及商业候选；C1仍后置。
+   DSD/DSO支路电流日志次序只作单独诊断，不能给候选比较移相。
+   保持3 GiB启动/2 GiB动态余量、RPC20 s/build180 s/run120 s/总420 s及原件/profile/父环境守卫。
+   不引入自动二极管、非线性、复杂机器、稀疏或加速框架。
+3. **A3和B2保持已验收范围。** 27只覆盖冻结常参数集总损耗Bergeron，不推广为宽带电缆；
+   STANDARD/无快照、零可观测前史与因果到达不等于直接导出隐藏缓冲。
+   26只覆盖冻结同步控制/负荷事件及二极管不活动域；原100/50 ns参考FAIL保留。
+   不为换参或凑数量复制SPWM/RLC算例。新候选须有独立教学价值和真实相容参考。
+4. **F1等待外部账单锁解除。** 精确验收ae9fe36的
+   [CI42616684547](https://github.com/yu-yikai/PyCy_EMT_Lite/actions/runs/42616684547)
+   已实查终态failure；Ubuntu129158174490/Windows129158174768均runner0/steps空，两注释确认billing lock。
+   [ci_ae9fe36.json](experiments/ci_ae9fe36.json)及7份raw/hash已核，未执行测试/test_count=null。
+   不轮询同终态、不制造空提交或修改代码绕过；外部账户恢复后再补验精确里程碑双OS全部步骤。
+   旧90b2fcd只覆盖22，23–27跨OS仍未验证。
 
 ## 本机命令
 
-稳定Python3.14.5：.tmp/venv-py3145/Scripts/python.exe。下列离线缓存仅适用于本机，其他机器正常uv sync --locked。
+稳定Python3.14.5：`.tmp/venv-py3145/Scripts/python.exe`。下列离线缓存仅适用于本机，其他机器正常`uv sync --locked`。
 
 ~~~powershell
 $env:UV_CACHE_DIR="$PWD/.uv-cache"
 $env:UV_PYTHON_INSTALL_DIR="$PWD/.uv-python"
 $env:UV_PROJECT_ENVIRONMENT="$PWD/.tmp/venv-py3145"
 $env:UV_PYTHON_DOWNLOADS='never'
-uv sync --locked --offline --python .uv-python/cpython-3.14.5-windows-x86_64-none/python.exe
 $env:PYTHONUTF8='1'
 $env:MPLBACKEND='Agg'
 $env:MPLCONFIGDIR="$PWD/.tmp/longterm/mpl"
 $env:OPENBLAS_NUM_THREADS='1'
-uv run ruff check pycy_emt_lite examples tests validation
-uv run mypy
-uv run pytest
+uv sync --locked --offline --python .uv-python/cpython-3.14.5-windows-x86_64-none/python.exe
+uv run --locked --offline ruff check pycy_emt_lite examples tests validation
+uv run --locked --offline mypy
+uv run --locked --offline pytest
 ~~~
 
-pytest指定新仓库内--basetemp=.tmp/longterm/pytest-<唯一ID>，先核路径位于仓库且不存在，可加-p no:cacheprovider。
-保留slow；新代码/失败才触发对应范围与必要完整回归。日志/XML放.tmp/longterm/，不覆盖旧失败。
-Git ownership用单命令-c safe.directory=D:/VibeCoding/PyCy_EMT_Lite；子进程仅当前进程GIT_CONFIG_COUNT/KEY_0/VALUE_0，不改全局配置。
-网络按实际结果判断：早先direct成功、后续direct低速/443失败；最终已有系统代理的子进程helper在提升权限后正常push并核远端5f1a96b。可用.tmp/longterm/git_with_system_proxy.py传git参数，读取现有系统代理并脱敏，不持久改网络设置。
-正式case比较入口：uv run python -m validation.cases.<case>.compare，case包括cascaded_rc/rc_charging/nodal_analysis/earthing/transmission_line/transformer_t_equivalent/three_phase_transformer_chain/source_line_transformer。
-Buck尚未正式交付，不套用其他case的单参数MATLAB命令。所有第三方原件、波形/图片/缓存保留忽略的local_reference。
-长期目标仍active；结束当前执行前同步证据/任务/提交/下一步，不宣称离线后台继续。
+pytest指定新仓库内`--basetemp=.tmp/longterm/pytest-<唯一ID>`，先核路径位于仓库且不存在，可加`-p no:cacheprovider`。
+保留slow；仅有新代码/失败/未解疑点才运行对应检查和必要完整回归，日志/XML不覆盖旧结果。
+默认教学执行不读商业归档；`finite_r_bergeron`比较只读已核本地PSCAD归档，不启动native。
+商业比较入口为`uv run --locked python -m validation.cases.<case>.compare`；26/27的特殊参考范围见各case README，
+不套用其他case的MATLAB导出命令。第三方原件、波形和研究脚本保留忽略的`local_reference/`。
+
+Git ownership仅用单命令`-c safe.directory=D:/VibeCoding/PyCy_EMT_Lite`；子进程仅当前进程设置
+GIT_CONFIG_COUNT/KEY_0/VALUE_0，不改全局配置。已有系统代理helper
+`.tmp/longterm/git_with_system_proxy.py`可传git参数；仅本命令读取系统现有代理并脱敏，不持久改网络设置。
+结束当前执行前同步任务/证据/提交/下一步；不声称无环境时会后台继续。
 
 ## 历史证据边界
 
-08:22UTC约2.282GiB<3GiB时只准备/未启动；08:36:59UTC实测约10.28GiB后才顺序运行。首个B2更细启动资源保护中止、旧参考自身FAIL，以及A3/B1的全部失败目录保持，不恢复旧worker、不覆盖旧输出。
-B2的callback/load_system研究没有证明与open_system语义等价或减少内存；当前不需要通过未测替换重跑合格参考。所有第三方原件/波形/脚本仅保留忽略目录。
+旧暂停中断全量不作通过；最新1244来自后续独立完成的运行。08:22UTC低于3 GiB时只准备/未启动，
+后来资源满足后才顺序实跑；旧资源中止、A3 CRC/v6 save、B1端口等失败全保留，不再列为当前阻塞。
+A3 v7严格允许单次观察CRC转0、保存后完整源定义恢复，不忽略CRC或推广一般语义。
+B2 callback/load_system研究没有证明语义等价或内存收益，不以未测替换重跑合格参考。

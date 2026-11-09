@@ -1,10 +1,28 @@
 # 持久进度
 
-2026-11-09恢复检查点：长期目标已恢复active。本地HEAD `9269350887a867aee2740fed04155ade8f8757be`，26验收已单独提交，已正常推送并核真实远端相同，精确新CI42606454705因billing lock启动前失败、未执行测试。正式新增19–26共8项完成，当前任务A3。
+2026-11-09验收检查点：`ae9fe3629ad9617853979b0ef58d4d8319239592`，分支`codex/emt-examples-longterm`。
+该功能提交已正常推送，真实远端已核相同；本段之后的收尾文档提交须与实际Git历史交叉核对。
+长期目标active，正式新增19–27共9项完成，当前任务B1；既有02补验证另计。
 
-B2的25/12.5ns完整真实参考自细化PASS；首次50ns候选商业比较与独立原始数据/输入/周期/两窗复核PASS。13项比较工具测试、锁定27包、Ruff/mypy及恢复后完整1236 passed478.786s含slow、零失败/错误/跳过通过，26已交付9269350；早先暂停中断仍不记通过。A3最小诊断将唯一CRC变化定位在删除其余76个Main顶层对象之后，官方含义仍未证；B1端口抓取31组件/53项检查发现23坐标不符，须逐端口重连；均未build/sim，异常后正常quit且自有进程清空、源/profile不变。当前不再以资源不足或“尚未启动native”作为阻塞。
+27有限R Bergeron已完成正式验收。真实PSCAD参考1/0.5 µs两运行先完成16项自细化，
+协议`44d1436`在候选前提交；四量在0–1.2 ms和1.2–6 ms双完整窗八项比较全过，未移相/删点。
+最大电压误差5.92e-12 V、电流5.16e-14 A；153输入快照、原始数据换算与指标分别独审通过。
+8项独立物理测试、独立Agg6001点、锁定27包/Ruff/mypy39通过；
+完整**1244 passed，469.79 s**（XML469.778，含slow），零失败/错误/跳过，109个Python文件与运行前hash一致。
+教学脚本103行，只组合8个既有元件；核心包、pyproject.toml和uv.lock相对起点main没有变化。
+结论限冻结的集总损耗Bergeron近似，不认证宽带真实电缆；隐藏原生延迟缓冲没有直接导出。
 
-实际run、完整hash与恢复入口集中见[本轮证据索引](experiments/native_reference_attempts_20261109.md)。暂停收尾保存在`.tmp/longterm/paused-20261109T0925.json`；以下按时间保留历史，当前状态以本段和tasks/next_actions为准。
+B1实际端口重连后的同数学PSCAD短探针已真实build/run，完整1 ms/201点/46通道通过原始数据核查，
+1206门极值与原数学一致。当前缺口是电气步长细化时保持5 µs控制输入的真实语义及完整0.2 s验收，
+不是旧CRC/端口/无波形阻塞。12原MathWorks2%波形FAIL保持；下一步先20 µs、再1 ms受控保持探针。
+
+新精确[CI42616684547](https://github.com/yu-yikai/PyCy_EMT_Lite/actions/runs/42616684547)
+终态failure，Ubuntu/Windows均runner0、steps空，两个注释确认账户billing lock，未执行测试。
+[新CI证据](experiments/ci_ae9fe36.json)保留7份raw/hash，23–27跨OS仍待验，F1外部受阻；同终态不再轮询。
+
+全部本轮仿真、导出、测试、独审和CI观察均已终态。实际run、完整hash及恢复入口见
+[本轮证据索引](experiments/native_reference_attempts_20261109.md)和[next_actions](next_actions.md)。
+暂停中断记录仅为历史，不记作通过；以下按时间保留旧阶段事实，以本段和tasks/next_actions为当前状态。
 
 日期：2026-11-04（Asia/Shanghai）。起点 main=`a03a450340797771099fceb5ec77137bc7f681c2`，工作分支 `codex/emt-examples-longterm`，起始工作区干净。
 

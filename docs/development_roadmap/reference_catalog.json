@@ -2018,7 +2018,7 @@
     {
       "id": "pscad-installed-scalar-bergeron-v5",
       "short_code": "PSCAD-BERGERON",
-      "name": "Installed scalar finite-resistance Bergeron definitions and environment probe",
+      "name": "Derived SrvcCbl scalar finite-resistance Bergeron reference",
       "source_url": "https://www.pscad.com/webhelp-v5-ol/EMTDC/Transmission_Lines/The_Bergeron_Model.htm",
       "files": [
         "ENI/Cigre_BM.pscx",
@@ -2030,7 +2030,7 @@
         ".pscx"
       ],
       "model_version": "Installed PSCAD 5.0 examples; executable reports 5.0.0",
-      "status": "inspected",
+      "status": "reference_ready",
       "software_requirements": [
         "PSCAD 5.0",
         "EMTDC",
@@ -2044,16 +2044,13 @@
       "downloaded": false,
       "content_inspected": true,
       "opened_in_native_software": true,
-      "simulation_succeeded": false,
-      "reference_numeric_data_obtained": false,
+      "simulation_succeeded": true,
+      "reference_numeric_data_obtained": true,
       "local_path": "local_reference/a3_followup",
       "allows_local_save": "Installed example metadata and local research evidence inspected; no redistribution permission asserted",
       "allows_redistribution": "not_asserted",
-      "mathematical_compatibility": "Five manual scalar Bergeron definitions have nonzero active R. Published undamped constant-parameter finite-R model equals R/4 + two lossless half-lines separated by R/2 + R/4, by independent analytic elimination; 97 complex-frequency checks supplement it. Existing single attenuation factor is insufficient. Original HVDC/lightning host networks are not directly small PyCy cases. Actual parameters, initial histories, native interpolation/events and finite-R numerical comparison remain pending.",
-      "blockers": [
-        "Minimal diagnostic20261109T111545271892Z observed only root CRC change immediately after batch deletion of76 other Main top objects; previous0..34 snapshots unchanged. No linevertices/Length edit/save/build/run. Exact object cause and official CRC semantics remain unproven; no guard relaxation.",
-        "Actual tlo/source timing/units/directions/zero histories/waveform and full acceptance protocol remain pending; resource shortage is historical."
-      ],
+      "mathematical_compatibility": "Actual TLI/TLO, units, Main.dta/f and full native output establish R100ohm/Z201ohm/tau300us with Interp1=1, Inflen=0, BDamp=0, LongLine=0. Same finite-R approximation uses explicit R25/50/25ohm plus two lossless Z201ohm/tau150us half-lines, attenuation1. Independent analytic elimination/97 frequency checks and first-flight/KVL/causal-output checks agree. Runtime line parameters are distinct from LCP frequency-domain complex diagnostics; no broadband cable or other host-network equivalence claimed.",
+      "blockers": [],
       "probe_record": "docs/development_roadmap/experiments/bergeron_reference_followup.md",
       "native_environment_probe": {
         "run_id": "20261106T061600Z_startup",
@@ -2093,7 +2090,15 @@
         "native_reference_design/20261109T074056761817Z/native_probe/20261109T092018312571Z/manifest.json": "6393b32c33fce16cc63e8274c9ffa2c0dd718a887c7ec25c9b55a0b6950b08d5",
         "finite_r_native_probe_owned_guard_v5.py": "6beca649559638c15221dd16ebeca1717adbd7939d9dc81b85447afe3a3cd457",
         "native_reference_design/20261109T074056761817Z/builder_checked_v5.py": "ce894fec7178107cb51189b6a2c7007aea4cb026620dabd8195619ceb172bb4d",
-        "native_reference_design/20261109T074056761817Z/native_probe/20261109T105927241384Z/manifest.json": "47d246343b0458709fe78a77b4af307374425b3539a0739526e31ed12d73b439"
+        "native_reference_design/20261109T074056761817Z/native_probe/20261109T105927241384Z/manifest.json": "47d246343b0458709fe78a77b4af307374425b3539a0739526e31ed12d73b439",
+        "native_reference_design/20261109T074056761817Z/native_probe/20261109T113500721502Z/manifest.json": "9f903a290b0c03850e756a5483ad612ac0e8c4cac1e254a9017a8ee98b91bf67",
+        "native_reference_design/20261109T074056761817Z/native_probe/20261109T114121456591Z/manifest.json": "cc6c4e3bb2df9b8352e5a46cc6a3ca29e3f6afc374bab58e7ffbc3262b5f714c",
+        "native_reference_design/20261109T074056761817Z/native_probe/20261109T115004933156Z/manifest.json": "7306e2af6297ae2f9beac77df78a8392af90edd9725ce32ced6f3fa2abc22cb7",
+        "integrity_review/20261109_a3_refpair_qualification_a8d36e/qualification.json": "638fd6607f703a1799831a274f98088108a28f72a74c0d5b253e9cce25359cd8",
+        "integrity_review/20261109_a3_refpair_qualification_a8d36e/manifest.json": "cb538d8af2ff5d4624bf6acd212db601899e4bcb68a3f5274f98c09108efcdca",
+        "integrity_review/20261109_v7_waveform_probe_3f7a1d/analysis.json": "25aee298452561b83c134c6488135ddadefe2791dbc9b91e2910bbf13959d375",
+        "integrity_review/20261109_a3_commercial_independent_bef0ad/report.json": "a38fad05833cbdff7a73e6ea3af42dd1d5efbf94607d6431617f6d0fa3228689",
+        "integrity_review/20261109_a3_commercial_independent_bef0ad/manifest.json": "fe449f4dd1e291f9b7d2ec78443df5727269f4d61791a60abd7c620b1dbb4f9a"
       },
       "license_notes": "Installed original projects, library sources, official figures and all probe evidence remain local. Startup did not request login, acquire a certificate, change settings or bypass licensing.",
       "standalone_compiler_probe": {
@@ -2136,13 +2141,13 @@
           "Z0_ohm": 201,
           "tau_s": 0.0003
         },
-        "status": "native_prebuild_rowdefn_equality_blocked",
+        "status": "completed_derived_scalar_case27",
         "native_started": true,
         "builder_executed": true,
-        "sim_called": false,
-        "acceptance_protocol_frozen": false,
+        "sim_called": true,
+        "acceptance_protocol_frozen": true,
         "same_native_instance_waiting": false,
-        "candidate_created": false,
+        "candidate_created": true,
         "profile_guard_followup": {
           "driver": "local_reference/a3_followup/finite_r_native_probe_profile_guard_v2.py",
           "actual_profile_required": true,
@@ -2163,11 +2168,10 @@
           "preflight_min_bytes": 3221225472
         },
         "actual_attempt_record": "docs/development_roadmap/experiments/native_reference_attempts_20261109.md",
-        "latest_native_run": "20261109T105927241384Z",
-        "latest_stop": "Native SrvcCbl definition changed during Main-only editing",
-        "last_attempt_driver": "local_reference/a3_followup/finite_r_native_probe_owned_guard_v5.py",
-        "last_attempt_builder": "local_reference/a3_followup/native_reference_design/20261109T074056761817Z/builder_checked_v5.py",
-        "latest_rowdefn_difference": "Only root Definition/@crc36752239 to0; all64 parameters, IDs, internal CRC, layout/attributes/topology equal. Native cause unproven; no save/build/sim.",
+        "latest_native_run": "20261109T115004933156Z",
+        "latest_stop": "Normal finished; EMTDC run completed",
+        "last_attempt_driver": "local_reference/a3_followup/finite_r_native_probe_halfus_owned_guard_v7.py",
+        "last_attempt_builder": "local_reference/a3_followup/native_reference_design/20261109T074056761817Z/builder_checked_v7_halfus.py",
         "crc_semantics_research": {
           "path": "local_reference/a3_followup/integrity_review/20261109_crc_semantics_research_a9e612",
           "report_sha256": "ea17d3c4bff90ae234fe3cd93c52cda94079254de28bbb93cbf1b5ddb71d1848",
@@ -2200,22 +2204,123 @@
             ]
           }
         },
-        "prospective_v6": "Not implemented: only this observed batch-delete transition may be checked strictly, then full post-delete CRC0 XML becomes strict baseline. Any later change incl save-timeCRC value still stops; no general semantic/numeric acceptance."
+        "historical_v5_attempt": {
+          "latest_native_run": "20261109T105927241384Z",
+          "latest_stop": "Native SrvcCbl definition changed during Main-only editing",
+          "last_attempt_driver": "local_reference/a3_followup/finite_r_native_probe_owned_guard_v5.py",
+          "last_attempt_builder": "local_reference/a3_followup/native_reference_design/20261109T074056761817Z/builder_checked_v5.py",
+          "latest_rowdefn_difference": "Only root Definition/@crc36752239 to0; all64 parameters, IDs, internal CRC, layout/attributes/topology equal. Native cause unproven; no save/build/sim."
+        },
+        "historical_v6_plan": "Not implemented: only this observed batch-delete transition may be checked strictly, then full post-delete CRC0 XML becomes strict baseline. Any later change incl save-timeCRC value still stops; no general semantic/numeric acceptance.",
+        "crc_guard_evolution": "v6 actual113500 saved successfully, then strict post-clearCRC0 baseline rejected native/disk restoration to originalCRC36752239 before build. v7 retains exact one-boundary editing checks; after save requires nativeAfterSave==diskSaved==complete original source includingCRC, plus native serialization byte equality to source-before. No CRC field is ignored.",
+        "successful_native_runs": [
+          {
+            "run": "20261109T114121456591Z",
+            "solution_and_sample_us": 1.0,
+            "samples": 6001,
+            "worker_returncode": 0,
+            "elapsed_s": 35.5043994000298
+          },
+          {
+            "run": "20261109T115004933156Z",
+            "solution_and_sample_us": 0.5,
+            "samples": 12001,
+            "worker_returncode": 0,
+            "elapsed_s": 50.288396599993575
+          }
+        ],
+        "acceptance_protocol_commit": "44d1436df5714060176998ea1ce94c6d6eaf7d48",
+        "latest_rowdefn_preservation": "Editing: strict complete post-clearCRC0 baseline. After save: native and disk complete definitions equal original source includingCRC36752239, and native serialized bytes equal before.",
+        "acceptance_commit": "ae9fe3629ad9617853979b0ef58d4d8319239592"
+      },
+      "comparison_reference_ready": true,
+      "reference_ready_scope": "Only the explicit derived SrvcCbl scalar circuit with Rs100ohm/RL400ohm, R100ohm/Z201ohm/tau300us, zero observed prehistory, ramp0.5-0.6ms and full0-6ms. The four installed host projects/five definitions remain inventory/source research, not five qualified benchmarks. Hidden native delay buffers were not directly exported.",
+      "reference_data": "local_reference/a3_followup/native_reference_design/20261109T074056761817Z/native_probe/20261109T115004933156Z/project/Steep_Front.gf46/a3_native_probe_01.out",
+      "samples": 12001,
+      "stop_s": 0.006,
+      "validation_case": "validation/cases/finite_r_bergeron",
+      "qualification": {
+        "report": "local_reference/a3_followup/integrity_review/20261109_a3_refpair_qualification_a8d36e/qualification.json",
+        "report_sha256": "638fd6607f703a1799831a274f98088108a28f72a74c0d5b253e9cce25359cd8",
+        "manifest": "local_reference/a3_followup/integrity_review/20261109_a3_refpair_qualification_a8d36e/manifest.json",
+        "manifest_sha256": "cb538d8af2ff5d4624bf6acd212db601899e4bcb68a3f5274f98c09108efcdca",
+        "signal_window_view_checks": 16,
+        "all_passed": true,
+        "common_1us_max_abs_error": 0,
+        "merged_PWL_max_voltage_error_V": 9.663381206337363e-12,
+        "merged_PWL_max_current_error_A": 5.1514348342607263e-14,
+        "max_nrmse": 2.7474478381156035e-15,
+        "budget": "Each signal/window/view: maxabs<=0.1V or0.0005A AND NRMSE<=1e-4; no exclusion/shift"
+      },
+      "formal_pycy_validation": {
+        "passed": true,
+        "candidate_commercial_comparison_passed": true,
+        "report": "local_reference/finite_r_bergeron/comparison_results/20261109T120632310271Z/report.json",
+        "report_sha256": "1961582edfe26d9db3497cee3a3b7a884b977ac0596826c63998c433cffaed56",
+        "candidate_source_sha256": "ab2e3e6cdcd3c799f9ae1952db8c4e2aab711c520443fcf5f529d7a31ba55ee0",
+        "comparison_count": 8,
+        "max_voltage_error_V": 5.9117155615240335e-12,
+        "max_current_error_A": 5.1514348342607263e-14,
+        "max_nrmse": 6.048877853956552e-15,
+        "source_input_max_abs_error_V": 1.4139800441625994e-12,
+        "pending": [],
+        "formal_new_completed_count": 9,
+        "independent_commercial_audits": [
+          {
+            "report": "local_reference/a3_followup/integrity_review/20261109_a3_commercial_independent_bef0ad/report.json",
+            "report_sha256": "a38fad05833cbdff7a73e6ea3af42dd1d5efbf94607d6431617f6d0fa3228689"
+          },
+          {
+            "report": "local_reference/native_static_reviews/20261109T1207201487924Z_a3_public_review/actual_comparison_receipt.json",
+            "report_sha256": "a75905ec83e2d92a2a8690f6afc8bfd6566600223f08894b57596a2bffdbc8c9"
+          }
+        ],
+        "acceptance_commit": "ae9fe3629ad9617853979b0ef58d4d8319239592",
+        "public_report": "validation/cases/finite_r_bergeron/validation_report.json",
+        "public_report_sha256": "7768af6062eb7544afd7a4ff382733211fa4a09d0ed8c03f7e12d5c4bfff5a1f",
+        "local_verification": {
+          "full_pytest_items": 1244,
+          "terminal_duration_s": 469.79,
+          "XML_duration_s": 469.778,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "includes_slow": true,
+          "current_python_files_unchanged_from_pre_run": 109,
+          "locked_packages": 27,
+          "ruff": "passed",
+          "mypy_source_files": 39,
+          "independent_fullsuite_audit": "local_reference/native_static_reviews/20261109T122213385907Z_a3_fullsuite_closeout/report.json",
+          "independent_fullsuite_audit_sha256": "eccac0a01c8ffc046ae268acb7b77bfd90f3fd551fb7ba12248ee4e59d0d4fc6",
+          "CI_scope": "Exact pushed acceptance HEAD ae9fe362 CI42616684547 failed before runner allocation due billing lock; two jobs runner0/steps[], test_count null. No cross-OS tests executed; local1244/commercial PASS are separate."
+        },
+        "remote_delivery": {
+          "pushed_commit": "ae9fe3629ad9617853979b0ef58d4d8319239592",
+          "remote_matches_observed": true,
+          "CI_run_id": 42616684547,
+          "CI_status": "completed",
+          "CI_conclusion": "failure",
+          "CI_execution_started": false,
+          "test_count": null,
+          "reason": "billing lock before runner allocation",
+          "evidence": "docs/development_roadmap/experiments/ci_ae9fe36.json",
+          "evidence_sha256": "33523e8e411aa2a5d62670f52b4b33e6a34c2119f10d19efe28733fbf6ec9f57"
+        }
       }
     },
     {
       "id": "pscad-derived-bilateral-spwm-v5",
       "short_code": "PSCAD-SPWM-DERIVED",
-      "name": "Prospective bilateral SPWM reference built from installed PSCAD standard components",
+      "name": "Independent bilateral SPWM reference: actual 1ms probe",
       "source_path": "C:/Program Files (x86)/PSCAD50/master.pslx",
       "source_sha256": "2940ddce6fe1fae56cb6be70bbaf0210a7e36059bfcad1e78b0ddbfd4d2a7c77",
       "source_scope": "independent derived circuit/control design; not an unchanged official benchmark or the original MathWorks circuit",
-      "model_version": "PSCAD application5.0.0; installed master.pslx XML5.0.0.2; actual native construction attempted, no build/simulation",
-      "status": "inspected",
+      "model_version": "PSCAD5.0.0; installed master.pslx XML5.0.0.2; actual GF46/x86 build/run",
+      "status": "runnable",
       "content_inspected": true,
       "opened_in_native_software": true,
-      "simulation_succeeded": false,
-      "reference_numeric_data_obtained": false,
+      "simulation_succeeded": true,
+      "reference_numeric_data_obtained": true,
       "comparison_reference_ready": false,
       "local_path": "local_reference/two_level_pwm",
       "design_record": "docs/development_roadmap/experiments/spwm_matched_reference_design.md",
@@ -2225,10 +2330,10 @@
         "full_acceptance_protocol_frozen": false,
         "candidate_modified": false
       },
-      "mathematical_compatibility": "Target default12 bilateral Ron/Goff switches and floating RL load. Native TIME directly drives shortprobe; grid observers, complete gates/effective R, source, TR history and actual output precision must be measured before formal full-run protocol.",
+      "mathematical_compatibility": "Short probe uses raw native TIME and standard math/comparators, six bilateral varrlc pure-R branches, floating1ohm+1mH phase loads and400V ideal source. All1206 observed gate values match the default12 formula evaluated at retained raw native TIME, all six R inputs are0.001/1e9ohm, and zero initial current/KCL/TR relations were checked. Generated12-significant-digit phase/omega literals and ASCII timing precision remain explicit boundaries; this is not full-run bitwise controller equivalence.",
       "blockers": [
-        "Actual31component/53port capture has23 coordinate mismatches: sourceNA/NB(6,4)/(10,4), groundstill(11,4), passive/currentmeter span2. Re-route per native ports and verify graph/orthogonality/source probe+ground; no global scaling or waveform yet.",
-        "Opaque routines, Type6 source/use_ideal_branchFalse, clock/ties/effective R/units/TR initialization still require actual outputs before full protocol. Original MathWorks FAIL and criteria retained."
+        "Full0.2s same-input native reference and its5us-control-preserving2.5us electrical refinement protocol remain unfrozen; short-run gate equality does not establish all40001 control points or floating boundary decisions.",
+        "A proposed standard sampler/impulse hold needs separate20us and1ms actual probes for t0/consecutive pulses/same-time update order. Branch-current DSD/DSO logging offset is diagnostic only; preserve all raw rows and never shift candidate waveforms. Original MathWorks2% FAIL/default12/thresholds remain unchanged."
       ],
       "sha256": {
         "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/report.md": "2ef092f9ad188cd2b63155ddbf9623317631f2a6ce98935e77cf34c0212d5906",
@@ -2244,7 +2349,12 @@
         "matched_control_research/20261109T0828140915684Z_builder_review/report.md": "250128b68424ae4964d423b9ca9776a466a6fe2c0d2ef9f667167a6751c8fb8e",
         "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/builder_design_report.md": "62eb308945c0a32f81b07b487356dab69deaeaeab301359b4ece820903254dae",
         "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/builder_static_audit.json": "e66108bbf4869474ff2e37604ba355376fe0dc69845dcc8f1a717d70f3b09705",
-        "matched_control_research/20261109T0828140915684Z_builder_review/control_review_final.json": "96246f19f109ec67da90694a5325433a268b0fc3843b3dc2dae377f9cb3ffe2b"
+        "matched_control_research/20261109T0828140915684Z_builder_review/control_review_final.json": "96246f19f109ec67da90694a5325433a268b0fc3843b3dc2dae377f9cb3ffe2b",
+        "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/n/20261109T114236896235Z/manifest.json": "f41b69742d26d17d712454aae18a1f2b7f7a3bc7f283d1adbf963b02ff61bc2b",
+        "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/readback_audit_research/20261109T114345717986Z/results/20261109T114236896235Z/report.json": "f7113ab57b35077ff9164f66e1720bf58bdaca36d5bda477823c5f1879a75f7d",
+        "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/actual_waveform_research/20261109T1149537774717Z/results/report.json": "2dcd7dc01a3970cc08366a28432a8c9a9e034ef3516bfc6d620c9062719e1238",
+        "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/control_rate_design/20261109T115836954582Z/design.md": "3213e21c93e30e25f46a78d15441271325a2281a952a94e16753bef312707166",
+        "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/control_rate_design/20261109T115836954582Z/manifest.json": "e24dd70dae0e55e4cd61766ae7bc81bf1f27e5b17416d129257481412b1c9570"
       },
       "license_notes": "Installed library excerpts, donor original, scripts and raw evidence remain ignored locally; redistribution permission not asserted.",
       "original_static_builder_preparation": {
@@ -2261,6 +2371,42 @@
       },
       "native_probe": {
         "record": "docs/development_roadmap/experiments/native_reference_attempts_20261109.md",
+        "latest_run": "local_reference/two_level_pwm/matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/n/20261109T114236896235Z",
+        "native_started": true,
+        "builder_executed": true,
+        "build_called": true,
+        "sim_called": true,
+        "stop": "Normal finished; EMTDC run completed",
+        "worker_returncode": 0,
+        "elapsed_s": 209.4687479,
+        "remaining_owned": [],
+        "source_profile_parent_environment_unchanged": true,
+        "driver_sha256": "317192dfbc5858a65a52aa9b7f30a9b558179b7211921f8e033414bdf22a6b91",
+        "builder_sha256": "2e83146221683fe5c54398432c48902d212da9b786bcb0a460fa3d8cc273e3f5",
+        "manifest_sha256": "f41b69742d26d17d712454aae18a1f2b7f7a3bc7f283d1adbf963b02ff61bc2b",
+        "rows": 201,
+        "channels": 46,
+        "graph_audit": "local_reference/two_level_pwm/matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/readback_audit_research/20261109T114345717986Z/results/20261109T114236896235Z/report.json",
+        "graph_audit_sha256": "f7113ab57b35077ff9164f66e1720bf58bdaca36d5bda477823c5f1879a75f7d",
+        "waveform_audit": "local_reference/two_level_pwm/matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/actual_waveform_research/20261109T1149537774717Z/results/report.json",
+        "waveform_audit_sha256": "2dcd7dc01a3970cc08366a28432a8c9a9e034ef3516bfc6d620c9062719e1238",
+        "gate_values_compared": 1206,
+        "gate_mismatches": 0,
+        "formal_acceptance": false
+      },
+      "native_port_capture": {
+        "run": "20261109T111717200520Z",
+        "components": 31,
+        "expected_port_checks": 53,
+        "mismatches": 23,
+        "capture_sha256": "a3ab6c0197777eec75953bee59527b0ceb2180f7410a04480457988e54f458c8",
+        "manifest_sha256": "46027d13cac184b7e051a9edbe571a514e68e791e329ceddca8354c0d3fae1b9",
+        "terminal_sha256": "dacff8ff0d60c08efac859db5cc14c60d8e75755f8636867f86176e1ce5b72ec",
+        "deliberate_stop_before_all_wires_save_build_run": true
+      },
+      "reference_ready_scope": "Only201 native rows and46 channels over0-1ms at5us are audited; full0.2s and a refinement protocol preserving the independent5us applied-control grid are not frozen or qualified.",
+      "previous_prebuild_probe": {
+        "record": "docs/development_roadmap/experiments/native_reference_attempts_20261109.md",
         "latest_run": "local_reference/two_level_pwm/matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/n/20261109T091917405572Z",
         "native_started": true,
         "builder_executed": true,
@@ -2274,15 +2420,11 @@
         "builder_sha256": "a113419df5602b0146e3027fdfa77339b7baaaa58993f3652958b5d23ead0a77",
         "manifest_sha256": "ae06fe3bc55b29b653b82639469a2a9fab074aa353a195786ad675bd92f59aea"
       },
-      "native_port_capture": {
-        "run": "20261109T111717200520Z",
-        "components": 31,
-        "expected_port_checks": 53,
-        "mismatches": 23,
-        "capture_sha256": "a3ab6c0197777eec75953bee59527b0ceb2180f7410a04480457988e54f458c8",
-        "manifest_sha256": "46027d13cac184b7e051a9edbe571a514e68e791e329ceddca8354c0d3fae1b9",
-        "terminal_sha256": "dacff8ff0d60c08efac859db5cc14c60d8e75755f8636867f86176e1ce5b72ec",
-        "deliberate_stop_before_all_wires_save_build_run": true
+      "control_rate_design": {
+        "record": "local_reference/two_level_pwm/matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/control_rate_design/20261109T115836954582Z/design.md",
+        "sha256": "3213e21c93e30e25f46a78d15441271325a2281a952a94e16753bef312707166",
+        "implemented_or_native_executed": false,
+        "scope": "Six non-interpolated standard samplers plus shared impulse/INT proposed; no TIME quantization or candidate gate replay. Upstream69 math blocks still execute at electrical h; applied gates must be proven held at independent5us grid."
       }
     }
   ],
