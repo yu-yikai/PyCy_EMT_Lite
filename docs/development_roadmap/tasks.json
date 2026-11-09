@@ -3,7 +3,7 @@
   "updated_date": "2026-11-09",
   "timezone": "Asia/Shanghai",
   "branch": "codex/emt-examples-longterm",
-  "checkpoint_head": "5f1a96b01bf1bcb1d4b3f53737b000a5a78f0c89",
+  "checkpoint_head": "03a913ed52bacd6a07083fe4dbc7ae45c7b78fee",
   "current_task": "A3",
   "formal_new_examples_completed": 7,
   "status_values": [
@@ -172,18 +172,20 @@
         "pscad-line-energizing",
         "pscad-installed-scalar-bergeron-v5"
       ],
-      "validation": "有限R两半线+三R解析等价仍仅数学证据。独立官方vdiv原参数实跑：PSCAD5.0.0许可true、公共宏gf46/x86、16正常build消息/零警错、实际编译Station.f/Main.f并EMTDC链接，运行输出completed；0.2s/50us原配置，PlotType0无波形。原件/profile/父环境不变，自有进程正常退出。原settings挂起保留，有限R波形仍缺。",
+      "validation": "有限R两半线+三R解析等价仍仅数学证据。独立官方vdiv原参数实跑：PSCAD5.0.0许可true、公共宏gf46/x86、16正常build消息/零警错、实际编译Station.f/Main.f并EMTDC链接，运行输出completed；0.2s/50us原配置，PlotType0无波形。原件/profile/父环境不变，自有进程正常退出。原settings挂起保留，有限R波形仍缺。 新选Steep_Front:SrvcCbl完整原定义，仅实例.01→10km，名义R100/Z201/tau300us；独立解析/全组件codec及公开API静态审查通过，保留原稿另加保存一致性硬守卫。仅prepare-only快照，freecommit2.7181GiB<3GiB，未启动native/执行builder/调用sim；实际tlo/源电压/完整波形仍待核。",
       "acceptance": "先确认可运行参考，再固定教学与验收；无真实数据不完成",
       "status": "in_progress",
       "files": [
         "docs/development_roadmap/experiments/bergeron_reference_followup.md",
-        "docs/development_roadmap/experiments/pscad_toolchain_smoke.json"
+        "docs/development_roadmap/experiments/pscad_toolchain_smoke.json",
+        "docs/development_roadmap/experiments/bergeron_reference_design.md"
       ],
       "commits": [
-        "4385e2ea6941e693ac784c48a78e7074c803f4ed"
+        "4385e2ea6941e693ac784c48a78e7074c803f4ed",
+        "03a913ed52bacd6a07083fe4dbc7ae45c7b78fee"
       ],
       "blockers": [
-        "PSCAD实际工具链已通过小教程；有限R标量相容参考的拓扑/生效参数/历史/延时及真实波形尚未固定与获取，无A3候选。"
+        "工具链已由独立vdiv实证；有限R参考仅完成来源/解析/静态设计。准备时2.7181GiB、收尾2.331GiB可用提交量均低于3GiB启动门槛，未原生执行；实际参数/历史/通道/波形与正式协议仍待，不能创建候选。"
       ]
     },
     {
@@ -406,7 +408,7 @@
       "references": [
         "mw-synchronous-buck-r2025a"
       ],
-      "validation": "先行167bb49/0297c85；26最小候选Agg200001点/四事件、12独立物理测试、21参考数学/原始点/配对测试通过；最终完整1223 passed 475.864s含slow且0fail/error/skip，锁定/Ruff/mypy通过。100/50ns真实参考103550/204619点，最终新CLI原始点/同协议/全部500周期复验保持FAIL（duty .00275472>.0015、派生源流.0240559>.01），完整失败/图/输入快照保留，未商业比较。25ns新尝试在仿真前因系统提交内存1.46GiB低于2GiB中止，自有进程已退出；更细双run未完成，26仍未验收。",
+      "validation": "先行167bb49/0297c85；26最小候选Agg200001点/四事件、12独立物理测试、21参考数学/原始点/配对测试通过；最终完整1223 passed 475.864s含slow且0fail/error/skip，锁定/Ruff/mypy通过。100/50ns真实参考103550/204619点，最终新CLI原始点/同协议/全部500周期复验保持FAIL（duty .00275472>.0015、派生源流.0240559>.01），完整失败/图/输入快照保留，未商业比较。25ns新尝试在仿真前因系统提交内存1.46GiB低于2GiB中止，自有进程已退出；更细双run未完成，26仍未验收。 新静态callback审计37输入/235记录：9直接SPS mask均SelfModifiable，但p-code初始化/OpenFcn及实际调用顺序未知；不能把load_system宣称等价或已节省内存。未运行MATLAB或改exporter。",
       "acceptance": "每项先有参考与固定判据再实施，禁止冒充自动二极管",
       "status": "in_progress",
       "files": [

@@ -119,3 +119,11 @@ B1本轮新只读研究按原安装库推导100us慢到快缓存/计时器，与
 A3真实工具链取得突破：官方未改vdiv独立会话活动宏gf46/x86，PSCAD5.0.0/许可true，16正常消息零警错，实际编译/EMTDC链接/run completed；原0.2s/50µs配置，PlotType0不请求磁盘波形。13.6482s生命周期、最低提交余量2193596416bytes，高于2GiB保护；正常quit无强制清理，自有42340/46468实核不存在，原件/profile/父环境不变。25项库存132e558c…，精简证据experiments/pscad_toolchain_smoke.json；有限R仍inspected，无候选/波形，不计第8项完成。
 
 B2内存仅只读研究，当前约3.2GiB不足约3.6GiB峰值加2GiB保护；未重启MATLAB、不触用户PID50448。-nojvm与现有Java路径/hash不兼容；load_system避免editor是未来可测选项，当前不以未测节省量降低门槛。核心/依赖/测试/默认算例未改，1223仍为前次最终全量；CI账单锁终态不重复轮询。本轮同步记录后正常提交推送，正式新增仍7。
+
+2026-11-09 A3新进展：本地/真实远端03a913e、干净状态恢复。独立选定官方Steep_Front的SrvcCbl，保留完整定义、仅实例长度.01→10km，派生简单斜坡源/Rs100/RL400外网；名义R100/Z201/tau300us、1us/6ms。原宿主差异、首次平台/DC/稳定递推和API/codec/端口静态核查已保存，不把解析当商业输出。root另核15物理库存/8输入/8 API输入/5准备库存/5协议引用，另11Buck审计产物/37输入均匹配，核验基于03a913e时状态。
+
+新有限R仅执行--prepare-only：2918506496bytes可用提交量低于3GiB，native_started/builder_executed/sim_called均false，快照未被原生消费；无worker/project目录或活进程可等待。原版builder保留，独立审查后新增保存RowDefn不一致即停止的checked副本。实际.tlo/源电压/零历史/波形和正式协议仍待，未创建候选，正式新增仍7。
+
+B2新callback审计37输入/235记录，9直接mask均SelfModifiable；p-code初始化/OpenFcn和实际调用次序未知，不能宣称load_system等价或内存下降，未改exporter/启动MATLAB。核心/依赖/默认例/测试不变，1223是前次最终实测，不机械重跑；CI同账单锁终态不轮询。本轮只同步新证据与可执行恢复路径后正常提交推送。
+
+收尾资源复核进一步降至2444276KiB（约2.331GiB）可用提交量，无PSCAD进程；用户R2022b MATLAB50448保持既有创建时间且未触碰。没有再次尝试原生启动，下一执行先检查资源与实际Git。

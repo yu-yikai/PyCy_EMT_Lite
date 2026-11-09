@@ -1,7 +1,7 @@
 # 恢复与下一步
 
 2026-11-09（Asia/Shanghai）。先读tasks/progress/decisions/validation_status，核实际分支、HEAD、工作区和远端。
-记录时checkpoint为5f1a96b01bf1bcb1d4b3f53737b000a5a78f0c89；后续提交须与Git历史核对。
+记录时checkpoint为03a913ed52bacd6a07083fe4dbc7ae45c7b78fee；后续提交须与Git历史核对。
 分支codex/emt-examples-longterm；不操作main、不强推、不覆盖未提交文件。
 
 ## 当前事实
@@ -29,7 +29,9 @@
    条件根预算还依赖原生UC/滤波状态导数相容及无隐藏根，duty epsilon或AbsTol不是绝对误差证明。
    完整内部物理/独立执行/真实比较/图报告/自动测试/教学/常规检查/Git验收齐备才完成26。
 3. **A3有限R参考先行。** [Bergeron记录](experiments/bergeron_reference_followup.md)及[工具链结果](experiments/pscad_toolchain_smoke.json)：未改官方vdiv已真实build/EMTDC链接/run，活动宏gf46/x86，正常退出且原件/profile/父环境不变；无磁盘波形，不能算有限R参考。
-   不重跑整包settings/空ATS范围或已成功小教程。先固定有限正R最小标量参考、原宿主差异、生效参数/初值/方向/延时，再冻结完整比较窗/阈值并获取真实波形；候选前置门槛不变。
+   新[有限R设计](experiments/bergeron_reference_design.md)：保留SrvcCbl完整定义，仅实例长度.01→10km，名义R100Ω/Z201Ω/tau300us；1kV斜坡.5–.6ms、Rs100Ω/RL400Ω、1us/6ms。来源/解析/codec/端口/公开API已核，未实际建模或仿真。
+   仅prepare-only目录20261109T075010503354Z；2918506496bytes可用提交量<3GiB，未启动native、没有可等待的worker/进程。资源恢复再核新脚本/input hash，使用Python313运行local_reference/a3_followup/finite_r_native_probe.py无参数；--prepare-only绝不启动。新唯一目录、2GiB动态保护/普通RPC20s/build180s/run120s/总420s不变，不连续重试、不关用户程序。
+   先确认实际.tlo/参数频率/flags、Vs与Mag时序、全时间轴/原生kV-kA及方向、零历史；PSCAD后续版本修过手工线路flags，不能只看XML。再冻正式窗/限值/自细化及候选步长，不创建候选迎合未经核定的参考。不重跑整包settings/空ATS范围或已成功小教程。
 4. **F1外部依赖。** 最新实查41a6685的CI run42576654146终态failure，两个job均runner0/steps空，注释明确billing lock，未执行测试。
    不重复轮询该终态；账户真实恢复后补跑覆盖26候选及此前代码的run，核精确HEAD/attempt的双OS全步骤。旧90b2fcd只覆盖22，本地通过不等于跨OS通过。
 5. B1先读[独立误差隔离](experiments/spwm_error_isolation.md)：全点回放/16组合/24顺序已审计，门极为主要影响，BE/器件仍有可见影响，1µS很小。观测电压残差闭合只作诊断。后续另冻有明确教学意图的同数学验证协议；不把供应商跨任务调度直接写入12、不拟合时移/放宽2%或扩二极管框架。C1后置；D0不重复成功仿真。
@@ -63,6 +65,6 @@ Buck尚未正式交付，不套用其他case的单参数MATLAB命令。所有第
 
 最终复现审计在local_reference/b2_protocol_research/20261109T065107846Z-final-reference-audit，两run同协议/版本检查和全部raw重复点检查已启用，周期FAIL逐位不变。恢复不得继续已终态的旧进程；最终测试及审计均应以已保存终态为准。
 
-本轮已推送候选41a6685，精确CI已终态billing lock启动前失败；本次恢复文档提交只保存证据，代码/冻结协议/1223测试输入不变。最新系统可用提交量约3.16GiB，仍不足原生启动峰值加2GiB余量，先检查资源再决定新双run，不能直接重启。
+候选代码41a6685已推送，精确CI已终态billing lock启动前失败；后续03a913e已实核本地/远端一致。本次只保存设计证据，代码/冻结协议/1223测试输入不变。收尾Win32实读可用提交量2444276KiB（约2.331GiB），无PSCAD进程；既有用户MATLAB50448为R2022b，未触碰。A3/B2均须资源恢复，不能直接重启或把prepare-only当活任务等待。
 
-本轮B2启动方式仅只读研究：-batch已无desktop，当前Java路径/hash依赖使-nojvm不可直接用。未来可先审OpenFcn/配置等价，再在资源充足时独立研究load_system+-noFigureWindows；节省量尚未实测，不能据此在约3.2GiB余量启动完整25/12.5ns。报告local_reference/b2_protocol_research/memory_launch_review/20261109T071653855Z/report.md（d3f52933b748e349d8b7f3c85555e5dce0e83fad362b9a41a257720055d87e34）。
+B2启动方式仍仅只读研究：-batch已无desktop，Java路径/hash依赖使-nojvm不可直接用。新callback审计local_reference/b2_protocol_research/callback_audit/20261109T073545Z/report.md（d6ed233c222e19b3f618d67fa8223d20eeee6e0eefa0975a417a92bffbf8165a）：37输入、67源blocks/13链接实例/9直接SPS库、235记录已核；9 masks SelfModifiable支持研究load_system，但OpenFcn/p-code及调用顺序不明，不能证明等价或内存收益。资源足够后才按报告作两个独立进程、各120s且sim(in)前硬返回的加载对照，完整记录配置/拓扑/SID/workspace/日志/SI；仍守6GiB/2GiB/600s。两臂中原open_system峰值约3.6GiB，不在当前不足3GiB余量下尝试。

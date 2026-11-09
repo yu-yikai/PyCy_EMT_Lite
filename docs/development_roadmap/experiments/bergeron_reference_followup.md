@@ -120,3 +120,5 @@ PSCAD5.0.0/许可true，16条正常build消息、零警告/错误；Station.f和
 下一步先固定最小有限正R标量参考及其与原宿主的差异，核生效参数/零历史/延时插值与端口方向；在A3候选出现前冻结完整比较窗和阈值。教程不含线路，不提升第23项有限R参考的inspected状态。
 
 独立审计逐项核25个文件的hash/size及清单无遗漏，并读取PE确认vdiv.exe为x86（0x014c）；原生、worker及实际运行exe均已退出。生成map只能证明运行配置，不能代替末采样时间或数值精度。审计为`local_reference/a3_followup/native_toolchain_audit/20261109_readonly_e41b7d/audit_result.json`，SHA`9edaac84d2ea930c66f2b545e216deb38e7b388710d5d7cb7bc85346cd3451cb`。
+
+2026-11-09后续[有限R参考设计](bergeron_reference_design.md)已选择SrvcCbl完整定义和明确的派生外网，解析/原生API/codec审查完成。最新prepare-only记录可用提交量2.7181GiB<3GiB，未启动PSCAD或执行builder，无实际有限R波形；下一步须资源恢复后核原生.tlo/源电压/通道和时间轴，再固定正式协议，A3仍未验收。

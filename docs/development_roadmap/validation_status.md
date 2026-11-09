@@ -64,3 +64,5 @@ D0独立物理核验：17支路参数最大相对差6.994e-14，12状态相量3.
 B1原2%波形FAIL保持；本轮结构重建六路真实门极全40001点一致，±0.8V/实际二极管/1uS+BE差异已获得新代数证据，但默认12未改、未跑候选或新商业比较，仍未验收。见[时序补充](experiments/spwm_timing_followup.md)。
 
 2026-11-09后续研究：PSCAD官方vdiv原参数0.2s/50µs实跑完成，16正常build消息/零警错，实际EMTDC链接/运行；PlotType0无磁盘波形，有限R仍未验收，详见experiments/pscad_toolchain_smoke.json。B1独立四因素16组合及24顺序审计确认门极为主影响，原12/2% FAIL不变；观测器件残差不算预测器件模型。本轮无生产源码/测试/依赖变化，1223是前次最终代码实测，不机械重跑。
+
+2026-11-09 A3设计检查：15项物理库存、8输入、8 API输入、所有组件codec/端口、精确首个平台/DC及名义稳定性已独立复核。prepared目录5项库存与5引用全核，2.7181GiB<3GiB，native/builder/sim均未执行，有限R参考仍inspected/无数值验收；详见[设计](experiments/bergeron_reference_design.md)。B2 callback审计11产物/37输入和235记录保存，但无语义等价/内存增益实测。本轮仅研究文档，无生产/test/依赖修改，沿用前次1223实测而不称新回归。

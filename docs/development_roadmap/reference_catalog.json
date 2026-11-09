@@ -2023,8 +2023,8 @@
       "allows_redistribution": "not_asserted",
       "mathematical_compatibility": "Five manual scalar Bergeron definitions have nonzero active R. Published undamped constant-parameter finite-R model equals R/4 + two lossless half-lines separated by R/2 + R/4, by independent analytic elimination; 97 complex-frequency checks supplement it. Existing single attenuation factor is insufficient. Original HVDC/lightning host networks are not directly small PyCy cases. Actual parameters, initial histories, native interpolation/events and finite-R numerical comparison remain pending.",
       "blockers": [
-        "Finite-R host projects not loaded or simulated; no finite-R waveform or candidate.",
-        "Toolchain now verified separately by untouched vdiv tutorial; finite-R active parameters, interpolation/history and numerical acceptance remain pending."
+        "Finite-R native parameter/output probe not started: 2.7181 GiB available commit below 3 GiB preflight guard.",
+        "Manual-line active tlo/actual source/zero history/full waveform not yet observed. Official later fixes require checking generated constants. No candidate or formal numerical acceptance protocol yet."
       ],
       "probe_record": "docs/development_roadmap/experiments/bergeron_reference_followup.md",
       "native_environment_probe": {
@@ -2048,7 +2048,15 @@
         "compiler_env_smoke/20261106T070543Z/manifest.json": "8edc38e5151541ab227fccba10df0faa2d3f1d96eda866be02a34bb57806438e",
         "native_toolchain/20261109T072309048657Z/manifest.json": "132e558c8da89b6f190a29ae38de01d48a847b29c5a04b2382466c879246324f",
         "selection_api_research/20261109_readonly_8b4c2e/manifest.json": "740b7938e943c0bc8aa4d4f04bd4ab9d753c7aa52bcb6ecc29b3911eb107427a",
-        "native_toolchain_audit/20261109_readonly_e41b7d/audit_result.json": "9edaac84d2ea930c66f2b545e216deb38e7b388710d5d7cb7bc85346cd3451cb"
+        "native_toolchain_audit/20261109_readonly_e41b7d/audit_result.json": "9edaac84d2ea930c66f2b545e216deb38e7b388710d5d7cb7bc85346cd3451cb",
+        "reference_design/20261109T073906Z_physics_7ea4ab/final_manifest.json": "16a7856cadfa48aa8bea03e9b127cc2e695e1ee9d76ac8c80a2eee4d60f2eb54",
+        "native_reference_design/20261109T074056761817Z/static_evidence.json": "41b70eed61c4b4235dbd04b9199fc2f7954c0831b416a91064ccd02e50e9162d",
+        "native_reference_design/20261109T074056761817Z/additional_static_review.json": "ad7c9733fad43617e703602b2888c3c3c48308a768855d03f51388d7cd5a0981",
+        "native_reference_design/20261109T074056761817Z/builder_checked.py": "e8223b51418edbeb4bbc9a721f5ca63207e44336fa1a81f5602de76561ef2528",
+        "native_reference_design/20261109T074056761817Z/native_probe/20261109T075010503354Z/manifest.json": "3fde7192efae9f8e0f8b8d3eb004cc76d7890f7f7da091c5469f8dec3b87e7d7",
+        "native_reference_design/20261109T075227277184Z_independent_prepared_review/review.json": "d8e28703d2455427b427b63ec796b89ba1d9520704f1bbf0a1da21d279c47a79",
+        "root_design_audit/20261109T075249916256Z/report.json": "cb65650be243b93c28906a98b1e90528f8808db48a128a742daaeca56e8b780e",
+        "finite_r_native_probe.py": "bdcd63cd7febc7c182d096a9d3937c13ced03b63b66b3c216eddbc376d9f288b"
       },
       "license_notes": "Installed original projects, library sources, official figures and all probe evidence remain local. Startup did not request login, acquire a certificate, change settings or bypass licensing.",
       "standalone_compiler_probe": {
@@ -2075,6 +2083,31 @@
         "original_profile_parent_environment_unchanged": true,
         "normal_exit_no_forced_cleanup": true,
         "tracked_summary_git_lf_sha256": "d79adfbe5880fd421d55af212d5a3149907b53976569d63ba1816a5b8d04d935"
+      },
+      "reference_design_probe": {
+        "record": "docs/development_roadmap/experiments/bergeron_reference_design.md",
+        "scope": "explicit derived reference, not original complete lightning host",
+        "donor_project": "Lightning/Steep_Front.pscx",
+        "retained_definition": "SrvcCbl",
+        "retained_line_id": 2024913992,
+        "instance_length_km_before_after": [
+          0.01,
+          10
+        ],
+        "nominal_R_Z0_tau": {
+          "R_ohm": 100,
+          "Z0_ohm": 201,
+          "tau_s": 0.0003
+        },
+        "status": "prepared_only_not_native_executed",
+        "native_started": false,
+        "builder_executed": false,
+        "sim_called": false,
+        "acceptance_protocol_frozen": false,
+        "free_commit_bytes": 2918506496,
+        "preflight_min_bytes": 3221225472,
+        "same_native_instance_waiting": false,
+        "candidate_created": false
       }
     }
   ],
