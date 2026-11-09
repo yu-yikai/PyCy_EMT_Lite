@@ -1,7 +1,7 @@
 # 恢复与下一步
 
 2026-11-09（Asia/Shanghai）。先读tasks/progress/decisions/validation_status，核实际分支、HEAD、工作区和远端。
-记录时checkpoint为41a6685da241b5a759786963b81e236728afbd98；后续提交须与Git历史核对。
+记录时checkpoint为5f1a96b01bf1bcb1d4b3f53737b000a5a78f0c89；后续提交须与Git历史核对。
 分支codex/emt-examples-longterm；不操作main、不强推、不覆盖未提交文件。
 
 ## 当前事实
@@ -28,13 +28,11 @@
    原生稀疏Isrc跳变不能PWL积分成斜坡；派生源流须明确标识，不称直接门极/源流日志。
    条件根预算还依赖原生UC/滤波状态导数相容及无隐藏根，duty epsilon或AbsTol不是绝对误差证明。
    完整内部物理/独立执行/真实比较/图报告/自动测试/教学/常规检查/Git验收齐备才完成26。
-3. **A3工具链核验。** 先读[Bergeron记录](experiments/bergeron_reference_followup.md)。有限R两半线+三R仅有解析等价，尚无商业波形。
-   裸GF46在官方gf46vars合同对应的child-only环境已编译运行成功；PSCAD实际选择、EMTDC链接/build/sim仍未证。
-   settings(field)不是getter，非空字典/kwargs是写；不要重复已挂起的整包读取或空ATS范围查询。
-   用版本明确支持的只读接口或自有有界界面确认选择后，再复制官方简单教程作隔离build/run。不改全局PATH/ATS，没有有限R实际参考前不创建A3候选。
+3. **A3有限R参考先行。** [Bergeron记录](experiments/bergeron_reference_followup.md)及[工具链结果](experiments/pscad_toolchain_smoke.json)：未改官方vdiv已真实build/EMTDC链接/run，活动宏gf46/x86，正常退出且原件/profile/父环境不变；无磁盘波形，不能算有限R参考。
+   不重跑整包settings/空ATS范围或已成功小教程。先固定有限正R最小标量参考、原宿主差异、生效参数/初值/方向/延时，再冻结完整比较窗/阈值并获取真实波形；候选前置门槛不变。
 4. **F1外部依赖。** 最新实查41a6685的CI run42576654146终态failure，两个job均runner0/steps空，注释明确billing lock，未执行测试。
    不重复轮询该终态；账户真实恢复后补跑覆盖26候选及此前代码的run，核精确HEAD/attempt的双OS全步骤。旧90b2fcd只覆盖22，本地通过不等于跨OS通过。
-5. B1先读[时序补充](experiments/spwm_timing_followup.md)：原库100us缓存/计时器重建全部六路门极完全一致，但实际二极管/±0.8V/1uS与BE仍和12/TR不同。先用已有数据与独立方程分别隔离贡献；不为迎合原生调度直接改默认12数学意图，不建自动二极管框架。固定2%波形仍FAIL，不拟合时移或放宽。C1后置；D0不重复成功仿真。
+5. B1先读[独立误差隔离](experiments/spwm_error_isolation.md)：全点回放/16组合/24顺序已审计，门极为主要影响，BE/器件仍有可见影响，1µS很小。观测电压残差闭合只作诊断。后续另冻有明确教学意图的同数学验证协议；不把供应商跨任务调度直接写入12、不拟合时移/放宽2%或扩二极管框架。C1后置；D0不重复成功仿真。
 
 ## 本机命令
 
@@ -58,7 +56,7 @@ uv run pytest
 pytest指定新仓库内--basetemp=.tmp/longterm/pytest-<唯一ID>，先核路径位于仓库且不存在，可加-p no:cacheprovider。
 保留slow；新代码/失败才触发对应范围与必要完整回归。日志/XML放.tmp/longterm/，不覆盖旧失败。
 Git ownership用单命令-c safe.directory=D:/VibeCoding/PyCy_EMT_Lite；子进程仅当前进程GIT_CONFIG_COUNT/KEY_0/VALUE_0，不改全局配置。
-旧系统代理127.0.0.1:7897本次不可连接；本次命令级git -c http.proxy= ls-remote成功，可正常push开发分支，不持久改网络设置。
+网络按实际结果判断：早先direct成功、后续direct低速/443失败；最终已有系统代理的子进程helper在提升权限后正常push并核远端5f1a96b。可用.tmp/longterm/git_with_system_proxy.py传git参数，读取现有系统代理并脱敏，不持久改网络设置。
 正式case比较入口：uv run python -m validation.cases.<case>.compare，case包括cascaded_rc/rc_charging/nodal_analysis/earthing/transmission_line/transformer_t_equivalent/three_phase_transformer_chain/source_line_transformer。
 Buck尚未正式交付，不套用其他case的单参数MATLAB命令。所有第三方原件、波形/图片/缓存保留忽略的local_reference。
 长期目标仍active；结束当前执行前同步证据/任务/提交/下一步，不宣称离线后台继续。
@@ -66,3 +64,5 @@ Buck尚未正式交付，不套用其他case的单参数MATLAB命令。所有第
 最终复现审计在local_reference/b2_protocol_research/20261109T065107846Z-final-reference-audit，两run同协议/版本检查和全部raw重复点检查已启用，周期FAIL逐位不变。恢复不得继续已终态的旧进程；最终测试及审计均应以已保存终态为准。
 
 本轮已推送候选41a6685，精确CI已终态billing lock启动前失败；本次恢复文档提交只保存证据，代码/冻结协议/1223测试输入不变。最新系统可用提交量约3.16GiB，仍不足原生启动峰值加2GiB余量，先检查资源再决定新双run，不能直接重启。
+
+本轮B2启动方式仅只读研究：-batch已无desktop，当前Java路径/hash依赖使-nojvm不可直接用。未来可先审OpenFcn/配置等价，再在资源充足时独立研究load_system+-noFigureWindows；节省量尚未实测，不能据此在约3.2GiB余量启动完整25/12.5ns。报告local_reference/b2_protocol_research/memory_launch_review/20261109T071653855Z/report.md（d3f52933b748e349d8b7f3c85555e5dce0e83fad362b9a41a257720055d87e34）。

@@ -14,7 +14,7 @@
 | 新增24三相Y–Δ–Y链 | 9项精确启动/连续插值/KCL/功率/能量/TR/RMS/相位通过，独立Agg100001点；全量1179 passed490.61s含slow | 原完整58899/76502点自细化38项通过；最终商业两窗19量38项通过，初次1µs绝对FAIL保留 | 已完成02044768579ba083d1fb526786922e770cc2e7c6；不含线路/其他组别/零序/饱和，跨OS CI另待验 |
 | 新增25完整供电网络 | 11项独立节点/12初值/14量PWL/KCL/14损耗/双能量/TR/RMS/PQ/相位，Agg5001点；完整1190 passed478.96s含slow | 原完整5023/10023点，28self+56独立精度全过；14量两窗28商业比较全过，maxV0.864127V/maxI0.00623452A/maxNR1.74756e−6 | 已完成9e2513dd98c12ee4f50d94261318ef56fd475aa4；首次守卫失败保留，跨OS CI单列 |
 | B2同步Buck候选26 | 12独立物理+21参考数学/原始点/配对测试；Agg200001点；最终全量1223 passed 475.864s含slow | 100/50ns真实参考两连续窗过，500周期duty/派生源流FAIL；新25ns启动前资源中止 | in_progress，无候选商业比较/未验收，正式新增仍7 |
-| A3有限R Bergeron研究 | 两半线+三R解析等价及97频点；官方child-env下独立GF46编译运行成功 | 真实PSCAD启动/许可true；编译选择/EMTDC build/sim未证，原挂起保留 | inspected/in_progress，无商业波形，不计完成 |
+| A3有限R Bergeron研究 | 两半线+三R解析等价及97频点；未改官方vdiv已真实编译/EMTDC链接/run，宏gf46/x86 | 工具链通过，原件/profile/父环境不变、自有进程正常退出；有限R真实波形仍缺 | inspected/in_progress，不计完成；教程不替代线路 |
 | PSCAD cookbook | 工程XML已检查 | v4.6.0，无实跑数值 | inspected |
 
 到20的本地稳定Python3.14.5完整回归：1133 passed，154.47 s；Ruff/mypy通过。原14例及新增19/20均单独执行通过。
@@ -62,3 +62,5 @@ D0独立物理核验：17支路参数最大相对差6.994e-14，12状态相量3.
 2026-11-09远端精确候选41a6685：[run42576654146](https://github.com/yu-yikai/PyCy_EMT_Lite/actions/runs/42576654146)已核终态failure；Ubuntu129025769158/Windows129025769665均未获runner/steps空，注释仍为账户billing lock，远端test_count=null。软件代码没有在CI执行，不能推断测试失败或跨OS通过；7份raw/hash及精简JSON已保存。1223是本地实测。
 
 B1原2%波形FAIL保持；本轮结构重建六路真实门极全40001点一致，±0.8V/实际二极管/1uS+BE差异已获得新代数证据，但默认12未改、未跑候选或新商业比较，仍未验收。见[时序补充](experiments/spwm_timing_followup.md)。
+
+2026-11-09后续研究：PSCAD官方vdiv原参数0.2s/50µs实跑完成，16正常build消息/零警错，实际EMTDC链接/运行；PlotType0无磁盘波形，有限R仍未验收，详见experiments/pscad_toolchain_smoke.json。B1独立四因素16组合及24顺序审计确认门极为主影响，原12/2% FAIL不变；观测器件残差不算预测器件模型。本轮无生产源码/测试/依赖变化，1223是前次最终代码实测，不机械重跑。

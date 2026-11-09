@@ -1,8 +1,8 @@
 # A3：有限电阻Bergeron参考与PSCAD环境核验
 
-2026-11-09恢复复核；以下原生启动和编译运行证据均产生于2026-11-06。
-已完成安装例调查、独立数学交叉审查、一次原生启动探针和独立Fortran编译运行。
-未加载商业工程、build或sim，未创建PyCy候选；A3在研究中，不计正式完成。
+2026-11-09：独立官方vdiv教程已真实完成PSCAD编译、EMTDC链接与运行，工具链验证通过。
+有限R标量参考仍停留在调查/解析等价阶段；尚无其商业波形或PyCy候选，不计正式完成。
+下文保留2026-11-06启动挂起及裸编译失败，最新受控教程结果见末节。
 
 ## 参考调查与可复用的等效网络
 
@@ -100,3 +100,23 @@ launch的连接timeout不能限制已连接后的RPC读取，后续不重复这�
 在任何A3候选前，先固定有限正R标量参考、与原宿主的明确差异、生效参数/初值/延时规则、事件/方向及比较窗/阈值。
 只有真实有限R波形、候选/内部物理/独立运行/图报告/测试/教学/Git验收全部完成才能关闭A3。
 不以更简单的无损线路替代有限R要求，也不为它增加损耗线路核心类。
+
+## 2026-11-09：公开宏与真实EMTDC工具链冒烟
+
+官方V5[资源宏文档](https://www.pscad.com/webhelp-v5-ol/PSCAD/The_Application_Environment/The_Workspace/The_Primary_Window/Projects_Branch/Resources_Branch.htm)定义`$(Compiler)`和`$(EmtPlatform)`；本机2.9.7公开`substitute(str)`直接调用该接口，不经过settings/ATS codec。
+先行只读研究另确认profile持久偏好为GF46，但没有把它当活动选择。随后新建独立最小化会话，公开宏实际返回`gf46`/`x86`。
+
+按[官方项目API](https://www.pscad.com/webhelp-v5-al/reference/project.html)复制未改的tutorial/vdiv.pscx到唯一目录，先核输出目录确实在隔离run内，再load→build→messages→run→output→quit。
+PSCAD5.0.0/许可true，16条正常build消息、零警告/错误；Station.f和Main.f实际编译，链接vdiv.exe，运行输出EMTDC5.00 R#93051001及`EMTDC run completed.`。
+输入和生成map均为原0–0.2s、50µs计算/250µs绘图配置；PlotType=0不请求磁盘波形。本次只验证环境，不能叫有限R数值验收。
+
+继承的编译环境仍只作用于子进程，未修改settings/ATS/注册表/全局PATH。新会话按PID/路径/父进程/创建时间/专属端口核归属，阶段/总期限及2GiB可用提交量保护有效。
+13.6482s完整生命周期内，最低观测可用提交量2193596416bytes，未触发保护。quit返回后有界观察退出，cleanup为空；自有worker42340/PSCAD46468已独立核实不存在。
+原官方模型、用户profile哈希和父进程环境均未变，没有触碰既有用户MATLAB。
+
+[精简结果与hash](pscad_toolchain_smoke.json)对应忽略目录`local_reference/a3_followup/native_toolchain/20261109T072309048657Z/`，25项库存SHA为`132e558c8da89b6f190a29ae38de01d48a847b29c5a04b2382466c879246324f`；第三方原件、生成源码/二进制及运行配置均只留本地。
+先前整包settings挂起/原生自行退出原因仍未知，原记录不覆盖；本轮成功不依赖重复该查询。
+
+下一步先固定最小有限正R标量参考及其与原宿主的差异，核生效参数/零历史/延时插值与端口方向；在A3候选出现前冻结完整比较窗和阈值。教程不含线路，不提升第23项有限R参考的inspected状态。
+
+独立审计逐项核25个文件的hash/size及清单无遗漏，并读取PE确认vdiv.exe为x86（0x014c）；原生、worker及实际运行exe均已退出。生成map只能证明运行配置，不能代替末采样时间或数值精度。审计为`local_reference/a3_followup/native_toolchain_audit/20261109_readonly_e41b7d/audit_result.json`，SHA`9edaac84d2ea930c66f2b545e216deb38e7b388710d5d7cb7bc85346cd3451cb`。

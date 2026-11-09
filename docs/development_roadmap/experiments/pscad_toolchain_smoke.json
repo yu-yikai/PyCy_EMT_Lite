@@ -1,0 +1,73 @@
+{
+  "schema_version": 1,
+  "date": "2026-11-09",
+  "status": "toolchain_smoke_passed",
+  "scope": "Untouched official single-phase voltage-divider tutorial only; not finite-R Bergeron validation",
+  "local_run": "local_reference/a3_followup/native_toolchain/20261109T072309048657Z",
+  "pscad_version_observed": "5.0.0",
+  "licensed_observed": true,
+  "compiler_macro_observed": "gf46",
+  "platform_macro_observed": "x86",
+  "emtdc_version_output": "5.00 R#93051001",
+  "build_messages": {
+    "normal": 16,
+    "warning": 0,
+    "error": 0
+  },
+  "compiled_sources": [
+    "Station.f",
+    "Main.f"
+  ],
+  "linked_executable": "vdiv.exe",
+  "run_completion_observed": "EMTDC run completed.",
+  "original_runtime_parameters": {
+    "start_s": 0.0,
+    "finish_s": 0.2,
+    "time_step_s": 5e-05,
+    "plot_step_s": 0.00025,
+    "PlotType": 0
+  },
+  "waveform_files_requested": false,
+  "finite_R_reference_waveform_obtained": false,
+  "parent_environment_unchanged": true,
+  "user_profile_hash_unchanged": true,
+  "original_project_hash_unchanged": true,
+  "forced_cleanup": false,
+  "owned_processes_absent": true,
+  "owned_worker_pid": 42340,
+  "owned_pscad_pid": 46468,
+  "lifecycle_s": 13.6481678999844,
+  "minimum_free_commit_guard_bytes": 2147483648,
+  "minimum_observed_free_commit_bytes": 2193596416,
+  "evidence_inventory_files": 25,
+  "sha256": {
+    "manifest.json": "132e558c8da89b6f190a29ae38de01d48a847b29c5a04b2382466c879246324f",
+    "protocol.json": "fa42fc77cdf8a28bb97d3a745f2eba28ef12d2d015cef2cc565d70957e89d420",
+    "worker.json": "d0a0c60d02b577d68debd379ca3de112f1f0161bb3453c53498ffbccf6c7c37a",
+    "terminal.json": "22dc5712bc3bdee55fbb8bce1e931b1759c5193f47f27b56b3cc41e1ab5a608f",
+    "build_messages.json": "37ca41a72ffd7bfac212934300092e065412476009adc3374749678230ae7265",
+    "run_messages.json": "fac88dac6a8e907fcfdd7bbb5dc3df3d0df563ae26fbfdc0a752576875a2ea74",
+    "run_output.txt": "c9e9ea146420a0c4d3594e7bb3eb44ea0f094a7d15dc3ff02a53e92dbe0e8871",
+    "project/vdiv.pscx": "6fddffe5a82da4ef0b81c3597f44229a00c6c83ba24d16e6495014fe60567e05",
+    "project/vdiv.gf46/vdiv.exe": "aea65de92155a640815be472e603d1279a8a77684bba55bd9f57012e13777197",
+    "project/vdiv.gf46/vdiv.map": "bb758e737374851ceed036aa70a439e479ef1abfa88624d0b7270e309331854f",
+    "project/vdiv.gf46/vdiv.mak": "3326cbcf1348c38c254498faa23a8513a9b7811407397ec6604f2904f5c0dcb5"
+  },
+  "public_sources": [
+    "https://www.pscad.com/webhelp-v5-al/reference/project.html",
+    "https://www.pscad.com/webhelp-v5-ol/PSCAD/The_Application_Environment/The_Workspace/The_Primary_Window/Projects_Branch/Resources_Branch.htm"
+  ],
+  "limitations": [
+    "No numerical waveform was requested by the original tutorial.",
+    "Finite-R scalar topology, history, parameters and validation protocol remain pending.",
+    "Earlier settings RPC hang and spontaneous exit remain unexplained and preserved."
+  ],
+  "independent_audit": {
+    "local_path": "local_reference/a3_followup/native_toolchain_audit/20261109_readonly_e41b7d/audit_result.json",
+    "sha256": "9edaac84d2ea930c66f2b545e216deb38e7b388710d5d7cb7bc85346cd3451cb",
+    "inventory_size_and_hash_verified": 25,
+    "exe_PE_machine": "0x014c",
+    "exe_architecture": "x86",
+    "configuration_is_not_last_waveform_sample_proof": true
+  }
+}

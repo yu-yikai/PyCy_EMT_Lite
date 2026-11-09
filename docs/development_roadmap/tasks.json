@@ -3,8 +3,8 @@
   "updated_date": "2026-11-09",
   "timezone": "Asia/Shanghai",
   "branch": "codex/emt-examples-longterm",
-  "checkpoint_head": "41a6685da241b5a759786963b81e236728afbd98",
-  "current_task": "B2",
+  "checkpoint_head": "5f1a96b01bf1bcb1d4b3f53737b000a5a78f0c89",
+  "current_task": "A3",
   "formal_new_examples_completed": 7,
   "status_values": [
     "planned",
@@ -172,17 +172,18 @@
         "pscad-line-energizing",
         "pscad-installed-scalar-bergeron-v5"
       ],
-      "validation": "有限R两半线+三R解析等价仍仅数学证据；真实PSCAD5.0启动/许可true但整包settings挂起，无build/sim。GF46原环境compile1、f951加载0xC0000135；按官方gf46vars合同只改子进程环境后前端/编译/运行均0，2x2解[2,3]残差0。实际PSCAD编译选择/EMTDC链接未证；公共settings(field)不是getter。",
+      "validation": "有限R两半线+三R解析等价仍仅数学证据。独立官方vdiv原参数实跑：PSCAD5.0.0许可true、公共宏gf46/x86、16正常build消息/零警错、实际编译Station.f/Main.f并EMTDC链接，运行输出completed；0.2s/50us原配置，PlotType0无波形。原件/profile/父环境不变，自有进程正常退出。原settings挂起保留，有限R波形仍缺。",
       "acceptance": "先确认可运行参考，再固定教学与验收；无真实数据不完成",
       "status": "in_progress",
       "files": [
-        "docs/development_roadmap/experiments/bergeron_reference_followup.md"
+        "docs/development_roadmap/experiments/bergeron_reference_followup.md",
+        "docs/development_roadmap/experiments/pscad_toolchain_smoke.json"
       ],
       "commits": [
         "4385e2ea6941e693ac784c48a78e7074c803f4ed"
       ],
       "blockers": [
-        "缺实际有限R同数学商业波形；裸GF46已成功，PSCAD实际选择/EMTDC链接/build/run仍未证。"
+        "PSCAD实际工具链已通过小教程；有限R标量相容参考的拓扑/生效参数/历史/延时及真实波形尚未固定与获取，无A3候选。"
       ]
     },
     {
@@ -371,7 +372,7 @@
         "mw-spwm-r2025a",
         "mw-two-level-pwm-r2025a"
       ],
-      "validation": "原真实40001点及2.66%–2.72% NRMSE>固定2% FAIL保持。新只读原库/计时器/100us跨任务缓存重建六路物理门极40001点全同，主审独立复核；未读编译RT活动模式，不叫内部信号日志。实际二极管达157A、额外器件压降约±0.8V，负荷含1uS且满足BE方程残差2.06e-10V，12为TR；各电流误差贡献仍待隔离。未改12/阈值/移时，18项库存全核。",
+      "validation": "原固定2%波形FAIL保持。独立RL回放两边全40001点误差约1e-11A；四因素16组合/24顺序均保存。只换结构推导门极，稳态NRMSE2.66%–2.72%→0.503%–0.505%；再TR→BE约0.449%–0.452%，1uS约0.000153A RMS。器件项为观测电压残差条件诊断，非预测模型/商业验收；27项库存与独立总电流递推/积分审计通过，12和阈值未改。",
       "acceptance": "模型一致性解释、预设基波RMS/功率方向/纹波判据和真实波形比较",
       "status": "blocked",
       "files": [
@@ -379,14 +380,15 @@
         "validation/cases/two_level_pwm/parameters.json",
         "validation/cases/two_level_pwm/validation_report.json",
         "docs/development_roadmap/experiments/spwm_feasibility.md",
-        "docs/development_roadmap/experiments/spwm_timing_followup.md"
+        "docs/development_roadmap/experiments/spwm_timing_followup.md",
+        "docs/development_roadmap/experiments/spwm_error_isolation.md"
       ],
       "commits": [
         "146a279",
         "8a65b6e"
       ],
       "blockers": [
-        "原默认12与参考的跨任务控制时序、导通器件/二极管及积分方法不同；门极差异已有结构解释，但原固定2%波形仍FAIL，贡献尚未全部定量隔离。不得为迎合原生调度直接改12数学意图或新增自动二极管框架。"
+        "默认12数学意图与原生跨任务时序/器件模型不同，原2%仍FAIL。门极为主要影响已有条件定量诊断；后续先另冻有教学意义的同数学参考/验证协议，不凭观测残差闭合认证器件、不直接把供应商调度写入12、不扩自动二极管框架。"
       ]
     },
     {

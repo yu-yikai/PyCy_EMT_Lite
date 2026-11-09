@@ -2023,8 +2023,8 @@
       "allows_redistribution": "not_asserted",
       "mathematical_compatibility": "Five manual scalar Bergeron definitions have nonzero active R. Published undamped constant-parameter finite-R model equals R/4 + two lossless half-lines separated by R/2 + R/4, by independent analytic elimination; 97 complex-frequency checks supplement it. Existing single attenuation factor is insufficient. Original HVDC/lightning host networks are not directly small PyCy cases. Actual parameters, initial histories, native interpolation/events and finite-R numerical comparison remain pending.",
       "blockers": [
-        "No native project load, build or simulation. No reference waveform or candidate.",
-        "Standalone GF46 compile/run succeeds only after official child environment setup; actual PSCAD compiler selection and EMTDC link unknown. No supported settings(field) getter; do not repeat whole-settings hang or infer selection from empty ATS range."
+        "Finite-R host projects not loaded or simulated; no finite-R waveform or candidate.",
+        "Toolchain now verified separately by untouched vdiv tutorial; finite-R active parameters, interpolation/history and numerical acceptance remain pending."
       ],
       "probe_record": "docs/development_roadmap/experiments/bergeron_reference_followup.md",
       "native_environment_probe": {
@@ -2045,7 +2045,10 @@
         "compiler_smoke/20261106T065622Z/manifest.json": "efd66274b89e2c32c45203fb66ef11819dadd86f35884c638dd5cf60b9dadffa",
         "compiler_diagnostics/20261106T070003Z/manifest.json": "55c71614e7c831f4653246a6f838ce2a54214ec6cde47f1d178c4f7ac7f92224",
         "helper_versions/20261106T070301Z/manifest.json": "e76b723936c225b125effb69444ccbca6d10430d8dcee7a695bd9e64d320c0e8",
-        "compiler_env_smoke/20261106T070543Z/manifest.json": "8edc38e5151541ab227fccba10df0faa2d3f1d96eda866be02a34bb57806438e"
+        "compiler_env_smoke/20261106T070543Z/manifest.json": "8edc38e5151541ab227fccba10df0faa2d3f1d96eda866be02a34bb57806438e",
+        "native_toolchain/20261109T072309048657Z/manifest.json": "132e558c8da89b6f190a29ae38de01d48a847b29c5a04b2382466c879246324f",
+        "selection_api_research/20261109_readonly_8b4c2e/manifest.json": "740b7938e943c0bc8aa4d4f04bd4ab9d753c7aa52bcb6ecc29b3911eb107427a",
+        "native_toolchain_audit/20261109_readonly_e41b7d/audit_result.json": "9edaac84d2ea930c66f2b545e216deb38e7b388710d5d7cb7bc85346cd3451cb"
       },
       "license_notes": "Installed original projects, library sources, official figures and all probe evidence remain local. Startup did not request login, acquire a certificate, change settings or bypass licensing.",
       "standalone_compiler_probe": {
@@ -2060,6 +2063,18 @@
         ],
         "residual": 0,
         "parent_environment_unchanged": true
+      },
+      "native_toolchain_probe": {
+        "scope": "separate official vdiv tutorial; does not promote finite-R reference status",
+        "run_id": "20261109T072309048657Z",
+        "compiler": "gf46",
+        "platform": "x86",
+        "actual_EMTDC_link_and_run_completed": true,
+        "waveform_obtained": false,
+        "tracked_summary": "docs/development_roadmap/experiments/pscad_toolchain_smoke.json",
+        "original_profile_parent_environment_unchanged": true,
+        "normal_exit_no_forced_cleanup": true,
+        "tracked_summary_git_lf_sha256": "d79adfbe5880fd421d55af212d5a3149907b53976569d63ba1816a5b8d04d935"
       }
     }
   ],
