@@ -1,42 +1,47 @@
 # 恢复与下一步
 
-日期2026-11-06（Asia/Shanghai）。恢复先读tasks/progress/decisions/validation_status，核分支、HEAD、工作区、git log和真实远端。
-checkpoint `4385e2ea6941e693ac784c48a78e7074c803f4ed` 是记录时最近已知提交，须与实际后续历史交叉核对；不覆盖用户工作、不强推、不操作main。
+2026-11-09（Asia/Shanghai）。先读tasks/progress/decisions/validation_status，核实际分支、HEAD、工作区和远端。
+记录时checkpoint为dda8deb47f74764ac5a15fd19baff01d73432578；后续提交须与Git历史核对。
+分支codex/emt-examples-longterm；不操作main、不强推、不覆盖未提交文件。
 
 ## 当前事实
 
-分支codex/emt-examples-longterm。正式新增19/20/21/22/23/24/25共7项完成，既有02补参考另计，既有12商业波形FAIL保持。
-最新完整交付25是9e2513d；原完整源→两π线路→T→固定阻抗负荷/补偿网络已交付D0，24无实际线路的范围不扩大。
-25仅224行、28现有元件，公开初值由本例复阻抗递推计算；核心、pyproject.toml和uv.lock相对原main均无差异。
+正式新增19–25共7项完成，02补参考另计；12商业波形仍FAIL。25完整供电网络交付为9e2513d。
+恢复实际本地dda8deb、远端4385e2e。暂停前26候选、Buck normalization及参考测试未提交；26尚未验收。
+核心包、pyproject.toml和uv.lock相对原main没有改动；教学入口复用既有元件/控制器，不扩框架。
+到25最近完整回归为1190 passed478.96s（含slow，零失败/错误/跳过）；不能扩大到本轮新增代码。
+恢复已执行锁定27包/Ruff/mypy39、13项参考数学测试和26独立Agg200001点，均通过；
+12项内部物理测试也实际通过42.61s，日志/XML为.tmp/longterm/buck-internal-20261109b.*。最终全量和商业验收待完。
 
-到25最近一次完整回归为1190 passed478.96s（XML478.948，含slow，零失败/错误/跳过），日志.tmp/longterm/d0-final-full-pytest.log和d0-final-full-tests.xml；本轮研究/文档未重新执行全量。
-锁定27包、全范围Ruff、mypy39及两个新Python入口通过；25专项11passed6.63s，独立Agg5001点。
-协议65d89bb在候选/tests不存在时固定14量双窗；守卫勘误436c266只纠正真实SFunction身份，全部物理/求解设置/限值不变。
-正式reference run20261106T054135322Z，5023/10023点，28self及56独立精度PASS；baseline从首次守卫失败的完整MAT只读复用，refined真实新跑。
-candidate compare20261106T054356596388Z，TR10µs/5001点、28项PASS；maxV.864127V/maxI.00623452A/maxNR1.74756e−6，图已查看。
-详见validation/cases/source_line_transformer/README.md及机器报告；独立236项身份/28self/56PWL界审计见.tmp/longterm/d0-native-independent-audit.json。
-上述25的数值/导出/测试进程均终态；用户原MATLAB PID9980未触碰。
-9e2513d已正常push并核真实远端；精确该HEAD的CI已终态核验。后续B2新state-save/只读query及A3一次启动均已终态，研究结论独立归档；当前功能代码仍与9e2513d相同。B2研究已提交f36c063，A3及恢复状态继续单独同步，以实际Git历史交叉核对。
+## 执行顺序
 
-## 下一步
+1. **B2参考先解决精度失败。** 原100/50ns两次真实10ms成功，103550/204619点，原生MAT/状态/Scope及各30项库存本次重新全核。
+   UC/iL两完整窗自细化通过；500周期duty最大差0.00275472>0.0015、重建源流0.0240559A>0.01A，参考自身FAIL。
+   完整[失败报告](../../validation/cases/synchronous_buck/initial_reference_failure.json)保留，候选尚未商业比较。
+   独立积分/根贡献分解见local_reference/b2_protocol_research/refinement_diagnosis/；主因是原生控制/根漂移，不能删周期或改阈值。
+   [solver补充](../../validation/cases/synchronous_buck/reference_solver_addendum.md)先行固定25/12.5ns及同比收紧Rel/Abs；提交后顺序跑两完整10ms，再审计全部状态/根/有效域/500周期。
+   运行用新唯一目录及自有进程监控（6GiB私有/2GiB可用提交量/600s/重复最小步长告警），不触用户MATLAB。
+   exporter签名为export_reference(repositoryRoot,runDirectory,stage,protocolFile,protocolHash)；本轮protocolFile为补充md，hash须运行前固定。
+   原模型、三份原验收协议、候选50ns、两完整窗、全部500周期及限值均不变。
+2. **B2内部与正式交付。** 合格参考就绪后才安装canonical引用并作候选商业比较/图报告。
+   教学脚本不读商业数据；LPBE→无内部限幅PI→外Limiter、解后更新及显式负荷事件不变。
+   UC/iL在负荷事件连续，可用严格限定的连续状态视图比较；不能任意撤销公共event guard。
+   原生稀疏Isrc跳变不能PWL积分成斜坡；派生源流须明确标识，不称直接门极/源流日志。
+   条件根预算还依赖原生UC/滤波状态导数相容及无隐藏根，duty epsilon或AbsTol不是绝对误差证明。
+   完整内部物理/独立执行/真实比较/图报告/自动测试/教学/常规检查/Git验收齐备才完成26。
+3. **A3工具链核验。** 先读[Bergeron记录](experiments/bergeron_reference_followup.md)。有限R两半线+三R仅有解析等价，尚无商业波形。
+   裸GF46在官方gf46vars合同对应的child-only环境已编译运行成功；PSCAD实际选择、EMTDC链接/build/sim仍未证。
+   settings(field)不是getter，非空字典/kwargs是写；不要重复已挂起的整包读取或空ATS范围查询。
+   用版本明确支持的只读接口或自有有界界面确认选择后，再复制官方简单教程作隔离build/run。不改全局PATH/ATS，没有有限R实际参考前不创建A3候选。
+4. **F1外部依赖。** 最后实查9e2513d的CI run42170878293终态failure，两个job均runner0/steps空，注释明确billing lock，未执行测试。
+   不重复轮询该终态；账户真实恢复后补跑覆盖25的run，核精确HEAD/attempt的双OS全步骤。旧90b2fcd只覆盖22，本地通过不等于跨OS通过。
+5. B1固定2%波形限仍FAIL，不拟合时移或放宽。C1后置；D0已交付，不重复成功仿真或无新代码时机械全量。
 
-1. F1局部blocked：精确9e2513d的run42170878293已真实终态failure，Ubuntu127738145863/Windows127738146164均runner0、steps空、billing lock注释，未执行测试/test_count=null。
-   证据experiments/ci_9e2513d.json及7份raw/hash已全核；不再轮询该终态。外部账户真实解锁后，优先对这个覆盖25的run选择Re-run all jobs，再核精确head/attempt的Windows/Ubuntu全步骤。
-   不改代码制造空提交、不操作账户账单。90b2fcd成功仅覆盖22；本地/商业结果不代替23/24/25跨OS验证。
-2. B2先读experiments/synchronous_buck_state_followup.md。新state-save运行与缓存提取已完成，原四Scope逐字不变；L/C非零初值、互补selector和固定PI坐标已核，原生状态误差/控制离散化仍待验证。
-   实现前协议和exporter已写在validation/cases/synchronous_buck/，需核对应先行Git提交；26及tests仍不存在。下一步按冻结100/50ns配置顺序完成两次真实原生10ms运行，保留各自完整raw MAT/Scope/state后再提取/审计；不要重复已完成原始探针。无内部限幅PI配外部Limiter，避免增加抗饱和；LP/PI动态误差不能由代数坐标残差替代。
-   旧Isrc稀疏跳变PWL周期均值可错0.7136A，不能直接积分。按实际iL/UC/duty与解析carrier求全部根，再逐模式KCL精确积分；标为派生源流，原测量和根侧歧义全留。每个新run重核条件根/域预算及500周期真实自细化。根附近全点/不同浮点布尔结果保留，不用guard删点。保持现有Switch/控制器，禁止自动二极管/非线性扩展；教学入口只解释电路与运行。
-3. A3先读experiments/bergeron_reference_followup.md：127个安装工程/53线路定义已查，有限R两半线+三R数学等价经独立解析审查，不是商业结果。
-   实际PSCAD5.0.0启动/许可true，但整包settings RPC挂起、原生自行退出，自有Python已安全终止。先有界读gfortran版本与公共API单项编译设置，避免重复整个settings；确认实际选择后才做隔离官方教程build/run烟雾验证。缺ATS ProductList导致发现列表为空不代表编译器不存在，不改ATS/私有映射/注册表。
-   参考先冻结有限正R/关闭额外damping/双端标量、实际参数频率及LongLine结果、tau/(2dt)整数、零历史、方向/事件和阈值；无真实有限R波形不实施候选、不以lossless替代要求。simpleac的耦合三相线路只可检查环境。
-4. B1既有12固定2%波形限仍FAIL（2.66%–2.72%），不放宽标准/拟合时移；C1控制教学链保持后置。
-5. D0无需重复成功仿真/全量测试。以后仅真实新代码或失败触发必要验证；运行身份/许可环境迁移须重新审计，不绕过SFunction/MEX/source守卫。
+## 本机命令
 
-## 本机命令与环境
+稳定Python3.14.5：.tmp/venv-py3145/Scripts/python.exe。下列离线缓存仅适用于本机，其他机器正常uv sync --locked。
 
-稳定Python3.14.5位于`.tmp/venv-py3145/Scripts/python.exe`。PowerShell先设置：
-
-```powershell
+~~~powershell
 $env:UV_CACHE_DIR="$PWD/.uv-cache"
 $env:UV_PYTHON_INSTALL_DIR="$PWD/.uv-python"
 $env:UV_PROJECT_ENVIRONMENT="$PWD/.tmp/venv-py3145"
@@ -46,20 +51,15 @@ $env:PYTHONUTF8='1'
 $env:MPLBACKEND='Agg'
 $env:MPLCONFIGDIR="$PWD/.tmp/longterm/mpl"
 $env:OPENBLAS_NUM_THREADS='1'
-```
+uv run ruff check pycy_emt_lite examples tests validation
+uv run mypy
+uv run pytest
+~~~
 
-其他机器正常`uv sync --locked`，不依赖忽略缓存。默认沙箱Temp有权限问题，全量pytest使用新的仓库内`--basetemp=.tmp/longterm/pytest-<唯一ID>`，先验证目标绝对路径位于仓库且不存在，避免pytest清理旧内容；可加`-p no:cacheprovider`避免旧cache权限warning。常规检查Ruff包括pycy_emt_lite/examples/tests/validation，mypy检查包，pytest保留slow。新代码/失败才重跑必要范围，已经通过后不机械重复全量。
-
-如Git因当前身份拒绝ownership，读写命令可加`-c safe.directory=D:/VibeCoding/PyCy_EMT_Lite`，子进程则仅当前进程环境设置：
-
-```powershell
-$env:GIT_CONFIG_COUNT='1'
-$env:GIT_CONFIG_KEY_0='safe.directory'
-$env:GIT_CONFIG_VALUE_0='D:/VibeCoding/PyCy_EMT_Lite'
-```
-
-必须正斜杠，不写全局配置。GitHub直连曾超时，已有系统代理可用；忽略helper`.tmp/longterm/git_with_system_proxy.py`只读取系统配置、允许本分支普通push/ls-remote、不打印凭据、不更改remote/持久配置。按执行权限机制审批网络写操作。
-
-各case重现：`uv run python -m validation.cases.<case>.compare`，case名cascaded_rc/rc_charging/nodal_analysis/earthing/transmission_line/transformer_t_equivalent/three_phase_transformer_chain/source_line_transformer；缺真实参考应报错，不生成伪数据。MATLAB从根目录`clear export_reference; addpath('validation/cases/<case>'); export_reference(pwd)`，需合法许可；同名函数切换须clear。原件/原始日志/波形/缓存保留local_reference。
-
-长期目标尚未完成，D0已交付；继续B2参考相容性、A3独立研究及F1外部恢复；不声称无实际执行环境时后台继续。
+pytest指定新仓库内--basetemp=.tmp/longterm/pytest-<唯一ID>，先核路径位于仓库且不存在，可加-p no:cacheprovider。
+保留slow；新代码/失败才触发对应范围与必要完整回归。日志/XML放.tmp/longterm/，不覆盖旧失败。
+Git ownership用单命令-c safe.directory=D:/VibeCoding/PyCy_EMT_Lite；子进程仅当前进程GIT_CONFIG_COUNT/KEY_0/VALUE_0，不改全局配置。
+旧系统代理127.0.0.1:7897本次不可连接；本次命令级git -c http.proxy= ls-remote成功，可正常push开发分支，不持久改网络设置。
+正式case比较入口：uv run python -m validation.cases.<case>.compare，case包括cascaded_rc/rc_charging/nodal_analysis/earthing/transmission_line/transformer_t_equivalent/three_phase_transformer_chain/source_line_transformer。
+Buck尚未正式交付，不套用其他case的单参数MATLAB命令。所有第三方原件、波形/图片/缓存保留忽略的local_reference。
+长期目标仍active；结束当前执行前同步证据/任务/提交/下一步，不宣称离线后台继续。

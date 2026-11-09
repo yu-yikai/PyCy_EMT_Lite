@@ -13,15 +13,16 @@ copyfile(source,fullfile(inputDirectory,[modelName '.slx']));
 copyfile([mfilename('fullpath') '.m'],fullfile(inputDirectory,'export_reference.m'));
 protocolDirectory=fullfile(repositoryRoot,'validation','cases','synchronous_buck');
 protocolSnapshots=struct('file',{},'sha256_raw',{},'sha256_lf',{});
-for name={'acceptance_plan.md','manifest.json','parameters.json','native_logging_api_addendum.md'}
+for name={'acceptance_plan.md','manifest.json','parameters.json','native_logging_api_addendum.md', ...
+        'reference_solver_addendum.md','reference_solver_addendum.json'}
     protocolSource=fullfile(protocolDirectory,name{1});
     copyfile(protocolSource,fullfile(inputDirectory,name{1}));
     protocolSnapshots(end+1)=struct('file',name{1},'sha256_raw',sha256File(protocolSource), ...
         'sha256_lf',sha256LFFile(protocolSource)); %#ok<AGROW>
 end
-assert(strcmp(canonical(protocolFile),canonical(fullfile(protocolDirectory,'acceptance_plan.md'))));
+assert(strcmp(canonical(protocolFile),canonical(fullfile(protocolDirectory,'reference_solver_addendum.md'))));
 parameters=jsondecode(fileread(fullfile(inputDirectory,'parameters.json')));
-settings=parameters.reference_solver;selected=settings.(stage);
+settings=jsondecode(fileread(fullfile(inputDirectory,'reference_solver_addendum.json')));selected=settings.(stage);
 assert(strcmp(settings.solver,'ode23tb') && strcmp(settings.auto_scale_abs_tol,'off'));
 assert(strcmp(parameters.reference_model_sha256,expectedModelHash) && parameters.stop_second==0.01);
 previousPath=path;pathCleanup=onCleanup(@() path(previousPath)); %#ok<NASGU>
@@ -40,7 +41,7 @@ blockTolerances=struct('sid',{},'path',{},'absolute_tolerance',{});
 for sid=[81,84]
     block=Simulink.ID.getFullName(sprintf('%s:%d',modelName,sid));
     try
-        tolerance=get_param(block,'AbsTol');
+        tolerance=get_param(block,'AbsoluteTolerance');
     catch err
         tolerance=struct('unavailable',true,'identifier',err.identifier,'message',err.message);
     end

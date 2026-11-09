@@ -1,0 +1,118 @@
+{
+  "scope": "Two actual native refinements, conditional numerical evidence; no candidate or absolute accuracy proof",
+  "input_sha256": {
+    "D:\\VibeCoding\\PyCy_EMT_Lite\\local_reference\\b2_protocol_research\\native_refinement\\20261106T064932434Z\\runs\\20261106T070956629Z-baseline\\extracted\\native_state_04.csv": "e96cfe7acca1d3af1233fbd5c80e4582583a1c3fe9b7160bd95b84e3006acac8",
+    "D:\\VibeCoding\\PyCy_EMT_Lite\\local_reference\\b2_protocol_research\\native_refinement\\20261106T064932434Z\\runs\\20261106T071447577Z-refined\\extracted\\native_state_04.csv": "777a6d3bf0ea8d975be7b532f34165a3b1cf38fa3c9d2e47175fb25780c1fdea",
+    "D:\\VibeCoding\\PyCy_EMT_Lite\\local_reference\\b2_protocol_research\\normalization_audit\\compare_native_refinement.py": "1857e7cf114973049918d5460eea5bb3409c8630db550f494be8d3c09191469c",
+    "D:\\VibeCoding\\PyCy_EMT_Lite\\validation\\cases\\synchronous_buck\\manifest.json": "e75b8832cf76ffb4799b5757d38a3163da49126ddfd56d9303d23abae7076719",
+    "D:\\VibeCoding\\PyCy_EMT_Lite\\local_reference\\b2_protocol_research\\normalization_audit\\20261106T070956629Z-baseline\\cycle_means.csv": "ed135609d0ed14a46b5294629d917759374c8e7853416ac1343cf3855aa46986",
+    "D:\\VibeCoding\\PyCy_EMT_Lite\\local_reference\\b2_protocol_research\\normalization_audit\\20261106T070956629Z-baseline\\cross_audit.json": "292b28bec1a74e50f60d10d8fc4d2d29e19019deefb4e0555942d2ba52b3cf28",
+    "D:\\VibeCoding\\PyCy_EMT_Lite\\local_reference\\b2_protocol_research\\normalization_audit\\20261106T070956629Z-baseline\\normalization_diagnostics.json": "7f93a950bec85c32ff8b1fdf6fbd3226cef9a64a3fc4c39b24c4be2fca3225be",
+    "D:\\VibeCoding\\PyCy_EMT_Lite\\local_reference\\b2_protocol_research\\normalization_audit\\20261106T071447577Z-refined\\cycle_means.csv": "6d467ff35ff3d50bc6a90377f8e672fc1ed631838f60f41d41ec5344aca6f44c",
+    "D:\\VibeCoding\\PyCy_EMT_Lite\\local_reference\\b2_protocol_research\\normalization_audit\\20261106T071447577Z-refined\\cross_audit.json": "82e37227688dcaf2d03969b5c819402e6fe2e62c539293d84545922199ec54b2",
+    "D:\\VibeCoding\\PyCy_EMT_Lite\\local_reference\\b2_protocol_research\\normalization_audit\\20261106T071447577Z-refined\\normalization_diagnostics.json": "67c2de476bef0f318bbd5013fda436a38092b7b930be8d3ffdd37732f70436d7"
+  },
+  "continuous": [
+    {
+      "name": "iL",
+      "start": 0,
+      "stop": 0.0025,
+      "max_abs_error": 0.0024487340832788362,
+      "rms_error": 0.0009699173155362583,
+      "nrmse": 0.00012123966444203229,
+      "max_abs_limit": 0.015,
+      "nrmse_limit": 0.001,
+      "passed": true
+    },
+    {
+      "name": "uC",
+      "start": 0,
+      "stop": 0.0025,
+      "max_abs_error": 0.004297462719884848,
+      "rms_error": 0.0012515479680241645,
+      "nrmse": 8.343653120161097e-05,
+      "max_abs_limit": 0.03,
+      "nrmse_limit": 0.0005,
+      "passed": true
+    },
+    {
+      "name": "iL",
+      "start": 0.0025,
+      "stop": 0.01,
+      "max_abs_error": 0.0038421595246607154,
+      "rms_error": 0.0010555440422711988,
+      "nrmse": 0.00013194300528389984,
+      "max_abs_limit": 0.015,
+      "nrmse_limit": 0.001,
+      "passed": true
+    },
+    {
+      "name": "uC",
+      "start": 0.0025,
+      "stop": 0.01,
+      "max_abs_error": 0.006007336660749374,
+      "rms_error": 0.0014771464470444901,
+      "nrmse": 9.8476429802966e-05,
+      "max_abs_limit": 0.03,
+      "nrmse_limit": 0.0005,
+      "passed": true
+    }
+  ],
+  "period_features": {
+    "all_500_cycles": true,
+    "columns": [
+      "uC",
+      "iL",
+      "duty",
+      "reconstructed_Isrc"
+    ],
+    "max_abs_errors": [
+      0.005867990108983534,
+      0.0036197128790425026,
+      0.0027547155834090897,
+      0.024055924944032636
+    ],
+    "rms_errors": [
+      0.0014109346559372997,
+      0.0007455840321846113,
+      0.0005299278365199267,
+      0.0032165980541727242
+    ],
+    "max_limits": [
+      0.015,
+      0.008,
+      0.0015,
+      0.01
+    ],
+    "passed": false
+  },
+  "checks": {
+    "20261106T070956629Z-baseline": {
+      "normalization_checks": {
+        "pi_mapping": true,
+        "all_post_initial_modes_unique": true,
+        "initial_source_blocked_mode": true,
+        "initial_states": true,
+        "clear_carrier_modes": true,
+        "domain_bridge_arithmetic": true,
+        "root_local_conditions": true
+      },
+      "conditional_edge_budget_passed": true,
+      "explicit_duty_error_sensitivity_assumption": 1e-06
+    },
+    "20261106T071447577Z-refined": {
+      "normalization_checks": {
+        "pi_mapping": true,
+        "all_post_initial_modes_unique": true,
+        "initial_source_blocked_mode": true,
+        "initial_states": true,
+        "clear_carrier_modes": true,
+        "domain_bridge_arithmetic": true,
+        "root_local_conditions": true
+      },
+      "conditional_edge_budget_passed": true,
+      "explicit_duty_error_sensitivity_assumption": 1e-06
+    }
+  },
+  "passed": false
+}

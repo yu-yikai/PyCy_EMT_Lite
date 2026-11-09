@@ -13,8 +13,8 @@
 | 新增23线性T等效 | 0ec7239先固定协议；独立两状态谱指数/KCL/能量/显式事件/TR细化8项通过，独立Agg8001点 | 原完整五网络真实8063/16042点自细化PASS，七量两窗全过，最大0.697mV/0.304mA | 已完成A4a `91dbad6bb77af24d1a548a6d0943930c4bcce40f`；三相/其余组合未推广 |
 | 新增24三相Y–Δ–Y链 | 9项精确启动/连续插值/KCL/功率/能量/TR/RMS/相位通过，独立Agg100001点；全量1179 passed490.61s含slow | 原完整58899/76502点自细化38项通过；最终商业两窗19量38项通过，初次1µs绝对FAIL保留 | 已完成02044768579ba083d1fb526786922e770cc2e7c6；不含线路/其他组别/零序/饱和，跨OS CI另待验 |
 | 新增25完整供电网络 | 11项独立节点/12初值/14量PWL/KCL/14损耗/双能量/TR/RMS/PQ/相位，Agg5001点；完整1190 passed478.96s含slow | 原完整5023/10023点，28self+56独立精度全过；14量两窗28商业比较全过，maxV0.864127V/maxI0.00623452A/maxNR1.74756e−6 | 已完成9e2513dd98c12ee4f50d94261318ef56fd475aa4；首次守卫失败保留，跨OS CI单列 |
-| B2同步Buck研究 | 3633点双mode唯一；固定PI映射全点/3192未限幅点2.35e-15，条件区间界 | 原网新state-save3634点/10ms，非零初值；compile只读参数，旧四Scope逐字相同 | 仍runnable，无26候选/精化/商业比较，不计完成 |
-| A3有限R Bergeron研究 | 两半线+三R解析等价及97复频率点互核 | 127安装工程已查；真实5.0.0启动/许可true，编译设置读取挂起，无build/sim | inspected/in_progress，未取得商业波形，不计完成 |
+| B2同步Buck候选26 | 协议先行，Agg200001点/四事件成功；13参考数学测试通过，内部物理/全量待完 | 真实100/50ns共103550/204619点；连续状态自细化过，500周期duty/派生源流FAIL，原报告保留 | in_progress，未商业比较/未验收，不计完成；新25/12.5ns协议先行 |
+| A3有限R Bergeron研究 | 两半线+三R解析等价及97频点；官方child-env下独立GF46编译运行成功 | 真实PSCAD启动/许可true；编译选择/EMTDC build/sim未证，原挂起保留 | inspected/in_progress，无商业波形，不计完成 |
 | PSCAD cookbook | 工程XML已检查 | v4.6.0，无实跑数值 | inspected |
 
 到20的本地稳定Python3.14.5完整回归：1133 passed，154.47 s；Ruff/mypy通过。原14例及新增19/20均单独执行通过。
@@ -54,3 +54,5 @@ D0独立物理核验：17支路参数最大相对差6.994e-14，12状态相量3.
 
 
 2026-11-06最新9e2513d代码里程碑已正常推送；[CI run42170878293](https://github.com/yu-yikai/PyCy_EMT_Lite/actions/runs/42170878293)已实查终态failure，Ubuntu127738145863/Windows127738146164均runner0、steps空，各注释确认GitHub账户billing lock，未执行测试/test_count=null。证据experiments/ci_9e2513d.json，7份raw响应/hash全核。F1局部受阻，23/24/25跨OS仍待账户外部恢复，不扩大本地/商业PASS结论；同终态不继续轮询。当前只做文档同步，代码/依赖与9e2513d一致，所有本轮监测已终态。
+
+2026-11-09：参考自身失败完整报告见[initial_reference_failure.json](../../validation/cases/synchronous_buck/initial_reference_failure.json)；更细配置见[补充协议](../../validation/cases/synchronous_buck/reference_solver_addendum.md)。恢复后的13项参考数学测试、锁定/Ruff/mypy和独立Agg已实际执行；1190全量仍是25阶段结果，不称本轮已重跑。

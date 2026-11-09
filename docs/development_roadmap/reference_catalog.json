@@ -1611,10 +1611,10 @@
       "local_path": "local_reference/synchronous_buck",
       "allows_local_save": "Installed licensed MathWorks example downloaded from official versioned exampledata for local study",
       "allows_redistribution": "not_asserted",
-      "mathematical_compatibility": "Actual nonzero L/C initial states and active complementary selector/NOT structure now observed. Native states plus Isrc uniquely identify complementary linear modes at all 3633 post-initial samples; diode-inactivity interval certificate remains conditional on native absolute-state accuracy. Fixed PI coordinate scaling verified against existing duty without fitting. Continuous/discrete control and event-error protocol still pending; no PyCy candidate.",
+      "mathematical_compatibility": "Original physical topology, nonzero DC initials and PI coordinates resolved. Candidate26 reuses existing switches/LP/PI/limiter without core changes; independent Agg complete. Full100/50ns native references ran but all500-cycle duty/source self-refinement FAILED; not reference_ready or commercial validation. Conditional root budgets require native anchor-state/derivative compatibility, not duty error alone.",
       "blockers": [
-        "No reference self-refinement or certified native state-error budget yet; conditional diode-inactivity proof does not certify all operating conditions.",
-        "Discrete LP/PI sample/update order and PWM/step-load event comparison require a frozen numerical protocol before candidate implementation. Root-near Boolean ambiguities are retained; no direct dynamic gate/diode current logs."
+        "原100/50ns参考自身周期duty/源流未满足固定十分之一预算；新配置尚未运行。",
+        "候选内部物理测试、最终全量、合格参考与商业比较/图报告/教学/Git验收未完成。"
       ],
       "sha256": {
         "simulink/SynchronousBuckConverter.slx": "ea8344f62e2a691456363f0391389cd1675bfe246bd71dc8f15a3b838ca6ab42",
@@ -1646,7 +1646,7 @@
       "formal_pycy_validation": {
         "status": "not_started",
         "implementation_commit": null,
-        "note": "Initial-state/control observability gaps reduced by real follow-up; formal reference refinement, discrete semantics and acceptance must precede any candidate. No generic diode/nonlinear framework."
+        "note": "Candidate26 uncommitted and standalone run complete; native reference self-refinement failed. No commercial candidate comparison or completed-case claim."
       },
       "state_control_followup": {
         "record": "docs/development_roadmap/experiments/synchronous_buck_state_followup.md",
@@ -1673,11 +1673,31 @@
           "manifest.json": "e75b8832cf76ffb4799b5757d38a3163da49126ddfd56d9303d23abae7076719",
           "parameters.json": "a65d62ffa5fb01674a3932c3f89eac8485c7faa2d9b18f879f25808db570aa51",
           "acceptance_plan.md": "068094050105f56b603e33ec077666af0c8bcd7002bdff25a0afa65befe7fd6d",
-          "export_reference.m": "7c1d163685422e77fb88f39550c1fb91784c16dd46c87290a69b807b8893164e",
-          "native_logging_api_addendum.md": "9141ede70b423338859d4cb6c9384eb4a2470b88a9e27bd176af99ff522deb13"
+          "export_reference.m": "d7d6d048470b7f482ce1a5807a896f5ba8a84850babf99c5ae728d24687c3f5d",
+          "native_logging_api_addendum.md": "9141ede70b423338859d4cb6c9384eb4a2470b88a9e27bd176af99ff522deb13",
+          "reference_solver_addendum.md": "baeb1297a9299c2a67a8c48e2c2f62e62177c492b229ba44140afdd34705b7e7",
+          "reference_solver_addendum.json": "73bdad1b9263d0853624878823913ab1905bc005fd84f5a9c3d503252add8d0c"
         },
-        "native_refinement": "pending",
+        "native_refinement": "100/50ns FAILED; finer25/12.5ns protocol defined before new runs",
         "source_means": "Derived from measured native states/duty and resolved carrier/topology, never raw source PWL ramps; all500 cycles and conditional root budgets audited."
+      },
+      "native_refinement_failure": {
+        "report": "validation/cases/synchronous_buck/initial_reference_failure.json",
+        "sha256_raw": "3ecf74ba7fd91a6f27c91b26dbaf1138fcb8700350e068c4d0ce793930e4be94",
+        "baseline_run": "20261106T070956629Z-baseline",
+        "refined_run": "20261106T071447577Z-refined",
+        "local_path": "local_reference/b2_protocol_research/native_refinement/20261106T064932434Z/runs",
+        "samples": [
+          103550,
+          204619
+        ],
+        "all_500_cycles": true,
+        "passed": false,
+        "candidate_compared": false,
+        "inventory_sha256": {
+          "20261106T070956629Z-baseline": "4bd7d9255b381942ec2ccd1e10b3772760de532c296b3c4c7d8b8e8171eddb3a",
+          "20261106T071447577Z-refined": "faf2bea10001f8c8093088626336dfb25cdf0b3f2b91c0bb1b3e9fe56bf3f0f4"
+        }
       }
     },
     {
@@ -1964,7 +1984,7 @@
       "mathematical_compatibility": "Five manual scalar Bergeron definitions have nonzero active R. Published undamped constant-parameter finite-R model equals R/4 + two lossless half-lines separated by R/2 + R/4, by independent analytic elimination; 97 complex-frequency checks supplement it. Existing single attenuation factor is insufficient. Original HVDC/lightning host networks are not directly small PyCy cases. Actual parameters, initial histories, native interpolation/events and finite-R numerical comparison remain pending.",
       "blockers": [
         "No native project load, build or simulation. No reference waveform or candidate.",
-        "Actual compiler selection unknown; missing ATS discovery file makes fortran_versions empty. Whole-settings RPC hung; owned native instance subsequently exited itself, cause unknown."
+        "Standalone GF46 compile/run succeeds only after official child environment setup; actual PSCAD compiler selection and EMTDC link unknown. No supported settings(field) getter; do not repeat whole-settings hang or infer selection from empty ATS range."
       ],
       "probe_record": "docs/development_roadmap/experiments/bergeron_reference_followup.md",
       "native_environment_probe": {
@@ -1980,9 +2000,27 @@
         "analysis_manifest.json": "9f3f5090a98e9d4ac71484f8423ed9d199d1d15cad15f0f4916e29b9d82205a5",
         "installed_examples_inventory.json": "104fd10fea6a32067cd931072828e26e245a6ef2d0ee1b4bdf37c40bf423eb4d",
         "startup/20261106T061600Z_startup/terminal_summary.json": "aecb6c82b0755ab6dc6fbae25d7ca4667551cae2f08e91bd113f78380c10891d",
-        "independent_review/physics_audit_review.md": "eda8af3fd639ba70090f6fba170ffb62e87ae799add44184b0fd919d4725bbea"
+        "independent_review/physics_audit_review.md": "eda8af3fd639ba70090f6fba170ffb62e87ae799add44184b0fd919d4725bbea",
+        "compiler_readiness/20261106T064800Z/manifest.json": "dc3de17a5f0109cae6661ff9fed80d6d33aacb07773b955095c73c33f2fe6eca",
+        "compiler_smoke/20261106T065622Z/manifest.json": "efd66274b89e2c32c45203fb66ef11819dadd86f35884c638dd5cf60b9dadffa",
+        "compiler_diagnostics/20261106T070003Z/manifest.json": "55c71614e7c831f4653246a6f838ce2a54214ec6cde47f1d178c4f7ac7f92224",
+        "helper_versions/20261106T070301Z/manifest.json": "e76b723936c225b125effb69444ccbca6d10430d8dcee7a695bd9e64d320c0e8",
+        "compiler_env_smoke/20261106T070543Z/manifest.json": "8edc38e5151541ab227fccba10df0faa2d3f1d96eda866be02a34bb57806438e"
       },
-      "license_notes": "Installed original projects, library sources, official figures and all probe evidence remain local. Startup did not request login, acquire a certificate, change settings or bypass licensing."
+      "license_notes": "Installed original projects, library sources, official figures and all probe evidence remain local. Startup did not request login, acquire a certificate, change settings or bypass licensing.",
+      "standalone_compiler_probe": {
+        "scope": "bare GF46, not PSCAD/EMTDC",
+        "default_compile_exit": 1,
+        "original_frontend_exit_hex": "0xC0000135",
+        "official_child_environment_compile_exit": 0,
+        "run_exit": 0,
+        "linear_solution": [
+          2,
+          3
+        ],
+        "residual": 0,
+        "parent_environment_unchanged": true
+      }
     }
   ],
   "scope_notes": [

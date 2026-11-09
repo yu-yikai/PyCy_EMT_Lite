@@ -1,0 +1,8 @@
+{
+  "defined_date": "2026-11-09",
+  "supersedes_only": "parameters.json reference_solver numerical settings; all physical parameters and acceptance limits unchanged",
+  "solver": "ode23tb",
+  "auto_scale_abs_tol": "off",
+  "baseline": {"max_step_s": 0.000000025, "relative_tolerance": 0.000000025, "absolute_tolerance": 0.00000000000025},
+  "refined": {"max_step_s": 0.0000000125, "relative_tolerance": 0.0000000125, "absolute_tolerance": 0.000000000000125}
+}

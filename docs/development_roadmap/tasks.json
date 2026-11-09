@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
-  "updated_date": "2026-11-06",
+  "updated_date": "2026-11-09",
   "timezone": "Asia/Shanghai",
   "branch": "codex/emt-examples-longterm",
-  "checkpoint_head": "167bb493c1405cd4edd4eaadd1b4cf2e0ad257a0",
+  "checkpoint_head": "dda8deb47f74764ac5a15fd19baff01d73432578",
   "current_task": "B2",
   "formal_new_examples_completed": 7,
   "status_values": [
@@ -172,7 +172,7 @@
         "pscad-line-energizing",
         "pscad-installed-scalar-bergeron-v5"
       ],
-      "validation": "127个安装pscx/53个显式线路定义已查，5个手工标量Bergeron均有限R；两无损半线+三R等效有独立解析证明及97频点互核，不是商业验证。真实PSCAD5.0.0启动/许可true，但整包settings查询挂起、原生自行退出；自有Python身份核对后结束，无工程加载/build/sim。",
+      "validation": "有限R两半线+三R解析等价仍仅数学证据；真实PSCAD5.0启动/许可true但整包settings挂起，无build/sim。GF46原环境compile1、f951加载0xC0000135；按官方gf46vars合同只改子进程环境后前端/编译/运行均0，2x2解[2,3]残差0。实际PSCAD编译选择/EMTDC链接未证；公共settings(field)不是getter。",
       "acceptance": "先确认可运行参考，再固定教学与验收；无真实数据不完成",
       "status": "in_progress",
       "files": [
@@ -403,7 +403,7 @@
       "references": [
         "mw-synchronous-buck-r2025a"
       ],
-      "validation": "真实初值/互补/PI坐标已核；本轮先于26及tests固定完整拓扑/50ns更新/显式负荷事件、两完整窗及全部500周期限值、100/50ns原生精化。独立先验发现旧源流PWL均值错误，改按实际状态+duty/解析载波/KCL分段物理重建并保留条件根预算；不是直接门极/源流日志。正式新参考及候选均未运行，不计完成。",
+      "validation": "167bb49先冻结；100/50ns真实完整10ms参考103550/204619点成功，原始60项hash全核；连续UC/iL自细化过，500周期duty .00275472>.0015、重建源流.0240559>.01，参考自身FAIL，未作候选商业比较。独立积分/根贡献复核支持原生控制根漂移，全部失败保留。26候选Agg200001点成功；13参考数学测试/锁定/Ruff/mypy过，内部物理与最终全量待完。本补充先于25/12.5ns两新运行固定，原物理/窗/阈值/候选50ns不变，仍未验收。",
       "acceptance": "每项先有参考与固定判据再实施，禁止冒充自动二极管",
       "status": "in_progress",
       "files": [
@@ -414,14 +414,20 @@
         "validation/cases/synchronous_buck/parameters.json",
         "validation/cases/synchronous_buck/acceptance_plan.md",
         "validation/cases/synchronous_buck/export_reference.m",
-        "validation/cases/synchronous_buck/native_logging_api_addendum.md"
+        "validation/cases/synchronous_buck/native_logging_api_addendum.md",
+        "validation/cases/synchronous_buck/initial_reference_failure.json",
+        "validation/cases/synchronous_buck/reference_solver_addendum.md",
+        "validation/cases/synchronous_buck/reference_solver_addendum.json"
       ],
       "commits": [
         "d79e849",
         "f36c06362244efb43285e2725bc6b6db975c86ec",
-        "167bb493c1405cd4edd4eaadd1b4cf2e0ad257a0"
+        "167bb493c1405cd4edd4eaadd1b4cf2e0ad257a0",
+        "dda8deb47f74764ac5a15fd19baff01d73432578"
       ],
-      "blockers": []
+      "blockers": [
+        "原100/50ns参考自身周期duty/源流未满足固定十分之一预算；新配置尚未运行。"
+      ]
     },
     {
       "id": "C1",

@@ -1,6 +1,7 @@
 # A3：有限电阻Bergeron参考与PSCAD环境核验
 
-2026-11-06。已完成安装例调查、独立数学交叉审查和一次原生启动探针。
+2026-11-09恢复复核；以下原生启动和编译运行证据均产生于2026-11-06。
+已完成安装例调查、独立数学交叉审查、一次原生启动探针和独立Fortran编译运行。
 未加载商业工程、build或sim，未创建PyCy候选；A3在研究中，不计正式完成。
 
 ## 参考调查与可复用的等效网络
@@ -50,9 +51,36 @@ launch的连接timeout不能限制已连接后的RPC读取，后续不重复这�
 原始部分结果、退出检查和清理记录分别保留。没有触碰用户程序，也没有工程加载/编译/仿真。
 这证明一次带许可的原生启动，尚不能证明完整PSCAD运行环境可用。
 
+## 编译器故障定位与独立运行
+
+安装的mhi.pscad 2.9.7公共接口是`settings(settings=None, **kwargs)`：无参数读取整个字典，非空字典或关键字用于写入。
+没有核实到`settings(field)`这样的单字段getter，不能按旧恢复说明猜测调用。
+`setting_range('fortran_version')`只返回可选范围；本机客户端使用ATS ProductList构建编译器映射，缺文件时范围为空，不能据此知道原生实际选择。
+该结论由本机已安装源码核验；未调用不受支持的getter，也未修改ATS、私有映射或设置。
+
+随后按顺序取得以下独立进程证据，每个命令均有30秒期限：
+
+| 条件与操作 | 实际结果 | 能说明的范围 |
+| --- | --- | --- |
+| 原环境，绝对路径`gfortran.exe --version` | exit 0，GNU Fortran 4.6.2 | 版本命令可执行 |
+| 原环境，编译自写10行线性方程程序 | exit 1，stdout/stderr均空，无exe，未尝试运行 | 默认编译失败，原记录保留 |
+| 原环境，直接`f951 --version` | `0xC0000135`；同轮as/ld均exit 0 | 前端加载失败；未定位具体缺失DLL |
+| 官方批处理对应的子进程环境，前端/编译/运行 | 三项均exit 0；编译0.19771s、运行0.05966s | 独立GF46工具链可用 |
+
+编译器随附的`gf46vars.bat`清空`GCC_EXEC_PREFIX`，并将`%GFORTRAN46%\bin`放到PATH前部。
+成功实验只在新子进程内采用该合同：GFORTRAN46指向已核安装根目录，保留原PATH完整后缀及其他环境项；父进程环境核对未变。
+没有复制DLL、更改全局PATH、注册表、安装文件或用户配置。
+原环境下的PE导入/文件位置检查与前端退出码支持继续检查加载环境，但没有完整加载器跟踪，不能宣称已确定哪个DLL导致失败。
+
+两次编译使用逐字相同的自写程序，求解`[[3,1],[1,2]] * x = [9,8]`；成功输出`x=[2,3]`、最大残差0。
+生成exe为x86（PE `0x014c`），SHA-256为`d7580063d5227ecd6b66ff02e2dd669c04ffb9c05cd5166dbdf0b8641658f7c8`。
+没有链接EMTDC，也没有新启动PSCAD或加载工程。实际PSCAD编译器选择、EMTDC链接和工程build/run仍未证明。
+该成功也不能解释此前无关的settings挂起及原生自行退出原因；原失败日志、结果和输入快照均保留。
+
 ## 可恢复证据与下一步
 
-证据均在忽略的`local_reference/a3_followup/`：
+证据均在忽略的`local_reference/a3_followup/`。
+本次只读复核五份新增清单的52项文件及其JSON中带路径/hash的61个不同文件引用（两者有重叠），全部相符；下列四个原有证据入口hash也未变。
 
 | 入口 | SHA-256 |
 | --- | --- |
@@ -60,8 +88,14 @@ launch的连接timeout不能限制已连接后的RPC读取，后续不重复这�
 | `installed_examples_inventory.json` | `104fd10fea6a32067cd931072828e26e245a6ef2d0ee1b4bdf37c40bf423eb4d` |
 | `startup/20261106T061600Z_startup/terminal_summary.json` | `aecb6c82b0755ab6dc6fbae25d7ca4667551cae2f08e91bd113f78380c10891d` |
 | `independent_review/physics_audit_review.md` | `eda8af3fd639ba70090f6fba170ffb62e87ae799add44184b0fd919d4725bbea` |
+| `compiler_readiness/20261106T064800Z/manifest.json`（8项） | `dc3de17a5f0109cae6661ff9fed80d6d33aacb07773b955095c73c33f2fe6eca` |
+| `compiler_smoke/20261106T065622Z/manifest.json`（7项） | `efd66274b89e2c32c45203fb66ef11819dadd86f35884c638dd5cf60b9dadffa` |
+| `compiler_diagnostics/20261106T070003Z/manifest.json`（15项） | `55c71614e7c831f4653246a6f838ce2a54214ec6cde47f1d178c4f7ac7f92224` |
+| `helper_versions/20261106T070301Z/manifest.json`（10项） | `e76b723936c225b125effb69444ccbca6d10430d8dcee7a695bd9e64d320c0e8` |
+| `compiler_env_smoke/20261106T070543Z/manifest.json`（12项） | `8edc38e5151541ab227fccba10df0faa2d3f1d96eda866be02a34bb57806438e` |
 
-先独立有界读取编译器版本，核公共API的单项设置/工程工具链选择；避开已知挂起的整包settings读取。
+下一步在自有、限时的原生会话中，通过该版本明确支持的只读接口或界面确认实际编译器选择。
+启动子进程可继承已核的官方编译环境；不重复整包settings读取或已知为空的ATS范围查询，不把编译器存在当作选中。
 确认选择后，独立复制官方简单教程做build/run烟雾验证，只用于环境检查。
 在任何A3候选前，先固定有限正R标量参考、与原宿主的明确差异、生效参数/初值/延时规则、事件/方向及比较窗/阈值。
 只有真实有限R波形、候选/内部物理/独立运行/图报告/测试/教学/Git验收全部完成才能关闭A3。
