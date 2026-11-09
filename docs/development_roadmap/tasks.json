@@ -3,7 +3,7 @@
   "updated_date": "2026-11-09",
   "timezone": "Asia/Shanghai",
   "branch": "codex/emt-examples-longterm",
-  "checkpoint_head": "dda8deb47f74764ac5a15fd19baff01d73432578",
+  "checkpoint_head": "0297c85c451ee9a9054450058f48f1db6a937810",
   "current_task": "B2",
   "formal_new_examples_completed": 7,
   "status_values": [
@@ -182,7 +182,7 @@
         "4385e2ea6941e693ac784c48a78e7074c803f4ed"
       ],
       "blockers": [
-        "尚未取得有限R同数学Bergeron的真实商业波形；工具链实际选择/build/run未证，需先做有界编译环境检查。"
+        "缺实际有限R同数学商业波形；裸GF46已成功，PSCAD实际选择/EMTDC链接/build/run仍未证。"
       ]
     },
     {
@@ -403,7 +403,7 @@
       "references": [
         "mw-synchronous-buck-r2025a"
       ],
-      "validation": "167bb49先冻结；100/50ns真实完整10ms参考103550/204619点成功，原始60项hash全核；连续UC/iL自细化过，500周期duty .00275472>.0015、重建源流.0240559>.01，参考自身FAIL，未作候选商业比较。独立积分/根贡献复核支持原生控制根漂移，全部失败保留。26候选Agg200001点成功；13参考数学测试/锁定/Ruff/mypy过，内部物理与最终全量待完。本补充先于25/12.5ns两新运行固定，原物理/窗/阈值/候选50ns不变，仍未验收。",
+      "validation": "先行167bb49/0297c85；26最小候选Agg200001点/四事件、12独立物理测试、21参考数学/原始点/配对测试通过；最终完整1223 passed 475.864s含slow且0fail/error/skip，锁定/Ruff/mypy通过。100/50ns真实参考103550/204619点，最终新CLI原始点/同协议/全部500周期复验保持FAIL（duty .00275472>.0015、派生源流.0240559>.01），完整失败/图/输入快照保留，未商业比较。25ns新尝试在仿真前因系统提交内存1.46GiB低于2GiB中止，自有进程已退出；更细双run未完成，26仍未验收。",
       "acceptance": "每项先有参考与固定判据再实施，禁止冒充自动二极管",
       "status": "in_progress",
       "files": [
@@ -417,16 +417,24 @@
         "validation/cases/synchronous_buck/native_logging_api_addendum.md",
         "validation/cases/synchronous_buck/initial_reference_failure.json",
         "validation/cases/synchronous_buck/reference_solver_addendum.md",
-        "validation/cases/synchronous_buck/reference_solver_addendum.json"
+        "validation/cases/synchronous_buck/reference_solver_addendum.json",
+        "examples/26_synchronous_buck.py",
+        "tests/test_synchronous_buck.py",
+        "tests/test_synchronous_buck_reference.py",
+        "validation/cases/synchronous_buck/README.md",
+        "validation/cases/synchronous_buck/normalization.py",
+        "validation/cases/synchronous_buck/audit_reference.py"
       ],
       "commits": [
         "d79e849",
         "f36c06362244efb43285e2725bc6b6db975c86ec",
         "167bb493c1405cd4edd4eaadd1b4cf2e0ad257a0",
-        "dda8deb47f74764ac5a15fd19baff01d73432578"
+        "dda8deb47f74764ac5a15fd19baff01d73432578",
+        "0297c85c451ee9a9054450058f48f1db6a937810"
       ],
       "blockers": [
-        "原100/50ns参考自身周期duty/源流未满足固定十分之一预算；新配置尚未运行。"
+        "原100/50ns参考自身周期duty/源流未满足固定十分之一预算。",
+        "新25/12.5ns参考待运行；首次新启动被系统可用提交内存低于2GiB监控中止。先预检资源，禁止降低保护或连续重启。"
       ]
     },
     {
@@ -514,7 +522,7 @@
       ],
       "new_capabilities": [],
       "references": [],
-      "validation": "最新本地1190 passed478.96s（含slow）、锁定/Ruff/mypy覆盖25。已实查精确9e2513d run42170878293 terminal failure：Ubuntu127738145863/Windows127738146164均runner_id=0、steps=[]，各有billing lock注释，未执行测试/test_count=null。23/24/25跨OS仍未验证，旧90b2fcd仅覆盖22；历史1423证据保留，停止轮询同终态。",
+      "validation": "最新本地1223 passed 475.864s含slow，锁定/Ruff/mypy覆盖26候选；最新远端真实CI仍以已观测9e2513d billing lock记录，新候选HEAD待推送及精确观察。旧90b2fcd只覆盖22，不以本地通过代替新代码跨OS。",
       "acceptance": "本批测试与真实CI记录、教学导航、里程碑推送和恢复指令",
       "status": "blocked",
       "files": [

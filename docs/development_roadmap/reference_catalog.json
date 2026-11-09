@@ -1613,8 +1613,9 @@
       "allows_redistribution": "not_asserted",
       "mathematical_compatibility": "Original physical topology, nonzero DC initials and PI coordinates resolved. Candidate26 reuses existing switches/LP/PI/limiter without core changes; independent Agg complete. Full100/50ns native references ran but all500-cycle duty/source self-refinement FAILED; not reference_ready or commercial validation. Conditional root budgets require native anchor-state/derivative compatibility, not duty error alone.",
       "blockers": [
-        "原100/50ns参考自身周期duty/源流未满足固定十分之一预算；新配置尚未运行。",
-        "候选内部物理测试、最终全量、合格参考与商业比较/图报告/教学/Git验收未完成。"
+        "原100/50ns参考自身周期duty/源流未满足固定十分之一预算。",
+        "新25/12.5ns参考待运行；首次新启动被系统可用提交内存低于2GiB监控中止。先预检资源，禁止降低保护或连续重启。",
+        "无候选商业比较/正式验收，仍runnable而非reference_ready。"
       ],
       "sha256": {
         "simulink/SynchronousBuckConverter.slx": "ea8344f62e2a691456363f0391389cd1675bfe246bd71dc8f15a3b838ca6ab42",
@@ -1644,9 +1645,9 @@
         "evidence_scope": "Runnability and three existing Scope outputs only; no reference refinement, complete gate/diode current export or PyCy validation"
       },
       "formal_pycy_validation": {
-        "status": "not_started",
+        "status": "candidate_internal_verified_reference_not_ready",
         "implementation_commit": null,
-        "note": "Candidate26 uncommitted and standalone run complete; native reference self-refinement failed. No commercial candidate comparison or completed-case claim."
+        "note": "Candidate26 internal/standalone/full regression verified; no commercial candidate comparison, accepted feature commit or completed-case claim. Original native reference self-refinement FAILED; finer native attempt stopped before simulation for resource guard."
       },
       "state_control_followup": {
         "record": "docs/development_roadmap/experiments/synchronous_buck_state_followup.md",
@@ -1698,6 +1699,24 @@
           "20261106T070956629Z-baseline": "4bd7d9255b381942ec2ccd1e10b3772760de532c296b3c4c7d8b8e8171eddb3a",
           "20261106T071447577Z-refined": "faf2bea10001f8c8093088626336dfb25cdf0b3f2b91c0bb1b3e9fe56bf3f0f4"
         }
+      },
+      "reference_audit": {
+        "local_path": "local_reference/b2_protocol_research/20261109T065107846Z-final-reference-audit",
+        "report_sha256": "a2f9083ac33f2ca8d3b4b2c52dc6f10671098bf3dff307d3cba64275372d93df",
+        "inventory_sha256": "06186a62456a18884e262a019e8df4a9e700804430331f40c2f8454699d9bbd0",
+        "input_hashes_verified": 83,
+        "all_500_cycles": true,
+        "passed": false,
+        "pair_identity_passed": true,
+        "source_means": "Native state/duty/carrier/KCL reconstruction; not directly logged source current",
+        "plot": "reference_self_refinement_v2.png"
+      },
+      "finer_reference_resource_stop": {
+        "local_path": "local_reference/b2_protocol_research/native_refinement/20261109T063906937Z/runs/20261109T063906971Z-baseline",
+        "inventory_sha256": "e33b935ff35c4bf8c41f1041c96661e9fafd9be5a53ef7fed65bfb663f9ac56f",
+        "simulation_invoked": false,
+        "own_processes_confirmed_absent": true,
+        "guard": "system free commit below 2GiB; no guard reduction or automatic retry"
       }
     },
     {

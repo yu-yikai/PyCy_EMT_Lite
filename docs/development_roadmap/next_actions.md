@@ -1,7 +1,7 @@
 # 恢复与下一步
 
 2026-11-09（Asia/Shanghai）。先读tasks/progress/decisions/validation_status，核实际分支、HEAD、工作区和远端。
-记录时checkpoint为dda8deb47f74764ac5a15fd19baff01d73432578；后续提交须与Git历史核对。
+记录时checkpoint为0297c85c451ee9a9054450058f48f1db6a937810；后续提交须与Git历史核对。
 分支codex/emt-examples-longterm；不操作main、不强推、不覆盖未提交文件。
 
 ## 当前事实
@@ -9,9 +9,8 @@
 正式新增19–25共7项完成，02补参考另计；12商业波形仍FAIL。25完整供电网络交付为9e2513d。
 恢复实际本地dda8deb、远端4385e2e。暂停前26候选、Buck normalization及参考测试未提交；26尚未验收。
 核心包、pyproject.toml和uv.lock相对原main没有改动；教学入口复用既有元件/控制器，不扩框架。
-到25最近完整回归为1190 passed478.96s（含slow，零失败/错误/跳过）；不能扩大到本轮新增代码。
-恢复已执行锁定27包/Ruff/mypy39、13项参考数学测试和26独立Agg200001点，均通过；
-12项内部物理测试也实际通过42.61s，日志/XML为.tmp/longterm/buck-internal-20261109b.*。最终全量和商业验收待完。
+本次最终完整回归1223 passed 475.864s（XML，含slow，零失败/错误/跳过）；锁定27包/Ruff/mypy39及3新入口通过。
+26独立Agg200001点、12内部物理及21参考数学/原始点/配对测试通过。商业验收仍未完成，当前候选提交/推送身份须核实际Git。
 
 ## 执行顺序
 
@@ -19,7 +18,7 @@
    UC/iL两完整窗自细化通过；500周期duty最大差0.00275472>0.0015、重建源流0.0240559A>0.01A，参考自身FAIL。
    完整[失败报告](../../validation/cases/synchronous_buck/initial_reference_failure.json)保留，候选尚未商业比较。
    独立积分/根贡献分解见local_reference/b2_protocol_research/refinement_diagnosis/；主因是原生控制/根漂移，不能删周期或改阈值。
-   [solver补充](../../validation/cases/synchronous_buck/reference_solver_addendum.md)先行固定25/12.5ns及同比收紧Rel/Abs；提交后顺序跑两完整10ms，再审计全部状态/根/有效域/500周期。
+   [solver补充](../../validation/cases/synchronous_buck/reference_solver_addendum.md)先行固定25/12.5ns及同比收紧Rel/Abs；首个新启动已因系统提交内存不足被保护中止，无sim输出。先读系统资源；先前原生峰值约3.6GiB，须给启动和2GiB余量留空间，再顺序跑两完整10ms。禁止降低保护或反复重启。
    运行用新唯一目录及自有进程监控（6GiB私有/2GiB可用提交量/600s/重复最小步长告警），不触用户MATLAB。
    exporter签名为export_reference(repositoryRoot,runDirectory,stage,protocolFile,protocolHash)；本轮protocolFile为补充md，hash须运行前固定。
    原模型、三份原验收协议、候选50ns、两完整窗、全部500周期及限值均不变。
@@ -63,3 +62,5 @@ Git ownership用单命令-c safe.directory=D:/VibeCoding/PyCy_EMT_Lite；子进�
 正式case比较入口：uv run python -m validation.cases.<case>.compare，case包括cascaded_rc/rc_charging/nodal_analysis/earthing/transmission_line/transformer_t_equivalent/three_phase_transformer_chain/source_line_transformer。
 Buck尚未正式交付，不套用其他case的单参数MATLAB命令。所有第三方原件、波形/图片/缓存保留忽略的local_reference。
 长期目标仍active；结束当前执行前同步证据/任务/提交/下一步，不宣称离线后台继续。
+
+最终复现审计在local_reference/b2_protocol_research/20261109T065107846Z-final-reference-audit，两run同协议/版本检查和全部raw重复点检查已启用，周期FAIL逐位不变。恢复不得继续已终态的旧进程；最终测试及审计均应以已保存终态为准。

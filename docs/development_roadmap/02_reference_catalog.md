@@ -1,6 +1,6 @@
 # 参考模型目录与筛选依据
 
-初查日期：2026-11-04；最近核验：2026-11-06。机器可读记录见 [reference_catalog.json](reference_catalog.json)。本轮已下载的第三方原件仅保存在忽略 Git 的 `local_reference/`；下载不代表获得再分发许可。
+初查日期：2026-11-04；最近核验：2026-11-09。机器可读记录见 [reference_catalog.json](reference_catalog.json)。本轮已下载的第三方原件仅保存在忽略 Git 的 `local_reference/`；下载不代表获得再分发许可。
 
 ## 证据状态
 
@@ -142,7 +142,11 @@ PyCy在3761a21预先冻结的验收下，已完成独立8项物理测试、独�
 
 ### 同步 Buck 原件及真实探针
 
-第20项`mw-synchronous-buck-r2025a`保持**runnable**。原件及新state-save运行均真实到10ms/3634点，旧四Scope CSV逐字相同；实际L/C初值已导出，生效连续PI、互补selector与50kHz载波已读到。固定PI状态映射的全点/未限幅核对通过，体二极管不活动仍依赖原生精度条件；尚无真实自细化、离散控制误差协议或PyCy商业比较。见[原件初查](experiments/synchronous_buck_reference_probe.md)及[状态与控制补充](experiments/synchronous_buck_state_followup.md)。优先复用现有Switch、LP、无内部限幅PI及外部Limiter，保持精简，不扩自动二极管或连续控制框架。
+第20项`mw-synchronous-buck-r2025a`保持**runnable**，没有提升为reference_ready。原state-save探针已核非零L/C初值、连续PI映射及互补控制。
+在167bb49冻结协议后，100/50ns两次真实完整10ms运行成功，103550/204619点；连续UC/iL精化通过，但全部500周期的duty/派生源流超预定参考预算。
+[完整失败](../../validation/cases/synchronous_buck/initial_reference_failure.json)与原始数据保留；0297c85先行补充25/12.5ns，首次新尝试因系统提交内存不足在仿真前中止。
+26已有使用现有Switch/LP/PI/Limiter的候选及内部测试，尚无商业比较；[教学及研究复现](../../validation/cases/synchronous_buck/README.md)明确未验收状态。
+体二极管不活动和根预算仍有原生状态/导数精度条件，不扩自动二极管或连续控制框架。
 
 ### 双三相变压器与Delta Reference
 
@@ -172,7 +176,8 @@ PyCy在3761a21预先冻结的验收下，已完成独立8项物理测试、独�
 线路双曲修正实际生成的三条并联电阻与全部非零初值均保留，不能用无G、零初值线路封装直接替代。
 本次只额外开启时间/状态捕获，Scope没有保存波形；后续C/D线性投影须明确来源。
 满精度支路表及独立物理相量核验已完成，12状态相量最大相对差3.839e-13。
-当前为runnable，尚未参考自身精化或候选验收，不增加正式算例数。
+该默认探针当时仅为runnable。后续D0已完成真实双run精化及25的28项商业比较，参考现在为reference_ready，交付提交9e2513d；
+见[教学与正式验证](../../validation/cases/source_line_transformer/README.md)，不把默认219点探针代替正式参考。
 原件、MAT/CSV、native分析及独立物理审查均在忽略目录，
 [调查与恢复](experiments/source_line_transformer_reference_probe.md)说明下一步；优先基础R/L/C与理想T，暂不增加核心能力。
 

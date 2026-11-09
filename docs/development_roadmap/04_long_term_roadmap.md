@@ -29,4 +29,8 @@
 
 2026-11-06状态：到25的本地最终1190 passed478.96s（含slow），核心源码及依赖相对原main未改。到22的双系统CI已通过；23/24/25的精确CI因GitHub账户账单锁在runner启动前失败，F1局部受阻，不能借旧CI扩大结论。12仍按146a279固定标准保留波形FAIL；24原1µs startupFAIL也保留，0.5µs在原限值下重验通过。
 
-D0已交付25完整 `power_gui` 线性网络：源→两π段线路→T→固定阻抗负荷，保留所有补偿/修正G和非零初值；真实双run精化、28项商业比较及1190全量回归通过，无核心或依赖改动。见[教学与验证指南](../../validation/cases/source_line_transformer/README.md)及[前置调查](experiments/source_line_transformer_reference_probe.md)。B2已取得非零初值、生效互补结构和固定PI坐标映射，详见[研究补充](experiments/synchronous_buck_state_followup.md)；仍先固定原生精化及离散控制/事件协议，再决定候选，不扩框架。历史实施经过留在progress和Git，当前任务状态以tasks为准。
+D0已交付25完整 `power_gui` 线性网络：源→两π段线路→T→固定阻抗负荷，保留所有补偿/修正G和非零初值；真实双run精化、28项商业比较及1190全量回归通过，无核心或依赖改动。见[教学与验证指南](../../validation/cases/source_line_transformer/README.md)及[前置调查](experiments/source_line_transformer_reference_probe.md)。
+
+2026-11-09 B2已先冻结协议并实现26最小候选，内部物理及独立执行通过；原100/50ns真实参考自身周期精化FAIL，未作候选商业验收。
+更细25/12.5ns参考配置已先行提交，但首次新尝试因提交内存不足在仿真前中止。保留全部失败与原限值，见[候选指南](../../validation/cases/synchronous_buck/README.md)。
+A3独立GF46编译运行已通过，PSCAD实际选择/EMTDC链接/build/sim仍待证。不改变原教学目标或以内部结果替代商业波形；正式新增仍7，当前状态以tasks及Git为准。
