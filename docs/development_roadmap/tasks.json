@@ -3,7 +3,7 @@
   "updated_date": "2026-11-09",
   "timezone": "Asia/Shanghai",
   "branch": "codex/emt-examples-longterm",
-  "checkpoint_head": "0297c85c451ee9a9054450058f48f1db6a937810",
+  "checkpoint_head": "41a6685da241b5a759786963b81e236728afbd98",
   "current_task": "B2",
   "formal_new_examples_completed": 7,
   "status_values": [
@@ -371,21 +371,22 @@
         "mw-spwm-r2025a",
         "mw-two-level-pwm-r2025a"
       ],
-      "validation": "TwoLevel真实40001点；首次比较waveform FAIL：三相NRMSE 0.02658–0.02717>0.02；RMS/基波/相位/电阻功率features通过；实测门极稳态约1%样本不同，未拟合/未改阈值",
+      "validation": "原真实40001点及2.66%–2.72% NRMSE>固定2% FAIL保持。新只读原库/计时器/100us跨任务缓存重建六路物理门极40001点全同，主审独立复核；未读编译RT活动模式，不叫内部信号日志。实际二极管达157A、额外器件压降约±0.8V，负荷含1uS且满足BE方程残差2.06e-10V，12为TR；各电流误差贡献仍待隔离。未改12/阈值/移时，18项库存全核。",
       "acceptance": "模型一致性解释、预设基波RMS/功率方向/纹波判据和真实波形比较",
       "status": "blocked",
       "files": [
         "validation/cases/two_level_pwm/manifest.json",
         "validation/cases/two_level_pwm/parameters.json",
         "validation/cases/two_level_pwm/validation_report.json",
-        "docs/development_roadmap/experiments/spwm_feasibility.md"
+        "docs/development_roadmap/experiments/spwm_feasibility.md",
+        "docs/development_roadmap/experiments/spwm_timing_followup.md"
       ],
       "commits": [
         "146a279",
         "8a65b6e"
       ],
       "blockers": [
-        "既有12的载波比较/参考保持与官方自然PWM计算时序不逐点一致，器件压降/反并联二极管也不同；各项贡献尚未隔离。现有默认参考未满足预设波形判据，不能记作完成。"
+        "原默认12与参考的跨任务控制时序、导通器件/二极管及积分方法不同；门极差异已有结构解释，但原固定2%波形仍FAIL，贡献尚未全部定量隔离。不得为迎合原生调度直接改12数学意图或新增自动二极管框架。"
       ]
     },
     {
@@ -430,7 +431,8 @@
         "f36c06362244efb43285e2725bc6b6db975c86ec",
         "167bb493c1405cd4edd4eaadd1b4cf2e0ad257a0",
         "dda8deb47f74764ac5a15fd19baff01d73432578",
-        "0297c85c451ee9a9054450058f48f1db6a937810"
+        "0297c85c451ee9a9054450058f48f1db6a937810",
+        "41a6685da241b5a759786963b81e236728afbd98"
       ],
       "blockers": [
         "原100/50ns参考自身周期duty/源流未满足固定十分之一预算。",
@@ -522,7 +524,7 @@
       ],
       "new_capabilities": [],
       "references": [],
-      "validation": "最新本地1223 passed 475.864s含slow，锁定/Ruff/mypy覆盖26候选；最新远端真实CI仍以已观测9e2513d billing lock记录，新候选HEAD待推送及精确观察。旧90b2fcd只覆盖22，不以本地通过代替新代码跨OS。",
+      "validation": "本地最终1223 passed475.87s含slow、锁定/Ruff/mypy覆盖26候选。41a6685已正常推送且真实远端一致；精确新CI42576654146终态failure，Ubuntu129025769158/Windows129025769665均runner0/steps空，两个注释确认billing lock，未执行测试/test_count=null。23/24/25/26新代码跨OS未验证，旧90b2fcd只覆盖22；不轮询同终态。",
       "acceptance": "本批测试与真实CI记录、教学导航、里程碑推送和恢复指令",
       "status": "blocked",
       "files": [
@@ -530,14 +532,16 @@
         "docs/development_roadmap/experiments/ci_90b2fcd.json",
         "docs/development_roadmap/experiments/ci_e51c1f1.json",
         "docs/development_roadmap/experiments/ci_1423c7d.json",
-        "docs/development_roadmap/experiments/ci_9e2513d.json"
+        "docs/development_roadmap/experiments/ci_9e2513d.json",
+        "docs/development_roadmap/experiments/ci_41a6685.json"
       ],
       "commits": [
         "90b2fcd",
         "91dbad6bb77af24d1a548a6d0943930c4bcce40f",
         "e51c1f1",
         "d79e849",
-        "1423c7d6dfbca10547cf856dc20faa5dadf935dc"
+        "1423c7d6dfbca10547cf856dc20faa5dadf935dc",
+        "41a6685da241b5a759786963b81e236728afbd98"
       ],
       "blockers": [
         "GitHub check-run两项注释：The job was not started because your account is locked due to a billing issue. 账户解除外部账单锁后才能补跑；不通过重复push或改代码绕过。"

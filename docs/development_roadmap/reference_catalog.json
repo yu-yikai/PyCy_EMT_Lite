@@ -884,7 +884,7 @@
       "mathematical_compatibility": "Original circuit/controller retained: stiff 400V DC, 60Hz reference, modulation 0.8, 1kHz switching, 100us reference hold and 5us local Backward Euler, floating wye load 1ohm+1mH per phase. Native enumeration resolves device_type=3 to IGBT with active Vf=0.8V, Ron=0.001ohm and Goff=1e-5S; enabled no-dynamics antiparallel diodes have the same Vf/Ron/Goff. Logged Q1/Q2, Q3/Q4, Q5/Q6 map A/B/C upper/lower gates and are strictly complementary. Official Natural PWM computes switching times; example12 uses pointwise sampled carrier comparison. IGBT forward drop, unidirectional device conduction and automatic diode current paths differ from PyCy bilateral Ron/Goff switches. No fitted time/amplitude adjustment. Resource data readiness does not imply PyCy validation passed.",
       "blockers": [
         "Existing example12 fails the predeclared 2% waveform NRMSE limit (A 2.6995%, B 2.6577%, C 2.7167%); RMS/fundamental/phase/resistor-power features pass. Preserve the failed report and frozen limits.",
-        "Gate-sequence differences and IGBT/diode physical differences have not been isolated; do not claim device equivalence or automatically commutating diode validation."
+        "Original-library timing/counter reconstruction now matches all native gates; default12 still differs. Actual diode conduction/forward drop and 1uS/BE load differ from bilateral switches/TR. Their individual current-error contributions remain unquantified; no device equivalence or automatic diode validation."
       ],
       "sha256": {
         "simulink/TwoLevelPWMGenerator.slx": "ad8ddf5e46dd633b4853d7694067528d5d20ce78a24059a2847c6a97dbc2ea34",
@@ -978,7 +978,18 @@
         "amplitude_fitting": false,
         "note": "Failed comparison retains immutable input snapshots from its own run. Later repeated reference export preserves canonical CSV bytes; raw MAT serialization and provenance timestamps need not equal those captured in the earlier report."
       },
-      "license_notes": "Licensed MathWorks openExample acquisition. Original model, scripts and generated data remain local; no redistribution permission asserted."
+      "license_notes": "Licensed MathWorks openExample acquisition. Original model, scripts and generated data remain local; no redistribution permission asserted.",
+      "timing_followup": {
+        "record": "docs/development_roadmap/experiments/spwm_timing_followup.md",
+        "local_path": "local_reference/two_level_pwm/followup/20261109T065409566123Z",
+        "inventory_sha256": "5a2a495341955a0e2643a8bf4bbac45bce50fd7dd1a54c7ab9d6d2c547d1badb",
+        "report_sha256": "be64ab97f24ffa5c57d84a16240daccace91fc91ac6573bcb80c0d83564ec881",
+        "all_six_gate_samples": 40001,
+        "structure_counter_mismatch_count": 0,
+        "compiled_rate_transition_mode_observed": false,
+        "candidate_or_native_run": false,
+        "original_waveform_acceptance": "FAIL unchanged; no default12 edit, fitted phase or threshold relaxation"
+      }
     },
     {
       "id": "mw-lc-line-r2025a",
@@ -1647,7 +1658,17 @@
       "formal_pycy_validation": {
         "status": "candidate_internal_verified_reference_not_ready",
         "implementation_commit": null,
-        "note": "Candidate26 internal/standalone/full regression verified; no commercial candidate comparison, accepted feature commit or completed-case claim. Original native reference self-refinement FAILED; finer native attempt stopped before simulation for resource guard."
+        "note": "Candidate26 internal/standalone/full regression verified; no commercial candidate comparison, accepted feature commit or completed-case claim. Original native reference self-refinement FAILED; finer native attempt stopped before simulation for resource guard.",
+        "candidate_implementation_commit": "41a6685da241b5a759786963b81e236728afbd98",
+        "os_ci": {
+          "head_sha": "41a6685da241b5a759786963b81e236728afbd98",
+          "run_id": 42576654146,
+          "status": "blocked_before_runner",
+          "execution_started": false,
+          "test_count": null,
+          "reason": "GitHub account billing lock",
+          "evidence": "docs/development_roadmap/experiments/ci_41a6685.json"
+        }
       },
       "state_control_followup": {
         "record": "docs/development_roadmap/experiments/synchronous_buck_state_followup.md",

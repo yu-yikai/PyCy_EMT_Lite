@@ -1,13 +1,13 @@
 # 恢复与下一步
 
 2026-11-09（Asia/Shanghai）。先读tasks/progress/decisions/validation_status，核实际分支、HEAD、工作区和远端。
-记录时checkpoint为0297c85c451ee9a9054450058f48f1db6a937810；后续提交须与Git历史核对。
+记录时checkpoint为41a6685da241b5a759786963b81e236728afbd98；后续提交须与Git历史核对。
 分支codex/emt-examples-longterm；不操作main、不强推、不覆盖未提交文件。
 
 ## 当前事实
 
 正式新增19–25共7项完成，02补参考另计；12商业波形仍FAIL。25完整供电网络交付为9e2513d。
-恢复实际本地dda8deb、远端4385e2e。暂停前26候选、Buck normalization及参考测试未提交；26尚未验收。
+恢复时本地dda8deb、远端4385e2e；本批候选已提交41a6685并正常push，实核远端一致。26仍未商业验收，不计正式完成。
 核心包、pyproject.toml和uv.lock相对原main没有改动；教学入口复用既有元件/控制器，不扩框架。
 本次最终完整回归1223 passed 475.864s（XML，含slow，零失败/错误/跳过）；锁定27包/Ruff/mypy39及3新入口通过。
 26独立Agg200001点、12内部物理及21参考数学/原始点/配对测试通过。商业验收仍未完成，当前候选提交/推送身份须核实际Git。
@@ -32,9 +32,9 @@
    裸GF46在官方gf46vars合同对应的child-only环境已编译运行成功；PSCAD实际选择、EMTDC链接/build/sim仍未证。
    settings(field)不是getter，非空字典/kwargs是写；不要重复已挂起的整包读取或空ATS范围查询。
    用版本明确支持的只读接口或自有有界界面确认选择后，再复制官方简单教程作隔离build/run。不改全局PATH/ATS，没有有限R实际参考前不创建A3候选。
-4. **F1外部依赖。** 最后实查9e2513d的CI run42170878293终态failure，两个job均runner0/steps空，注释明确billing lock，未执行测试。
-   不重复轮询该终态；账户真实恢复后补跑覆盖25的run，核精确HEAD/attempt的双OS全步骤。旧90b2fcd只覆盖22，本地通过不等于跨OS通过。
-5. B1固定2%波形限仍FAIL，不拟合时移或放宽。C1后置；D0已交付，不重复成功仿真或无新代码时机械全量。
+4. **F1外部依赖。** 最新实查41a6685的CI run42576654146终态failure，两个job均runner0/steps空，注释明确billing lock，未执行测试。
+   不重复轮询该终态；账户真实恢复后补跑覆盖26候选及此前代码的run，核精确HEAD/attempt的双OS全步骤。旧90b2fcd只覆盖22，本地通过不等于跨OS通过。
+5. B1先读[时序补充](experiments/spwm_timing_followup.md)：原库100us缓存/计时器重建全部六路门极完全一致，但实际二极管/±0.8V/1uS与BE仍和12/TR不同。先用已有数据与独立方程分别隔离贡献；不为迎合原生调度直接改默认12数学意图，不建自动二极管框架。固定2%波形仍FAIL，不拟合时移或放宽。C1后置；D0不重复成功仿真。
 
 ## 本机命令
 
@@ -64,3 +64,5 @@ Buck尚未正式交付，不套用其他case的单参数MATLAB命令。所有第
 长期目标仍active；结束当前执行前同步证据/任务/提交/下一步，不宣称离线后台继续。
 
 最终复现审计在local_reference/b2_protocol_research/20261109T065107846Z-final-reference-audit，两run同协议/版本检查和全部raw重复点检查已启用，周期FAIL逐位不变。恢复不得继续已终态的旧进程；最终测试及审计均应以已保存终态为准。
+
+本轮已推送候选41a6685，精确CI已终态billing lock启动前失败；本次恢复文档提交只保存证据，代码/冻结协议/1223测试输入不变。最新系统可用提交量约3.16GiB，仍不足原生启动峰值加2GiB余量，先检查资源再决定新双run，不能直接重启。

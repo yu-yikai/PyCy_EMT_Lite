@@ -58,3 +58,7 @@ D0独立物理核验：17支路参数最大相对差6.994e-14，12状态相量3.
 2026-11-09：参考自身失败完整报告见[initial_reference_failure.json](../../validation/cases/synchronous_buck/initial_reference_failure.json)；更细配置见[补充协议](../../validation/cases/synchronous_buck/reference_solver_addendum.md)。恢复后的13项参考数学测试、锁定/Ruff/mypy和独立Agg已实际执行；1190全量仍是25阶段结果，不称本轮已重跑。
 
 2026-11-09最终本地全量：**1223 passed，475.864s（XML，含slow）**，零失败/错误/跳过；日志/XML .tmp/longterm/b2-final-20261109.*。原始点/配对两项校验修复后已完整重跑，锁定/Ruff/mypy及独立Agg通过。这是内部软件证据，Buck真实参考自身FAIL保持，PSCAD未build，跨OS尚待新HEAD实查。
+
+2026-11-09远端精确候选41a6685：[run42576654146](https://github.com/yu-yikai/PyCy_EMT_Lite/actions/runs/42576654146)已核终态failure；Ubuntu129025769158/Windows129025769665均未获runner/steps空，注释仍为账户billing lock，远端test_count=null。软件代码没有在CI执行，不能推断测试失败或跨OS通过；7份raw/hash及精简JSON已保存。1223是本地实测。
+
+B1原2%波形FAIL保持；本轮结构重建六路真实门极全40001点一致，±0.8V/实际二极管/1uS+BE差异已获得新代数证据，但默认12未改、未跑候选或新商业比较，仍未验收。见[时序补充](experiments/spwm_timing_followup.md)。

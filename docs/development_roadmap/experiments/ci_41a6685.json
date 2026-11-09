@@ -1,0 +1,231 @@
+{
+  "schema_version": 1,
+  "observed_at_utc": "2026-11-09T07:01:52.244236+00:00",
+  "source": "GitHub Actions public REST API, direct connection for this command only",
+  "target_head_sha": "41a6685da241b5a759786963b81e236728afbd98",
+  "target_branch": "codex/emt-examples-longterm",
+  "run_found": true,
+  "request_evidence": [
+    {
+      "url": "https://api.github.com/repos/yu-yikai/PyCy_EMT_Lite/actions/runs?head_sha=41a6685da241b5a759786963b81e236728afbd98&per_page=10",
+      "http_status": 200,
+      "github_request_id": "E5A4:3ED142:5534BDD:87BAE75:6AF16FDE",
+      "snapshot": ".tmp/longterm/ci_b2_resume/20261109T070151084970Z/runs.json",
+      "sha256": "d3495ac31b42ad660e334f2e2ddbd2a245a729f2d930eada35d1099f0bad9b77"
+    },
+    {
+      "url": "https://api.github.com/repos/yu-yikai/PyCy_EMT_Lite/actions/runs/42576654146",
+      "http_status": 200,
+      "github_request_id": "E5A5:29DF5D:5633B3B:88C22CD:6AF16FDF",
+      "snapshot": ".tmp/longterm/ci_b2_resume/20261109T070151084970Z/run.json",
+      "sha256": "c57803e362bf0b0db99472e4f3225bf37af34769afad5c8b5d75c501e97a8bbc"
+    },
+    {
+      "url": "https://api.github.com/repos/yu-yikai/PyCy_EMT_Lite/actions/runs/42576654146/jobs?per_page=30",
+      "http_status": 200,
+      "github_request_id": "E5A6:2A5819:552E7C3:87B0CFA:6AF16FDF",
+      "snapshot": ".tmp/longterm/ci_b2_resume/20261109T070151084970Z/jobs.json",
+      "sha256": "accd28e29bf216dd57e9863e2a2c275a449da339a9bdfd6a68896d5a2e670274"
+    },
+    {
+      "url": "https://api.github.com/repos/yu-yikai/PyCy_EMT_Lite/check-runs/129025769158",
+      "http_status": 200,
+      "github_request_id": "E5AA:4A8E6:55C6252:88506ED:6AF16FE1",
+      "snapshot": ".tmp/longterm/ci_b2_resume/20261109T070151084970Z/check_run-129025769158.json",
+      "sha256": "577f8203fad45053234261ed893fc548e969e16251049fa49d766dfc6fea3bcb"
+    },
+    {
+      "url": "https://api.github.com/repos/yu-yikai/PyCy_EMT_Lite/check-runs/129025769158/annotations?per_page=100",
+      "http_status": 200,
+      "github_request_id": "E5A7:2FC134:55F8391:8887253:6AF16FE1",
+      "snapshot": ".tmp/longterm/ci_b2_resume/20261109T070151084970Z/annotations-129025769158.json",
+      "sha256": "e81e8aba69aabe1cc8f0a299b57cdac1433b9d518c1e518e5baee1acd51b94d9"
+    },
+    {
+      "url": "https://api.github.com/repos/yu-yikai/PyCy_EMT_Lite/check-runs/129025769665",
+      "http_status": 200,
+      "github_request_id": "E5A8:F01B6:569E3E8:892B60F:6AF16FE1",
+      "snapshot": ".tmp/longterm/ci_b2_resume/20261109T070151084970Z/check_run-129025769665.json",
+      "sha256": "06ce55879cd318ab22fa63dbb6679f33ee66ca9d4d1466d01ed89d0f00f8b276"
+    },
+    {
+      "url": "https://api.github.com/repos/yu-yikai/PyCy_EMT_Lite/check-runs/129025769665/annotations?per_page=100",
+      "http_status": 200,
+      "github_request_id": "E5A9:152F6F:5683076:890E147:6AF16FE1",
+      "snapshot": ".tmp/longterm/ci_b2_resume/20261109T070151084970Z/annotations-129025769665.json",
+      "sha256": "b917f9279161637bbb476f34ce9974886d0e7ad998fd849339bb017258d2a96c"
+    }
+  ],
+  "authenticated_access_not_attempted": true,
+  "test_count": null,
+  "test_count_note": "No remote test count inferred from API metadata, local tests or other commits. Job logs were not requested.",
+  "rerun_or_push_requested": false,
+  "billing_accessed_or_changed": false,
+  "prior_failure_evidence_unchanged": true,
+  "observation_policy": "One listing for this new exact HEAD; no old-run requests, polling or reruns. Requests bounded within 55 seconds, each at most 10 seconds.",
+  "scope": "This pushed milestone includes internally verified candidate26 and prior work; candidate26 has no accepted commercial comparison. CI runs software tests/examples only, not MATLAB/PSCAD references.",
+  "live_monitor_process_remaining": false,
+  "workflow_run_id": 42576654146,
+  "run_url": "https://github.com/yu-yikai/PyCy_EMT_Lite/actions/runs/42576654146",
+  "status": "completed",
+  "conclusion": "failure",
+  "run_attempt": 1,
+  "run_started_at": "2026-11-09T07:01:26Z",
+  "created_at": "2026-11-09T07:01:26Z",
+  "updated_at": "2026-11-09T07:01:30Z",
+  "jobs": [
+    {
+      "id": 129025769158,
+      "name": "ci (ubuntu-latest)",
+      "head_sha": "41a6685da241b5a759786963b81e236728afbd98",
+      "status": "completed",
+      "conclusion": "failure",
+      "started_at": "2026-11-09T07:01:27Z",
+      "completed_at": "2026-11-09T07:01:29Z",
+      "html_url": "https://github.com/yu-yikai/PyCy_EMT_Lite/actions/runs/42576654146/job/129025769158",
+      "steps": [],
+      "runner_id": 0,
+      "runner_name": "",
+      "check_run_url": "https://api.github.com/repos/yu-yikai/PyCy_EMT_Lite/check-runs/129025769158"
+    },
+    {
+      "id": 129025769665,
+      "name": "ci (windows-latest)",
+      "head_sha": "41a6685da241b5a759786963b81e236728afbd98",
+      "status": "completed",
+      "conclusion": "failure",
+      "started_at": "2026-11-09T07:01:27Z",
+      "completed_at": "2026-11-09T07:01:29Z",
+      "html_url": "https://github.com/yu-yikai/PyCy_EMT_Lite/actions/runs/42576654146/job/129025769665",
+      "steps": [],
+      "runner_id": 0,
+      "runner_name": "",
+      "check_run_url": "https://api.github.com/repos/yu-yikai/PyCy_EMT_Lite/check-runs/129025769665"
+    }
+  ],
+  "jobs_total_count": 2,
+  "execution_started": false,
+  "check_diagnosis": [
+    {
+      "job_id": 129025769158,
+      "kind": "check_run",
+      "request_evidence": {
+        "url": "https://api.github.com/repos/yu-yikai/PyCy_EMT_Lite/check-runs/129025769158",
+        "http_status": 200,
+        "github_request_id": "E5AA:4A8E6:55C6252:88506ED:6AF16FE1",
+        "snapshot": ".tmp/longterm/ci_b2_resume/20261109T070151084970Z/check_run-129025769158.json",
+        "sha256": "577f8203fad45053234261ed893fc548e969e16251049fa49d766dfc6fea3bcb"
+      },
+      "head_sha": "41a6685da241b5a759786963b81e236728afbd98",
+      "output": {
+        "title": null,
+        "summary": null,
+        "text": null,
+        "annotations_count": 2,
+        "annotations_url": "https://api.github.com/repos/yu-yikai/PyCy_EMT_Lite/check-runs/129025769158/annotations"
+      }
+    },
+    {
+      "job_id": 129025769158,
+      "kind": "annotations",
+      "request_evidence": {
+        "url": "https://api.github.com/repos/yu-yikai/PyCy_EMT_Lite/check-runs/129025769158/annotations?per_page=100",
+        "http_status": 200,
+        "github_request_id": "E5A7:2FC134:55F8391:8887253:6AF16FE1",
+        "snapshot": ".tmp/longterm/ci_b2_resume/20261109T070151084970Z/annotations-129025769158.json",
+        "sha256": "e81e8aba69aabe1cc8f0a299b57cdac1433b9d518c1e518e5baee1acd51b94d9"
+      },
+      "annotations": [
+        {
+          "path": ".github",
+          "blob_href": "https://github.com/yu-yikai/PyCy_EMT_Lite/blob/41a6685da241b5a759786963b81e236728afbd98/.github",
+          "start_line": 1,
+          "start_column": null,
+          "end_line": 1,
+          "end_column": null,
+          "annotation_level": "failure",
+          "title": "",
+          "message": "The job was not started because your account is locked due to a billing issue.",
+          "raw_details": ""
+        },
+        {
+          "path": ".github",
+          "blob_href": "https://github.com/yu-yikai/PyCy_EMT_Lite/blob/41a6685da241b5a759786963b81e236728afbd98/.github",
+          "start_line": 1,
+          "start_column": null,
+          "end_line": 1,
+          "end_column": null,
+          "annotation_level": "notice",
+          "title": "",
+          "message": "\"The ubuntu-latest label will migrate to Ubuntu 26 beginning October 19, 2026. For more information, see https://github.com/actions/runner-images/issues/14748\"",
+          "raw_details": ""
+        }
+      ]
+    },
+    {
+      "job_id": 129025769665,
+      "kind": "check_run",
+      "request_evidence": {
+        "url": "https://api.github.com/repos/yu-yikai/PyCy_EMT_Lite/check-runs/129025769665",
+        "http_status": 200,
+        "github_request_id": "E5A8:F01B6:569E3E8:892B60F:6AF16FE1",
+        "snapshot": ".tmp/longterm/ci_b2_resume/20261109T070151084970Z/check_run-129025769665.json",
+        "sha256": "06ce55879cd318ab22fa63dbb6679f33ee66ca9d4d1466d01ed89d0f00f8b276"
+      },
+      "head_sha": "41a6685da241b5a759786963b81e236728afbd98",
+      "output": {
+        "title": null,
+        "summary": null,
+        "text": null,
+        "annotations_count": 1,
+        "annotations_url": "https://api.github.com/repos/yu-yikai/PyCy_EMT_Lite/check-runs/129025769665/annotations"
+      }
+    },
+    {
+      "job_id": 129025769665,
+      "kind": "annotations",
+      "request_evidence": {
+        "url": "https://api.github.com/repos/yu-yikai/PyCy_EMT_Lite/check-runs/129025769665/annotations?per_page=100",
+        "http_status": 200,
+        "github_request_id": "E5A9:152F6F:5683076:890E147:6AF16FE1",
+        "snapshot": ".tmp/longterm/ci_b2_resume/20261109T070151084970Z/annotations-129025769665.json",
+        "sha256": "b917f9279161637bbb476f34ce9974886d0e7ad998fd849339bb017258d2a96c"
+      },
+      "annotations": [
+        {
+          "path": ".github",
+          "blob_href": "https://github.com/yu-yikai/PyCy_EMT_Lite/blob/41a6685da241b5a759786963b81e236728afbd98/.github",
+          "start_line": 1,
+          "start_column": null,
+          "end_line": 1,
+          "end_column": null,
+          "annotation_level": "failure",
+          "title": "",
+          "message": "The job was not started because your account is locked due to a billing issue.",
+          "raw_details": ""
+        }
+      ]
+    }
+  ],
+  "same_billing_lock_reconfirmed": true,
+  "terminal_now": true,
+  "failure_classification": "external_github_account_billing_lock",
+  "failure_reason": "The job was not started because your account is locked due to a billing issue.",
+  "execution_evidence": "Both exact-HEAD jobs have runner_id=0 and steps=[]; neither job started code/tests.",
+  "failure_scope": "GitHub rejected both jobs before runner allocation. This establishes no cross-platform software test result.",
+  "recovery": {
+    "prerequisite": "Account owner resolves the external billing lock outside this task; no billing settings or credentials accessed.",
+    "exact_run_url": "https://github.com/yu-yikai/PyCy_EMT_Lite/actions/runs/42576654146",
+    "after_prerequisite": "Re-run this exact milestone through an authorized Actions interface; no rerun was requested."
+  },
+  "observation_elapsed_s": 3.626994199992623,
+  "snapshot_sha256": {
+    ".tmp/longterm/ci_b2_resume/20261109T070151084970Z/runs.json": "d3495ac31b42ad660e334f2e2ddbd2a245a729f2d930eada35d1099f0bad9b77",
+    ".tmp/longterm/ci_b2_resume/20261109T070151084970Z/run.json": "c57803e362bf0b0db99472e4f3225bf37af34769afad5c8b5d75c501e97a8bbc",
+    ".tmp/longterm/ci_b2_resume/20261109T070151084970Z/jobs.json": "accd28e29bf216dd57e9863e2a2c275a449da339a9bdfd6a68896d5a2e670274",
+    ".tmp/longterm/ci_b2_resume/20261109T070151084970Z/check_run-129025769158.json": "577f8203fad45053234261ed893fc548e969e16251049fa49d766dfc6fea3bcb",
+    ".tmp/longterm/ci_b2_resume/20261109T070151084970Z/annotations-129025769158.json": "e81e8aba69aabe1cc8f0a299b57cdac1433b9d518c1e518e5baee1acd51b94d9",
+    ".tmp/longterm/ci_b2_resume/20261109T070151084970Z/check_run-129025769665.json": "06ce55879cd318ab22fa63dbb6679f33ee66ca9d4d1466d01ed89d0f00f8b276",
+    ".tmp/longterm/ci_b2_resume/20261109T070151084970Z/annotations-129025769665.json": "b917f9279161637bbb476f34ce9974886d0e7ad998fd849339bb017258d2a96c"
+  }
+}
