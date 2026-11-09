@@ -2333,7 +2333,7 @@
       "mathematical_compatibility": "Short probe uses raw native TIME and standard math/comparators, six bilateral varrlc pure-R branches, floating1ohm+1mH phase loads and400V ideal source. All1206 observed gate values match the default12 formula evaluated at retained raw native TIME, all six R inputs are0.001/1e9ohm, and zero initial current/KCL/TR relations were checked. Generated12-significant-digit phase/omega literals and ASCII timing precision remain explicit boundaries; this is not full-run bitwise controller equivalence.",
       "blockers": [
         "Full0.2s same-input native reference and its5us-control-preserving2.5us electrical refinement protocol remain unfrozen; short-run gate equality does not establish all40001 control points or floating boundary decisions.",
-        "A proposed standard sampler/impulse hold needs separate20us and1ms actual probes for t0/consecutive pulses/same-time update order. Branch-current DSD/DSO logging offset is diagnostic only; preserve all raw rows and never shift candidate waveforms. Original MathWorks2% FAIL/default12/thresholds remain unchanged."
+        "20us标准sampler/impulse原语双步长资格通过，但六路三相1ms t0/互补/有效R/同刻次序和保持仍待实测。DSD/DSO日志只作诊断；原MathWorks2% FAIL/default12/阈值不改。"
       ],
       "sha256": {
         "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/report.md": "2ef092f9ad188cd2b63155ddbf9623317631f2a6ce98935e77cf34c0212d5906",
@@ -2354,7 +2354,13 @@
         "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/readback_audit_research/20261109T114345717986Z/results/20261109T114236896235Z/report.json": "f7113ab57b35077ff9164f66e1720bf58bdaca36d5bda477823c5f1879a75f7d",
         "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/actual_waveform_research/20261109T1149537774717Z/results/report.json": "2dcd7dc01a3970cc08366a28432a8c9a9e034ef3516bfc6d620c9062719e1238",
         "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/control_rate_design/20261109T115836954582Z/design.md": "3213e21c93e30e25f46a78d15441271325a2281a952a94e16753bef312707166",
-        "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/control_rate_design/20261109T115836954582Z/manifest.json": "e24dd70dae0e55e4cd61766ae7bc81bf1f27e5b17416d129257481412b1c9570"
+        "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/control_rate_design/20261109T115836954582Z/manifest.json": "e24dd70dae0e55e4cd61766ae7bc81bf1f27e5b17416d129257481412b1c9570",
+        "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/hold_microprobe_research/20261109T123808872837Z/manifest.json": "209092793a35838fec9e7959d071f6565b4fd53363f82d72a6bf5d982f43b184",
+        "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/hold_microprobe_research/20261109T123808872837Z/probe_plan.json": "54b25beceb7d94d010d9447f4f0a39f2c1820317aef2a3676a24b4f16d89dc84",
+        "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/n/20261109T125632879377Z/manifest.json": "fa9d32ebe777eef2604fb4efdb068a8a6e08a073b03f33ce616abb9d42e5c514",
+        "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/n/20261109T125858632549Z/manifest.json": "f8a4daa4c4fa9a6b0fba7dcea4c7ab7085063d930933ee550d02fddd443f79e1",
+        "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/microprobe_analysis/20261109T125739637402Z/primitive_qualification/20261109T130659559817Z/qualification.json": "5859c0fee101ba1942ecc2c0e7ac8fa1a3ca5ef4fcc111df984e282829089ae2",
+        "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/microprobe_analysis/20261109T125739637402Z/primitive_qualification/20261109T130659559817Z/manifest.json": "5fe89702c127ec3a5f4aa62b66a2c67d69b13f1454f514d9969d46eb6b8d711f"
       },
       "license_notes": "Installed library excerpts, donor original, scripts and raw evidence remain ignored locally; redistribution permission not asserted.",
       "original_static_builder_preparation": {
@@ -2425,6 +2431,23 @@
         "sha256": "3213e21c93e30e25f46a78d15441271325a2281a952a94e16753bef312707166",
         "implemented_or_native_executed": false,
         "scope": "Six non-interpolated standard samplers plus shared impulse/INT proposed; no TIME quantization or candidate gate replay. Upstream69 math blocks still execute at electrical h; applied gates must be proven held at independent5us grid."
+      },
+      "hold_microprobe": {
+        "status": "qualified_bounded_native_primitives_only",
+        "coarse_run": "20261109T125632879377Z",
+        "fine_run": "20261109T125858632549Z",
+        "duration_s": 2e-05,
+        "native_steps_s": [
+          5e-06,
+          2.5e-06
+        ],
+        "rows": [
+          5,
+          9
+        ],
+        "channels": 17,
+        "qualification_sha256": "5859c0fee101ba1942ecc2c0e7ac8fa1a3ca5ef4fcc111df984e282829089ae2",
+        "scope": "Two scalar samplers and onevarR only; t0/consecutivePulse/midpointHold/sameTickR verified. Original69/fullsix/1ms/full0.2s remain unqualified. Allrawrows retained; no timefit or waveformshift."
       }
     }
   ],

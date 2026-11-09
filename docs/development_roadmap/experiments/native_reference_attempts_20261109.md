@@ -86,3 +86,30 @@ DSD/DSO使六支路I日志落后一记录；1200对`V[k],R[k],I_record[k+1]`残�
 26交付`9269350887a867aee2740fed04155ade8f8757be`已正常push，真实ls-remote相同。精确[CI42606454705](https://github.com/yu-yikai/PyCy_EMT_Lite/actions/runs/42606454705)终态failure，Ubuntu129123587852/Windows129123588150均runner_id0、steps空；各check注释确认账户billing lock，未执行任何测试/test_count=null。精简[CI证据](ci_9269350.json) SHA`f84ac79906b409131616b71c0ab52dab6f31967b3e583dc014e4d138b0426a85`，7份原始API响应hash均核。F1局部受阻，不机械轮询该终态或借本地1236/商业PASS称跨OS通过。
 
 27验收提交`ae9fe3629ad9617853979b0ef58d4d8319239592`已正常push且真实ls-remote相同；精确[CI42616684547](https://github.com/yu-yikai/PyCy_EMT_Lite/actions/runs/42616684547)实查终态failure，Ubuntu129158174490/Windows129158174768均runner0/steps空，两组annotations明确billing lock、未执行测试/test_count=null。新[CI证据](ci_ae9fe36.json) SHA`33523e8e411aa2a5d62670f52b4b33e6a34c2119f10d19efe28733fbf6ec9f57`，7份raw/hash已核。本地1244/商业PASS不代表跨OS执行；旧9269350证据独立保留，不重查任一终态。
+
+## B1采样保持小模型双步长实测（13:07 UTC检查点）
+
+以下D仍为`local_reference/two_level_pwm/matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d`。
+新小模型包为`D/hold_microprobe_research/20261109T123808872837Z`，plan在原生运行前冻结。
+
+| 入口 | SHA256或终态 |
+|---|---|
+| 小模型包manifest.json（94项） | `209092793a35838fec9e7959d071f6565b4fd53363f82d72a6bf5d982f43b184` |
+| probe_plan.json | `54b25beceb7d94d010d9447f4f0a39f2c1820317aef2a3676a24b4f16d89dc84` |
+| 原生5 µs：D/n/20261109T125632879377Z | worker0，62.7550735 s，5行/17通道 |
+| 该run manifest.json（46项） | `fa9d32ebe777eef2604fb4efdb068a8a6e08a073b03f33ce616abb9d42e5c514` |
+| 原生2.5 µs：D/n/20261109T125858632549Z | worker0，62.5221623 s，9行/17通道 |
+| 该run manifest.json（46项） | `f8a4daa4c4fa9a6b0fba7dcea4c7ab7085063d930933ee550d02fddd443f79e1` |
+| 资格：D/microprobe_analysis/20261109T125739637402Z/primitive_qualification/20261109T130659559817Z/qualification.json | `5859c0fee101ba1942ecc2c0e7ac8fa1a3ca5ef4fcc111df984e282829089ae2` |
+| 资格目录manifest.json | `5fe89702c127ec3a5f4aa62b66a2c67d69b13f1454f514d9969d46eb6b8d711f` |
+| 独审：local_reference/native_static_reviews/b1_micro_pair_actual_20261109T130532536138Z/report.json | `47309dc912e9f5e78ba844168e9de843cd0d9d8e04f1aceba0bd39953c158496` |
+| 该独审manifest.json | `2054135013d4f9813158571ea2c2f88c286b9062ccf6261d30ac99c082682ecc` |
+
+两run原件/profile/父环境未变、自有进程空，清理/监控错误均空。
+原生全部5/9行、t0/末点和四个半步均保留；初次分析profile字段schema错误的FAIL也保留，
+修正仅影响解析，不改原生输入/数据。首次导入产生的一个__pycache__单独列为运行缓存，94个冻结输入均未变。
+主审另独立核两份46项run manifest、全部原始值、共享点/中间保持和资格关联65个文件hash，并实看配对图。
+资格只认证20 µs的两个标量sampler/单varR：连续高Pulse每次采样、中间保持、t0及同tick电阻生效，
+电压方程残差≤3.91e-16 kV。DSD/DSO支路I记录次序不作波形移相。
+六路三相1 ms、完整0.2 s和默认12新商业比较仍未验收；原MathWorks2% FAIL保持。
+本轮没有项目Python源码/依赖变化，109个源码hash与已通过1244全量前一致，不把旧全量称为本轮重跑。

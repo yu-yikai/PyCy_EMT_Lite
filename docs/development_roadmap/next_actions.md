@@ -19,16 +19,19 @@
 所有本轮native、仿真、测试和CI观察已终态，不恢复旧worker或无故重跑已合格参考/回归。
 
 B1按真实端口重连后已真实build/run：完整1 ms、201点、46通道，400V源及1206门极值经独审。
-当前参考仅`runnable`；电气细化时5 µs控制保持和完整0.2 s尚未验收。
+当前参考仍为`runnable`。20 µs标准sampler/impulse小模型的5/2.5 µs两次真实运行、完整原始行和独审已通过；
+已证t0、连续高Pulse更新、中间点保持及同tick有效R，范围仅两个sampler/一条varR。
+六路三相1 ms保持和完整0.2 s尚未验收；资格/两run/hash见证据索引。
 原12及MathWorks2%波形FAIL保持，不以新短探针覆盖原失败。
 全部run、脚本身份与完整hash集中在[本轮证据索引](experiments/native_reference_attempts_20261109.md)。
 
 ## 执行顺序
 
-1. **B1先实测控制保持。** 见[同数学参考设计](experiments/spwm_matched_reference_design.md)。
-   从已成功短探针的隔离副本出发，保持69控制数学及native TIME，先用20 µs小探针核标准sampler/impulse的
-   t0、脉冲连续为1的语义、同tick有效R次序；通过后再运行完整1 ms，比较电气5/2.5 µs时门极输入均保持5 µs。
-   6个sampler加公共脉冲只是已审查设计，尚无原生运行证据；不能提前称成立。
+1. **B1继续三相1 ms保持探针。** 见[同数学参考设计](experiments/spwm_matched_reference_design.md)。
+   20 µs微探针已终态合格，不重跑。由其资格hash固定的新审查版本，从成功1 ms工程先copy再load，
+   保持原69控制数学、31电气对象及全部原通道，只增加6个sampler和公共impulse/INT；
+   原参数只允许12个R输入标签改接保持门极。先实际5 µs、再2.5 µs，核六门极t0/互补/实际R/同刻次序，
+   再核全部共享点及中间点保持；微探针不能提前认证完整三相模型。
    保存原始时间/全部边界/原始及保持门极，不量化时钟、拟合相位、删点或回放候选门极。
    先copy再load隔离工程，不重试已知PSCAD5.0跨目录save_as挂起路径。
 2. **B1通过短探针后再冻完整协议。** 先固定0.2 s、控制周期与细化方式、初值、有效R、源单位、

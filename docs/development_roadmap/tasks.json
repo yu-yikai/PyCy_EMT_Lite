@@ -386,7 +386,7 @@
         "mw-two-level-pwm-r2025a",
         "pscad-derived-bilateral-spwm-v5"
       ],
-      "validation": "原MathWorks固定2%波形FAIL及12保持。实际端口重连已通过独立660检查；PSCAD同数学短探针20261109T114236896235Z真实build/run成功，201点/46通道/完整1ms。400V源、1206门极值、六开关R、RL/TR残差和实际拓扑经独立原始数据复核。原生branch1理想化警告属于零内阻源；开关不是该分支。DSD/DSO支路电流日志次序另作有名诊断，未修改原时间点/移相候选。短探针仅使参考runnable，完整0.2s与控制保持细化尚未验证。",
+      "validation": "原MathWorks固定2%波形FAIL及12保持。实际端口重连已通过独立660检查；PSCAD同数学短探针20261109T114236896235Z真实build/run成功，201点/46通道/完整1ms。400V源、1206门极值、六开关R、RL/TR残差和实际拓扑经独立原始数据复核。原生branch1理想化警告属于零内阻源；开关不是该分支。DSD/DSO支路电流日志次序另作有名诊断，未修改原时间点/移相候选。短探针仅使参考runnable，完整0.2s与控制保持细化尚未验证。 20us标准采样保持微探针实际5/2.5us两运行成功，完整17通道5/9行（含t0/末点）与独立20项通过；连续高Pulse逐次更新、四半步保持、单varR同tick生效。资格5859c0fee101ba1942ecc2c0e7ac8fa1a3ca5ef4fcc111df984e282829089ae2只覆盖两个标量sampler/单varR，不能认证六路或完整0.2s。",
       "acceptance": "模型一致性解释、预设基波RMS/功率方向/纹波判据和真实波形比较",
       "status": "in_progress",
       "files": [
@@ -404,7 +404,7 @@
         "8a65b6e"
       ],
       "blockers": [
-        "电气步长2.5us时须先实测门极保持原5us周期：标准sampler/impulse的t0、连续脉冲及同tick有效R次序尚未证。先20us再1ms有界原生探针，保留原69控制数学/native TIME和全部边界；通过后才冻结完整0.2s/控制网格细化协议。原12/MathWorks FAIL/2%阈值不改，不拟合时钟或增加自动二极管框架。"
+        "20us原语双步长已真实合格。下一步以新审查隔离版本运行三相1ms双步长：保持原69数学/native TIME，只增加6sampler+共享impulse/INT并改接12个R输入标签；须实测六路t0互补、有效R/同刻次序、全部共享点及半步保持，再冻完整0.2s协议。原12/MathWorks FAIL/2%阈值保持；无新通用框架。"
       ]
     },
     {
