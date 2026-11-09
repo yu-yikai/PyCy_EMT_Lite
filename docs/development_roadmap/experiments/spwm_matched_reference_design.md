@@ -1,7 +1,7 @@
 # B1：保留12数学意图的独立参考探针
 
 2026-11-09。原MathWorks对标的2%波形FAIL及全部原报告、参数、窗口不改。[离线诊断](spwm_error_isolation.md)已说明跨任务门极时序、器件和积分差异；本设计改为独立构建与12教学数学相符的PSCAD参考，不把原IGBT网络称为理想双向开关。
-目前只有安装库/公开文档/离线算术核查，无新原生建模、波形或验收。完整运行前须另冻结正式比较协议；短探针不能关闭B1。
+目前已实际加载并创建短探针组件，但原生端口坐标守卫拒绝，未build/run或取得波形。完整运行前须另冻结正式比较协议；短探针不能关闭B1。
 
 ## 探针边界与预定输入
 
@@ -54,10 +54,17 @@ R_switch = 0.001*g_closed + 1e9*(1-g_closed)
 正式稳态窗仍0.1–0.2s；三相尺度150A、NRMSE2%、maxabs10A、总/基波RMS及负荷功率相对5%、基波相位3°，全部保持。完整启动和全部原生门极仍保存，不做时间/幅值拟合。门极回放最多证明给定输入下的电路，不能完成控制器验证。
 原MathWorks报告继续以源特定FAIL保留。新的独立同数学参考只有真实完整波形、内部物理、独立执行、图报告、自动测试、教学与Git验收都完成后才可能关闭B1；不据本文或短探针修改完成数。
 
-原始来源摘录、脚本及离线证据均保留在忽略的`local_reference/two_level_pwm/matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/`和`matched_control_research/20261109T0804578518774Z_control_audit/`。实际原生执行沿用新目录、真实用户profile观察、3GiB启动/2GiB动态内存保护及自有进程身份核验；本轮截至方案记录尚未启动新原生程序。
+## 实际短探针与恢复边界
 
-已保存未执行的`builder_probe.py`，SHA`e93e70abf3640b52cdc9c16957124ec9fb4b4e731048b7905be01b3d5ab2dc12`。仅提供`build(app, run, stage)`以配置隔离副本，不启动软件、build、run或quit；接受harness已创建的唯一run，但拒绝已存在的项目/建模快照子目录。当前**没有B1运行器**，A3驱动不能仅换路径后用于B1，原生执行前仍须单独准备并复核归属/资源/输入输出记录。
+来源摘录和原静态builder仍在`local_reference/two_level_pwm/matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/`。原`builder_probe.py` SHAe93e70ab…及库存保留不改；69控制/31电气/46通道和独立40001固定网格条件算术不变，不能据此认证实际连通性、时钟或TR历史。
 
-最终静态图含69个控制块、31个电气组件、46个输出通道。局部接地消除负母线交叉，整数信号采用实体线、转成实数后才使用标签；安装库表单、活动端口和传递类型均已离线核查。独立标准块标量解释在40001个原固定网格点上重现ref/carrier/六门极和两种R值，保持/观察步号也一致；此结果以给定时间和标准块公式为条件，不证明原生计算顺序、连通性、实际时钟或TR历史。
+现已独立准备/审查B1自有runner，接受既有唯一run契约，严格核vdiv donor全部25ID/类型（top21+2Graph+2Curve），仅删除top21。不是把A3路径直接替换后运行；全部输入快照、编译路径/资源/归属/真实用户profile守卫均单独核查。
+第一轮创建过程中原子日志replace遇WinError5，旧cleanup动态WMI调用又报TypeError，无完整terminal；事后进程清空证据独立保留，不称正常quit。公共守卫另存有界写retry、及时关闭的共享reader及显式ExecMethod_/finally；旧失败和真实强用例FAIL保留。
 
-`builder_design_report.md`和独立`matched_control_research/20261109T0828140915684Z_builder_review/`保存准确脚本快照与未验证项；旧来源库存保持。08:22UTC真实资源约2.282GiB<3GiB，未调用driver，未得到新商业波形。全部研究脚本留在本地参考目录，默认12和初学者入口不增加这些步骤。
+修订后262字符工程路径加载报FileNotFoundError，Python副本存在且hash匹配；另派生新唯一`D/n/UTC`短路径并在mkdir前拒绝工程路径>230字符。最新`D/n/20261109T091917405572Z`的170字符路径实际加载成功、创建组件后，守卫报`Installed native port coordinates differ; re-route before build`。未build/run；终态观察到异常后正常quit、自有进程清空、源/profile/父环境不变。D、实际run和完整hash见[本轮证据索引](native_reference_attempts_20261109.md)。
+
+该次driver`b1_native_probe_short_path_v4.py` SHA8d596142…与`builder_inventory_v2.py` SHAa113419d…固定本次失败身份；须按实际端口另存重连修订并独立审查，不能略过坐标守卫或直接重跑。原08:22UTC资源不足是历史；3GiB启动/2GiB动态余量/RPC20s/build180s/run120s/监控总420s和真实profile守卫不降。
+
+没有实际波形，源Type6/use_ideal_branchFalse、电阻生效时序、完整g/有效R、单位/方向和首步TR历史仍未核定。完整0.2s协议继续待定，原MathWorksFAIL和默认12/全部原限值不变。研究脚本不加入初学者教学执行路径。
+
+补充仅端口抓取`D/n/20261109T111717200520Z`按设计在所有wire/save/build/run前停止，31组件/53项检查有23坐标不符。源NA/NB实际(6,4)/(10,4)、ground仍(11,4)，静态重合假设无效；R/L/varrlc/电流表跨度2格、差分电压端口也不同。下一稿须逐端口核图/正交性/源probe和ground，不能整体缩放；尚无重连稿或新波形。完整实际hash见证据索引。

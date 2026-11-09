@@ -142,11 +142,8 @@ PyCy在3761a21预先冻结的验收下，已完成独立8项物理测试、独�
 
 ### 同步 Buck 原件及真实探针
 
-第20项`mw-synchronous-buck-r2025a`保持**runnable**，没有提升为reference_ready。原state-save探针已核非零L/C初值、连续PI映射及互补控制。
-在167bb49冻结协议后，100/50ns两次真实完整10ms运行成功，103550/204619点；连续UC/iL精化通过，但全部500周期的duty/派生源流超预定参考预算。
-[完整失败](../../validation/cases/synchronous_buck/initial_reference_failure.json)与原始数据保留；0297c85先行补充25/12.5ns，首次新尝试因系统提交内存不足在仿真前中止。
-26已有使用现有Switch/LP/PI/Limiter的候选及内部测试，尚无商业比较；[教学及研究复现](../../validation/cases/synchronous_buck/README.md)明确未验收状态。
-体二极管不活动和根预算仍有原生状态/导数精度条件，不扩自动二极管或连续控制框架。
+第20项`mw-synchronous-buck-r2025a`现为**reference_ready**。原100/50ns完整参考的500周期duty/派生源流FAIL保留；先行25/12.5ns补充随后真实运行完整10ms，406263/809567点，两连续窗及全部500周期通过原预算，见[合格参考报告](../../validation/cases/synchronous_buck/qualified_reference_report.json)。
+26复用现有Switch/LP/PI/Limiter，首次50ns候选商业报告及独立原始数据复核PASS，最新1236全量含slow及锁定/Ruff/mypy通过，已独立交付9269350887a867aee2740fed04155ade8f8757be，26正式完成；总数8；该交付只覆盖26，其他半/全桥、Boost和滤波候选仍未验证。体二极管不活动、重建源流和根预算的原生状态/导数条件保持；参考就绪不代表候选正式验收。run及hash集中见[本轮证据](experiments/native_reference_attempts_20261109.md)。
 
 ### 双三相变压器与Delta Reference
 
@@ -183,8 +180,8 @@ PyCy在3761a21预先冻结的验收下，已完成独立8项物理测试、独�
 
 ### 有限电阻Bergeron与PSCAD原生环境
 
-第23项`pscad-installed-scalar-bergeron-v5`为**inspected**，与未下载的Chapter6线路投切资源分开。127个安装pscx中查到5个手工标量Bergeron定义，均有有限R；两无损半线和三R组合与官方基础方程有独立解析等价，但尚无有限R商业工程加载、仿真或波形。2026-11-09独立未改官方vdiv教程已完成PSCAD5.0.0编译、EMTDC链接/运行，活动宏gf46/x86，原件/profile不变、自有进程正常退出；这是工具链证据，不提升有限R参考状态。先前整包settings挂起与自行退出记录仍保留。见[调查、边界和恢复步骤](experiments/bergeron_reference_followup.md)，不新增线路核心类或提升为reference_ready。
+第23项`pscad-installed-scalar-bergeron-v5`仍为**inspected**。官方未改vdiv教程真实GF46/x86编译/EMTDC链接/run仅证明工具链。有限R派生参考现已实际加载/创建网络；v4通用参数API问题窄修后，最新v5 `20261109T105927241384Z`已过Wire库存，再被SrvcCbl编辑前/后RowDefn一致性守卫拒绝，未保存修改工程/build/sim。当前须独立核定义XML差异来源，不放松守卫，资源不足已为历史；实际.tlo/波形/正式协议仍缺，不创建候选或新增线路核心类。见[设计](experiments/bergeron_reference_design.md)和[实际尝试索引](experiments/native_reference_attempts_20261109.md)，旧库存/定义身份守卫失败均保留。
 
 ### 双向开关SPWM独立派生参考
 
-第24项`pscad-derived-bilateral-spwm-v5`仅为**inspected**，来自安装的PSCAD5.0标准元件及独立控制设计，并非未改的官方整例。目标是核验默认12的双向Ron/Goff、浮星RL与采样控制数学；来源、22定义codec/端口及独立控制算术已核，尚无原生建模或波形。先执行[0–1ms短探针设计](experiments/spwm_matched_reference_design.md)，实测门极、有效电阻、时钟与TR历史后再另冻完整协议。原MathWorks资源及2%波形FAIL保持，不因新目录项提升验证或完成数；原件、脚本和摘录仅留本地。
+第24项`pscad-derived-bilateral-spwm-v5`仍为**inspected**，是PSCAD5.0安装标准元件组成的独立派生参考。69控制/31电气/46通道仅有静态数学/codec证据；最新170字符短路径实际加载并创建组件后，原生端口坐标守卫拒绝，无build/run或波形。需先按实际端口重核布线，再执行[短探针](experiments/spwm_matched_reference_design.md)量时基、门极、有效R、源/单位/TR历史后另冻完整协议。原MathWorks资源、2%波形FAIL及完成数保持；脚本/摘录留本地，实际失败和入口hash见[本轮索引](experiments/native_reference_attempts_20261109.md)。

@@ -3,9 +3,9 @@
   "updated_date": "2026-11-09",
   "timezone": "Asia/Shanghai",
   "branch": "codex/emt-examples-longterm",
-  "checkpoint_head": "34c3b6b10638ac07022e32a18194e894e92dd38d",
+  "checkpoint_head": "9269350887a867aee2740fed04155ade8f8757be",
   "current_task": "A3",
-  "formal_new_examples_completed": 7,
+  "formal_new_examples_completed": 8,
   "status_values": [
     "planned",
     "ready",
@@ -172,13 +172,14 @@
         "pscad-line-energizing",
         "pscad-installed-scalar-bergeron-v5"
       ],
-      "validation": "有限R两半线+三R解析等价仍仅数学证据。独立官方vdiv原参数实跑：PSCAD5.0.0许可true、公共宏gf46/x86、16正常build消息/零警错、实际编译Station.f/Main.f并EMTDC链接，运行输出completed；0.2s/50us原配置，PlotType0无波形。原件/profile/父环境不变，自有进程正常退出。原settings挂起保留，有限R波形仍缺。 新选Steep_Front:SrvcCbl完整原定义，仅实例.01→10km，名义R100/Z201/tau300us；独立解析/全组件codec及公开API静态审查通过，保留原稿另加保存一致性硬守卫。仅prepare-only快照，freecommit2.7181GiB<3GiB，未启动native/执行builder/调用sim；实际tlo/源电压/完整波形仍待核。 新独立审计核20个catalog pins、8静态输入及准备库存；profile守卫v2要求真实LOCALAPPDATA与实际存在的配置文件，9种缺失/hash不等/exists标记矛盾场景通过。08:22UTC可用提交2392828KiB<3GiB，driver未调用，原生启动数0。",
+      "validation": "有限R两半线+三R解析仅数学证据；官方vdiv工具链已真实GF46/x86编译/链接/run，无磁盘波形。有限R四次实际探针依次在top77/native85库存、未限定defn_name、v4通用parameters API及v5 RowDefn前后一致性守卫停止。最新20261109T105927241384Z已过Wire库存，Native SrvcCbl definition changed during Main-only editing导致未保存修改工程，无build/sim。异常后正常quit、自有进程清空，原件/profile/父环境不变；实际数值仍缺。 最小分阶段CRC诊断20261109T111545271892Z在删除其余76个Main顶层对象后首次观察根CRC变0，此前0–34快照不变；预期DiagnosticStop，未编辑线路位置/Length，无save/build/run，正常quit/自有进程空/源profile不变。",
       "acceptance": "先确认可运行参考，再固定教学与验收；无真实数据不完成",
       "status": "in_progress",
       "files": [
         "docs/development_roadmap/experiments/bergeron_reference_followup.md",
         "docs/development_roadmap/experiments/pscad_toolchain_smoke.json",
-        "docs/development_roadmap/experiments/bergeron_reference_design.md"
+        "docs/development_roadmap/experiments/bergeron_reference_design.md",
+        "docs/development_roadmap/experiments/native_reference_attempts_20261109.md"
       ],
       "commits": [
         "4385e2ea6941e693ac784c48a78e7074c803f4ed",
@@ -186,7 +187,7 @@
         "34c3b6b10638ac07022e32a18194e894e92dd38d"
       ],
       "blockers": [
-        "有限R实际tlo/参数/初值/波形仍缺；最新可用提交约2.282GiB低于3GiB启动门槛。资源恢复后只运行已审查的profile_guard_v2，保留2GiB动态保护；不触用户MATLAB或等待prepare-only目录。"
+        "CRC唯一变化已定位于delete_other_main_objects批量删除之后，但单对象原因与官方CRC语义仍未证，不能放松定义守卫。实际tlo/参数/源时序/方向/零历史/波形/正式协议仍缺；最小诊断已终态，不重复等待旧worker。 后续仅拟v6对该唯一删除边界强核一次CRC转换，其后完整CRC0 XML为严格基线、任何再变含save新CRC即停；尚未写代码，须另存独审，不推广一般CRC含义。"
       ]
     },
     {
@@ -376,7 +377,7 @@
         "mw-two-level-pwm-r2025a",
         "pscad-derived-bilateral-spwm-v5"
       ],
-      "validation": "原固定2%波形FAIL保持。独立RL回放两边全40001点误差约1e-11A；四因素16组合/24顺序均保存。只换结构推导门极，稳态NRMSE2.66%–2.72%→0.503%–0.505%；再TR→BE约0.449%–0.452%，1uS约0.000153A RMS。器件项为观测电压残差条件诊断，非预测模型/商业验收；27项库存与独立总电流递推/积分审计通过，12和阈值未改。 已另立同数学PSCAD短探针设计：400V、六双向外控R、浮星1Ω+1mH、0–1ms/5µs；静态库与独立40001点控制算术、22定义codec/端口已核。native TIME驱动并保存网格观察量，不拟合/删边界；codec接受字符串不证明原生表达式支持，控制用标准块连线。没有原生建模/运行或新商业比较。 最终未执行builder e93e70ab，69控制/31电气/46通道；局部ground和整数实体线去除已知静态歧义，独立40001固定网格图解释零差。builder/独立审阅库存5/7项均核；无B1运行器、无实际native拓扑/时序认证。",
+      "validation": "原MathWorks固定2%波形FAIL及12保持。40001点离线控制/电流误差隔离、69控制/31电气/46通道静态审查完成。已独立准备B1自有runner并严格核donor全部25ID/类型，仅删除top21；实际依次发生日志/旧cleanup失败、262字符路径加载失败。最新短路径170字符run20261109T091917405572Z成功加载并创建组件，实际端口坐标守卫拒绝，无build/run。异常后正常quit，自有进程清空，源/profile/父环境不变。 仅端口抓取run20261109T111717200520Z保存31组件/53项检查，23坐标不符；按设计在所有wire/save/build/run前停止，正常quit/自有进程空/源profile不变。",
       "acceptance": "模型一致性解释、预设基波RMS/功率方向/纹波判据和真实波形比较",
       "status": "in_progress",
       "files": [
@@ -386,20 +387,21 @@
         "docs/development_roadmap/experiments/spwm_feasibility.md",
         "docs/development_roadmap/experiments/spwm_timing_followup.md",
         "docs/development_roadmap/experiments/spwm_error_isolation.md",
-        "docs/development_roadmap/experiments/spwm_matched_reference_design.md"
+        "docs/development_roadmap/experiments/spwm_matched_reference_design.md",
+        "docs/development_roadmap/experiments/native_reference_attempts_20261109.md"
       ],
       "commits": [
         "146a279",
         "8a65b6e"
       ],
       "blockers": [
-        "原MathWorks2%波形FAIL保持；同数学PSCAD参考仍仅静态设计，须先实测时间映射、全部门极/有效R/源/单位/TR历史，再另冻完整0.2s协议与自细化。最新约2.282GiB<3GiB，未启动原生程序；12/原报告/阈值不变。"
+        "实际源NA/NB=(6,4)/(10,4)，ground仍(11,4)，原重合假设不成立；R/L/varrlc/电流表跨度2格、差分电压端口也不同。逐个按实际端口重连并核图/正交性/源probe和ground，不全局缩放，另存独审后再probe。原MathWorksFAIL/12/阈值保持；正式0.2s协议仍待时基/门极/有效R/源单位/TR历史。"
       ]
     },
     {
       "id": "B2",
       "phase": "power_electronics",
-      "title": "半全桥、同步DC/DC与滤波候选",
+      "title": "本阶段26同步Buck（其余电力电子候选未验）",
       "priority": 2,
       "dependencies": [
         "R2",
@@ -411,9 +413,9 @@
       "references": [
         "mw-synchronous-buck-r2025a"
       ],
-      "validation": "先行167bb49/0297c85；26最小候选Agg200001点/四事件、12独立物理测试、21参考数学/原始点/配对测试通过；最终完整1223 passed 475.864s含slow且0fail/error/skip，锁定/Ruff/mypy通过。100/50ns真实参考103550/204619点，最终新CLI原始点/同协议/全部500周期复验保持FAIL（duty .00275472>.0015、派生源流.0240559>.01），完整失败/图/输入快照保留，未商业比较。25ns新尝试在仿真前因系统提交内存1.46GiB低于2GiB中止，自有进程已退出；更细双run未完成，26仍未验收。 新静态callback审计37输入/235记录：9直接SPS mask均SelfModifiable，但p-code初始化/OpenFcn及实际调用顺序未知；不能把load_system宣称等价或已节省内存。未运行MATLAB或改exporter。",
-      "acceptance": "每项先有参考与固定判据再实施，禁止冒充自动二极管",
-      "status": "in_progress",
+      "validation": "25/12.5ns真实完整10ms参考406263/809567点，两连续窗及全部500周期自细化PASS，原100/50ns FAIL保留。50ns候选首个商业比较及独立原始数据/输入/周期/两窗复核PASS；Agg200001点/4事件源身份匹配。13项新比较测试、锁定27包/Ruff/mypy、恢复后完整1236 passed478.786s含slow且零fail/error/skip。精简商业报告/图/教学与独立验收齐备，正式交付提交9269350887a867aee2740fed04155ade8f8757be，新增19–26共8项完成。结论限预设同步控制/负荷事件及核定的二极管不活动域。",
+      "acceptance": "本阶段候选筛选后交付26同步Buck；内部/真实参考/图报告/测试/教学/Git全部完成。其他半/全桥、Boost、滤波候选保持未验证，不能由26认证；后续仍须逐项先冻参考/判据，不冒充自动二极管。",
+      "status": "completed",
       "files": [
         "docs/development_roadmap/experiments/next_reference_candidates.md",
         "docs/development_roadmap/experiments/synchronous_buck_reference_probe.md",
@@ -431,7 +433,14 @@
         "tests/test_synchronous_buck_reference.py",
         "validation/cases/synchronous_buck/README.md",
         "validation/cases/synchronous_buck/normalization.py",
-        "validation/cases/synchronous_buck/audit_reference.py"
+        "validation/cases/synchronous_buck/audit_reference.py",
+        "docs/development_roadmap/experiments/native_reference_attempts_20261109.md",
+        "validation/cases/synchronous_buck/qualified_reference_report.json",
+        "validation/cases/synchronous_buck/candidate_quadrature_addendum.md",
+        "validation/cases/synchronous_buck/validation_report.json",
+        "validation/cases/synchronous_buck/compare.py",
+        "validation/cases/synchronous_buck/quadrature.py",
+        "tests/test_synchronous_buck_comparison.py"
       ],
       "commits": [
         "d79e849",
@@ -439,12 +448,11 @@
         "167bb493c1405cd4edd4eaadd1b4cf2e0ad257a0",
         "dda8deb47f74764ac5a15fd19baff01d73432578",
         "0297c85c451ee9a9054450058f48f1db6a937810",
-        "41a6685da241b5a759786963b81e236728afbd98"
+        "41a6685da241b5a759786963b81e236728afbd98",
+        "4e43a09fa24f30b401ee04d3a8e5e6ab2e19d4ea",
+        "9269350887a867aee2740fed04155ade8f8757be"
       ],
-      "blockers": [
-        "原100/50ns参考自身周期duty/源流未满足固定十分之一预算。",
-        "新25/12.5ns参考待运行；首次新启动被系统可用提交内存低于2GiB监控中止。先预检资源，禁止降低保护或连续重启。"
-      ]
+      "blockers": []
     },
     {
       "id": "C1",
@@ -531,7 +539,7 @@
       ],
       "new_capabilities": [],
       "references": [],
-      "validation": "本地最终1223 passed475.87s含slow、锁定/Ruff/mypy覆盖26候选。41a6685已正常推送且真实远端一致；精确新CI42576654146终态failure，Ubuntu129025769158/Windows129025769665均runner0/steps空，两个注释确认billing lock，未执行测试/test_count=null。23/24/25/26新代码跨OS未验证，旧90b2fcd只覆盖22；不轮询同终态。",
+      "validation": "最新本地完整1236 passed478.786s含slow、零失败/错误/跳过，锁定27包/Ruff/mypy及B2商业独立审查通过。26验收9269350已正常推送，真实远端一致。精确新CI42606454705终态failure，Ubuntu129123587852/Windows129123588150均runner0/steps空，两个check注释确认billing lock，未运行测试/test_count=null。23/24/25/26跨OS仍未验证，旧90b2fcd只覆盖22；不轮询同终态。",
       "acceptance": "本批测试与真实CI记录、教学导航、里程碑推送和恢复指令",
       "status": "blocked",
       "files": [
@@ -540,7 +548,8 @@
         "docs/development_roadmap/experiments/ci_e51c1f1.json",
         "docs/development_roadmap/experiments/ci_1423c7d.json",
         "docs/development_roadmap/experiments/ci_9e2513d.json",
-        "docs/development_roadmap/experiments/ci_41a6685.json"
+        "docs/development_roadmap/experiments/ci_41a6685.json",
+        "docs/development_roadmap/experiments/ci_9269350.json"
       ],
       "commits": [
         "90b2fcd",
@@ -548,7 +557,8 @@
         "e51c1f1",
         "d79e849",
         "1423c7d6dfbca10547cf856dc20faa5dadf935dc",
-        "41a6685da241b5a759786963b81e236728afbd98"
+        "41a6685da241b5a759786963b81e236728afbd98",
+        "9269350887a867aee2740fed04155ade8f8757be"
       ],
       "blockers": [
         "GitHub check-run两项注释：The job was not started because your account is locked due to a billing issue. 账户解除外部账单锁后才能补跑；不通过重复push或改代码绕过。"
@@ -571,5 +581,7 @@
       "commits": [],
       "blockers": []
     }
-  ]
+  ],
+  "execution_status": "active",
+  "pause_checkpoint": "2026-11-09 user pause preserved in .tmp/longterm/paused-20261109T0925.json; goal resumed; interrupted full pytest is not a PASS"
 }

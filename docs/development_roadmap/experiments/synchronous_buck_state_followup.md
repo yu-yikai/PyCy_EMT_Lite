@@ -1,5 +1,7 @@
 # B2：同步 Buck 初值、互补开关与控制坐标
 
+2026-11-09当前状态：本页保留早期探针与相容性研究。后续25/12.5ns真实完整参考已自细化PASS，首次50ns候选商业报告及独立原始数据复核/完整1236回归PASS，26已交付9269350、正式新增8；详见[本轮证据索引](native_reference_attempts_20261109.md)和[合格参考报告](../../../validation/cases/synchronous_buck/qualified_reference_report.json)。下文旧“尚无细化/候选”不作为当前状态。
+
 2026-11-06。继[原件初查](synchronous_buck_reference_probe.md)后的真实参考核验。
 已取得原先缺少的储能状态和生效控制参数；尚未编写26候选、冻结正式判据或进行PyCy商业比较，正式新增仍为7项。
 

@@ -1,40 +1,22 @@
 # 恢复与下一步
 
-2026-11-09（Asia/Shanghai）。先读tasks/progress/decisions/validation_status，核实际分支、HEAD、工作区和远端。
-记录时checkpoint为34c3b6b10638ac07022e32a18194e894e92dd38d；后续提交须与Git历史核对。
-分支codex/emt-examples-longterm；不操作main、不强推、不覆盖未提交文件。
+2026-11-09（Asia/Shanghai）。长期目标已恢复active；先读tasks/progress/decisions/validation_status并核实际Git。当前本地HEAD为`9269350887a867aee2740fed04155ade8f8757be`，26验收已单独提交；正常push及真实ls-remote已核相同；精确新CI42606454705已终态billing lock启动前failure，未执行测试。分支`codex/emt-examples-longterm`；不操作main、不强推、不覆盖未提交文件。暂停记录`.tmp/longterm/paused-20261109T0925.json`属于历史，暂停中断的全量不记通过。
 
 ## 当前事实
 
-正式新增19–25共7项完成，02补参考另计；12商业波形仍FAIL。25完整供电网络交付为9e2513d。
-历史恢复记录为本地dda8deb、远端4385e2e；候选代码41a6685已提交推送。最新恢复时本地与真实远端均34c3b6b，后续提交另核Git。26仍未商业验收，不计正式完成。
-核心包、pyproject.toml和uv.lock相对原main没有改动；教学入口复用既有元件/控制器，不扩框架。
-前次代码最终完整回归1223 passed 475.864s（XML，含slow，零失败/错误/跳过）；锁定27包/Ruff/mypy39及3新入口通过。
-26独立Agg200001点、12内部物理及21参考数学/原始点/配对测试通过。商业验收仍未完成，当前候选提交/推送身份须核实际Git。
+正式新增19–26共8项完成，02补参考另计；26交付提交9269350，12原MathWorks2%波形FAIL保持。核心包/pyproject.toml/uv.lock相对原main未改，教学入口沿用既有元件/控制器。
+B2合格参考和首次候选PASS分开：25/12.5ns真实完整10ms自细化已通过；首次50ns候选商业比较及独立原始数据/输入/周期/两窗复核PASS；13项比较工具测试、锁定27包、Ruff/mypy、恢复后完整1236 passed478.786s含slow零失败/错误/跳过通过。26已完成独立验收并提交9269350，前次暂停中断不作通过；新XML见证据索引。
+A3/B1已经实际加载/建模，但最新均在build前停止；无有限R或同数学SPWM波形。两最新run终态均正常异常后quit、自有进程清空，原件/profile/父环境不变。旧资源门槛中止和失败均保留，资源不足不再是当前阻塞。完整run与hash只在[本轮证据索引](experiments/native_reference_attempts_20261109.md)集中列出。
 
 ## 执行顺序
 
-1. **B2参考先解决精度失败。** 原100/50ns两次真实10ms成功，103550/204619点，原生MAT/状态/Scope及各30项库存本次重新全核。
-   UC/iL两完整窗自细化通过；500周期duty最大差0.00275472>0.0015、重建源流0.0240559A>0.01A，参考自身FAIL。
-   完整[失败报告](../../validation/cases/synchronous_buck/initial_reference_failure.json)保留，候选尚未商业比较。
-   独立积分/根贡献分解见local_reference/b2_protocol_research/refinement_diagnosis/；主因是原生控制/根漂移，不能删周期或改阈值。
-   [solver补充](../../validation/cases/synchronous_buck/reference_solver_addendum.md)先行固定25/12.5ns及同比收紧Rel/Abs；首个新启动已因系统提交内存不足被保护中止，无sim输出。先读系统资源；先前原生峰值约3.6GiB，须给启动和2GiB余量留空间，再顺序跑两完整10ms。禁止降低保护或反复重启。
-   运行用新唯一目录及自有进程监控（6GiB私有/2GiB可用提交量/600s/重复最小步长告警），不触用户MATLAB。
-   exporter签名为export_reference(repositoryRoot,runDirectory,stage,protocolFile,protocolHash)；本轮protocolFile为补充md，hash须运行前固定。
-   原模型、三份原验收协议、候选50ns、两完整窗、全部500周期及限值均不变。
-2. **B2内部与正式交付。** 合格参考就绪后才安装canonical引用并作候选商业比较/图报告。
-   教学脚本不读商业数据；LPBE→无内部限幅PI→外Limiter、解后更新及显式负荷事件不变。
-   UC/iL在负荷事件连续，可用严格限定的连续状态视图比较；不能任意撤销公共event guard。
-   原生稀疏Isrc跳变不能PWL积分成斜坡；派生源流须明确标识，不称直接门极/源流日志。
-   条件根预算还依赖原生UC/滤波状态导数相容及无隐藏根，duty epsilon或AbsTol不是绝对误差证明。
-   完整内部物理/独立执行/真实比较/图报告/自动测试/教学/常规检查/Git验收齐备才完成26。
-3. **A3有限R参考先行。** [Bergeron记录](experiments/bergeron_reference_followup.md)及[工具链结果](experiments/pscad_toolchain_smoke.json)：未改官方vdiv已真实build/EMTDC链接/run，活动宏gf46/x86，正常退出且原件/profile/父环境不变；无磁盘波形，不能算有限R参考。
-   新[有限R设计](experiments/bergeron_reference_design.md)：保留SrvcCbl完整定义，仅实例长度.01→10km，名义R100Ω/Z201Ω/tau300us；1kV斜坡.5–.6ms、Rs100Ω/RL400Ω、1us/6ms。来源/解析/codec/端口/公开API已核，未实际建模或仿真。
-   仅prepare-only目录20261109T075010503354Z；未启动native、没有可等待的worker/进程。08:22UTC真实环境读2392828KiB可用提交量（约2.282GiB）<3GiB，driver未调用。资源恢复先核新脚本/input hash，使用Python313运行local_reference/a3_followup/finite_r_native_probe_profile_guard_v2.py无参数，SHA8441fe2c7cb00a272cbafc7d5976db287046cbc376b7664c14df3504ba5c6228；--prepare-only绝不启动。v2必须观察真实用户LOCALAPPDATA和实际存在的profile，9种缺失/hash不等/exists标记矛盾守卫场景已独立核；原driver保留不再作为恢复入口，中间无v2后缀的草稿有静态TypeError，禁止运行。新唯一目录、2GiB动态保护/普通RPC20s/build180s/run120s/总420s不变，不连续重试、不关用户程序。
-   先确认实际.tlo/参数频率/flags、Vs与Mag时序、全时间轴/原生kV-kA及方向、零历史；PSCAD后续版本修过手工线路flags，不能只看XML。再冻正式窗/限值/自细化及候选步长，不创建候选迎合未经核定的参考。不重跑整包settings/空ATS范围或已成功小教程。
-4. **F1外部依赖。** 最新实查41a6685的CI run42576654146终态failure，两个job均runner0/steps空，注释明确billing lock，未执行测试。
-   不重复轮询该终态；账户真实恢复后补跑覆盖26候选及此前代码的run，核精确HEAD/attempt的双OS全步骤。旧90b2fcd只覆盖22，本地通过不等于跨OS通过。
-5. B1先读[独立误差隔离](experiments/spwm_error_isolation.md)和[同数学短探针设计](experiments/spwm_matched_reference_design.md)。独立标准块生成控制、六双向外控R与浮星RL，先测0–1ms/5µs；native TIME直接驱动，j/t_grid仅观察，所有边界点保留。已核静态源、独立40001点控制算术和22定义codec/端口；codec保留字符串不证明表达式可用。最终未执行builder为e93e70ab…，69控制/31电气/46通道，有独立固定网格图解释；当前无B1运行器，须先单独准备/复核，不能只改A3路径。原生时间/全部g与有效R/源/单位/TR历史核定后才另冻完整协议和细化控制网格。原MathWorks FAIL、12、2%与其余限值均保留；不引入二极管框架。C1后置；D0不重复成功仿真。
+1. **保存本批研究状态。** 26商业比较/独立原始数据复核、1236全量、图/报告/教学已验收，独立交付提交`9269350887a867aee2740fed04155ade8f8757be`；正式新增8。9269350已正常推送且真实远端一致，精确新CI已一次有界观察终态；单独提交/正常推送本轮路线图研究状态，不重复观察同CI。不重复合格参考、独立执行或完整回归，除非有新改动/失败。
+   原100/50ns参考FAIL、原物理/窗/500周期/全部限值保持。26只覆盖已冻结同步控制/事件与二极管不活动域，派生源流和条件精度边界不扩大。核心/pyproject.toml/uv.lock相对原main仍无改动。
+2. **A3先核定义前后差异。** [有限R设计](experiments/bergeron_reference_design.md)的v4库存API问题已窄修为仅本轮精确Wire/已知iid省略parameters，完整集合强核。v5实际run`20261109T105927241384Z`已过全部Wire库存，在SrvcCbl编辑前/后RowDefn一致性守卫停止；未保存修改工程/build/sim。已核唯一根CRC 36752239→0，其余定义相同；官方语义未证明。最小分阶段诊断`20261109T111545271892Z`已定位snapshot35紧接删除其余76个Main顶层对象后首次变CRC，其前0–34快照无差异；未编辑线路位置/Length、无save/build/run，按设计停止。单对象原因与一般CRC语义仍未证。下一步仅拟v6：在这一个批量删除边界强核唯一CRC转换/其余完整定义相同，再以删除后完整CRC0 XML严格作基线；此后任何变化含save新CRC仍停止。v6未写代码，须另存独审，不能泛化放松守卫；实际/研究/计划pins见证据索引。
+   `finite_r_native_probe_owned_guard_v5.py` SHA6beca649…/`builder_checked_v5.py` SHAce894fec…固定最新失败身份；v4及旧失败保留。实际6ms/1us回读仅为配置，`.tlo`、Vs/Mag时序、方向、零历史/波形仍缺。保持3GiB启动、2GiB动态余量、RPC20s/build180s/run120s/监控总420s。参数/波形核定后才冻正式协议和候选，不扩线路核心类或重跑已成功vdiv教程/整包settings。
+3. **B1先修实际端口布线。** [短探针设计](experiments/spwm_matched_reference_design.md)为0–1ms/5µs、native TIME直接驱动、网格仅观察。`D/n/20261109T091917405572Z`的170字符路径已加载，创建组件后实际端口坐标守卫拒绝；未build/run。补充端口抓取`D/n/20261109T111717200520Z`已保存31组件/53项检查、23坐标不符，按设计在所有wire/save/build/run前停止。source NA/NB实际(6,4)/(10,4)、ground仍(11,4)，旧重合假设失效；R/L/varrlc/电流表跨度2格。逐个按实际端口另存重连稿，核图/正交性/源probe与ground并独立审查，不统一缩放或略过守卫。D的完整路径见证据索引。
+   六双向外控R/浮星RL、69/31/46规格和原控制数学不变；实测时基、全部g/有效R、源/单位/TR历史后才另冻完整0.2s及控制网格细化协议。默认12、原MathWorksFAIL和原全部限值保持，C1后置，不引入自动二极管框架。
+4. **F1仍是外部账单锁。** 精确验收9269350的[CI42606454705](https://github.com/yu-yikai/PyCy_EMT_Lite/actions/runs/42606454705)终态failure，Ubuntu129123587852/Windows129123588150均runner0/steps空，注释确认billing lock、未执行测试，test_count=null。证据[ci_9269350.json](experiments/ci_9269350.json)，7份raw/hash已核。不轮询同终态；账户恢复后补验精确HEAD双OS全部步骤，旧90b2fcd仅覆盖22。D0不重复已成功参考。
 
 ## 本机命令
 
@@ -63,8 +45,7 @@ Git ownership用单命令-c safe.directory=D:/VibeCoding/PyCy_EMT_Lite；子进�
 Buck尚未正式交付，不套用其他case的单参数MATLAB命令。所有第三方原件、波形/图片/缓存保留忽略的local_reference。
 长期目标仍active；结束当前执行前同步证据/任务/提交/下一步，不宣称离线后台继续。
 
-最终复现审计在local_reference/b2_protocol_research/20261109T065107846Z-final-reference-audit，两run同协议/版本检查和全部raw重复点检查已启用，周期FAIL逐位不变。恢复不得继续已终态的旧进程；最终测试及审计均应以已保存终态为准。
+## 历史证据边界
 
-候选代码41a6685已推送，精确CI已终态billing lock启动前失败；后续03a913e已实核本地/远端一致。本次只保存设计证据，代码/冻结协议/1223测试输入不变。收尾Win32实读可用提交量2444276KiB（约2.331GiB），无PSCAD进程；既有用户MATLAB50448为R2022b，未触碰。A3/B2均须资源恢复，不能直接重启或把prepare-only当活任务等待。
-
-B2启动方式仍仅只读研究：-batch已无desktop，Java路径/hash依赖使-nojvm不可直接用。新callback审计local_reference/b2_protocol_research/callback_audit/20261109T073545Z/report.md（d6ed233c222e19b3f618d67fa8223d20eeee6e0eefa0975a417a92bffbf8165a）：37输入、67源blocks/13链接实例/9直接SPS库、235记录已核；9 masks SelfModifiable支持研究load_system，但OpenFcn/p-code及调用顺序不明，不能证明等价或内存收益。资源足够后才按报告作两个独立进程、各120s且sim(in)前硬返回的加载对照，完整记录配置/拓扑/SID/workspace/日志/SI；仍守6GiB/2GiB/600s。两臂中原open_system峰值约3.6GiB，不在当前不足3GiB余量下尝试。
+08:22UTC约2.282GiB<3GiB时只准备/未启动；08:36:59UTC实测约10.28GiB后才顺序运行。首个B2更细启动资源保护中止、旧参考自身FAIL，以及A3/B1的全部失败目录保持，不恢复旧worker、不覆盖旧输出。
+B2的callback/load_system研究没有证明与open_system语义等价或减少内存；当前不需要通过未测替换重跑合格参考。所有第三方原件/波形/脚本仅保留忽略目录。

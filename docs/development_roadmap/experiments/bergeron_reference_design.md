@@ -1,6 +1,6 @@
 # A3：有限电阻线路的参考设计
 
-2026-11-09。已选定来源、完成独立解析和原生API静态核查，探针输入快照已保存。**本次没有启动PSCAD、执行建模脚本或仿真；尚无有限R波形或PyCy候选。**
+2026-11-09。来源、独立解析和原生API静态核查后，已实际加载并创建派生网络；最新v5已过Wire库存，再被SrvcCbl编辑前/后RowDefn一致性守卫拒绝，未保存修改工程/build/sim。**尚无有限R波形或PyCy候选。**
 前次[工具链实跑](pscad_toolchain_smoke.json)只验证了官方电压分压教程，不代替本线路参考。
 
 ## 来源和明确的改动
@@ -44,19 +44,16 @@ e(t)在0–0.5ms为0，0.5–0.6ms从0连续升至1000V，之后保持1000V；�
 
 首个接收波前名义上在0.8ms；中间R的同端反射也在此时返回，负荷反射约1.1ms返回发送端。这说明单一衰减系数不能代替有限R模型。名义误差递推谱半径约0.25488，仅说明所选窗口足以观察收敛，不证明原生精度或最后采样点。
 
-## 已准备的运行及资源状态
+## 实际尝试与当前阻塞
 
-只用公开API，在独立副本中保留TLine实例2024913992。删除前核原77个对象ID；保存原/运行时/编辑后RowDefn与实际解析的master资源。保存后与原定义不一致就停止，不能继续build。编译目录必须位于本轮run内。
-初版builder及静态记录保留不改；`builder_checked.py`仅增加上述保存一致性硬检查。所有组件参数已用安装版真实表单离线编码，项目枚举映射和Python语法也已核查；这些均不能替代实际建模。
+只用公开API，在独立副本保留TLine实例2024913992。原top77与native85差异来自Frame的4Graph+4Curve，严格完整库存核对后只删除顶层；原库存守卫失败不删。第二次未限定库名的definition身份守卫失败后，另存v4核实际master/项目定义和XML，保持原RowDefn不变。
+最新run`20261109T092018312571Z`完成库/定义身份、网络创建、14次接线调用和6ms/1µs配置回读，在最终库存`final_10_parameters`报`ValueError: Component has no parameters`。未保存修改工程、没有build/sim，不能从配置回读推断实际求解或连通性。
 
-忽略目录`local_reference/a3_followup/native_reference_design/20261109T074056761817Z/native_probe/20261109T075010503354Z/`为**仅准备**记录：5项清单和5个协议文件引用均独立核对。2918506496bytes（2.7181GiB）可用提交量低于3GiB启动门槛；`native_started/builder_executed/sim_called`均false，输入快照未被原生软件消费。没有worker或project目录，不存在可等待的原生任务。
+该次driver为`local_reference/a3_followup/finite_r_native_probe_owned_guard_v4.py` SHA362fa0b5…，builder为本设计目录的`builder_checked_v4.py` SHA5182eec4…；完整hash/终态入口见[实际尝试索引](native_reference_attempts_20261109.md)。v5已将参数例外严格限定于本轮create_wire返回的精确Wire/已知iid并核全集，其他参数错误继续抛出，控制/物理/接线/保护不变；新driver SHA6beca649…/builder SHAce894fec…经独立静态复核后实际运行`20261109T105927241384Z`，过Wire库存后触发`Native SrvcCbl definition changed during Main-only editing`。未保存修改工程/build/run，正常异常后quit/自有进程清空/源和profile不变。当前已核唯一根CRC 36752239→0，其余64参数/ID/内部CRC/布局/拓扑一致；公共Definition.xml返回新的客户端Element，XSD/wizard仅支持required long/初值0，官方未证明缓存失效语义。最小分阶段CRC诊断`20261109T111545271892Z`已将首次唯一CRC变化定位于删除其余76个Main顶层对象之后（snapshot35，此前0–34不变），未编辑line vertices/Length即按设计停止；无save/build/run，正常quit/自有进程空/源profile不变。单对象原因/官方语义仍未证，不放松守卫；研究/计划/实际pins见索引。当前无等待中的worker。
 
-资源恢复后先核脚本与输入hash，再用本机Python3.13运行`local_reference/a3_followup/finite_r_native_probe_profile_guard_v2.py`；无参数才会尝试一次原生探针，`--prepare-only`始终只保存快照。每次新目录，不恢复或覆盖此准备目录。
-沿用新会话归属核验、原件/profile/父环境核对、3GiB启动门槛、2GiB动态余量、普通RPC20s、build180s/run120s、总420s和精确自有进程清理，不修改全局PATH/ATS/设置，也不触用户MATLAB。
+初次`20261109T075010503354Z`仅prepare-only、2.7181GiB<3GiB及08:22UTC约2.282GiB检查保持为历史。随后资源恢复才顺序运行；当前不是内存阻塞。仍保持3GiB启动、2GiB动态余量、RPC20s/build180s/run120s/监控总420s、真实用户profile双侧存在/hash核对和精确自有进程清理。新公共守卫修复日志共享冲突与WMI清理/finally，实际验证的边界见索引，不改全局PATH/ATS/设置。
 
-后续独立审计发现沙箱可能重定向LOCALAPPDATA；缺失文件的两个空hash不能证明profile未变。v2在启动前要求真实用户路径和实际文件，结束前要求两侧均可观测且hash相同。9种缺失/hash不等/exists标记矛盾场景已核；v2 SHA`8441fe2c7cb00a272cbafc7d5976db287046cbc376b7664c14df3504ba5c6228`。原driver保留；无v2后缀的中间草稿存在未执行的静态TypeError，不得使用。08:22UTC新门槛检查为2392828KiB（约2.282GiB）<3GiB，未调用driver，也没有新原生失败或波形。
-
-下一步必须先取得实际参数、完整原生波形、初末时间、零历史及源电压/方向证据，再在候选出现前固定正式窗、误差限、参考自细化和候选步长。两无损半线加三R的数学等价仍见[原调查](bergeron_reference_followup.md)；不创建新线路核心类。
+下一步须先取得实际`.tlo`/参数频率/flags、Vs与Mag时序、完整原生时间轴/单位/方向和零历史，再在候选出现前冻结正式窗、误差限、自细化与候选步长。两无损半线加三R数学等价仍仅是候选依据，不新增线路核心类。
 
 ## 证据入口
 

@@ -1,5 +1,12 @@
 # 技术决策
 
+2026-11-09恢复：目标active；实际状态与恢复入口见[本轮证据索引](experiments/native_reference_attempts_20261109.md)，历史暂停/失败保留。
+
+- B2参考自身PASS、候选比较PASS和正式交付分别记账；暂停中断的全量不计通过。独立复核及新1236全量通过后，以9269350完成独立交付，正式新增记8。原100/50ns FAIL与全部窗口/限值不变。
+- native返回的画布库存会包含Frame子Graph/Curve；严格核完整ID/类型，只删除原顶层对象，不用宽松subset绕过。真实库身份、原生端口和对象支持的API优先于静态命名/坐标/通用接口假设；失败前不继续build。
+- 原子日志采用共享读后及时close及0.2s有界retry，持续锁必须失败；真实持开reader替换强用例FAIL保留。WMI清理用显式ExecMethod_并核完整归属，自有句柄和terminal置独立finally。没有完整终态的旧cleanup异常不能称正常quit。
+- 更短的新唯一运行路径保留在原DESIGN严格子目录，并预检工程路径≤230字符；不移动/复用旧run，不以成功加载抹去原262字符加载失败。
+
 2026-11-04：
 
 - 保持 `CaseDefinition → Circuit → Simulator → SimulationResult`，不创建新算例基类/插件。
