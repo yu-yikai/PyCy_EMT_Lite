@@ -1,0 +1,307 @@
+{
+  "case_id": "synchronous_buck",
+  "reference_id": "mw-synchronous-buck-r2025a",
+  "passed": true,
+  "run_id": "20261109T092300Z-first-candidate",
+  "full_report": {
+    "file": "local_reference/synchronous_buck/comparison_results/20261109T092300Z-first-candidate/report.json",
+    "sha256": "d70e717a10b762b8e5dc8dc822907c04b5fdc2173cccf55fff8eb93b99def948"
+  },
+  "comparison_git_head": "4e43a09fa24f30b401ee04d3a8e5e6ab2e19d4ea",
+  "comparison_source_note": "New case-local comparison modules were uncommitted at execution; exact input snapshots and hashes are retained in the full report. Teaching and core code were unchanged.",
+  "platform": "MATLAB R2025a Update 1 / Simulink / Simscape Electrical Specialized Power Systems",
+  "matlab_version": "25.1.0.2973910 (R2025a) Update 1",
+  "reference_model_sha256": "ea8344f62e2a691456363f0391389cd1675bfe246bd71dc8f15a3b838ca6ab42",
+  "qualified_reference_report": {
+    "file": "qualified_reference_report.json",
+    "sha256": "2833c2839e79326f9c828747fa88b4eca9ff241610dbefd61046e61d6c49c1e6"
+  },
+  "selected_reference": {
+    "raw_mat_sha256": "1da52957d0e8ba9c1d072196f8baf7850132ee4e8615597fdb7094ba23d5a0fc",
+    "npz_sha256": "486c4f93bfeca9ce54fbd00109d49f5c456539b851cf3d632ec7a5953bea9bd1",
+    "cycle_means_sha256": "2dd73492e70e1c30f6de8970c55bdcf15fac4da5db6a6967846a4eb8a33bc5e5",
+    "requested_solver_settings": {
+      "max_step_s": 1.25e-08,
+      "relative_tolerance": 1.25e-08,
+      "absolute_tolerance": 1.25e-13
+    }
+  },
+  "frozen_protocol_lf_sha256": {
+    "acceptance_plan.md": "068094050105f56b603e33ec077666af0c8bcd7002bdff25a0afa65befe7fd6d",
+    "manifest.json": "e75b8832cf76ffb4799b5757d38a3163da49126ddfd56d9303d23abae7076719",
+    "parameters.json": "a65d62ffa5fb01674a3932c3f89eac8485c7faa2d9b18f879f25808db570aa51",
+    "native_logging_api_addendum.md": "9141ede70b423338859d4cb6c9384eb4a2470b88a9e27bd176af99ff522deb13",
+    "reference_solver_addendum.md": "baeb1297a9299c2a67a8c48e2c2f62e62177c492b229ba44140afdd34705b7e7",
+    "reference_solver_addendum.json": "73bdad1b9263d0853624878823913ab1905bc005fd84f5a9c3d503252add8d0c"
+  },
+  "candidate_quadrature_addendum_lf_sha256": "4dab9153a1b8187185175226220301252ef1e885394c5ce2ec8951f340281c7f",
+  "candidate": {
+    "samples": 200001,
+    "time_step_s": 5e-08,
+    "method": "trapezoidal",
+    "python_version": "3.14.5",
+    "numpy_version": "2.5.2",
+    "source_sha256": {
+      "examples/26_synchronous_buck.py": "b9db60e8de612a7b5e3667c0b34369fe306fc6ce8884eba1c787aca3d6b5caa2",
+      "validation/common/comparison.py": "8545b5e8fba8abdc2f20cdc2006342bb428765110c5bf9052103dfb0e349affe",
+      "tests/test_synchronous_buck.py": "27d163145b196cf4ed799faf9c43df9747c7815fc409e022c743576d98d5bf04",
+      "tests/test_synchronous_buck_reference.py": "185c05bade15d3f3441edc640acc15772bf444e762e681f6448b8a5ad1c83226",
+      "tests/test_synchronous_buck_comparison.py": "2789f1c6af9afb6bfd510d338de85f6fdcaded656e9f7456fa224c84315278ff",
+      "validation/cases/synchronous_buck/audit_reference.py": "1f5e9f805e4fad290bdd59f741f88eacb4d3421d731729bd4bcc0cfb41b8d2a6",
+      "validation/cases/synchronous_buck/compare.py": "bfdb9e95188245b863309336b02c1cff884c3c09331094859a4a11b22d2702fa",
+      "validation/cases/synchronous_buck/normalization.py": "6ce38ecdb0f80a018edff73ba2d6233500b6e14d553a1f8ef4893bb914093890",
+      "validation/cases/synchronous_buck/quadrature.py": "98fc0212d2cf4e77b45fdfdbf9b17d234bf8d6f6cc1504b68ed3784e44fdb610"
+    }
+  },
+  "time_shift_seconds": 0,
+  "windows": [
+    {
+      "window_seconds": [
+        0.0,
+        0.0025
+      ],
+      "alignment": "absolute_time_linear_interpolation",
+      "passed": true,
+      "signals": {
+        "v:out": {
+          "reference": "vout",
+          "unit": "V",
+          "scale": 15.0,
+          "rmse": 0.004909705684785358,
+          "nrmse": 0.0003273137123190239,
+          "max_abs_error": 0.02343901495372336,
+          "candidate_mean": 14.072281550005531,
+          "reference_mean": 14.072071304138108,
+          "candidate_rms": 14.380231251932754,
+          "reference_rms": 14.379712901035939,
+          "limits": {
+            "max_nrmse": 0.005,
+            "max_abs_error": 0.3
+          },
+          "passed": true
+        },
+        "i:L": {
+          "reference": "iL",
+          "unit": "A",
+          "scale": 8.0,
+          "rmse": 0.002596547559301403,
+          "nrmse": 0.0003245684449126754,
+          "max_abs_error": 0.010463024099961249,
+          "candidate_mean": 3.8836030029700237,
+          "reference_mean": 3.883566108559277,
+          "candidate_rms": 3.9304524047129847,
+          "reference_rms": 3.9302854410580768,
+          "limits": {
+            "max_nrmse": 0.01,
+            "max_abs_error": 0.15
+          },
+          "passed": true
+        }
+      }
+    },
+    {
+      "window_seconds": [
+        0.0025,
+        0.01
+      ],
+      "alignment": "absolute_time_linear_interpolation",
+      "passed": true,
+      "signals": {
+        "v:out": {
+          "reference": "vout",
+          "unit": "V",
+          "scale": 15.0,
+          "rmse": 0.002120889883845838,
+          "nrmse": 0.00014139265892305588,
+          "max_abs_error": 0.012672024299595464,
+          "candidate_mean": 14.94787185633579,
+          "reference_mean": 14.947839110808815,
+          "candidate_rms": 14.963509487678362,
+          "reference_rms": 14.963439635849605,
+          "limits": {
+            "max_nrmse": 0.005,
+            "max_abs_error": 0.3
+          },
+          "passed": true
+        },
+        "i:L": {
+          "reference": "iL",
+          "unit": "A",
+          "scale": 8.0,
+          "rmse": 0.001184703092204167,
+          "nrmse": 0.0001480878865255209,
+          "max_abs_error": 0.006130581004090363,
+          "candidate_mean": 5.319805636130912,
+          "reference_mean": 5.319790411762569,
+          "candidate_rms": 5.408581252052702,
+          "reference_rms": 5.408569261208059,
+          "limits": {
+            "max_nrmse": 0.01,
+            "max_abs_error": 0.15
+          },
+          "passed": true
+        }
+      }
+    }
+  ],
+  "period_features": {
+    "columns": [
+      "uC",
+      "iL",
+      "duty",
+      "reconstructed_source_current"
+    ],
+    "cycles": 500,
+    "all_absolute_cycles_included": true,
+    "max_abs_errors": [
+      0.02257233566686523,
+      0.009993704187551522,
+      0.01103181587260077,
+      0.04634504265185646
+    ],
+    "max_abs_limits": [
+      0.15,
+      0.08,
+      0.015,
+      0.1
+    ],
+    "rms_errors": [
+      0.003043616806615928,
+      0.0016057328061112655,
+      0.0012461007874378083,
+      0.00786474116336445
+    ],
+    "worst_cycle_indices_zero_based": [
+      18,
+      22,
+      19,
+      18
+    ],
+    "passed": true
+  },
+  "physical_checks": {
+    "checks": {
+      "frozen_step_and_stop": true,
+      "all_frozen_grid_rows_retained": true,
+      "initial_both_off": true,
+      "post_initial_complementary": true,
+      "duty_limits": true,
+      "rowwise_source_kcl": true,
+      "rowwise_midpoint_kcl": true,
+      "current_voltage_domain": true,
+      "diode_voltage_domain": true,
+      "all_declared_load_events": true,
+      "positive_source_power": true
+    },
+    "passed": true,
+    "max_rowwise_source_kcl_residual_a": 1.9539925233402755e-14,
+    "max_rowwise_midpoint_kcl_residual_v": 7.105427357601002e-15,
+    "whole_record_source_power_w": 78.17229413119537,
+    "source_label": "Held recorded gate modes with PWL storage states and KCL; measured -i:Vdc retained separately",
+    "quadrature": "PWL UC/iL; left-held duty and observed gates on [t[n],t[n+1]); no terminal extension"
+  },
+  "event_log": [
+    {
+      "time": 0.0025,
+      "scheduled_time": 0.0025,
+      "type": "load_current_step",
+      "target": "Ipulse",
+      "before": 0.0,
+      "after": 2.0,
+      "name": ""
+    },
+    {
+      "time": 0.005,
+      "scheduled_time": 0.005,
+      "type": "load_current_step",
+      "target": "Ipulse",
+      "before": 2.0,
+      "after": 0.0,
+      "name": ""
+    },
+    {
+      "time": 0.0075,
+      "scheduled_time": 0.0075,
+      "type": "load_current_step",
+      "target": "Ipulse",
+      "before": 0.0,
+      "after": 2.0,
+      "name": ""
+    },
+    {
+      "time": 0.01,
+      "scheduled_time": 0.01,
+      "type": "load_current_step",
+      "target": "Ipulse",
+      "before": 2.0,
+      "after": 0.0,
+      "name": ""
+    }
+  ],
+  "known_difference": "Reference has continuous PI/1us lag and natural PWM with two antiparallel MOSFET diodes; candidate uses existing discrete LP/PI, external limit and grid-sampled complementary IdealSwitch. Its 50ns timing is frozen, not fitted. Diodes may be omitted only within the independently checked inactivity domain and native-refinement evidence; no automatic diode or general device equivalence claimed. UC/iL are continuous across explicit load events; Isrc has switching jumps, so only edge-audited per-carrier-cycle means are acceptance metrics. All samples, including t0 and every root-near Boolean ambiguity, remain in raw artifacts. No fitted shifts, scale, phase or omitted cycles.",
+  "source_current_note": "Both cycle-source quantities are explicitly mode/state-derived; raw measured source columns remain in full saved artifacts.",
+  "reference_accuracy_note": "Conditional numerical evidence, not an absolute global error proof",
+  "reference_accuracy_assumptions": [
+    "Diode-inactivity model and physical equations apply",
+    "Explicit anchor duty error bound holds",
+    "Native UC/filtered-error anchor errors preserve local derivative/clipping bounds; duty error alone is insufficient",
+    "No hidden physical roots; both full native runs require checks"
+  ],
+  "independent_review": {
+    "file": "local_reference/synchronous_buck/comparison_audits/20261109T1054201484912Z_independent/report.json",
+    "sha256": "2962a893dff0636bd452b349dfbadd5a0126a37f1fe230e75a9921ae3866f552"
+  },
+  "visual_review": "Both complete-record plots inspected by root; labels, units, absolute time, full startup and all load changes retained.",
+  "quality_checks": {
+    "locked_sync_packages": 27,
+    "ruff": "passed",
+    "mypy_package_files": 39,
+    "pytest": {
+      "name": "pytest",
+      "errors": "0",
+      "failures": "0",
+      "skipped": "0",
+      "tests": "1236",
+      "time": "478.786",
+      "timestamp": "2026-11-09T18:52:37.727373+08:00",
+      "hostname": "Ktoorain"
+    },
+    "pytest_xml": ".tmp/longterm/buck-final-20261109Tresume01.xml",
+    "pytest_xml_sha256": "08923f2470d57988738efccd3fbd5ac39e432e2ea585ccb2ba794f143971b188",
+    "standalone_log": ".tmp/longterm/b2-resume-20261109-standalone.log",
+    "standalone_source_identity": "Unchanged candidate SHA verified against b2-final-python-source-hashes.json"
+  },
+  "cross_os_ci": "Pending for this code; previous precise-head CI did not start because of an external account billing lock.",
+  "artifact_sha256": {
+    "candidate_cycle_means.csv": "bedab0eb442788b65fd50ffc52558a6cfa0680fea3e6e4dde876a8379040ea36",
+    "candidate_physical_diagnostics.npz": "b586a5d2bba0297ecc3e7f2a3b0d9f6f8afb9a88be1f6f23983bc4707f8f1fdf",
+    "continuous_comparison.png": "fd706ec40067eaca09838e7e2b2f7834f3b42427c3f5b58d29f4991a2636bafe",
+    "cycle_comparison.png": "a95b8452a6dc509a106d2f3cbbae0ded0e2342cb2ed4b8d8444938096b519891",
+    "cycle_mean_errors.csv": "9ce1cc8d9e83e2681444dcf85b632cba3d274414f200c4bc3dac4e8b9becb638",
+    "event_log.json": "549bf37fe97bad23f15636387529b8fd98fb2b3d5fce09c258bdfc50d65e1cae",
+    "input_snapshot.json": "4bd226d8253d03b9da0a683813752b6805ab0861354578b5db407d2f241eeb44",
+    "inputs\\00_audit_reference.py": "1f5e9f805e4fad290bdd59f741f88eacb4d3421d731729bd4bcc0cfb41b8d2a6",
+    "inputs\\01_compare.py": "bfdb9e95188245b863309336b02c1cff884c3c09331094859a4a11b22d2702fa",
+    "inputs\\02_normalization.py": "6ce38ecdb0f80a018edff73ba2d6233500b6e14d553a1f8ef4893bb914093890",
+    "inputs\\03_quadrature.py": "98fc0212d2cf4e77b45fdfdbf9b17d234bf8d6f6cc1504b68ed3784e44fdb610",
+    "inputs\\04_initial_reference_failure.json": "3ecf74ba7fd91a6f27c91b26dbaf1138fcb8700350e068c4d0ce793930e4be94",
+    "inputs\\05_manifest.json": "e75b8832cf76ffb4799b5757d38a3163da49126ddfd56d9303d23abae7076719",
+    "inputs\\06_parameters.json": "a65d62ffa5fb01674a3932c3f89eac8485c7faa2d9b18f879f25808db570aa51",
+    "inputs\\07_qualified_reference_report.json": "2833c2839e79326f9c828747fa88b4eca9ff241610dbefd61046e61d6c49c1e6",
+    "inputs\\08_reference_solver_addendum.json": "73bdad1b9263d0853624878823913ab1905bc005fd84f5a9c3d503252add8d0c",
+    "inputs\\09_acceptance_plan.md": "068094050105f56b603e33ec077666af0c8bcd7002bdff25a0afa65befe7fd6d",
+    "inputs\\10_candidate_quadrature_addendum.md": "4dab9153a1b8187185175226220301252ef1e885394c5ce2ec8951f340281c7f",
+    "inputs\\11_native_logging_api_addendum.md": "9141ede70b423338859d4cb6c9384eb4a2470b88a9e27bd176af99ff522deb13",
+    "inputs\\12_README.md": "7323e2e83613271b0d78e1e7ee13d517c8e112da628c8a36e21088aff16c7481",
+    "inputs\\13_reference_solver_addendum.md": "baeb1297a9299c2a67a8c48e2c2f62e62177c492b229ba44140afdd34705b7e7",
+    "inputs\\14_26_synchronous_buck.py": "b9db60e8de612a7b5e3667c0b34369fe306fc6ce8884eba1c787aca3d6b5caa2",
+    "inputs\\15_comparison.py": "8545b5e8fba8abdc2f20cdc2006342bb428765110c5bf9052103dfb0e349affe",
+    "inputs\\16_provenance.json": "85a5163a7eb95f647cbae1ce39771abce767a7e7982bfb0db68ec2f55b0ad859",
+    "inputs\\17_report.json": "973dcb1874ae5afae6f97e601d7f36dc563a116ebf517fa075c77b13d955e947",
+    "inputs\\19_cycle_means.csv": "2dd73492e70e1c30f6de8970c55bdcf15fac4da5db6a6967846a4eb8a33bc5e5",
+    "inputs\\20_diagnostics.json": "9705b862001ff4ba2f751ab074ed634d5f210632946d8a0d0148092f8d3dc5a9",
+    "pycy.csv": "f4796efd17f98e778771bc4620f11bd5ce733ad0855c0ddbc6a753a09deb6a63",
+    "pycy.json": "e3dc016cd6af6fe14c437fb12d40e9b77c89494c3dc823ec33aaaace07c700e8",
+    "pycy.npz": "089f0ff9b416bfef739a2f9ac9ee386b47a150ff1d3961991e8b2bbbe7fb22e4"
+  }
+}

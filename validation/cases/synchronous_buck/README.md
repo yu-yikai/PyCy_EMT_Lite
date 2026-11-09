@@ -1,7 +1,7 @@
-# 26：同步 Buck 电压闭环候选
+# 26：同步 Buck 电压闭环
 
-**未验收候选：内部物理测试通过，新25/12.5ns真实参考自身精化通过，尚未进行候选商业比较；正式新增算例仍为7项。**
-本例可用于学习与运行，当前结果不能称为已通过 Simulink 对标。默认电路、初值、更新顺序和误差限见
+**默认工况已通过真实 Simulink 比较、独立复核和完整回归。**
+本例仅覆盖下述体二极管不活动域。默认电路、初值、更新顺序和误差限见
 [参数](parameters.json)、[实现前协议](acceptance_plan.md)及[验收清单](manifest.json)。
 
 ## 电路与初值
@@ -62,7 +62,7 @@ uv run --locked python examples/26_synchronous_buck.py
 [参考归一化测试](../../../tests/test_synchronous_buck_reference.py)另用解析数据检查积分和非法输入，不把内部解析解称为商业输出。
 
 ```powershell
-uv run --locked pytest tests/test_synchronous_buck.py tests/test_synchronous_buck_reference.py
+uv run --locked pytest tests/test_synchronous_buck.py tests/test_synchronous_buck_reference.py tests/test_synchronous_buck_comparison.py
 ```
 
 原100/50ns两次真实10ms运行成功，分别103550/204619点；UC/iL两个完整窗自细化通过。
@@ -71,7 +71,7 @@ uv run --locked pytest tests/test_synchronous_buck.py tests/test_synchronous_buc
 [求解配置补充](reference_solver_addendum.md)先行固定25/12.5ns并收紧容差；首个新尝试曾因可用提交内存不足2GiB在仿真前中止，旧记录保留。
 2026-11-09资源恢复后，两次独立完整10ms实际运行成功，406263/809567点，实际ode23tb、原件hash不变、无仿真警错。
 两窗连续量及全部500周期自细化通过，见[新参考报告](qualified_reference_report.json)。最大周期duty差0.000901717、派生源流差0.00681914A，低于原0.0015/0.01A预算；主审与独立复核逐值一致。
-这只证明参考具备当前比较所需的条件性数值证据，不称绝对精度证明或候选商业验收。
+这证明参考具备当前比较所需的条件性数值证据，不称绝对精度证明。
 [候选周期积分约定](candidate_quadrature_addendum.md)在首次候选商业比较前另行提交，明确左保持和模式内源流积分；原50ns、窗口和限值保持。
 
 `audit_reference`只审计两组真实参考，不导入或运行候选。以下命令重放原100/50ns证据，预期保留FAIL；输出目录须为新目录：
@@ -87,4 +87,28 @@ uv run --locked python -m validation.cases.synchronous_buck.audit_reference `
 
 参考源流周期均值由原生iL/UC/duty、解析载波交点及KCL分段重建，明确属于派生量；原始测量样本完整保留，
 不能将稀疏源流跳变PWL插值后积分。`1e-6`是显式条件敏感性假设，还依赖状态锚点导数相容和无隐藏根，不能由AbsTol推定绝对精度。
-真实参考自身合格后，仍须完成候选商业比较、图/报告、教学与全部常规检查、Git提交，才能验收26。
+首次候选比较使用原50ns步长、完整200001点和四次负荷事件；没有移时、删周期或调整限值。
+两连续窗的最大电压误差为0.0234391V，电感电流为0.0104631A，分别低于0.3V和0.15A；NRMSE也均通过。
+全部500周期的最大均值误差如下，详见[数值报告](validation_report.json)：
+
+| 量 | 最大误差 | 固定上限 |
+| --- | --- | --- |
+| 输出电压 | 0.0225724V | 0.15V |
+| 电感电流 | 0.00999371A | 0.08A |
+| duty | 0.0110319 | 0.015 |
+| 派生源流 | 0.0463451A | 0.1A |
+
+独立审计从原始数据另算载波根、分段积分和连续窗指标，差异不超过5e-14。
+完整回归1236项通过（含slow，478.786s），锁定同步、Ruff和mypy通过；教学脚本独立Agg运行通过。
+跨操作系统CI仍待外部账户恢复，不能把本地回归称为CI通过。
+
+取得本机忽略目录中的合格参考与provenance后，可用新运行目录重放比较：
+
+```powershell
+$env:MPLBACKEND='Agg'
+uv run --locked python -m validation.cases.synchronous_buck.compare
+```
+
+入口先核验参考及协议hash，再运行本例并保存完整结果、事件、两张图和报告。
+源流均值仍是明确标识的派生量；连续控制与离散控制、自然PWM与网格PWM的差异，以及参考根误差的条件假设继续适用。
+本结果不推广到死区、二极管换流、反向大电流或任意参数；练习改参后应重新验证。

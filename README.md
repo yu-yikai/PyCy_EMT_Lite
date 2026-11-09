@@ -102,6 +102,7 @@ Complete 01 first, then study storage in 02 and 03 before moving to 04 and 17. O
 | Synchronous machines | [10](examples/10_park_generator_avr_governor.py) | Start at equilibrium, observe voltage and speed after a load step, and distinguish the roles of the AVR and governor. |
 | Discrete control | [11](examples/11_pll_dynamic_response.py) | Observe q-axis voltage and angular frequency in the standalone SRF-PLL loop and explain when it approaches lock. |
 | PWM | [12](examples/12_two_level_pwm_generator.py) | Compare ideal-switch SPWM gates with RL current and distinguish switching ripple from the fundamental. The [real reference study](validation/cases/two_level_pwm/README.md) records a remaining waveform mismatch. |
+| Closed-loop synchronous Buck | [26](examples/26_synchronous_buck.py) | After 02 and 12, connect existing filter, PI and limiter blocks; observe startup overshoot and pulsed-load recovery. [Circuit, operating limits and real Simulink comparison](validation/cases/synchronous_buck/README.md). |
 | Integrated VSC-HVDC | [18](examples/18_three_terminal_vsc_hvdc.py) | Follow voltage and power after an AC fault through three two-level bridges, independent PLL/dq loops and a bipolar DC network. |
 
 [The cascaded-RC reference guide](validation/cases/cascaded_rc/README.md) records the real Simscape run, fixed acceptance criteria and reproduction commands. Teaching scripts plot their own waveforms; independent validation reads vendor reference data.
