@@ -113,3 +113,138 @@ DSD/DSO使六支路I日志落后一记录；1200对`V[k],R[k],I_record[k+1]`残�
 电压方程残差≤3.91e-16 kV。DSD/DSO支路I记录次序不作波形移相。
 六路三相1 ms、完整0.2 s和默认12新商业比较仍未验收；原MathWorks2% FAIL保持。
 本轮没有项目Python源码/依赖变化，109个源码hash与已通过1244全量前一致，不把旧全量称为本轮重跑。
+
+## 2026-11-10三相保持v3：编译前重载端口拒绝
+
+D仍为上述B1研究根。保存XML库存审查的两处缺口（重复ID/参数名和额外Frame被过滤）均保留原失败，
+中断132011稿又拒绝了合法Main无ID元数据，未冻结/未原生运行。v3仅允许原件完整相同的paramlist和空grouping，
+其余全部孩子逐一检查；双正常、24反例拒绝通过。源包D/held_bridge_research/20261110T012542208437Z_inventory_fix_v3，
+75项manifest SHA `7383d7be87ba0382c09b1828af7eff9575e48e3f8513624253a628ec9b10c68f`；
+独审 `local_reference/native_static_reviews/b1_held_bridge_v3_20261110T012725578000Z/report.json`
+SHA `999e414f13c8b4c787a02d4d3e35594f940c294829a40317616f30a951f1ca60`。
+这些是静态和隔离副本保存守卫结果，不能认证原生连通性。
+
+实际粗步run `D/n/20261110T012944216380Z` 在读取第36个组件Ts_s时拒绝，worker1/14.8018653 s；
+没有到setter、改接、新增元件、save、build或run，复制工程仍与00c3输入逐字相同。
+Ts_s定义/参数/codec/端口类型不变，唯OUT.x由原创建记录70变为原生重载69；原输出标签仍在70且无连线，
+不能假定偏移无害。已抓36个组件中只有该端口差异，不能据此推断剩余284个端口或完整图。
+库名义端口仍在x+2；同类h_s未移，具体原生重载/图形原因尚未证明。
+
+| 实际归档 | SHA256 |
+|---|---|
+| terminal.json | `67dddc9505b9771a17b67e31ba39cd01b71e69ec1f919f72c8593107cd55000c` |
+| manifest.json（33项全部核同） | `eed419bf054ecffab97c96fbde3e5ac4ea4f008a3b3ddbd54cca5d6483b3ffca` |
+| before_components.json（36项） | `0112baa1f8dfe4ab4fe3848c7b83b5926042569ea54dc4244c15a80141914c98` |
+| worker.stderr.txt | `6edc2387c4806791c36fbabd125d174c486cede9475e9eb9a70d9a6ef101e135` |
+
+自有进程空、monitor/cleanup错误空，源/profile/父环境未变；native_run_returned=false，build_errors=null。
+这不是科学比较FAIL，亦不改变此前20 µs原语资格。v3细步长不启动；下一步准备独审的只读全320组件/163线
+抓取入口，先核所有重载差异及实际网络，在所有setter/save/build/run前硬停。原12和原MathWorks2% FAIL保持。
+先前分析器130950及其绑定v3的派生版012748均支持5/2.5 µs配对分析；后者9ccb37ef…不能用于这个无波形失败run；
+协议340cf3a6…和阈值不变，后续来源包变化必须另建绑定版本。
+
+## 2026-11-10完整只读重载抓取与单线修正依据
+
+捕获包 `D/load_geometry_capture/20261110T013730Z_capture_only_v1`，19项manifest
+`6f558354bbb4f77235307fd521f3b3046b64c6a95c28d71b3a5838787ee279d7`；
+builder `dd189cae923b97ffbca81d79958b4140b0e3df2bc70b9ca8dc5418a586687b11`，
+driver `da430d882d6d6a14f1079eaf4e1338565e0c7f2aacb3571a9bd85ae5536a7b40`。
+已检查不存在原生setter/save/project.build/run路径，保留原420 s资源/身份/清理守卫。
+
+实际 `D/n/20261110T014409445520Z` 终态为READ_ONLY_CAPTURE_COMPLETE_NO_MUTATION_OR_SOLVE，
+162.0826488 s，预定CaptureComplete异常/worker1，diagnostic_capture_completed=true，
+guarded_driver_completed=false；不称仿真PASS。自有进程空，原件/profile/父环境未变。
+全部320组件定义/参数/codec、163条线顶点逐项相同，唯Ts_s OUT70→69；其原生location67与源XML68不同，
+其他319个location均同原件。主库OUT相对原生location仍+2，所以不再把现象猜成主库端口偏移。
+具体加载/实例位置变化的原因仍未证；Ts_s和h_s末次端口重读均稳定，磁盘副本仍为00c3。
+
+| 实际run归档 | SHA256 |
+|---|---|
+| manifest.json（42项主审/独审全核） | `b89a771447cc7602246f0bedda04276b2d2849bc37ce8a4d62f4a6cd6fdf62f7` |
+| terminal.json | `e688b537c1b5e657303d78388e77952381381750a68c9734aad866ec8952bf24` |
+| capture_result.json | `27981f4464882d72779cefd6746dc37dc8fd4a40d78d6e64e92d79c99d817fde` |
+| loaded_components.json | `a7e05122c1ad2fc2d9e2ac2e6fb941eeac75990c12ebaa21a50a055995afe0af` |
+| loaded_wires.json | `85911836d6b5675d49166772e3be4f538642314106ccd163ec5b92e652e4d927` |
+| loaded_graph.json | `b2b50338cd63760a3a441d67900f8f15906c1727ae4e9c2481c1102b9bab8405` |
+
+422端口/102预期网只有signal:Ts_s分为两段，零short/X交叉/overlap。
+独审 `local_reference/native_static_reviews/b1_complete_load_geometry_20261110T014556040427Z/report.json`
+SHA `7c19d8e6557b716cc61ceb8e60d0068c69a1fff7ff634947eff298ee2588a431`；
+其one_wire_repair_proof/report.json SHA `c95a46739a5462489a25aaf54c96ae80eb99267b7315c82016a43423c63ecd23`
+以连续线段/端口独立算法证明只加(69,60)→(70,60)线可恢复422端口/102网全连通，且段上仅两个目标端口。
+all_location_crosscheck/report.json SHA `8324706dbe18054409bfbed92860fa4c1f08384ec1a0550500221a0711e733ef`。
+这是最小几何修正的依据，不认证后续save或运行；旧XML位置守卫保持，保存结果尚未实测。
+
+新 `D/held_bridge_analysis/20261110T015018895673Z_geometry_addendum/protocol.json`
+SHA `6e9bd7764a2e32a3e73a5697a2f48fe88fdba13fa77dadacadfef614450c8493`，仅线数184→185；
+数值预算/物理方程与340cf3原协议完全相同，尚无新波形。后续单线版本见下一节；
+原12、原MathWorks FAIL和正式完成9项不变。
+全部109项目Python文件集合/hash与1244全量前一致，核心/依赖相对起点main不变；本轮未机械重跑旧全量。
+
+
+## 2026-11-10单线修复 v4：冻结与运行入口
+
+源包为 `D/held_bridge_research/20261110T015230Z_Ts_one_wire_v4`。24 文件清单全部核同，
+manifest SHA `2cec5b4405083ccc0e91f61be66eb9f14374839c52e75fdb1ac649a8b7c6a679`。
+只据完整原生捕获把 Ts_s.OUT 预期坐标改为 (69,60)，增加一段到原标签 (70,60) 的导线。
+不主动移动原组件；69 个控制数学对象、31 个电气对象和原导线保持。
+总数为 356 组件、185 线、471 端口、110 网络，保存库存为 541 对象及原两项元数据。
+
+两步长离线接线通过；30 项 XML 反例、4 项接线故障和两项过期证据均被拒绝。
+原保存 XML 的组件坐标守卫保持严格，未预先允许 Ts_s 保存到新坐标。
+独审 `local_reference/native_static_reviews/b1_one_wire_v4_20261110T015420439121Z/report.json`
+SHA `85675153792e6f001ef1b91f65597159f398bf146bf868d98f2abff8a1000367`，
+最终绑定 `final_package_binding/report.json`
+SHA `47346ed4fcb769388350408205b1ba41e1eab65e21eb05ed1eadb75491048a8d`。
+
+| 冻结入口 | SHA256 |
+|---|---|
+| builder_held_bridge_5us.py | `7ea821ee2cc3b857d40a78a9a59d8d4134dbe5d55402fb6e67582cbc183ce4ef` |
+| builder_held_bridge_2p5us.py | `27579e2474fe1c64cc1b9de735483d7987bfee49f00f592a3cf70a7a6c83dd63` |
+| b1_native_held_bridge_5us.py | `badf51a5f2499c5ed1aff53376fbcf4ee67825633e6220afc8303d2644211975` |
+| b1_native_held_bridge_2p5us.py | `449be6f37f72f79cc5d8c058d2d163f0a907d5c2c5dcffdde1acac7a7da1ee00` |
+
+分析器为 `D/held_bridge_analysis/20261110T015936218946Z_Ts_one_wire_v4/analyze.py`，
+SHA `d8518e6f74a88171423fe60779e0823bb0427bc15934156f4078b1f591970159`；
+7 文件 manifest SHA `1baaafdcee5a972aa4b00772b17090693cb58fe130351206605711ee167bb7ff`。
+绑定 SHA `311d11aed064bcc27f0bf1ed17204e77cd9763989a489d11b6ed84d54b7e3cad`，协议仍为 `6e9bd776…`。
+分析器仅更新源包绑定、协议身份和导线数，全部方程、预算与其他函数保持。
+独审 `analyzer_binding_review/report.json`（同上述独审目录）
+SHA `91ca96640782b3ec2982c40dc27c97c946ec3398047c2eb98ca3bab9e37d31ac`。
+上述冻结及审查都在新波形之前；资源、原件、profile 和清理保护不变。
+
+
+### v4 粗步长实际保存结果：尚未编译
+
+实际 run `D/n/20261110T020027875119Z`，256.4880211 s，worker1。
+原生新增 36 组件、22 条线（含修复线）并保存；随后完整回读 320 个原组件和 163 条原导线，
+全部定义、参数、端口和导线顶点通过原生检查，只有预设的 12 个标签 Name 改接。
+保存后全图通过：356 组件、185 线、471 端口、110 网络，开路、短接、交叉和重叠均为空。
+
+保存 XML 检查首先在 `revisor` 处拒绝，因此没有 build/run，也没有新波形。
+完整读盘观察到修订信息更新、Ts_s 的 x 从 1224 持久化为 1206（68→67 网格）、
+Main 画布 size 从 0 变为 4、12 个改名标签的显示宽度各增加 30 像素，Main CRC 改变；
+顶层 Station 的 hierarchy link 从 645246283 变为 1700560261，嵌套 Main link 1978988629 不变。
+这些观察用于准备有明确范围的保存检查，不忽略任意坐标、元数据或物理参数变化；
+剔除新增 36 组件和 22 线、逐项还原上述七类差异后，整个规范化项目树与原件一致。
+新增组件的完整编码参数、全部新增线顶点也与原生回读相同。v4 的细步长入口不运行。
+两个顶层 link 值均不是文件中的对象 id；Station 定义及嵌套 Main 的目标对象保持相同。
+link 的具体含义未证明，不据此虚构平台语义。
+
+| 实际归档 | SHA256 |
+|---|---|
+| manifest.json（51 文件全部核同） | `0499fc9dea9dfae80a1c1a721bcfc0233adaa962388af231d943823221c67845` |
+| terminal.json | `ac221078e465a4f92b56e24e5c3b0d52d7167340ed45509b7bd065b23f448ec1` |
+| after_save_graph.json | `7d365669c069edbbedc7c10245eb57e599262958a4e6e33eac92403777ab1591` |
+| project/vdiv.pscx | `754f4584efca82da8a41c458c007be5db702f538a66af984441194b666b8d38d` |
+
+monitor/cleanup 错误为空，自有进程为空，源、依赖、profile 和父环境未变。
+这是保存守卫拒绝，不是数值比较 FAIL；B1 仍进行中，完整 0.2 s 未验收，原 MathWorks FAIL 保留。
+
+
+完整读盘核对记录为 `D/save_metadata_review/20261110T020900Z_v4_actual/report.json`，
+SHA `f29fe59406a055949e17f6fc21219f4c2c0851f1a6aafd8e9fa8e369966c8d45`；
+其 manifest 为 `2cf3453d9a42ed0180f04efc399e2e0d2342305e08d02572ae027ea3db3a2f91`。
+实际修订秒数 1794276148 位于本次 save 调用的 02:02:27.879874–02:02:28.116686 UTC 内。
+新版本将检查同一修订者及本次 save 的整数秒范围，只允许已实测的单个坐标和画布尺寸变化；
+原组件改用完整属性比较，并只允许上述 12 个标签的宽度增量，其余属性保持严格。
