@@ -1,10 +1,21 @@
 # 恢复与下一步
 
-2026-11-10（Asia/Shanghai）。长期目标active，分支`codex/emt-examples-longterm`。
+2026-11-10（Asia/Shanghai）。长期目标paused（用户主动暂停），分支`codex/emt-examples-longterm`。
 先读tasks/progress/decisions/validation_status，并核实际分支、HEAD、工作区和远端。
 任务检查点为最新功能验收`ae9fe3629ad9617853979b0ef58d4d8319239592`；已正常push且真实远端核同。
 后续文档提交在其后，以实际Git历史交叉核对，不把checkpoint当成实时HEAD。
 不操作main、不强推、不覆盖未提交文件；开发分支常规提交及里程碑推送已获授权。
+
+## 暂停现场
+
+用户已明确暂停，不自动恢复任务。已推送里程碑 `2f3846c`（六路20 µs资格），正式验收checkpoint仍为 `ae9fe36`。
+完整v6来源：`D/held_bridge_research/20261110T031601744130Z_six_observers_v6`，27文件manifest `ff8a2dd3…`；
+分析器：`D/held_bridge_analysis/20261110T032215391716Z_six_observers_v6/analyze.py`，`fda6e359…`，18文件manifest `ae1e1db2…`。
+协议 `837a0b76…` 在新波形前冻结，旧物理预算不变；来源和分析器独审均通过。
+首次粗步 `D/n/20261110T033233257295Z` 在保存后回读时按暂停指令终止；未build/run，无数值结果。
+372.6662254 s、worker1、owned空，原件/profile/父环境未变。52文件归档已核。
+暂停注记在 `D/paused_runs/20261110T033233257295Z/pause.json`，放在run外，不改原terminal/manifest。
+显式恢复后先核分支/状态/冻结来源，再在新目录运行粗步；本次中断run不得分析或启动细步。现无后台原生进程。
 
 ## 当前事实
 
@@ -23,11 +34,11 @@ B1 非保持同数学短模型真实运行 1 ms/201 行/46 通道，当前参考
 证实六 Pulse、六保持值、五共享点、四中点和同 tick 单 varR，资格 `b10ecb6e…`。
 该资格包括六个 Pulse 观察器，不能直接转移到移除/改线后的网络或六路互补完整桥。
 v5 保存检查通过但编译五处 Pulse 悬空，无三相保持波形；所有已启动 run 均终态且自有进程清空。
-下一步为完整桥方案 B 最小实现、来源审查和实际 1 ms 双步长；完整 0.2 s 仍未验收。
+完整桥方案 B 来源和分析器已冻结、独审通过；首次粗步因用户暂停中断。实际 1 ms 双步长及完整 0.2 s 仍未验收。
 原12及MathWorks2%波形FAIL保持，不以新短探针覆盖原失败。
 全部run、脚本身份与完整hash集中在[本轮证据索引](experiments/native_reference_attempts_20261109.md)。
 
-## 执行顺序
+## 明确恢复后的执行顺序
 
 1. **B1 先补完整桥 1 ms 双步长。** 见[同数学参考设计](experiments/spwm_matched_reference_design.md)和[本轮证据索引](experiments/native_reference_attempts_20261109.md)。
    D 为索引中的 B1 研究根。已合格六路小模型源为 `D/junction_micro_research/20261110T023500Z_endpoint_segments`，

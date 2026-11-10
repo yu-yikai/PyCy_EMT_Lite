@@ -2332,8 +2332,8 @@
       },
       "mathematical_compatibility": "Short probe uses raw native TIME and standard math/comparators, six bilateral varrlc pure-R branches, floating1ohm+1mH phase loads and400V ideal source. All1206 observed gate values match the default12 formula evaluated at retained raw native TIME, all six R inputs are0.001/1e9ohm, and zero initial current/KCL/TR relations were checked. Generated12-significant-digit phase/omega literals and ASCII timing precision remain explicit boundaries; this is not full-run bitwise controller equivalence.",
       "blockers": [
-        "Full0.2s native reference, its refinement scope and fixed comparison protocol remain unfrozen until the full1ms heldbridge pair is qualified; original MathWorks2% waveformFAIL remains.",
-        "Six-sampler20us endpoint-segment network WITH observers is qualified; fullbridge optionB must still be implemented/frozen/reviewed/run. Expected384components/204wires/506ports/117nets/60channels. Oldv5 build5Pulse opens remains preserved and its fine run must not start."
+        "User explicitly paused goal; do not resume automatically. Fullv6 source/analyzer static review passed but its first coarse1ms attempt was user-interrupted after save readback,beforebuild/run. New coarse run required after explicitresume; interruptedrun must not be analyzed or paired.",
+        "Full1ms heldbridge pair,full0.2s reference qualification/protocol and candidate comparison remain pending; originalMathWorks2%FAIL unchanged."
       ],
       "sha256": {
         "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/report.md": "2ef092f9ad188cd2b63155ddbf9623317631f2a6ce98935e77cf34c0212d5906",
@@ -2404,7 +2404,16 @@
         "../native_static_reviews/b1_junction_actual_20261110T025715280858Z/coarse/report.json": "7d1a329f0ad63e993f01af70dccdd70f31b0d5aa668ee0788daad7af894bc8e6",
         "../native_static_reviews/b1_junction_actual_20261110T025715280858Z/fine/report.json": "844180e1a9c6f5ba5326f6eafe5d05a68823d4191d8fb0c72ae3d0edaf458155",
         "../native_static_reviews/b1_junction_actual_20261110T025715280858Z/initial_analyzer_metadata_correction/report.json": "f4a0e090c766ae582282da786edc350e26f6a61d6ae78da59bff83356e991ab8",
-        "../native_static_reviews/b1_analyzer_cache_fix_20261110T030523813426Z/report.json": "e9e1fc713e5735e66bb75f539274e7d4adeaee1e460202a2e9c4f0bb54b38d37"
+        "../native_static_reviews/b1_analyzer_cache_fix_20261110T030523813426Z/report.json": "e9e1fc713e5735e66bb75f539274e7d4adeaee1e460202a2e9c4f0bb54b38d37",
+        "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/held_bridge_research/20261110T031601744130Z_six_observers_v6/manifest.json": "ff8a2dd30be7af0d7b5e58dba77820cae5ce73a1ae47a23d63985062f4a6a985",
+        "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/held_bridge_research/20261110T031601744130Z_six_observers_v6/probe_plan.json": "837a0b76bb1b1e7343abe2d614949edbadf3049a7b40fe976fd704654c8fe752",
+        "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/held_bridge_analysis/20261110T032215391716Z_six_observers_v6/manifest.json": "ae1e1db23573c03fda818e9ce5751107d89783eb44c157304d86b969bfe93a36",
+        "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/held_bridge_analysis/20261110T032215391716Z_six_observers_v6/analyze.py": "fda6e3599a012f77467618200fa7b449053231bba346062e63c3f84e769d5212",
+        "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/n/20261110T033233257295Z/manifest.json": "e9e326dc2414e7d4a9aeca304fb3de25333ede7363b6ae7653122b707ee9fc12",
+        "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/n/20261110T033233257295Z/terminal.json": "ed7aad3a8459743114067d174618959bb84b04bd297886e5471ac32e5f0678e8",
+        "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/paused_runs/20261110T033233257295Z/pause.json": "7a0565c5ae8d157d32ce4ab36c4543c252802fb3c496284882c9c329661f66ff",
+        "../native_static_reviews/b1_full_v6_20261110T033000Z/report.json": "8c1e1aff55cfe9769e57334c82a6d2181f48625dcd3f75e14f78bf324f8f15e4",
+        "../native_static_reviews/b1_full60_analyzer_20261110T033500Z/report.json": "24c3d44a2054e9a7d0fc07284bcb753dc17338964bdca08c68488fc7729288b5"
       },
       "license_notes": "Installed library excerpts, donor original, scripts and raw evidence remain ignored locally; redistribution permission not asserted.",
       "original_static_builder_preparation": {
@@ -2591,7 +2600,7 @@
         "metadata_correction": "Old5c457 incorrectly listed all19 absolute-pinned source files as cache. Newbb3f resolves path identities; all numerical functions/protocol and coarse artifacts unchanged; old result preserved."
       },
       "held_bridge_next_geometry": {
-        "status": "selected_prospective_not_native_executed",
+        "status": "frozen_source_independently_reviewed_native_attempt_user_interrupted",
         "option": "B",
         "record": "local_reference/two_level_pwm/matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/junction_followup_plan/20261110T025800908018Z/selection_addendum.json",
         "sha256": "f41e5d8c9698c0c7b747f0fa4797cb4687105ddac32abd2c7a32d3451a6d051d",
@@ -2604,6 +2613,22 @@
           "objects": 588
         },
         "delta": "Preserve old objects/PGB. Six new Pulse observers atx300,seven newPGB atx400;globalobserver at310,340;six-segment trunk. Requires new fullsource/offline/native checks."
+      },
+      "held_bridge_v6_attempt": {
+        "run": "20261110T033233257295Z",
+        "classification": "user_interrupted_before_build_run_not_numerical_FAIL_or_PASS",
+        "goal_paused": true,
+        "stage": "builder_after_save_ports_off_c_l",
+        "elapsed_s": 372.6662253999966,
+        "worker_returncode": 1,
+        "native_build_errors": null,
+        "native_run_returned": false,
+        "native_completion_observed": false,
+        "remaining_owned": [],
+        "source_profile_parent_environment_unchanged": true,
+        "analyzed": false,
+        "pause_record": "local_reference/two_level_pwm/matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/paused_runs/20261110T033233257295Z/pause.json",
+        "pause_record_sha256": "7a0565c5ae8d157d32ce4ab36c4543c252802fb3c496284882c9c329661f66ff"
       }
     }
   ],

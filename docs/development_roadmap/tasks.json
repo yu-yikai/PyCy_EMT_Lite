@@ -386,7 +386,7 @@
         "mw-two-level-pwm-r2025a",
         "pscad-derived-bilateral-spwm-v5"
       ],
-      "validation": "原12和MathWorks固定2%波形FAIL保留。同数学PSCAD非保持短模型已真实运行1ms/201行/46通道，400V、1206门极值、拓扑和RL/TR经独审，只使参考runnable。此前两个sampler/单varR的20us原语资格保留。v3重载Ts_s输出左移一格，完整只读捕获定位后以单线修复；v4保存后XML守卫拒绝，v5限定保存检查通过，但v5编译报告5个Pulse悬空，未运行、无三相保持波形。新六路分段扇出小模型已实际完成5/2.5us双步长：143组件/77线/184端口/40网，27通道全部5/9行含t0/末点，六Pulse、六保持值、5共享点、4中点与同tick单varR均通过独审；最大物理残差3.91e-16原始kV/kA。资格b10ecb6e只覆盖含六个Pulse观察器的20us标量网络。完整桥选择保留旧对象、只缩短新增观察器支线的方案B，预期384/204/506/117、60通道；尚未原生执行。分析器修复绝对/相对路径误分类，数值函数/协议不变，旧误标报告保留。详细run/hash见证据索引。",
+      "validation": "原12和MathWorks固定2%波形FAIL保留。同数学PSCAD非保持短模型已真实运行1ms/201行/46通道，400V、1206门极值、拓扑和RL/TR经独审，只使参考runnable。此前两个sampler/单varR的20us原语资格保留。v3重载Ts_s输出左移一格，完整只读捕获定位后以单线修复；v4保存后XML守卫拒绝，v5限定保存检查通过，但v5编译报告5个Pulse悬空，未运行、无三相保持波形。新六路分段扇出小模型已实际完成5/2.5us双步长：143组件/77线/184端口/40网，27通道全部5/9行含t0/末点，六Pulse、六保持值、5共享点、4中点与同tick单varR均通过独审；最大物理残差3.91e-16原始kV/kA。资格b10ecb6e只覆盖含六个Pulse观察器的20us标量网络。完整桥选择保留旧对象、只缩短新增观察器支线的方案B，预期384/204/506/117、60通道；已冻结并独审；首次粗步在保存后回读时按用户暂停终止，未编译/仿真，不记数值FAIL。分析器修复绝对/相对路径误分类，数值函数/协议不变，旧误标报告保留。详细run/hash见证据索引。",
       "acceptance": "模型一致性解释、预设基波RMS/功率方向/纹波判据和真实波形比较",
       "status": "in_progress",
       "files": [
@@ -404,8 +404,8 @@
         "8a65b6e"
       ],
       "blockers": [
-        "六路20us小模型双步长已合格，但不认证六路互补门极完整桥。须先冻结方案B最小完整来源、60通道/几何补充和新分析绑定，独审后顺序实跑1ms双步长。",
-        "完整0.2s协议、自细化和原12新商业比较尚未验收；原MathWorksFAIL保持。不运行旧v3/v4/v5细步长，不量化TIME、回放候选门极或删点。"
+        "用户已暂停长期目标。完整v6来源和60通道分析器已冻结并独审；粗步run033233257295Z在保存后回读期间按用户指令终止，未编译/仿真，清理正常。显式恢复后新建运行目录重做粗步，当前中断run不得数值分析或配对细步长。",
+        "完整1ms双步长、0.2s参考自细化和原12新商业比较仍未验收；原MathWorks2% FAIL保留。"
       ]
     },
     {
@@ -595,5 +595,15 @@
     }
   ],
   "execution_status": "active",
-  "pause_checkpoint": "2026-11-09 pause preserved in .tmp/longterm/paused-20261109T0925.json as history; goal resumed; interrupted run is not a PASS. Separate later full run completed1244 tests; current acceptance checkpoint ae9fe36, subsequent documentation commits are checked against actual Git history."
+  "pause_checkpoint": {
+    "reason": "explicit_user_pause",
+    "last_pushed_milestone": "2f3846c3d62c6883ef9d9aa1706d3513bf2b21dd",
+    "record": "local_reference/two_level_pwm/matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/paused_runs/20261110T033233257295Z/pause.json",
+    "record_sha256": "7a0565c5ae8d157d32ce4ab36c4543c252802fb3c496284882c9c329661f66ff",
+    "interrupted_run": "20261110T033233257295Z",
+    "stage": "builder_after_save_ports_off_c_l",
+    "owned_processes_remaining": 0,
+    "resume_requires_explicit_user_instruction": true
+  },
+  "goal_status": "paused"
 }

@@ -401,3 +401,22 @@ SHA `e9e1fc713e5735e66bb75f539274e7d4adeaee1e460202a2e9c4f0bb54b38d37`。
 选择补记 `selection_addendum.json` SHA `f41e5d8c9698c0c7b747f0fa4797cb4687105ddac32abd2c7a32d3451a6d051d`。
 完整预期库存 384/204/506/117、60 通道、588 保存对象。新完整源、协议几何补充、独审和实际 1 ms 双步长仍须分别完成。
 本阶段所有已启动原生 run 已终态；项目 109 个 Python 源文件仍与 1244 全量前快照相同，未重复全量测试。
+
+### 用户暂停：完整 v6 来源已冻结，首次粗步未编译
+
+完整来源 `D/held_bridge_research/20261110T031601744130Z_six_observers_v6` 已冻结，27 文件 manifest `ff8a2dd30be7af0d7b5e58dba77820cae5ce73a1ae47a23d63985062f4a6a985`；
+协议 `probe_plan.json` `837a0b76bb1b1e7343abe2d614949edbadf3049a7b40fe976fd704654c8fe752`。保持原69数学/31电气，只有预定分段接线、七观察器与60通道补充，预算不变。
+来源独审 `local_reference/native_static_reviews/b1_full_v6_20261110T033000Z/report.json` SHA `8c1e1aff55cfe9769e57334c82a6d2181f48625dcd3f75e14f78bf324f8f15e4`。
+分析器 `D/held_bridge_analysis/20261110T032215391716Z_six_observers_v6/analyze.py` SHA `fda6e3599a012f77467618200fa7b449053231bba346062e63c3f84e769d5212`，
+18 文件 manifest `ae1e1db23573c03fda818e9ce5751107d89783eb44c157304d86b969bfe93a36`，协议字节复用来源；九项有限检查通过，原物理/源公式不变。
+分析入口独审 `local_reference/native_static_reviews/b1_full60_analyzer_20261110T033500Z/report.json` SHA `24c3d44a2054e9a7d0fc07284bcb753dc17338964bdca08c68488fc7729288b5`。
+
+root 唯一粗步 `D/n/20261110T033233257295Z` 保存后回读时收到用户暂停指令。
+按路径、完整命令、创建时刻、PID及父监控身份核对，仅终止自有worker17644，监控19976保留并完成原有精确清理。
+worker1，372.6662254 s，末阶段 `builder_after_save_ports_off_c_l`；native_build_errors=null、run返回false、完成标记false。
+尚未编译或仿真，没有数值验收；源/profile/父环境未变，自有进程、monitor和cleanup错误均为空。
+52归档SHA/size核同，manifest `e9e326dc2414e7d4a9aeca304fb3de25333ede7363b6ae7653122b707ee9fc12`；terminal `ed7aad3a8459743114067d174618959bb84b04bd297886e5471ac32e5f0678e8`。
+原terminal的stop_reason为null，因为外部按用户指令终止worker；不修改原件，另存暂停注记
+`D/paused_runs/20261110T033233257295Z/pause.json` SHA `7a0565c5ae8d157d32ce4ab36c4543c252802fb3c496284882c9c329661f66ff`。
+这是用户中断，不是数值FAIL/PASS；无粗步分析、细步启动或完整0.2s结果。等待明确恢复后新建run目录重新粗步。
+六路20us资格已在2f3846c正常推送；正式新增9及功能checkpoint ae9fe36不变。所有自有原生进程均已结束，无后台继续。
