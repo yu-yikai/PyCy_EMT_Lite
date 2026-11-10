@@ -2333,7 +2333,7 @@
       "mathematical_compatibility": "Short probe uses raw native TIME and standard math/comparators, six bilateral varrlc pure-R branches, floating1ohm+1mH phase loads and400V ideal source. All1206 observed gate values match the default12 formula evaluated at retained raw native TIME, all six R inputs are0.001/1e9ohm, and zero initial current/KCL/TR relations were checked. Generated12-significant-digit phase/omega literals and ASCII timing precision remain explicit boundaries; this is not full-run bitwise controller equivalence.",
       "blockers": [
         "Full0.2s same-input native reference and its5us-control-preserving2.5us electrical refinement protocol remain unfrozen; short-run gate equality does not establish all40001 control points or floating boundary decisions.",
-        "单线v4已实际保存且原生356/185/471/110全图通过，保存XML在revisor处拒绝，未build/run。须独审全部保存差异并冻结限定修正后的新版本；1ms双步长和完整0.2s仍未验收，原语资格和原MathWorksFAIL保持。"
+        "v5保存XML和356/185/471/110几何图通过，但原生编译5个sampler Pulse悬空，无Main.f/inf/波形且未run。先用小型六路扇出诊断核验原生分支连接规则，再改完整模型；原语资格和原MathWorksFAIL保持。"
       ],
       "sha256": {
         "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/report.md": "2ef092f9ad188cd2b63155ddbf9623317631f2a6ce98935e77cf34c0212d5906",
@@ -2373,7 +2373,14 @@
         "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/held_bridge_analysis/20261110T015936218946Z_Ts_one_wire_v4/analyze.py": "d8518e6f74a88171423fe60779e0823bb0427bc15934156f4078b1f591970159",
         "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/n/20261110T020027875119Z/manifest.json": "0499fc9dea9dfae80a1c1a721bcfc0233adaa962388af231d943823221c67845",
         "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/n/20261110T020027875119Z/terminal.json": "ac221078e465a4f92b56e24e5c3b0d52d7167340ed45509b7bd065b23f448ec1",
-        "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/n/20261110T020027875119Z/after_save_graph.json": "7d365669c069edbbedc7c10245eb57e599262958a4e6e33eac92403777ab1591"
+        "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/n/20261110T020027875119Z/after_save_graph.json": "7d365669c069edbbedc7c10245eb57e599262958a4e6e33eac92403777ab1591",
+        "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/held_bridge_research/20261110T021300Z_save_exact_v5/manifest.json": "72a3b74bc09440fe1ad4a05a19a2ef033e7db5e08c701c21e824eb877f8e004d",
+        "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/held_bridge_analysis/20261110T021727588195Z_save_exact_v5/manifest.json": "8517deafc91375c57592a623c530f5b8e59983b8a867fecc5bf8f17660412d0d",
+        "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/held_bridge_analysis/20261110T021727588195Z_save_exact_v5/analyze.py": "6ba6251a320b82414854fa87d968a43afd752672894bcedf86ee5ee14ceecb66",
+        "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/n/20261110T022135566419Z/manifest.json": "0104d573c901096f07433008373b65615aed4275640797d035e287605ed6f481",
+        "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/n/20261110T022135566419Z/terminal.json": "383b7d10d6ee9f9c68918dbfaf42a382bd3f087d6f5751a8ca1b2efad101ea68",
+        "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/n/20261110T022135566419Z/build_messages.json": "af66f24eeb00ed1948123ea747a5435c0216bdfc9e885937041e6ceb18d8dad1",
+        "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/n/20261110T022135566419Z/saved_xml_guard.json": "7264be61040e08235f2f2c24af760e1418356ecf5429cbd98490fa0a2e397e07"
       },
       "license_notes": "Installed library excerpts, donor original, scripts and raw evidence remain ignored locally; redistribution permission not asserted.",
       "original_static_builder_preparation": {
@@ -2510,6 +2517,20 @@
         "build_called": false,
         "sim_called": false,
         "saved_XML_rejection": "revisor",
+        "remaining_owned": [],
+        "source_profile_parent_environment_unchanged": true
+      },
+      "held_bridge_v5_attempt": {
+        "run": "20261110T022135566419Z",
+        "worker_returncode": 0,
+        "elapsed_s": 201.1054258000222,
+        "guarded_driver_completed": true,
+        "guard_scope": "process_lifecycle_only_not_build_run_success",
+        "native_build_errors": 5,
+        "native_run_returned": false,
+        "saved_XML_guard_passed": true,
+        "geometric_graph_passed": true,
+        "waveform_rows": null,
         "remaining_owned": [],
         "source_profile_parent_environment_unchanged": true
       }

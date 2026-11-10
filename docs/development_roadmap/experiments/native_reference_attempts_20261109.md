@@ -248,3 +248,98 @@ SHA `f29fe59406a055949e17f6fc21219f4c2c0851f1a6aafd8e9fa8e369966c8d45`；
 实际修订秒数 1794276148 位于本次 save 调用的 02:02:27.879874–02:02:28.116686 UTC 内。
 新版本将检查同一修订者及本次 save 的整数秒范围，只允许已实测的单个坐标和画布尺寸变化；
 原组件改用完整属性比较，并只允许上述 12 个标签的宽度增量，其余属性保持严格。
+
+
+## 2026-11-10限定保存检查 v5
+
+独立完整核对：`local_reference/native_static_reviews/b1_v4_saved_XML_20261110T021128309961Z/report.json`，
+SHA `087a27d9785e4a38f5ada4ff62683b188b40f931ab536deef8c654006743a33b`。
+其独立连通图和七类差异的全树还原均通过；只还原三个拦截字段后，原 v4 保存守卫通过。
+
+新源包 `D/held_bridge_research/20261110T021300Z_save_exact_v5` 的 25 文件 manifest 为
+`72a3b74bc09440fe1ad4a05a19a2ef033e7db5e08c701c21e824eb877f8e004d`。
+v5 只限定已观察到的保存变化：同一修订者、本次 save 调用前后整数秒范围、单个 Ts_s 的 x=1206、
+Main.size=4。其余 Main 元数据保持；原组件改为完整属性比较，只允许上述 Ts_s 坐标和 12 个标签宽度各 +30。
+没有新增模型 setter、数学控制、导线或物理判据，原 420 s 与进程清理保护保持。
+
+真实 v4 保存文件未经修改即可通过 v5 检查；双步长离线图及 28 项针对性拒绝通过。
+时间边界在实际 save 调用前后立即采集，先于后续 320 组件回读，不扩大到整个诊断时段。
+独审 `local_reference/native_static_reviews/b1_save_exact_v5_20261110T021713155624Z/report.json`
+SHA `53280816ccd0e4af33ae51351ef74dc1a1e8366ce36ab695ca9577833b5e8407`；
+最终绑定 `final_package_binding/report.json`
+SHA `d50a3bbaaeacc55024880bb0b261c3121497dc800fdc4b3e9abe6ccf1a22e508`。
+
+| v5 冻结入口 | SHA256 |
+|---|---|
+| builder_held_bridge_5us.py | `4ea93fc45c2f4d160fce9241adc800e4ce7790e0904d202f7100f65176395275` |
+| builder_held_bridge_2p5us.py | `68ebbc901cffca59d2ce840a77095f7fb1488ba61a74aac593bc051f7b7aa93b` |
+| b1_native_held_bridge_5us.py | `7d2c42031f9fadccace363d7a42db859a2151a4428950da1ed84fb7a3f48d168` |
+| b1_native_held_bridge_2p5us.py | `e298b0a64e62f39679d2091f67f4e398cb97bb8d4168f41a2f91ca1d73fe260f` |
+
+分析器 `D/held_bridge_analysis/20261110T021727588195Z_save_exact_v5/analyze.py`
+SHA `6ba6251a320b82414854fa87d968a43afd752672894bcedf86ee5ee14ceecb66`；
+7 文件 manifest 为 `8517deafc91375c57592a623c530f5b8e59983b8a867fecc5bf8f17660412d0d`，
+绑定 SHA `cf3819e4ea4fc609d8bb14633ef94fab7d9e4b5c7ff7981603feb601a733605e`。
+协议仍为 `6e9bd776…`，仅换来源绑定，14 个函数及全部预算、方程保持。
+独审 `analyzer_binding_review/report.json`（同上述 v5 独审目录）
+SHA `9e91eb6c6a1c6104a5349dfc86190a924c9a0a56f42fd8159611233cee44ca9a`。
+冻结与来源审查均在新波形之前，不将静态检查称为原生运行或数值验收。
+
+
+### v5 原生编译：保存通过，五个 Pulse 悬空
+
+实际 run `D/n/20261110T022135566419Z`，201.1054258 s。保存后的完整图与限定 XML 检查均通过；
+编译器随后报告 5 个 `master:sampler` 的 Pulse 输入悬空，未生成 Main.f、inf 或波形，也没有调用 run。
+5 个错误对象 id 为 1576063309、1672543186、1498322375、1778087624、1465072573。
+只有 Station.f/Station.dta，不能据此声称完整电气模型已编译。
+
+worker0 和 guarded_driver_completed=true 只表示驱动流程正常清理；
+terminal 明确 native_build_errors=5、native_run_returned=false，不能将退出码当作仿真成功。
+源、依赖、profile 和父环境未变，monitor/cleanup 错误及自有进程均为空。
+下一稿应在清理后也以非零退出码报告编译失败，分析入口须先检查 build/run 语义再读取波形。
+本次过早调用旧分析器，在缺少 inf 时返回 FileNotFoundError；没有数值报告或 PASS。
+旧分析器及不完整结果保留，不重跑失败输入；修正仅限输入资格检查，不修改任何数值预算。
+
+| v5 实际归档 | SHA256 |
+|---|---|
+| manifest.json（60 文件全部核同） | `0104d573c901096f07433008373b65615aed4275640797d035e287605ed6f481` |
+| terminal.json | `383b7d10d6ee9f9c68918dbfaf42a382bd3f087d6f5751a8ca1b2efad101ea68` |
+| build_messages.json | `af66f24eeb00ed1948123ea747a5435c0216bdfc9e885937041e6ceb18d8dad1` |
+| saved_xml_guard.json | `7264be61040e08235f2f2c24af760e1418356ecf5429cbd98490fa0a2e397e07` |
+| after_save_graph.json | `7d365669c069edbbedc7c10245eb57e599262958a4e6e33eac92403777ab1591` |
+
+保存修订秒数 1794277394 位于本次保存整数边界 1794277393..1794277395。
+Ts_s.x=1206、Main.size=4 均按实测持久化；旧数学控制和电气对象检查通过。
+几何图把五处分支看作相接，但 PSCAD 编译器没有认可这些 Pulse 连接；
+须核对原生分支连接规则，先用小型六路扇出诊断验证最小修正，再改完整模型。
+v5 细步长不运行。尚无六路三相 1 ms 波形资格，完整 0.2 s 和原 12 新比较仍待验；正式新增9不变。
+
+
+### 编译失败的分析准入修正与下一步候选
+
+早拒补丁为 `D/held_bridge_analysis/20261110T022926997877Z_build_run_admission_patch/analyze.py`，
+SHA `c311a53e22604acab1ff93f84e7640d14981da44a0399d2a6a07142f0afbb2be`，
+6 文件 manifest 为 `d79be13a695939d2a15d255e3470e4717794e606d488a44f3b2b4e593261fd25`。
+它先核 run 清单，要求 worker/terminal 的编译错误均为 0、run 已返回并有 EMTDC 完成标记，
+再创建本次波形子目录和解析数据。实际 v5 失败输入在解析前被拒绝，六个有限准入检查通过；
+13 个其他函数、数值预算和方程保持。旧 6ba 分析器及部分结果 `20261110T022521053709Z` 保留。
+该补丁暂保留历史 v5 绑定，仅作下一稿的已审查修正；未来完整模型来源仍须另冻绑定。
+
+两路实际映射确认，五个报错分别是 a_u、a_l、b_u、b_l、c_u，Pulse 高度为 378/392/406/420/434；
+末端 c_l 的高度 448 没有报错。干线原生回读及保存均保留全部八个预设顶点，排除了顶点丢失。
+官方连接文档描述允许顶点相接，因此不据这一次失败推断通用的“只允许端点”规则。
+下一候选只把一条干线分成六条、各段在分支处结束，保留六个原分支；扇出导线由 7 条变 12 条。
+先以 20 µs、5/2.5 µs 的小型六路 sampler 诊断确认端点相接的候选原生可用，未证实前不修改完整参考。
+若采用此方案，完整模型预期导线数 190、保存对象数 546；这仍是待实测候选，几何协议须提前补充。
+
+
+v5 原生编译终态独审为
+`local_reference/native_static_reviews/b1_v5_native_build_20261110T023147236205Z/report.json`，
+SHA `c8393274f9f7090812656718c28a70aa185e4c027c4b6a7b4bcfbf6ce9613f80`；
+其 manifest 为 `9e03b5bae1cda9105b370827ee8a5bad1570c85a8deb10e68007798fed38e785`。
+60 文件及实际文件集合全核，保存全文仍仅有上述七类差异；独审明确修正了此前连续几何图被当作原生开路证明的不足。
+无波形便无 53 通道/201 行资格或独立 TR 波形结论。本轮所有已启动原生进程均已终态，下一诊断尚未原生执行。
+
+早期分析准入补丁的独审为上述 v5 原生独审目录下的 `analyzer_patch_review/report.json`，
+SHA `c9b0560da77d2dbb6e913a9a93a48b31f87069379e267537652b0d87693f2383`；
+实际失败 run 在波形解析前被拒绝，13 个其他函数及全部数值预算不变，未来来源绑定仍待冻结。
