@@ -2332,8 +2332,8 @@
       },
       "mathematical_compatibility": "Short probe uses raw native TIME and standard math/comparators, six bilateral varrlc pure-R branches, floating1ohm+1mH phase loads and400V ideal source. All1206 observed gate values match the default12 formula evaluated at retained raw native TIME, all six R inputs are0.001/1e9ohm, and zero initial current/KCL/TR relations were checked. Generated12-significant-digit phase/omega literals and ASCII timing precision remain explicit boundaries; this is not full-run bitwise controller equivalence.",
       "blockers": [
-        "Full0.2s same-input native reference and its5us-control-preserving2.5us electrical refinement protocol remain unfrozen; short-run gate equality does not establish all40001 control points or floating boundary decisions.",
-        "v5保存XML和356/185/471/110几何图通过，但原生编译5个sampler Pulse悬空，无Main.f/inf/波形且未run。先用小型六路扇出诊断核验原生分支连接规则，再改完整模型；原语资格和原MathWorksFAIL保持。"
+        "Full0.2s native reference, its refinement scope and fixed comparison protocol remain unfrozen until the full1ms heldbridge pair is qualified; original MathWorks2% waveformFAIL remains.",
+        "Six-sampler20us endpoint-segment network WITH observers is qualified; fullbridge optionB must still be implemented/frozen/reviewed/run. Expected384components/204wires/506ports/117nets/60channels. Oldv5 build5Pulse opens remains preserved and its fine run must not start."
       ],
       "sha256": {
         "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/report.md": "2ef092f9ad188cd2b63155ddbf9623317631f2a6ce98935e77cf34c0212d5906",
@@ -2380,7 +2380,31 @@
         "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/n/20261110T022135566419Z/manifest.json": "0104d573c901096f07433008373b65615aed4275640797d035e287605ed6f481",
         "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/n/20261110T022135566419Z/terminal.json": "383b7d10d6ee9f9c68918dbfaf42a382bd3f087d6f5751a8ca1b2efad101ea68",
         "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/n/20261110T022135566419Z/build_messages.json": "af66f24eeb00ed1948123ea747a5435c0216bdfc9e885937041e6ceb18d8dad1",
-        "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/n/20261110T022135566419Z/saved_xml_guard.json": "7264be61040e08235f2f2c24af760e1418356ecf5429cbd98490fa0a2e397e07"
+        "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/n/20261110T022135566419Z/saved_xml_guard.json": "7264be61040e08235f2f2c24af760e1418356ecf5429cbd98490fa0a2e397e07",
+        "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/junction_micro_research/20261110T023500Z_endpoint_segments/manifest.json": "754fe2a31c567694845f16851812efb53a2aafc4e86a8be01c172faf52b68238",
+        "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/junction_micro_research/20261110T023500Z_endpoint_segments/probe_plan.json": "0c255ecf850220b916f937effe7564a0177ee04f019b6e26825b6b3aa2fc496b",
+        "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/junction_micro_analysis/20261110T030215964117Z_cache_paths_v2/manifest.json": "366bdb2f20c17539ff4bf0ec0764a4e2a82604a7d5b5390a15a80dd41b27d27f",
+        "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/junction_micro_analysis/20261110T030215964117Z_cache_paths_v2/analyze.py": "bb3f485c5fc80c02b40f077d23027d08d1363609b8a76c4e0de553c5dc44dc9f",
+        "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/junction_micro_analysis/20261110T030215964117Z_cache_paths_v2/results/20261110T030650934205Z/summary.json": "7c45ea89be5579aa1921f50b506ef1840da8341f1d7ebe133eda30b5456c9365",
+        "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/junction_micro_analysis/20261110T030215964117Z_cache_paths_v2/results/20261110T030650934205Z/manifest.json": "cb87f7567ec24b2b2f1b020a081b6c0b80d7ccb1ba41baf509d7f40b0820d895",
+        "../native_static_reviews/b1_junction_actual_20261110T025715280858Z/pair_final/report.json": "b10ecb6ec9b79355ffbf65313543d10403a45f8275b54d1aeafe4c2aa937be22",
+        "../native_static_reviews/b1_junction_actual_20261110T025715280858Z/pair_final/manifest.json": "4c6ec60b0474305650e96cb067f4c5942fb158966b83cbd14380c516c555f50d",
+        "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/junction_micro_qualification/20261110T031249998050Z/qualification.json": "10ca01a7ad54d20a88b89ce2a99bc9df4ca286b2d4fb763a1e6ee9cbd5db53d2",
+        "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/junction_micro_qualification/20261110T031249998050Z/manifest.json": "43858adad90c5ccb6a20188be96b99ca267ea6898290e55238e7ee423de09d9a",
+        "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/junction_followup_plan/20261110T025800908018Z/report.json": "15576de1e9d360e118e740239700f4b422025fa58f368f7a9c0708a482bc671c",
+        "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/junction_followup_plan/20261110T025800908018Z/selection_addendum.json": "f41e5d8c9698c0c7b747f0fa4797cb4687105ddac32abd2c7a32d3451a6d051d",
+        "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/junction_micro_research/20261110T023500Z_endpoint_segments/builder_junction_micro_5us.py": "2bca477670624be9717416c983486df63bd22b8e7b82121168a0ba7b25537eb1",
+        "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/junction_micro_research/20261110T023500Z_endpoint_segments/builder_junction_micro_2p5us.py": "0810ec04fea28b88df8f4847f1827d4961414eac1ff5aec830b5e3ece25deca6",
+        "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/junction_micro_research/20261110T023500Z_endpoint_segments/b1_native_junction_micro_5us.py": "4f9539933ac7dd75878b1161173e9a81d71fbdabd21bfba9cde2baa13b4a3c58",
+        "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/junction_micro_research/20261110T023500Z_endpoint_segments/b1_native_junction_micro_2p5us.py": "a158caf516d049b3d2fe08524ecadb75984570f09c3fb9ab7a4c0279367dcda2",
+        "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/n/20261110T025013355273Z/manifest.json": "8253361711e7d7a969e5cca017e458c7c2cc2790bb207f8265a6259dcca92bd9",
+        "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/n/20261110T025013355273Z/terminal.json": "3268d6d75cdd99dafe4b7393ef2e9d67890846a243fd4b5a3ab9b600119e39b6",
+        "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/n/20261110T030456070288Z/manifest.json": "f99d5bb1c0a2dc18a7efab20d7bde6d52ec12bfc38843c3c478945977f0c025a",
+        "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/n/20261110T030456070288Z/terminal.json": "5dac8051a18eda1ae3866a07d1fa13e449261bb3c260a3e60fed570bac29c57a",
+        "../native_static_reviews/b1_junction_actual_20261110T025715280858Z/coarse/report.json": "7d1a329f0ad63e993f01af70dccdd70f31b0d5aa668ee0788daad7af894bc8e6",
+        "../native_static_reviews/b1_junction_actual_20261110T025715280858Z/fine/report.json": "844180e1a9c6f5ba5326f6eafe5d05a68823d4191d8fb0c72ae3d0edaf458155",
+        "../native_static_reviews/b1_junction_actual_20261110T025715280858Z/initial_analyzer_metadata_correction/report.json": "f4a0e090c766ae582282da786edc350e26f6a61d6ae78da59bff83356e991ab8",
+        "../native_static_reviews/b1_analyzer_cache_fix_20261110T030523813426Z/report.json": "e9e1fc713e5735e66bb75f539274e7d4adeaee1e460202a2e9c4f0bb54b38d37"
       },
       "license_notes": "Installed library excerpts, donor original, scripts and raw evidence remain ignored locally; redistribution permission not asserted.",
       "original_static_builder_preparation": {
@@ -2430,7 +2454,7 @@
         "terminal_sha256": "dacff8ff0d60c08efac859db5cc14c60d8e75755f8636867f86176e1ce5b72ec",
         "deliberate_stop_before_all_wires_save_build_run": true
       },
-      "reference_ready_scope": "Only201 native rows and46 channels over0-1ms at5us are audited; full0.2s and a refinement protocol preserving the independent5us applied-control grid are not frozen or qualified.",
+      "reference_ready_scope": "Original nonheld 1ms/201row/46channel native reference is runnable. A separate exact observer-bearing six-scalar sampler network has qualified20us5/2.5us runs,27channels5/9rows. No six-complementary-gate fullbridge or0.2s/candidate qualification.",
       "previous_prebuild_probe": {
         "record": "docs/development_roadmap/experiments/native_reference_attempts_20261109.md",
         "latest_run": "local_reference/two_level_pwm/matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/n/20261109T091917405572Z",
@@ -2533,6 +2557,53 @@
         "waveform_rows": null,
         "remaining_owned": [],
         "source_profile_parent_environment_unchanged": true
+      },
+      "sampler_fanout_probe": {
+        "status": "qualified_exact_20us_six_scalar_network_with_observers_only",
+        "coarse_run": "20261110T025013355273Z",
+        "fine_run": "20261110T030456070288Z",
+        "duration_s": 2e-05,
+        "native_steps_s": [
+          5e-06,
+          2.5e-06
+        ],
+        "rows": [
+          5,
+          9
+        ],
+        "channels": 27,
+        "inventory": {
+          "components": 143,
+          "wires": 77,
+          "ports": 184,
+          "nets": 40
+        },
+        "qualification": "local_reference/two_level_pwm/matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/junction_micro_qualification/20261110T031249998050Z/qualification.json",
+        "qualification_sha256": "10ca01a7ad54d20a88b89ce2a99bc9df4ca286b2d4fb763a1e6ee9cbd5db53d2",
+        "independent_qualification": "local_reference/native_static_reviews/b1_junction_actual_20261110T025715280858Z/pair_final/report.json",
+        "independent_qualification_sha256": "b10ecb6ec9b79355ffbf65313543d10403a45f8275b54d1aeafe4c2aa937be22",
+        "pair_summary": "local_reference/two_level_pwm/matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/junction_micro_analysis/20261110T030215964117Z_cache_paths_v2/results/20261110T030650934205Z/summary.json",
+        "pair_summary_sha256": "7c45ea89be5579aa1921f50b506ef1840da8341f1d7ebe133eda30b5456c9365",
+        "all_six_Pulse_and_holds_shared_and_midpoints_pass": true,
+        "same_tick_plant_max_residual_raw_kV_or_kA": 3.903127820947816e-16,
+        "fullbridge_or_0p2s_or_candidate_certified": false,
+        "source_current_logger_scope": "MainDyn previous-MainOut values retained; no primary waveform shift.",
+        "metadata_correction": "Old5c457 incorrectly listed all19 absolute-pinned source files as cache. Newbb3f resolves path identities; all numerical functions/protocol and coarse artifacts unchanged; old result preserved."
+      },
+      "held_bridge_next_geometry": {
+        "status": "selected_prospective_not_native_executed",
+        "option": "B",
+        "record": "local_reference/two_level_pwm/matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/junction_followup_plan/20261110T025800908018Z/selection_addendum.json",
+        "sha256": "f41e5d8c9698c0c7b747f0fa4797cb4687105ddac32abd2c7a32d3451a6d051d",
+        "counts": {
+          "components": 384,
+          "wires": 204,
+          "ports": 506,
+          "nets": 117,
+          "channels": 60,
+          "objects": 588
+        },
+        "delta": "Preserve old objects/PGB. Six new Pulse observers atx300,seven newPGB atx400;globalobserver at310,340;six-segment trunk. Requires new fullsource/offline/native checks."
       }
     }
   ],

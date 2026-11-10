@@ -343,3 +343,61 @@ SHA `c8393274f9f7090812656718c28a70aa185e4c027c4b6a7b4bcfbf6ce9613f80`；
 早期分析准入补丁的独审为上述 v5 原生独审目录下的 `analyzer_patch_review/report.json`，
 SHA `c9b0560da77d2dbb6e913a9a93a48b31f87069379e267537652b0d87693f2383`；
 实际失败 run 在波形解析前被拒绝，13 个其他函数及全部数值预算不变，未来来源绑定仍待冻结。
+
+### 六路分段扇出 20 µs：实际双步长资格
+
+新源包 `D/junction_micro_research/20261110T023500Z_endpoint_segments`，19 文件 manifest `754fe2a31c567694845f16851812efb53a2aafc4e86a8be01c172faf52b68238`。
+方案 `probe_plan.json` 为 `0c255ecf850220b916f937effe7564a0177ee04f019b6e26825b6b3aa2fc496b`，在实际新波形前冻结。
+本模型只有三个同源斜坡 sampler、三个同源二进制门极 sampler、六个 Pulse 观察器及一条双向 varR；不是六路互补完整桥。
+30 控制、9 电气、27 通道，完整库存为 143 组件/77 线/184 端口/40 网。
+干线分成六段，六个 sampler Pulse、六个 Integer→Real 观察器、时钟及全局观察器共 14 个整数端口以端点相接。
+该构造的离线正例和 17 个反例通过；不把端点构造解释为 PSCAD 的通用连接规则。
+
+| 冻结入口 | SHA256 |
+|---|---|
+| builder_junction_micro_5us.py | `2bca477670624be9717416c983486df63bd22b8e7b82121168a0ba7b25537eb1` |
+| builder_junction_micro_2p5us.py | `0810ec04fea28b88df8f4847f1827d4961414eac1ff5aec830b5e3ece25deca6` |
+| b1_native_junction_micro_5us.py | `4f9539933ac7dd75878b1161173e9a81d71fbdabd21bfba9cde2baa13b4a3c58` |
+| b1_native_junction_micro_2p5us.py | `a158caf516d049b3d2fe08524ecadb75984570f09c3fb9ab7a4c0279367dcda2` |
+
+root 顺序执行实际粗/细 run，清理后明确要求编译错误 0、run 返回和 EMTDC 完成标记均通过，再读取波形。
+两次均自有进程清空、无 monitor/cleanup 错误，原件、profile 和父环境未变。每次 48 个归档 SHA/size 全核。
+
+| 实际 run | 耗时 | manifest SHA256 | terminal SHA256 |
+|---|---|---|---|
+| `20261110T025013355273Z` | 100.4808871 s | `8253361711e7d7a969e5cca017e458c7c2cc2790bb207f8265a6259dcca92bd9` | `3268d6d75cdd99dafe4b7393ef2e9d67890846a243fd4b5a3ab9b600119e39b6` |
+| `20261110T030456070288Z` | 72.6936051 s | `f99d5bb1c0a2dc18a7efab20d7bde6d52ec12bfc38843c3c478945977f0c025a` | `5dac8051a18eda1ae3866a07d1fa13e449261bb3c260a3e60fed570bac29c57a` |
+
+27 通道保留全部 5/9 行及 t0/20 µs。粗步 Pulse 每行 1，细步为 1/0 交替；六个 Pulse 观察器逐行等于整数时钟。
+三组斜坡细步保持值为 1,1,2,2,3,3,4,4,5，三组门极保持值为 1,1,0,0,1,1,0,0,1。
+五个共享点的六保持值、六 Pulse 和有效 R 完全一致，四个中间点正确保持；R 只取 .001/1e9 Ω。
+同一步 Vload=Vs/(R+1)、Vvar=Vs−Vload、Iload=Vload/1Ω 及 KVL/欧姆关系均过原预算，最大残差 3.91e-16（原始 kV/kA）。
+源和 varR 的 MainDyn 电流日志保留原值，不移相主波形；源电流在两个共享点仅有 5.70e-21 kA 打印/舍入差异。
+六次 SAMP5 和六个 Pulse REAL 观察器使用同一 IT_1；驱动单 varR 的 g_held 在 R 计算/EXE 前生效。
+两个不驱动电气支路的辅助门极 sampler 在 EXE 后执行，不能声称六个 sampler 都驱动了电气元件。
+两次保存仅将 g_int 的三个数字拼写 1.0/0.0/1.0 改为 1/0/1，其他参数及全部 77 线严格一致。
+实际两 run 的组件参数/端口/线路在排除随机 id 后相同，仅 time_step/sample_step 从 5 改为 2.5 µs。
+细步运行有两行源 Branch1/SS1 的零内阻理想化提示，不属于 varR。独审旧一行匹配器在读原始数据前拒绝该格式；
+保留原脚本和拒绝事实，另版只识别实际两行格式，继续拒绝任何额外、未解析或非源分支提示。
+
+初版分析器 `5c45704a…` 错将全部 19 个源文件列为缓存，原因是绝对清单路径与相对运行路径直接比较。
+旧源和旧结果保留。新版只在 main 中按 resolve 后的文件身份比较，真实 pyc 缓存与其他未列文件分别报告；
+8 个其他函数、协议和数值预算不变，4 个路径检查通过。新版的三个额外文件列表均为空，粗步数值产物与原结果字节一致。
+
+新版分析器 `D/junction_micro_analysis/20261110T030215964117Z_cache_paths_v2/analyze.py` SHA `bb3f485c5fc80c02b40f077d23027d08d1363609b8a76c4e0de553c5dc44dc9f`；
+12 文件 manifest `366bdb2f20c17539ff4bf0ec0764a4e2a82604a7d5b5390a15a80dd41b27d27f`。
+唯一双步长分析结果为该目录下 `results/20261110T030650934205Z`，21 文件 manifest `cb87f7567ec24b2b2f1b020a081b6c0b80d7ccb1ba41baf509d7f40b0820d895`，
+summary `7c45ea89be5579aa1921f50b506ef1840da8341f1d7ebe133eda30b5456c9365`，DIAGNOSTIC_PASS，图已查看。
+独立终态资格 `local_reference/native_static_reviews/b1_junction_actual_20261110T025715280858Z/pair_final/report.json` SHA `b10ecb6ec9b79355ffbf65313543d10403a45f8275b54d1aeafe4c2aa937be22`，manifest `4c6ec60b0474305650e96cb067f4c5942fb158966b83cbd14380c516c555f50d`。
+独立粗/细报告 SHA 分别为 `7d1a329f0ad63e993f01af70dccdd70f31b0d5aa668ee0788daad7af894bc8e6` / `844180e1a9c6f5ba5326f6eafe5d05a68823d4191d8fb0c72ae3d0edaf458155`。
+总绑定 `D/junction_micro_qualification/20261110T031249998050Z/qualification.json` SHA `10ca01a7ad54d20a88b89ce2a99bc9df4ca286b2d4fb763a1e6ee9cbd5db53d2`，
+2 文件 manifest `43858adad90c5ccb6a20188be96b99ca267ea6898290e55238e7ee423de09d9a`；逐项绑定原始 source、两 run、分析和最终独审。
+路径修正独审 `local_reference/native_static_reviews/b1_analyzer_cache_fix_20261110T030523813426Z/report.json`
+SHA `e9e1fc713e5735e66bb75f539274e7d4adeaee1e460202a2e9c4f0bb54b38d37`。
+
+资格严格限于带观察器的上述 20 µs 标量网络；完整 69 数学块、六互补桥门极、1 ms 或 0.2 s 均不因此认证。
+方案 B 的下一步选择保留旧对象/PGB，只将新增 Pulse 观察器设在 x300、新七 PGB 放 x400，避免 x320 支线碰到旧 PGB。
+计划 `D/junction_followup_plan/20261110T025800908018Z/report.json` SHA `15576de1e9d360e118e740239700f4b422025fa58f368f7a9c0708a482bc671c`；
+选择补记 `selection_addendum.json` SHA `f41e5d8c9698c0c7b747f0fa4797cb4687105ddac32abd2c7a32d3451a6d051d`。
+完整预期库存 384/204/506/117、60 通道、588 保存对象。新完整源、协议几何补充、独审和实际 1 ms 双步长仍须分别完成。
+本阶段所有已启动原生 run 已终态；项目 109 个 Python 源文件仍与 1244 全量前快照相同，未重复全量测试。
