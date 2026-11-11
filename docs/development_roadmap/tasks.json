@@ -3,7 +3,7 @@
   "updated_date": "2026-11-11",
   "timezone": "Asia/Shanghai",
   "branch": "codex/emt-examples-longterm",
-  "checkpoint_head": "acaec459d0ffe05a56a9951bed3a5544f23c9817",
+  "checkpoint_head": "1bdcd469f7ec332cba2be7f0f23d8061836f7936",
   "current_task": "C1",
   "formal_new_examples_completed": 9,
   "status_values": [
@@ -657,7 +657,7 @@
         "small measured naming/timing fixes only if proven"
       ],
       "references": [],
-      "validation": "既有11 PLL递推/初值/方向已设计并独立审查；真实R2026b/SATK许可和两标准块编辑接口已实测通过，但PLL参考尚未构造或仿真。先冻结启动三点与完整比较协议，再实跑；PLL后逐层推进dq/P/Vac/Vdc，局部结果不等于单站全链完成。",
+      "validation": "既有11 PLL真实R2026b标准块参考的0/100/200us启动资格通过：58块80连接，44输入快照，22路double原始日志，141项冻结独立检查及两路实际独审通过。完整1s参考/候选比较尚未执行；PLL后续开环、dq、P前馈/Vac和真实DC电容Vdc链仍待验。",
       "acceptance": "局部、可独立运行验证的教学例逐项验收",
       "status": "in_progress",
       "files": [],
@@ -671,7 +671,7 @@
         "evidence_sha256": "d92469cdd234477829ca5a5fa75a67648f17235fffadf3d3cbdaa73672375427",
         "native_executed": false
       },
-      "current_stage": "existing_11_pll_reference_design",
+      "current_stage": "existing_11_pll_startup_qualified_full_protocol_pending",
       "interface_discovery": {
         "status": "qualified_native_satk_batch_interface",
         "simulink_model_tools_provided": false,
@@ -689,11 +689,108 @@
         "scope": "现有Simulink许可、真实model_read/edit/check；Constant0→Terminator两块一连接，回读与SLX一致、healthy；无PLL或其他仿真。"
       },
       "reference_design_review": {
-        "status": "reviewed_design_requires_protocol_freeze",
+        "status": "historical_design_review_startup_now_qualified",
         "record": "local_reference/native_static_reviews/pll_angle_design_20261111T135817707827Z/review.md",
         "record_sha256": "acdee17e593a26d636514c1cce879e8ddaf9aacb5762ed5bea5da3780cfd01a5",
         "native_pll_executed": false,
-        "next_gate": "Freeze 0/100/200us semantic qualification before building/running the PLL reference; full comparison uses declared 100us update rows and anchored unwrap/PWL."
+        "next_gate": "Review and commit the complete 1s protocol before full reference/candidate output; keep 100us control and explicitly separate solver_step."
+      },
+      "startup_qualification": {
+        "status": "qualified_three_native_startup_rows_only",
+        "source_manifest": {
+          "path": "local_reference/c1_pll_reference_research/20261111T151000Z_pll_startup_v5/source_manifest.json",
+          "sha256": "48dc5e9ac46c3f4cc7147d5730c75de4291cc46752188a2eb107cf92455579d0"
+        },
+        "protocol": {
+          "path": "local_reference/c1_pll_reference_research/20261111T151000Z_pll_startup_v5/protocol.json",
+          "sha256": "866e1c07d4b38dc0138dcd501968cbf44eca5035c2a3277547cce27a55460250"
+        },
+        "run": "local_reference/c1_pll_reference_research/20261111T151000Z_pll_startup_v5/runs/20261111T1513366278040Z",
+        "terminal": {
+          "path": "local_reference/c1_pll_reference_research/20261111T151000Z_pll_startup_v5/runs/20261111T1513366278040Z/terminal.json",
+          "sha256": "52a176795a240107d43e1d101e2d6084b24539012ba78c9c98556cb79a48f9b6"
+        },
+        "worker": {
+          "path": "local_reference/c1_pll_reference_research/20261111T151000Z_pll_startup_v5/runs/20261111T1513366278040Z/worker_result.json",
+          "sha256": "0f3b248a471aeaefff43c42af3e5540eb7ce3958b0a95062cfef67edbb7d9801"
+        },
+        "raw_csv": {
+          "path": "local_reference/c1_pll_reference_research/20261111T151000Z_pll_startup_v5/runs/20261111T1513366278040Z/startup.csv",
+          "sha256": "87bb74466d5927c3defe7681bf71a6a7300a7131de5e56d364f5facb5dd5a531"
+        },
+        "raw_mat": {
+          "path": "local_reference/c1_pll_reference_research/20261111T151000Z_pll_startup_v5/runs/20261111T1513366278040Z/raw_simulation.mat",
+          "sha256": "149c19a318147227cf163394bc3fbe5caf3690f041429ef251ee27e9af788f75"
+        },
+        "saved_model": {
+          "path": "local_reference/c1_pll_reference_research/20261111T151000Z_pll_startup_v5/runs/20261111T1513366278040Z/C1PllStartup20261111.slx",
+          "sha256": "60ae5f014e2e57a74f27992bcea047a50043d43e8f85427507df85c10ea487e7"
+        },
+        "numerical_report": {
+          "path": "local_reference/c1_pll_reference_research/20261111T151000Z_pll_startup_v5/runs/20261111T1513366278040Z/semantic_analysis/20261111T1515333170669Z/report.json",
+          "sha256": "e01083df354c5ff69411544063229d6c06b400224857910490f24b2cd7de9442"
+        },
+        "independent_reviews": [
+          {
+            "path": "local_reference/native_static_reviews/pll_startup_v5_actual_20261111T151730614879Z/receipt.json",
+            "sha256": "908681d0e818fdfa1a7c47804b657fcfa09e94959f88366083b103fa670d45a2"
+          },
+          {
+            "path": "local_reference/native_static_reviews/pll_startup_v5_numerical_20261111T152032874378Z/receipt.json",
+            "sha256": "ab2416987e7b538bba3768a6a9ac0a55ee705a7f9f1f6ff63503759c70e231fe"
+          }
+        ],
+        "checks": 141,
+        "rows": 3,
+        "columns": 23,
+        "full_1s_reference_or_candidate_executed": false,
+        "scope": "Native startup order and observed double signals only; internal CompiledPortDataTypes is a struct summary, not per-port double proof; no full PLL/VSC/C1 acceptance."
+      },
+      "startup_attempts_preserved": [
+        {
+          "version": 1,
+          "classification": "JVM hash unavailable before model construction",
+          "record": {
+            "path": "local_reference/c1_pll_reference_research/20261111T141000Z_pll_startup_v1/failure_review/receipt.json",
+            "sha256": "321372f5d35c7990259fecfd10895b2695242b011df6094c95aa8ad23868a98e"
+          }
+        },
+        {
+          "version": 2,
+          "classification": "healthy native graph; Sum port-spacer string gate before simulation",
+          "record": {
+            "path": "local_reference/c1_pll_reference_research/20261111T143700Z_pll_startup_v2/failure_review/receipt.json",
+            "sha256": "37eea2fe871425c3ff8d91dc8645a407407c5b85d4fbd7f521f5de1099f40c90"
+          }
+        },
+        {
+          "version": 3,
+          "classification": "simulation returned; no logsout because signal logging off",
+          "record": {
+            "path": "local_reference/native_static_reviews/pll_startup_v3_actual_20261111T150418451929Z/receipt.json",
+            "sha256": "85b8cf2bfcb1dd6a7e576699a477ab2c73f95f6cdcd20a873bbfb303518b7ded"
+          }
+        },
+        {
+          "version": 4,
+          "classification": "logging configured; wrong direct readback handle before simulation",
+          "record": {
+            "path": "local_reference/native_static_reviews/pll_startup_v4_actual_20261111T151137255487Z/receipt.json",
+            "sha256": "454acf0b344aa4703c8ad4c6e7762f6f3dfbefae2856275462606c6483983b26"
+          }
+        }
+      ],
+      "full_comparison_protocol_draft": {
+        "status": "draft_not_frozen_no_full_output",
+        "record": {
+          "path": "local_reference/c1_pll_reference_research/20261111T151458821003Z_full_protocol_draft/full_protocol_draft.md",
+          "sha256": "0e98eb18f087dd9661415d32a3002332963fb954f9e3228971ddcce85d5ff9be"
+        },
+        "receipt": {
+          "path": "local_reference/c1_pll_reference_research/20261111T151458821003Z_full_protocol_draft/receipt.json",
+          "sha256": "d6ddc957f9ff3c29ce94b190ce5bf82e0b1f77a4110481fe6dd1f8b943724142"
+        },
+        "next_gate": "Fix secondary scheduling tolerance, endpoint/export and analyzer contracts; commit before full reference or candidate execution."
       }
     },
     {
@@ -859,5 +956,5 @@
       "resume_requires_explicit_user_instruction": true
     }
   ],
-  "current_stage": "existing_11_pll_reference_design"
+  "current_stage": "existing_11_pll_startup_qualified_full_protocol_pending"
 }

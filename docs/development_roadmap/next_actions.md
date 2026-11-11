@@ -1,40 +1,25 @@
 # 恢复与下一步
 
-2026-11-11目标active，用户已明确恢复。先核五状态文件及实际分支/HEAD/工作区/真实远端。
-恢复时本地与远端均为`3737e663c89646cf76e6cd9f4880d0e579d95731`；12未提交文件及111个
-Python源与暂停记录一致。不操作main、不强推、不覆盖未提交文件。常规开发分支提交/里程碑推送已授权。
-最新功能验收为`40bef297c431a0981f0dc93279cddf5acbbd6ea6`；最新已核研究提交为`acaec459d0ffe05a56a9951bed3a5544f23c9817`，均已推送。
+2026-11-11目标active。先读五状态文件，交叉核分支/实际HEAD/工作区/真实远端；checkpoint为最近记录提交1bdcd469。
+在codex/emt-examples-longterm工作，不修改main、不强推、不覆盖用户未提交文件；常规提交与里程碑推送已授权。
+当前C1为in_progress，三点启动资格通过；完整1s PLL仍未验证。19–27正式新增9，B1既有12已完成。
+本轮原生与分析都已终态，无已知运行待恢复；不要重新运行已通过的三点探针或1267全量代替审查。
 
-## 当前事实
+1. 复核启动证据：run为local_reference/c1_pll_reference_research/20261111T151000Z_pll_startup_v5/runs/20261111T1513366278040Z，
+   semantic_analysis/20261111T1515333170669Z/report.json为141项PASS；完整SHA及独审见tasks.json与原生记录。
+2. 审定并在Git提交完整1s协议，再运行完整参考/候选。草案在local_reference/c1_pll_reference_research/20261111T151458821003Z_full_protocol_draft，尚未冻结。
+   固定初值/方向/全窗和阈值，保留t0误差；共同初角锚定unwrap后按真实100µs更新行做PWL，不拟合或移时。
+   每行硬核旧omega推进角度、新xi参与PI、状态链和abs(oldomega*Delta)<pi；不能仅靠较宽轨迹误差限。
+   原worker/config的FixedStep写为control_step，50µs secondary须先独立定义solver_step并实际回读，控制仍100µs。
+   secondary只核同一离散任务的调度/输出不变性；无真实中点记录便不称实测保持或控制步长细化。
+3. 完成PLL后依次推进开环并网VSC、已知角度dq电流、合格PLL、P前馈/Vac和带真实DC电容的Vdc链。
+   复用现有控制器：P前馈给id_ref、Vac外环给iq_ref；不改称P/Q双PI，不用固定理想直流源证明Vdc动态。
+4. 保持精简可读、初学者友好；复用CaseDefinition→Circuit→Simulator→SimulationResult，不加通用框架。
+   27限常参数集总损耗Bergeron；26限冻结同步控制/二极管不活动域。F1待外部账单锁解除后补精确HEAD双OS。
+   不重查同一CI终态、不制造空提交，不实施自动二极管、非线性、MMC、稀疏或加速框架。
 
-B1已completed40bef297；当前C1为in_progress，阶段`existing_11_pll_reference_design`。
-B1真实完整参考及300输入资格、原12正式比较、
-340快照/独立复算和独立默认Agg40001点均通过，图/报告/精简教学完成。
-新1267全量含slow通过494.62s（XML494.618），0失败/错误/跳过；锁定27包/Ruff/mypy39通过。
-原109源码、核心、依赖及原12保持，仅新增比较入口/测试；原MathWorks2% FAIL和所有旧失败保留。
-正式新增19–27共9项，B1补对标不增加编号。完整pins见[证据索引](experiments/native_reference_attempts_20261109.md)。
-本轮仅新执行一次R2026b/SATK接口探针，正常终态/独审通过；无PLL/native/candidate/pytest待恢复。
-探针run为`local_reference/c1_pll_reference_research/20261111T135000Z_satk_probe_v2/runs/20261111T1354072589026Z`；
-接口结果不替代PLL参考。111个Python源hash不变，既有1267测试不称本轮重跑，暂停原记录不改写。
-
-## 执行顺序
-
-1. 本机真实R2026b/SATK保护函数已验证可用，当前MCP目录无model_*不再是建模接口障碍。
-   复用已审的owned进程/快照守卫：新建独立目录、冻结来源，使用model_read→model_edit（显式layout）→read/check；
-   仿真用SimulationInput/Output，不绕过接口，不改全局安装/配置。已完成接口探针不重跑。
-2. 先设计既有11 PLL的独立商业参考，不将这一步冒称完整单站控制链。可行性记录为
-   `local_reference/c1_pll_reference_research/20261111T013530229954Z/feasibility.md`。
-   下一步先冻结并运行0/100/200µs语义探针，再做完整参考；五个Unit Delay方案已独审，尚未构造。
-   完整角度比较选共同初角锚定unwrap/PWL，先核旧omega×实际Delta小于pi及角增量；50µs保持中点另核，
-   不混入100µs更新行的主PWL。旧xi顺序错误可能落在完整预算内，须靠启动及逐行代数硬门拒绝。
-   先固定递推/初值/相位/信号方向与窗口/阈值，审t0/100/200µs的显式状态延迟、
-   正弦与Park角度约定、q归一化、PI积分先更新和旧omega推进角度；模型未建立或运行。
-   现成PLL数学不同，不能只换增益宣称一致；参考和判据固定后再实施、实跑与独立验证。
-3. 根据实际参考拆分开环→PLL→dq电流→P/Q/Vdc→扰动，逐项验收并复用现有元件/控制器。
-   不新增同题编号或通用框架；教学参数、接线和观察顺序清楚，商业接口/审计留在validation及忽略归档。
-4. 保持27仅常参数集总损耗Bergeron、26仅冻结同步控制和二极管不活动域的边界。
-   F1等待外部billing lock解除后再补精确里程碑双OS，不重查终态CI或制造空提交。
-   不实施自动二极管、通用非线性、复杂机器、MMC、稀疏或加速框架。
+完整回归仍为B1阶段1267 passed494.62s含slow，锁定27包/Ruff/mypy39已通过；本轮111源不变，未重复测试。
+结束执行前同步任务/证据/提交/下一步，不声称无运行环境时会后台继续。
 
 ## 本机命令
 

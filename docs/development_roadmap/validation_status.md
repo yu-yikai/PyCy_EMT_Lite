@@ -1,23 +1,15 @@
 # 验证状态
 
-2026-11-11目标active。B1已以40bef297正式验收提交推送并核真实远端相同，状态completed。
-当前C1为in_progress，阶段existing_11_pll_reference_design；PLL仅参考设计，尚无其模型/仿真/验收。
-新增一次真实R2026b/SATK接口探针PASS：现有许可、genuine edit/read/check两块一连接、SLX独核，
-exit0/80.897s、17原件及快照全核、观察到的owned均退出；未运行PLL或项目候选。
-真实PSCAD参考40002/80003行×60通道，300输入资格、全部拓扑/控制/物理及自细化核验通过；
-原12正式40001点对细步参考，固定[.1,.2]max≤0.322A、maxNRMSE约0.092%，全部特征及正功率限通过。
-独审cd20f993及340原件/快照全核通过；默认__main__透明观察独立Agg40001点通过、NPZ与正式候选相同。
-图及精简教学/中英导航已检查。原MathWorks2% FAIL、旧1ms/20us和失败/中断历史全部保留。
-协议e25ebed及入口3737e66先于正式输出，原12/核心/依赖不改，原109源码仍同，新增验证Python2个。
-
-B1验收时完整测试含slow：1267 passed494.62s（XML494.618），0失败/错误/跳过；111源码全程及恢复后hash不变。
-证据`.tmp/longterm/b1-final-20261111T0317.xml` SHA10775c002801b1490d6a8456d0b61c93822ef5aafe15c56f36187e5622374c5e。
-B1验收时锁定27包/Ruff/mypy39通过；恢复后未重复成功测试。正式新增19–27共9，B1不新增编号。
-C1本机受支持的SATK batch接口已核可用；当前MCP目录未连接不扩大为商业软件不可用。
-下一步先冻结PLL三点语义协议。核心/依赖/原例及111源码hash不变，本轮未重复1267全量。
-F1精确ae9fe36双OS CI42616684547在runner启动前因账单锁终态失败，
-23–27跨OS仍待验，不轮询同终态；旧90b2fcd只覆盖22。
-详见[证据索引](experiments/native_reference_attempts_20261109.md)与[PSCAD报告](../../validation/cases/two_level_pwm_pscad/validation_report.json)。
+2026-11-11目标active；当前C1为in_progress，阶段`existing_11_pll_startup_qualified_full_protocol_pending`。
+既有11 PLL已取得真实R2026b三点启动资格：0/100/200µs，58标准块/80连接/5延迟；
+22路原始double信号与时间共23列×3行，141项冻结独立检查及两路实际复核通过。
+本次run exit0、68.2577356s，44份原件/快照全核、观察到的自有进程均退出，无监控或清理错误。
+结果只覆盖启动递推；完整1s参考/候选、独立运行和PLL教学验收尚未执行，更不等于C1单站全链完成。
+v1–v4的接口/日志失败全部保留，未改数学或降低判据。原11、核心、依赖及111个项目Python文件hash不变。
+已实测的完整回归仍为B1阶段1267 passed、494.62s（含slow）；本轮未重复该回归。
+B1既有12已completed40bef297；正式新增19–27仍共9项。F1账单锁未解除，23–27跨OS仍待验证。
+用户补充约束：保持项目精简、易读、适合初学者；优先复用现有模块，验证研究留在忽略归档。
+证据和失败分类见[原生记录](experiments/native_reference_attempts_20261109.md)。
 
 | 对象 | 内部证据 | 外部参考 | 正式状态 |
 |---|---|---|---|
