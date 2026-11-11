@@ -3068,6 +3068,39 @@
       "blockers": [
         "FrozenbridgeDC/ammeter1e-8V gates unresolved; fresh source-branch measurement equivalence is the next research gate."
       ]
+    },
+    {
+      "id": "pscad-derived-source-current-build-v5",
+      "short_code": "C1-SOURCE-BUILD",
+      "name": "Project-local source branch current observation, build-only",
+      "source_kind": "Original bounded measurement/build experiment using installed source_1 clone",
+      "status": "inspected",
+      "model_version": "PSCAD5.0 installed; native exact version in closedrun archive",
+      "content_inspected": true,
+      "opened_in_native_software": true,
+      "simulation_succeeded": false,
+      "reference_numeric_data_obtained": false,
+      "local_path": "local_reference/c1_openloop_reference_research/20261111T211733025252Z_source_current_build_only_v3/n/20261111T212459071143Z",
+      "samples": 0,
+      "configured_channels": 32,
+      "research_record": {
+        "path": "docs/development_roadmap/experiments/c1_source_current_build_only_20261112.json",
+        "bytes": 12785,
+        "sha256": "5ff439846d78a56b937314b133c5be06047b666592d90762ea742707a8ee26d5",
+        "hash_scope": "Exact published workspace bytes; Git LF identity supplied separately.",
+        "git_lf_bytes": 12785,
+        "git_lf_sha256": "5ff439846d78a56b937314b133c5be06047b666592d90762ea742707a8ee26d5"
+      },
+      "native_build_only_status": "BUILD_ONLY_COMPILED_INF_GUARD_STOP_AND_INDEPENDENT_DC_STAGE_REJECTION",
+      "numeric_status": "NOT_OBSERVED",
+      "numerical_acceptance": false,
+      "candidate_executed": false,
+      "full_VSC_reference_ready": false,
+      "scope": "Only native definition/build/generated freshness discovery; no simulation. Three phaseA plus negative sourceBA is new current identity; source/bridge voltage rank1. AlloldFAIL unchanged.",
+      "allows_redistribution": "Native/library clone/helper files remain ignored; no redistribution rights claimed.",
+      "blockers": [
+        "Freeze Map PGBList32 + DATAStruct actual-ID + native/saved PGB parameter binding, and a separate project-local PGB clone used only for DC: move the original standard Fortran segment to Dsout, preserving its content/form/parameters/graphics/Scale1. Prefreeze the exact negative-CBR template matching actual \"= -( CBR(...))\"; the old \"(-CBR...)\" check was not reached thisrun. Then one new build-only attempt must prove negative own sourceBA CBR before its unique ownPGB in sameMainOut/no overwrite. No INF-only rerun, forced fallback in oldpackage, Run, numeric acceptance or relaxed physical budgets."
+      ]
     }
   ],
   "scope_notes": [

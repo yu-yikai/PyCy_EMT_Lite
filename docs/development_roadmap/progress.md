@@ -1,18 +1,13 @@
 # 持久进度
 
-2026-11-12目标active；C1仍in_progress。既有11已在5e27e787补验证，正式新增19–27共9项。
-本次理想支路单选项诊断已完成：启用use_ideal_branch，阈值仍0.0005 Ω；其余物理、33量、时钟和所有门保持。
-真实PSCAD编译0错误、运行正常结束、自有进程清空；19冻结文件/65归档完整，实际after/XML/Map确认选项生效。
-七项实际映射准入通过后，两套独立数值审查均完整执行81行/80段，原桥端DC和电流表压降仍同五行FAIL。
-最坏含格仍分别1.351e−8 V、1.3485212946308e−8 V，均超1e−8 V；源端和秩2闭合门通过。
-新旧INF及四个OUT全部原始字节一致；独立33量逐token/末位界/检查记录的SHA也相同。
-结论限于本短探针未观察到输出变化，不证明闭源内部算法原因；条件预测仍仅诊断，整体参考未验收。
-下一步调查不引入独立零阻支路的电源同刻电流测量；改变计量方式前，须另冻物理等价与fresh支路映射合同。
-完整开环参考、候选及C1控制链/D1尚未完成；旧源v1 FAIL与v2单回路观测PASS均保留。
-本轮113项Python源码与依赖未改，1300全量含slow/锁定27包/Ruff/mypy39属于同代码的前次结果，未重复运行。
-F1仍因GitHub账单锁待补跨OS，旧CI43060348386未启动runner，不重复轮询。
-当前边界见[参考设计](experiments/c1_openloop_reference_design.md)与[单选项结果](experiments/c1_ideal_branch_diagnostic_20261112.json)；[前次测量诊断](experiments/c1_dc_measurement_diagnostic_20261112.json)及所有原FAIL保持。
-保持现有CaseDefinition链和元件；研究工具留在忽略目录，不向初学者入口添加框架或商业依赖。
+2026-11-12目标active；C1仍in_progress，既有11已验收，正式新增19–27共9项。
+本轮只构建新的源支路电流计量，不调用Run。真实PSCAD编译0错误，原驱动因构建阶段无INF而非零停止；独立实际审查另证DC负BA读在MainOut、其PGB仅在MainDyn，输出链未获准入。原生会话受控退出，自有进程清空。
+32量合同采用三相A表加负DC源BA电流；去DC表并合并理想线后，桥/源电压关系为rank1。
+旧电流表压降与旧rank2闭合门在新拓扑不适用，不以结构恒等式追认旧FAIL；所有旧记录保留。
+数值状态NOT_OBSERVED，完整开环参考/候选/C1控制链与D1仍待。下一步另冻Map/实际PGB绑定、仅DC本地PGB的Fortran→Dsout调度及已观察的−(CBR...)精确模板，再做独立build-only；不得只补INF重跑或直接Run。
+113源码及依赖未改，1300含slow/锁定27包/Ruff/mypy39为同代码前次结果，本轮未重跑。
+F1仍待外部CI账单锁恢复；研究工具和派生定义只留忽略目录，教学入口保持精简。
+当前证据见[只构建记录](experiments/c1_source_current_build_only_20261112.json)和[参考设计](experiments/c1_openloop_reference_design.md)。
 
 以下保留已完成的1ms诊断及历史；不覆盖上述当前状态。
 
