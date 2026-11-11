@@ -3006,6 +3006,37 @@
       "blockers": [
         "Unresolved DC bridge-port difference gate: max raw+token 1.351e-8 V > frozen 1e-8 V."
       ]
+    },
+    {
+      "id": "pscad-derived-dc-measurement-diagnostic-v5",
+      "short_code": "C1-DC-MEASUREMENT",
+      "name": "Derived manual three-phase probe with source and ammeter differential voltages",
+      "source_kind": "Original minimal diagnostic using installed standard components",
+      "status": "runnable",
+      "model_version": "PSCAD 5.0.0.0 / EMTDC 5.00 R93051001",
+      "content_inspected": true,
+      "opened_in_native_software": true,
+      "simulation_succeeded": true,
+      "reference_numeric_data_obtained": true,
+      "local_path": "local_reference/c1_openloop_reference_research/20261111T193625022842Z_dc_measurement_diagnostic_v2/n/20261111T194623690905Z",
+      "samples": 81,
+      "channels": 33,
+      "research_record": {
+        "path": "docs/development_roadmap/experiments/c1_dc_measurement_diagnostic_20261112.json",
+        "bytes": 15789,
+        "sha256": "0610d8dd9038ea802b333350608a288559bcfee135d382cd3bbb573656a5a41f",
+        "hash_scope": "Preserved Windows workspace bytes; Git LF identity is supplied separately.",
+        "git_lf_bytes": 15462,
+        "git_lf_sha256": "37a766d52e8f5627302e5165b4178917c4e37639ab58ff87ee87a62b58685429"
+      },
+      "numerical_acceptance": false,
+      "candidate_executed": false,
+      "full_VSC_reference_ready": false,
+      "scope": "Mapping and localized measurement diagnostic only. Original bridge-DC and fresh ammeter-drop gates FAIL five rows; source-terminal and dependent rank2 closure gates PASS. No internal cause, SPWM/full-reference/candidate qualification.",
+      "allows_redistribution": "Donor/generated native files/raw waveforms remain ignored in local_reference",
+      "blockers": [
+        "Frozen1e-8V bridge-DC and ammeter-drop gates remain unresolved."
+      ]
     }
   ],
   "scope_notes": [

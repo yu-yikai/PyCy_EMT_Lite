@@ -1,17 +1,19 @@
 # 恢复与下一步
 
 2026-11-12目标active。恢复先读五状态文件，核分支、实际HEAD、工作区与真实远端。
-checkpoint为本次记录前的a241d1ec；后续提交须按实际Git历史交叉核对，不自称包含自身。
+checkpoint为本次记录前的e73c0b3b；后续提交须按实际Git历史交叉核对，不自称包含自身。
 开发分支codex/emt-examples-longterm常规提交/里程碑推送已授权；不改main、不强推、不覆盖用户文件。
 C1仍in_progress；既有11已验收、正式新增9项。本轮原生/分析已终态，无已知待恢复运行。
 
-1. 先读[三相记录](experiments/c1_three_phase_probe_20261112.json)及[参考设计](experiments/c1_openloop_reference_design.md)。
-   400 µs八态探针整体FAIL保留：五行DC端口差超原门，最大含格1.351e−8 V > 1e−8 V。
-   接线/生成顺序和直接物理残差可独立引用；条件预测前提未满足，不作为参考通过。
-2. 下一次原生运行前另冻最小测量诊断：保持物理、接地、参数、八态、时钟及原失败不变，
-   只增加DC源NA→NB和串联电流表两端的fresh差分电压，核端口差=源端电压+电流表压降。
-   先区分记录路径与端约束，再研究浮置数值条件；不把配置400 V或文本量子当作内部误差来源证明。
-   新包让owned worker显式禁用bytecode并复核守卫；不改旧冻结包、删cache或重跑已完成的旧probe。
+1. 先读[测量诊断](experiments/c1_dc_measurement_diagnostic_20261112.json)、[原三相记录](experiments/c1_three_phase_probe_20261112.json)及[参考设计](experiments/c1_openloop_reference_design.md)。
+   最新33通道包真实运行及两套数值审计已终态。原DC端口和新电流表压降各五行超1e−8 V门，整体FAIL。
+   源端电压/闭合过门，只定位了记录中的端电压差；条件预测仍仅诊断，不推断内部EMF或浮置数值成因。
+2. 安装电流表及实际生成分支已只读核实。下一包只改`use_ideal_branch=False→True`，
+   保持`branch_threshold=0.0005 Ω`、33通道、元件/参数/门极/时钟和全部原门；先独立冻结再运行。
+   这是算法选项假设，可能影响其他零阻抗支路；不能称只改DC表内部或保证修复。核实际选项与生成`SHORT_CIRCUIT`后再读波形。
+   新设计须保留同刻独立电流观测、端口方向和全部原失败；不能用源CUR历史或改门追认旧数据。
+   33通道v1编译失败、v2成功运行但数值FAIL均完整保留，不修改冻结包或重启已完成的run。
+   新包继续显式worker -B、精确无缓存库存与资源/时间/归属守卫；节点从实际生成文件核定，映射收据先于原始波形。
 3. 合格后再冻结完整开环协议、参考细化与最小候选；实际源唯一sin(ωt+Ph)、正abc，cos-Park角为ωt−π/2。
    复用12/18、controls/vsc.py及CaseDefinition链，保持开环→已知角dq电流→PLL→P前馈/Vac→真实DC电容Vdc及扰动。
    固定理想DC不能验证Vdc，刚性电网端不能验证Vac调节；不新增通用框架或重复算例。

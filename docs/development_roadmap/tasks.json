@@ -3,7 +3,7 @@
   "updated_date": "2026-11-12",
   "timezone": "Asia/Shanghai",
   "branch": "codex/emt-examples-longterm",
-  "checkpoint_head": "a241d1ec1636e5635166f3b434acdd67034a38c4",
+  "checkpoint_head": "e73c0b3b8b0e1b0f1507618d973989ad9553703f",
   "current_task": "C1",
   "formal_new_examples_completed": 9,
   "status_values": [
@@ -660,9 +660,10 @@
         "simulink-standard-blocks-srf-pll-r2026b",
         "pscad-official-vsc-background-v463",
         "pscad-derived-source-startup-v5",
-        "pscad-derived-three-phase-manual-probe-v5"
+        "pscad-derived-three-phase-manual-probe-v5",
+        "pscad-derived-dc-measurement-diagnostic-v5"
       ],
-      "validation": "既有11真实PLL已验收；本次真实三相八态探针81行/31量、接线与生成顺序通过，DC端口电压差五行超过原1e-8V门，整体FAIL保留。原v1/v2历史不变；条件预测仅诊断。113源码/依赖未改，1300全量为相同代码前次结果。完整开环/dq/P前馈/Vac/真实DC电容Vdc仍未完成。",
+      "validation": "既有11真实PLL已验收；新33通道测量诊断完成，原DC端口门与电流表压降门同五行FAIL；源端及闭合门PASS，不能证明内部成因。首个新包编译失败保留，第二包三观察线最小修正后真实正常运行。113源码/依赖未改，沿用同代码1300全量；完整开环/dq/PLL/PQ/Vdc/Vac及扰动链尚未完成。",
       "acceptance": "局部、可独立运行验证的教学例逐项验收",
       "status": "in_progress",
       "files": [
@@ -676,7 +677,8 @@
         "validation/cases/pll_dynamic_response/validation_report.json",
         "docs/development_roadmap/experiments/c1_openloop_reference_design.md",
         "docs/development_roadmap/experiments/c1_openloop_source_research_20261112.json",
-        "docs/development_roadmap/experiments/c1_three_phase_probe_20261112.json"
+        "docs/development_roadmap/experiments/c1_three_phase_probe_20261112.json",
+        "docs/development_roadmap/experiments/c1_dc_measurement_diagnostic_20261112.json"
       ],
       "commits": [
         "b835e31785fab3fda247c333d23edbe9ce576dfa",
@@ -684,7 +686,8 @@
         "da18a43321901f294786694fbb8b9c70ab79881f",
         "5314486fcb30929f79c62a5b15faf2e462529573",
         "5e27e7878ac4260c31e07c2eaf4b33b2164298c4",
-        "a241d1ec1636e5635166f3b434acdd67034a38c4"
+        "a241d1ec1636e5635166f3b434acdd67034a38c4",
+        "e73c0b3b8b0e1b0f1507618d973989ad9553703f"
       ],
       "blockers": [],
       "reference_feasibility": {
@@ -695,7 +698,7 @@
         "evidence_sha256": "d92469cdd234477829ca5a5fa75a67648f17235fffadf3d3cbdaa73672375427",
         "native_executed": false
       },
-      "current_stage": "open_loop_three_phase_probe_DC_port_gate_failed",
+      "current_stage": "open_loop_DC_measurement_localized_gate_failed",
       "interface_discovery": {
         "status": "qualified_native_satk_batch_interface",
         "simulink_model_tools_provided": false,
@@ -975,6 +978,20 @@
         "full_VSC_reference_ready": false,
         "new_candidate_executed": false,
         "active_native_runs": 0
+      },
+      "dc_measurement_diagnostic": {
+        "status": "measurement_localization_complete_original_and_ammeter_gates_FAIL",
+        "record": {
+          "path": "docs/development_roadmap/experiments/c1_dc_measurement_diagnostic_20261112.json",
+          "bytes": 15789,
+          "sha256": "0610d8dd9038ea802b333350608a288559bcfee135d382cd3bbb573656a5a41f",
+          "hash_scope": "Preserved Windows workspace bytes; Git LF identity is supplied separately.",
+          "git_lf_bytes": 15462,
+          "git_lf_sha256": "37a766d52e8f5627302e5165b4178917c4e37639ab58ff87ee87a62b58685429"
+        },
+        "new_candidate_executed": false,
+        "full_VSC_reference_ready": false,
+        "active_native_runs": 0
       }
     },
     {
@@ -1127,7 +1144,7 @@
       "path": "local_reference/native_static_reviews/b1_resume_evidence_20261111/receipt_20261111T132350441453Z.json",
       "sha256": "73c22f1cbf7bfafaa1cc563e475bfb3293fa5e02d52386b4064e42b2a3eb32e8"
     },
-    "latest_checked_head": "a241d1ec1636e5635166f3b434acdd67034a38c4",
+    "latest_checked_head": "e73c0b3b8b0e1b0f1507618d973989ad9553703f",
     "latest_remote_head_verified_same": true,
     "latest_goal_turn_classification": "progress"
   },
@@ -1143,5 +1160,5 @@
       "resume_requires_explicit_user_instruction": true
     }
   ],
-  "current_stage": "open_loop_three_phase_probe_DC_port_gate_failed"
+  "current_stage": "open_loop_DC_measurement_localized_gate_failed"
 }
