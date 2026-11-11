@@ -1,11 +1,11 @@
 # C1：开环并网VSC参考设计
 
-2026-11-12。既有11 PLL已补验证；C1完整链仍in_progress，新增完成数9。
-DC PGB注册/写出分段实际编译失败：精确10+603字节保存仍缺DC通道，dim/index未展开，Map31路。
-正常退出不等于构建通过；无Run，深层准入及数值未观察。
-下一步只静态冻结官方Output Intent源观察字段、Dsout负ownCBR与标准master:pgb的最小方案，当前源调度未证明。
-全部原物理/预算/旧FAIL保留；核心和教学代码未改，继续复用CaseDefinition链与现有元件。
-见[当前证据](c1_pgb_split_build_only_20261112.json)；以下按各自冻结范围保留设计和历史。
+2026-11-12。既有11 PLL补验证完成；C1完整链仍in_progress，新增完成数9。
+Output Intent源观察字段+标准PGB方案build0，Map32/DATAStruct34，但DC ownPGB仍MainDyn、负ownBA读取在MainOut，未通过同刻测量门。
+runtime空格解析局限与独立helper分隔线异常另列，深层准入未完成；无Run/OUT，数值未观察。
+下一步仅另冻一个标准force_dsout与不同输入/输出别名的最小信号链，观察图/存储另行预定，实际调度仍须验证。
+原源/电路物理、通道、时钟、预算及旧FAIL保持；核心和教学代码未改，继续复用CaseDefinition链与现有元件。
+见[当前证据](c1_output_intent_build_only_20261112.json)；以下按各自冻结范围保留设计和历史。
 
 ## 教学内容和最小接线
 

@@ -1,12 +1,13 @@
 # 验证状态
 
 2026-11-12。C1仍in_progress；新增19–27共9项本地/商业验收保持，跨OS单列F1。
-本轮DC PGB注册/写出分段仅构建失败：6条构建错误、Map31路缺DC；worker正常退出且运行器守卫通过。
-23包件/71归档及6份XML已核；独立90检查唯一build0前提失败、33绑定复核通过，深层检查未执行。
-同刻输出时序、完整32路元数据和数值均NOT_OBSERVED；无Run/OUT，不记新数值或时序FAIL。
-原件/环境未变、自有进程清空；113源码/依赖未改，本轮复用1300含slow等既有检查。
-官方Output Intent下一方案仍未实施；完整开环、C1其余控制链和D1待办，F1外部CI恢复待补。
-见[本轮失败记录](experiments/c1_pgb_split_build_only_20261112.json)。
+本轮Output Intent源观察字段+标准PGB原生build0，但DC ownPGB在MainDyn451、负ownBA读取在MainOut854，时序拒绝；完整开环未合格。
+runtime先停于合法CBR空格解析局限；独立helper193完成检查PASS后遇PGBList分隔线异常，未达深审，不能记独审PASS。
+ROOT全核22包件/67归档、3源完整语义；独立另101描述符复核PASS。Map32/DATAStruct34/37原始维度零差是有界事实，完整深层资格未建立。
+会话4225已闭场：worker1受控异常且quit返回，guarded/native completion为false；自有进程清空，无Run/OUT，数值NOT_OBSERVED。
+原件/环境未变；113源码/依赖未改，复用1300含slow等既有检查，本轮未重测。
+标准force_dsout下一方案未实施；C1其余控制链和D1待办，F1外部CI恢复待补。
+见[本轮构建记录](experiments/c1_output_intent_build_only_20261112.json)。
 
 | 对象 | 内部证据 | 外部参考 | 正式状态 |
 |---|---|---|---|

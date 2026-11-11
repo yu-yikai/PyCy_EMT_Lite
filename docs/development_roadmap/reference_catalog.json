@@ -3167,6 +3167,39 @@
       "blockers": [
         "Freeze and independently inspect a minimal source-observation value field with Intent=Output, using the documented scalar Real/Variable field and direct negative own-BA CBR assignment in Dsout; restore the DC recorder to unchanged master:pgb. Keep all original source physics/CUR/ports, the other31 channels, topology, clocks, flags and17 plus Vs/token budgets. Installed5.0 contains this observation-language primitive; the official5.1 tutorial says it was introduced in4.5, but neither proves this source scheduling. No new package or native attempt yet. First freeze exact XML/schema and a separate BUILD-ONLY contract; require build0, complete Map32/DATAStruct34 and all11 parameters/ports/instance hierarchy, four direct currents and15 Vm fresh-to-own-PGB in MainOut without overwrite, and all prior storage/environment guards. Derive indices; do not vary #PGB placement again without evidence, patch old/generated files, use history CUR, relax thresholds or call Run, even if a build-only check passes."
       ]
+    },
+    {
+      "id": "pscad-derived-output-intent-build-v5",
+      "short_code": "C1-OUTPUT-INTENT-BUILD",
+      "name": "Source Output Intent field with standard PGB, build-only",
+      "source_kind": "Minimal installed-source observation field with direct Dsout negative ownBA current;32 standard master PGBs",
+      "status": "inspected",
+      "content_inspected": true,
+      "opened_in_native_software": true,
+      "simulation_succeeded": false,
+      "reference_numeric_data_obtained": false,
+      "local_path": "local_reference/c1_openloop_reference_research/20261111T230607005288Z_output_intent_build_only_v1/n/20261111T231950255510Z",
+      "samples": 0,
+      "configured_channels": 32,
+      "generated_Map_channels": 32,
+      "research_record": {
+        "path": "docs/development_roadmap/experiments/c1_output_intent_build_only_20261112.json",
+        "bytes": 11201,
+        "sha256": "8d26354d697c3da2501fc81716096d5e495a65d642ed7af9e28e6d812254e521",
+        "hash_scope": "Exact LF workspace bytes; Git LF blob identity verified separately at staging.",
+        "git_lf_bytes": 11201,
+        "git_lf_sha256": "8d26354d697c3da2501fc81716096d5e495a65d642ed7af9e28e6d812254e521"
+      },
+      "native_build_only_status": "BUILD_ONLY_COMPILED_DC_STAGE_REJECTION_AND_REVIEWER_PARSE_BOUNDARY",
+      "numeric_status": "NOT_OBSERVED",
+      "numerical_acceptance": false,
+      "candidate_executed": false,
+      "full_VSC_reference_ready": false,
+      "scope": "Build0 but controlled worker1/guarded false. Runtime whitespace rejection separate from actual DC Dyn/Out mismatch; independent helper193 partialPASS then PGBList parse exception. No Run/OUT or numeric qualification.",
+      "allows_redistribution": "Native/library/helper files remain ignored; no redistribution rights claimed.",
+      "blockers": [
+        "Freeze one standard master:force_dsout Real/Dim1 signal transfer between distinct source-fresh and recorded aliases, with exact observer components/ports/wires/nets and storage expectations. Preserve19 physical branches, source equations/CUR,32 channels, clocks and17 plus Vs/token budgets. Official v5.02 and installed5.0 support this primitive, not its future compiled ordering. Use a new package/helper only: accept whitespace in the exact bare negative own-CBR expression and the exact known PGBList separator, reject other records. Require build0, complete Map32/DATAStruct34 and all11 parameters/ports/instance identities, four currents and15 Vm fresh to own PGB in MainOut, and all37 dimensions/storage/writer guards. For DC prove negative ownBA then standard identity copy then own PGB, in order, without overwrite or own Dyn writer/history CUR. No Run even after a build-only pass; freeze a separate numeric execution contract first. Do not patch frozen failures, generated files or indices, reconstruct DC current or relax budgets."
+      ]
     }
   ],
   "scope_notes": [
