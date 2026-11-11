@@ -953,7 +953,7 @@
         },
         "gate_mapping": "Q1/Q2 = A upper/lower; Q3/Q4 = B upper/lower; Q5/Q6 = C upper/lower. Native 0/1V gate pairs are strictly complementary at every logged time."
       },
-      "reference_ready_scope": "Real 40001-point time/current reference with original model, raw MAT, native physical gates, power audit and provenance retained locally. Electrical/controller topology and physical parameters unchanged. This is resource readiness only; existing PyCy example12 has not passed complete validation.",
+      "reference_ready_scope": "Real 40001-point time/current reference with original model, raw MAT, native physical gates, power audit and provenance retained locally. Electrical/controller topology and physical parameters unchanged. This is resource readiness only; existing PyCy example12 has not passed complete validation against this original MathWorks reference.",
       "formal_pycy_validation": {
         "passed": false,
         "waveform_passed": false,
@@ -2311,17 +2311,17 @@
     {
       "id": "pscad-derived-bilateral-spwm-v5",
       "short_code": "PSCAD-SPWM-DERIVED",
-      "name": "Independent bilateral SPWM reference: actual 1ms probe",
+      "name": "Independent bilateral SPWM reference: actual full0.2s native pair",
       "source_path": "C:/Program Files (x86)/PSCAD50/master.pslx",
       "source_sha256": "2940ddce6fe1fae56cb6be70bbaf0210a7e36059bfcad1e78b0ddbfd4d2a7c77",
       "source_scope": "independent derived circuit/control design; not an unchanged official benchmark or the original MathWorks circuit",
       "model_version": "PSCAD5.0.0; installed master.pslx XML5.0.0.2; actual GF46/x86 build/run",
-      "status": "runnable",
+      "status": "reference_ready",
       "content_inspected": true,
       "opened_in_native_software": true,
       "simulation_succeeded": true,
       "reference_numeric_data_obtained": true,
-      "comparison_reference_ready": false,
+      "comparison_reference_ready": true,
       "local_path": "local_reference/two_level_pwm",
       "design_record": "docs/development_roadmap/experiments/spwm_matched_reference_design.md",
       "short_probe": {
@@ -2332,8 +2332,7 @@
       },
       "mathematical_compatibility": "Short probe uses raw native TIME and standard math/comparators, six bilateral varrlc pure-R branches, floating1ohm+1mH phase loads and400V ideal source. All1206 observed gate values match the default12 formula evaluated at retained raw native TIME, all six R inputs are0.001/1e9ohm, and zero initial current/KCL/TR relations were checked. Generated12-significant-digit phase/omega literals and ASCII timing precision remain explicit boundaries; this is not full-run bitwise controller equivalence.",
       "blockers": [
-        "完整联合协议ed9eec3d已固定并独审；新完整来源/分析入口仍须冻结独审后顺序实跑，参考自细化通过前不得比较候选。",
-        "原12的新商业比较及正式B1交付仍待；原MathWorks2% FAIL、150A尺度/.02/10A/5%/3°保持。"
+        "全部数值、独审、独立运行、测试和教学检查已完成，待本次正式验收Git提交与推送。"
       ],
       "sha256": {
         "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/report.md": "2ef092f9ad188cd2b63155ddbf9623317631f2a6ce98935e77cf34c0212d5906",
@@ -2442,7 +2441,35 @@
         "../../validation/cases/two_level_pwm_pscad/manifest.json": "8c29826fdd5e82468cc4940f7fa3f007cdcaf509cfb311c9281dba161795f232",
         "../../validation/cases/two_level_pwm_pscad/parameters.json": "b51abbc578d0ef496a5a83224cd63e66bbc67f51dad292faf7e5ad048ccc2208",
         "../../validation/cases/two_level_pwm_pscad/reference_protocol.json": "ed9eec3d015a3e121e41e3855a2ff234ccfa5fb966d3456931485a6bfae03863",
-        "../native_static_reviews/b1_full_protocol_20261111T021652231587Z/receipt.json": "a91f38ee38371b1b8931a42f6c3ea3f2df25743dcfbe094724948213af3ac2a0"
+        "../native_static_reviews/b1_full_protocol_20261111T021652231587Z/receipt.json": "a91f38ee38371b1b8931a42f6c3ea3f2df25743dcfbe094724948213af3ac2a0",
+        "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/full_reference_research/20261111T021741938635Z_full_v7/manifest.json": "859b56fdd8385a33c52c37ef105f37c6a1422c7a9f351e45a5d78cdd580741b6",
+        "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/full_reference_analysis/20261111T022954759863Z_author_v1/manifest.json": "6ce2e2e8978d3552954bd32f507ae63ab378da34e638adff3a93205656c64aad",
+        "../native_static_reviews/b1_full_joint_20261111/frozen_manifest.json": "d68b1957b1ff91758a0a4cb54e2f75ae8b05440692e78547645489a7ec86ea67",
+        "../native_static_reviews/b1_author_full_review_20261111T023803509291Z/receipt.json": "60314d6bd6822277fa21d79fbbb089c43dd8b2efbb90ee2f4d8024510c909fea",
+        "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/n/20261111T023903947818Z/manifest.json": "088b5cffc3a1baad2a72a0b8eff19174040809ab291caeab4e00fd1d66f513ed",
+        "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/n/20261111T023903947818Z/terminal.json": "37fc4488f505034c9d76303086f9caec4813c99f0321691940155944cbd222f8",
+        "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/n/20261111T024750132919Z/manifest.json": "e2e3c3a574a12757551d3e03648df0bfe433045c9fb331aeae5fe8ec0a0d4d49",
+        "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/n/20261111T024750132919Z/terminal.json": "98213c97546f537a8b754dbcd27d5908453c09a213c9e969c4a84a2de30bd492",
+        "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/full_reference_analysis/20261111T022954759863Z_author_v1/results/20261111T025307501016Z/summary.json": "1fd3d6f02996d2fab58f25f83c51a4f25371723604b59bc9928545de8cb92bb6",
+        "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/full_reference_analysis/20261111T022954759863Z_author_v1/results/20261111T025307501016Z/manifest.json": "7a1a575a15ef057c0a4d0e809d9b775a452352d0bb997bdf7fcf52bc7dc1b766",
+        "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/full_reference_analysis/20261111T022954759863Z_author_v1/results/20261111T025307501016Z/reference_self_refinement.json": "5fa7166ed0868bf613532add05873645ec296846520651022fbf9bdd4535a319",
+        "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/full_reference_analysis/20261111T022954759863Z_author_v1/results/20261111T025307501016Z/held_bridge_raw.png": "09b3e6a6e4e3538241fb679bd5018d322f56827a1e1c576d2955885e70dc13bc",
+        "../native_static_reviews/b1_full_joint_20261111/coarse_20261111T023903947818Z/report.json": "73dc4b6385f9814803999029910344234835118bd8e5078fccfa4aafd63b9ca2",
+        "../native_static_reviews/b1_full_joint_20261111/coarse_20261111T023903947818Z/manifest.json": "c6a0ad0da7daf94cc11323471907da89305864c0502f7e9e40bbce65470c3e52",
+        "../native_static_reviews/b1_full_joint_20261111/fine_20261111T024750132919Z/report.json": "c0a4ed78dd78f552d8dec8e7f30239114ec42ee58b0bbf8e1d3949e0eb6ae60e",
+        "../native_static_reviews/b1_full_joint_20261111/fine_20261111T024750132919Z/manifest.json": "5db682b07248d075dec70775355989a5e899de12d78e69326f464e03c62ba906",
+        "../native_static_reviews/b1_full_joint_20261111/pair_20261111T024750132919Z/report.json": "bdf1e26a5ed4a035541d2470d318f0d869ae7b7ea49cd8092a73a9b28c0e73a2",
+        "../native_static_reviews/b1_full_joint_20261111/pair_20261111T024750132919Z/manifest.json": "ab8a350840baee7be187caa5bcd201b5c501b34d2dfcdc28d6d8f4569b2af1fb",
+        "../two_level_pwm_pscad/qualification/20261111T031524306929Z/qualification.json": "b8511f04434dc091e44afe385cbf022b461f537067f814e053d437a3ab8c5c83",
+        "../two_level_pwm_pscad/qualification/20261111T031524306929Z/provenance.json": "52ea3ed43b42e7a7404a3c32705a754af80f6e6d02714c02d15c407dde85692c",
+        "../two_level_pwm_pscad/qualification/20261111T031524306929Z/normalized_results/reference.csv": "9b3ad5841f4aeb666a14facc3ca5154413d675d21b466febb5690e16b008025c",
+        "../native_static_reviews/b1_qualification_actual_20261111/receipt_20261111T031748352820Z.json": "1d50b49c19a739aeda2a4e3f62526ab84c4080cbb9017fd741b20680b0e43d31",
+        "../native_static_reviews/b1_case_loader_final_20261111T031526797922Z/receipt.json": "72168a8d109820e36b74fcdf68713f1eb20b36e3c4da33116d7a034454aa063d",
+        "../two_level_pwm_pscad/comparison_results/20261111T032613323109Z/report.json": "f52762d559beff7b16608928d12f831fd642b49b31466595010563770d2faa38",
+        "validation/cases/two_level_pwm_pscad/validation_report.json": "1d235718f31e7ec095ec33396b81d14f5975ffb540cdffaa4139f7d5db64dc0e",
+        "local_reference/native_static_reviews/b1_original12_standalone_20261111T032943447679Z/receipt.json": "7e9278a797aa7890256861dc3849589bc9fca2aa7f4096322a5a9ec9d4666a0e",
+        "local_reference/native_static_reviews/b1_original12_standalone_20261111T032943447679Z/verification.json": "2a6163fc76c0a9b9c7b51d3114a1b72f0182907fdc726e03a12bdbac7498afac",
+        "local_reference/native_static_reviews/b1_resume_evidence_20261111/receipt_20261111T132350441453Z.json": "73c22f1cbf7bfafaa1cc563e475bfb3293fa5e02d52386b4064e42b2a3eb32e8"
       },
       "license_notes": "Installed library excerpts, donor original, scripts and raw evidence remain ignored locally; redistribution permission not asserted.",
       "original_static_builder_preparation": {
@@ -2492,7 +2519,7 @@
         "terminal_sha256": "dacff8ff0d60c08efac859db5cc14c60d8e75755f8636867f86176e1ce5b72ec",
         "deliberate_stop_before_all_wires_save_build_run": true
       },
-      "reference_ready_scope": "Original nonheld1ms reference is runnable; exact observer-bearing held fullbridge qualified for frozen1ms5/2.5us diagnostic only,60channels201/401rows. Full0.2s reference and candidate comparison remain unqualified.",
+      "reference_ready_scope": "Full native reference and unchanged original12 comparison independently accepted; bilateral-switch/held-gate assumptions only. Teaching/checks complete, formal Git delivery pending. Original MathWorks waveform FAIL retained.",
       "previous_prebuild_probe": {
         "record": "docs/development_roadmap/experiments/native_reference_attempts_20261109.md",
         "latest_run": "local_reference/two_level_pwm/matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/n/20261109T091917405572Z",
@@ -2698,8 +2725,164 @@
         "sha256": "ed9eec3d015a3e121e41e3855a2ff234ccfa5fb966d3456931485a6bfae03863",
         "independent_review": "local_reference/native_static_reviews/b1_full_protocol_20261111T021652231587Z/receipt.json",
         "independent_review_sha256": "a91f38ee38371b1b8931a42f6c3ea3f2df25743dcfbe094724948213af3ac2a0",
-        "full_native_executed": false,
-        "candidate_executed": false
+        "full_native_executed": true,
+        "candidate_executed": true,
+        "reference_self_refinement_accepted": true
+      },
+      "full_reference_pair": {
+        "status": "actual_full_native_pair_self_refinement_accepted",
+        "coarse_run": "20261111T023903947818Z",
+        "fine_run": "20261111T024750132919Z",
+        "duration_s": 0.200005,
+        "formal_stop_s": 0.2,
+        "native_steps_s": [
+          5e-06,
+          2.5e-06
+        ],
+        "rows": [
+          40002,
+          80003
+        ],
+        "channels": 60,
+        "native_archive_files": [
+          88,
+          88
+        ],
+        "shared_exact_applied_inputs": 40002,
+        "midpoint_holds": 40001,
+        "author_summary": "local_reference/two_level_pwm/matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/full_reference_analysis/20261111T022954759863Z_author_v1/results/20261111T025307501016Z/summary.json",
+        "author_summary_sha256": "1fd3d6f02996d2fab58f25f83c51a4f25371723604b59bc9928545de8cb92bb6",
+        "independent_pair": "local_reference/native_static_reviews/b1_full_joint_20261111/pair_20261111T024750132919Z/report.json",
+        "independent_pair_sha256": "bdf1e26a5ed4a035541d2470d318f0d869ae7b7ea49cd8092a73a9b28c0e73a2",
+        "full_current_PWL_max_abs_A": 0.33250124895715,
+        "startup_max_nrmse": 0.0009214710649340416,
+        "steady_max_nrmse": 0.0009176418992109418,
+        "max_fundamental_phase_difference_degrees": 0.02699580340120633,
+        "load_mean_power_relative_difference": 4.6118030031541384e-06,
+        "all_native_TIME_t0_stop_tail_retained": true,
+        "candidate_executed": false,
+        "formal_B1_completed": false
+      },
+      "candidate_comparison_status": "independently_validated_Git_pending",
+      "full_reference_qualification": {
+        "status": "QUALIFIED_FULL_CONDITIONAL_NATIVE_REFERENCE",
+        "record": "local_reference/two_level_pwm_pscad/qualification/20261111T031524306929Z/qualification.json",
+        "sha256": "b8511f04434dc091e44afe385cbf022b461f537067f814e053d437a3ab8c5c83",
+        "public_report": "validation/cases/two_level_pwm_pscad/qualified_reference_report.json",
+        "public_report_sha256": "2b26e1855b137a279a39fed134bd66c21d0c081db2543adadf1961b06b31b982",
+        "provenance": "local_reference/two_level_pwm_pscad/qualification/20261111T031524306929Z/provenance.json",
+        "provenance_sha256": "52ea3ed43b42e7a7404a3c32705a754af80f6e6d02714c02d15c407dde85692c",
+        "normalized_reference": "local_reference/two_level_pwm_pscad/qualification/20261111T031524306929Z/normalized_results/reference.csv",
+        "normalized_reference_sha256": "9b3ad5841f4aeb666a14facc3ca5154413d675d21b466febb5690e16b008025c",
+        "normalized_rows": 80003,
+        "time_from": "TIME_native_s",
+        "complete_input_files": 300,
+        "independent_review": "local_reference/native_static_reviews/b1_qualification_actual_20261111/receipt_20261111T031748352820Z.json",
+        "independent_review_sha256": "1d50b49c19a739aeda2a4e3f62526ab84c4080cbb9017fd741b20680b0e43d31",
+        "candidate_executed": false,
+        "formal_B1_completed": false,
+        "scope": "Reference qualification constructed before the later candidate comparison; current candidate state is recorded separately."
+      },
+      "comparison_entry_checks": {
+        "entry": "validation/cases/two_level_pwm_pscad/compare.py",
+        "entry_sha256": "b2042f4ff6c6116cf73f98c97690d4e04db96a2101e3f5f273ac05da307e4844",
+        "tests": "tests/test_two_level_pwm_pscad_comparison.py",
+        "tests_sha256": "e54ef32c1332b78112a2c2fca146118c209d00f333fd8481411b847a22b9288c",
+        "focused_tests_passed": 23,
+        "ruff_passed": true,
+        "independent_review": "local_reference/native_static_reviews/b1_case_loader_final_20261111T031526797922Z/receipt.json",
+        "independent_review_sha256": "72168a8d109820e36b74fcdf68713f1eb20b36e3c4da33116d7a034454aa063d",
+        "full_suite_status": "passed_including_slow",
+        "candidate_executed": false,
+        "full_suite": {
+          "tests": 1267,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "elapsed_s": 494.62,
+          "junit_elapsed_s": 494.618,
+          "xml": ".tmp/longterm/b1-final-20261111T0317.xml",
+          "xml_sha256": "10775c002801b1490d6a8456d0b61c93822ef5aafe15c56f36187e5622374c5e",
+          "log": ".tmp/longterm/b1-final-20261111T0317-pytest.log"
+        },
+        "entry_freeze_commit": "3737e663c89646cf76e6cd9f4880d0e579d95731",
+        "entry_freeze_pushed_before_candidate": true,
+        "scope": "Pre-candidate loader/refusal tests and full regression; current candidate state is recorded separately."
+      },
+      "candidate_comparison": {
+        "status": "actual_candidate_pass_independently_verified",
+        "candidate_executed": true,
+        "record": "local_reference/two_level_pwm_pscad/comparison_results/20261111T032613323109Z/report.json",
+        "sha256": "f52762d559beff7b16608928d12f831fd642b49b31466595010563770d2faa38",
+        "candidate_rows": 40001,
+        "reference_rows": 80003,
+        "window_seconds": [
+          0.1,
+          0.2
+        ],
+        "phase_order": [
+          "a",
+          "b",
+          "c"
+        ],
+        "max_abs_error_A": [
+          0.3219980003405567,
+          0.31817675865325157,
+          0.3195713485704914
+        ],
+        "nrmse": [
+          0.0009176324502834651,
+          0.0009169917588470124,
+          0.0009176418992002043
+        ],
+        "max_fundamental_phase_error_degrees": 0.026995803400751583,
+        "load_mean_power_relative_error": 4.611803011589366e-06,
+        "independent_review": {
+          "path": "local_reference/native_static_reviews/b1_candidate_audit_20261111/actual_20261111T032613323109Z/receipt.json",
+          "bytes": 4555,
+          "sha256": "cd20f9934a2aef3ad8b0655282f806e25587e7b76a9912255c7f39088bb7681d"
+        },
+        "independent_Agg": {
+          "passed": true,
+          "samples": 40001,
+          "exit_code": 0,
+          "scope": "One unchanged original12 __main__ execution through transparent output observation; default parameters and output flags unchanged. No second commercial comparison.",
+          "receipt": {
+            "path": "local_reference/native_static_reviews/b1_original12_standalone_20261111T032943447679Z/receipt.json",
+            "bytes": 30380,
+            "sha256": "7e9278a797aa7890256861dc3849589bc9fca2aa7f4096322a5a9ec9d4666a0e"
+          },
+          "verification": {
+            "path": "local_reference/native_static_reviews/b1_original12_standalone_20261111T032943447679Z/verification.json",
+            "bytes": 3041,
+            "sha256": "2a6163fc76c0a9b9c7b51d3114a1b72f0182907fdc726e03a12bdbac7498afac"
+          },
+          "stdout": {
+            "path": "local_reference/native_static_reviews/b1_original12_standalone_20261111T032943447679Z/stdout_stderr.log",
+            "bytes": 549,
+            "sha256": "a22e0385785f6ce2a2a8cc727acb0eed78ce3271798941f1edf69f358ca81d24"
+          },
+          "figure": {
+            "path": "local_reference/native_static_reviews/b1_original12_standalone_20261111T032943447679Z/original_figure_1.png",
+            "bytes": 165262,
+            "sha256": "0bcc60e81b887349e727579c72c521455ff8fa2904cab1511d4b05bbdfbb42ee"
+          },
+          "complete_result": {
+            "path": "local_reference/native_static_reviews/b1_original12_standalone_20261111T032943447679Z/complete_result.npz",
+            "bytes": 9930712,
+            "sha256": "d2200f7fa1d81eed6e346e8a19c66b134a94c4aaf1049e5f61bdbc72537870dd"
+          },
+          "full_npz_bytes_equal_formal_comparison_candidate": true
+        },
+        "teaching_and_final_Git_delivery": "teaching_complete_Git_pending",
+        "formal_B1_completed": false,
+        "input_snapshot_files": 340,
+        "all_input_hashes_unchanged": true,
+        "public_report": {
+          "path": "validation/cases/two_level_pwm_pscad/validation_report.json",
+          "bytes": 12381,
+          "sha256": "1d235718f31e7ec095ec33396b81d14f5975ffb540cdffaa4139f7d5db64dc0e"
+        }
       }
     }
   ],

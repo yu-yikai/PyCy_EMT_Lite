@@ -62,4 +62,4 @@ uv run --locked python -m validation.cases.two_level_pwm.compare
 
 2026-11-09[独立误差隔离](../../../docs/development_roadmap/experiments/spwm_error_isolation.md)已全点回放两边并保存16组合/24顺序：仅换结构门极后稳态NRMSE约0.503%–0.505%，再用BE约0.449%–0.452%。1µS影响很小，器件项只用观测电压残差作条件诊断；这些数值不替代默认12的商业比较，原FAIL保持。
 
-后续[PSCAD双向开关参考](../two_level_pwm_pscad/README.md)采用独立标准块控制和双向外控电阻，已取得完整0.2 s真实波形并通过参考自细化与独立核验；原12的正式比较仍待执行。两种参考的器件与时序假设不同，本目录原manifest、参数与失败报告保持。
+后续[PSCAD双向开关参考](../two_level_pwm_pscad/README.md)采用独立标准块控制和双向外控电阻，完整0.2 s真实参考自细化、原12正式比较及独立复算均已通过。两种参考的器件与时序假设不同，本目录原manifest、参数与失败报告保持。

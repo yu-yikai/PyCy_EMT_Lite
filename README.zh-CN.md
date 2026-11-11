@@ -101,7 +101,7 @@ uv run --locked pytest -o addopts= -q -p no:cacheprovider --basetemp=.tmp/pytest
 | 电源、线路、变压器与负荷 | [25](examples/25_source_line_transformer_network.py) | 在08、17和23之后学习完整网络的正弦稳态初始化、充电和补偿导致的电流差，并核实际负荷功率及损耗；附[接线、初值与验证说明](validation/cases/source_line_transformer/README.md)。 |
 | 同步机 | [10](examples/10_park_generator_avr_governor.py) | 从平衡初值出发，观察负荷阶跃后电压和转速的变化，区分 AVR 与调速器的作用。 |
 | 离散控制 | [11](examples/11_pll_dynamic_response.py) | 观察独立 SRF-PLL 控制循环的 q 轴电压和角频率，说明何时接近锁定。 |
-| PWM | [12](examples/12_two_level_pwm_generator.py) | 对照理想开关的 SPWM 门极与 RL 电流，区分开关纹波和基波；[真实参考研究](validation/cases/two_level_pwm/README.md)保留尚未通过的波形判据。 |
+| PWM | [12](examples/12_two_level_pwm_generator.py) | 对照 SPWM 门极与 RL 电流，区分纹波和基波；[PSCAD 双向开关对标](validation/cases/two_level_pwm_pscad/README.md)已通过，[MathWorks IGBT 研究](validation/cases/two_level_pwm/README.md)保留原波形差异。 |
 | 同步Buck电压闭环 | [26](examples/26_synchronous_buck.py) | 在02和12之后连接已有低通、PI与限幅积木，观察启动过冲和脉冲负荷恢复；附[电路、有效域与真实Simulink对标](validation/cases/synchronous_buck/README.md)。 |
 | VSC-HVDC 综合仿真 | [18](examples/18_three_terminal_vsc_hvdc.py) | 沿三个两电平桥、独立 PLL/dq 闭环和双极 DC 网络，跟踪交流故障后的电压、功率变化。 |
 

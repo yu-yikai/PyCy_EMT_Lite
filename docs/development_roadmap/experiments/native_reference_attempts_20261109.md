@@ -2,7 +2,7 @@
 
 本记录区分真实参考、自检、候选比较与建模失败。正式新增19–27共9项；27已独立验收提交ae9fe362，A3completed，当前B1。26的9269350交付和旧失败均保留历史。所有第三方模型、原始波形及运行脚本留在忽略的`local_reference/`。短探针没有替代正式验收。
 
-当前更新至2026-11-11：B1完整1ms保持桥双步长诊断通过；完整0.2s协议已另冻，参考/候选仍待，详见文末。
+当前更新至2026-11-11恢复active：B1完整.200005s双步长参考及300输入资格、原12正式比较、340快照独审和独立Agg均通过；23专项与1267含slow全量通过，教学/报告完成，现validated待验收Git。恢复核同本地/远端3737e66、暂停12文件及111源码；不重跑成功输出。8cc1457为早期恢复历史，协议e25ebed先于native，入口3737e66先于候选，详见文末。
 
 ## B2：参考、候选数值与正式交付通过
 
@@ -478,7 +478,7 @@ C1只读可行性 `local_reference/c1_pll_reference_research/20261111T0135302299
 所有本轮native和分析均终态，无自有原生进程待恢复；CI同账单锁终态不重复轮询。
 
 
-## 完整0.2 s前瞻协议：尚无完整波形
+## 完整0.2 s前瞻协议（定义时尚无完整波形）
 
 2026-11-11继续核同本地/真实远端8cc1457、干净工作区及五状态文件，上一阶段为有实测进展。
 新独立验证身份 `validation/cases/two_level_pwm_pscad` 仅补对标既有12，不新增教学编号。
@@ -498,3 +498,79 @@ TIME完整词元区间须在每run名义点±2ps内，实际hold_fraction→INT 
 原未执行草稿/拒绝证据 `03cc9ccb…` 保留；修后v2只允许精确该时长变化，正/错duration/其他字段三fixture通过，
 独审 `local_reference/native_static_reviews/b1_full_draft_fix_20261111/report.json` 为 `253428a4…`。
 上述是离线源准备，不是完整运行；新来源和两分析入口仍须另冻结独审，只有ROOT可顺序启动native。
+
+
+## 完整参考真实双run与自细化通过
+
+协议ed9eec3d于e25ebed2511312c496a52303222344e4d754d4cd提交推送，真实远端核同，先于两完整运行。
+新来源D/full_reference_research/20261111T021741938635Z_full_v7，27项manifest859b56fd；
+作者D/full_reference_analysis/20261111T022954759863Z_author_v1，12项manifest6ce2e2e8、入口3ce0b83d；
+独立local_reference/native_static_reviews/b1_full_joint_20261111，8项frozen_manifest d68b1957。
+源独审708be5c5、作者独审60314d6b、boundary独审faf8d920、pair kernel独审e21ad700均通过；
+作者25、独立33有限检查仅为准备期检查，不当作完整商业输出。
+
+| run | 实际终态与完整归档 |
+| --- | --- |
+| coarse 20261111T023903947818Z | 277.6601983s；terminal37fc4488；88项manifest088b5cff |
+| fine 20261111T024750132919Z | 227.6937776s；terminal98213c97；88项manifeste2e3c3a5 |
+
+两者build0/runtrue/完成标记true，owned[]、monitor/cleanup错误空，source/profile/父环境/依赖守卫均通过。
+ROOT在终态语义核验后才核完整文件及授权分析。首次ROOT小检查误取present-file描述中的可选exists键，
+改按实际hash/size形状核验后继续；原terminal和原生行为未修改，也不是native失败或重跑。
+比旧84项多的4项仅是builder_input_snapshot与dependency_snapshots各自新增bridge_1ms_qualification/full_protocol。
+
+384组件、204线、506端口、117网、588保存对象及原69上游数学、生成常量和日志顺序全部核过。
+60通道全40002/80003行；末nativeTIME两者均.200005、t0/名义.2/尾步全部保留，无外推或TIME量化。
+40002共享六施加门极/R完全相同，40001细步中点保持；全部七Pulse、raw/held互补及严格电阻映射通过。
+三处A相单点canonical/emitted差位于coarse行10010/20010/30010（fine行其两倍），
+实际gate1而单点0；两run在同一时刻一致，均有同actual-m/common-carrier分支准入证据，不删除。
+159条source诊断及细步40001非驱动INT半点诊断保留；不能将observational准入宣称为libm源码证明。
+t0粗I=0，细I约6.303e-29A；pole/neutral约3.999999999996e-10V，未强制归零。
+
+作者配对D/full_reference_analysis/20261111T022954759863Z_author_v1/results/20261111T025307501016Z：
+summary1fd3d6f02996d2fab58f25f83c51a4f25371723604b59bc9928545de8cb92bb6，37项manifest7a1a575a；
+自细化5fa7166e、共享输入bd216599、图09b3e6a6已查看。独立根为上述b1_full_joint_20261111：
+coarse报告73dc4b63/4项manifestc6a0ad0d；fine报告c0a4ed78/4项manifest5db682b0；
+pair_20261111T024750132919Z/report.json为bdf1e26a5ed4a035541d2470d318f0d869ae7b7ea49cd8092a73a9b28c0e73a2，
+2项manifestab8a3508及8直接输入全核，issues均空。ROOT交叉核9项PWL峰/RMSE逐相逐窗一致。
+
+全[0,.2]三相最大差.332501249/.318176759/.319571349A；启动/稳态最大NRMSE .000921472/.000917642，
+各自低于固定3A/.02/.01。稳态RMS相对差≤2.306024e-6、基波RMS≤1.386180e-7、相位≤.026995804°；
+负荷耗散33689.2402617/33689.3956305W、相对4.611804e-6，正吸收，均通过2.5%/1°冻结限值。
+独立fine nodal最大I1.375611e-11A、neutral1.243337e-9V、RL/TR3.993599e-9V；
+原物理预算均通过。唯一idealization notice为Branch1/SS1原零R电压源，六varR没有被理想化。
+
+结论限本次完整参考对：实际共享输入相同，可称同输入电气h细化；不扩称连续真解或器件/二极管等价。
+完整资格已在 `local_reference/two_level_pwm_pscad/qualification/20261111T031524306929Z` 固定：
+`qualification.json` SHA `b8511f04434dc091e44afe385cbf022b461f537067f814e053d437a3ab8c5c83`。
+300叶子覆盖两原生归档、来源/分析器、作者/独审结果、四协议和fine归一化；不含Q自身或后建provenance。
+80,003行 `normalized_results/reference.csv` 的TIME直接取原生TIME_native_s，三电流仅kA→A，逐值核验。
+公开报告、provenance及CSV的完整SHA见reference_catalog新full_reference_qualification；公开报告固定Q/provenance防止hash循环。
+实际资格独审 `local_reference/native_static_reviews/b1_qualification_actual_20261111/receipt_20261111T031748352820Z.json`
+SHA `1d50b49c19a739aeda2a4e3f62526ab84c4080cbb9017fd741b20680b0e43d31`，300输入/80003行全部通过。
+
+新增case专用compare.py `b2042f4f…` 及测试 `e54ef32c…` 保持旧12/common数值函数和全部限值。
+23项专项验证缺失/改动参考、合同/路径/非有限电流拒绝，以及快照/运行异常保留FAIL；全部是明确标注的合成fixture，未执行数值候选。
+Ruff通过；独审 `local_reference/native_static_reviews/b1_case_loader_final_20261111T031526797922Z/receipt.json`
+SHA `72168a8d109820e36b74fcdf68713f1eb20b36e3c4da33116d7a034454aa063d`。
+旧109个Python源hash不变，仅新增这两个文件。新完整pytest（含slow）1267 passed494.62s，
+XML494.618s、零失败/错误/跳过：`.tmp/longterm/b1-final-20261111T0317.xml` SHA
+`10775c002801b1490d6a8456d0b61c93822ef5aafe15c56f36187e5622374c5e`，日志同目录 `b1-final-20261111T0317-pytest.log`。
+入口/测试/public/新caseREADME/旧case说明共5文件以3737e663c89646cf76e6cd9f4880d0e579d95731提交推送，真实远端核同。
+这是候选前的代码冻结。其后ROOT单次正式比较位于
+`local_reference/two_level_pwm_pscad/comparison_results/20261111T032613323109Z/report.json`，
+SHA `f52762d559beff7b16608928d12f831fd642b49b31466595010563770d2faa38`，exit0/PASS。
+原12为40001点，fine参考80003点；固定[.1,.2]三相PWL最大差.321998000341/.318176758653/.319571348570A，
+NRMSE .0009176324503/.0009169917588/.0009176418992，均满足原150A/.02/10A判据。
+RMS/基波/相位及正吸收耗散均通过原5%/3°，相位max.026995803401°、功率相对差4.611803012e-6；
+无时间或幅值拟合，原12与核心保持。当时独审/Agg仍待；随后独审、独立Agg和教学完成，当前validated待Git，见下一节，正式新增仍9。
+原12、原MathWorks2% FAIL、所有旧失败/中断及旧1244回归的历史身份均保留。
+
+## B1候选独立验收与教学收尾
+
+正式报告f52762d5已独立复核通过：`local_reference/native_static_reviews/b1_candidate_audit_20261111/actual_20261111T032613323109Z/receipt.json`，SHA `cd20f9934a2aef3ad8b0655282f806e25587e7b76a9912255c7f39088bb7681d`。
+303资格输入与48代码/协议输入共享11项，联合340个文件；全部原件及快照hash/文件集合精确相同，原始CSV/JSON与NPZ对比时间/三相逐值一致。独立PWL波形/基波/RMS/相位/功率全项符合冻结预算并与正式报告一致，无移时/删点/拟合/外推。ROOT另核全部340及NPZ数值，图13ebc97f实际查看。
+
+默认12独立`__main__`带透明输出观察仅执行一次，Python3.14.5/Agg、exit0、9.102644s、40001全行有限及原5us网格，全部默认参数/输出开关不变。目录 `local_reference/native_static_reviews/b1_original12_standalone_20261111T032943447679Z`，receipt SHA7e9278a797aa7890256861dc3849589bc9fca2aa7f4096322a5a9ec9d4666a0e，verification SHA2a6163fc76c0a9b9c7b51d3114a1b72f0182907fdc726e03a12bdbac7498afac。完整NPZ与正式候选逐字相同。原stdout为脚本摘要权威，观察器额外trapezoid(x²)RMS不作为正式指标；原receipt保留，说明另存，未重跑。
+
+精简公开报告`validation/cases/two_level_pwm_pscad/validation_report.json` SHA `1d235718f31e7ec095ec33396b81d14f5975ffb540cdffaa4139f7d5db64dc0e`，绑定完整报告/资格/独审/独立运行及新1267全量证据。case说明给出电路假设、三相误差表及纹波解读，中英入口只新增一行链接。原MathWorks波形FAIL与所有失败保留；B1数值/检查/教学均validated，待本次Git正式提交推送，不增加正式新例数量。
