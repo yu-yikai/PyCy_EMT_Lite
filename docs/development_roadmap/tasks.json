@@ -3,7 +3,7 @@
   "updated_date": "2026-11-12",
   "timezone": "Asia/Shanghai",
   "branch": "codex/emt-examples-longterm",
-  "checkpoint_head": "5e27e7878ac4260c31e07c2eaf4b33b2164298c4",
+  "checkpoint_head": "a241d1ec1636e5635166f3b434acdd67034a38c4",
   "current_task": "C1",
   "formal_new_examples_completed": 9,
   "status_values": [
@@ -659,9 +659,10 @@
       "references": [
         "simulink-standard-blocks-srf-pll-r2026b",
         "pscad-official-vsc-background-v463",
-        "pscad-derived-source-startup-v5"
+        "pscad-derived-source-startup-v5",
+        "pscad-derived-three-phase-manual-probe-v5"
       ],
-      "validation": "既有11已完成真实1s PLL对标、243快照独审、默认Agg、33专项/1300全量含slow及教学。新单回路v1首流FAIL保留；v2真实2ms/401行线性渐升及原观测门通过、47归档双独审。官方VSC只检查未运行，内部精度/同刻KCL/三相桥未认证；113源码与依赖未改，未重复全量。开环/dq/P前馈Vac/真实DC电容Vdc全链待完成，不新增编号。",
+      "validation": "既有11真实PLL已验收；本次真实三相八态探针81行/31量、接线与生成顺序通过，DC端口电压差五行超过原1e-8V门，整体FAIL保留。原v1/v2历史不变；条件预测仅诊断。113源码/依赖未改，1300全量为相同代码前次结果。完整开环/dq/P前馈/Vac/真实DC电容Vdc仍未完成。",
       "acceptance": "局部、可独立运行验证的教学例逐项验收",
       "status": "in_progress",
       "files": [
@@ -674,14 +675,16 @@
         "tests/test_pll_reference_comparison.py",
         "validation/cases/pll_dynamic_response/validation_report.json",
         "docs/development_roadmap/experiments/c1_openloop_reference_design.md",
-        "docs/development_roadmap/experiments/c1_openloop_source_research_20261112.json"
+        "docs/development_roadmap/experiments/c1_openloop_source_research_20261112.json",
+        "docs/development_roadmap/experiments/c1_three_phase_probe_20261112.json"
       ],
       "commits": [
         "b835e31785fab3fda247c333d23edbe9ce576dfa",
         "8048ce469472040b2244641e0e6790c166f7630c",
         "da18a43321901f294786694fbb8b9c70ab79881f",
         "5314486fcb30929f79c62a5b15faf2e462529573",
-        "5e27e7878ac4260c31e07c2eaf4b33b2164298c4"
+        "5e27e7878ac4260c31e07c2eaf4b33b2164298c4",
+        "a241d1ec1636e5635166f3b434acdd67034a38c4"
       ],
       "blockers": [],
       "reference_feasibility": {
@@ -692,7 +695,7 @@
         "evidence_sha256": "d92469cdd234477829ca5a5fa75a67648f17235fffadf3d3cbdaa73672375427",
         "native_executed": false
       },
-      "current_stage": "open_loop_source_startup_observed_three_phase_reference_pending",
+      "current_stage": "open_loop_three_phase_probe_DC_port_gate_failed",
       "interface_discovery": {
         "status": "qualified_native_satk_batch_interface",
         "simulink_model_tools_provided": false,
@@ -961,6 +964,17 @@
         "new_candidate_executed": false,
         "full_VSC_reference_ready": false,
         "active_native_runs": 0
+      },
+      "three_phase_probe": {
+        "status": "manual_three_phase_probe_NUMERICAL_FAIL",
+        "record": {
+          "path": "docs/development_roadmap/experiments/c1_three_phase_probe_20261112.json",
+          "bytes": 11483,
+          "sha256": "8d9c6a45f0b0ec66eee06fa4b99765fe8a319d4e5bda302396f2de5d32f949b8"
+        },
+        "full_VSC_reference_ready": false,
+        "new_candidate_executed": false,
+        "active_native_runs": 0
       }
     },
     {
@@ -1113,7 +1127,7 @@
       "path": "local_reference/native_static_reviews/b1_resume_evidence_20261111/receipt_20261111T132350441453Z.json",
       "sha256": "73c22f1cbf7bfafaa1cc563e475bfb3293fa5e02d52386b4064e42b2a3eb32e8"
     },
-    "latest_checked_head": "5e27e7878ac4260c31e07c2eaf4b33b2164298c4",
+    "latest_checked_head": "a241d1ec1636e5635166f3b434acdd67034a38c4",
     "latest_remote_head_verified_same": true,
     "latest_goal_turn_classification": "progress"
   },
@@ -1129,5 +1143,5 @@
       "resume_requires_explicit_user_instruction": true
     }
   ],
-  "current_stage": "open_loop_source_startup_observed_three_phase_reference_pending"
+  "current_stage": "open_loop_three_phase_probe_DC_port_gate_failed"
 }

@@ -2978,6 +2978,34 @@
       "scope": "Only raw observed 2ms joint-ramp single-loop gates. v1 initial gate remains FAIL. Does not certify internal precision, contemporaneous source-current KCL or a three-phase bridge.",
       "allows_redistribution": "Third-party donor, generated native files and waveforms stay ignored in local_reference",
       "blockers": []
+    },
+    {
+      "id": "pscad-derived-three-phase-manual-probe-v5",
+      "short_code": "C1-THREE-PHASE-PROBE",
+      "name": "Derived grounded-AC / floating-DC manual eight-vector startup probe",
+      "source_kind": "Original probe using installed standard components and previously qualified bilateral switches",
+      "status": "runnable",
+      "model_version": "PSCAD 5.0.0.0 / EMTDC 5.00 R93051001",
+      "content_inspected": true,
+      "opened_in_native_software": true,
+      "simulation_succeeded": true,
+      "reference_numeric_data_obtained": true,
+      "local_path": "local_reference/c1_openloop_reference_research/20261111T182845626945Z_three_phase_execution_v1/n/20261111T183913212661Z",
+      "samples": 81,
+      "channels": 31,
+      "research_record": {
+        "path": "docs/development_roadmap/experiments/c1_three_phase_probe_20261112.json",
+        "bytes": 11483,
+        "sha256": "8d9c6a45f0b0ec66eee06fa4b99765fe8a319d4e5bda302396f2de5d32f949b8"
+      },
+      "numerical_acceptance": false,
+      "candidate_executed": false,
+      "full_VSC_reference_ready": false,
+      "scope": "Native run/graph/generation succeeded; original DC-port source constraint failed five rows. No full VSC/SPWM/refinement/control qualification.",
+      "allows_redistribution": "Donor, generated native files and waveforms stay ignored in local_reference",
+      "blockers": [
+        "Unresolved DC bridge-port difference gate: max raw+token 1.351e-8 V > frozen 1e-8 V."
+      ]
     }
   ],
   "scope_notes": [

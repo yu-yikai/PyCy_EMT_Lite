@@ -667,3 +667,10 @@ PLL五状态方案仍仅设计：`local_reference/c1_pll_reference_research/2026
 两run各47归档全核，v2逐token/生成时序双独审。source CUR晚一拍，内部零精度/DELT未直接证明，不认证同刻KCL或三相桥。
 本轮无正式候选、源码或依赖变更，无活动自有运行；下一步另冻固定DC/零AC/零向量三相短探针。
 完整hash和边界集中在[精简记录](c1_openloop_source_research_20261112.json)，接线与教学理由见[设计](c1_openloop_reference_design.md)。
+
+## 2026-11-12 三相八态短探针
+
+run183913212661Z正常终态168.6223s、编译0错误、81行31量，64归档/18原件/双层10输入均核。
+实际图与源/门极/电阻/四fresh电流表生成顺序通过；DC端口差五行超过原1e−8 V门，整体数值FAIL。
+原始审计缓存拒绝与后续精确准入均保留，数值门未改、没有native重跑；条件预测仅诊断。
+无新候选/源码/依赖变化，C1仍in_progress。下一步固定源端/电流表压降测量诊断；[集中记录](c1_three_phase_probe_20261112.json)。
