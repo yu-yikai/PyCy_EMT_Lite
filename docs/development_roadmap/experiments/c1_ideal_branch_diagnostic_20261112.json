@@ -1,0 +1,358 @@
+{
+  "recorded_utc": "2026-11-11T20:29:40.116615+00:00",
+  "checked_head": "42c9c7a88acb7d3f8411f373eee366528524512d",
+  "status": "IDEAL_BRANCH_OPTION_CONFIRMED_NO_OBSERVED_OUTPUT_CHANGE_NUMERICAL_FAIL",
+  "goal_status": "active",
+  "C1_status": "in_progress",
+  "D1_status": "planned",
+  "F1_status": "blocked_external_CI_restoration_pending",
+  "formal_new_examples_completed": 9,
+  "candidate_executed": false,
+  "full_VSC_reference_ready": false,
+  "new_formal_example_created": false,
+  "previous_result_preserved": {
+    "path": "docs/development_roadmap/experiments/c1_dc_measurement_diagnostic_20261112.json",
+    "bytes": 15789,
+    "sha256": "0610d8dd9038ea802b333350608a288559bcfee135d382cd3bbb573656a5a41f"
+  },
+  "contract": {
+    "effective_runtime_delta": "use_ideal_branch False -> True; explicitly set original effective branch_threshold0.0005ohm.",
+    "unchanged": "167components/133wires/234ports/73nets, all33channels,10inputs except protocol metadata, samephysics/400us/5us/81rows/80segments/manual8vectors/phase/directions/token rules/all17old+4diagnostic budget fields.",
+    "scope": "Global zero/subthreshold branch algorithm option, not only DC ammeter. No guaranteed fix or closed-engine cause claim.",
+    "no_alias_or_current_recovery_relaxation": true,
+    "mapping_before_any_OUT_hash_or_interpretation": true,
+    "old_failures_and_limits_retained": true
+  },
+  "frozen_before_native": {
+    "package": {
+      "path": "local_reference/c1_openloop_reference_research/20261111T201258018847Z_ideal_branch_diagnostic_v1/manifest.json",
+      "bytes": 5725,
+      "sha256": "b71e53faa2ce26eefda01d1aed5daa32bdd1b5733c63ed612482339c185a16a7"
+    },
+    "preparation": {
+      "path": "local_reference/c1_openloop_reference_research/20261111T201258018847Z_ideal_branch_diagnostic_v1/preparation_receipt.json",
+      "bytes": 5222,
+      "sha256": "879cd844bce9ad080c6525372f49731398b88d672c095582f6322db791fb5c93"
+    },
+    "plan": {
+      "path": "local_reference/c1_openloop_reference_research/20261111T201258018847Z_ideal_branch_diagnostic_v1/inputs/probe_plan.json",
+      "bytes": 15711,
+      "sha256": "4c6e16333183897e466b595081d86c357efb5772e191c9b51eadd05b924e9850"
+    },
+    "entry_review": {
+      "path": "local_reference/native_static_reviews/c1_dc_entry_20261111T201416837463Z/receipt.json",
+      "bytes": 4843,
+      "sha256": "3c982fa12e4b0db5abdf76b6f1f53f1a08c661f3c3e747496d8d03773e01b0d4"
+    },
+    "package_review": {
+      "path": "local_reference/native_static_reviews/c1_ideal_branch_package_static_20261111T201707774233Z/receipt.json",
+      "bytes": 3922,
+      "sha256": "764347cb9248b9446ece5ce063ef2df276fb56565c40d7a33d3c9ae41eff6aec"
+    },
+    "admission_review": {
+      "path": "local_reference/native_static_reviews/c1_ideal_branch_admission_static_20261111T201932240094Z/receipt.json",
+      "bytes": 2653,
+      "sha256": "b982c3bae4ed4e2bc007557dcbd18a6dc17e94d7190c4a84b667fb475a68fe6f"
+    },
+    "root_preflight": {
+      "path": "local_reference/native_static_reviews/c1_ideal_branch_root_preflight_20261112/receipt.json",
+      "bytes": 861,
+      "sha256": "3735753295845a9537715a9bd45f8d19ba3f2e2fcba94e46ca4ea75c1dbe6b42"
+    },
+    "root_auditor_preparation": {
+      "path": "local_reference/native_static_reviews/c1_ideal_branch_root_preparation_20261112/receipt.json",
+      "bytes": 1421,
+      "sha256": "cc1f843709128e4e477070aea5c07bef0d61754e5186075f6d09d1022aa5d3e6"
+    },
+    "independent_auditor_preparation": {
+      "path": "local_reference/native_static_reviews/c1_ideal_branch_independent_preparation_20261111T2023Z/receipt.json",
+      "bytes": 3795,
+      "sha256": "e22a2b9db6a652427607b99625034f7af25b023c214e3b0b0e3e2a7f7d867a12"
+    },
+    "mapping_source": {
+      "path": ".tmp/longterm/admit_c1_ideal_branch_actual_mapping_20261112.py",
+      "bytes": 18325,
+      "sha256": "fceaf535fb815af341a0bed55148da70587298ac71b19963a0cb84958a7c8a10"
+    },
+    "admission_delta": "Only new package pins, actualTrue/.0005 and seventh configuration boolean. Root also moved mapping admission ahead of waveform hashing. All numerical math/parser/token/budgets remain unchanged."
+  },
+  "native": {
+    "run": "local_reference/c1_openloop_reference_research/20261111T201258018847Z_ideal_branch_diagnostic_v1/n/20261111T202012039472Z",
+    "session_id": 63415,
+    "exec_closed": true,
+    "exit_code": 0,
+    "elapsed_s": 245.1017241999507,
+    "terminal": {
+      "path": "local_reference/c1_openloop_reference_research/20261111T201258018847Z_ideal_branch_diagnostic_v1/n/20261111T202012039472Z/terminal.json",
+      "bytes": 15818,
+      "sha256": "51098bd64846b7fc1e006a7995e12197e2b8c6926a5d9a22d390fe55dbe82393"
+    },
+    "archive": {
+      "path": "local_reference/c1_openloop_reference_research/20261111T201258018847Z_ideal_branch_diagnostic_v1/n/20261111T202012039472Z/manifest.json",
+      "bytes": 21409,
+      "sha256": "235d06753278fb822f2852f88fd89bf6dafc709a74434cb99a79e4959515b1b1"
+    },
+    "archive_files": 65,
+    "build_errors": 0,
+    "run_returned": true,
+    "completion_observed": true,
+    "normal_quit": true,
+    "remaining_owned": [],
+    "profile_source_dependency_parent_environment_unchanged": true,
+    "old_native_runs_not_restarted": true
+  },
+  "actual_mapping": {
+    "receipt": {
+      "path": "local_reference/native_static_reviews/c1_ideal_branch_actual_mapping_20261111T202012039472Z_202535519201/receipt.json",
+      "bytes": 8512,
+      "sha256": "68d1ed4edbc00d5529e914bf723067e6aa3230fe9a867a0ac4127e7d777c17bd"
+    },
+    "all_seven_admissions_passed": true,
+    "raw_output_consumed_by_mapper": false,
+    "actual_configuration": {
+      "actual_after_use_ideal_branch": true,
+      "actual_after_threshold_ohm": 0.0005,
+      "saved_XML_Advanced": 14328,
+      "saved_XML_threshold_ohm": 0.0005,
+      "generated_SHORT_CIRCUIT_ohm": 0.0005,
+      "scope": "Global zero-impedance network algorithms, not only DC ammeter; no rootcause or improvement is implied"
+    },
+    "all20branches_and_four_fresh_currents_retained": true
+  },
+  "observed": {
+    "rows": 81,
+    "channels": 33,
+    "segments": 80,
+    "observed_pass": false,
+    "legacy_failed_rows_zero_based": [
+      10,
+      11,
+      15,
+      18,
+      19
+    ],
+    "failed_times_us": [
+      50,
+      55,
+      75,
+      90,
+      95
+    ],
+    "old_DC_bridge_max_raw_plus_token_V": "1.351e-8",
+    "old_DC_bridge_limit_V": "1e-8",
+    "measurement": {
+      "measurement_gates_pass": false,
+      "failures": [
+        {
+          "gate": "ammeter_drop",
+          "row": 10,
+          "raw": "-1.0355716284494000E-8",
+          "radius": "1.000E-21",
+          "limit": "1E-8"
+        },
+        {
+          "gate": "ammeter_drop",
+          "row": 11,
+          "raw": "-1.3485212946307000E-8",
+          "radius": "1.000E-21",
+          "limit": "1E-8"
+        },
+        {
+          "gate": "ammeter_drop",
+          "row": 15,
+          "raw": "-1.1508738406718000E-8",
+          "radius": "1.000E-21",
+          "limit": "1E-8"
+        },
+        {
+          "gate": "ammeter_drop",
+          "row": 18,
+          "raw": "-1.2219447675932000E-8",
+          "radius": "1.000E-21",
+          "limit": "1E-8"
+        },
+        {
+          "gate": "ammeter_drop",
+          "row": 19,
+          "raw": "-1.0679734874230000E-8",
+          "radius": "1.000E-21",
+          "limit": "1E-8"
+        }
+      ],
+      "max_raw_V": {
+        "source_terminal": "0",
+        "ammeter_drop": "1.3485212946307000E-8",
+        "closure": "7.5526634791000E-12"
+      },
+      "max_raw_plus_token_V": {
+        "source_terminal": "1.000E-11",
+        "ammeter_drop": "1.3485212946308000E-8",
+        "closure": "1.3000E-10"
+      },
+      "limits_V": {
+        "source_terminal": "1E-8",
+        "ammeter_drop": "1E-8",
+        "closure": "1E-9"
+      },
+      "scope": "Terminal/drop observations and dependent rank2 voltage identity; no internal EMF or causal attribution."
+    },
+    "other_direct_residuals_plus_token": {
+      "time": 0.0,
+      "source": 1.351e-08,
+      "initial_current": 2.4913404672136e-23,
+      "initial_dc_leak": 1.000000000012e-19,
+      "three_phase_KCL": 5.81e-11,
+      "pole_KCL": 2.933208476027e-08,
+      "DCrail_KCL": 5.671579102894e-08,
+      "R": 2e-12,
+      "KVL": 1e-10,
+      "TR": 1.19e-09,
+      "pole_thevenin": 1.3512631388174358e-08,
+      "common_mode": 2.79027422666668e-08,
+      "power": 3.123703278752001e-08,
+      "predicted_current": 1.5587078323753e-08,
+      "predicted_neutral": 1.4889310000000013e-07,
+      "initial_pole": 9.9902752735263e-21,
+      "energy": 2.018821978430186e-13
+    },
+    "conditional_prediction_preconditions_observed": false,
+    "conditional_prediction_scope": "Diagnostic only; original bridge/source prerequisite failed.",
+    "source_phase": "Unique sin(omega*t+Ph), positiveabc; cosinePark angle omega*t-pi/2.",
+    "comparison_to_False_setting": {
+      "all_INF_and_four_OUT_bytes_identical": true,
+      "raw_file_pairs": [
+        {
+          "old": {
+            "path": "local_reference/c1_openloop_reference_research/20261111T193625022842Z_dc_measurement_diagnostic_v2/n/20261111T194623690905Z/project/vdiv.gf46/c1_three_phase_probe.inf",
+            "bytes": 3932,
+            "sha256": "d52f2d466b5b6268dc8191d9937feae902919c4848d7e13f0469a4822eee5452"
+          },
+          "new": {
+            "path": "local_reference/c1_openloop_reference_research/20261111T201258018847Z_ideal_branch_diagnostic_v1/n/20261111T202012039472Z/project/vdiv.gf46/c1_three_phase_probe.inf",
+            "bytes": 3932,
+            "sha256": "d52f2d466b5b6268dc8191d9937feae902919c4848d7e13f0469a4822eee5452"
+          }
+        },
+        {
+          "old": {
+            "path": "local_reference/c1_openloop_reference_research/20261111T193625022842Z_dc_measurement_diagnostic_v2/n/20261111T194623690905Z/project/vdiv.gf46/c1_three_phase_probe_01.out",
+            "bytes": 21539,
+            "sha256": "4e24d39223b99b653347a637563616742c278ec0c09f92e8ed60ba92433fd157"
+          },
+          "new": {
+            "path": "local_reference/c1_openloop_reference_research/20261111T201258018847Z_ideal_branch_diagnostic_v1/n/20261111T202012039472Z/project/vdiv.gf46/c1_three_phase_probe_01.out",
+            "bytes": 21539,
+            "sha256": "4e24d39223b99b653347a637563616742c278ec0c09f92e8ed60ba92433fd157"
+          }
+        },
+        {
+          "old": {
+            "path": "local_reference/c1_openloop_reference_research/20261111T193625022842Z_dc_measurement_diagnostic_v2/n/20261111T194623690905Z/project/vdiv.gf46/c1_three_phase_probe_02.out",
+            "bytes": 21539,
+            "sha256": "34c0bd77fe8e3c9658dc2106226d9c9b3b9ac29ca0d302a5a569253320899293"
+          },
+          "new": {
+            "path": "local_reference/c1_openloop_reference_research/20261111T201258018847Z_ideal_branch_diagnostic_v1/n/20261111T202012039472Z/project/vdiv.gf46/c1_three_phase_probe_02.out",
+            "bytes": 21539,
+            "sha256": "34c0bd77fe8e3c9658dc2106226d9c9b3b9ac29ca0d302a5a569253320899293"
+          }
+        },
+        {
+          "old": {
+            "path": "local_reference/c1_openloop_reference_research/20261111T193625022842Z_dc_measurement_diagnostic_v2/n/20261111T194623690905Z/project/vdiv.gf46/c1_three_phase_probe_03.out",
+            "bytes": 21539,
+            "sha256": "22c02e3a9e6067430efeb0c0b62bea47bdbc02de3bf49c633b1224869e796b0a"
+          },
+          "new": {
+            "path": "local_reference/c1_openloop_reference_research/20261111T201258018847Z_ideal_branch_diagnostic_v1/n/20261111T202012039472Z/project/vdiv.gf46/c1_three_phase_probe_03.out",
+            "bytes": 21539,
+            "sha256": "22c02e3a9e6067430efeb0c0b62bea47bdbc02de3bf49c633b1224869e796b0a"
+          }
+        },
+        {
+          "old": {
+            "path": "local_reference/c1_openloop_reference_research/20261111T193625022842Z_dc_measurement_diagnostic_v2/n/20261111T194623690905Z/project/vdiv.gf46/c1_three_phase_probe_04.out",
+            "bytes": 7931,
+            "sha256": "d4683538200e23ba56b5e98bdeb403ada5f207560ec1c16abf05b9eebb0e210b"
+          },
+          "new": {
+            "path": "local_reference/c1_openloop_reference_research/20261111T201258018847Z_ideal_branch_diagnostic_v1/n/20261111T202012039472Z/project/vdiv.gf46/c1_three_phase_probe_04.out",
+            "bytes": 7931,
+            "sha256": "d4683538200e23ba56b5e98bdeb403ada5f207560ec1c16abf05b9eebb0e210b"
+          }
+        }
+      ],
+      "independent_all33tokens_radii_and_checks_same_sha256": "e90dc362c4fa6c900dd4e6724b47bb379a14d77b5afb7e995ae5517ce87cd721",
+      "interpretation": "No observable output change in this configured short probe. This does not establish how the closed engine processed any particular branch or identify the internal numerical cause."
+    },
+    "overall_reference_accepted": false
+  },
+  "actual_numerical_reviews": {
+    "root": {
+      "path": "local_reference/native_static_reviews/c1_dc_measurement_root_actual_20261111T202012039472Z/receipt.json",
+      "bytes": 39006,
+      "sha256": "aceb0062c82bb872b66df9faf585f3f671e82185dfdd8cc8aa25c06d9594a37f"
+    },
+    "root_exit_code": 1,
+    "root_log": {
+      "path": ".tmp/longterm/c1-ideal-branch-root-20261112T2026.log",
+      "bytes": 494,
+      "sha256": "14013034c9d34a5b48feb6c67f32a540f5989fac09cf6b717cef5826fc179bb9"
+    },
+    "independent": {
+      "path": "local_reference/native_static_reviews/c1_dc_measurement_independent_actual_20261111T202012039472Z/receipt.json",
+      "bytes": 74215,
+      "sha256": "acdf3ebf62189fa274c13795e7f2aec30e1420b26fb26e1cc4d6d521384fa039"
+    },
+    "independent_exit_code": 1,
+    "independent_log": {
+      "path": ".tmp/longterm/c1-idealbranch-independent-202012039472Z-once-20261112.log",
+      "bytes": 374,
+      "sha256": "df58804046404cb61589bd24075cec136da689522b637f3d60915d2ea6ff70aa"
+    },
+    "independent_bound_files_rechecked": 90,
+    "no_native_rerun_for_analysis": true
+  },
+  "full_openloop_preparation": {
+    "engineering_calculation": {
+      "path": "local_reference/native_static_reviews/c1_openloop_engineering_20261112/receipt.json",
+      "bytes": 3310,
+      "sha256": "6123039bcce80170d49a6df16d01532b0436079b3e0df0034a138c7ea67fe4fc"
+    },
+    "independent_math_review": {
+      "path": "local_reference/native_static_reviews/c1_full_openloop_math_independent_20261111T2026Z/receipt.json",
+      "bytes": 2114,
+      "sha256": "79342edf690f9975077d10469f9b29f5135f33d0b3f48938ab52db05da483205"
+    },
+    "scope": "UnfrozenL10mH draft. ExactFraction conditionalTR BIBO envelope about436A is a conservative peak bound, not RMS or tolerance; approximate basebandI3.266A/P1146.94W/Q-259.17var explains direction, not an exact reference. Approximate switch conduction loss excludes offleak0.00048W and actual ripple.",
+    "no_budgets_frozen_or_changed": true,
+    "candidate_executed": false
+  },
+  "source113_unchanged": true,
+  "project_source_dependencies_unchanged": true,
+  "source_baseline": {
+    "path": ".tmp/longterm/c1-pll-entry-final-source-hashes-20261112.json",
+    "bytes": 12850,
+    "sha256": "7c666c145ee97c8cbe8fdd50932ca35d7ff25ca9424d07fd5be4b4324703ef71"
+  },
+  "test_reuse": "Previous1300passed including slow/locked27/Ruff/mypy39 remains the identical-code baseline, not a new test run.",
+  "next_gate": "Prepare the minimally derived native source-current build-only experiment described in prospective_current_recovery. Freeze exactsourceclone/physicalequivalence/newmeasurementidentity/actualMainOut freshness beforeRun; preservealloldFAIL and all applicable originalplant accuracygates. Fullopenlooprefinement/candidate/C1controlscope remainspending.",
+  "local_only": "Donors/native models/raw files/helper scripts/review receipts remain ignored under local_reference/.tmp; commit only original compact metadata and roadmap text.",
+  "prospective_current_recovery": {
+    "proposal": {
+      "path": "local_reference/native_static_reviews/c1_source_branch_current_proposal_20261111T203335956983Z/receipt.json",
+      "bytes": 16638,
+      "sha256": "70766c5039b068f374e14ab2a29fa40e617bada3bc1382a71f7e7c91469bc5c8"
+    },
+    "independent_physics": {
+      "path": "local_reference/native_static_reviews/c1_direct_source_current_physics_20261111T203251026039Z/receipt.json",
+      "bytes": 11213,
+      "sha256": "3bc3762a7c6fc2d14316e0e2171ed60a25865f9bc557ba562023429079b77dd5"
+    },
+    "status": "static_feasibility_only_no_execution_package_or_native",
+    "ideal_equivalence": "Eliminate oldidealA zero-voltage constraint p=x and observe sourcebranch absorption -CBR(BA), where BA is NB->NA. No addedphysicalR/ground/state. ExactDAE equivalence does not establish equalnativearithmetic.",
+    "freshness_gate": "BeforeRun build-only stage must prove unchanged sourcephysics and actualMainOut direct-CBR assignment preceding its ownPGB, noDyn PGB/historysubstitute. Newscalar0 declarationalone is notproof; rejectifnotfresh.",
+    "measurement_identity_change": "Fourfreshcurrents wouldbe threephaseA branchCBRs plus negativeDC sourceBA CBR. DeletedA voltageconstraint is notretainedas independentgate; joiningp=sourceNA makes B=S/A=0 rank1. OldA FAIL immutable; do notcallstructuralwirezero a repair.",
+    "scope": "Separatefreezeandactualmappingrequired. If forcedPGB mechanism is needed, freezeit separately; no other framework or newcandidate."
+  }
+}

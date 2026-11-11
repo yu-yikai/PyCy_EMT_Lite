@@ -3037,6 +3037,37 @@
       "blockers": [
         "Frozen1e-8V bridge-DC and ammeter-drop gates remain unresolved."
       ]
+    },
+    {
+      "id": "pscad-derived-ideal-branch-probe-v5",
+      "short_code": "C1-IDEAL-BRANCH",
+      "name": "Derived manual three-phase probe with enabled ideal-branch option",
+      "source_kind": "Original single-option diagnostic using installed standard components",
+      "status": "runnable",
+      "model_version": "PSCAD5.0.0.0 / EMTDC5.00R93051001",
+      "content_inspected": true,
+      "opened_in_native_software": true,
+      "simulation_succeeded": true,
+      "reference_numeric_data_obtained": true,
+      "local_path": "local_reference/c1_openloop_reference_research/20261111T201258018847Z_ideal_branch_diagnostic_v1/n/20261111T202012039472Z",
+      "samples": 81,
+      "channels": 33,
+      "research_record": {
+        "path": "docs/development_roadmap/experiments/c1_ideal_branch_diagnostic_20261112.json",
+        "bytes": 17807,
+        "sha256": "6b8f5d9b9d15c431b5ad22a946be1afabda6916154b7c282dbea7f7c973151a4",
+        "hash_scope": "Preserved Windows workspace bytes; Git LF identity supplied separately.",
+        "git_lf_bytes": 17449,
+        "git_lf_sha256": "40cce79f5493b0a6df11ae19ca8427688c7115b7097eb64a0c9eb860a2051095"
+      },
+      "numerical_acceptance": false,
+      "candidate_executed": false,
+      "full_VSC_reference_ready": false,
+      "scope": "Actualenabledflag/threshold/SHORT and originalstrict branch/current map verified. Original bridgeDC and ammeter-drop gates still FAIL five rows; allINF/OUT bytes identical toFalse configuration. No internal cause or fullVSC qualification.",
+      "allows_redistribution": "Donor/native files/raw waveforms remain ignored in local_reference",
+      "blockers": [
+        "FrozenbridgeDC/ammeter1e-8V gates unresolved; fresh source-branch measurement equivalence is the next research gate."
+      ]
     }
   ],
   "scope_notes": [
