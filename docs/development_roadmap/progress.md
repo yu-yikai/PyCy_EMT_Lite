@@ -1,14 +1,15 @@
 # 持久进度
 
-2026-11-12目标active；C1为in_progress，阶段`existing_11_pll_accepted_open_loop_reference_pending`。
-既有11的完整离散PLL补验证已通过：真实1s参考资格、首次候选三窗九项、243输入快照和独立复算全部完成。
-默认原例__main__独立Agg通过，三原图/输出行为保持；完整NPZ各数组和元数据、NPZ/CSV/JSON字节均与正式候选相同。
-最大角度差5.68434e−14rad、角频率差1.13687e−13rad/s、q电压差3.12639e−13V；未拟合或放宽阈值。
-33专项及本轮1300全量含slow通过（XML510.444s）；锁定27包/Ruff/mypy39通过。原111源及依赖未改，总113源前后相同。
-本次只完成C1的既有11子步骤，不增教学编号；正式新增19–27仍共9项，C1全VSC链/D1仍待完成。
-5314486精确CI43060348386再次因账户账单锁在runner前失败，两OS未执行测试；跨OS未补验。
-下一步先明确开环并网VSC的电气接线、已知角度/采样、初值及方向，取得真实参考后再候选。
-继续保持精简、易读、初学者友好；见[PLL指南](../../validation/cases/pll_dynamic_response/README.md)与[结果报告](../../validation/cases/pll_dynamic_response/validation_report.json)。
+2026-11-12目标active；C1为in_progress，当前已从既有11 PLL转入开环并网VSC的参考准备。
+既有11已在5e27e787正式补验证；正式新增19–27仍共9项，C1全链/D1尚未完成。
+本轮只核来源、最小接线和电源启动：官方两工程只检查未运行；单回路v1首流FAIL保留，
+新激励v2真实2 ms/401行唯一符合预列线性升压，原始观测门与双独审通过。
+打印零不证明内部精确零；源CUR晚一拍，不能当同刻独立KCL；单回路不认证三相桥。
+所有原生运行已终态、自有进程清空，无已知待恢复运行。源码113项及依赖未改；
+1300全量含slow/锁定27包/Ruff/mypy39是上一轮相同代码的通过结果，本轮未重跑。
+F1仍因GitHub账单锁待补跨OS，旧CI43060348386终态未启动runner，不重复轮询。
+当前设计与证据见[参考设计](experiments/c1_openloop_reference_design.md)及[精简记录](experiments/c1_openloop_source_research_20261112.json)。
+保持现有CaseDefinition链和元件，无新增核心类、依赖或正式算例；持续优先精简、可读、初学者友好。
 
 以下保留已完成的1ms诊断及历史；不覆盖上述当前状态。
 

@@ -1,23 +1,25 @@
 # 恢复与下一步
 
-2026-11-12目标active。先读五状态文件，交叉核分支/实际HEAD/工作区/真实远端；checkpoint为最近记录提交5314486。
-开发分支codex/emt-examples-longterm常规提交/推送已授权；不改main、不强推、不覆盖用户文件。
-C1仍in_progress：既有11完整离散PLL补验证通过；正式新增19–27共9项，B1已完成。
-所有本轮pytest/原生/商业比较/独立默认运行和分析均已终态，无已知待恢复的运行。
+2026-11-12目标active。恢复先读五状态文件，交叉核分支、实际HEAD、工作区及真实远端。
+checkpoint为最近记录提交5e27e787；不将其冒充包含本次研究记录的新提交。
+开发分支codex/emt-examples-longterm常规提交/里程碑推送已授权；不改main、不强推、不覆盖用户文件。
+C1仍in_progress；既有11已验收，正式新增9项。全部本轮原生/分析已终态，无已知待恢复运行。
 
-1. 恢复时核[PLL结果](../../validation/cases/pll_dynamic_response/validation_report.json)与5314486前置入口提交。
-   已通过首次比较run20261111T163858643683Z、独立审计8dc2a994和默认运行164014570020Z，不重跑这些已通过结果代替审查。
-2. 进入开环并网VSC参考先行设计。先读examples/12_two_level_pwm_generator.py、examples/18_three_terminal_vsc_hvdc.py的station_components、
-   pycy_emt_lite/controls/vsc.py及B1已验证双向开关参考；复用既有六开关/SPWM/RL与CaseDefinition链。
-   明确固定DC端、三相电网/中性点及零序回路、RL接线、已知角度/门极采样保持、初值、AC→converter电流方向和参数来源；
-   预先冻结拓扑/参数/三相P/Q关系、时间窗和限值，取得真实Simulink或PSCAD输出后再候选，不复制RL负载SPWM题凑数。
-3. 再依次已知角度dq电流→已合格PLL→P前馈/Vac外环→真实DC电容Vdc及扰动。
-   P前馈给id_ref、Vac给iq_ref；固定理想DC源不能证明Vdc动态。C1全链、D1及F1范围保持。
-4. F1精确[CI43060348386](https://github.com/yu-yikai/PyCy_EMT_Lite/actions/runs/43060348386)已终态：账单锁、两OS runner0/steps空，未执行测试。
-   外部账户恢复后重跑该精确run，再核两OS完整步骤/产物；不再轮询同终态，不空提交或改代码绕过账户锁。
+1. 先读[开环设计](experiments/c1_openloop_reference_design.md)与[证据记录](experiments/c1_openloop_source_research_20261112.json)。
+   v1首流FAIL保留，v2仅2 ms单回路观测PASS；不重跑成功探针，不当作三相VSC参考资格。
+2. 冻结新的三相短探针：接地AC星点、浮置DC双极、3支R/L、6互补双向开关。
+   固定400 V DC，AC幅值从0启动、门极首点为零向量；此激励不同于v2两源同时渐升。
+   明确正弦源与Park角度、相序、方向、采样保持及初值；先固定观测分辨率、时间窗和预算，
+   再核完整真实接线、同刻三线KCL、共模、首步和积分关系。仅复用B1已合格开关，不继承整桥资格。
+3. 先固定完整开环协议，取得合格真实输出后再写最小候选。复用原12/18元件、controls/vsc.py及CaseDefinition链。
+   后续保持已知角度dq电流→合格PLL→P前馈/Vac外环→真实DC电容Vdc及扰动；不新增通用框架。
+   固定理想DC不能验证Vdc，刚性电网端不能验证Vac调节。
+4. F1旧CI43060348386因账单锁在runner前失败，未执行测试；外部恢复后补跑该精确run并核两OS产物。
+   不轮询同终态，不空提交或改代码绕过账户锁。
 
-本轮33专项/1300全量含slow（XML510.444s）、锁定27包/Ruff/mypy39通过；旧111源及依赖未改，总113源hash前后同。
-保持精简、可读、初学者友好；第三方原件、波形和研究工具在忽略local_reference。结束前同步任务/证据/提交/下一步，不声称无环境会后台继续。
+源码113项/依赖未改，上一轮1300全量含slow及锁定/Ruff/mypy通过，本轮未机械重跑。
+第三方原件、波形、逐token长审查及研究工具保留在忽略local_reference/.tmp。
+结束当前执行前同步任务、证据、提交及下一步，不声称无环境会后台继续。
 
 ## 本机命令
 

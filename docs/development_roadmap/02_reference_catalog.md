@@ -1,6 +1,6 @@
 # 参考模型目录与筛选依据
 
-初查日期：2026-11-04；最近核验：2026-11-09。机器可读记录见 [reference_catalog.json](reference_catalog.json)。本轮已下载的第三方原件仅保存在忽略 Git 的 `local_reference/`；下载不代表获得再分发许可。
+初查日期：2026-11-04；最近核验：2026-11-12。机器可读记录见 [reference_catalog.json](reference_catalog.json)。本轮已下载的第三方原件仅保存在忽略 Git 的 `local_reference/`；下载不代表获得再分发许可。
 
 ## 证据状态
 
@@ -189,3 +189,11 @@ PyCy在3761a21预先冻结的验收下，已完成独立8项物理测试、独�
 第24项`pscad-derived-bilateral-spwm-v5`现为**runnable**，完整0–1ms/5µs短探针真实build/run成功，保存201×46原生数据。实际320组件/163wire/422端口形成102预期网络，无开短接；Vs=400V、六支路R输入0.001/1e9Ω，全部1206门极值与原公式在原生TIME处一致，三相零初流/KCL/TR关系已核。
 
 这仍不是完整0.2s合格参考：生成相位/角频率常量12位舍入、ASCII时间边界及DSD/DSO支路电流日志错开一拍均明确保留，未移动任何物理时间或候选波形。下一步先审标准采样保持的20µs/1ms小探针，证明细电气步长下独立5µs控制输入，再冻结完整协议。原MathWorks2%波形FAIL、默认12及原全部限值不变，B1仍in_progress。见[设计](experiments/spwm_matched_reference_design.md)及[实际证据索引](experiments/native_reference_attempts_20261109.md)。
+
+
+## 2026-11-12 单站VSC参考调查
+
+新增官方AC/DC与并网控制两个v4.6.3工程，只完成下载/XML检查，未原生打开或运行。
+另一个派生单回路探针真实运行成功，只验证2 ms源启动观测；v1首流FAIL保留，v2唯一符合线性渐升。
+两项资源独立记为inspected/runnable，均不表示完整三相VSC reference_ready。
+源模式、活动模块与接地边界见[设计](experiments/c1_openloop_reference_design.md)，hash/终态见[记录](experiments/c1_openloop_source_research_20261112.json)。

@@ -2924,6 +2924,60 @@
         "bytes": 8454,
         "sha256": "2ba60f5967d7ce2cf8d9e4f96559f055f98b7b89c82a280d6d64e1e269dbe950"
       }
+    },
+    {
+      "id": "pscad-official-vsc-background-v463",
+      "short_code": "C1-VSC-OFFICIAL",
+      "name": "Official AC/DC and grid-connected VSC background projects",
+      "source_kind": "PSCAD official original downloads; inspected only",
+      "status": "inspected",
+      "model_version": "4.6.3",
+      "source_urls": [
+        "https://www.pscad.com/knowledge-base/article/253",
+        "https://www.pscad.com/knowledge-base/article/254"
+      ],
+      "content_inspected": true,
+      "opened_in_native_software": false,
+      "simulation_succeeded": false,
+      "reference_numeric_data_obtained": false,
+      "local_path": "local_reference/c1_openloop_reference_research/20261111T170212Z_official_sources",
+      "download_receipt": {
+        "path": "local_reference/c1_openloop_reference_research/20261111T170212Z_official_sources/download_receipt.json",
+        "bytes": 3566,
+        "sha256": "e09736fe60fe5a1fef701be3cf3b0a37085ed335e34bd5bd0e498dc960c10780"
+      },
+      "inspection": {
+        "path": "local_reference/native_static_reviews/c1_openloop_official_xml_verification_20261111T171424256006Z/receipt.json",
+        "bytes": 5686,
+        "sha256": "891eeddb5eb39e3706552d3007f295a58458ef4d23385d2464e2d69f08591219"
+      },
+      "scope": "Background source only: source_3 and source3 have different enums; file inventory includes inactive module definitions; IGBT/diode topology is not the bilateral-switch candidate.",
+      "allows_redistribution": "Unverified; originals stay ignored in local_reference",
+      "blockers": []
+    },
+    {
+      "id": "pscad-derived-source-startup-v5",
+      "short_code": "C1-SOURCE-STARTUP",
+      "name": "Derived single-loop AC/DC source startup investigation",
+      "source_kind": "Original probe using installed source_1/R/L and a local tutorial donor",
+      "status": "runnable",
+      "model_version": "PSCAD 5.0.0.0 / EMTDC 5.00 R93051001",
+      "content_inspected": true,
+      "opened_in_native_software": true,
+      "simulation_succeeded": true,
+      "reference_numeric_data_obtained": true,
+      "local_path": "local_reference/c1_openloop_reference_research/20261111T173650266158Z_source_loop_v2/n/20261111T174505207756Z",
+      "samples": 401,
+      "candidate_executed": false,
+      "research_record": {
+        "path": "docs/development_roadmap/experiments/c1_openloop_source_research_20261112.json",
+        "bytes": 8639,
+        "sha256": "e41c8483bf23357d3bc8534cc8e3f04a69fc731acb51ea34aa9b8476825c5fc6"
+      },
+      "full_VSC_reference_ready": false,
+      "scope": "Only raw observed 2ms joint-ramp single-loop gates. v1 initial gate remains FAIL. Does not certify internal precision, contemporaneous source-current KCL or a three-phase bridge.",
+      "allows_redistribution": "Third-party donor, generated native files and waveforms stay ignored in local_reference",
+      "blockers": []
     }
   ],
   "scope_notes": [

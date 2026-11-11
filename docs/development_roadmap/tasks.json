@@ -3,7 +3,7 @@
   "updated_date": "2026-11-12",
   "timezone": "Asia/Shanghai",
   "branch": "codex/emt-examples-longterm",
-  "checkpoint_head": "5314486fcb30929f79c62a5b15faf2e462529573",
+  "checkpoint_head": "5e27e7878ac4260c31e07c2eaf4b33b2164298c4",
   "current_task": "C1",
   "formal_new_examples_completed": 9,
   "status_values": [
@@ -657,9 +657,11 @@
         "small measured naming/timing fixes only if proven"
       ],
       "references": [
-        "simulink-standard-blocks-srf-pll-r2026b"
+        "simulink-standard-blocks-srf-pll-r2026b",
+        "pscad-official-vsc-background-v463",
+        "pscad-derived-source-startup-v5"
       ],
-      "validation": "既有11完整离散PLL补验证通过：真实1s参考资格、未改原main首次候选三窗九项、243输入快照与独立数值复算、默认__main__独立Agg/三原图及完整结果一致、33合成/1300全量含slow、锁定/Ruff/mypy、精简教学均完成。原111源及依赖未改，总113源前后相同。不增加编号；C1开环并网/dq/P前馈Vac/真实DC电容Vdc全链仍待完成。",
+      "validation": "既有11已完成真实1s PLL对标、243快照独审、默认Agg、33专项/1300全量含slow及教学。新单回路v1首流FAIL保留；v2真实2ms/401行线性渐升及原观测门通过、47归档双独审。官方VSC只检查未运行，内部精度/同刻KCL/三相桥未认证；113源码与依赖未改，未重复全量。开环/dq/P前馈Vac/真实DC电容Vdc全链待完成，不新增编号。",
       "acceptance": "局部、可独立运行验证的教学例逐项验收",
       "status": "in_progress",
       "files": [
@@ -670,13 +672,16 @@
         "validation/cases/pll_dynamic_response/compare.py",
         "validation/cases/pll_dynamic_response/README.md",
         "tests/test_pll_reference_comparison.py",
-        "validation/cases/pll_dynamic_response/validation_report.json"
+        "validation/cases/pll_dynamic_response/validation_report.json",
+        "docs/development_roadmap/experiments/c1_openloop_reference_design.md",
+        "docs/development_roadmap/experiments/c1_openloop_source_research_20261112.json"
       ],
       "commits": [
         "b835e31785fab3fda247c333d23edbe9ce576dfa",
         "8048ce469472040b2244641e0e6790c166f7630c",
         "da18a43321901f294786694fbb8b9c70ab79881f",
-        "5314486fcb30929f79c62a5b15faf2e462529573"
+        "5314486fcb30929f79c62a5b15faf2e462529573",
+        "5e27e7878ac4260c31e07c2eaf4b33b2164298c4"
       ],
       "blockers": [],
       "reference_feasibility": {
@@ -687,7 +692,7 @@
         "evidence_sha256": "d92469cdd234477829ca5a5fa75a67648f17235fffadf3d3cbdaa73672375427",
         "native_executed": false
       },
-      "current_stage": "existing_11_pll_accepted_open_loop_reference_pending",
+      "current_stage": "open_loop_source_startup_observed_three_phase_reference_pending",
       "interface_discovery": {
         "status": "qualified_native_satk_batch_interface",
         "simulink_model_tools_provided": false,
@@ -945,6 +950,17 @@
         "input_snapshot_files": 243,
         "existing_11_accepted": true,
         "complete_C1_chain_accepted": false
+      },
+      "open_loop_reference_research": {
+        "status": "observed_single_loop_startup_pass_only_three_phase_reference_pending",
+        "record": {
+          "path": "docs/development_roadmap/experiments/c1_openloop_source_research_20261112.json",
+          "bytes": 8639,
+          "sha256": "e41c8483bf23357d3bc8534cc8e3f04a69fc731acb51ea34aa9b8476825c5fc6"
+        },
+        "new_candidate_executed": false,
+        "full_VSC_reference_ready": false,
+        "active_native_runs": 0
       }
     },
     {
@@ -1097,8 +1113,9 @@
       "path": "local_reference/native_static_reviews/b1_resume_evidence_20261111/receipt_20261111T132350441453Z.json",
       "sha256": "73c22f1cbf7bfafaa1cc563e475bfb3293fa5e02d52386b4064e42b2a3eb32e8"
     },
-    "latest_checked_head": "40bef297c431a0981f0dc93279cddf5acbbd6ea6",
-    "latest_remote_head_verified_same": true
+    "latest_checked_head": "5e27e7878ac4260c31e07c2eaf4b33b2164298c4",
+    "latest_remote_head_verified_same": true,
+    "latest_goal_turn_classification": "progress"
   },
   "pause_checkpoint_history": [
     {
@@ -1112,5 +1129,5 @@
       "resume_requires_explicit_user_instruction": true
     }
   ],
-  "current_stage": "existing_11_pll_accepted_open_loop_reference_pending"
+  "current_stage": "open_loop_source_startup_observed_three_phase_reference_pending"
 }
