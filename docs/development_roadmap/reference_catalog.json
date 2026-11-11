@@ -2331,9 +2331,7 @@
         "candidate_modified": false
       },
       "mathematical_compatibility": "Short probe uses raw native TIME and standard math/comparators, six bilateral varrlc pure-R branches, floating1ohm+1mH phase loads and400V ideal source. All1206 observed gate values match the default12 formula evaluated at retained raw native TIME, all six R inputs are0.001/1e9ohm, and zero initial current/KCL/TR relations were checked. Generated12-significant-digit phase/omega literals and ASCII timing precision remain explicit boundaries; this is not full-run bitwise controller equivalence.",
-      "blockers": [
-        "全部数值、独审、独立运行、测试和教学检查已完成，待本次正式验收Git提交与推送。"
-      ],
+      "blockers": [],
       "sha256": {
         "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/report.md": "2ef092f9ad188cd2b63155ddbf9623317631f2a6ce98935e77cf34c0212d5906",
         "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/evidence_inventory.json": "5539edc3888f73437e39c83325608df51ba76af68789953c3dd6b2fdac45bbad",
@@ -2519,7 +2517,7 @@
         "terminal_sha256": "dacff8ff0d60c08efac859db5cc14c60d8e75755f8636867f86176e1ce5b72ec",
         "deliberate_stop_before_all_wires_save_build_run": true
       },
-      "reference_ready_scope": "Full native reference and unchanged original12 comparison independently accepted; bilateral-switch/held-gate assumptions only. Teaching/checks complete, formal Git delivery pending. Original MathWorks waveform FAIL retained.",
+      "reference_ready_scope": "Full native reference and unchanged original12 comparison independently accepted and delivered in40bef297; bilateral-switch/held-gate assumptions only. Original MathWorks waveform FAIL retained.",
       "previous_prebuild_probe": {
         "record": "docs/development_roadmap/experiments/native_reference_attempts_20261109.md",
         "latest_run": "local_reference/two_level_pwm/matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/n/20261109T091917405572Z",
@@ -2763,7 +2761,7 @@
         "candidate_executed": false,
         "formal_B1_completed": false
       },
-      "candidate_comparison_status": "independently_validated_Git_pending",
+      "candidate_comparison_status": "completed",
       "full_reference_qualification": {
         "status": "QUALIFIED_FULL_CONDITIONAL_NATIVE_REFERENCE",
         "record": "local_reference/two_level_pwm_pscad/qualification/20261111T031524306929Z/qualification.json",
@@ -2874,15 +2872,18 @@
           },
           "full_npz_bytes_equal_formal_comparison_candidate": true
         },
-        "teaching_and_final_Git_delivery": "teaching_complete_Git_pending",
-        "formal_B1_completed": false,
+        "teaching_and_final_Git_delivery": "completed",
+        "formal_B1_completed": true,
         "input_snapshot_files": 340,
         "all_input_hashes_unchanged": true,
         "public_report": {
           "path": "validation/cases/two_level_pwm_pscad/validation_report.json",
           "bytes": 12381,
           "sha256": "1d235718f31e7ec095ec33396b81d14f5975ffb540cdffaa4139f7d5db64dc0e"
-        }
+        },
+        "acceptance_commit": "40bef297c431a0981f0dc93279cddf5acbbd6ea6",
+        "acceptance_pushed": true,
+        "remote_head_verified_same": true
       }
     }
   ],

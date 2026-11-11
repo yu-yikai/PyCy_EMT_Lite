@@ -3,8 +3,8 @@
   "updated_date": "2026-11-11",
   "timezone": "Asia/Shanghai",
   "branch": "codex/emt-examples-longterm",
-  "checkpoint_head": "ae9fe3629ad9617853979b0ef58d4d8319239592",
-  "current_task": "B1",
+  "checkpoint_head": "40bef297c431a0981f0dc93279cddf5acbbd6ea6",
+  "current_task": "C1",
   "formal_new_examples_completed": 9,
   "status_values": [
     "planned",
@@ -386,9 +386,9 @@
         "mw-two-level-pwm-r2025a",
         "pscad-derived-bilateral-spwm-v5"
       ],
-      "validation": "完整协议e25ebed和入口3737e66均先提交推送。真实PSCAD5/2.5us参考40002/80003行×60通道，自细化、300输入资格及独立原始物理/控制核验通过。默认原12以5us运行40001点，在固定[.1,.2]三相最大误差.321998/.318177/.319571A、maxNRMSE.000917642；RMS/基波/相位/正耗散全部满足原限值。独审cd20f993独立积分全项一致，340原件/快照全核；图已查看。原12默认__main__独立Agg一次通过40001点，完整NPZ逐字等正式候选。23入口检查及新含slow全量1267 passed494.62s、锁定27包/Ruff/mypy39通过，111个Python源全程不变，旧109完全不改。精简说明/结果报告/中英导航已完成，待正式Git。原MathWorks2%波形FAIL和全部旧失败/中断保留；不增加教学编号。",
-      "acceptance": "本次双向开关模型的真实参考、候选固定指标、独立复算/运行、图报告、自动检查及教学已验收；Git提交推送后记completed。原MathWorks IGBT模型的失败单列保留。",
-      "status": "validated",
+      "validation": "完整协议e25ebed和入口3737e66均先提交推送。真实PSCAD5/2.5us参考40002/80003行×60通道，自细化、300输入资格及独立原始物理/控制核验通过。默认原12以5us运行40001点，在固定[.1,.2]三相最大误差.321998/.318177/.319571A、maxNRMSE.000917642；RMS/基波/相位/正耗散全部满足原限值。独审cd20f993独立积分全项一致，340原件/快照全核；图已查看。原12默认__main__独立Agg一次通过40001点，完整NPZ逐字等正式候选。23入口检查及新含slow全量1267 passed494.62s、锁定27包/Ruff/mypy39通过，111个Python源全程不变，旧109完全不改。精简说明/结果报告/中英导航已完成，40bef297已正式验收提交推送并核真实远端相同。原MathWorks2%波形FAIL和全部旧失败/中断保留；不增加教学编号。",
+      "acceptance": "本次双向开关模型的真实参考、候选固定指标、独立复算/运行、图报告、自动检查及教学已验收，并以40bef297正式提交推送。原MathWorks IGBT模型的失败单列保留；不增加教学编号。",
+      "status": "completed",
       "files": [
         "validation/cases/two_level_pwm/manifest.json",
         "validation/cases/two_level_pwm/parameters.json",
@@ -412,11 +412,10 @@
         "146a279",
         "8a65b6e",
         "e25ebed2511312c496a52303222344e4d754d4cd",
-        "3737e663c89646cf76e6cd9f4880d0e579d95731"
+        "3737e663c89646cf76e6cd9f4880d0e579d95731",
+        "40bef297c431a0981f0dc93279cddf5acbbd6ea6"
       ],
-      "blockers": [
-        "全部数值、独审、独立运行、测试和教学检查已完成，待本次正式验收Git提交与推送。"
-      ],
+      "blockers": [],
       "last_diagnostic": {
         "status": "qualified_bounded_1ms_only",
         "record": "local_reference/two_level_pwm/matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/held_bridge_qualification/20261111T014703278697Z/qualification.json",
@@ -576,15 +575,18 @@
           },
           "full_npz_bytes_equal_formal_comparison_candidate": true
         },
-        "teaching_and_final_Git_delivery": "teaching_complete_Git_pending",
-        "formal_B1_completed": false,
+        "teaching_and_final_Git_delivery": "completed",
+        "formal_B1_completed": true,
         "input_snapshot_files": 340,
         "all_input_hashes_unchanged": true,
         "public_report": {
           "path": "validation/cases/two_level_pwm_pscad/validation_report.json",
           "bytes": 12381,
           "sha256": "1d235718f31e7ec095ec33396b81d14f5975ffb540cdffaa4139f7d5db64dc0e"
-        }
+        },
+        "acceptance_commit": "40bef297c431a0981f0dc93279cddf5acbbd6ea6",
+        "acceptance_pushed": true,
+        "remote_head_verified_same": true
       }
     },
     {
@@ -655,9 +657,9 @@
         "small measured naming/timing fixes only if proven"
       ],
       "references": [],
-      "validation": "开环到PLL/dq/PQ/Vdc逐层探针和商业对标；现成PLL与11的归一化/相位/更新次序不同，标准算术块+显式状态延迟的派生参考只读可行性已调查，未建立或运行商业参考。",
+      "validation": "先对既有11 PLL作参考先行设计，核归一化、dq方向、PI离散式、旧omega积分顺序和t0/wrap；当前仅只读设计，尚无商业模型、运行或验收。PLL后再按实际参考逐层推进dq/PQ/Vdc，不将局部设计视为单站全链完成。",
       "acceptance": "局部、可独立运行验证的教学例逐项验收",
-      "status": "planned",
+      "status": "in_progress",
       "files": [],
       "commits": [],
       "blockers": [],
@@ -668,6 +670,14 @@
         "evidence": "local_reference/c1_pll_reference_research/20261111T013530229954Z/evidence.json",
         "evidence_sha256": "d92469cdd234477829ca5a5fa75a67648f17235fffadf3d3cbdaa73672375427",
         "native_executed": false
+      },
+      "current_stage": "existing_11_pll_reference_design",
+      "interface_discovery": {
+        "status": "checking_existing_local_interfaces",
+        "simulink_model_tools_provided": false,
+        "plugin_searches_without_results": 3,
+        "native_executed": false,
+        "scope": "当前会话未提供Simulink model_*工具；继续核本机已有接口，尚不据此将C1判blocked。"
       }
     },
     {
@@ -817,7 +827,9 @@
     "evidence_review": {
       "path": "local_reference/native_static_reviews/b1_resume_evidence_20261111/receipt_20261111T132350441453Z.json",
       "sha256": "73c22f1cbf7bfafaa1cc563e475bfb3293fa5e02d52386b4064e42b2a3eb32e8"
-    }
+    },
+    "latest_checked_head": "40bef297c431a0981f0dc93279cddf5acbbd6ea6",
+    "latest_remote_head_verified_same": true
   },
   "pause_checkpoint_history": [
     {
@@ -830,5 +842,6 @@
       "owned_processes_remaining": 0,
       "resume_requires_explicit_user_instruction": true
     }
-  ]
+  ],
+  "current_stage": "existing_11_pll_reference_design"
 }

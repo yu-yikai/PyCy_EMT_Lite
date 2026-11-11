@@ -1,6 +1,7 @@
 # 持久进度
 
-2026-11-11恢复active。分支`codex/emt-examples-longterm`，当前B1为validated，待本次验收提交推送。
+2026-11-11目标active。B1已以`40bef297c431a0981f0dc93279cddf5acbbd6ea6`正式验收提交推送，真实远端核同。
+当前C1为in_progress，阶段`existing_11_pll_reference_design`；仅既有11 PLL参考设计，尚无商业模型、运行或验收。
 恢复时本地HEAD与真实远端均为`3737e663c89646cf76e6cd9f4880d0e579d95731`；
 暂停的12份未提交文件逐项hash一致，111个Python源文件路径及hash完全不变。
 上一轮为有实测进展；不重跑已成功的仿真或测试。暂停记录保留在忽略目录，原始失败也保留。
@@ -13,12 +14,12 @@ RMS/基波/相位/正耗散均满足原阈值，独审cd20f993逐项一致，340
 默认12独立__main__带透明输出观察仅运行一次，Agg/exit0，完整NPZ逐字等正式候选。
 23专项、新1267全量含slow全部通过，494.62s（XML494.618），无失败/错误/跳过；
 本轮锁定27包、Ruff和mypy39也通过。旧109源、核心/依赖/原12不改，仅新增验证入口与测试。
-精简case说明、结果表和中英导航已完成，最终Git提交后才将B1记completed。
+精简case说明、结果表和中英导航已完成，B1已记completed；当前验收checkpoint为40bef297。
 结果见[PSCAD对标](../../validation/cases/two_level_pwm_pscad/README.md)及[证据索引](experiments/native_reference_attempts_20261109.md)。
 
 原MathWorks IGBT参考的2%波形FAIL继续单列，双向开关PASS不扩大到二极管/死区等器件行为。
-正式新增19–27仍9项；B1只补既有12，不增加教学编号。功能checkpoint仍ae9fe362，
-本次Git正式验收后更新实际SHA。后续先C1既有11 PLL参考，再按依赖推进单站控制链。
+正式新增19–27仍9项；B1只补既有12，不增加教学编号。C1先核既有11 PLL的独立参考语义，
+当前会话无Simulink model_*工具且插件三次搜索无结果，继续核本机已有接口，尚不判blocked；后续逐层推进单站控制链。
 F1账单锁仍为既有外部阻塞，23–27跨OS未验，不重复轮询已终态的CI。
 
 以下保留已完成的1ms诊断及历史；不覆盖上述完整参考新进展。
