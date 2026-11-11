@@ -1,0 +1,220 @@
+{
+  "recorded_utc": "2026-11-11T22:52:22.833243+00:00",
+  "checked_head": "2e158872b1a55ee32836e34561981fb458d49bb7",
+  "status": "BUILD_ONLY_PGB_SPLIT_COMPILE_FAILURE",
+  "goal_status": "active",
+  "C1_status": "in_progress",
+  "D1_status": "planned",
+  "F1_status": "blocked_external_CI_restoration_pending",
+  "formal_new_examples_completed": 9,
+  "new_formal_example_created": false,
+  "candidate_executed": false,
+  "full_VSC_reference_ready": false,
+  "previous_result_preserved": {
+    "path": "docs/development_roadmap/experiments/c1_pgb_dsout_build_only_20261112.json",
+    "bytes": 9916,
+    "sha256": "b9b8b546f93a372d744ac7e5f3d7e5ca46c0f8e74135f0e3ae6962e4e64f7fd6",
+    "hash_scope": "Preserved Windows workspace bytes; actual Git LF identity supplied separately.",
+    "git_lf_bytes": 9723,
+    "git_lf_sha256": "b8c644eb8c8da08e0ff5b37b64db534bcf13f8b80900eb6f7d393737d5f54b11"
+  },
+  "scope": {
+    "execution": "build_only",
+    "native_run_permitted": false,
+    "numeric_status": "NOT_OBSERVED",
+    "configured_channels": 32,
+    "configured_components_wires_ports_nets": [
+      163,
+      129,
+      228,
+      71
+    ],
+    "physical_branches": 19,
+    "only_observer_delta": "One complete DC PGB clone: retain original10-byte #PGB registration in Fortran, place unchanged603-byte suffix in Dsout; remaining31 master PGB unchanged.",
+    "all_plant_source_gate_clock_flag_and17_plus_Vs_token_budgets_unchanged": true,
+    "source_current_identity": "Negative own source BA (absorption NA-to-NB); sourceCUR not used.",
+    "voltage_identity_rank": 1,
+    "deleted_A_drop_and_rank2_gates": "NOT_APPLICABLE_DELETED_NOT_PASS",
+    "registration_effectiveness": "NOT_ESTABLISHED: actual Map still lacks the DC channel."
+  },
+  "frozen_before_native": {
+    "contract": {
+      "path": "local_reference/native_static_reviews/c1_pgb_registered_dsout_build_contract_20261111T223330880746Z/receipt.json",
+      "bytes": 20495,
+      "sha256": "62c979d037420ff7283e674b9161044600fd260d2dbebc8768af763dcf39fe74"
+    },
+    "package": {
+      "path": "local_reference/c1_openloop_reference_research/20261111T223409308779Z_pgb_split_build_only_v1/manifest.json",
+      "bytes": 6909,
+      "sha256": "bb162c152b97d2dc5615a9e1dfeb5e58f39ed06feda74da840325333bf515330"
+    },
+    "package_files": 23,
+    "flat_input_pins": 14,
+    "preparation": {
+      "path": "local_reference/c1_openloop_reference_research/20261111T223409308779Z_pgb_split_build_only_v1/preparation_receipt.json",
+      "bytes": 8957,
+      "sha256": "0a760053284d4e68d4aabd9cbbd5436083943173fad061d9d3088ac3928d254b"
+    },
+    "static_review": {
+      "path": "local_reference/native_static_reviews/c1_pgb_split_final_20261111T224100Z/receipt.json",
+      "bytes": 10089,
+      "sha256": "d12b72cdfcc6076871cdf58307ed20d7f0616c8bd87008d27a05c2761630d53e"
+    },
+    "independent_prelaunch": {
+      "path": "local_reference/native_static_reviews/c1_pgb_registered_dsout_independent_final_prelaunch_20261111T223836273381Z/receipt.json",
+      "bytes": 19493,
+      "sha256": "67a3b0ab3a92c1dfe83a02adaa9bbb9222d7710dbc49ec2220eebae06651628f"
+    },
+    "independent_helper": {
+      "path": ".tmp/longterm/independent_c1_pgb_registered_dsout_build_only_20261112.py",
+      "bytes": 55682,
+      "sha256": "e7da3046ab88dcb0e1416e7a9cdb04b8e26c1d40e030e19c2b04490942855792"
+    },
+    "root_preflight": {
+      "path": "local_reference/native_static_reviews/c1_pgb_split_root_preflight_20261112/receipt.json",
+      "bytes": 1322,
+      "sha256": "faaa3479fb2bb6acc717bc121bd1fd3aa6dd06ea8b16716585f7b73f9f5937ba"
+    },
+    "registration_bytes": 10,
+    "Dsout_suffix_bytes": 603,
+    "original613_reconstructed_exactly": true,
+    "preparation_wording_erratum": "Frozen preparation says GFortran5.0-compatible; actual unchanged installed toolchain is PSCAD5.0 with GFortran4.6. This corrects prose only; the frozen file is retained."
+  },
+  "native": {
+    "run": "local_reference/c1_openloop_reference_research/20261111T223409308779Z_pgb_split_build_only_v1/n/20261111T223926034853Z",
+    "session_id": 24811,
+    "exec_closed": true,
+    "exit_code": 1,
+    "elapsed_s": 208.34578089998104,
+    "build_error_messages": 6,
+    "Fortran_syntax_diagnostics": 3,
+    "derived_make_or_executable_errors": 3,
+    "worker_returncode": 0,
+    "worker_final_stage": "finished",
+    "worker_completion": "normal_quit",
+    "quit_returned_stage_observed": true,
+    "guarded_driver_completed": true,
+    "native_build_only_completed": false,
+    "generated_admission_passed": false,
+    "generated_admission_file_exists": false,
+    "generated_admission_status": "NOT_EVALUATED_BUILD_ERRORS",
+    "native_run_requested": false,
+    "native_run_returned": false,
+    "native_completion_observed": false,
+    "remaining_owned": [],
+    "forced_termination": false,
+    "profile_source_dependency_parent_environment_unchanged": true,
+    "terminal": {
+      "path": "local_reference/c1_openloop_reference_research/20261111T223409308779Z_pgb_split_build_only_v1/n/20261111T223926034853Z/terminal.json",
+      "bytes": 6597,
+      "sha256": "7f323f2a21a55252dc81dfce0f9a69af6cbd975b25e44d786a4ec1f6cc490c7b"
+    },
+    "archive": {
+      "path": "local_reference/c1_openloop_reference_research/20261111T223409308779Z_pgb_split_build_only_v1/n/20261111T223926034853Z/manifest.json",
+      "bytes": 23196,
+      "sha256": "2fb076c2c2892b2ed288dc75ffbdb63cb39c1fd154424cc7277a6bbcaced9549"
+    },
+    "archive_files": 71,
+    "build_messages": {
+      "path": "local_reference/c1_openloop_reference_research/20261111T223409308779Z_pgb_split_build_only_v1/n/20261111T223926034853Z/build_messages.json",
+      "bytes": 7794,
+      "sha256": "4c4d6b37120dd2408a29bbaeddd3fbb22e96b445e66cc5c914f758a7cf693255"
+    }
+  },
+  "failed_build_diagnostics": {
+    "scope": "Read-only generated text/Map diagnosis from a failed compile; not executable or freshness admission.",
+    "source": {
+      "path": "local_reference/c1_openloop_reference_research/20261111T223409308779Z_pgb_split_build_only_v1/n/20261111T223926034853Z/project/vdiv.gf46/Main.f",
+      "bytes": 33880,
+      "sha256": "687379cca67dcd693450b86a23e638a1a78fb0d9e3212723f64bc0849637c5ca"
+    },
+    "map": {
+      "path": "local_reference/c1_openloop_reference_research/20261111T223409308779Z_pgb_split_build_only_v1/n/20261111T223926034853Z/project/vdiv.gf46/vdiv.map",
+      "bytes": 10862,
+      "sha256": "31b54de015e399a44aeba2a6bb37c506fb751f6d308c54c85ad605b79030e90a"
+    },
+    "fresh_DC_negative_BA_MainOut_line": 744,
+    "unresolved_MainOut_lines": [
+      {
+        "line_one_based": 853,
+        "text": "DO IVD1_1 = 1, <empty>"
+      },
+      {
+        "line_one_based": 854,
+        "text": "PGB(IPGB+<empty>+IVD1_1-1) = I_dc_absorb_kA(IVD1_1)"
+      }
+    ],
+    "Map_PGBS": 31,
+    "DATAStruct_records": 33,
+    "missing_registered_channel": "I_dc_absorb_kA",
+    "STORF_ModelStorage": 44,
+    "STOF_InternalStorage": 45,
+    "only_Map_dimension_delta": {
+      "PGBS": -1
+    },
+    "interpretation": "Exact10+603 split survived all actual readbacks but still yielded no DC Map metadata and unexpanded dim/index. This rejects this attempt only; compiler internals and source scheduling are not inferred."
+  },
+  "actual_reviews": {
+    "root_full23_package71_run_hashes_and6_XML_semantics": {
+      "path": "local_reference/native_static_reviews/c1_pgb_split_root_actual_20261112/receipt.json",
+      "bytes": 10690,
+      "sha256": "82b708857c82f89193e432d9df7a4e3c5b173fcffcd737515af8a5e535bd984b"
+    },
+    "independent_once": {
+      "path": "local_reference/native_static_reviews/c1_pgb_registered_dsout_build_independent_actual_20261111T223926034853Z_20261111T224412222508Z/receipt.json",
+      "bytes": 57368,
+      "sha256": "04408bd375f62fdb06df184346f103ae9c837f334a8d3a49d830cca919af9db7"
+    },
+    "independent_scope": "90 checks, only actual_build0 failed;33 bound-file rechecks passed. Stopped before Map/Main/full-run-archive deep admission; it did not establish Map channel count, registration, timing or numerical status.",
+    "independent_scope_supplement": {
+      "path": "local_reference/native_static_reviews/c1_pgb_registered_dsout_build_independent_actual_20261111T223926034853Z_20261111T224412222508Z/scope_supplement.json",
+      "bytes": 3216,
+      "sha256": "dd2bdb77180c54971e4446a5c00ba67b1d46374067b13fda830db66639c80b90"
+    },
+    "compile_diagnosis": {
+      "path": "local_reference/native_static_reviews/c1_pgb_split_compile_failure_20261111T224718636724Z/receipt.json",
+      "bytes": 9941,
+      "sha256": "0aa26d9ba34f2564bd8a2ecf6d5456b24c3c23a8731aaa67172c0a2f98a994c6"
+    }
+  },
+  "numerical": {
+    "status": "NOT_OBSERVED",
+    "observed_waveform_rows": 0,
+    "freshness_and_complete32_metadata_admission": "NOT_OBSERVED_BUILD0_PRECONDITION_FAILED",
+    "numeric_acceptance": false,
+    "overall_reference_accepted": false
+  },
+  "source113_and_dependencies_unchanged": true,
+  "source_baseline": {
+    "path": ".tmp/longterm/c1-pll-entry-final-source-hashes-20261112.json",
+    "bytes": 12850,
+    "sha256": "7c666c145ee97c8cbe8fdd50932ca35d7ff25ca9424d07fd5be4b4324703ef71"
+  },
+  "test_reuse": "Previous1300passed including slow/locked27/Ruff/mypy39 is the unchanged-code baseline; no new regression run in this research-only milestone.",
+  "next_gate": "Freeze and independently inspect a minimal source-observation value field with Intent=Output, using the documented scalar Real/Variable field and direct negative own-BA CBR assignment in Dsout; restore the DC recorder to unchanged master:pgb. Keep all original source physics/CUR/ports, the other31 channels, topology, clocks, flags and17 plus Vs/token budgets. Installed5.0 contains this observation-language primitive; the official5.1 tutorial says it was introduced in4.5, but neither proves this source scheduling. No new package or native attempt yet. First freeze exact XML/schema and a separate BUILD-ONLY contract; require build0, complete Map32/DATAStruct34 and all11 parameters/ports/instance hierarchy, four direct currents and15 Vm fresh-to-own-PGB in MainOut without overwrite, and all prior storage/environment guards. Derive indices; do not vary #PGB placement again without evidence, patch old/generated files, use history CUR, relax thresholds or call Run, even if a build-only check passes.",
+  "simplicity": "One observer experiment only; no public framework, dependency, core or teaching-code edits. Native definitions, raw files and helpers remain ignored.",
+  "old_failures_preserved": true,
+  "remote_scope": "Real remote verified2e15887 at turn entry; postcommit remote/clean state is recorded separately in the ignored closeout.",
+  "metadata_erratum": {
+    "applies_to": [
+      "docs/development_roadmap/tasks.json:C1.dc_pgb_build_only.record",
+      "docs/development_roadmap/reference_catalog.json:pscad-derived-dc-pgb-build-v5.research_record"
+    ],
+    "correction": "Only the two mutable descriptors are corrected from workspace/Git-LF conflation to the actual HEAD blob. The prior public record and raw/native conclusions are unchanged.",
+    "verified_head": "2e158872b1a55ee32836e34561981fb458d49bb7",
+    "old_workspace_bytes": 9916,
+    "old_workspace_sha256": "b9b8b546f93a372d744ac7e5f3d7e5ca46c0f8e74135f0e3ae6962e4e64f7fd6",
+    "actual_Git_LF_bytes": 9723,
+    "actual_Git_LF_sha256": "b8c644eb8c8da08e0ff5b37b64db534bcf13f8b80900eb6f7d393737d5f54b11"
+  },
+  "prospective_unimplemented_observation_method": {
+    "status": "READ_ONLY_PROPOSAL_NO_NEW_PACKAGE_OR_NATIVE_EXECUTION",
+    "installed_pattern_evidence": {
+      "path": "local_reference/native_static_reviews/c1_pgb_split_compile_failure_20261111T224718636724Z/installed_observation_patterns.json",
+      "bytes": 1955,
+      "sha256": "99c053042dcf1cc37c101264c4a2e9a4901bc1163bbf52e1fd1c18c4ccc5af73"
+    },
+    "primary_source": "https://www.pscad.com/webhelp-pscad-v5.1.0-ol/PSCAD/Component_Design/Tutorial_Creating_a_New_Component/Adding_Internal_Output_Variables.htm",
+    "evidence_scope": "Official source tutorial documents value-field Intent=Output direct CBR, introduced in4.5. Installed5.0 library supplies this field plus Dsout assignment primitive. Neither proves this source/native scheduling. No machine or transformer physics is proposed."
+  }
+}
