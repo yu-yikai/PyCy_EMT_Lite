@@ -1,0 +1,42 @@
+# 既有11：锁相环怎样对齐电网电压
+
+[原例](../../../examples/11_pll_dynamic_response.py)只运行控制器，不含电路网络。
+三相电压为50Hz、230V相电压有效值；PLL每100µs更新一次，持续1s。
+PI根据归一化的q轴误差调整角频率，使d轴逐渐对齐电网电压矢量。
+误差为`q / max(|d|, |q|, 1V)`；原例的PI增益作用于这个无量纲误差。
+
+## 读图时看什么
+
+- q轴电压逐渐接近零，表示估计方向逐渐对齐；启动时q不为零是声明初值的结果。
+- 角频率逐渐接近`2π×50 rad/s`。原例的`frequency`列单位是rad/s。
+- 原始角度在`[0,2π)`内，每圈跳回零。比较时只加整数圈展开，不拟合相位或时间。
+
+相A正弦偏移为+30°。按项目使用的Clarke/Park定义，电压空间矢量角为`ωt−60°`；
+不能直接把+30°当作PLL的锁定方向。t=0只观察初值，后续先用旧角频率推进角度，
+再计算同刻dq并更新PI；新积分参与新角频率，新角频率用于下一步。
+
+## 外部参考与比较
+
+真实Simulink R2026b参考使用58个标准离散块实现同一组已声明方程，
+其完整1s[参考资格已通过](qualified_reference_report.json)。
+它是独立标准块实现，来源和适用范围见[协议](reference_protocol.json)。
+两次求解步为100/50µs，控制周期均为100µs；第二次只验证相同控制任务的调度和输出一致性。
+
+比较入口使用未修改原例`main()`产生的结果，保留原来的三次绘图。
+角度、角频率和q电压在三个固定窗口中比较，启动误差保留。
+具体阈值见[验收约定](acceptance_plan.md)和[manifest](manifest.json)。
+
+在项目根目录用PowerShell运行：
+
+```powershell
+$env:MPLBACKEND='Agg'
+uv run --locked python -m validation.cases.pll_dynamic_response.compare
+```
+
+入口需要已取得资格的本地商业参考归档；缺失或改变会报错。
+每次运行的输入快照、原始候选、比较图和报告保存在忽略的
+`local_reference/pll_dynamic_response/comparison_results/<运行编号>/`。
+普通教学运行仍使用`uv run python examples/11_pll_dynamic_response.py`。
+
+当前仅完成参考资格，PyCy候选比较和既有11正式验收仍待完成。
+本步骤不增加教学编号；并网VSC、电流环和直流电压环须分别验证。

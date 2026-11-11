@@ -1,19 +1,18 @@
 # 验证状态
 
-2026-11-12目标active；当前C1为in_progress，阶段`existing_11_pll_full_reference_qualified_candidate_pending`。
-既有11 PLL的完整1s真实R2026b参考已资格通过：58标准块/80连接/5延迟，23列各10001行。
-100/50µs求解步两次均exit0、输入未变且观察到的自有进程均退出；原始solver时钟分别10001/20001行。
-逐行语义及23列配对检查通过，两个参考CSV逐字相同；50µs运行仍保持100µs控制，不称控制细化或中点实测。
-198项文件绑定、10001行规范化数据及两路资格复核通过；公开入口为[参考资格报告](../../validation/cases/pll_dynamic_response/qualified_reference_report.json)。
-尚未执行PyCy候选商业比较、独立默认运行或既有11正式教学验收；C1单站VSC全链仍在进行。
-原11、核心、依赖和111个项目Python文件hash不变；完整回归仍为此前B1的1267 passed494.62s含slow，本轮未重跑。
-B1既有12已completed40bef297；正式新增19–27仍共9项。F1外部账单锁仍待解除，23–27跨OS未补验。
-继续保持项目精简、易读、适合初学者；复用现有模块，研究脚本和商业原件留在忽略归档。
-证据与失败分类见[原生记录](experiments/native_reference_attempts_20261109.md)。
+2026-11-12目标active；C1为in_progress，阶段`existing_11_pll_comparison_entry_checked_candidate_pending`。
+既有11完整1s真实Simulink参考已取得资格；比较入口和33项合成检查已完成，尚未执行首次PyCy候选。
+本轮完整回归1300 passed、510.44s（含slow），零失败/错误/跳过；锁定27包/Ruff/mypy39通过。
+新增文件仅case比较入口及其测试，原有111个Python源和依赖未改，总113源在测试前后hash不变。
+入口保留原11 main()和三幅图，仅观察其SimulationResult；沿用三窗九指标，不复制PLL递推。
+真实参考只读加载203项绑定通过；完整1s双schedule、198项资格、10001行规范化及两路独审均保持。
+50µs求解步仍为100µs控制，仅检查调度；PLL候选/图报告/独立默认运行/正式教学验收及C1后续链尚待完成。
+正式新增19–27仍共9项，B1已完成；F1仍按最近实查账单锁记录，后续新代码HEAD需单独观察CI。
+保持精简、易读、初学者友好；入口见[PLL指南](../../validation/cases/pll_dynamic_response/README.md)。
 
 | 对象 | 内部证据 | 外部参考 | 正式状态 |
 |---|---|---|---|
-| 既有11 PLL（C1子步骤） | 原11/核心不变；候选和正式验收待执行 | 完整1s双schedule原生、逐行/配对、198绑定与规范化独审通过 | 仅参考资格通过，C1仍in_progress |
+| 既有11 PLL（C1子步骤） | 原111源不变；33合成/1300全量通过，候选仍待执行 | 完整1s双schedule原生、逐行/配对、198绑定与规范化独审通过 | 仅参考资格通过，C1仍in_progress |
 | 基线a03a450 | 1118测试含slow、14原有例通过 | 旧文档不等于本次商业对标 | 能力重评完成 |
 | 级联RC探针 | 独立expm、KCL、TR/BE收敛通过 | 不冒称商业参考 | 研究探针完成 |
 | 新增19级联RC | 分段矩阵指数、KCL/能量、TR/BE细化；独立执行通过 | 官方R2025a，真实10052样本；16个窗×信号均通过 | 已完成290a8ea |

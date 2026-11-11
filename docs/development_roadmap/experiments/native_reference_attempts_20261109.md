@@ -643,3 +643,9 @@ PLL五状态方案仍仅设计：`local_reference/c1_pll_reference_research/2026
 - 后置资格独审 `local_reference/native_static_reviews/pll_full_qualification_actual_20261111T160353894957Z/receipt.json` SHA `34795aac8cd62d89c0a92f53e2ade6ec743224b96e2543c51a95116d92bce974`。
 
 公开资格入口为validation/cases/pll_dynamic_response/qualified_reference_report.json。本次只验收参考，不计既有11正式验收或新增数量；PyCy候选、图/报告、默认独立Agg、必要测试和教学仍待完成。111个Python源及依赖未变，1267全量为此前B1实测，本轮未重复。原三点失败与所有历史保持；下一步用现有比较模块写最小case入口，测试并提交后再首次候选比较。
+
+## 2026-11-12 PLL比较入口执行前检查
+
+入口SHA `f4ea246cb9299216dce569595f1b214fd83eb4f936ae34e3de9a1619d0b72a59`、测试SHA `ea6f2af97406bf62b5d2393586208c0b779c0fb668d2f7fbeab0a0775501e74f`；复用原main和公共PWL，无新PLL实现。33专项收据 `local_reference/native_static_reviews/pll_comparison_synthetic_tests_20261111T162405980159Z/frozen_receipt.json` SHA `88cf7dd3e37d8bf95fb3bd0acf64a3117fe555d91df721b5290073dda060fe6b`；静态独审 `local_reference/native_static_reviews/pll_comparison_final_static_review_20261111T163023334292Z/receipt.json` SHA `bed36c753b121f0ef2b5ef389917981bcb73b3038403c980e731f46f349ff63d`。
+
+本轮完整1300 passed510.44s含slow，XML `.tmp/longterm/c1-pll-full-20261111T162829439Z.xml` SHA `6ea47a1f9fba99f3e19eef03f6f1a6df2b78d2e66015ddd1cddf3f52ad3aa818`。27包锁定同步、全Ruff/mypy39通过；113源前后不变，原111源未改。最终入口只读实际参考预检通过203绑定/10001行，未调用原例main或商业候选。本检查点提交后才首次候选比较；图/报告、独立复算/默认Agg及PLL正式教学验收仍待完成。
