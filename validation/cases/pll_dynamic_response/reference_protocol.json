@@ -1,0 +1,184 @@
+{
+  "schema_version": 1,
+  "required_matlab_release": "2026b",
+  "control_step_s": 0.0001,
+  "csv_columns": [
+    "time_s",
+    "control_time_s",
+    "delta_s",
+    "started",
+    "va_v",
+    "vb_v",
+    "vc_v",
+    "alpha_v",
+    "beta_v",
+    "d_v",
+    "q_v",
+    "base_v",
+    "error",
+    "theta_old_rad",
+    "omega_old_rad_s",
+    "xi_old_rad_s",
+    "time_old_s",
+    "theta_rad",
+    "omega_rad_s",
+    "xi_rad_s",
+    "mod_input_rad",
+    "mod_divisor_rad",
+    "mod_output_rad"
+  ],
+  "parameters": {
+    "frequency_hz": 50.0,
+    "phase_rms_v": 230.0,
+    "phase_offset_rad": 0.5235987755982988,
+    "kp": 100.0,
+    "ki": 1000.0,
+    "theta0_rad": 0.0,
+    "xi0_rad_s": 0.0,
+    "omega0_rad_s": 314.1592653589793,
+    "mod_input_rad": -0.1,
+    "mod_divisor_rad": 6.283185307179586
+  },
+  "absolute_budgets": {
+    "time_s": 1e-14,
+    "angle_rad": 1e-11,
+    "xi_rad_s": 1e-11,
+    "error": 1e-11,
+    "omega_rad_s": 1e-09,
+    "voltage_v": 1e-08,
+    "mod_rad": 1e-11
+  },
+  "ownership_limits": {
+    "minimum_launch_free_physical_gib": 3,
+    "minimum_launch_free_commit_gib": 6,
+    "maximum_observed_owned_private_gib": 6,
+    "minimum_running_free_physical_or_commit_gib": 2,
+    "main_wall_limit_s": 300,
+    "cleanup_limit_s": 10,
+    "poll_sleep_s": 0.5
+  },
+  "scope": "Full default existing example11, unchanged discrete SRFPLL; no complete VSC/C1 claim",
+  "model": "C1PllFull20261111",
+  "fixed_step_s": 0.0001,
+  "stop_s": 1.0,
+  "expected_row_count": 10001,
+  "expected_solver_row_count": 10001,
+  "schedule_name": "coarse",
+  "schedules": {
+    "coarse": {
+      "fixed_step_s": 0.0001,
+      "expected_solver_row_count": 10001
+    },
+    "fine": {
+      "fixed_step_s": 5e-05,
+      "expected_solver_row_count": 20001
+    }
+  },
+  "artifact_names": {
+    "signals": "reference.csv",
+    "solver_grid": "solver_time.csv"
+  },
+  "record_contract": {
+    "start_s": 0.0,
+    "stop_s": 1.0,
+    "strict_endpoint_coverage": true,
+    "nominal_control_grid_absolute_tolerance_s": 1e-14,
+    "endpoint_policy": "First and last actual values must equal 0 and 1; no clamping or extrapolation."
+  },
+  "source_inputs": [
+    {
+      "path": "examples/11_pll_dynamic_response.py",
+      "sha256": "7d0fd1ccf9d4af6a3123c6208e4607cead19ce38804490ea2d9d7ab98d1b2647"
+    },
+    {
+      "path": "pycy_emt_lite/controls/pll.py",
+      "sha256": "7eca0fb9c6f6464bb36f82d7cad1b27be5bd1b6455b046b5ad3279c075a36efa"
+    },
+    {
+      "path": "pycy_emt_lite/controls/blocks.py",
+      "sha256": "e862509d8dceb31a1151ff710d4f861267e23e9dccd1843f98f774fb07684a7b"
+    },
+    {
+      "path": "pycy_emt_lite/controls/transforms.py",
+      "sha256": "c48dbe02a1cd4b1c12a8fd29439038b76ada81d68f71f7b1183eec2bdc98ab99"
+    },
+    {
+      "path": "validation/common/comparison.py",
+      "sha256": "8545b5e8fba8abdc2f20cdc2006342bb428765110c5bf9052103dfb0e349affe"
+    }
+  ],
+  "startup_qualification": {
+    "protocol": {
+      "path": "local_reference/c1_pll_reference_research/20261111T151000Z_pll_startup_v5/protocol.json",
+      "sha256": "866e1c07d4b38dc0138dcd501968cbf44eca5035c2a3277547cce27a55460250"
+    },
+    "numerical_report": {
+      "path": "local_reference/c1_pll_reference_research/20261111T151000Z_pll_startup_v5/runs/20261111T1513366278040Z/semantic_analysis/20261111T1515333170669Z/report.json",
+      "sha256": "e01083df354c5ff69411544063229d6c06b400224857910490f24b2cd7de9442"
+    },
+    "independent_reviews": [
+      {
+        "path": "local_reference/native_static_reviews/pll_startup_v5_actual_20261111T151730614879Z/receipt.json",
+        "sha256": "908681d0e818fdfa1a7c47804b657fcfa09e94959f88366083b103fa670d45a2"
+      },
+      {
+        "path": "local_reference/native_static_reviews/pll_startup_v5_numerical_20261111T152032874378Z/receipt.json",
+        "sha256": "ab2416987e7b538bba3768a6a9ac0a55ee705a7f9f1f6ff63503759c70e231fe"
+      }
+    ]
+  },
+  "semantic_gates": [
+    "Retain all 10001 finite rows and exact 23 columns, actual native control timestamps, t0 and t=1; nominal grid residual <=1e-14s.",
+    "At t0 only observe theta0/omega0/xi0; no PI or angle update. Check first three states with the previously frozen observed-Delta closed forms.",
+    "Every later old theta/omega/xi/time equals preceding new state/time; started is exactly 0 then 1. Delta is the positive actual difference.",
+    "Before unwrapping, reject abs(old_omega*Delta)>=pi. Compute theta from old omega; same-time abc and current theta give dq; new xi enters omega0+(Kp*error+xi_new).",
+    "Check all source/Clarke/Park/base/error/mod/state algebraic identities from recorded scalars with startup absolute budgets; do not generate a second recursive reference trajectory.",
+    "For all rows preserve the negative mod diagnostic. Only first three errors must equal -1; do not apply this startup identity to later full rows.",
+    "Anchor both theta and theta_old streams at the declared theta0; principal increments in (-pi,pi), validate against logged state-chain/old-omega advance. No fitted turns, phase or delay."
+  ],
+  "native_gates": [
+    "Before launch freeze per-schedule graph, worker, analyzer, monitor, runtime and input hashes; each run has a separate immutable source and output directory.",
+    "Use R2026b existing license and protected SATK read/edit/read/check interfaces. Preserve the 58 standard blocks, 80 connections, 5 delays and 100us control rates.",
+    "Use separate named solver_step for 100us or 50us, actual configuration readback, with control_step fixed100us. Protocol-only overrides do not prove a solver change.",
+    "Configure and read back all22 signal names/logging-on/SignalName/no-decimation/no-point-limit; Name is a line property, logging settings belong to source output ports.",
+    "Use SimulationInput/Output outside try/catch. Save original MAT/SLX and native17digit CSV; all22 Time/Data arrays must be double with identical grids.",
+    "Retain and check original out.tout separately as solver_time.csv, exact10001/20001 nominal solver ticks, strict 0/1 coverage, finite double. No invented signal midpoints.",
+    "Inspect all actual compiled control sample times [100us,0]. Internal type summaries are not per-port double proof.",
+    "Require normal terminal closure, unchanged inputs, all observed owned processes exited, and no monitor or cleanup errors before analysis."
+  ],
+  "secondary_invariance": {
+    "scope": "Same100us discrete task under50us solver; no control-step convergence or signal-midpoint claim",
+    "pairing": "Same control-row index; no interpolation, deletion, fitting or time quantization",
+    "signal_midpoints_observed": false,
+    "absolute_limits_by_column": {
+      "time_s": 1e-14,
+      "control_time_s": 1e-14,
+      "delta_s": 1e-14,
+      "time_old_s": 1e-14,
+      "theta_rad": 1e-11,
+      "theta_old_rad": 1e-11,
+      "xi_rad_s": 1e-11,
+      "xi_old_rad_s": 1e-11,
+      "error": 1e-11,
+      "mod_input_rad": 1e-11,
+      "mod_divisor_rad": 1e-11,
+      "mod_output_rad": 1e-11,
+      "omega_rad_s": 1e-09,
+      "omega_old_rad_s": 1e-09,
+      "va_v": 1e-08,
+      "vb_v": 1e-08,
+      "vc_v": 1e-08,
+      "alpha_v": 1e-08,
+      "beta_v": 1e-08,
+      "d_v": 1e-08,
+      "q_v": 1e-08,
+      "base_v": 1e-08,
+      "started": 0.0
+    },
+    "angle_columns": [
+      "theta_rad",
+      "theta_old_rad"
+    ],
+    "required": "Every column and every row passes; both angle columns use common-anchor unwrap; started must be exactly binary."
+  }
+}

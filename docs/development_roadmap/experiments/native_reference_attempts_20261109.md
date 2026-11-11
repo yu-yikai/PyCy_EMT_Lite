@@ -621,3 +621,9 @@ PLL五状态方案仍仅设计：`local_reference/c1_pll_reference_research/2026
 原始日志22路Time/Data为double且共用真实三点网格，17位CSV保留23列。冻结分析器141项PASS、issues空；theta/omega/xi闭式状态残差0，Clarke/Park电压闭式最大残差5.684341886080802e-14V。两路独立实际复核通过；没有运行Python候选或生成第二条递推轨迹冒充参考。
 
 下一步审定并提交完整1s协议；现有草案未冻结。全部研究脚本/商业SLX/MAT/CSV留在忽略目录，111项目Python源、核心、依赖和原11不变，未重复此前1267回归。正式新增仍9，不把局部结果扩大为C1完成。
+
+## C1完整1s协议预先固定（尚无完整输出）
+
+公共协议位于validation/cases/pll_dynamic_response，master SHA `dc6a48e221062d72816f882ae0ec70933ea887c91bf96396df8b0b436691036a`。原11默认参数与源码不改，三窗九指标固定，50µs solver仅复核100µs任务调度/输出不变性；23列逐行固定门和两角度共同初角展开均明确。原生信号10001行，原tout预期10001/20001行，严格实际端点0/1、无clamp/fit/外推。
+
+公共预审：`local_reference/native_static_reviews/pll_full_public_protocol_review_20261111T153358964109Z/receipt.json` SHA `746436c25d5618625ab3b3b8001138c072827806995e9ae4b62b350edec03d10`，5源码及4启动资格直接pins已核。本检查点仅固定协议/状态，不执行完整native、候选或新全量；111项目Python源与此前1267通过代码仍同。下一门为独立solver_step原生源和独立逐行分析器预冻审核，不能把协议提交本身当作完整PLL资格或C1完成。

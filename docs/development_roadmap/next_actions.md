@@ -1,13 +1,14 @@
 # 恢复与下一步
 
-2026-11-11目标active。先读五状态文件，交叉核分支/实际HEAD/工作区/真实远端；checkpoint为最近记录提交1bdcd469。
+2026-11-11目标active。先读五状态文件，交叉核分支/实际HEAD/工作区/真实远端；checkpoint为最近记录提交b835e317。
 在codex/emt-examples-longterm工作，不修改main、不强推、不覆盖用户未提交文件；常规提交与里程碑推送已授权。
 当前C1为in_progress，三点启动资格通过；完整1s PLL仍未验证。19–27正式新增9，B1既有12已完成。
 本轮原生与分析都已终态，无已知运行待恢复；不要重新运行已通过的三点探针或1267全量代替审查。
 
 1. 复核启动证据：run为local_reference/c1_pll_reference_research/20261111T151000Z_pll_startup_v5/runs/20261111T1513366278040Z，
    semantic_analysis/20261111T1515333170669Z/report.json为141项PASS；完整SHA及独审见tasks.json与原生记录。
-2. 审定并在Git提交完整1s协议，再运行完整参考/候选。草案在local_reference/c1_pll_reference_research/20261111T151458821003Z_full_protocol_draft，尚未冻结。
+2. 完整1s协议已固定于validation/cases/pll_dynamic_response的manifest/reference_protocol/acceptance_plan，并随本检查点提交。
+   原完整草案作为历史保留。先冻结并独审各schedule源、独立分析器及有限合成拒绝样例，再顺序执行100/50µs solver原生参考；参考资格通过后才运行候选。
    固定初值/方向/全窗和阈值，保留t0误差；共同初角锚定unwrap后按真实100µs更新行做PWL，不拟合或移时。
    每行硬核旧omega推进角度、新xi参与PI、状态链和abs(oldomega*Delta)<pi；不能仅靠较宽轨迹误差限。
    原worker/config的FixedStep写为control_step，50µs secondary须先独立定义solver_step并实际回读，控制仍100µs。

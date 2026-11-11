@@ -1,0 +1,55 @@
+{
+  "case_id": "pll_dynamic_response",
+  "reference_id": "simulink-standard-blocks-srf-pll-r2026b",
+  "example": "examples/11_pll_dynamic_response.py",
+  "acceptance_defined": "2026-11-11 before any full1s reference or candidate output",
+  "reference_source": "Independent standard-block Simulink realization of explicit PLL equations; startup qualified separately; not a vendor PLL benchmark",
+  "reference_platform": "MATLAB/Simulink R2026b, SATK2026.06.01",
+  "reference_state": "requires_qualified_local_reference",
+  "windows_seconds": [
+    [
+      0.0,
+      1.0
+    ],
+    [
+      0.0,
+      0.02
+    ],
+    [
+      0.02,
+      1.0
+    ]
+  ],
+  "time_shift_seconds": 0,
+  "signals": [
+    {
+      "candidate": "angle_unwrapped",
+      "reference": "theta_unwrapped",
+      "unit": "rad",
+      "scale": 1.0,
+      "max_nrmse": 0.0008726646259971648,
+      "max_abs_error": 0.003490658503988659
+    },
+    {
+      "candidate": "frequency",
+      "reference": "omega_rad_s",
+      "unit": "rad/s",
+      "scale": 1.0,
+      "max_nrmse": 0.12566370614359174,
+      "max_abs_error": 0.6283185307179586
+    },
+    {
+      "candidate": "q_axis_voltage",
+      "reference": "q_v",
+      "unit": "V",
+      "scale": 325.2691193458119,
+      "max_nrmse": 0.001,
+      "max_abs_error": 1.0
+    }
+  ],
+  "angle_alignment": "Declared common initial theta0, unique principal-increment unwrap after hard semantic gates; no fitted integer turns",
+  "metric": "Existing union-knot piecewise-linear time-weighted RMS and max error on100us update rows; all9 window-signal checks must pass",
+  "source_identity_max_abs_error_v": 1e-07,
+  "candidate_contract": "Run unchanged example11 defaults through main and retain its SimulationResult using transparent output observation; no second copied PLL trajectory, parameter override or reference replay.",
+  "known_difference": "Pure discrete control reference. PWL is the metric convention only; the50us solver run tests scheduling invariance, not an underlying continuous PLL. Original startup error is retained."
+}

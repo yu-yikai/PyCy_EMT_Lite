@@ -1,9 +1,10 @@
 # 持久进度
 
-2026-11-11目标active；当前C1为in_progress，阶段`existing_11_pll_startup_qualified_full_protocol_pending`。
+2026-11-11目标active；当前C1为in_progress，阶段`existing_11_pll_full_protocol_fixed_native_pending`。
 既有11 PLL已取得真实R2026b三点启动资格：0/100/200µs，58标准块/80连接/5延迟；
 22路原始double信号与时间共23列×3行，141项冻结独立检查及两路实际复核通过。
 本次run exit0、68.2577356s，44份原件/快照全核、观察到的自有进程均退出，无监控或清理错误。
+完整1s的三份协议已固定：三窗九指标、23列调度不变性门和严格0/1端点，独立预审通过；尚无完整输出。
 结果只覆盖启动递推；完整1s参考/候选、独立运行和PLL教学验收尚未执行，更不等于C1单站全链完成。
 v1–v4的接口/日志失败全部保留，未改数学或降低判据。原11、核心、依赖及111个项目Python文件hash不变。
 已实测的完整回归仍为B1阶段1267 passed、494.62s（含slow）；本轮未重复该回归。

@@ -3,7 +3,7 @@
   "updated_date": "2026-11-11",
   "timezone": "Asia/Shanghai",
   "branch": "codex/emt-examples-longterm",
-  "checkpoint_head": "1bdcd469f7ec332cba2be7f0f23d8061836f7936",
+  "checkpoint_head": "b835e31785fab3fda247c333d23edbe9ce576dfa",
   "current_task": "C1",
   "formal_new_examples_completed": 9,
   "status_values": [
@@ -660,8 +660,14 @@
       "validation": "既有11 PLL真实R2026b标准块参考的0/100/200us启动资格通过：58块80连接，44输入快照，22路double原始日志，141项冻结独立检查及两路实际独审通过。完整1s参考/候选比较尚未执行；PLL后续开环、dq、P前馈/Vac和真实DC电容Vdc链仍待验。",
       "acceptance": "局部、可独立运行验证的教学例逐项验收",
       "status": "in_progress",
-      "files": [],
-      "commits": [],
+      "files": [
+        "validation/cases/pll_dynamic_response/manifest.json",
+        "validation/cases/pll_dynamic_response/reference_protocol.json",
+        "validation/cases/pll_dynamic_response/acceptance_plan.md"
+      ],
+      "commits": [
+        "b835e31785fab3fda247c333d23edbe9ce576dfa"
+      ],
       "blockers": [],
       "reference_feasibility": {
         "status": "read_only_feasibility_only",
@@ -671,7 +677,7 @@
         "evidence_sha256": "d92469cdd234477829ca5a5fa75a67648f17235fffadf3d3cbdaa73672375427",
         "native_executed": false
       },
-      "current_stage": "existing_11_pll_startup_qualified_full_protocol_pending",
+      "current_stage": "existing_11_pll_full_protocol_fixed_native_pending",
       "interface_discovery": {
         "status": "qualified_native_satk_batch_interface",
         "simulink_model_tools_provided": false,
@@ -791,6 +797,29 @@
           "sha256": "d6ddc957f9ff3c29ce94b190ce5bf82e0b1f77a4110481fe6dd1f8b943724142"
         },
         "next_gate": "Fix secondary scheduling tolerance, endpoint/export and analyzer contracts; commit before full reference or candidate execution."
+      },
+      "full_comparison_protocol": {
+        "status": "fixed_before_full_reference_or_candidate_output",
+        "contracts": [
+          {
+            "path": "validation/cases/pll_dynamic_response/manifest.json",
+            "sha256": "9a55c97285c552b7519012ce0a2bac5f13f3a877a320b8fae6056c58d9df3e9d"
+          },
+          {
+            "path": "validation/cases/pll_dynamic_response/reference_protocol.json",
+            "sha256": "dc6a48e221062d72816f882ae0ec70933ea887c91bf96396df8b0b436691036a"
+          },
+          {
+            "path": "validation/cases/pll_dynamic_response/acceptance_plan.md",
+            "sha256": "cd38929a398c9dc9b0005080c76baa067796d3eb83205177517ecfa8630be0bf"
+          }
+        ],
+        "independent_review": {
+          "path": "local_reference/native_static_reviews/pll_full_public_protocol_review_20261111T153358964109Z/receipt.json",
+          "sha256": "746436c25d5618625ab3b3b8001138c072827806995e9ae4b62b350edec03d10"
+        },
+        "reference_or_candidate_executed": false,
+        "next_gate": "Freeze reviewed per-schedule source and independent finite-tested analyzer; then run native100us and50us solver references under unchanged100us control. No candidate before reference qualification."
       }
     },
     {
@@ -956,5 +985,5 @@
       "resume_requires_explicit_user_instruction": true
     }
   ],
-  "current_stage": "existing_11_pll_startup_qualified_full_protocol_pending"
+  "current_stage": "existing_11_pll_full_protocol_fixed_native_pending"
 }
