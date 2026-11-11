@@ -3,7 +3,7 @@
   "updated_date": "2026-11-11",
   "timezone": "Asia/Shanghai",
   "branch": "codex/emt-examples-longterm",
-  "checkpoint_head": "40bef297c431a0981f0dc93279cddf5acbbd6ea6",
+  "checkpoint_head": "acaec459d0ffe05a56a9951bed3a5544f23c9817",
   "current_task": "C1",
   "formal_new_examples_completed": 9,
   "status_values": [
@@ -657,7 +657,7 @@
         "small measured naming/timing fixes only if proven"
       ],
       "references": [],
-      "validation": "先对既有11 PLL作参考先行设计，核归一化、dq方向、PI离散式、旧omega积分顺序和t0/wrap；当前仅只读设计，尚无商业模型、运行或验收。PLL后再按实际参考逐层推进dq/PQ/Vdc，不将局部设计视为单站全链完成。",
+      "validation": "既有11 PLL递推/初值/方向已设计并独立审查；真实R2026b/SATK许可和两标准块编辑接口已实测通过，但PLL参考尚未构造或仿真。先冻结启动三点与完整比较协议，再实跑；PLL后逐层推进dq/P/Vac/Vdc，局部结果不等于单站全链完成。",
       "acceptance": "局部、可独立运行验证的教学例逐项验收",
       "status": "in_progress",
       "files": [],
@@ -673,11 +673,27 @@
       },
       "current_stage": "existing_11_pll_reference_design",
       "interface_discovery": {
-        "status": "checking_existing_local_interfaces",
+        "status": "qualified_native_satk_batch_interface",
         "simulink_model_tools_provided": false,
         "plugin_searches_without_results": 3,
-        "native_executed": false,
-        "scope": "当前会话未提供Simulink model_*工具；继续核本机已有接口，尚不据此将C1判blocked。"
+        "mode": "installed protected SATK functions in a fresh owned MATLAB batch; current MCP connection unchanged",
+        "matlab_version": "26.2.0.3386108 (R2026b)",
+        "native_executed": true,
+        "pll_reference_or_candidate_simulated": false,
+        "record": "local_reference/c1_pll_reference_research/20261111T135000Z_satk_probe_v2/runs/20261111T1354072589026Z/interface_probe.json",
+        "record_sha256": "43420197566e13959648202d1582f233eae1753227b3d9677a2f28c63353c963",
+        "terminal": "local_reference/c1_pll_reference_research/20261111T135000Z_satk_probe_v2/runs/20261111T1354072589026Z/terminal.json",
+        "terminal_sha256": "01f98bfbf19988a51c0b70f917fe9d1815fd9db3a5064edb47081cd17d8f3f47",
+        "independent_review": "local_reference/native_static_reviews/c1_satk_v2_actual_20261111T135919821288Z/receipt.json",
+        "independent_review_sha256": "8f9bbdfac2f728a621fbea2a1a5ff860d1110b084a2bf9b9374414cd0ee9b9f3",
+        "scope": "现有Simulink许可、真实model_read/edit/check；Constant0→Terminator两块一连接，回读与SLX一致、healthy；无PLL或其他仿真。"
+      },
+      "reference_design_review": {
+        "status": "reviewed_design_requires_protocol_freeze",
+        "record": "local_reference/native_static_reviews/pll_angle_design_20261111T135817707827Z/review.md",
+        "record_sha256": "acdee17e593a26d636514c1cce879e8ddaf9aacb5762ed5bea5da3780cfd01a5",
+        "native_pll_executed": false,
+        "next_gate": "Freeze 0/100/200us semantic qualification before building/running the PLL reference; full comparison uses declared 100us update rows and anchored unwrap/PWL."
       }
     },
     {

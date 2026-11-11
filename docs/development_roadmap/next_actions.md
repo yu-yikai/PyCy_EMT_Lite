@@ -3,7 +3,7 @@
 2026-11-11目标active，用户已明确恢复。先核五状态文件及实际分支/HEAD/工作区/真实远端。
 恢复时本地与远端均为`3737e663c89646cf76e6cd9f4880d0e579d95731`；12未提交文件及111个
 Python源与暂停记录一致。不操作main、不强推、不覆盖未提交文件。常规开发分支提交/里程碑推送已授权。
-最新功能验收checkpoint为`40bef297c431a0981f0dc93279cddf5acbbd6ea6`，已正常push并核真实远端相同。
+最新功能验收为`40bef297c431a0981f0dc93279cddf5acbbd6ea6`；最新已核研究提交为`acaec459d0ffe05a56a9951bed3a5544f23c9817`，均已推送。
 
 ## 当前事实
 
@@ -13,14 +13,20 @@ B1真实完整参考及300输入资格、原12正式比较、
 新1267全量含slow通过494.62s（XML494.618），0失败/错误/跳过；锁定27包/Ruff/mypy39通过。
 原109源码、核心、依赖及原12保持，仅新增比较入口/测试；原MathWorks2% FAIL和所有旧失败保留。
 正式新增19–27共9项，B1补对标不增加编号。完整pins见[证据索引](experiments/native_reference_attempts_20261109.md)。
-无本轮native/candidate/pytest待恢复，不重跑成功运行替代审查；暂停原记录不改写。
+本轮仅新执行一次R2026b/SATK接口探针，正常终态/独审通过；无PLL/native/candidate/pytest待恢复。
+探针run为`local_reference/c1_pll_reference_research/20261111T135000Z_satk_probe_v2/runs/20261111T1354072589026Z`；
+接口结果不替代PLL参考。111个Python源hash不变，既有1267测试不称本轮重跑，暂停原记录不改写。
 
 ## 执行顺序
 
-1. C1先核本机已有Simulink接口。当前会话无model_*工具，插件三次搜索无结果；尚不据此判blocked。
-   实际修改模型前先读building-simulink-models技能并使用可用的受支持接口，不启动未经审阅的商业运行。
+1. 本机真实R2026b/SATK保护函数已验证可用，当前MCP目录无model_*不再是建模接口障碍。
+   复用已审的owned进程/快照守卫：新建独立目录、冻结来源，使用model_read→model_edit（显式layout）→read/check；
+   仿真用SimulationInput/Output，不绕过接口，不改全局安装/配置。已完成接口探针不重跑。
 2. 先设计既有11 PLL的独立商业参考，不将这一步冒称完整单站控制链。可行性记录为
    `local_reference/c1_pll_reference_research/20261111T013530229954Z/feasibility.md`。
+   下一步先冻结并运行0/100/200µs语义探针，再做完整参考；五个Unit Delay方案已独审，尚未构造。
+   完整角度比较选共同初角锚定unwrap/PWL，先核旧omega×实际Delta小于pi及角增量；50µs保持中点另核，
+   不混入100µs更新行的主PWL。旧xi顺序错误可能落在完整预算内，须靠启动及逐行代数硬门拒绝。
    先固定递推/初值/相位/信号方向与窗口/阈值，审t0/100/200µs的显式状态延迟、
    正弦与Park角度约定、q归一化、PI积分先更新和旧omega推进角度；模型未建立或运行。
    现成PLL数学不同，不能只换增益宣称一致；参考和判据固定后再实施、实跑与独立验证。

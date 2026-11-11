@@ -574,4 +574,20 @@ RMS/基波/相位及正吸收耗散均通过原5%/3°，相位max.026995803401°
 默认12独立`__main__`带透明输出观察仅执行一次，Python3.14.5/Agg、exit0、9.102644s、40001全行有限及原5us网格，全部默认参数/输出开关不变。目录 `local_reference/native_static_reviews/b1_original12_standalone_20261111T032943447679Z`，receipt SHA7e9278a797aa7890256861dc3849589bc9fca2aa7f4096322a5a9ec9d4666a0e，verification SHA2a6163fc76c0a9b9c7b51d3114a1b72f0182907fdc726e03a12bdbac7498afac。完整NPZ与正式候选逐字相同。原stdout为脚本摘要权威，观察器额外trapezoid(x²)RMS不作为正式指标；原receipt保留，说明另存，未重跑。
 
 精简公开报告`validation/cases/two_level_pwm_pscad/validation_report.json` SHA `1d235718f31e7ec095ec33396b81d14f5975ffb540cdffaa4139f7d5db64dc0e`，绑定完整报告/资格/独审/独立运行及新1267全量证据。case说明给出电路假设、三相误差表及纹波解读，中英入口只新增一行链接。原MathWorks波形FAIL与所有失败保留；B1已以`40bef297c431a0981f0dc93279cddf5acbbd6ea6`正式验收提交推送，真实远端核同，不增加正式新例数量。
-当前C1为in_progress，阶段existing_11_pll_reference_design，仅作既有11参考设计；尚无商业模型、运行或验收。当前会话无model_*工具且插件三次搜索无结果，继续核本机已有接口，尚不判blocked。
+接口探针前，C1为in_progress，阶段existing_11_pll_reference_design，仅作既有11参考设计；尚无商业模型、运行或验收。当时会话无model_*工具且插件三次搜索无结果，继续核本机已有接口，尚不判blocked。
+
+## C1真实SATK接口与PLL设计核验（非PLL仿真）
+
+已找到本机真实SATK 2026.06.01及可执行R2025a/R2026b；旧配置的R2025b无exe，不沿用或修改它。
+唯一受控接口probe：`local_reference/c1_pll_reference_research/20261111T135000Z_satk_probe_v2/runs/20261111T1354072589026Z`。固定manifest SHA f9c204f19ab419aad31e2722d7657fd64677bd60d9d5d1c5ca025e30fdbb0f91，
+17输入先冻结，实际执行run快照；静态独审b382f17d通过。真实MATLAB 26.2.0.3386108/R2026b、现有Simulink许可1；
+真正model_read/check空模型后，以model_edit(full)建Constant0→Terminator，立即回读/检查；返回ok/healthy。
+独立解SLX确认唯一两块一连；无sim调用。terminal SHA `01f98bfbf19988a51c0b70f917fe9d1815fd9db3a5064edb47081cd17d8f3f47`，
+exit0/process_completed、80.897046s、无监控/清理错误，22个观察身份均非既有PID且已退出；不声称捕获未观测后代。
+17原件与17快照一致。实际独审`local_reference/native_static_reviews/c1_satk_v2_actual_20261111T135919821288Z/receipt.json`，SHA 8f9bbdfac2f728a621fbea2a1a5ff860d1110b084a2bf9b9374414cd0ee9b9f3。
+
+PLL五状态方案仍仅设计：`local_reference/c1_pll_reference_research/20261111T133135996103Z_unit_delay_design/design.md`。
+独立角度/预算审查`local_reference/native_static_reviews/pll_angle_design_20261111T135817707827Z/review.md`，SHA acdee17e593a26d636514c1cce879e8ddaf9aacb5762ed5bea5da3780cfd01a5；
+共同初角锚定unwrap→100µs更新行PWL；旧omega/实际Delta及新xi顺序须硬核，保持中点另核。
+旧草案接口缺失/R2022b叙述为历史，当前以本次真实R2026b证据为准。尚无PLL模型、PLL/native波形、候选或C1验收；
+下一步先冻结启动三点语义协议。111项目Python源hash不变，核心/依赖/教学脚本不改，沿用已实测1267而不声称重跑。
