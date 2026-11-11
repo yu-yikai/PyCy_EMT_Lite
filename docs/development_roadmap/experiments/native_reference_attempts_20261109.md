@@ -2,11 +2,11 @@
 
 本记录区分真实参考、自检、候选比较与建模失败。正式新增19–27共9项；27已独立验收提交ae9fe362，A3completed；B1已completed40bef297，当前C1已完成既有11 PLL补验证，正准备开环并网VSC参考。26的9269350交付和旧失败均保留历史。所有第三方模型、原始波形及运行脚本留在忽略的`local_reference/`。短探针没有替代正式验收。
 
-2026-11-12当前：[源支路电流只构建记录](c1_source_current_build_only_20261112.json)。
-真实PSCAD编译0错误，原驱动因构建阶段无INF而非零停止；独立实际审查另证DC负BA读在MainOut、其PGB仅在MainDyn，输出链未获准入。原生会话受控退出，自有进程清空。 本轮无Run和OUT数值，NOT_OBSERVED；不能据构建或生成顺序升级完整参考。
-32量新合同保留原物理与适用预算，三相A表加负自身源BA计量；桥/源电压rank1，旧A压降/秩2门不适用。
-[前次理想支路诊断](c1_ideal_branch_diagnostic_20261112.json)和[测量诊断](c1_dc_measurement_diagnostic_20261112.json)及全部旧FAIL保持。
-下一步另冻Map/实际PGB绑定、仅DC本地PGB的Fortran→Dsout调度及已观察的−(CBR...)精确模板，再做独立build-only；不得只补INF重跑或直接Run。 113源码/依赖未改，复用同代码1300含slow基线，C1仍in_progress、正式新增9。
+2026-11-12当前：[单DC输出移段只构建失败](c1_pgb_dsout_build_only_20261112.json)。
+唯一原生会话已闭场：worker正常quit/guarded完成，编译6错误；MainOut中dim/index未展开，Map31路缺DC，未进入generated admission。
+无Run/OUT，深层测量和数值NOT_OBSERVED。23包件/71归档和6份XML已核；独立冻结helper一次仅build0前提失败。
+下一步另冻原Fortran注册＋Dsout写出并独立build-only；不改旧包或门限。113源码/依赖未改，复用既有1300含slow。
+[前次源电流构建](c1_source_current_build_only_20261112.json)的缺INF及独立时序FAIL、全部旧数值FAIL均保持；C1和完整参考仍待。
 
 2026-11-11恢复历史记录：B1完整.200005s双步长参考及300输入资格、原12正式比较、340快照独审和独立Agg均通过；23专项与1267含slow全量通过，教学/报告完成，并已以40bef297正式验收提交推送，真实远端核同。恢复核同本地/远端3737e66、暂停12文件及111源码；不重跑成功输出。8cc1457为早期恢复历史，协议e25ebed先于native，入口3737e66先于候选，详见文末。
 

@@ -1,10 +1,9 @@
 # C1：开环并网VSC参考设计
 
-2026-11-12。既有11 PLL补验证已完成，C1整条控制链仍in_progress，正式新增数保持9。
-本轮仅构建32量源电流计量，不调用Run。真实PSCAD编译0错误，原驱动因构建阶段无INF而非零停止；独立实际审查另证DC负BA读在MainOut、其PGB仅在MainDyn，输出链未获准入。原生会话受控退出，自有进程清空。
-新身份为三相A表＋负DC源BA；去表合并理想线使桥/源电压关系rank1，旧A压降及秩2门在新拓扑不适用。
-数值NOT_OBSERVED，所有旧FAIL保持；完整开环参考、细化及候选仍待。下一步另冻Map/实际PGB绑定、仅DC本地PGB的Fortran→Dsout调度及已观察的−(CBR...)精确模板，再做独立build-only；不得只补INF重跑或直接Run。
-当前事实见[只构建记录](c1_source_current_build_only_20261112.json)；以下设计和历史按各自冻结范围保留。
+2026-11-12。既有11 PLL已补验证；C1完整链仍in_progress，新增完成数9。
+一个DC PGB完整Fortran→Dsout移段实际编译失败，dim/index未展开，Map仅31路；正常退出不等于构建通过。
+无Run/数值与深层准入；下一步另冻“原注册保留Fortran、其余正文放Dsout”的最小build-only，不能保证成功。
+原物理、预算和历史FAIL保持，核心与教学代码未改。见[当前证据](c1_pgb_dsout_build_only_20261112.json)；以下按各自冻结范围保留设计和历史。
 
 ## 教学内容和最小接线
 

@@ -1,13 +1,11 @@
 # 持久进度
 
-2026-11-12目标active；C1仍in_progress，既有11已验收，正式新增19–27共9项。
-本轮只构建新的源支路电流计量，不调用Run。真实PSCAD编译0错误，原驱动因构建阶段无INF而非零停止；独立实际审查另证DC负BA读在MainOut、其PGB仅在MainDyn，输出链未获准入。原生会话受控退出，自有进程清空。
-32量合同采用三相A表加负DC源BA电流；去DC表并合并理想线后，桥/源电压关系为rank1。
-旧电流表压降与旧rank2闭合门在新拓扑不适用，不以结构恒等式追认旧FAIL；所有旧记录保留。
-数值状态NOT_OBSERVED，完整开环参考/候选/C1控制链与D1仍待。下一步另冻Map/实际PGB绑定、仅DC本地PGB的Fortran→Dsout调度及已观察的−(CBR...)精确模板，再做独立build-only；不得只补INF重跑或直接Run。
-113源码及依赖未改，1300含slow/锁定27包/Ruff/mypy39为同代码前次结果，本轮未重跑。
-F1仍待外部CI账单锁恢复；研究工具和派生定义只留忽略目录，教学入口保持精简。
-当前证据见[只构建记录](experiments/c1_source_current_build_only_20261112.json)和[参考设计](experiments/c1_openloop_reference_design.md)。
+2026-11-12。目标active；C1仍in_progress，新增19–27共9项已完成本地/商业数值验收，跨OS另列F1。
+本轮只构建一个DC输出元件的调度改法，实际编译失败：3条Fortran语法诊断及3条派生构建错误，Map31路缺DC。
+worker正常退出、运行器守卫通过、自有进程清空；未调用Run，深层准入和数值均未观察。
+下一步另冻“原Fortran注册＋Dsout写出”的最小方案，先独立build-only，不修补旧包或放宽物理门限。
+113源码和依赖未改；1300含slow/锁定/Ruff/mypy为同代码既有结果。教学入口继续复用现有结构。
+当前证据见[只构建失败记录](experiments/c1_pgb_dsout_build_only_20261112.json)；完整开环、C1控制链和D1仍待。
 
 以下保留已完成的1ms诊断及历史；不覆盖上述当前状态。
 

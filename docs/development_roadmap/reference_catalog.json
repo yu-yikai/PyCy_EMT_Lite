@@ -3101,6 +3101,39 @@
       "blockers": [
         "Freeze Map PGBList32 + DATAStruct actual-ID + native/saved PGB parameter binding, and a separate project-local PGB clone used only for DC: move the original standard Fortran segment to Dsout, preserving its content/form/parameters/graphics/Scale1. Prefreeze the exact negative-CBR template matching actual \"= -( CBR(...))\"; the old \"(-CBR...)\" check was not reached thisrun. Then one new build-only attempt must prove negative own sourceBA CBR before its unique ownPGB in sameMainOut/no overwrite. No INF-only rerun, forced fallback in oldpackage, Run, numeric acceptance or relaxed physical budgets."
       ]
+    },
+    {
+      "id": "pscad-derived-dc-pgb-build-v5",
+      "short_code": "C1-DC-PGB-BUILD",
+      "name": "Single DC output recorder stage experiment, build-only",
+      "source_kind": "Installed PGB complete clone with one segment-name change",
+      "status": "inspected",
+      "content_inspected": true,
+      "opened_in_native_software": true,
+      "simulation_succeeded": false,
+      "reference_numeric_data_obtained": false,
+      "local_path": "local_reference/c1_openloop_reference_research/20261111T215452961752Z_pgb_dsout_build_only_v1/n/20261111T221728850140Z",
+      "samples": 0,
+      "configured_channels": 32,
+      "generated_Map_channels": 31,
+      "research_record": {
+        "path": "docs/development_roadmap/experiments/c1_pgb_dsout_build_only_20261112.json",
+        "bytes": 9916,
+        "sha256": "b9b8b546f93a372d744ac7e5f3d7e5ca46c0f8e74135f0e3ae6962e4e64f7fd6",
+        "hash_scope": "Exact workspace and Git LF bytes.",
+        "git_lf_bytes": 9916,
+        "git_lf_sha256": "b9b8b546f93a372d744ac7e5f3d7e5ca46c0f8e74135f0e3ae6962e4e64f7fd6"
+      },
+      "native_build_only_status": "BUILD_ONLY_PGB_REGISTRATION_COMPILE_FAILURE",
+      "numeric_status": "NOT_OBSERVED",
+      "numerical_acceptance": false,
+      "candidate_executed": false,
+      "full_VSC_reference_ready": false,
+      "scope": "Normal worker quit and guard completion; compile6 failure, missing DC registration, no generated admission or Run. OldFAIL unchanged.",
+      "allows_redistribution": "Native/library/helper files remain ignored; no redistribution rights claimed.",
+      "blockers": [
+        "Freeze a separate one-DC PGB registration/write split: keep the original #PGB $dim registration in Fortran and move only the unchanged remaining standard text to Dsout. Keep the other31 master observers, full source physics, topology, clocks, flags and all17 plus Vs/token budgets. Cross-segment dim/index visibility is unproved. Independently review and perform a new build-only attempt requiring build0, complete Map32/DATAStruct34/full11params/ports/hierarchy and four currents+15Vm fresh-to-own-PGB in MainOut/no overwrite. Derive indices; never patch old runs, hard-code an index, relax thresholds, call Run or infer numerical qualification from generated text."
+      ]
     }
   ],
   "scope_notes": [

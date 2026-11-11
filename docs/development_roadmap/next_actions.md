@@ -1,24 +1,19 @@
 # 恢复与下一步
 
-2026-11-12目标active。恢复先读五状态文件，核实际分支、HEAD、工作区与远端。
-checkpoint为本次记录前的4aff99c3；按实际Git历史交叉核对，不自称包含自身提交。
-开发分支codex/emt-examples-longterm常规提交/里程碑推送已授权；不改main、不强推、不覆盖用户文件。
-C1仍in_progress，正式新增9项；本轮仅构建已终态，不恢复或重复旧run。
+2026-11-12。目标active；恢复先读五状态，核分支/HEAD/工作区/实际远端。
+checkpoint为本记录前的e0d7e63，与Git历史交叉核对；开发分支常规提交/里程碑推送已授权，不改main或用户文件。
+C1仍in_progress，新增9项的本地/商业验收保持，跨OS另列F1。
 
-1. 先读[源电流只构建记录](experiments/c1_source_current_build_only_20261112.json)和[参考设计](experiments/c1_openloop_reference_design.md)。
-   真实PSCAD编译0错误，原驱动因构建阶段无INF而非零停止；独立实际审查另证DC负BA读在MainOut、其PGB仅在MainDyn，输出链未获准入。原生会话受控退出，自有进程清空。
-   本轮无Run/OUT数值，NOT_OBSERVED；新身份是三相A表与负源BA，原CUR历史不能替代同刻计量。
-2. 下一步另冻Map/实际PGB绑定、仅DC本地PGB的Fortran→Dsout调度及已观察的−(CBR...)精确模板，再做独立build-only；不得只补INF重跑或直接Run。
-   任何后续运行都须另冻执行/数值合同，不能把编译或MainOut计量准入当商业波形验收。
-   旧[理想支路结果](experiments/c1_ideal_branch_diagnostic_20261112.json)和[测量诊断](experiments/c1_dc_measurement_diagnostic_20261112.json)全部FAIL保持。
-   去表后B=S为rank1，旧A压降/秩2门不适用；不放宽原源、桥、KCL/功率/能量预算或引入接地/电阻追认失败。
-3. 合格后再冻结完整开环协议、参考细化及最小候选；实际正弦约定仍为sin(ωt+Ph)、正abc，cos-Park角ωt−π/2。
-   复用CaseDefinition链、现有12/18与controls/vsc.py，沿开环→已知角dq电流→PLL→P前馈/Vac→真实DC电容Vdc及扰动推进。
-   固定DC不认证Vdc，刚性电网端不认证Vac调节；D1planned，控制/合闸/扰动/故障范围未完成。
-4. F1旧CI43060348386在runner前因账单锁失败；外部恢复后补双OS，不轮询同终态或空提交绕锁。
+1. 先读[本轮只构建记录](experiments/c1_pgb_dsout_build_only_20261112.json)。唯一run221728850140Z已结束，exec96817 exit1，worker0正常quit、guarded完成，但编译6错误，未进入generated admission。Map31/DATAStruct33缺DC，dim/index为`<empty>`；无Run/OUT，不恢复旧会话。
+2. 另冻一个DC PGB的注册/写出分段：原Fortran只保留原`#PGB $dim`注册，Dsout保留原其余标准正文；其余31路及全部form/ports/Scale等不变。不保证跨段dim/index可见，必须先独审，再新独立build-only。
+   要求build0、Map32/DATAStruct34与actual/saved全11参数/ports/实例层级绑定、四current和15Vm同MainOut fresh→ownPGB且无覆盖；索引从实际生成推导。全部DIMENSIONS/STOF身份守卫保留，STORF物理存储与STOF观察转存分清。
+   原物理、源、门极、时钟、ideal flags、17预算及Vs/token门不变；旧A压降/秩2门为NA而非PASS。不得改旧包、手填PGB索引、放宽阈值或直接Run。
+3. 编译和结构合格后，另冻短探针执行/数值合同及分析器，才能Run；再推进完整开环参数/参考细化/最小候选。
+   复用CaseDefinition链、现有12/18与controls/vsc.py，沿开环→已知角dq电流→PLL→P前馈/Vac→真实DC电容Vdc及扰动推进。固定DC不认证Vdc，刚性电网端不认证Vac；合闸/扰动/故障与D1仍待。
+4. F1最近已查CI43060348386在runner前因账单锁失败；外部恢复后补双OS，不重复轮询同终态或空提交绕锁。
 
 113源码/依赖未改，复用前次1300含slow/锁定/Ruff/mypy39，不称本轮重新测试。
-原件、派生定义、原生文件和研究脚本留在忽略目录；结束前同步证据、提交及下一步。
+原件、原生文件和辅助脚本继续留忽略目录；结束前同步证据、Git及下一步，保持教学精简、易读。
 
 ## 本机命令
 

@@ -3,7 +3,7 @@
   "updated_date": "2026-11-12",
   "timezone": "Asia/Shanghai",
   "branch": "codex/emt-examples-longterm",
-  "checkpoint_head": "4aff99c3bd6b88b700a875132b96c47e7f589397",
+  "checkpoint_head": "e0d7e63b7756a37b53b628e1dbcdc1aa043c3845",
   "current_task": "C1",
   "formal_new_examples_completed": 9,
   "status_values": [
@@ -663,9 +663,10 @@
         "pscad-derived-three-phase-manual-probe-v5",
         "pscad-derived-dc-measurement-diagnostic-v5",
         "pscad-derived-ideal-branch-probe-v5",
-        "pscad-derived-source-current-build-v5"
+        "pscad-derived-source-current-build-v5",
+        "pscad-derived-dc-pgb-build-v5"
       ],
-      "validation": "既有11 PLL已验收；本轮新计量仅构建，未调用Run，数值NOT_OBSERVED。真实PSCAD编译0错误，原驱动因构建阶段无INF而非零停止；独立实际审查另证DC负BA读在MainOut、其PGB仅在MainDyn，输出链未获准入。原生会话受控退出，自有进程清空。 原33量DC/电流表FAIL全部保留，未扩大完整参考。113源码/依赖未改，复用同代码1300含slow基线；完整开环/控制链仍待。",
+      "validation": "既有11已验收；本轮仅构建的完整PGB移段方案编译失败（6条消息：3语法、3派生错误），Map31路缺DC。worker正常退出、运行器守卫通过，不等于构建通过；深层时序/完整映射及数值未观察，无Run/OUT。113源码与依赖未改，复用同代码1300含slow基线；完整开环和C1控制链仍待。",
       "acceptance": "局部、可独立运行验证的教学例逐项验收",
       "status": "in_progress",
       "files": [
@@ -682,7 +683,8 @@
         "docs/development_roadmap/experiments/c1_three_phase_probe_20261112.json",
         "docs/development_roadmap/experiments/c1_dc_measurement_diagnostic_20261112.json",
         "docs/development_roadmap/experiments/c1_ideal_branch_diagnostic_20261112.json",
-        "docs/development_roadmap/experiments/c1_source_current_build_only_20261112.json"
+        "docs/development_roadmap/experiments/c1_source_current_build_only_20261112.json",
+        "docs/development_roadmap/experiments/c1_pgb_dsout_build_only_20261112.json"
       ],
       "commits": [
         "b835e31785fab3fda247c333d23edbe9ce576dfa",
@@ -693,7 +695,8 @@
         "a241d1ec1636e5635166f3b434acdd67034a38c4",
         "e73c0b3b8b0e1b0f1507618d973989ad9553703f",
         "42c9c7a88acb7d3f8411f373eee366528524512d",
-        "4aff99c3bd6b88b700a875132b96c47e7f589397"
+        "4aff99c3bd6b88b700a875132b96c47e7f589397",
+        "e0d7e63b7756a37b53b628e1dbcdc1aa043c3845"
       ],
       "blockers": [],
       "reference_feasibility": {
@@ -704,7 +707,7 @@
         "evidence_sha256": "d92469cdd234477829ca5a5fa75a67648f17235fffadf3d3cbdaa73672375427",
         "native_executed": false
       },
-      "current_stage": "open_loop_source_current_build_only_output_stage_rejected",
+      "current_stage": "open_loop_dc_pgb_build_only_compile_failure",
       "interface_discovery": {
         "status": "qualified_native_satk_batch_interface",
         "simulink_model_tools_provided": false,
@@ -1028,6 +1031,22 @@
         "full_VSC_reference_ready": false,
         "new_candidate_executed": false,
         "active_native_runs": 0
+      },
+      "dc_pgb_build_only": {
+        "status": "BUILD_ONLY_PGB_REGISTRATION_COMPILE_FAILURE",
+        "record": {
+          "path": "docs/development_roadmap/experiments/c1_pgb_dsout_build_only_20261112.json",
+          "bytes": 9916,
+          "sha256": "b9b8b546f93a372d744ac7e5f3d7e5ca46c0f8e74135f0e3ae6962e4e64f7fd6",
+          "hash_scope": "Exact workspace and Git LF bytes.",
+          "git_lf_bytes": 9916,
+          "git_lf_sha256": "b9b8b546f93a372d744ac7e5f3d7e5ca46c0f8e74135f0e3ae6962e4e64f7fd6"
+        },
+        "numeric_status": "NOT_OBSERVED",
+        "native_run_requested": false,
+        "full_VSC_reference_ready": false,
+        "new_candidate_executed": false,
+        "active_native_runs": 0
       }
     },
     {
@@ -1180,7 +1199,7 @@
       "path": "local_reference/native_static_reviews/b1_resume_evidence_20261111/receipt_20261111T132350441453Z.json",
       "sha256": "73c22f1cbf7bfafaa1cc563e475bfb3293fa5e02d52386b4064e42b2a3eb32e8"
     },
-    "latest_checked_head": "4aff99c3bd6b88b700a875132b96c47e7f589397",
+    "latest_checked_head": "e0d7e63b7756a37b53b628e1dbcdc1aa043c3845",
     "latest_remote_head_verified_same": true,
     "latest_goal_turn_classification": "progress"
   },
@@ -1196,5 +1215,5 @@
       "resume_requires_explicit_user_instruction": true
     }
   ],
-  "current_stage": "open_loop_source_current_build_only_output_stage_rejected"
+  "current_stage": "open_loop_dc_pgb_build_only_compile_failure"
 }
