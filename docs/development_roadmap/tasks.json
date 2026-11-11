@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_date": "2026-11-10",
+  "updated_date": "2026-11-11",
   "timezone": "Asia/Shanghai",
   "branch": "codex/emt-examples-longterm",
   "checkpoint_head": "ae9fe3629ad9617853979b0ef58d4d8319239592",
@@ -386,7 +386,7 @@
         "mw-two-level-pwm-r2025a",
         "pscad-derived-bilateral-spwm-v5"
       ],
-      "validation": "原12和MathWorks固定2%波形FAIL保留。同数学PSCAD非保持短模型已真实运行1ms/201行/46通道，400V、1206门极值、拓扑和RL/TR经独审，只使参考runnable。此前两个sampler/单varR的20us原语资格保留。v3重载Ts_s输出左移一格，完整只读捕获定位后以单线修复；v4保存后XML守卫拒绝，v5限定保存检查通过，但v5编译报告5个Pulse悬空，未运行、无三相保持波形。新六路分段扇出小模型已实际完成5/2.5us双步长：143组件/77线/184端口/40网，27通道全部5/9行含t0/末点，六Pulse、六保持值、5共享点、4中点与同tick单varR均通过独审；最大物理残差3.91e-16原始kV/kA。资格b10ecb6e只覆盖含六个Pulse观察器的20us标量网络。完整桥选择保留旧对象、只缩短新增观察器支线的方案B，预期384/204/506/117、60通道；已冻结并独审；首次粗步在保存后回读时按用户暂停终止，未编译/仿真，不记数值FAIL。分析器修复绝对/相对路径误分类，数值函数/协议不变，旧误标报告保留。详细run/hash见证据索引。",
+      "validation": "原12及MathWorks固定2%波形FAIL保留。原非保持1ms和六路20us原语证据保留；v5五Pulse编译失败及上轮用户中断不覆盖。2026-11-11完整v6真实5/2.5us双步长完成：384组件/204线/506端口/117网，60通道全201/401行含首末点，201共享六施加门极/R相同、200中点保持、七Pulse、原69数学与3612原始门极值、生成顺序和KCL/TR均通过作者及独立四未知量网络审查。两run均build0/runtrue/完成标记true，84项各全核，清理及原件/profile/父环境检查通过。资格仅限含观察器的1ms诊断；完整0.2s及候选未验收，详细run/hash见证据索引。",
       "acceptance": "模型一致性解释、预设基波RMS/功率方向/纹波判据和真实波形比较",
       "status": "in_progress",
       "files": [
@@ -404,9 +404,15 @@
         "8a65b6e"
       ],
       "blockers": [
-        "用户已暂停长期目标。完整v6来源和60通道分析器已冻结并独审；粗步run033233257295Z在保存后回读期间按用户指令终止，未编译/仿真，清理正常。显式恢复后新建运行目录重做粗步，当前中断run不得数值分析或配对细步长。",
-        "完整1ms双步长、0.2s参考自细化和原12新商业比较仍未验收；原MathWorks2% FAIL保留。"
-      ]
+        "完整0.2s的范围、时钟/常量边界准入、比较窗/指标/预算及来源绑定须在新波形前另冻；1ms不能认证全时长。",
+        "原12的新商业比较及正式B1交付仍待；原MathWorks2% FAIL、150A尺度/.02/10A/5%/3°保持。"
+      ],
+      "last_diagnostic": {
+        "status": "qualified_bounded_1ms_only",
+        "record": "local_reference/two_level_pwm/matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/held_bridge_qualification/20261111T014703278697Z/qualification.json",
+        "sha256": "8be490f84a5d75acada52c46e84b0d5f4d6e5bdcd4345360340309f696201475",
+        "formal_B1_completed": false
+      }
     },
     {
       "id": "B2",
@@ -476,12 +482,20 @@
         "small measured naming/timing fixes only if proven"
       ],
       "references": [],
-      "validation": "开环到PLL/dq/PQ/Vdc逐层探针和商业对标",
+      "validation": "开环到PLL/dq/PQ/Vdc逐层探针和商业对标；现成PLL与11的归一化/相位/更新次序不同，标准算术块+显式状态延迟的派生参考只读可行性已调查，未建立或运行商业参考。",
       "acceptance": "局部、可独立运行验证的教学例逐项验收",
       "status": "planned",
       "files": [],
       "commits": [],
-      "blockers": []
+      "blockers": [],
+      "reference_feasibility": {
+        "status": "read_only_feasibility_only",
+        "record": "local_reference/c1_pll_reference_research/20261111T013530229954Z/feasibility.md",
+        "record_sha256": "fc38067eda4c14f44de69838a0392ae3db8e8caac2a3bd3ae78b9cd694eef405",
+        "evidence": "local_reference/c1_pll_reference_research/20261111T013530229954Z/evidence.json",
+        "evidence_sha256": "d92469cdd234477829ca5a5fa75a67648f17235fffadf3d3cbdaa73672375427",
+        "native_executed": false
+      }
     },
     {
       "id": "D0",
@@ -605,5 +619,14 @@
     "owned_processes_remaining": 0,
     "resume_requires_explicit_user_instruction": true
   },
-  "goal_status": "paused"
+  "goal_status": "active",
+  "resume_checkpoint": {
+    "resumed_utc": "2026-11-11T01:23:51.423834+00:00",
+    "authorization": "explicit_user_goal_active_and_continue",
+    "checked_head": "0796f7422b365eafa551effdc926c07cfb711f67",
+    "remote_head_verified_same": true,
+    "frozen_source_and_analyzer_unchanged": true,
+    "old_interrupted_run_not_consumed": true,
+    "latest_bounded_1ms_qualification": "local_reference/two_level_pwm/matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/held_bridge_qualification/20261111T014703278697Z/qualification.json"
+  }
 }

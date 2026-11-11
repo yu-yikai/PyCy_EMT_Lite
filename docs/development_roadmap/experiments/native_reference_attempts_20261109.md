@@ -1,6 +1,8 @@
-# 2026-11-09：商业参考的实际运行与恢复入口
+# 商业参考的实际运行与恢复入口（2026-11-09起）
 
 本记录区分真实参考、自检、候选比较与建模失败。正式新增19–27共9项；27已独立验收提交ae9fe362，A3completed，当前B1。26的9269350交付和旧失败均保留历史。所有第三方模型、原始波形及运行脚本留在忽略的`local_reference/`。短探针没有替代正式验收。
+
+当前更新至2026-11-11：B1完整1ms保持桥双步长诊断通过；完整0.2s协议/参考/候选仍待，详见文末。
 
 ## B2：参考、候选数值与正式交付通过
 
@@ -420,3 +422,57 @@ worker1，372.6662254 s，末阶段 `builder_after_save_ports_off_c_l`；native_
 `D/paused_runs/20261110T033233257295Z/pause.json` SHA `7a0565c5ae8d157d32ce4ab36c4543c252802fb3c496284882c9c329661f66ff`。
 这是用户中断，不是数值FAIL/PASS；无粗步分析、细步启动或完整0.2s结果。等待明确恢复后新建run目录重新粗步。
 六路20us资格已在2f3846c正常推送；正式新增9及功能checkpoint ae9fe36不变。所有自有原生进程均已结束，无后台继续。
+
+
+## 2026-11-11：完整保持桥1 ms双步长诊断通过
+
+用户明确恢复后重新核同分支/HEAD/真实远端0796f74、冻结来源/分析器/旧资格，
+无PSCAD/compiler进程且资源满足守卫。旧033233暂停run没有被分析或配对。
+原v6方案B、837a协议与fda6分析器不变，分别保留384组件/204线/506端口/117网/588保存对象。
+
+| 实际run | 步长/全部行 | 生命周期 | manifest / terminal SHA256 |
+|---|---|---|---|
+| D/n/20261111T012359520751Z | 5µs / 201 | 250.3283437s、worker0 | 1e3079dc29d7f3a213fdcf14b1860dfc3fe25cefa46817f3049eac72684afdd0 / 6a8b48f8b96ae83c5c70a5519111c3a7983561f9598b4060c585369f6bccf40e |
+| D/n/20261111T013727404980Z | 2.5µs / 401 | 305.6036259s、worker0 | 5eea30c7151ea6fddf5c17f6cb2340ca6f64694e035ed430730d909e490206b3 / 2af78bb9e582533f2c3542e746c7661b7350bacfc1de136549e1fafdb7fc8dda |
+
+两者分别84归档SHA/size全核，terminal与worker均build_errors0/run_returnedtrue/完成标记true；
+owned、monitor/cleanup错误为空，原件/profile/父环境/依赖未变。保存前后完整XML和原320组件/163线按旧限定守卫核对，
+保存图、整数14端点BFS、生成顺序均通过；不推断通用接线规则。
+
+作者配对 `D/held_bridge_analysis/20261110T032215391716Z_six_observers_v6/results/20261111T014327781041Z`：
+summary `525ef21e04051ab9b53df6127fa2aafdedde23236a25117b9f3e0b3681628fb6`，
+29项manifest `9e0d6eccdb259dc9fe3e1c0db1e0ee1c56ae0c63bc1cbb1c795c2457d8547184`，DIAGNOSTIC_PASS。
+60通道全201/401行含t0/末点；201共享六施加门极/R相同、200中点保持及七整数Pulse观察器均通过。
+3612原始门极值符合原69数学在原生TIME处的公式，R严格.001/1e9Ω，源400V。
+两者均保留phaseA50µs近等号行，margin2.220446049250313e-16、原式/native gate1；
+细步88个ASCII观察量半格舍入诊断保留，这些观察量没有驱动控制。t0粗I=0，细I约6.303e-29A，
+均在旧1e-12A预算内；pole/neutral约3.999999999996e-10V，没有归零或删点。
+
+独审根 `local_reference/native_static_reviews/b1_full60_actual_20261111`：
+粗/细report `bca3e636…` / `69879da8…`；pair `pair_20261111T013727404980Z/report.json`
+`5574049047936e6ddd21f1753142b82621d85c515dde47423edc48d98cec0ea3`，manifest `09bb78a5…`。
+独立四未知量节点TR解覆盖全部行，细步最大电流差5.671e-12A、neutral差4.302e-11V、KCL5.003e-12A、RL/TR3.459e-9V，
+均在冻结837a预算内。全部384组件（除新随机ID）参数/端口/位置及204导线路径两run一致，仅项目h/sample5→2.5µs。
+独立全窗PWL电流max A/B/C为0.332501249/0.207000924/0.291821831A，RMS0.200099312/0.123277339/0.135738858A；
+仅描述真实电气细化差，不新增验收门槛、不移相。root及作者已查看配对图 `ea337827…`。
+
+独审v1先因小模型snapshot文件名假设拒绝，v2再因公共枚举表示假设拒绝，均在读raw前；
+v3 `ea129011…`仅精确检查实际13个输入快照和requested1/2、encoded字符串1/2、公共INTEGER/REAL及端口类型，
+旧脚本/拒绝事实保留，物理函数、协议、预算与原生数据不变。
+范围资格 `D/held_bridge_qualification/20261111T014703278697Z/qualification.json`
+`8be490f84a5d75acada52c46e84b0d5f4d6e5bdcd4345360340309f696201475`；manifest `b1105dd8…`，
+绑定源27、分析器18、两run各84、作者29、独审及全部33pair输入。完整hash集中于reference_catalog的B1项。
+该资格严格限含观察器的1ms，full0p2s/candidate/formalB1均false；原12和MathWorks2% FAIL保留。
+
+完整输出前另有66行精确有理数数学推导：`D/electrical_refinement_estimate/20261111T013605399749Z`，
+report `fa3f9dce…`，独审 `local_reference/native_static_reviews/b1_electrical_bound_20261111T014114157641Z/receipt.json` 为 `9e11b5fe…`。
+same5µs保持输入、零初值及指定TR端点更新下，共享界0.664171454A、PWL全时/任意窗RMS界0.665002498A；
+这只是reducedTR数学，不证明EMTDC实现、2ps时钟或libm。结合旧68边界的估计仍有条件，没有冻结新预算。
+下一步按next_actions先另冻完整0.2s范围/准入/指标/预算，再运行真实参考；不继承旧未冻结1A/.3A提案。
+
+C1只读可行性 `local_reference/c1_pll_reference_research/20261111T013530229954Z/feasibility.md`
+`fc38067eda4c14f44de69838a0392ae3db8e8caac2a3bd3ae78b9cd694eef405`，evidence.json
+`d92469cdd234477829ca5a5fa75a67648f17235fffadf3d3cbdaa73672375427`。
+现成PSCAD master:tvekta和R2022b SPS PLL与11非同数学；独立标准块/UnitDelay方案尚未建立或执行，C1仍planned。
+本轮109个Python源文件仍与1244全量前集合/hash一致，未改核心/依赖/教学入口，未重复全量测试。
+所有本轮native和分析均终态，无自有原生进程待恢复；CI同账单锁终态不重复轮询。

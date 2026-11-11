@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "assessed_on": "2026-11-09",
+  "assessed_on": "2026-11-11",
   "repository_baseline": "a03a450340797771099fceb5ec77137bc7f681c2",
   "state_semantics": {
     "discovered": "source only",
@@ -2332,8 +2332,8 @@
       },
       "mathematical_compatibility": "Short probe uses raw native TIME and standard math/comparators, six bilateral varrlc pure-R branches, floating1ohm+1mH phase loads and400V ideal source. All1206 observed gate values match the default12 formula evaluated at retained raw native TIME, all six R inputs are0.001/1e9ohm, and zero initial current/KCL/TR relations were checked. Generated12-significant-digit phase/omega literals and ASCII timing precision remain explicit boundaries; this is not full-run bitwise controller equivalence.",
       "blockers": [
-        "User explicitly paused goal; do not resume automatically. Fullv6 source/analyzer static review passed but its first coarse1ms attempt was user-interrupted after save readback,beforebuild/run. New coarse run required after explicitresume; interruptedrun must not be analyzed or paired.",
-        "Full1ms heldbridge pair,full0.2s reference qualification/protocol and candidate comparison remain pending; originalMathWorks2%FAIL unchanged."
+        "完整0.2s的范围、时钟/常量边界准入、比较窗/指标/预算及来源绑定须在新波形前另冻；1ms不能认证全时长。",
+        "原12的新商业比较及正式B1交付仍待；原MathWorks2% FAIL、150A尺度/.02/10A/5%/3°保持。"
       ],
       "sha256": {
         "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/report.md": "2ef092f9ad188cd2b63155ddbf9623317631f2a6ce98935e77cf34c0212d5906",
@@ -2413,7 +2413,31 @@
         "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/n/20261110T033233257295Z/terminal.json": "ed7aad3a8459743114067d174618959bb84b04bd297886e5471ac32e5f0678e8",
         "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/paused_runs/20261110T033233257295Z/pause.json": "7a0565c5ae8d157d32ce4ab36c4543c252802fb3c496284882c9c329661f66ff",
         "../native_static_reviews/b1_full_v6_20261110T033000Z/report.json": "8c1e1aff55cfe9769e57334c82a6d2181f48625dcd3f75e14f78bf324f8f15e4",
-        "../native_static_reviews/b1_full60_analyzer_20261110T033500Z/report.json": "24c3d44a2054e9a7d0fc07284bcb753dc17338964bdca08c68488fc7729288b5"
+        "../native_static_reviews/b1_full60_analyzer_20261110T033500Z/report.json": "24c3d44a2054e9a7d0fc07284bcb753dc17338964bdca08c68488fc7729288b5",
+        "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/held_bridge_qualification/20261111T014703278697Z/qualification.json": "8be490f84a5d75acada52c46e84b0d5f4d6e5bdcd4345360340309f696201475",
+        "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/held_bridge_qualification/20261111T014703278697Z/manifest.json": "b1105dd8e1541c9aa1675818557ee50c1b078252cb6427321475397e85b85e21",
+        "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/n/20261111T012359520751Z/manifest.json": "1e3079dc29d7f3a213fdcf14b1860dfc3fe25cefa46817f3049eac72684afdd0",
+        "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/n/20261111T012359520751Z/terminal.json": "6a8b48f8b96ae83c5c70a5519111c3a7983561f9598b4060c585369f6bccf40e",
+        "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/n/20261111T013727404980Z/manifest.json": "5eea30c7151ea6fddf5c17f6cb2340ca6f64694e035ed430730d909e490206b3",
+        "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/n/20261111T013727404980Z/terminal.json": "2af78bb9e582533f2c3542e746c7661b7350bacfc1de136549e1fafdb7fc8dda",
+        "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/held_bridge_analysis/20261110T032215391716Z_six_observers_v6/results/20261111T014327781041Z/manifest.json": "9e0d6eccdb259dc9fe3e1c0db1e0ee1c56ae0c63bc1cbb1c795c2457d8547184",
+        "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/held_bridge_analysis/20261110T032215391716Z_six_observers_v6/results/20261111T014327781041Z/summary.json": "525ef21e04051ab9b53df6127fa2aafdedde23236a25117b9f3e0b3681628fb6",
+        "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/held_bridge_analysis/20261110T032215391716Z_six_observers_v6/results/20261111T012937225997Z/manifest.json": "4c3a18bbfe903be8941893685efcd3f2fcaddf8befd07616c58926b7afda1378",
+        "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/held_bridge_analysis/20261110T032215391716Z_six_observers_v6/results/20261111T012937225997Z/summary.json": "d2757f40e01fc589fe18b74f58cbf4d392f993b6166a3bc310900b4097cc2cc1",
+        "../native_static_reviews/b1_full60_actual_20261111/coarse_20261111T012359520751Z/report.json": "bca3e6360328137086a7bb21b53b59bd7dd93734e5e63cb9ee3916144cc1020a",
+        "../native_static_reviews/b1_full60_actual_20261111/coarse_20261111T012359520751Z/manifest.json": "e13c56ba0bf5b2daa77ece1731f2470b34a60c23de3cd93cc4d4ba3d48fbf79c",
+        "../native_static_reviews/b1_full60_actual_20261111/fine_20261111T013727404980Z/report.json": "69879da801345dbaf2d6e3def4754f81e880d02c63dcdb593f3ed51fef134d27",
+        "../native_static_reviews/b1_full60_actual_20261111/fine_20261111T013727404980Z/manifest.json": "1e888565281102195a4b14373060b0d1fb748859dca5514b546b77e66c92e1c8",
+        "../native_static_reviews/b1_full60_actual_20261111/pair_20261111T013727404980Z/report.json": "5574049047936e6ddd21f1753142b82621d85c515dde47423edc48d98cec0ea3",
+        "../native_static_reviews/b1_full60_actual_20261111/pair_20261111T013727404980Z/manifest.json": "09bb78a587968fbeb35cd98839f61bb1dfca4a6b827fd67c1a732de6950e9f2d",
+        "../native_static_reviews/b1_full60_actual_20261111/audit_v3.py": "ea129011637fee891cd24ac6174549cb1eac1dcee0b64fd8208802df5867be2c",
+        "../native_static_reviews/b1_full60_actual_20261111/pair.py": "1599c09a1272bd75172b5a7b508043bf75b2bfca9bde7afe7599da63269b1ada",
+        "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/electrical_refinement_estimate/20261111T013605399749Z/estimate.py": "2da9f1164f60c419a705bd38f11789f068caa7657424006be71a146f79132e52",
+        "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/electrical_refinement_estimate/20261111T013605399749Z/report.json": "fa3f9dcea3ffc79c3be133461befbefb632155b1787c077adfeca2e969b43b2b",
+        "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/electrical_refinement_estimate/20261111T013605399749Z/recommendation.md": "75bcd8a05fd713658008906382710f3ae0519a772777c3d17c444f930f8efcc9",
+        "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/electrical_refinement_estimate/20261111T013605399749Z/manifest.json": "6c7b5b33779c4de598ddf6876990a03d13787ef15a3cf6acede26f0c2d4a28b5",
+        "../native_static_reviews/b1_electrical_bound_20261111T014114157641Z/receipt.json": "9e11b5fedf9bcd3a54d25089bfe6104212b7f413643019ca57382dc8a8c5472e",
+        "../native_static_reviews/b1_full_v6_resume_20261111/20261111T012247655863Z/report.json": "c1ee6d4f195737787802e854f21dd2afb397158ea945f7cebd7e392cc8ffbfb1"
       },
       "license_notes": "Installed library excerpts, donor original, scripts and raw evidence remain ignored locally; redistribution permission not asserted.",
       "original_static_builder_preparation": {
@@ -2463,7 +2487,7 @@
         "terminal_sha256": "dacff8ff0d60c08efac859db5cc14c60d8e75755f8636867f86176e1ce5b72ec",
         "deliberate_stop_before_all_wires_save_build_run": true
       },
-      "reference_ready_scope": "Original nonheld 1ms/201row/46channel native reference is runnable. A separate exact observer-bearing six-scalar sampler network has qualified20us5/2.5us runs,27channels5/9rows. No six-complementary-gate fullbridge or0.2s/candidate qualification.",
+      "reference_ready_scope": "Original nonheld1ms reference is runnable; exact observer-bearing held fullbridge qualified for frozen1ms5/2.5us diagnostic only,60channels201/401rows. Full0.2s reference and candidate comparison remain unqualified.",
       "previous_prebuild_probe": {
         "record": "docs/development_roadmap/experiments/native_reference_attempts_20261109.md",
         "latest_run": "local_reference/two_level_pwm/matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/n/20261109T091917405572Z",
@@ -2600,7 +2624,7 @@
         "metadata_correction": "Old5c457 incorrectly listed all19 absolute-pinned source files as cache. Newbb3f resolves path identities; all numerical functions/protocol and coarse artifacts unchanged; old result preserved."
       },
       "held_bridge_next_geometry": {
-        "status": "frozen_source_independently_reviewed_native_attempt_user_interrupted",
+        "status": "actual_1ms_pair_diagnostic_qualified_only",
         "option": "B",
         "record": "local_reference/two_level_pwm/matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/junction_followup_plan/20261110T025800908018Z/selection_addendum.json",
         "sha256": "f41e5d8c9698c0c7b747f0fa4797cb4687105ddac32abd2c7a32d3451a6d051d",
@@ -2612,7 +2636,7 @@
           "channels": 60,
           "objects": 588
         },
-        "delta": "Preserve old objects/PGB. Six new Pulse observers atx300,seven newPGB atx400;globalobserver at310,340;six-segment trunk. Requires new fullsource/offline/native checks."
+        "delta": "Preserve old objects/PGB; six new Pulse observers atx300,seven newPGB atx400;globalobserver310,340;six-segment trunk. Exact geometry verified in both actual1ms runs; no general native wire-law claim."
       },
       "held_bridge_v6_attempt": {
         "run": "20261110T033233257295Z",
@@ -2628,7 +2652,41 @@
         "source_profile_parent_environment_unchanged": true,
         "analyzed": false,
         "pause_record": "local_reference/two_level_pwm/matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/paused_runs/20261110T033233257295Z/pause.json",
-        "pause_record_sha256": "7a0565c5ae8d157d32ce4ab36c4543c252802fb3c496284882c9c329661f66ff"
+        "pause_record_sha256": "7a0565c5ae8d157d32ce4ab36c4543c252802fb3c496284882c9c329661f66ff",
+        "historical_pause_only": true
+      },
+      "held_bridge_v6_1ms": {
+        "status": "qualified_bounded_native_1ms_diagnostic_only",
+        "coarse_run": "20261111T012359520751Z",
+        "fine_run": "20261111T013727404980Z",
+        "duration_s": 0.001,
+        "native_steps_s": [
+          5e-06,
+          2.5e-06
+        ],
+        "rows": [
+          201,
+          401
+        ],
+        "channels": 60,
+        "shared_exact_applied_inputs": 201,
+        "midpoint_holds": 200,
+        "qualification": "local_reference/two_level_pwm/matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/held_bridge_qualification/20261111T014703278697Z/qualification.json",
+        "qualification_sha256": "8be490f84a5d75acada52c46e84b0d5f4d6e5bdcd4345360340309f696201475",
+        "independent_pair": "local_reference/native_static_reviews/b1_full60_actual_20261111/pair_20261111T013727404980Z/report.json",
+        "independent_pair_sha256": "5574049047936e6ddd21f1753142b82621d85c515dde47423edc48d98cec0ea3",
+        "all_native_TIME_t0_stop_retained": true,
+        "original_MathWorks_FAIL_unchanged": true,
+        "full0p2s_or_candidate_certified": false
+      },
+      "prospective_electrical_bound": {
+        "status": "mathematical_estimate_only_no_protocol_threshold_adopted",
+        "same_held_input_shared_bound_A": 0.6641714533832571,
+        "same_held_input_PWL_bound_A": 0.6650024979143029,
+        "native_or_candidate_executed": false,
+        "clock_or_EMTDC_implementation_proved": false,
+        "record": "local_reference/two_level_pwm/matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/electrical_refinement_estimate/20261111T013605399749Z/report.json",
+        "independent_review": "local_reference/native_static_reviews/b1_electrical_bound_20261111T014114157641Z/receipt.json"
       }
     }
   ],

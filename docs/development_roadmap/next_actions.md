@@ -1,78 +1,60 @@
 # 恢复与下一步
 
-2026-11-10（Asia/Shanghai）。长期目标paused（用户主动暂停），分支`codex/emt-examples-longterm`。
-先读tasks/progress/decisions/validation_status，并核实际分支、HEAD、工作区和远端。
-任务检查点为最新功能验收`ae9fe3629ad9617853979b0ef58d4d8319239592`；已正常push且真实远端核同。
-后续文档提交在其后，以实际Git历史交叉核对，不把checkpoint当成实时HEAD。
+2026-11-11（Asia/Shanghai）。长期目标active，分支 `codex/emt-examples-longterm`。
+先读tasks/progress/decisions/validation_status，并核实际分支、HEAD、工作区和真实远端。
+功能验收checkpoint为 `ae9fe3629ad9617853979b0ef58d4d8319239592`，已正常push；
+本轮恢复核同HEAD/远端0796f74，后续文档提交以实际Git历史核对，不把checkpoint当实时HEAD。
 不操作main、不强推、不覆盖未提交文件；开发分支常规提交及里程碑推送已获授权。
-
-## 暂停现场
-
-用户已明确暂停，不自动恢复任务。已推送里程碑 `2f3846c`（六路20 µs资格），正式验收checkpoint仍为 `ae9fe36`。
-完整v6来源：`D/held_bridge_research/20261110T031601744130Z_six_observers_v6`，27文件manifest `ff8a2dd3…`；
-分析器：`D/held_bridge_analysis/20261110T032215391716Z_six_observers_v6/analyze.py`，`fda6e359…`，18文件manifest `ae1e1db2…`。
-协议 `837a0b76…` 在新波形前冻结，旧物理预算不变；来源和分析器独审均通过。
-首次粗步 `D/n/20261110T033233257295Z` 在保存后回读时按暂停指令终止；未build/run，无数值结果。
-372.6662254 s、worker1、owned空，原件/profile/父环境未变。52文件归档已核。
-暂停注记在 `D/paused_runs/20261110T033233257295Z/pause.json`，放在run外，不改原terminal/manifest。
-显式恢复后先核分支/状态/冻结来源，再在新目录运行粗步；本次中断run不得分析或启动细步。现无后台原生进程。
 
 ## 当前事实
 
-正式新增19–27共9项完成，02补参考另计，当前任务B1。26提交`9269350`、27提交`ae9fe36`均已验收。
-核心包、pyproject.toml和uv.lock相对起点main没有变化；教学入口继续复用现有元件和统一建例流程。
-27只有8个元件：源、源阻、两半线、三只线路电阻和负载；先看参数/接线，再看波前、反射和直流极限。
+正式新增19–27共9项完成，当前B1。27真实PSCAD参考/候选/物理测试和独审已验收。
+最新完整实测为1244 passed469.79s（含slow），锁定27包/Ruff/mypy39通过；
+本轮109个Python源文件与该全量前hash核同，未重复全量。
+核心、依赖和教学入口未改；继续复用既有元件及统一建例流程，参数、接线、观察顺序应直观。
 
-27真实PSCAD参考1/0.5 µs先过16项自细化，`44d1436`先冻结协议再创建候选。
-四量双完整窗八项比较、8项独立物理测试、Agg独立6001点和两路原始数据审查均通过。
-完整1244 passed469.79s（XML469.778，含slow），零失败/错误/跳过；109个Python文件集合/hash与运行前一致。
-锁定27包、Ruff全范围和mypy39通过；证据`.tmp/longterm/a3-27-full-20261109T1207.*`。
-所有本轮native、仿真、测试和CI观察已终态，不恢复旧worker或无故重跑已合格参考/回归。
+D为[证据索引](experiments/native_reference_attempts_20261109.md)中的B1研究根。
+完整v6源 `D/held_bridge_research/20261110T031601744130Z_six_observers_v6`，27文件manifest `ff8a2dd3…`；
+分析器 `D/held_bridge_analysis/20261110T032215391716Z_six_observers_v6/analyze.py` 为 `fda6e359…`。
+冻结协议 `837a0b76…` 的真实1ms5/2.5µs双步长现已完成，**不要重跑合格诊断代替下一阶段**：
 
-B1 非保持同数学短模型真实运行 1 ms/201 行/46 通道，当前参考仍为 `runnable`。
-此前两个 sampler 原语与新增六路分段扇出 20 µs 双步长均已独审通过；后者保留全部 27 通道 5/9 行，
-证实六 Pulse、六保持值、五共享点、四中点和同 tick 单 varR，资格 `b10ecb6e…`。
-该资格包括六个 Pulse 观察器，不能直接转移到移除/改线后的网络或六路互补完整桥。
-v5 保存检查通过但编译五处 Pulse 悬空，无三相保持波形；所有已启动 run 均终态且自有进程清空。
-完整桥方案 B 来源和分析器已冻结、独审通过；首次粗步因用户暂停中断。实际 1 ms 双步长及完整 0.2 s 仍未验收。
-原12及MathWorks2%波形FAIL保持，不以新短探针覆盖原失败。
-全部run、脚本身份与完整hash集中在[本轮证据索引](experiments/native_reference_attempts_20261109.md)。
+- 粗/细 `D/n/20261111T012359520751Z` / `D/n/20261111T013727404980Z`，84项归档各全核；
+  manifest `1e3079dc…` / `5eea30c7…`，两者build0/runtrue/完成标记true，清理和环境守卫通过。
+- 384组件/204线/506端口/117网，60通道全201/401行，201共享门极/R相同、200中点保持；
+  七Pulse、原69数学/3612门极值、t0/末点/近边界、生成顺序及KCL/TR独审通过。
+- 配对结果 `D/held_bridge_analysis/20261110T032215391716Z_six_observers_v6/results/20261111T014327781041Z`，
+  summary `525ef21e…`，29项manifest `9e0d6ecc…`，图已查看。
+- 独审 `local_reference/native_static_reviews/b1_full60_actual_20261111/pair_20261111T013727404980Z/report.json` 为 `55740490…`；
+  范围资格 `D/held_bridge_qualification/20261111T014703278697Z/qualification.json` 为 `8be490f8…`。
 
-## 明确恢复后的执行顺序
+资格仅限含观察器的1ms网络，不是完整B1验收。原12、MathWorks2% FAIL及历史v5五Pulse编译失败保留。
+上轮暂停run `D/n/20261110T033233257295Z` 未编译/运行，不能分析或配对；暂停注记保留于run外。
+所有本轮native和分析已终态，无自有原生进程待恢复。
 
-1. **B1 先补完整桥 1 ms 双步长。** 见[同数学参考设计](experiments/spwm_matched_reference_design.md)和[本轮证据索引](experiments/native_reference_attempts_20261109.md)。
-   D 为索引中的 B1 研究根。已合格六路小模型源为 `D/junction_micro_research/20261110T023500Z_endpoint_segments`，
-   19 文件 manifest `754fe2a3…`，预先冻结协议 `0c255ecf…`，不能重跑已合格小模型代替完整桥。
-   实际粗/细 run 为 `025013355273Z` / `030456070288Z`，均完整 20 µs，48 文件各全核。
-   修正分析器 `D/junction_micro_analysis/20261110T030215964117Z_cache_paths_v2/analyze.py` 为 `bb3f485c…`；
-   pair 结果 `results/20261110T030650934205Z`；独审资格在 `local_reference/native_static_reviews/b1_junction_actual_20261110T025715280858Z/pair_final/report.json`。
-   原分析器将 19 个绝对路径源文件误列缓存，另版仅修文件身份比较，原结果和数值预算保留。
-   完整方案 B 已选择：原旧对象/PGB 不动，新增六个 Integer→Real Pulse 观察器中心 x300，入口 x298；
-   新增七个 PGB x400，全局整数时钟观察器保持 (310,340)。直接复制小模型 x320 会碰到旧 PGB，不能采用。
-   将干线分成六段、保留六个分支和六个观察器；预计 384 组件/204 线/506 端口/117 网/60 通道/588 XML 对象。
-   方案与选择补记位于 `D/junction_followup_plan/20261110T025800908018Z`，补记 hash `f41e5d8c…`。
-   新完整源须绑定真实双步长资格/输入，不以 passed 布尔代替；沿用 v5 精确保存检查及旧对象属性守卫。
-   原 69 数学块、31 电气对象、旧导线/46 通道不改，只保留原定 12 标签 Name 改接与 Ts_s 单线修复。
-   先冻新来源、几何/60 通道补充与分析绑定，独审后由 root 顺序跑 5/2.5 µs，保留全部 201/401 行及首末点。
-   核六 Pulse/整数时钟、互补门极/有效 R、共享点/中间保持、生成顺序、KCL/TR 和独立电气解；原物理预算不变。
-   清理后以编译错误 0、run 返回、完成标记三项决定成功；分析入口先拒绝失败输入再读波形。
-   v3/v4/v5 细步长均不得启动。继续 copy 后 load 原 `00c3…` 工程，不重试旧跨目录 save_as 挂起路径。
-   端点分段是本网络实测有效构造，不据一次失败推断 PSCAD 的通用“只允许端点”规则。
-2. **B1通过短探针后再冻完整协议。** 先固定0.2 s、控制周期与细化方式、初值、有效R、源单位、
-   TR历史、比较窗和误差预算，再准备参考自细化及商业候选；C1仍后置。
-   DSD/DSO支路电流日志次序只作单独诊断，不能给候选比较移相。
-   保持3 GiB启动/2 GiB动态余量、RPC20 s/build180 s/run120 s/总420 s及原件/profile/父环境守卫。
-   不引入自动二极管、非线性、复杂机器、稀疏或加速框架。
-3. **A3和B2保持已验收范围。** 27只覆盖冻结常参数集总损耗Bergeron，不推广为宽带电缆；
-   STANDARD/无快照、零可观测前史与因果到达不等于直接导出隐藏缓冲。
-   26只覆盖冻结同步控制/负荷事件及二极管不活动域；原100/50 ns参考FAIL保留。
-   不为换参或凑数量复制SPWM/RLC算例。新候选须有独立教学价值和真实相容参考。
-4. **F1等待外部账单锁解除。** 精确验收ae9fe36的
-   [CI42616684547](https://github.com/yu-yikai/PyCy_EMT_Lite/actions/runs/42616684547)
-   已实查终态failure；Ubuntu129158174490/Windows129158174768均runner0/steps空，两注释确认billing lock。
-   [ci_ae9fe36.json](experiments/ci_ae9fe36.json)及7份raw/hash已核，未执行测试/test_count=null。
-   不轮询同终态、不制造空提交或修改代码绕过；外部账户恢复后再补验精确里程碑双OS全部步骤。
-   旧90b2fcd只覆盖22，23–27跨OS仍未验证。
+## 执行顺序
+
+1. **先冻结B1完整0.2s协议，再产生新完整波形。** 新建独立来源/分析包，不改旧837a/源/结果。
+   固定0.2s、5µs施加门极保持、5/2.5µs电气步长、400V/六R/浮星RL/初值/TR历史、
+   全部首末点和近边界、原生TIME/序列/生成顺序、窗/指标/误差预算及所有hash绑定。
+   纯电气细化须共享施加门极/R完全相同；若选时钟与电气联合细化，须预先明确常量/时钟/保持边界准入，
+   保留全部差异并把准入外差异判失败。不得量化TIME、回放候选门极、移相或事后放宽阈值。
+   数学界0.66418A共享/0.66501A PWL仅为sameinput reducedTR推导；旧2ps/libm组合估计没有实现证明，
+   不当作商业资格。旧十分之一1A/.3A仅为未冻结提案，不继承为硬门槛；完整预算须在完整输出前选择并独审。
+2. **真实完整参考自细化合格后，再比较原12。** 保持稳态窗0.1–0.2s、150A尺度、NRMSE.02、max10A、
+   RMS/基波/负荷功率5%和相位3°；不另加用户未要求的候选逐位门极相同门槛。
+   优先复用现有metrics/plot/current_features/compare_features，新增验证入口保持短小，不建通用框架。
+   日志DSD/DSO支路电流顺序只作有名诊断，不能移相商业比较数据。新候选/协议按既有流程先冻结提交再执行。
+   native保持3GiB启动/2GiB动态、RPC20s/build180s/run120s/总420s及原件/profile/父环境守卫。
+3. **C1仍后置，先从既有11 PLL补参考。** 可行性见
+   `local_reference/c1_pll_reference_research/20261111T013530229954Z/feasibility.md`；未建立或运行模型。
+   现成PLL的归一化/相位/次序不同，不能直接套相同增益宣称同数学。
+   未来独立标准算术块+显式状态延迟参考先审t0/100/200µs，特别核正弦输入下角度约定、q归一化、
+   PI积分先更新、旧omega推进角度与首点不反馈；实际编辑前读building-simulink-models技能。
+   不新增同题教学编号/控制类，不引入自动二极管、非线性、复杂机器、稀疏或加速框架。
+4. **保留已验收边界。** 27仅常参数集总损耗Bergeron，不推广为宽带电缆或隐藏延迟缓冲直接观测；
+   26仅冻结同步控制/负荷事件及二极管不活动域，旧100/50ns参考FAIL保留。
+   F1等待外部billing lock解除后补验精确里程碑双OS；[CI42616684547](https://github.com/yu-yikai/PyCy_EMT_Lite/actions/runs/42616684547)
+   已终态且未执行测试，不重复轮询或制造空提交。23–27跨OS仍未验证，旧90b2fcd只覆盖22。
 
 ## 本机命令
 
