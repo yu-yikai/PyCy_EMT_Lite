@@ -1,25 +1,22 @@
 # 恢复与下一步
 
-2026-11-11目标active。先读五状态文件，交叉核分支/实际HEAD/工作区/真实远端；checkpoint为最近记录提交b835e317。
-在codex/emt-examples-longterm工作，不修改main、不强推、不覆盖用户未提交文件；常规提交与里程碑推送已授权。
-当前C1为in_progress，三点启动资格通过；完整1s PLL仍未验证。19–27正式新增9，B1既有12已完成。
-本轮原生与分析都已终态，无已知运行待恢复；不要重新运行已通过的三点探针或1267全量代替审查。
+2026-11-12目标active。先读五状态文件，交叉核分支/实际HEAD/工作区/真实远端；checkpoint为最近记录提交8048ce469。
+在codex/emt-examples-longterm工作；常规提交/里程碑推送已授权，不改main、不强推、不覆盖用户文件。
+当前C1为in_progress：既有11完整1s参考资格已通过，候选比较尚未执行。新增19–27共9项，B1已完成。
+本轮原生和分析均已终态；不重跑已通过的参考、分析器或1267全量代替复核。
 
-1. 复核启动证据：run为local_reference/c1_pll_reference_research/20261111T151000Z_pll_startup_v5/runs/20261111T1513366278040Z，
-   semantic_analysis/20261111T1515333170669Z/report.json为141项PASS；完整SHA及独审见tasks.json与原生记录。
-2. 完整1s协议已固定于validation/cases/pll_dynamic_response的manifest/reference_protocol/acceptance_plan，并随本检查点提交。
-   原完整草案作为历史保留。先冻结并独审各schedule源、独立分析器及有限合成拒绝样例，再顺序执行100/50µs solver原生参考；参考资格通过后才运行候选。
-   固定初值/方向/全窗和阈值，保留t0误差；共同初角锚定unwrap后按真实100µs更新行做PWL，不拟合或移时。
-   每行硬核旧omega推进角度、新xi参与PI、状态链和abs(oldomega*Delta)<pi；不能仅靠较宽轨迹误差限。
-   原worker/config的FixedStep写为control_step，50µs secondary须先独立定义solver_step并实际回读，控制仍100µs。
-   secondary只核同一离散任务的调度/输出不变性；无真实中点记录便不称实测保持或控制步长细化。
-3. 完成PLL后依次推进开环并网VSC、已知角度dq电流、合格PLL、P前馈/Vac和带真实DC电容的Vdc链。
-   复用现有控制器：P前馈给id_ref、Vac外环给iq_ref；不改称P/Q双PI，不用固定理想直流源证明Vdc动态。
-4. 保持精简可读、初学者友好；复用CaseDefinition→Circuit→Simulator→SimulationResult，不加通用框架。
-   27限常参数集总损耗Bergeron；26限冻结同步控制/二极管不活动域。F1待外部账单锁解除后补精确HEAD双OS。
-   不重查同一CI终态、不制造空提交，不实施自动二极管、非线性、MMC、稀疏或加速框架。
+1. 复核[公开参考资格报告](../../validation/cases/pll_dynamic_response/qualified_reference_report.json)，再核其qualification/provenance/198项绑定及两份后置独审。
+   原生23列各10001行，solver时钟10001/20001行；50µs只核相同100µs控制的调度，不证明中点保持。
+2. 写精简case比较入口，复用validation/common/comparison.py；透明观察未修改原11 main()的SimulationResult，不复制PLL递推。
+   先做缺失/篡改/非法时间/角度展开/观察钩子恢复等必要自动检查并提交，再首次运行候选；参考或资格无效必须报错。
+   三窗九指标和硬门按8048ce4已冻结协议，不拟合、不移时、不放宽。候选后补独审、图报告、独立默认Agg运行和简短教学说明。
+   忽略的100行草稿在local_reference/c1_pll_reference_research/20261111T154759535349Z_comparison_draft；仅设计，未执行候选，不是公开入口。
+3. PLL正式验收后依次做开环并网VSC、已知角度dq电流、合格PLL、P前馈/Vac及真实DC电容Vdc链。
+   P前馈给id_ref、Vac外环给iq_ref；固定理想DC源不能证明Vdc动态。D1及F1也仍属于长期范围。
+4. 保持精简、可读和初学者友好，复用CaseDefinition→Circuit→Simulator→SimulationResult；不增通用框架。
+   F1待外部账单锁解除后补精确HEAD双OS，不轮询同一CI终态或造空提交；27/26既有限定保持。
 
-完整回归仍为B1阶段1267 passed494.62s含slow，锁定27包/Ruff/mypy39已通过；本轮111源不变，未重复测试。
+111个Python源未变，沿用此前1267 passed494.62s含slow、锁定27包/Ruff/mypy39结果，本轮未重跑。
 结束执行前同步任务/证据/提交/下一步，不声称无运行环境时会后台继续。
 
 ## 本机命令

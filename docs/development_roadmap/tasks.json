@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
-  "updated_date": "2026-11-11",
+  "updated_date": "2026-11-12",
   "timezone": "Asia/Shanghai",
   "branch": "codex/emt-examples-longterm",
-  "checkpoint_head": "b835e31785fab3fda247c333d23edbe9ce576dfa",
+  "checkpoint_head": "8048ce469472040b2244641e0e6790c166f7630c",
   "current_task": "C1",
   "formal_new_examples_completed": 9,
   "status_values": [
@@ -656,17 +656,21 @@
       "new_capabilities": [
         "small measured naming/timing fixes only if proven"
       ],
-      "references": [],
-      "validation": "既有11 PLL真实R2026b标准块参考的0/100/200us启动资格通过：58块80连接，44输入快照，22路double原始日志，141项冻结独立检查及两路实际独审通过。完整1s参考/候选比较尚未执行；PLL后续开环、dq、P前馈/Vac和真实DC电容Vdc链仍待验。",
+      "references": [
+        "simulink-standard-blocks-srf-pll-r2026b"
+      ],
+      "validation": "既有11 PLL完整1s真实R2026b标准块参考已资格通过：两次原生exit0，23列各10001行，原始solver时钟10001/20001行；逐行语义和23列配对检查及独立复核通过。198项输入绑定、规范化10001行及两路资格复核通过。尚未执行PyCy候选比较或原11正式验收；C1全VSC链仍待完成。",
       "acceptance": "局部、可独立运行验证的教学例逐项验收",
       "status": "in_progress",
       "files": [
         "validation/cases/pll_dynamic_response/manifest.json",
         "validation/cases/pll_dynamic_response/reference_protocol.json",
-        "validation/cases/pll_dynamic_response/acceptance_plan.md"
+        "validation/cases/pll_dynamic_response/acceptance_plan.md",
+        "validation/cases/pll_dynamic_response/qualified_reference_report.json"
       ],
       "commits": [
-        "b835e31785fab3fda247c333d23edbe9ce576dfa"
+        "b835e31785fab3fda247c333d23edbe9ce576dfa",
+        "8048ce469472040b2244641e0e6790c166f7630c"
       ],
       "blockers": [],
       "reference_feasibility": {
@@ -677,7 +681,7 @@
         "evidence_sha256": "d92469cdd234477829ca5a5fa75a67648f17235fffadf3d3cbdaa73672375427",
         "native_executed": false
       },
-      "current_stage": "existing_11_pll_full_protocol_fixed_native_pending",
+      "current_stage": "existing_11_pll_full_reference_qualified_candidate_pending",
       "interface_discovery": {
         "status": "qualified_native_satk_batch_interface",
         "simulink_model_tools_provided": false,
@@ -818,8 +822,29 @@
           "path": "local_reference/native_static_reviews/pll_full_public_protocol_review_20261111T153358964109Z/receipt.json",
           "sha256": "746436c25d5618625ab3b3b8001138c072827806995e9ae4b62b350edec03d10"
         },
-        "reference_or_candidate_executed": false,
-        "next_gate": "Freeze reviewed per-schedule source and independent finite-tested analyzer; then run native100us and50us solver references under unchanged100us control. No candidate before reference qualification."
+        "reference_or_candidate_executed": true,
+        "next_gate": "Implement and test a small adapter for the unchanged original11 main(), commit it before the first candidate comparison.",
+        "reference_executed": true,
+        "candidate_executed": false,
+        "freeze_commit": "8048ce469472040b2244641e0e6790c166f7630c"
+      },
+      "full_reference_qualification": {
+        "status": "QUALIFIED_NATIVE_REFERENCE_ONLY",
+        "reference_qualified": true,
+        "candidate_executed": false,
+        "existing_11_formally_accepted": false,
+        "complete_receipt": {
+          "path": "local_reference/pll_dynamic_response/qualification/20261111T155510206872Z/qualification.json",
+          "bytes": 60117,
+          "sha256": "77adfc0cfe84670cce8c2b1435ca9fed852251fa32d2808ce82e19770a7fa11e"
+        },
+        "public_report": {
+          "path": "validation/cases/pll_dynamic_response/qualified_reference_report.json",
+          "bytes": 2341,
+          "sha256": "ebe76a3c41bd0f5bce7680261ae56d858014f34daabffa01df240c74f5661a48"
+        },
+        "complete_input_files": 198,
+        "normalized_rows": 10001
       }
     },
     {
@@ -985,5 +1010,5 @@
       "resume_requires_explicit_user_instruction": true
     }
   ],
-  "current_stage": "existing_11_pll_full_protocol_fixed_native_pending"
+  "current_stage": "existing_11_pll_full_reference_qualified_candidate_pending"
 }

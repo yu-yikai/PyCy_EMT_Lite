@@ -627,3 +627,19 @@ PLL五状态方案仍仅设计：`local_reference/c1_pll_reference_research/2026
 公共协议位于validation/cases/pll_dynamic_response，master SHA `dc6a48e221062d72816f882ae0ec70933ea887c91bf96396df8b0b436691036a`。原11默认参数与源码不改，三窗九指标固定，50µs solver仅复核100µs任务调度/输出不变性；23列逐行固定门和两角度共同初角展开均明确。原生信号10001行，原tout预期10001/20001行，严格实际端点0/1、无clamp/fit/外推。
 
 公共预审：`local_reference/native_static_reviews/pll_full_public_protocol_review_20261111T153358964109Z/receipt.json` SHA `746436c25d5618625ab3b3b8001138c072827806995e9ae4b62b350edec03d10`，5源码及4启动资格直接pins已核。本检查点仅固定协议/状态，不执行完整native、候选或新全量；111项目Python源与此前1267通过代码仍同。下一门为独立solver_step原生源和独立逐行分析器预冻审核，不能把协议提交本身当作完整PLL资格或C1完成。
+
+## 2026-11-12 C1完整1s参考资格通过，候选待执行
+
+完整协议先以8048ce469提交/推送，主协议SHA dc6a48e221062d72816f882ae0ec70933ea887c91bf96396df8b0b436691036a。两份45输入源与独立逐行分析器先冻结和独审；分析器28项明确标注的合成拒绝检查通过，非商业波形。
+
+- coarse: `local_reference/c1_pll_reference_research/20261111T153000Z_pll_full_v1/runs/20261111T1547195468354Z`，exit0/67.7063173s，观察到的自有进程均退出，输入未变，无监控/清理错误。
+- fine: `local_reference/c1_pll_reference_research/20261111T153000Z_pll_full_fine_v1/runs/20261111T1549439156351Z`，exit0/66.1689593s，观察到的自有进程均退出，输入未变，无监控/清理错误。
+
+两个参考均10001行×23列，CSV逐字相同；原始solver时钟10001/20001行，严格0..1。逐行源/状态/变换/PI/正模门和23列配对均PASS，50µs仍为100µs控制，仅检查调度/输出一致性。独立ψ向量公式最大电压残差约1.45803e−11V；整圈展开旧omega步进最大残差5.54418e−14rad。
+
+完整资格 `local_reference/pll_dynamic_response/qualification/20261111T155510206872Z/qualification.json` SHA `77adfc0cfe84670cce8c2b1435ca9fed852251fa32d2808ce82e19770a7fa11e`，198项输入绑定；规范化SHA `9f41b13551564cd2a1e1441fa45e285c558ec408c66c332402e813704b467489`，四个原始列逐浮点不变，角度只加2π整圈，无拟合/插值。
+
+- 后置资格独审 `local_reference/native_static_reviews/pll_full_Q_binding_review_20261111T160423836992Z/receipt.json` SHA `237582597379e0e9305153cb2595bf400ca80f3aa4cd4ea4d34c72819ce9f355`。
+- 后置资格独审 `local_reference/native_static_reviews/pll_full_qualification_actual_20261111T160353894957Z/receipt.json` SHA `34795aac8cd62d89c0a92f53e2ade6ec743224b96e2543c51a95116d92bce974`。
+
+公开资格入口为validation/cases/pll_dynamic_response/qualified_reference_report.json。本次只验收参考，不计既有11正式验收或新增数量；PyCy候选、图/报告、默认独立Agg、必要测试和教学仍待完成。111个Python源及依赖未变，1267全量为此前B1实测，本轮未重复。原三点失败与所有历史保持；下一步用现有比较模块写最小case入口，测试并提交后再首次候选比较。

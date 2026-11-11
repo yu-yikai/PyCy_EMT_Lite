@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "assessed_on": "2026-11-11",
+  "assessed_on": "2026-11-12",
   "repository_baseline": "a03a450340797771099fceb5ec77137bc7f681c2",
   "state_semantics": {
     "discovered": "source only",
@@ -2885,6 +2885,40 @@
         "acceptance_pushed": true,
         "remote_head_verified_same": true
       }
+    },
+    {
+      "id": "simulink-standard-blocks-srf-pll-r2026b",
+      "short_code": "C1-PLL-SIMULINK",
+      "name": "Independent standard-block SRF-PLL discrete reference",
+      "source_kind": "Original realization of the frozen equations; not an official vendor PLL example",
+      "status": "reference_ready",
+      "model_version": "R2026b 26.2.0.3386108",
+      "software_requirements": [
+        "MATLAB R2026b",
+        "Simulink"
+      ],
+      "content_inspected": true,
+      "opened_in_native_software": true,
+      "simulation_succeeded": true,
+      "reference_numeric_data_obtained": true,
+      "local_path": "local_reference/pll_dynamic_response/qualification/20261111T155510206872Z",
+      "reference_data": "local_reference/pll_dynamic_response/qualification/20261111T155510206872Z/normalized_reference.csv",
+      "samples": 10001,
+      "reference_qualification": {
+        "path": "validation/cases/pll_dynamic_response/qualified_reference_report.json",
+        "bytes": 2341,
+        "sha256": "ebe76a3c41bd0f5bce7680261ae56d858014f34daabffa01df240c74f5661a48"
+      },
+      "complete_receipt": {
+        "path": "local_reference/pll_dynamic_response/qualification/20261111T155510206872Z/qualification.json",
+        "bytes": 60117,
+        "sha256": "77adfc0cfe84670cce8c2b1435ca9fed852251fa32d2808ce82e19770a7fa11e"
+      },
+      "candidate_executed": false,
+      "existing_11_formally_accepted": false,
+      "allows_redistribution": "Third-party originals and native waveforms remain in ignored local_reference",
+      "scope": "Full1s reference qualified only; 100/50us solver, unchanged100us control, no signal midpoint observation.",
+      "blockers": []
     }
   ],
   "scope_notes": [
