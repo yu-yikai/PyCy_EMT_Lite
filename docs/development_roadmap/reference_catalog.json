@@ -2332,7 +2332,7 @@
       },
       "mathematical_compatibility": "Short probe uses raw native TIME and standard math/comparators, six bilateral varrlc pure-R branches, floating1ohm+1mH phase loads and400V ideal source. All1206 observed gate values match the default12 formula evaluated at retained raw native TIME, all six R inputs are0.001/1e9ohm, and zero initial current/KCL/TR relations were checked. Generated12-significant-digit phase/omega literals and ASCII timing precision remain explicit boundaries; this is not full-run bitwise controller equivalence.",
       "blockers": [
-        "完整0.2s的范围、时钟/常量边界准入、比较窗/指标/预算及来源绑定须在新波形前另冻；1ms不能认证全时长。",
+        "完整联合协议ed9eec3d已固定并独审；新完整来源/分析入口仍须冻结独审后顺序实跑，参考自细化通过前不得比较候选。",
         "原12的新商业比较及正式B1交付仍待；原MathWorks2% FAIL、150A尺度/.02/10A/5%/3°保持。"
       ],
       "sha256": {
@@ -2437,7 +2437,12 @@
         "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/electrical_refinement_estimate/20261111T013605399749Z/recommendation.md": "75bcd8a05fd713658008906382710f3ae0519a772777c3d17c444f930f8efcc9",
         "matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/electrical_refinement_estimate/20261111T013605399749Z/manifest.json": "6c7b5b33779c4de598ddf6876990a03d13787ef15a3cf6acede26f0c2d4a28b5",
         "../native_static_reviews/b1_electrical_bound_20261111T014114157641Z/receipt.json": "9e11b5fedf9bcd3a54d25089bfe6104212b7f413643019ca57382dc8a8c5472e",
-        "../native_static_reviews/b1_full_v6_resume_20261111/20261111T012247655863Z/report.json": "c1ee6d4f195737787802e854f21dd2afb397158ea945f7cebd7e392cc8ffbfb1"
+        "../native_static_reviews/b1_full_v6_resume_20261111/20261111T012247655863Z/report.json": "c1ee6d4f195737787802e854f21dd2afb397158ea945f7cebd7e392cc8ffbfb1",
+        "../../validation/cases/two_level_pwm_pscad/acceptance_plan.md": "56615a8d9f34f98017a58e752c054c923c3835ed5ac47a707ca612b238cc0c67",
+        "../../validation/cases/two_level_pwm_pscad/manifest.json": "8c29826fdd5e82468cc4940f7fa3f007cdcaf509cfb311c9281dba161795f232",
+        "../../validation/cases/two_level_pwm_pscad/parameters.json": "b51abbc578d0ef496a5a83224cd63e66bbc67f51dad292faf7e5ad048ccc2208",
+        "../../validation/cases/two_level_pwm_pscad/reference_protocol.json": "ed9eec3d015a3e121e41e3855a2ff234ccfa5fb966d3456931485a6bfae03863",
+        "../native_static_reviews/b1_full_protocol_20261111T021652231587Z/receipt.json": "a91f38ee38371b1b8931a42f6c3ea3f2df25743dcfbe094724948213af3ac2a0"
       },
       "license_notes": "Installed library excerpts, donor original, scripts and raw evidence remain ignored locally; redistribution permission not asserted.",
       "original_static_builder_preparation": {
@@ -2687,6 +2692,14 @@
         "clock_or_EMTDC_implementation_proved": false,
         "record": "local_reference/two_level_pwm/matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/electrical_refinement_estimate/20261111T013605399749Z/report.json",
         "independent_review": "local_reference/native_static_reviews/b1_electrical_bound_20261111T014114157641Z/receipt.json"
+      },
+      "full_reference_protocol": {
+        "record": "validation/cases/two_level_pwm_pscad/reference_protocol.json",
+        "sha256": "ed9eec3d015a3e121e41e3855a2ff234ccfa5fb966d3456931485a6bfae03863",
+        "independent_review": "local_reference/native_static_reviews/b1_full_protocol_20261111T021652231587Z/receipt.json",
+        "independent_review_sha256": "a91f38ee38371b1b8931a42f6c3ea3f2df25743dcfbe094724948213af3ac2a0",
+        "full_native_executed": false,
+        "candidate_executed": false
       }
     }
   ],

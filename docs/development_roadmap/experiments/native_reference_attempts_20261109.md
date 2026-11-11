@@ -2,7 +2,7 @@
 
 本记录区分真实参考、自检、候选比较与建模失败。正式新增19–27共9项；27已独立验收提交ae9fe362，A3completed，当前B1。26的9269350交付和旧失败均保留历史。所有第三方模型、原始波形及运行脚本留在忽略的`local_reference/`。短探针没有替代正式验收。
 
-当前更新至2026-11-11：B1完整1ms保持桥双步长诊断通过；完整0.2s协议/参考/候选仍待，详见文末。
+当前更新至2026-11-11：B1完整1ms保持桥双步长诊断通过；完整0.2s协议已另冻，参考/候选仍待，详见文末。
 
 ## B2：参考、候选数值与正式交付通过
 
@@ -476,3 +476,25 @@ C1只读可行性 `local_reference/c1_pll_reference_research/20261111T0135302299
 现成PSCAD master:tvekta和R2022b SPS PLL与11非同数学；独立标准块/UnitDelay方案尚未建立或执行，C1仍planned。
 本轮109个Python源文件仍与1244全量前集合/hash一致，未改核心/依赖/教学入口，未重复全量测试。
 所有本轮native和分析均终态，无自有原生进程待恢复；CI同账单锁终态不重复轮询。
+
+
+## 完整0.2 s前瞻协议：尚无完整波形
+
+2026-11-11继续核同本地/真实远端8cc1457、干净工作区及五状态文件，上一阶段为有实测进展。
+新独立验证身份 `validation/cases/two_level_pwm_pscad` 仅补对标既有12，不新增教学编号。
+`reference_protocol.json` SHA `ed9eec3d015a3e121e41e3855a2ff234ccfa5fb966d3456931485a6bfae03863`，
+manifest `8c29826f…`、参数逐字同原b51abbc5、acceptance_plan `56615a8d…`；原候选窗/全部限值和MathWorksFAIL不变。
+独审 `local_reference/native_static_reviews/b1_full_protocol_20261111T021652231587Z/receipt.json`
+`a91f38ee38371b1b8931a42f6c3ea3f2df25743dcfbe094724948213af3ac2a0`，9个显式来源pins及三文件hash均核同。
+
+选择联合时钟/常量边界＋电气5/2.5µs细化，施加门极保持5µs；采集.200005s、40002/80003行，
+尾步确保实际nativeTIME末点>.2且固定[.1,.2]无外推，所有尾行仍审。参考自细化三相max3A、
+启动/稳态NRMSE.02/.01（150A）、稳态RMS/基波/耗散2.5%与相位1°，全部在完整输出前固定。
+TIME完整词元区间须在每run名义点±2ps内，实际hold_fraction→INT m→abc同分支；
+每operand取token/local-native/global交集，只有有限边界可双值；Pulse/互补/保持/R/物理不得豁免。
+这是可证伪的观测合同，不声称取得EMTDC/libm源码证明或十分之一参考精度。
+
+来源draft在native前独审发现旧savedXML循环仍将duration视为unrelated，确证会拒绝.001→.200005。
+原未执行草稿/拒绝证据 `03cc9ccb…` 保留；修后v2只允许精确该时长变化，正/错duration/其他字段三fixture通过，
+独审 `local_reference/native_static_reviews/b1_full_draft_fix_20261111/report.json` 为 `253428a4…`。
+上述是离线源准备，不是完整运行；新来源和两分析入口仍须另冻结独审，只有ROOT可顺序启动native。

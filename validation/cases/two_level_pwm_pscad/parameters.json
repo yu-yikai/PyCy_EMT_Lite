@@ -1,0 +1,24 @@
+{
+  "dc_voltage_volt": 400.0,
+  "frequency_hz": 60.0,
+  "switching_frequency_hz": 1000.0,
+  "modulation_index": 0.8,
+  "reference_hold_second": 0.0001,
+  "time_step_second": 5e-06,
+  "stop_second": 0.2,
+  "load_resistance_ohm": 1.0,
+  "load_inductance_henry": 0.001,
+  "load_neutral": "floating",
+  "phase_offsets_degree": [
+    90.0,
+    -30.0,
+    210.0
+  ],
+  "candidate_on_resistance_ohm": 0.001,
+  "reference_device_parameters": "see actual active variant/provenance; do not infer from unused mask fields",
+  "initial_current_ampere": [
+    0.0,
+    0.0,
+    0.0
+  ]
+}

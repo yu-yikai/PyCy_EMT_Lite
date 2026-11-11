@@ -386,7 +386,7 @@
         "mw-two-level-pwm-r2025a",
         "pscad-derived-bilateral-spwm-v5"
       ],
-      "validation": "原12及MathWorks固定2%波形FAIL保留。原非保持1ms和六路20us原语证据保留；v5五Pulse编译失败及上轮用户中断不覆盖。2026-11-11完整v6真实5/2.5us双步长完成：384组件/204线/506端口/117网，60通道全201/401行含首末点，201共享六施加门极/R相同、200中点保持、七Pulse、原69数学与3612原始门极值、生成顺序和KCL/TR均通过作者及独立四未知量网络审查。两run均build0/runtrue/完成标记true，84项各全核，清理及原件/profile/父环境检查通过。资格仅限含观察器的1ms诊断；完整0.2s及候选未验收，详细run/hash见证据索引。",
+      "validation": "原12及MathWorks固定2%波形FAIL保留。原非保持1ms和六路20us原语证据保留；v5五Pulse编译失败及上轮用户中断不覆盖。2026-11-11完整v6真实5/2.5us双步长完成：384组件/204线/506端口/117网，60通道全201/401行含首末点，201共享六施加门极/R相同、200中点保持、七Pulse、原69数学与3612原始门极值、生成顺序和KCL/TR均通过作者及独立四未知量网络审查。两run均build0/runtrue/完成标记true，84项各全核，清理及原件/profile/父环境检查通过。资格仅限含观察器的1ms诊断；完整0.2s及候选未验收，详细run/hash见证据索引。 完整联合时钟/电气协议ed9eec3d已在完整输出前另冻并独审；采集.200005s、40002/80003行，正式候选窗/限值不变，尚无完整运行。",
       "acceptance": "模型一致性解释、预设基波RMS/功率方向/纹波判据和真实波形比较",
       "status": "in_progress",
       "files": [
@@ -397,14 +397,18 @@
         "docs/development_roadmap/experiments/spwm_timing_followup.md",
         "docs/development_roadmap/experiments/spwm_error_isolation.md",
         "docs/development_roadmap/experiments/spwm_matched_reference_design.md",
-        "docs/development_roadmap/experiments/native_reference_attempts_20261109.md"
+        "docs/development_roadmap/experiments/native_reference_attempts_20261109.md",
+        "validation/cases/two_level_pwm_pscad/acceptance_plan.md",
+        "validation/cases/two_level_pwm_pscad/manifest.json",
+        "validation/cases/two_level_pwm_pscad/parameters.json",
+        "validation/cases/two_level_pwm_pscad/reference_protocol.json"
       ],
       "commits": [
         "146a279",
         "8a65b6e"
       ],
       "blockers": [
-        "完整0.2s的范围、时钟/常量边界准入、比较窗/指标/预算及来源绑定须在新波形前另冻；1ms不能认证全时长。",
+        "完整联合协议ed9eec3d已固定并独审；新完整来源/分析入口仍须冻结独审后顺序实跑，参考自细化通过前不得比较候选。",
         "原12的新商业比较及正式B1交付仍待；原MathWorks2% FAIL、150A尺度/.02/10A/5%/3°保持。"
       ],
       "last_diagnostic": {
@@ -412,6 +416,14 @@
         "record": "local_reference/two_level_pwm/matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/held_bridge_qualification/20261111T014703278697Z/qualification.json",
         "sha256": "8be490f84a5d75acada52c46e84b0d5f4d6e5bdcd4345360340309f696201475",
         "formal_B1_completed": false
+      },
+      "full_reference_protocol": {
+        "record": "validation/cases/two_level_pwm_pscad/reference_protocol.json",
+        "sha256": "ed9eec3d015a3e121e41e3855a2ff234ccfa5fb966d3456931485a6bfae03863",
+        "independent_review": "local_reference/native_static_reviews/b1_full_protocol_20261111T021652231587Z/receipt.json",
+        "independent_review_sha256": "a91f38ee38371b1b8931a42f6c3ea3f2df25743dcfbe094724948213af3ac2a0",
+        "full_native_executed": false,
+        "candidate_executed": false
       }
     },
     {
@@ -627,6 +639,7 @@
     "remote_head_verified_same": true,
     "frozen_source_and_analyzer_unchanged": true,
     "old_interrupted_run_not_consumed": true,
-    "latest_bounded_1ms_qualification": "local_reference/two_level_pwm/matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/held_bridge_qualification/20261111T014703278697Z/qualification.json"
+    "latest_bounded_1ms_qualification": "local_reference/two_level_pwm/matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/held_bridge_qualification/20261111T014703278697Z/qualification.json",
+    "latest_checked_head": "8cc14576c07fed6216b497089916667c3909825a"
   }
 }
