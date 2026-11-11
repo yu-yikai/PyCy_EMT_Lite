@@ -649,3 +649,11 @@ PLL五状态方案仍仅设计：`local_reference/c1_pll_reference_research/2026
 入口SHA `f4ea246cb9299216dce569595f1b214fd83eb4f936ae34e3de9a1619d0b72a59`、测试SHA `ea6f2af97406bf62b5d2393586208c0b779c0fb668d2f7fbeab0a0775501e74f`；复用原main和公共PWL，无新PLL实现。33专项收据 `local_reference/native_static_reviews/pll_comparison_synthetic_tests_20261111T162405980159Z/frozen_receipt.json` SHA `88cf7dd3e37d8bf95fb3bd0acf64a3117fe555d91df721b5290073dda060fe6b`；静态独审 `local_reference/native_static_reviews/pll_comparison_final_static_review_20261111T163023334292Z/receipt.json` SHA `bed36c753b121f0ef2b5ef389917981bcb73b3038403c980e731f46f349ff63d`。
 
 本轮完整1300 passed510.44s含slow，XML `.tmp/longterm/c1-pll-full-20261111T162829439Z.xml` SHA `6ea47a1f9fba99f3e19eef03f6f1a6df2b78d2e66015ddd1cddf3f52ad3aa818`。27包锁定同步、全Ruff/mypy39通过；113源前后不变，原111源未改。最终入口只读实际参考预检通过203绑定/10001行，未调用原例main或商业候选。本检查点提交后才首次候选比较；图/报告、独立复算/默认Agg及PLL正式教学验收仍待完成。
+
+## 2026-11-12 既有11 PLL完整补验证验收
+
+5314486入口在候选前提交、推送并核真实远端相同。首次正式run20261111T163858643683Z exit0，原报告SHA `4586c354f9e7d84ba2146601f07b9c35afca2420d49dd55b9f4d32ce9160235b`，三窗九指标全部PASS；243输入原件/快照经独立审计 `local_reference/native_static_reviews/pll_candidate_actual_20261111T163858643683Z_f982/receipt.json` SHA `8dc2a994039af7bb94b7337bc1a3face18cb3de880dd38bd4bb8ff863b3de318` 全核。独立误差积分与原报告一致，无拟合；角度/频率/q最大差5.68434e−14rad/1.13687e−13rad/s/3.12639e−13V。
+
+默认__main__独立run164014570020Z exit0/1.5457596s，核验 `local_reference/pll_dynamic_response/independent_runs/20261111T164014570020Z/independent_verification_receipt.json` SHA `71e40d5847daa3a73e4736cb3afcecfbd6b0ab8548f7736c4e1050c626af091b`；三原图已查看、同一结果三次转发、hooks/outputs不变，NPZ全数组/元数据与NPZ/CSV/JSON字节均等正式候选。33专项、1300全量510.45s（XML510.444）含slow/锁定27包/全Ruff/mypy39通过，113源前后同、旧111不变。
+
+公开validation/cases/pll_dynamic_response/validation_report.json与精简教学/导航共同交付，既有11补验证完成，不增加编号。C1全VSC链/D1仍在长期范围，下一步开环并网参考先明确中性点/零序/初值和控制保持。5314486的CI43060348386再次终态账单锁，两OS runner0/steps空/test_count=null；7份raw/hash保留在ci_5314486.json，无跨OS通过声明。

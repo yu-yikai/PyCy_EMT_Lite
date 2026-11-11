@@ -1,14 +1,14 @@
 # 持久进度
 
-2026-11-12目标active；C1为in_progress，阶段`existing_11_pll_comparison_entry_checked_candidate_pending`。
-既有11完整1s真实Simulink参考已取得资格；比较入口和33项合成检查已完成，尚未执行首次PyCy候选。
-本轮完整回归1300 passed、510.44s（含slow），零失败/错误/跳过；锁定27包/Ruff/mypy39通过。
-新增文件仅case比较入口及其测试，原有111个Python源和依赖未改，总113源在测试前后hash不变。
-入口保留原11 main()和三幅图，仅观察其SimulationResult；沿用三窗九指标，不复制PLL递推。
-真实参考只读加载203项绑定通过；完整1s双schedule、198项资格、10001行规范化及两路独审均保持。
-50µs求解步仍为100µs控制，仅检查调度；PLL候选/图报告/独立默认运行/正式教学验收及C1后续链尚待完成。
-正式新增19–27仍共9项，B1已完成；F1仍按最近实查账单锁记录，后续新代码HEAD需单独观察CI。
-保持精简、易读、初学者友好；入口见[PLL指南](../../validation/cases/pll_dynamic_response/README.md)。
+2026-11-12目标active；C1为in_progress，阶段`existing_11_pll_accepted_open_loop_reference_pending`。
+既有11的完整离散PLL补验证已通过：真实1s参考资格、首次候选三窗九项、243输入快照和独立复算全部完成。
+默认原例__main__独立Agg通过，三原图/输出行为保持；完整NPZ各数组和元数据、NPZ/CSV/JSON字节均与正式候选相同。
+最大角度差5.68434e−14rad、角频率差1.13687e−13rad/s、q电压差3.12639e−13V；未拟合或放宽阈值。
+33专项及本轮1300全量含slow通过（XML510.444s）；锁定27包/Ruff/mypy39通过。原111源及依赖未改，总113源前后相同。
+本次只完成C1的既有11子步骤，不增教学编号；正式新增19–27仍共9项，C1全VSC链/D1仍待完成。
+5314486精确CI43060348386再次因账户账单锁在runner前失败，两OS未执行测试；跨OS未补验。
+下一步先明确开环并网VSC的电气接线、已知角度/采样、初值及方向，取得真实参考后再候选。
+继续保持精简、易读、初学者友好；见[PLL指南](../../validation/cases/pll_dynamic_response/README.md)与[结果报告](../../validation/cases/pll_dynamic_response/validation_report.json)。
 
 以下保留已完成的1ms诊断及历史；不覆盖上述当前状态。
 

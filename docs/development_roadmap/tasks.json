@@ -3,7 +3,7 @@
   "updated_date": "2026-11-12",
   "timezone": "Asia/Shanghai",
   "branch": "codex/emt-examples-longterm",
-  "checkpoint_head": "da18a43321901f294786694fbb8b9c70ab79881f",
+  "checkpoint_head": "5314486fcb30929f79c62a5b15faf2e462529573",
   "current_task": "C1",
   "formal_new_examples_completed": 9,
   "status_values": [
@@ -659,7 +659,7 @@
       "references": [
         "simulink-standard-blocks-srf-pll-r2026b"
       ],
-      "validation": "既有11 PLL完整1s真实R2026b标准块参考已资格通过：两次原生exit0，23列各10001行，原始solver时钟10001/20001行；逐行语义和23列配对检查及独立复核通过。198项输入绑定、规范化10001行及两路资格复核通过。尚未执行PyCy候选比较或原11正式验收；C1全VSC链仍待完成。 新增精简case入口/合成测试；33专项及完整1300项含slow通过（510.44s），锁定27包/Ruff/mypy39通过。原111源未变、总113源测试前后不变，入口及测试独审通过；首次候选仍待执行。",
+      "validation": "既有11完整离散PLL补验证通过：真实1s参考资格、未改原main首次候选三窗九项、243输入快照与独立数值复算、默认__main__独立Agg/三原图及完整结果一致、33合成/1300全量含slow、锁定/Ruff/mypy、精简教学均完成。原111源及依赖未改，总113源前后相同。不增加编号；C1开环并网/dq/P前馈Vac/真实DC电容Vdc全链仍待完成。",
       "acceptance": "局部、可独立运行验证的教学例逐项验收",
       "status": "in_progress",
       "files": [
@@ -669,12 +669,14 @@
         "validation/cases/pll_dynamic_response/qualified_reference_report.json",
         "validation/cases/pll_dynamic_response/compare.py",
         "validation/cases/pll_dynamic_response/README.md",
-        "tests/test_pll_reference_comparison.py"
+        "tests/test_pll_reference_comparison.py",
+        "validation/cases/pll_dynamic_response/validation_report.json"
       ],
       "commits": [
         "b835e31785fab3fda247c333d23edbe9ce576dfa",
         "8048ce469472040b2244641e0e6790c166f7630c",
-        "da18a43321901f294786694fbb8b9c70ab79881f"
+        "da18a43321901f294786694fbb8b9c70ab79881f",
+        "5314486fcb30929f79c62a5b15faf2e462529573"
       ],
       "blockers": [],
       "reference_feasibility": {
@@ -685,7 +687,7 @@
         "evidence_sha256": "d92469cdd234477829ca5a5fa75a67648f17235fffadf3d3cbdaa73672375427",
         "native_executed": false
       },
-      "current_stage": "existing_11_pll_comparison_entry_checked_candidate_pending",
+      "current_stage": "existing_11_pll_accepted_open_loop_reference_pending",
       "interface_discovery": {
         "status": "qualified_native_satk_batch_interface",
         "simulink_model_tools_provided": false,
@@ -827,9 +829,9 @@
           "sha256": "746436c25d5618625ab3b3b8001138c072827806995e9ae4b62b350edec03d10"
         },
         "reference_or_candidate_executed": true,
-        "next_gate": "Verify the committed/pushed checked entry, then run the first unchanged original11 candidate comparison.",
+        "next_gate": "PLL substep accepted; prepare a physically explicit open-loop grid-connected VSC reference before a candidate.",
         "reference_executed": true,
-        "candidate_executed": false,
+        "candidate_executed": true,
         "freeze_commit": "8048ce469472040b2244641e0e6790c166f7630c"
       },
       "full_reference_qualification": {
@@ -848,7 +850,8 @@
           "sha256": "ebe76a3c41bd0f5bce7680261ae56d858014f34daabffa01df240c74f5661a48"
         },
         "complete_input_files": 198,
-        "normalized_rows": 10001
+        "normalized_rows": 10001,
+        "scope": "Reference-only snapshot preceding the later candidate acceptance; current candidate state is recorded separately."
       },
       "comparison_entry_checks": {
         "status": "checked_before_first_candidate",
@@ -907,7 +910,41 @@
         "mypy_source_files": 39,
         "actual_qualified_loader_rows": 10001,
         "actual_reference_bindings": 203,
-        "candidate_executed": false
+        "candidate_executed": false,
+        "scope": "Pre-candidate checks at entry freeze; current candidate outcome is recorded in candidate_comparison."
+      },
+      "candidate_comparison": {
+        "status": "passed_independently_verified",
+        "candidate_executed": true,
+        "report": {
+          "path": "validation/cases/pll_dynamic_response/validation_report.json",
+          "bytes": 8454,
+          "sha256": "2ba60f5967d7ce2cf8d9e4f96559f055f98b7b89c82a280d6d64e1e269dbe950"
+        },
+        "actual_report": {
+          "path": "local_reference/pll_dynamic_response/comparison_results/20261111T163858643683Z/report.json",
+          "bytes": 58607,
+          "sha256": "4586c354f9e7d84ba2146601f07b9c35afca2420d49dd55b9f4d32ce9160235b"
+        },
+        "entry_freeze_commit": "5314486fcb30929f79c62a5b15faf2e462529573",
+        "independent_audit": {
+          "path": "local_reference/native_static_reviews/pll_candidate_actual_20261111T163858643683Z_f982/receipt.json",
+          "bytes": 3738,
+          "sha256": "8dc2a994039af7bb94b7337bc1a3face18cb3de880dd38bd4bb8ff863b3de318"
+        },
+        "independent_default_run": {
+          "path": "local_reference/pll_dynamic_response/independent_runs/20261111T164014570020Z/independent_verification_receipt.json",
+          "bytes": 4340,
+          "sha256": "71e40d5847daa3a73e4736cb3afcecfbd6b0ab8548f7736c4e1050c626af091b"
+        },
+        "maximum_absolute_errors": {
+          "angle_unwrapped": 5.684341886080802e-14,
+          "frequency": 1.1368683772161603e-13,
+          "q_axis_voltage": 3.126388037344441e-13
+        },
+        "input_snapshot_files": 243,
+        "existing_11_accepted": true,
+        "complete_C1_chain_accepted": false
       }
     },
     {
@@ -976,7 +1013,7 @@
       ],
       "new_capabilities": [],
       "references": [],
-      "validation": "最新本地完整1244 passed469.79s含slow，零失败/错误/跳过；锁定27包/Ruff/mypy39及27独审通过。验收ae9fe36已正常push且真实远端一致；精确CI42616684547终态failure，Ubuntu129158174490/Windows129158174768均runner0/steps空，两个check注释确认billing lock，未执行测试/test_count=null。23–27跨OS仍未验证，旧90b2fcd只覆盖22；不轮询同终态。",
+      "validation": "最新本地1300 passed（XML510.444s，含slow）零失败/错误/跳过；锁定27包/Ruff/mypy39通过。精确5314486的CI43060348386终态failure，两OS均runner0/steps空，注释再次确认账户billing lock，测试未执行/test_count=null；23–27及本次入口跨OS仍待外部解除后补验，不轮询该终态。",
       "acceptance": "本批测试与真实CI记录、教学导航、里程碑推送和恢复指令",
       "status": "blocked",
       "files": [
@@ -987,7 +1024,8 @@
         "docs/development_roadmap/experiments/ci_9e2513d.json",
         "docs/development_roadmap/experiments/ci_41a6685.json",
         "docs/development_roadmap/experiments/ci_9269350.json",
-        "docs/development_roadmap/experiments/ci_ae9fe36.json"
+        "docs/development_roadmap/experiments/ci_ae9fe36.json",
+        "docs/development_roadmap/experiments/ci_5314486.json"
       ],
       "commits": [
         "90b2fcd",
@@ -997,7 +1035,8 @@
         "1423c7d6dfbca10547cf856dc20faa5dadf935dc",
         "41a6685da241b5a759786963b81e236728afbd98",
         "9269350887a867aee2740fed04155ade8f8757be",
-        "ae9fe3629ad9617853979b0ef58d4d8319239592"
+        "ae9fe3629ad9617853979b0ef58d4d8319239592",
+        "5314486fcb30929f79c62a5b15faf2e462529573"
       ],
       "blockers": [
         "GitHub check-run两项注释：The job was not started because your account is locked due to a billing issue. 账户解除外部账单锁后才能补跑；不通过重复push或改代码绕过。"
@@ -1073,5 +1112,5 @@
       "resume_requires_explicit_user_instruction": true
     }
   ],
-  "current_stage": "existing_11_pll_comparison_entry_checked_candidate_pending"
+  "current_stage": "existing_11_pll_accepted_open_loop_reference_pending"
 }

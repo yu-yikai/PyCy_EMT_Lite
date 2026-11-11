@@ -66,7 +66,7 @@ uv run --locked pytest -o addopts= -q -p no:cacheprovider --basetemp=.tmp/pytest
 示例默认显示图形，不保存数据或图片。
 网络算例需要保存时，把脚本顶部 `SAVE_RESULT_DATA` 或 `SAVE_RESULT_FIGURE` 改为 `1`；输出位于 `outputs/<算例名>/`。
 开启相应保存选项后，相同输出根目录下再次运行同名算例，会替换前次同名的数据文件（`result.csv`、`result.json`、`result.npz`）或图片。需要对照时，先复制旧结果或更换算例名，再运行。
-独立 PLL 示例 11 只显示图形，没有保存开关。
+独立 PLL 示例 11 只显示图形，没有保存开关。[PLL验证指南](validation/cases/pll_dynamic_response/README.md)说明角度、单位和已完成的真实Simulink离散对比。
 非交互后端（如 `MPLBACKEND=Agg`）跳过窗口显示，仍可计算与保存。
 
 遇到问题时先检查下面几项：

@@ -1,23 +1,23 @@
 # 恢复与下一步
 
-2026-11-12目标active。先读五状态文件，交叉核分支/实际HEAD/工作区/真实远端；checkpoint为最近记录提交da18a433。
-在codex/emt-examples-longterm工作；常规提交/里程碑推送已授权，不改main、不强推、不覆盖用户文件。
-当前C1为in_progress：既有11完整1s参考资格已通过，候选比较尚未执行。新增19–27共9项，B1已完成。
-本轮原生和分析均已终态；不重跑已通过的参考、分析器或1267全量代替复核。
+2026-11-12目标active。先读五状态文件，交叉核分支/实际HEAD/工作区/真实远端；checkpoint为最近记录提交5314486。
+开发分支codex/emt-examples-longterm常规提交/推送已授权；不改main、不强推、不覆盖用户文件。
+C1仍in_progress：既有11完整离散PLL补验证通过；正式新增19–27共9项，B1已完成。
+所有本轮pytest/原生/商业比较/独立默认运行和分析均已终态，无已知待恢复的运行。
 
-1. 复核[公开参考资格报告](../../validation/cases/pll_dynamic_response/qualified_reference_report.json)，再核其qualification/provenance/198项绑定及两份后置独审。
-   原生23列各10001行，solver时钟10001/20001行；50µs只核相同100µs控制的调度，不证明中点保持。
-2. 精简case比较入口、33合成检查及完整1300项含slow已通过；入口与代码独审已完成。
-   先核本检查点的实际Git提交/推送，再设置MPLBACKEND=Agg首次运行uv run --locked python -m validation.cases.pll_dynamic_response.compare。
-   原main/三次plot保持；任何缺失/篡改/非有限/非法时间/角度门或输入前后变化均须FAIL，不能重建候选递推。
-   三窗九指标和硬门按8048ce4已冻结协议，不拟合、不移时、不放宽。候选后补独审、图报告、独立默认Agg运行和简短教学说明。
-3. PLL正式验收后依次做开环并网VSC、已知角度dq电流、合格PLL、P前馈/Vac及真实DC电容Vdc链。
-   P前馈给id_ref、Vac外环给iq_ref；固定理想DC源不能证明Vdc动态。D1及F1也仍属于长期范围。
-4. 保持精简、可读和初学者友好，复用CaseDefinition→Circuit→Simulator→SimulationResult；不增通用框架。
-   F1待外部账单锁解除后补精确HEAD双OS，不轮询同一CI终态或造空提交；27/26既有限定保持。
+1. 恢复时核[PLL结果](../../validation/cases/pll_dynamic_response/validation_report.json)与5314486前置入口提交。
+   已通过首次比较run20261111T163858643683Z、独立审计8dc2a994和默认运行164014570020Z，不重跑这些已通过结果代替审查。
+2. 进入开环并网VSC参考先行设计。先读examples/12_two_level_pwm_generator.py、examples/18_three_terminal_vsc_hvdc.py的station_components、
+   pycy_emt_lite/controls/vsc.py及B1已验证双向开关参考；复用既有六开关/SPWM/RL与CaseDefinition链。
+   明确固定DC端、三相电网/中性点及零序回路、RL接线、已知角度/门极采样保持、初值、AC→converter电流方向和参数来源；
+   预先冻结拓扑/参数/三相P/Q关系、时间窗和限值，取得真实Simulink或PSCAD输出后再候选，不复制RL负载SPWM题凑数。
+3. 再依次已知角度dq电流→已合格PLL→P前馈/Vac外环→真实DC电容Vdc及扰动。
+   P前馈给id_ref、Vac给iq_ref；固定理想DC源不能证明Vdc动态。C1全链、D1及F1范围保持。
+4. F1精确[CI43060348386](https://github.com/yu-yikai/PyCy_EMT_Lite/actions/runs/43060348386)已终态：账单锁、两OS runner0/steps空，未执行测试。
+   外部账户恢复后重跑该精确run，再核两OS完整步骤/产物；不再轮询同终态，不空提交或改代码绕过账户锁。
 
-本轮1300 passed510.44s含slow、锁定27包/Ruff/mypy39通过；旧111源未改，新2文件，总113源前后不变。
-结束执行前同步任务/证据/提交/下一步，不声称无运行环境时会后台继续。
+本轮33专项/1300全量含slow（XML510.444s）、锁定27包/Ruff/mypy39通过；旧111源及依赖未改，总113源hash前后同。
+保持精简、可读、初学者友好；第三方原件、波形和研究工具在忽略local_reference。结束前同步任务/证据/提交/下一步，不声称无环境会后台继续。
 
 ## 本机命令
 

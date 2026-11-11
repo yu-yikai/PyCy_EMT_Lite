@@ -38,5 +38,17 @@ uv run --locked python -m validation.cases.pll_dynamic_response.compare
 `local_reference/pll_dynamic_response/comparison_results/<运行编号>/`。
 普通教学运行仍使用`uv run python examples/11_pll_dynamic_response.py`。
 
-当前仅完成参考资格，PyCy候选比较和既有11正式验收仍待完成。
+## 已完成的验证
+
+三个窗口、三个信号共九项比较均通过，启动段保留。跨窗口最大绝对差为：
+
+| 信号 | 最大绝对差 |
+|---|---:|
+| 展开角度 | 5.68434e-14 rad |
+| 角频率 | 1.13687e-13 rad/s |
+| q轴电压 | 3.12639e-13 V |
+
+两边采用同一组离散方程和更新顺序；结论覆盖这里固定的参数与窗口。243项输入快照与九项指标经独立复算，默认原例也独立运行通过，全部结果与正式候选逐值一致。33项合成检查和1300项完整回归（含slow）通过。完整证据见[结果报告](validation_report.json)。
+
+既有11的本次补验证已完成。GitHub CI因账户账单锁未启动测试，跨操作系统结果仍待补验。
 本步骤不增加教学编号；并网VSC、电流环和直流电压环须分别验证。

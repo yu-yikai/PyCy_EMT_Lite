@@ -2914,11 +2914,16 @@
         "bytes": 60117,
         "sha256": "77adfc0cfe84670cce8c2b1435ca9fed852251fa32d2808ce82e19770a7fa11e"
       },
-      "candidate_executed": false,
-      "existing_11_formally_accepted": false,
+      "candidate_executed": true,
+      "existing_11_formally_accepted": true,
       "allows_redistribution": "Third-party originals and native waveforms remain in ignored local_reference",
       "scope": "Full1s reference qualified only; 100/50us solver, unchanged100us control, no signal midpoint observation.",
-      "blockers": []
+      "blockers": [],
+      "candidate_comparison": {
+        "path": "validation/cases/pll_dynamic_response/validation_report.json",
+        "bytes": 8454,
+        "sha256": "2ba60f5967d7ce2cf8d9e4f96559f055f98b7b89c82a280d6d64e1e269dbe950"
+      }
     }
   ],
   "scope_notes": [

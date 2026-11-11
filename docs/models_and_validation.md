@@ -31,7 +31,7 @@
 | PWM 示例 12 | 门极、浮置星点、基波 RL 参考、细网格对照 | 细网格不构成器件参考，边沿不自动定位；同一电力电子测试 |
 | 三端两电平 VSC-HVDC 示例 18 | 单站开环/闭环、双站、三站 FAST 故障恢复、PLL/dq/P/Vdc/Vac、桥端口功率及 DC 离散能量 | 参考模型的教学重实现，含 RC 缓冲及控制调整；[系统测试](../tests/test_three_terminal_vsc_hvdc.py)、[步后回调与抽样](../tests/test_step_callback.py) |
 | `ThreePhasePiLine`、`ThreePhaseParallelRLCLoad` | 初值/第一步、输出字段及额定换算；平衡 AC 启动、三相接地故障投入/清除的六状态分段 DOP853 对照、两种积分与步长细化；并联负荷 KCL、π 线离散能量 | 独立相简化网络，不外推任意不平衡故障；[`test_three_phase_existing_models_match_independent_ac_fault_reference`](../tests/test_three_phase.py) |
-| 控制块与 SRF-PLL | 基础功能、采样时刻一致性、初始锁定保持、平衡输入的独立 ODE 与一阶收敛 | 功能及特定平衡工况检查；无闭环电网/弱网工程验证；[控制测试](../tests/test_controls.py) |
+| 控制块与 SRF-PLL | 基础功能、采样一致性、独立ODE与一阶收敛；既有11完整离散Simulink对比 | 功能及特定平衡工况检查；无闭环电网/弱网工程验证；[控制测试](../tests/test_controls.py) |
 | 饱和励磁近似 | 参数、线性磁链/电流关系，以及单向跨拐点的独立分段 λ–i 参考与步长细化 | **未完成独立非线性能量、回程/周期、磁滞或真实涌流认证**；[`test_saturation_matches_piecewise_flux_current_and_refines`](../tests/test_transformers.py) |
 
 指标、结果读写、绘图和线性求解器另有 [指标](../tests/test_analysis.py)、[读写](../tests/test_results_io.py)、
@@ -583,6 +583,8 @@ PI 增益 80/1000、零积分初值，DOP853 参考窗口为 0–0.2 s。
 声明初始频率保持额定值，首区间沿用它；连续方程的瞬时比例反馈频率不用于核对 t=0 的声明输出。
 这些证据限于给定的平衡输入与离散关系及所列输入边界，不验证频率/相位突变性能、弱网稳定性、
 负序解耦、陷波器、专用限幅恢复或闭环并网控制。
+
+[既有11的真实Simulink对比](../validation/cases/pll_dynamic_response/README.md)另以R2026b标准离散块实现相同方程，完整1s参考与未修改原例在三窗九项判据下全部通过，原始启动误差保留。100/50µs求解步均保持100µs控制；第二次核调度一致性。独立默认运行和原始数据复算也已通过。此证据覆盖该固定离散工况，闭环电网仍需单独验证。
 
 PWM 辅助函数 `triangular_carrier()` 生成 [-1,1] 三角载波，`sine_pwm_duty()` 根据调制比和电角度给出占空比，
 `carrier_compare()` 输出 0/1 比较结果。PWM 函数在比较前拒绝非有限量及错误类型；载波频率须为正，调制比须在 [0,1] 内。
