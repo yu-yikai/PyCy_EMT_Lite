@@ -3200,6 +3200,40 @@
       "blockers": [
         "Freeze one standard master:force_dsout Real/Dim1 signal transfer between distinct source-fresh and recorded aliases, with exact observer components/ports/wires/nets and storage expectations. Preserve19 physical branches, source equations/CUR,32 channels, clocks and17 plus Vs/token budgets. Official v5.02 and installed5.0 support this primitive, not its future compiled ordering. Use a new package/helper only: accept whitespace in the exact bare negative own-CBR expression and the exact known PGBList separator, reject other records. Require build0, complete Map32/DATAStruct34 and all11 parameters/ports/instance identities, four currents and15 Vm fresh to own PGB in MainOut, and all37 dimensions/storage/writer guards. For DC prove negative ownBA then standard identity copy then own PGB, in order, without overwrite or own Dyn writer/history CUR. No Run even after a build-only pass; freeze a separate numeric execution contract first. Do not patch frozen failures, generated files or indices, reconstruct DC current or relax budgets."
       ]
+    },
+    {
+      "id": "pscad-derived-force-dsout-build-v5",
+      "short_code": "C1-FORCE-DSOUT-BUILD",
+      "name": "Standard Force to DSOUT for the source-current recording chain, build-only",
+      "source_kind": "Installed standard signal block between existing source-fresh observation and unchanged standard PGB",
+      "status": "inspected",
+      "content_inspected": true,
+      "opened_in_native_software": true,
+      "simulation_succeeded": false,
+      "reference_numeric_data_obtained": false,
+      "local_path": "local_reference/c1_openloop_reference_research/20261111T235951387384Z_force_dsout_build_only_v1/n/20261112T001751572848Z",
+      "samples": 0,
+      "configured_channels": 32,
+      "generated_Map_channels": 32,
+      "research_record": {
+        "path": "docs/development_roadmap/experiments/c1_force_dsout_build_only_20261112.json",
+        "bytes": 10536,
+        "sha256": "0264904c12d993353a7f6b457d9267de085f3579221653defcea5f72b0b86cdc",
+        "hash_scope": "Exact LF workspace bytes; Git LF blob identity verified separately at staging.",
+        "git_lf_bytes": 10536,
+        "git_lf_sha256": "0264904c12d993353a7f6b457d9267de085f3579221653defcea5f72b0b86cdc"
+      },
+      "native_build_only_status": "BUILD_STRUCTURAL_ADMISSION_PASS_NOT_NUMERICAL_PASS",
+      "structural_build_qualified": true,
+      "numeric_status": "NOT_OBSERVED",
+      "numerical_acceptance": false,
+      "candidate_executed": false,
+      "full_VSC_reference_ready": false,
+      "scope": "Build0 and normal guarded completion;517 independent structural checks plus108 binding rechecks PASS. Actual fresh DC read/identity copy/PGB ordered in MainOut. No Run/OUT or numerical acceptance.",
+      "allows_redistribution": "Native/library/helper files remain ignored; no redistribution rights claimed.",
+      "blockers": [
+        "Freeze a separate 32-channel short-probe Run contract, driver and two independent numerical analyzers before any Run or OUT access. Bind this closed structural qualification and the new package/source/input identities. Rebuild and recheck the complete source-negative-ownBA to standard-force identity copy to own-PGB MainOut chain, full metadata and storage/physics in the new run. Require real completion, complete actual INF/Map/PGB binding before OUT loading, all 81 configured rows including endpoints, 17 unchanged physical budgets and Vs/full-token Decimal radius gates including zero tokens. No inferred or reconstructed DC current, edge deletion, half-cell uncertainty or relaxed limits. Deleted ammeter-drop/rank2 gates remain NA. Only after short-probe numerical qualification freeze the full open-loop case and dual-step reference, then implement the minimal candidate with existing modules."
+      ]
     }
   ],
   "scope_notes": [

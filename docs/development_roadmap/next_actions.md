@@ -1,16 +1,13 @@
 # 恢复与下一步
 
 2026-11-12。目标active；恢复先读五状态，核分支/HEAD/工作区/实际远端。
-checkpoint为本记录前的fb9aaa8，须与Git历史核对；开发分支常规提交/里程碑推送已授权。
+checkpoint为本记录前的b246236，须与Git历史核对；开发分支常规提交/里程碑推送已授权。
 C1仍in_progress，新增9项本地/商业验收保持，跨OS另列F1。
 
-1. 先读[本轮构建记录](experiments/c1_output_intent_build_only_20261112.json)。唯一run231950255510Z/会话4225已闭场exit1；build0但worker1受控异常、quit返回，guarded/native completion均false。DC ownPGB在MainDyn451，负ownBA读取在MainOut854，同刻测量不合格；无Run/OUT，不恢复旧会话。
-2. runtime的CBR空格解析局限、上述真实时序拒绝、独立helper的PGBList分隔线异常分别保留。独立helper仅193完成检查PASS，未达完整元数据/4I+15Vm/37维度与STOF深门；另101描述符复核不补成准入。冻结旧包/脚本/收据，不修后重跑它们。
-3. 另冻且独审一个标准master:force_dsout（Real/Dim1）置于源fresh内部别名与标准DC PGB之间的最小方案。官方v5.02页面及本机5.0安装定义只支持该原语，未来调度待实测。
-   先固定不同输入/输出别名、精确观察组件/ports/wires/nets与存储预期；19电气分支、源方程/CUR、32通道、时钟、ideal flags和17预算及Vs/token门保持。新helper只针对合法CBR空格及精确已知PGBList注释分隔线修解析，其他未知记录仍拒绝。
-   新独立build-only必须build0、完整Map32/DATAStruct34及全11参数/ports/实例身份，4I和15Vm同MainOut fresh→ownPGB无覆盖；DC明确负ownBA→标准identity copy→ownPGB顺序且无Dyn writer/历史CUR。37维度/STOF、原物理和环境守卫保留；不改生成文件/手填索引/重构电流/放宽预算。build-only通过仍不允许Run。
-4. 结构合格后，另冻短探针执行/数值合同与分析器再Run；随后完整开环参数、双步长参考、最小候选。旧数值/时序FAIL保持，删除的A压降/秩2门为NA而非PASS。
-   复用CaseDefinition链、现有12/18与controls/vsc.py，沿开环→已知角dq电流→PLL→P前馈/Vac→真实DC电容Vdc及扰动推进。固定DC不认证Vdc，刚性电网不认证Vac；合闸/扰动/故障和D1仍待。
+1. 读[本轮结构验证记录](experiments/c1_force_dsout_build_only_20261112.json)。唯一run001751572848Z/会话81982已闭场exit0，build0、worker0且正常quit；guarded/build-only completion均true，自有进程清空。DC原始文件855→858→862行在MainOut形成负ownBA读取→标准force恒等传递→ownPGB，独立517深门及108绑定重核全过。
+2. 此包只允许build，未Run/OUT，数值NOT_OBSERVED。冻结包、helper、收据及全部旧FAIL，不恢复旧会话或修后重跑。Map32/DATAStruct34、4I/15Vm、全11参数/端口/层级和37维度深审已完成；仅观察STOF45→46，122个非DC传递角色/双射保持，物理STORF44不变。
+3. 另冻32通道短探针Run合同、新驱动和两路数值分析器。复用已有17项物理计算；先核来源/新包身份、原生正常完成及actual INF/Map/PGB全绑定，再读OUT。保留全81点含首末、原17预算及Vs/full-token Decimal词元半径门（含零词元）；不删边沿、不用半cell或重构DC电流。新run还须重核完整生成链/元数据/存储/原物理。现有未来数值稿仅草案，未授权其执行。
+4. 短探针数值合格后，冻结完整开环参数/指标、双步长真实参考，再做最小候选。删除A压降/秩2门保持NA；旧数值/时序/编译失败保留。复用CaseDefinition→Circuit→Simulator→SimulationResult、现有12/18和controls/vsc.py，沿开环→已知角dq电流→PLL→P前馈/Vac→真实DC电容Vdc及扰动推进；固定DC不认证Vdc，刚性电网不认证Vac。合闸/扰动/故障和D1仍待。
 5. F1最近已查CI43060348386在runner前因账单锁失败；外部恢复后补双OS，不重复轮询同终态或空提交绕锁。
 
 113源码/依赖未改，复用既有1300含slow/锁定/Ruff/mypy39，不称本轮重测。

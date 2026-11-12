@@ -1,13 +1,12 @@
 # 商业参考的实际运行与恢复入口（2026-11-09起）
 
-正式新增19–27共9项本地/商业验收；B1已completed40bef297，C1既有11 PLL补验证完成，完整开环VSC仍待。原件、波形与研究脚本留忽略目录。
+正式新增19–27共9项本地/商业验收；B1已completed40bef297，C1既有11 PLL补验证完成，完整开环VSC仍待。原件、波形和研究脚本留忽略目录。
 
-2026-11-12当前：[Output Intent源观察字段只构建记录](c1_output_intent_build_only_20261112.json)。
-会话4225/run231950255510Z已闭场exit1；build0，worker1受控异常且quit返回，guarded/native completion均false，自有进程清空。
-runtime先停于合法CBR空格解析局限；ROOT和maker另核实际DC PGB MainDyn451、负ownBA读取MainOut854，时序不合格。
-ROOT核22包件/67归档/3源语义；独立helper193完成检查PASS后遇PGBList分隔线，深门未达，另101描述符复核不补成准入。
-无Run/OUT，数值未观察。下一步另冻一个标准force_dsout信号链及观察图/存储边界；实际调度未证明，尚无新包或原生执行。
-113源码/依赖未改，复用既有1300含slow；[前次分段编译失败](c1_pgb_split_build_only_20261112.json)、[完整移段](c1_pgb_dsout_build_only_20261112.json)与[源电流构建](c1_source_current_build_only_20261112.json)分别保持。
+2026-11-12当前：[标准force_dsout只构建记录](c1_force_dsout_build_only_20261112.json)。
+run001751572848Z/会话81982已闭场exit0，244.493s；build0、worker0正常完成且quit返回，guarded/build-only completion均true、自有进程清空。
+真实生成DC读取→标准恒等传递→ownPGB在MainOut按序；ROOT核23包件/70归档/3源完整语义，独立517深门及108绑定重核全过。
+无Run/OUT或数值资格；下一步另冻短探针执行与两路分析合同。113源码/依赖未改，复用既有1300含slow。
+[前次Output Intent时序拒绝](c1_output_intent_build_only_20261112.json)及[分段编译失败](c1_pgb_split_build_only_20261112.json)均保持原结论，不被本次结构PASS覆盖。
 
 2026-11-11恢复历史记录：B1完整.200005s双步长参考及300输入资格、原12正式比较、340快照独审和独立Agg均通过；23专项与1267含slow全量通过，教学/报告完成，并已以40bef297正式验收提交推送，真实远端核同。恢复核同本地/远端3737e66、暂停12文件及111源码；不重跑成功输出。8cc1457为早期恢复历史，协议e25ebed先于native，入口3737e66先于候选，详见文末。
 

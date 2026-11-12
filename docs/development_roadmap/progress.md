@@ -1,14 +1,13 @@
 # 持久进度
 
 2026-11-12。目标active；C1仍in_progress，新增19–27共9项本地/商业验收保持，跨OS另列F1。
-既有11 PLL、12 SPWM补验证完成；当前在开环并网VSC的直流测量链验证阶段。
-Output Intent源观察字段+标准PGB方案已原生编译，错误0；但DC通道仍MainDyn写出，负ownBA读取在MainOut，时序不合格。
-runtime另有CBR空格解析局限；独立helper193检查PASS后停于PGBList分隔线，深审未完成，不把局部通过称完整准入。
-会话4225已结束，worker1受控异常且quit返回，guarded/native completion为false；自有进程清空，无Run/OUT，数值未观察。
-下一步另冻一个标准force_dsout信号块及必要别名/连接的最小方案，先核完整生成链；尚未实施或原生执行。
-113源码/依赖未改，复用同代码1300含slow/锁定/Ruff/mypy；本轮未重复全量。
-继续复用CaseDefinition链和现有元件，研究工具留忽略目录，保持教学精简、可读、便于初学者理解。
-见[本轮构建与测量拒绝记录](experiments/c1_output_intent_build_only_20261112.json)；完整开环、C1其余控制链和D1仍待。
+既有11 PLL、12 SPWM补验证完成；当前已完成开环并网VSC短探针的直流测量链结构验证。
+仅增加一个标准force_dsout信号块及必要连接。原生编译零错误、正常退出；生成代码的最新电流读取→传递→输出通道写入均在MainOut按序完成。
+独立517项深层检查和108项绑定重核全过；32通道、19电气分支、原物理与预算保持。
+本轮未启动数值仿真，无OUT波形；结构合格不等于短探针或完整VSC数值验收。下一步先冻结短探针执行和两路数值分析合同。
+113源码/依赖未改，复用既有1300含slow、锁定/Ruff/mypy基线；本轮未重复全量。
+继续复用CaseDefinition链和现有元件/控制器，研究工具留忽略目录，保持项目精简、可读、便于初学者理解。
+见[本轮结构验证记录](experiments/c1_force_dsout_build_only_20261112.json)。
 
 以下保留已完成的1ms诊断及历史；不覆盖上述当前状态。
 

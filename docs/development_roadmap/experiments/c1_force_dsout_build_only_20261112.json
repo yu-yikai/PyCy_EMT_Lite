@@ -1,0 +1,209 @@
+{
+  "schema": "c1_force_dsout_build_only_v1",
+  "recorded_utc": "2026-11-12T00:26:43.206199+00:00",
+  "checked_head": "b2462365d5c40efd27400b0999cf6a8c668f3d91",
+  "status": "BUILD_STRUCTURAL_ADMISSION_PASS_NOT_NUMERICAL_PASS",
+  "scope": {
+    "purpose": "Structural qualification of the short-probe DC recording chain; no numerical reference or candidate acceptance.",
+    "minimal_change": "Retain the existing source observation equation. Rename its instance output to I_dc_source_fresh_kA and add one unchanged standard master:force_dsout Real/Dim1 signal block plus one label/wire to the original recorded alias.",
+    "preserved": "19 physical branches, original source equations/CUR/ports,32 standard PGB channels, all gates/clocks/ideal flags,17 physical budgets and Vs/token gates.",
+    "actual_graph": {
+      "components": 165,
+      "wires": 130,
+      "ports": 231,
+      "nets": 72
+    },
+    "configured_only": {
+      "stop_s": 0.0004,
+      "step_s": 5e-06,
+      "expected_points_if_run": 81,
+      "channels": 32
+    },
+    "observed_waveform_points": 0,
+    "versions": "Installed PSCAD5.0 / GFortran4.6; native artifacts and research helpers remain ignored."
+  },
+  "frozen_before_native": {
+    "contract": {
+      "path": "local_reference/native_static_reviews/c1_force_dsout_build_contract_20261112/receipt.json",
+      "bytes": 4921,
+      "sha256": "4bb2b7d7a8642f195d952aeda974052fd72839d0dc99f09872ffc873c7589a1d"
+    },
+    "package_manifest": {
+      "path": "local_reference/c1_openloop_reference_research/20261111T235951387384Z_force_dsout_build_only_v1/manifest.json",
+      "bytes": 6956,
+      "sha256": "a629ff2b437643b5acccd59c607b9612dbb6bc8e74e91c770dd2cd5a2e1e5aac"
+    },
+    "package_files": 23,
+    "flat_input_pins": 14,
+    "static_review": {
+      "path": "local_reference/native_static_reviews/c1_force_dsout_final_static_20261112T001651239454Z/receipt.json",
+      "bytes": 7443,
+      "sha256": "332d62d04c4fad4a6dd2ecd12a339f25ef0e8be1b3317ceefd7e88548027ba18"
+    },
+    "independent_prelaunch": {
+      "path": "local_reference/native_static_reviews/c1_force_dsout_independent_final_prelaunch_20261112T001404294883Z/receipt.json",
+      "bytes": 12518,
+      "sha256": "7ee75d4a027bc7bc75cf1f9dec6344464149de8ecf274463aecd06890d66c0f3"
+    },
+    "independent_helper": {
+      "path": ".tmp/longterm/independent_c1_force_dsout_build_only_20261112.py",
+      "bytes": 63460,
+      "sha256": "94fe2fe70c5e8107003bfffc61f66f973e09bea0190c3ee06b0216ee66626d37"
+    },
+    "root_preflight": {
+      "path": "local_reference/native_static_reviews/c1_force_dsout_root_preflight_20261112/receipt.json",
+      "bytes": 1488,
+      "sha256": "8d1d86f2f32cc7598ec0ebfc688742158c57d80b118da4f574722bd27fab5917"
+    },
+    "finite_runtime_parser_and_chain_cases": {
+      "passed": 23,
+      "receipt": {
+        "path": ".tmp/longterm/c1-force-synthetic_20261112T000644967593Z/test_receipt.json",
+        "bytes": 5666,
+        "sha256": "b77e3d04c3e9b1b613e0f119350838514596d3183bc0647bf450b2007aef2e3e"
+      }
+    },
+    "finite_independent_helper_cases": {
+      "passed": 22,
+      "receipt": {
+        "path": "local_reference/native_static_reviews/c1_force_dsout_helper_pure_preparation_20261112T000247120164Z/receipt.json",
+        "bytes": 3097,
+        "sha256": "9e2c548f8ac4f3070477cbb3609048bde642ca1076e7e7839ae302b5dc3410c2"
+      }
+    },
+    "synthetic_scope": "Finite negative/positive parser and graph cases are not native evidence."
+  },
+  "native": {
+    "run": "local_reference/c1_openloop_reference_research/20261111T235951387384Z_force_dsout_build_only_v1/n/20261112T001751572848Z",
+    "session_id": 81982,
+    "authoritative_exec_closed": true,
+    "exec_exit_code": 0,
+    "elapsed_s": 244.4932758999057,
+    "native_build_errors": 0,
+    "worker_returncode": 0,
+    "worker_final_stage": "finished",
+    "quit_returned": true,
+    "exit_classification": "NORMAL_WORKER_COMPLETION",
+    "guarded_driver_completed": true,
+    "native_build_only_completed": true,
+    "generated_admission_passed": true,
+    "native_run_requested": false,
+    "native_run_returned": false,
+    "native_completion_observed": false,
+    "remaining_owned": [],
+    "forced_termination": false,
+    "no_OUT": true,
+    "environment_guards_unchanged": {
+      "profile_hash_unchanged": true,
+      "source_hash_unchanged": true,
+      "dependency_hashes_unchanged": true,
+      "parent_environment_unchanged": true
+    },
+    "terminal": {
+      "path": "local_reference/c1_openloop_reference_research/20261111T235951387384Z_force_dsout_build_only_v1/n/20261112T001751572848Z/terminal.json",
+      "bytes": 7644,
+      "sha256": "48bd422b54f1deeb0ba5f1e6b1f3d48084373e6bb74dc958d68e69b2c52e09ba"
+    },
+    "archive": {
+      "path": "local_reference/c1_openloop_reference_research/20261111T235951387384Z_force_dsout_build_only_v1/n/20261112T001751572848Z/manifest.json",
+      "bytes": 23018,
+      "sha256": "0f879af2e5f019004449712873b6cc6457075fed4634e025dd781489de3c556f"
+    }
+  },
+  "structural_evidence": {
+    "generated_source": {
+      "path": "local_reference/c1_openloop_reference_research/20261111T235951387384Z_force_dsout_build_only_v1/n/20261112T001751572848Z/project/vdiv.gf46/Main.f",
+      "bytes": 34089,
+      "sha256": "e6f2d22241ecd9756718ea4317c412825ba796ba4938a2f6169c40935b3807fc"
+    },
+    "DC_chain_raw_file_lines": [
+      {
+        "routine": "MainOut",
+        "line": 855,
+        "text": "I_dc_source_fresh_kA = -CBR( (IBRCH(1)+2), SS(1))"
+      },
+      {
+        "routine": "MainOut",
+        "line": 858,
+        "text": "I_dc_absorb_kA = I_dc_source_fresh_kA"
+      },
+      {
+        "routine": "MainOut",
+        "line": 862,
+        "text": "PGB(IPGB+27) = I_dc_absorb_kA"
+      }
+    ],
+    "independent_logical_lines": "271/274/278 after comment/continuation folding; raw file lines above are 855/858/862.",
+    "DC_chain_gates": {
+      "no_unknown_alias_assignment_or_extra_copy": true,
+      "one_negative_own_BA_raw_producer_MainOut": true,
+      "one_identity_copy_producer_MainOut": true,
+      "one_own_PGB_writer_MainOut": true,
+      "one_named_standard_force_header_MainOut": true,
+      "copy_belongs_only_to_named_standard_force_block": true,
+      "cache_roles_unique_and_known": true,
+      "strict_fresh_read_copy_PGB_order": true,
+      "Out_cache_restores_before_producer_writes_after_chain": true
+    },
+    "standard_force_instance": {
+      "iid": 1799337353,
+      "parameters": {
+        "Name": "DC_current_to_DSOUT",
+        "Dtype": "REAL",
+        "Dim": 1
+      },
+      "before_and_after_save_and_XML_match": true
+    },
+    "full_metadata": "Map32/DATAStruct34; all11 actual/saved PGB parameters, scalar ports and hierarchy bindings passed. All32 own indices have unique writers across all routines.",
+    "fresh_measurements": "All4 currents and15 voltage observations read before their own PGB in MainOut without overwrite or own MainDyn PGB.",
+    "generated_physics": "19 branch identities/orientations, source CFG/Dyn cores, R/L/switch/RTCF and source-definition inverse passed; three complete native/saved source snapshots match the frozen source semantics.",
+    "storage": {
+      "STOF_before": 45,
+      "STOF_after": 46,
+      "recorded_alias_slot": 38,
+      "raw_alias_slot": 46,
+      "other36_dimensions_unchanged": true,
+      "STORF": 44,
+      "non_DC_transfer_roles_unchanged": 122,
+      "offset_mapping_bijective": true,
+      "joint_active_slot_NSTOF_Map_delta": 1
+    },
+    "parser_scope": "New frozen helpers accept lexical CBR whitespace and the exact known trailing3-line PGBList banner only. Unknown producers/routines/records/history/storage collisions remain rejected; old failed helpers/packages were not edited or rerun."
+  },
+  "actual_reviews": {
+    "root_closed_facts": {
+      "path": "local_reference/native_static_reviews/c1_force_dsout_root_actual_20261112/receipt.json",
+      "bytes": 9119,
+      "sha256": "b899cfb4bcb02efbd9ff86da95afea433ba743360610ccc05c10b2ed8eb66461"
+    },
+    "independent_deep_review": {
+      "path": "local_reference/native_static_reviews/c1_force_dsout_build_independent_actual_20261112T001751572848Z_20261112T002246384716Z/receipt.json",
+      "bytes": 434732,
+      "sha256": "11e0e2e4e7aebccfd383e3093f958bb6e590af01406431fa8c374e9e5096bf39"
+    }
+  },
+  "independent_result": {
+    "status": "BUILD_STRUCTURAL_ADMISSION_PASS_NOT_NUMERICAL_PASS",
+    "actual_helper_invocations": 1,
+    "checks_passed": 517,
+    "failed_checks": 0,
+    "final_binding_rechecks_passed": 108,
+    "exception": false
+  },
+  "previous_result_preserved": {
+    "path": "docs/development_roadmap/experiments/c1_output_intent_build_only_20261112.json",
+    "bytes": 11201,
+    "sha256": "8d26354d697c3da2501fc81716096d5e495a65d642ed7af9e28e6d812254e521"
+  },
+  "historical_scope": "Prior native numerical/timing/compile failures remain unchanged. Removed ammeter-drop/rank2 gates remain NA, not PASS. This structural result does not evaluate or replace numerical budgets.",
+  "test_reuse": "All113 Python source files and production dependencies unchanged. Reuse prior1300 passed including slow, locked27/Ruff/mypy39; no full regression rerun this research-only turn.",
+  "numeric_status": "NOT_OBSERVED",
+  "numerical_acceptance": false,
+  "structural_build_qualified": true,
+  "overall_reference_accepted": false,
+  "full_VSC_reference_ready": false,
+  "candidate_executed": false,
+  "active_native_runs": 0,
+  "long_term_scope": "Formal new examples19-27 remain9; C1in_progress, D1planned, F1 external CI restoration pending; goal active.",
+  "next_gate": "Freeze a separate 32-channel short-probe Run contract, driver and two independent numerical analyzers before any Run or OUT access. Bind this closed structural qualification and the new package/source/input identities. Rebuild and recheck the complete source-negative-ownBA to standard-force identity copy to own-PGB MainOut chain, full metadata and storage/physics in the new run. Require real completion, complete actual INF/Map/PGB binding before OUT loading, all 81 configured rows including endpoints, 17 unchanged physical budgets and Vs/full-token Decimal radius gates including zero tokens. No inferred or reconstructed DC current, edge deletion, half-cell uncertainty or relaxed limits. Deleted ammeter-drop/rank2 gates remain NA. Only after short-probe numerical qualification freeze the full open-loop case and dual-step reference, then implement the minimal candidate with existing modules."
+}

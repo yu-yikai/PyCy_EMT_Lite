@@ -1,13 +1,12 @@
 # 验证状态
 
 2026-11-12。C1仍in_progress；新增19–27共9项本地/商业验收保持，跨OS单列F1。
-本轮Output Intent源观察字段+标准PGB原生build0，但DC ownPGB在MainDyn451、负ownBA读取在MainOut854，时序拒绝；完整开环未合格。
-runtime先停于合法CBR空格解析局限；独立helper193完成检查PASS后遇PGBList分隔线异常，未达深审，不能记独审PASS。
-ROOT全核22包件/67归档、3源完整语义；独立另101描述符复核PASS。Map32/DATAStruct34/37原始维度零差是有界事实，完整深层资格未建立。
-会话4225已闭场：worker1受控异常且quit返回，guarded/native completion为false；自有进程清空，无Run/OUT，数值NOT_OBSERVED。
-原件/环境未变；113源码/依赖未改，复用1300含slow等既有检查，本轮未重测。
-标准force_dsout下一方案未实施；C1其余控制链和D1待办，F1外部CI恢复待补。
-见[本轮构建记录](experiments/c1_output_intent_build_only_20261112.json)。
+本轮标准force_dsout直流测量链结构合格：原生build0、worker0正常退出，生成读取→传递→ownPGB均在MainOut；独立517深门及108绑定重核全过。
+完整Map32/DATAStruct34、全11参数/端口/实例、4I和15Vm新鲜度、19分支/源物理及存储守卫均通过；STOF45→46，其他36维度不变。
+ROOT另核23包件/70归档及3份完整源语义。会话81982已闭场，自有进程清空、环境不变。
+本轮无Run/OUT、数值NOT_OBSERVED；短探针数值及完整开环尚未合格。下一步另冻执行合同及两路数值分析器。
+113源码/依赖未改，复用既有1300含slow和锁定/Ruff/mypy39，本轮未重测。
+C1其余控制链及D1待办，F1外部CI恢复待补。见[本轮构建记录](experiments/c1_force_dsout_build_only_20261112.json)。
 
 | 对象 | 内部证据 | 外部参考 | 正式状态 |
 |---|---|---|---|
