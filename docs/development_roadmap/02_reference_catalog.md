@@ -1,5 +1,9 @@
 # 参考模型目录与筛选依据
 
+2026-11-16最新目录共36项；原35项JSON对象保持。新增`pscad-derived-force-dsout-bounded-probe-v5`为真实运行且短scope数值通过的400µs人工向量研究探针（32量81点），不等于完整SPWM/VSC候选参考。见[公开记录](experiments/c1_force_dsout_bounded_numeric_20261116.json)。完整开环双步长参考仍待单独冻结/获取/验证。
+
+以下保留历史记录。
+
 初查日期：2026-11-04；最近核验：2026-11-12。机器可读记录见 [reference_catalog.json](reference_catalog.json)。本轮已下载的第三方原件仅保存在忽略 Git 的 `local_reference/`；下载不代表获得再分发许可。
 
 ## 证据状态

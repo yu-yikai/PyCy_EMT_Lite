@@ -1,5 +1,11 @@
 # C1：开环并网VSC参考设计
 
+2026-11-16：400µs/5µs人工八态短探针已取得真实数值资格，见[记录](c1_force_dsout_bounded_numeric_20261116.json)。唯一run023853622403Z正常闭场；551实际结构/INF门、118绑定复核与双路17+Vs全过。仅为浮置400V、R1Ω/L1mH、1ms电网源渐启的32通道81点，尚无完整SPWM/候选。源fresh→标准force→PGB使用实际电流，不用历史CUR或重构；Vs与桥轨是rank1，删除A/drop/rank2仍NA。配置网格源门通过，非约束TIME词元Lipschitz只作诊断，不证明内部源精度。
+
+下一步另冻完整开环协议和真实双步长参考：先修草案的旧测量链，固定整数门极/参考tick、t0、完整窗口/阈值/采集尾点；复用现有组件和CaseDefinition链。设计审查本地入口为local_reference/native_static_reviews/c1_full_openloop_reuse_review_20261116T024237332315Z/receipt.json。
+
+以下保留历史记录。
+
 2026-11-12。既有11 PLL补验证完成；C1完整链仍in_progress，新增完成数9。
 短探针只增加一个标准force_dsout和必要连接，直流测量读取→传递→通道写出已通过真实构建与独立结构深审。
 原电路/源物理、32通道、时钟和预算保持；本轮未Run或读取OUT，尚无数值资格。

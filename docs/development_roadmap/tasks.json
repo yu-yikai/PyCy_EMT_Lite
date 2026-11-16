@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
-  "updated_date": "2026-11-12",
+  "updated_date": "2026-11-16",
   "timezone": "Asia/Shanghai",
   "branch": "codex/emt-examples-longterm",
-  "checkpoint_head": "b2462365d5c40efd27400b0999cf6a8c668f3d91",
+  "checkpoint_head": "63e51654499c44ac215ab776d8b58f994935d7c1",
   "current_task": "C1",
   "formal_new_examples_completed": 9,
   "status_values": [
@@ -667,9 +667,10 @@
         "pscad-derived-dc-pgb-build-v5",
         "pscad-derived-dc-pgb-split-build-v5",
         "pscad-derived-output-intent-build-v5",
-        "pscad-derived-force-dsout-build-v5"
+        "pscad-derived-force-dsout-build-v5",
+        "pscad-derived-force-dsout-bounded-probe-v5"
       ],
-      "validation": "既有11 PLL已验收；本轮标准force_dsout最小信号链原生build0且正常退出，DC读取→传递→PGB全在MainOut。独立517深层检查及108绑定重核全过，32通道/19分支/原物理与预算保持；结构合格。未Run/OUT，数值未观察，完整开环及C1其余链仍待。113源码/依赖未改，复用1300含slow基线。",
+      "validation": "既有11 PLL和12 SPWM补验证已完成。C1新400µs人工八态短探针在会话63693正常闭场：build0/Run一次/quit/owned[]，551项实际结构及INF映射与118项绑定复核、双路原17+Vs数值检查均通过，32通道全81点/80段保留；源/完整末位精度门合格，删除A/drop/rank2仍NA。仅短探针资格，完整SPWM开环、其余闭环链和候选未验收；本轮113源码/依赖未变，1300含slow为既有回归。",
       "acceptance": "局部、可独立运行验证的教学例逐项验收",
       "status": "in_progress",
       "files": [
@@ -690,7 +691,8 @@
         "docs/development_roadmap/experiments/c1_pgb_dsout_build_only_20261112.json",
         "docs/development_roadmap/experiments/c1_pgb_split_build_only_20261112.json",
         "docs/development_roadmap/experiments/c1_output_intent_build_only_20261112.json",
-        "docs/development_roadmap/experiments/c1_force_dsout_build_only_20261112.json"
+        "docs/development_roadmap/experiments/c1_force_dsout_build_only_20261112.json",
+        "docs/development_roadmap/experiments/c1_force_dsout_bounded_numeric_20261116.json"
       ],
       "commits": [
         "b835e31785fab3fda247c333d23edbe9ce576dfa",
@@ -705,7 +707,8 @@
         "e0d7e63b7756a37b53b628e1dbcdc1aa043c3845",
         "2e158872b1a55ee32836e34561981fb458d49bb7",
         "fb9aaa8612a2725d9a93ec248b604d39f2be57fb",
-        "b2462365d5c40efd27400b0999cf6a8c668f3d91"
+        "b2462365d5c40efd27400b0999cf6a8c668f3d91",
+        "63e51654499c44ac215ab776d8b58f994935d7c1"
       ],
       "blockers": [],
       "reference_feasibility": {
@@ -716,7 +719,7 @@
         "evidence_sha256": "d92469cdd234477829ca5a5fa75a67648f17235fffadf3d3cbdaa73672375427",
         "native_executed": false
       },
-      "current_stage": "open_loop_force_dsout_build_qualified_numeric_pending",
+      "current_stage": "open_loop_short_probe_qualified_full_protocol_next",
       "interface_discovery": {
         "status": "qualified_native_satk_batch_interface",
         "simulink_model_tools_provided": false,
@@ -1105,6 +1108,59 @@
         "full_VSC_reference_ready": false,
         "new_candidate_executed": false,
         "active_native_runs": 0
+      },
+      "numeric_preparation_pause": {
+        "record": {
+          "path": "local_reference/c1_openloop_reference_research/pause_checkpoints/20261112T004850063339Z/pause.json",
+          "bytes": 3587,
+          "sha256": "d79fc87db723617ae06b4d507b7ef4905db3e66b3ba2022bb16753c67573026c"
+        },
+        "status": "paused_preparation_not_native_executed",
+        "package_manifest": {
+          "path": "local_reference/c1_openloop_reference_research/20261112T004216074571Z_force_dsout_bounded_numeric_v1/manifest.json",
+          "bytes": 7365,
+          "sha256": "1d08330d1f266b93103aafdbcbbf0e9bcb65e0d5d4793a221755ffe436778f8f"
+        },
+        "numeric_status": "NOT_OBSERVED",
+        "final_analyzers_sealed": false,
+        "native_started": false,
+        "candidate_executed": false,
+        "historical_pause_only": true
+      },
+      "numeric_preparation_resume": {
+        "record": {
+          "path": "local_reference/c1_openloop_reference_research/resume_checkpoints/20261116T022604926321Z/resume.json",
+          "bytes": 2656,
+          "sha256": "f5ede11533040fa53aa4be58c0b8a507afff22c8267ccb50bfb2ecfaaef448e3"
+        },
+        "v1_status": "FROZEN_NOT_EXECUTED_IMPORT_ORDER_REVIEW_FINDING",
+        "native_started": true,
+        "numeric_status": "SHORT_PROBE_NUMERICALLY_QUALIFIED_NOT_FULL_VSC",
+        "candidate_executed": false,
+        "final_analyzers_sealed": true,
+        "run_closed": true
+      },
+      "force_dsout_bounded_numeric": {
+        "status": "SHORT_PROBE_NUMERICALLY_QUALIFIED_NOT_FULL_VSC",
+        "record": {
+          "path": "docs/development_roadmap/experiments/c1_force_dsout_bounded_numeric_20261116.json",
+          "bytes": 14625,
+          "sha256": "f2b665412dfd1ddffe011553b344f608c4a4d18065c133c670a9e2da07997f58",
+          "hash_scope": "Exact LF workspace bytes; staged Git LF blob checked before commit.",
+          "git_lf_bytes": 14625,
+          "git_lf_sha256": "f2b665412dfd1ddffe011553b344f608c4a4d18065c133c670a9e2da07997f58"
+        },
+        "short_probe_numerically_qualified": true,
+        "run": "local_reference/c1_openloop_reference_research/20261116T023156856496Z_force_dsout_bounded_numeric_v2/n/20261116T023853622403Z",
+        "session_id": 63693,
+        "authoritative_exec_closed": true,
+        "active_native_runs": 0,
+        "source113_unchanged": true,
+        "all17_plus_Vs_pass": true,
+        "full_VSC_reference_ready": false,
+        "candidate_executed": false,
+        "formal_new_examples_completed": 9,
+        "next_gate": "Freeze a separate complete openloop-SPWM protocol and dual-step reference before any candidate. Fix5us gate/100us reference ticks, initial000/111,20ms source ramp, windows/thresholds/point counts and replace outdated deleted-A/rank2 text in the old draft."
       }
     },
     {
@@ -1222,44 +1278,42 @@
   ],
   "execution_status": "active",
   "pause_checkpoint": {
+    "path": "local_reference/c1_openloop_reference_research/pause_checkpoints/20261112T004850063339Z/pause.json",
+    "bytes": 3587,
+    "sha256": "d79fc87db723617ae06b4d507b7ef4905db3e66b3ba2022bb16753c67573026c",
     "reason": "explicit_user_goal_paused",
-    "paused_utc": "2026-11-11T03:34:46.257751+00:00",
-    "last_pushed_milestone": "3737e663c89646cf76e6cd9f4880d0e579d95731",
-    "task": "B1",
-    "task_status": "validated_final_Git_pending",
-    "native_and_candidate_and_pytest_terminal": true,
+    "paused_utc": "2026-11-12T00:48:50.063339+00:00",
+    "last_pushed_milestone": "63e51654499c44ac215ab776d8b58f994935d7c1",
+    "task": "C1",
+    "task_status": "in_progress",
+    "native_started_this_turn": false,
     "known_owned_runs_remaining": 0,
-    "resume_requires_explicit_user_instruction": true,
-    "record": "local_reference/two_level_pwm_pscad/pause_checkpoints/20261111T033446257751Z/pause.json",
+    "resume_requires_explicit_user_instruction": false,
     "formal_new_examples_completed": 9,
-    "full_test_result": "1267 passed,494.62s,including slow;0 failures/errors/skipped",
-    "candidate_report": "local_reference/two_level_pwm_pscad/comparison_results/20261111T032613323109Z/report.json",
-    "candidate_report_sha256": "f52762d559beff7b16608928d12f831fd642b49b31466595010563770d2faa38",
-    "public_report": "validation/cases/two_level_pwm_pscad/validation_report.json",
-    "public_report_sha256": "1d235718f31e7ec095ec33396b81d14f5975ffb540cdffaa4139f7d5db64dc0e",
-    "note": "已按用户指令暂停；不启动新的开发、仿真或测试。B1数值/独审/独立运行/1267全量及教学已完成，状态validated，最终验收文档与报告保留未提交；入口3737e66已推送。无已知自有运行待清理。须用户明确恢复后先核Git和证据，再完成最终文档一致性审查、验收提交推送；本次不进入C1。",
-    "historical_pause_only": true
+    "historical_pause_only": true,
+    "resumed_by": {
+      "path": "local_reference/c1_openloop_reference_research/resume_checkpoints/20261116T022604926321Z/resume.json",
+      "bytes": 2656,
+      "sha256": "f5ede11533040fa53aa4be58c0b8a507afff22c8267ccb50bfb2ecfaaef448e3"
+    }
   },
   "goal_status": "active",
   "resume_checkpoint": {
-    "resumed_utc": "2026-11-11T13:24:16.085490+00:00",
-    "authorization": "explicit_user_goal_active_and_continue",
-    "checked_head": "3737e663c89646cf76e6cd9f4880d0e579d95731",
+    "resumed_utc": "2026-11-16T02:26:04.926321+00:00",
+    "authorization": "active_goal_continuation_user_instruction",
+    "checked_head": "63e51654499c44ac215ab776d8b58f994935d7c1",
     "remote_head_verified_same": true,
-    "pause_record": "local_reference/two_level_pwm_pscad/pause_checkpoints/20261111T033446257751Z/pause.json",
-    "pause_record_sha256": "186cdb10ce163070e05af1aa90bbdbcfc5fe75c3a90106c3e1d340cb83b435c8",
-    "uncommitted12_unchanged_at_resume": true,
-    "python111_unchanged_at_resume": true,
-    "previous_goal_turn_classification": "progress",
-    "previous_progress": "Completed full1267 tests, actual candidate comparison and independent audit/default12 run; preserved pending acceptance documents at explicit pause.",
-    "no_successful_simulation_or_tests_restarted": true,
-    "evidence_review": {
-      "path": "local_reference/native_static_reviews/b1_resume_evidence_20261111/receipt_20261111T132350441453Z.json",
-      "sha256": "73c22f1cbf7bfafaa1cc563e475bfb3293fa5e02d52386b4064e42b2a3eb32e8"
+    "previous_goal_turn_classification": "no_progress_status_only",
+    "record": {
+      "path": "local_reference/c1_openloop_reference_research/resume_checkpoints/20261116T022604926321Z/resume.json",
+      "bytes": 2656,
+      "sha256": "f5ede11533040fa53aa4be58c0b8a507afff22c8267ccb50bfb2ecfaaef448e3"
     },
-    "latest_checked_head": "b2462365d5c40efd27400b0999cf6a8c668f3d91",
-    "latest_remote_head_verified_same": true,
-    "latest_goal_turn_classification": "progress"
+    "source113_unchanged_at_resume": true,
+    "no_previous_native_or_tests_restarted": true,
+    "latest_checked_head": "63e51654499c44ac215ab776d8b58f994935d7c1",
+    "latest_goal_turn_classification": "progress",
+    "latest_progress": "Single bounded native run and551/118 actual mapping plus independent dual numerical all17+Vs PASS; source113/dependencies unchanged; fullVSC not qualified."
   },
   "pause_checkpoint_history": [
     {
@@ -1271,7 +1325,63 @@
       "stage": "builder_after_save_ports_off_c_l",
       "owned_processes_remaining": 0,
       "resume_requires_explicit_user_instruction": true
+    },
+    {
+      "reason": "explicit_user_goal_paused",
+      "paused_utc": "2026-11-11T03:34:46.257751+00:00",
+      "last_pushed_milestone": "3737e663c89646cf76e6cd9f4880d0e579d95731",
+      "task": "B1",
+      "task_status": "validated_final_Git_pending",
+      "native_and_candidate_and_pytest_terminal": true,
+      "known_owned_runs_remaining": 0,
+      "resume_requires_explicit_user_instruction": true,
+      "record": "local_reference/two_level_pwm_pscad/pause_checkpoints/20261111T033446257751Z/pause.json",
+      "formal_new_examples_completed": 9,
+      "full_test_result": "1267 passed,494.62s,including slow;0 failures/errors/skipped",
+      "candidate_report": "local_reference/two_level_pwm_pscad/comparison_results/20261111T032613323109Z/report.json",
+      "candidate_report_sha256": "f52762d559beff7b16608928d12f831fd642b49b31466595010563770d2faa38",
+      "public_report": "validation/cases/two_level_pwm_pscad/validation_report.json",
+      "public_report_sha256": "1d235718f31e7ec095ec33396b81d14f5975ffb540cdffaa4139f7d5db64dc0e",
+      "note": "已按用户指令暂停；不启动新的开发、仿真或测试。B1数值/独审/独立运行/1267全量及教学已完成，状态validated，最终验收文档与报告保留未提交；入口3737e66已推送。无已知自有运行待清理。须用户明确恢复后先核Git和证据，再完成最终文档一致性审查、验收提交推送；本次不进入C1。",
+      "historical_pause_only": true
+    },
+    {
+      "path": "local_reference/c1_openloop_reference_research/pause_checkpoints/20261112T004850063339Z/pause.json",
+      "bytes": 3587,
+      "sha256": "d79fc87db723617ae06b4d507b7ef4905db3e66b3ba2022bb16753c67573026c",
+      "reason": "explicit_user_goal_paused",
+      "paused_utc": "2026-11-12T00:48:50.063339+00:00",
+      "last_pushed_milestone": "63e51654499c44ac215ab776d8b58f994935d7c1",
+      "task": "C1",
+      "task_status": "in_progress",
+      "native_started_this_turn": false,
+      "known_owned_runs_remaining": 0,
+      "resume_requires_explicit_user_instruction": true,
+      "formal_new_examples_completed": 9,
+      "historical_pause_only": true
     }
   ],
-  "current_stage": "open_loop_force_dsout_build_qualified_numeric_pending"
+  "current_stage": "open_loop_short_probe_qualified_full_protocol_next",
+  "resume_checkpoint_history": [
+    {
+      "resumed_utc": "2026-11-11T13:24:16.085490+00:00",
+      "authorization": "explicit_user_goal_active_and_continue",
+      "checked_head": "3737e663c89646cf76e6cd9f4880d0e579d95731",
+      "remote_head_verified_same": true,
+      "pause_record": "local_reference/two_level_pwm_pscad/pause_checkpoints/20261111T033446257751Z/pause.json",
+      "pause_record_sha256": "186cdb10ce163070e05af1aa90bbdbcfc5fe75c3a90106c3e1d340cb83b435c8",
+      "uncommitted12_unchanged_at_resume": true,
+      "python111_unchanged_at_resume": true,
+      "previous_goal_turn_classification": "progress",
+      "previous_progress": "Completed full1267 tests, actual candidate comparison and independent audit/default12 run; preserved pending acceptance documents at explicit pause.",
+      "no_successful_simulation_or_tests_restarted": true,
+      "evidence_review": {
+        "path": "local_reference/native_static_reviews/b1_resume_evidence_20261111/receipt_20261111T132350441453Z.json",
+        "sha256": "73c22f1cbf7bfafaa1cc563e475bfb3293fa5e02d52386b4064e42b2a3eb32e8"
+      },
+      "latest_checked_head": "63e51654499c44ac215ab776d8b58f994935d7c1",
+      "latest_remote_head_verified_same": true,
+      "latest_goal_turn_classification": "progress_before_explicit_pause"
+    }
+  ]
 }

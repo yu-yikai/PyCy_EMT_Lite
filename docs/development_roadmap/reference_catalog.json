@@ -3234,6 +3234,38 @@
       "blockers": [
         "Freeze a separate 32-channel short-probe Run contract, driver and two independent numerical analyzers before any Run or OUT access. Bind this closed structural qualification and the new package/source/input identities. Rebuild and recheck the complete source-negative-ownBA to standard-force identity copy to own-PGB MainOut chain, full metadata and storage/physics in the new run. Require real completion, complete actual INF/Map/PGB binding before OUT loading, all 81 configured rows including endpoints, 17 unchanged physical budgets and Vs/full-token Decimal radius gates including zero tokens. No inferred or reconstructed DC current, edge deletion, half-cell uncertainty or relaxed limits. Deleted ammeter-drop/rank2 gates remain NA. Only after short-probe numerical qualification freeze the full open-loop case and dual-step reference, then implement the minimal candidate with existing modules."
       ]
+    },
+    {
+      "id": "pscad-derived-force-dsout-bounded-probe-v5",
+      "short_code": "C1-FORCE-DSOUT-BOUNDED",
+      "name": "Manual-vector short probe with fresh standard-force DC current recording",
+      "source_kind": "Derived installed-PSCAD5.0/GFortran4.6 research plant; same19 physical branches, unchanged source equations plus observation alias and standard force block.",
+      "status": "runnable",
+      "content_inspected": true,
+      "opened_in_native_software": true,
+      "simulation_succeeded": true,
+      "reference_numeric_data_obtained": true,
+      "local_path": "local_reference/c1_openloop_reference_research/20261116T023156856496Z_force_dsout_bounded_numeric_v2/n/20261116T023853622403Z",
+      "samples": 81,
+      "configured_channels": 32,
+      "generated_Map_channels": 32,
+      "research_record": {
+        "path": "docs/development_roadmap/experiments/c1_force_dsout_bounded_numeric_20261116.json",
+        "bytes": 14625,
+        "sha256": "f2b665412dfd1ddffe011553b344f608c4a4d18065c133c670a9e2da07997f58",
+        "hash_scope": "Exact LF workspace bytes; staged Git LF blob checked before commit.",
+        "git_lf_bytes": 14625,
+        "git_lf_sha256": "f2b665412dfd1ddffe011553b344f608c4a4d18065c133c670a9e2da07997f58"
+      },
+      "short_probe_numerically_qualified": true,
+      "numerical_acceptance": true,
+      "candidate_executed": false,
+      "full_VSC_reference_ready": false,
+      "scope": "400us/5us,81rows/80segments,manual8 vectors,R1ohm/L1mH/400V,source1ms ramp.551mapping+118rechecks;dual numerical17+Vs PASS. Not a full-SPWM or candidate reference.",
+      "allows_redistribution": "Vendor/library/raw/helper artifacts remain ignored; no redistribution rights claimed.",
+      "blockers": [
+        "Freeze separate complete openloop-SPWM protocol and acquire/qualify real dual-step references before candidate implementation."
+      ]
     }
   ],
   "scope_notes": [
