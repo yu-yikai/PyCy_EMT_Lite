@@ -1,5 +1,9 @@
 # 验证状态
 
+2026-11-16当前：固定h最终120源码与2依赖的锁定同步、全范围Ruff/mypy（39文件）及1566项含slow回归通过（0失败/错误/跳过），默认独立Agg运行40001点通过。真实Simscape参考资格保持。新候选两档40002/80003点的双路独立检查均确认：粗档共模2487点超限，峰值2.533674891µV>原2µV；细档物理门、150/150同h与132跨h门通过，粗档条件预测仅作诊断。63596数值exit1非资源中止，17585测试exit0，均已终态；输入/快照/输出哈希重核一致。候选未验收，新增完成9，C1/跨OS未完成。见[机器报告](../../validation/cases/grid_connected_vsc_open_loop/validation_report.json)。下一项驱动账本仅有未执行计划。
+
+## 已记录里程碑
+
 2026-11-16：完整开环VSC的真实Simscape参考已通过资格验收：[资格报告](../../validation/cases/grid_connected_vsc_open_loop/qualified_reference_report.json)。两档40002/80003点、全部57量原时间位、原19门及辅助门、四窗/六周期和132跨h门通过；最终独审另核6960290次Time/Clock位及69个原始行，未将有限点审查冒称完整数学重跑。
 
 完整MAT重载后29个logsout数值摘要与tout前后一致；不宣称完整simlog树的任意对象元数据逐项相等。细档额外6个R_command日志仍40002点，正式导出57量均保持80003点。科学计数法文件大小仅由冻结窄规则精确核整数，原读取器FAIL保留。见[完整证据与边界](experiments/c1_nojvm_full_reference_20261116.json)。

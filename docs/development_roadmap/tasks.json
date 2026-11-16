@@ -3,7 +3,7 @@
   "updated_date": "2026-11-16",
   "timezone": "Asia/Shanghai",
   "branch": "codex/emt-examples-longterm",
-  "checkpoint_head": "fadb979f1dadd88962ae850478a6b864b95652a7",
+  "checkpoint_head": "bbb1e2d7dd669cade3621f4b0d5853d69ca43300",
   "current_task": "C1",
   "formal_new_examples_completed": 9,
   "status_values": [
@@ -671,7 +671,7 @@
         "pscad-derived-force-dsout-bounded-probe-v5",
         "simscape-derived-grid-vsc-openloop-r2025a"
       ],
-      "validation": "完整真实R2025a Simscape双档40002/80003点含尾点、57量时间位、原19门与辅助门、四窗/六周期及132跨h门通过，ROOT封存完整开环参考资格。短MAT-only恢复通过，但原失败保留。28号候选尚未实施；C1全链与跨OS未完成。",
+      "validation": "真实Simscape参考资格保持。固定h修复bbb1e2d通过1566含slow、锁定同步/Ruff/mypy及默认独立40001点运行。新完整双路比较粗档仅共模2487点、2.533675µV>2µV；细档物理和150/150/132比较通过。候选未验收，新增9，C1与跨OS未完成；零新解驱动账本仅有计划。",
       "acceptance": "局部、可独立运行验证的教学例逐项验收",
       "status": "in_progress",
       "files": [
@@ -709,7 +709,19 @@
         "docs/development_roadmap/experiments/c1_simscape_full_resource_stop_20261116.json",
         "docs/development_roadmap/experiments/c1_nojvm_short_saved_mat_20261116.json",
         "docs/development_roadmap/experiments/c1_nojvm_full_reference_20261116.json",
-        "validation/cases/grid_connected_vsc_open_loop/qualified_reference_report.json"
+        "validation/cases/grid_connected_vsc_open_loop/qualified_reference_report.json",
+        "docs/development_roadmap/experiments/c1_candidate_first_pair_failure_20261116.json",
+        "examples/28_grid_connected_vsc_open_loop.py",
+        "tests/test_grid_connected_vsc_open_loop.py",
+        "tests/test_grid_connected_vsc_open_loop_metrics.py",
+        "validation/cases/grid_connected_vsc_open_loop/README.md",
+        "validation/cases/grid_connected_vsc_open_loop/binding.py",
+        "validation/cases/grid_connected_vsc_open_loop/compare.py",
+        "validation/cases/grid_connected_vsc_open_loop/manifest.json",
+        "validation/cases/grid_connected_vsc_open_loop/metrics.py",
+        "validation/cases/grid_connected_vsc_open_loop/physics.py",
+        "validation/cases/grid_connected_vsc_open_loop/validation_report.json",
+        "docs/development_roadmap/experiments/fixed_time_grid_step_repair_20261116.json"
       ],
       "commits": [
         "b835e31785fab3fda247c333d23edbe9ce576dfa",
@@ -738,10 +750,13 @@
         "457ba4eadab46360cc27dfc65e3f2320630028bc",
         "5ac9d46b96a8c36622620d7e4d72ea9f64e7274c",
         "b57a2a8c06614cf8c626b0e189402063fa82dffd",
-        "fadb979f1dadd88962ae850478a6b864b95652a7"
+        "fadb979f1dadd88962ae850478a6b864b95652a7",
+        "3c3c3ca1dcc025b7bee130f3c90f20f58b37b1d1",
+        "bbb1e2d7dd669cade3621f4b0d5853d69ca43300"
       ],
       "blockers": [
-        "开环参考已合格；下一步最小教学候选及原协议全部同h/跨h比较、内部测试、独立运行、图报告、说明和Git尚待完成。"
+        "5µs候选共模物理硬门未通过；固定h修复未解决此误差，必须保留原门、全点及两次失败。",
+        "下一步先独审并另封全点零新解驱动账本，分解观测结果不等于修复因果；正式候选接受须后续完整重验。"
       ],
       "reference_feasibility": {
         "status": "read_only_feasibility_only",
@@ -751,7 +766,20 @@
         "evidence_sha256": "d92469cdd234477829ca5a5fa75a67648f17235fffadf3d3cbdaa73672375427",
         "native_executed": false
       },
-      "current_stage": "full_simscape_openloop_reference_qualified_candidate_pending",
+      "current_stage": "openloop_candidate_numeric_failed_fixed_h_verified_zero_solve_ledger_planned",
+      "open_loop_candidate_preparation": {
+        "record": {
+          "path": "docs/development_roadmap/experiments/c1_openloop_candidate_preparation_20261116.json",
+          "bytes": 2469,
+          "sha256": "c7d442ea3b5434edf6723c94b4d68fdad5d6f3ef378e76b820272db7f71b9340"
+        },
+        "status": "draft_not_executed_or_accepted",
+        "candidate_simulation_executed": false,
+        "candidate_accepted": false,
+        "new_full_regression_executed": false,
+        "formal_new_examples_completed": 9,
+        "historical_snapshot_only": true
+      },
       "interface_discovery": {
         "status": "qualified_native_satk_batch_interface",
         "simulink_model_tools_provided": false,
@@ -1441,6 +1469,48 @@
         "candidate_implemented": false,
         "active_workers": 0,
         "original_PSCAD_FAIL_preserved": true
+      },
+      "open_loop_candidate_first_pair": {
+        "record": {
+          "path": "docs/development_roadmap/experiments/c1_candidate_first_pair_failure_20261116.json",
+          "bytes": 6768,
+          "sha256": "2101dbf7b368d930d274aa2ce8e6d585cbd419ccb03fc47c960ae420f17f192d"
+        },
+        "status": "CANDIDATE_NUMERIC_FAIL_NOT_ACCEPTED",
+        "candidate_simulation_executed": true,
+        "candidate_accepted": false,
+        "full_regression_old_snapshot_passed": 1554,
+        "current_changes_covered": false,
+        "formal_new_examples_completed": 9
+      },
+      "open_loop_candidate_fixed_h_pair": {
+        "record": {
+          "path": "validation/cases/grid_connected_vsc_open_loop/validation_report.json",
+          "bytes": 5735,
+          "sha256": "503fc4b5fd1b2e2e6bc570f44b8b91c1cf062705e5354780bf725cc7dc2f1c63"
+        },
+        "status": "CANDIDATE_NUMERIC_FAIL_NOT_ACCEPTED",
+        "candidate_executed": true,
+        "candidate_accepted": false,
+        "full_regression_passed": 1566,
+        "default_independent_run_passed": true,
+        "sessions_terminal": [
+          63596,
+          17585
+        ],
+        "active_workers": 0,
+        "formal_new_examples_completed": 9
+      },
+      "next_zero_solve_ledger": {
+        "plan": {
+          "path": "local_reference/native_static_reviews/c1_fixed_h_zero_solve_ledger_plan_20261116T154539272172Z/plan.json",
+          "bytes": 14622,
+          "sha256": "154f0b73e990da283a53f4b9bc80afdf4e3bc2b1d7dfea70895c8b5024f73993"
+        },
+        "execution_authorized": false,
+        "analyzer_written": false,
+        "executed": false,
+        "new_solver_or_trajectory_authorized_by_plan": false
       }
     },
     {
@@ -1674,7 +1744,7 @@
       "historical_pause_only": true
     }
   ],
-  "current_stage": "full_simscape_openloop_reference_qualified_candidate_pending",
+  "current_stage": "openloop_candidate_numeric_failed_fixed_h_verified_zero_solve_ledger_planned",
   "resume_checkpoint_history": [
     {
       "resumed_utc": "2026-11-11T13:24:16.085490+00:00",
@@ -1698,28 +1768,29 @@
     }
   ],
   "current_source_snapshot": {
-    "path": "local_reference/native_static_reviews/vsc_input_fix_ROOT_20261116T111042668097Z/source113.json",
-    "bytes": 12980,
-    "sha256": "f533bcd69b6b1bdcf4282932864a7a9e6573ad88b72f37ba358f38b7429cc492"
+    "path": "local_reference/c1_openloop_reference_research/20261116T153547253025Z_candidate_fixed_h_pair_v2/source_snapshot.json",
+    "bytes": 22164,
+    "sha256": "3950a1cd10021020f3523f7e302e9e319f0d5e5210d2caef3c4984b47d88b709"
   },
   "latest_maintenance": {
-    "kind": "vsc_input_validation",
-    "status": "completed",
+    "kind": "fixed_time_grid_step_semantics",
+    "status": "verified_and_committed",
     "record": {
-      "path": "docs/development_roadmap/experiments/vsc_input_validation_20261116.json",
-      "bytes": 4317,
-      "sha256": "47a74bdd234a87be113294d60b5979d6e6f7fc06b6d6e96e6e25b956a62292a2"
+      "path": "docs/development_roadmap/experiments/fixed_time_grid_step_repair_20261116.json",
+      "bytes": 3924,
+      "sha256": "c0d6287ab94d07876d2f03f5d8666eeeb4ab8cf173297f055ed6fa21e46318a0"
     },
+    "commit": "bbb1e2d7dd669cade3621f4b0d5853d69ca43300",
     "changed_sources": [
-      "pycy_emt_lite/controls/vsc.py",
-      "tests/test_controls.py"
+      "pycy_emt_lite/core/simulation.py",
+      "tests/test_solvers.py",
+      "tests/test_time_grid.py"
     ],
-    "other_source_files_unchanged": 111,
+    "other_python_files_unchanged_from_first_pair": 117,
     "dependency_files_unchanged": true,
-    "full_pytest_passed": 1518,
-    "actual_commit_recorded_in_closeout": true,
-    "commit": "57fbc81106a75e6f70e09413e4fd94cf45853b96",
-    "remote_head_verified_same": true
+    "full_pytest_passed": 1566,
+    "candidate_accepted": false,
+    "remote_head_reverified": false
   },
   "offline_analysis_preparation": {
     "status": "ACTUAL_FULL_NATIVE_PAIR_NUMERIC_PASS_REFERENCE_QUALIFIED",
@@ -1762,5 +1833,26 @@
       "bytes": 12620,
       "sha256": "fdc5f34724c4bc9ebc8a549c5136a9e0553437766325a8555510f064647301bd"
     }
-  }
+  },
+  "maintenance_history": [
+    {
+      "kind": "vsc_input_validation",
+      "status": "completed",
+      "record": {
+        "path": "docs/development_roadmap/experiments/vsc_input_validation_20261116.json",
+        "bytes": 4317,
+        "sha256": "47a74bdd234a87be113294d60b5979d6e6f7fc06b6d6e96e6e25b956a62292a2"
+      },
+      "changed_sources": [
+        "pycy_emt_lite/controls/vsc.py",
+        "tests/test_controls.py"
+      ],
+      "other_source_files_unchanged": 111,
+      "dependency_files_unchanged": true,
+      "full_pytest_passed": 1518,
+      "actual_commit_recorded_in_closeout": true,
+      "commit": "57fbc81106a75e6f70e09413e4fd94cf45853b96",
+      "remote_head_verified_same": true
+    }
+  ]
 }

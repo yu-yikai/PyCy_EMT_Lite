@@ -1,5 +1,9 @@
 # 技术决策
 
+2026-11-16当前：按用户要求保持精简、可读、适合初学者。28号教学入口保持161行，复用16个现有元件、PWM函数和CaseDefinition链；严密比较集中在本例validation，无新增公共框架或依赖。固定h修复只识别连续生成网格端点，事件插点保留实际区间，不扩大公共容差；RC独立离散解与矩阵复用行为证明后单独提交bbb1e2d。该修复未解决候选共模超限，原阈值和两次FAIL保留。下一项先对已有轨迹做零新解分解，不据三个局部点直接增强求解器。见[修复证据](experiments/fixed_time_grid_step_repair_20261116.json)及[候选状态](../../validation/cases/grid_connected_vsc_open_loop/validation_report.json)。
+
+## 已记录里程碑
+
 2026-11-16：完整开环参考改用按冻结方程构建并真实运行的Simscape模型，两档全部原门通过后另封ROOT资格；不将其称为MathWorks官方算例，也不撤销原PSCAD的2µV FAIL。参考资格仅覆盖本开环电路和两步长，不能推广到闭环或跨OS。见[里程碑证据](experiments/c1_nojvm_full_reference_20261116.json)。
 
 已保存的MAT不因元数据读取问题重跑仿真。两份完整归档的native_output.bytes允许科学计数法表示精确正整数，保持原512MiB上限及实际bytes/hash核验；普通描述符检查、模型、波形与数值阈值不变。原FAIL、新归档准入和最终数值资格分开记录。

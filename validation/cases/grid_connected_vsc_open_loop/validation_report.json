@@ -1,0 +1,142 @@
+{
+  "schema": "grid_connected_vsc_open_loop_validation_status_v1",
+  "status": "CANDIDATE_NUMERIC_FAIL_NOT_ACCEPTED",
+  "passed": false,
+  "candidate_accepted": false,
+  "formal_example_accepted": false,
+  "formal_new_examples_completed": 9,
+  "C1_status": "in_progress",
+  "summary": "5µs档共模物理门仍未通过；固定h修复已通过独立RC闭式与回归验证，其余比较通过不能抵消候选物理失败。",
+  "reference_qualified": true,
+  "reference_platform": "Actual locally built and run R2025a Simscape model; not an official MathWorks example.",
+  "execution_head": "3c3c3ca1dcc025b7bee130f3c90f20f58b37b1d1",
+  "source_binding": {
+    "path": "local_reference/c1_openloop_reference_research/20261116T153547253025Z_candidate_fixed_h_pair_v2/source_snapshot.json",
+    "bytes": 22164,
+    "sha256": "3950a1cd10021020f3523f7e302e9e319f0d5e5210d2caef3c4984b47d88b709"
+  },
+  "candidate_rows": {
+    "coarse": 40002,
+    "fine": 80003
+  },
+  "all_original_points_windows_cycles_and_tail_retained": true,
+  "physical": {
+    "coarse": {
+      "passed": false,
+      "only_gate": [
+        "commonmode_with_tokens_V"
+      ],
+      "points": 2487,
+      "first_row": 33446,
+      "worst_row": 33719,
+      "maximum_full_q_V": "0.000002533674891383200133321816799866678183200133321816799866678183200000000",
+      "unchanged_limit_V": "0.000002"
+    },
+    "fine": {
+      "passed": true,
+      "commonmode_maximum_full_q_V": "9.315606118300013332181699986667818300013332181699986667818300000000000E-8"
+    }
+  },
+  "both_independent_statistical_paths": {
+    "coarse_same_h": {
+      "passed": true,
+      "gate_groups": 150
+    },
+    "fine_same_h": {
+      "passed": true,
+      "gate_groups": 150
+    },
+    "cross_h": {
+      "passed": true,
+      "gate_groups": 132
+    }
+  },
+  "conditional_coarse_predictions": "DIAGNOSTIC_ONLY_PREREQUISITE_FAILED",
+  "checks": {
+    "locked_sync_packages": 27,
+    "ruff": "PASS",
+    "mypy": {
+      "status": "PASS",
+      "source_files": 39
+    },
+    "pytest": {
+      "passed": 1566,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "includes_slow": true,
+      "seconds": "518.071",
+      "session_id": 17585,
+      "exit_code": 0
+    },
+    "source_scope": "Exact 120 Python files and two dependency files in source_snapshot; all 363 frozen bindings rechecked after both terminal runs."
+  },
+  "default_independent_cli": {
+    "exit_code": 0,
+    "rows": 40001,
+    "stop_s": 0.2,
+    "backend": "Agg",
+    "actual_entry": "examples/28_grid_connected_vsc_open_loop.py"
+  },
+  "native_calls_this_comparison": 0,
+  "run_closed": true,
+  "monitor": {
+    "exit_code": 1,
+    "elapsed_s": 314.1786662999075,
+    "peak_private_bytes": 698101760,
+    "minimum_available_bytes": 11350212608,
+    "reason": "worker_nonzero_exit",
+    "remaining_owned": [],
+    "cleanup_errors": []
+  },
+  "comparison_image": {
+    "path": "local_reference/c1_openloop_reference_research/20261116T153547253025Z_candidate_fixed_h_pair_v2/monitor_output/analysis/primary/comparison.png",
+    "bytes": 1547890,
+    "sha256": "345928d581f593e246366e02519dddc7b4d537c7579580e409ade2f02c05a3a9"
+  },
+  "references": {
+    "root_closure": {
+      "path": "local_reference/c1_openloop_reference_research/20261116T153547253025Z_candidate_fixed_h_pair_v2/ROOT_numeric_closure.json",
+      "bytes": 10401,
+      "sha256": "b6f409150c1d3be55e6bfc55242c456be379ae47244386cae3c42ead9286e6c1"
+    },
+    "independent_closure": {
+      "path": "local_reference/native_static_reviews/c1_candidate_fixed_h_closed_independent_20261116T154532250855Z/receipt.json",
+      "bytes": 7062,
+      "sha256": "a07dc98cd66adbb0d93fe8f3f763a96ec5a9b81b2624021a906287de5aa8e325"
+    },
+    "first_failure": {
+      "path": "docs/development_roadmap/experiments/c1_candidate_first_pair_failure_20261116.json",
+      "bytes": 6768,
+      "sha256": "2101dbf7b368d930d274aa2ce8e6d585cbd419ccb03fc47c960ae420f17f192d"
+    },
+    "fixed_step_repair": {
+      "path": "docs/development_roadmap/experiments/fixed_time_grid_step_repair_20261116.json",
+      "bytes": 3924,
+      "sha256": "c0d6287ab94d07876d2f03f5d8666eeeb4ab8cf173297f055ed6fa21e46318a0"
+    },
+    "qualified_reference": {
+      "path": "validation/cases/grid_connected_vsc_open_loop/qualified_reference_report.json",
+      "bytes": 3269,
+      "sha256": "58718e58e4b32ae930efe7b4244ff4207f8fda048eec65307b80b96b7ece1277"
+    },
+    "source_snapshot": {
+      "path": "local_reference/c1_openloop_reference_research/20261116T153547253025Z_candidate_fixed_h_pair_v2/source_snapshot.json",
+      "bytes": 22164,
+      "sha256": "3950a1cd10021020f3523f7e302e9e319f0d5e5210d2caef3c4984b47d88b709"
+    },
+    "default_cli_log": {
+      "path": ".tmp/longterm/c1-default-fixed-h-20261116-v1.log",
+      "bytes": 462,
+      "sha256": "ed5ce9218af0159a319364dec771d358f0c4b6fc8c2bfd76979891729764493d"
+    },
+    "full_pytest_xml": {
+      "path": ".tmp/longterm/c1-final-20261116-v2.xml",
+      "bytes": 225976,
+      "sha256": "06fe3a75799f92c9bb5ef4498e98fadc8536ef7c8e6bdba1a99a542dd212805b"
+    }
+  },
+  "scope": "Open-loop fixed-modulation candidate only. Closed-loop and cross-OS acceptance remain separate. Original failure archives and thresholds remain unchanged.",
+  "next_step": "先从现存完整轨迹分解组装、求解残差、历史与输出舍入对交替模态的驱动；计划未执行，尚无solver修复或新候选资格。",
+  "post_execution_documentation_changes": "After both executions closed and bindings were verified, only status/report documents and README/manifest status were updated. All 120 Python files, dependencies, physical parameters and acceptance protocol remain identical to the tested snapshot."
+}

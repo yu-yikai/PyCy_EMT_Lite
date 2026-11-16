@@ -1,5 +1,14 @@
 # 恢复与下一步
 
+2026-11-16当前：先核五状态、实际Git与[候选FAIL报告](../../validation/cases/grid_connected_vsc_open_loop/validation_report.json)。checkpoint为已提交的固定h修复bbb1e2d；候选研究快照提交后须交叉核实际HEAD。1566项含slow通过覆盖source_snapshot3950a1cd的120源码及2依赖；后续仅文档/状态更新。63596和17585均终态，无剩余运行，不复用已消耗manifest。
+
+1. 下一项仅做已存40002点的驱动账本：读取忽略目录c1_fixed_h_zero_solve_ledger_plan_20261116T154539272172Z/plan.json，execution_authorized=false。先独审公式、初值与实际state/h，写分析器并定向验证，再按新HEAD另封ROOT执行包；当前没有分析器或新求解器改动。
+2. 账本区分组装系数、求解残差、历史构造和输出相减对交替模态的累积作用；零新solve/trajectory/native，不删点、不投影、不换积分法、不改原2µV门。观测分解不能冒充干预因果。必要的后续单因素轨迹须另封协议，不直接改公共求解器。
+3. 28号仍未验收，新增完成9/C1进行中。已完成默认独立运行、两路完整比较、图和项目回归；后续修复必须重新冻结并完整重验，物理门及Git验收全部齐备才计完成。教学保持161行、现有16元件与CaseDefinition链，无新依赖/框架。
+4. 本轮远端直连在提升权限后仍连接重置；保留本地提交，网络恢复后正常核远端并推送开发分支。F1保留旧精确HEAD账单锁证据，本轮没有新CI观察。
+
+## 已记录里程碑
+
 2026-11-16：真实Simscape完整开环参考已合格，见[证据](experiments/c1_nojvm_full_reference_20261116.json)及[资格报告](../../validation/cases/grid_connected_vsc_open_loop/qualified_reference_report.json)。新增完成9，C1进行中；下一步28号最小教学候选。113源码/依赖未变，1518含slow为此前实测。
 
 1. 读取五状态，核分支、实际HEAD/远端、工作区及f533源码快照。checkpoint为本记录前fadb979，须交叉核实际新提交和闭场记录。36396/15503/57383/36134均已终态，无剩余自有进程，不重跑或复用消耗过的运行目录。
