@@ -3,7 +3,7 @@
   "updated_date": "2026-11-16",
   "timezone": "Asia/Shanghai",
   "branch": "codex/emt-examples-longterm",
-  "checkpoint_head": "fbfc278cffa37cb50f34553effd2f172373378f4",
+  "checkpoint_head": "1a9a5bdf4b2d89a18e496388bd6558b650a8e8aa",
   "current_task": "C1",
   "formal_new_examples_completed": 9,
   "status_values": [
@@ -670,7 +670,7 @@
         "pscad-derived-force-dsout-build-v5",
         "pscad-derived-force-dsout-bounded-probe-v5"
       ],
-      "validation": "同物理R2025a探针真实编译1次/仿真0次；80模块完整回读、19支路/14非地节点、参数/控制图、8采样率及29日志端口通过闭场核验，exit0。预检失败、v3配置失败和v4清单不完整均保留；累计3次MATLAB/2次编译/0次仿真。81行/同拍/原5µV TR及2µV共模门尚未实测；原PSCAD FAIL、完成9/C1进行中保持。113源码与依赖本轮未改，1300为既有全量。",
+      "validation": "同物理Simscape400µs短探针真实sim1/exit0闭场；57量81原点/80区间及时间位一致，原19预算经两种数学实现复算通过；控制/源/精度及六开关端点/RVI辅助门通过。第一次sim0的类型读取失败和报告序列化失败保留。完整0.2s双h尚未验证；旧PSCAD FAIL保持，新增9/C1进行中。113正式Python/依赖未改；1300为既有测试。",
       "acceptance": "局部、可独立运行验证的教学例逐项验收",
       "status": "in_progress",
       "files": [
@@ -703,7 +703,8 @@
         "docs/development_roadmap/experiments/c1_commonmode_constraint_followup_20261116.json",
         "docs/development_roadmap/experiments/c1_node_ordering_build_attempt_20261116.json",
         "docs/development_roadmap/experiments/c1_simscape_library_discovery_20261116.json",
-        "docs/development_roadmap/experiments/c1_simscape_short_build_20261116.json"
+        "docs/development_roadmap/experiments/c1_simscape_short_build_20261116.json",
+        "docs/development_roadmap/experiments/c1_simscape_short_run_20261116.json"
       ],
       "commits": [
         "b835e31785fab3fda247c333d23edbe9ce576dfa",
@@ -727,7 +728,8 @@
         "a49544935e740172ab65ce25486c97396cb055c1",
         "05dd455251bfff341a20d14d35000c8b972ad657",
         "c3fdf7957d1c52ee5a3ba51c6bf2c55dbea2151a",
-        "fbfc278cffa37cb50f34553effd2f172373378f4"
+        "fbfc278cffa37cb50f34553effd2f172373378f4",
+        "1a9a5bdf4b2d89a18e496388bd6558b650a8e8aa"
       ],
       "blockers": [],
       "reference_feasibility": {
@@ -738,7 +740,7 @@
         "evidence_sha256": "d92469cdd234477829ca5a5fa75a67648f17235fffadf3d3cbdaa73672375427",
         "native_executed": false
       },
-      "current_stage": "simscape_short_probe_build_verified_run_preparation",
+      "current_stage": "simscape_short_probe_numeric_verified_full_pair_preparation",
       "interface_discovery": {
         "status": "qualified_native_satk_batch_interface",
         "simulink_model_tools_provided": false,
@@ -1327,6 +1329,21 @@
         "metadata_complete": true,
         "reference_qualified": false,
         "active_native_sessions": 0
+      },
+      "simscape_short_probe_numeric": {
+        "record": {
+          "path": "docs/development_roadmap/experiments/c1_simscape_short_run_20261116.json",
+          "bytes": 10506,
+          "sha256": "eb7ffc9bf225008e09a4626fbb4f8268a2759d0f7e0cf83d94250ae05d9b9286"
+        },
+        "status": "REAL_SHORT_DIAGNOSTIC_NUMERIC_PASS_FULL_REFERENCE_PENDING",
+        "session": 45940,
+        "sim_calls": 1,
+        "exit_code": 0,
+        "rows": 81,
+        "numeric_pass": true,
+        "full_reference_qualified": false,
+        "active_native_sessions": 0
       }
     },
     {
@@ -1506,9 +1523,9 @@
     },
     "source113_unchanged_at_resume": true,
     "no_previous_native_or_tests_restarted": true,
-    "latest_checked_head": "fbfc278cffa37cb50f34553effd2f172373378f4",
+    "latest_checked_head": "1a9a5bdf4b2d89a18e496388bd6558b650a8e8aa",
     "latest_goal_turn_classification": "progress",
-    "latest_progress": "Built/compiled the same-physics Simscape short probe, retained failed/incomplete attempts, verified80-block actual metadata/19-branch graph/8rates and closed all owned runs. No simulation or new reference/candidate qualification.",
+    "latest_progress": "Actual same-physics Simscape short simulation, direct81row/57time logging and unchanged19budget dual-math checks PASS; closed all owned processes, preserved pre-sim and report-format failures. Full pair/candidate pending.",
     "latest_remote_head_verified_same": true
   },
   "pause_checkpoint_history": [
@@ -1557,7 +1574,7 @@
       "historical_pause_only": true
     }
   ],
-  "current_stage": "simscape_short_probe_build_verified_run_preparation",
+  "current_stage": "simscape_short_probe_numeric_verified_full_pair_preparation",
   "resume_checkpoint_history": [
     {
       "resumed_utc": "2026-11-11T13:24:16.085490+00:00",
