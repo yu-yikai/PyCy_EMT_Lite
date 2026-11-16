@@ -1,0 +1,100 @@
+{
+  "schema": "vsc_input_validation_fix_v1",
+  "date": "2026-11-16",
+  "branch": "codex/emt-examples-longterm",
+  "base_head": "5ac9d46b96a8c36622620d7e4d72ea9f64e7274c",
+  "problem": "A later invalid LV voltage or reactor current could be rejected after PLL/filter state had advanced; retrying a valid row at the same time then changed the result.",
+  "change": "Validate time, all required phase measurements, both DC rails and their difference with existing _finite_real before any state update. Preserve named KeyError for missing keys.",
+  "scope": "Invalid raw input types/non-finite values, missing keys and non-finite DC subtraction. No claim of transactional handling for every possible overflow of otherwise finite arithmetic.",
+  "production_files": [
+    {
+      "path": "pycy_emt_lite/controls/vsc.py",
+      "bytes": 10740,
+      "sha256": "389c2de36659a6509d0526ffc10f9091def65421691e5d4b678de4502d009359"
+    }
+  ],
+  "regression_files": [
+    {
+      "path": "tests/test_controls.py",
+      "bytes": 31099,
+      "sha256": "2b0b56ada25a37522e2f5e70d85b5a1b6bc7cac25ad0b092338d78234ddf3a05"
+    }
+  ],
+  "design": "Reuse existing validation and control flow; no new class, public API, dependency, rollback layer or numerical algorithm.",
+  "source_snapshot": {
+    "path": "local_reference/native_static_reviews/vsc_input_fix_ROOT_20261116T111042668097Z/source113.json",
+    "bytes": 12980,
+    "sha256": "f533bcd69b6b1bdcf4282932864a7a9e6573ad88b72f37ba358f38b7429cc492"
+  },
+  "source_count": 113,
+  "changed_sources": [
+    "pycy_emt_lite/controls/vsc.py",
+    "tests/test_controls.py"
+  ],
+  "other_source_files_unchanged": 111,
+  "dependency_files_unchanged": true,
+  "checks": {
+    "locked_sync": {
+      "result": "PASS",
+      "packages": 27,
+      "tool_chunk": "df1a3a"
+    },
+    "ruff": {
+      "result": "PASS",
+      "scope": "pycy_emt_lite examples tests validation",
+      "tool_chunk": "5d897e"
+    },
+    "mypy": {
+      "result": "PASS",
+      "checked_source_files": 39,
+      "tool_chunk": "82304b"
+    },
+    "full_pytest": {
+      "result": "PASS",
+      "passed": 1518,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "includes_slow": true,
+      "elapsed_console_s": 491.92,
+      "elapsed_junit_s": 491.912,
+      "newly_added_cases": 218,
+      "preexisting_cases": 1300,
+      "authoritative_session": 86152,
+      "exit_code": 0,
+      "log": {
+        "path": "local_reference/native_static_reviews/vsc_input_fix_ROOT_20261116T111042668097Z/pytest.log",
+        "bytes": 1816,
+        "sha256": "09fde306d5159317a590b6d540aa54f53e9828b4c909cfb92432a3ccd898709a"
+      },
+      "junit": {
+        "path": "local_reference/native_static_reviews/vsc_input_fix_ROOT_20261116T111042668097Z/pytest.xml",
+        "bytes": 218411,
+        "sha256": "5b3cb9ef6c419bd0a94e1524c4e02d841092a195accd841d2322f60eebdb0c53"
+      },
+      "tested_source_and_dependency_bytes_unchanged": true
+    }
+  },
+  "independent_scope": "Invalid input rejection leaves all nested state unchanged; same-time valid retries recover; 123 valid trace rows and six gates match the original across three control modes.",
+  "commercial_status": "No new native simulation or full commercial reference qualification. Prior full Simscape resource stop and original PSCAD numeric FAIL remain unchanged.",
+  "formal_new_examples_completed": 9,
+  "C1_status": "in_progress",
+  "git_identity": "Checkpoint records the base commit; the actual fix commit/remote and clean workspace are recorded in a separate ignored closeout.",
+  "author_evidence": {
+    "path": "local_reference/native_static_reviews/vsc_sample_input_prevalidation_fix_20261116T104205706414Z/receipt.json",
+    "bytes": 4005,
+    "sha256": "77b4756bafb544903bb36c87f806719458b90aa2e95d37c8ee77168307dbd272"
+  },
+  "independent_evidence": [
+    {
+      "path": "local_reference/native_static_reviews/vsc_input_rejection_independent_final_20261116T104151389919Z/receipt.json",
+      "bytes": 1403,
+      "sha256": "bcf2008f4c5ae8e6dcaff080d8725357a587c35ce623d25364291ab3555d9c6c"
+    },
+    {
+      "path": "local_reference/native_static_reviews/vsc_full_pytest_independent_20261116T110845004083Z/receipt.json",
+      "bytes": 3945,
+      "sha256": "dc4cfcfda92fd51fa07afcf605956545ca295e028c942766926096b348d41821"
+    }
+  ]
+}

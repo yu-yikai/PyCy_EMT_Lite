@@ -3,6 +3,7 @@
 文件作用：验证控制模块、坐标变换、PLL 和 PWM 的基础行为。
 """
 
+import copy
 import math
 import runpy
 from pathlib import Path
@@ -69,6 +70,74 @@ def _vsc_row(time, *, vac=1.0, voltage_dq=(30.0, 0.0), current_dq=(0.0, 0.0), vd
         row[f"v:S:lv:{phase}"] = voltage_dq[0] * cosine - voltage_dq[1] * sine
         row[f"i:S:reactor:{phase}"] = current_dq[0] * cosine - current_dq[1] * sine
     return row
+
+
+@pytest.mark.parametrize("sample_time", [0.0, 1e-4], ids=["initial", "later"])
+@pytest.mark.parametrize("key", ["time", "v:S:dc_p", "v:S:dc_n",
+                                 *(f"v:S:hv:{p}" for p in "abc"),
+                                 *(f"v:S:lv:{p}" for p in "abc"),
+                                 *(f"i:S:reactor:{p}" for p in "abc")])
+@pytest.mark.parametrize("invalid", [math.nan, math.inf, -math.inf, True, False, 1+0j, "1", None],
+                         ids=["nan", "inf", "negative_inf", "true", "false", "complex", "string", "none"])
+def test_vsc_rejects_invalid_measurement_without_state_change(sample_time, key, invalid) -> None:
+    controller = VSCController("S", 50.0, 100.0, 100.0, 0.0, 1000.0, VSCControlConfig(dc_voltage=400.0))
+    fresh = VSCController("S", 50.0, 100.0, 100.0, 0.0, 1000.0, VSCControlConfig(dc_voltage=400.0))
+    if sample_time > 0:
+        controller.sample(_vsc_row(0.0))
+        fresh.sample(_vsc_row(0.0))
+    before = copy.deepcopy(vars(controller))
+    bad = _vsc_row(sample_time)
+    bad[key] = invalid
+
+    with pytest.raises(ValueError, match="请"):
+        controller.sample(bad)
+
+    assert vars(controller) == before  # Includes every nested PLL/PI/filter state and output.
+    assert controller.sample(_vsc_row(sample_time)) == fresh.sample(_vsc_row(sample_time))
+    assert vars(controller) == vars(fresh)
+
+
+@pytest.mark.parametrize("sample_time", [0.0, 1e-4], ids=["initial", "later"])
+@pytest.mark.parametrize("key", ["time", "v:S:dc_p", "v:S:dc_n",
+                                 *(f"v:S:hv:{p}" for p in "abc"),
+                                 *(f"v:S:lv:{p}" for p in "abc"),
+                                 *(f"i:S:reactor:{p}" for p in "abc")])
+def test_vsc_missing_measurement_preserves_key_error_and_state(sample_time, key) -> None:
+    controller = VSCController("S", 50.0, 100.0, 100.0, 0.0, 1000.0, VSCControlConfig(dc_voltage=400.0))
+    fresh = VSCController("S", 50.0, 100.0, 100.0, 0.0, 1000.0, VSCControlConfig(dc_voltage=400.0))
+    if sample_time > 0:
+        controller.sample(_vsc_row(0.0))
+        fresh.sample(_vsc_row(0.0))
+    before = copy.deepcopy(vars(controller))
+    bad = _vsc_row(sample_time)
+    del bad[key]
+
+    with pytest.raises(KeyError) as error:
+        controller.sample(bad)
+
+    assert error.value.args == (key,)
+    assert vars(controller) == before
+    assert controller.sample(_vsc_row(sample_time)) == fresh.sample(_vsc_row(sample_time))
+    assert vars(controller) == vars(fresh)
+
+
+@pytest.mark.parametrize("sample_time", [0.0, 1e-4], ids=["initial", "later"])
+def test_vsc_rejects_dc_voltage_difference_overflow_without_state_change(sample_time) -> None:
+    controller = VSCController("S", 50.0, 100.0, 100.0, 0.0, 1000.0, VSCControlConfig(dc_voltage=400.0))
+    fresh = VSCController("S", 50.0, 100.0, 100.0, 0.0, 1000.0, VSCControlConfig(dc_voltage=400.0))
+    if sample_time > 0:
+        controller.sample(_vsc_row(0.0))
+        fresh.sample(_vsc_row(0.0))
+    before = copy.deepcopy(vars(controller))
+    bad = _vsc_row(sample_time)
+    bad.update({"v:S:dc_p": 1e308, "v:S:dc_n": -1e308})
+
+    with pytest.raises(ValueError, match="VSCController.Vdc.*请"):
+        controller.sample(bad)
+
+    assert vars(controller) == before
+    assert controller.sample(_vsc_row(sample_time)) == fresh.sample(_vsc_row(sample_time))
+    assert vars(controller) == vars(fresh)
 
 
 @pytest.mark.parametrize("id_demand", [0.0, 8.0])

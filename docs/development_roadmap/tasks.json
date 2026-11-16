@@ -3,7 +3,7 @@
   "updated_date": "2026-11-16",
   "timezone": "Asia/Shanghai",
   "branch": "codex/emt-examples-longterm",
-  "checkpoint_head": "457ba4eadab46360cc27dfc65e3f2320630028bc",
+  "checkpoint_head": "5ac9d46b96a8c36622620d7e4d72ea9f64e7274c",
   "current_task": "C1",
   "formal_new_examples_completed": 9,
   "status_values": [
@@ -670,7 +670,7 @@
         "pscad-derived-force-dsout-build-v5",
         "pscad-derived-force-dsout-bounded-probe-v5"
       ],
-      "validation": "Simscape完整两h模型各compile1/sim0，92模块与原19支路/29日志/8保持及6连续观察器经独审通过。5µs完整Run尝试因可用提交内存低于2GiB中止并清理，仅有原模型副本，无report/MAT/CSV；实际sim调用数未观测，细步长未启动。完整数值资格/候选待完成，旧400µs PASS和PSCAD FAIL限域保持。113源码/依赖未改，1300为既有测试。",
+      "validation": "完整两h Simscape模型各compile1/sim0及结构独审通过；5µs完整Run因可用提交内存低于2GiB中止，无report/MAT/CSV，实际sim调用数未观测，细档未启动。完整参考/候选待完成。另修复VSC非法测量提前污染状态，218新回归及本轮1518全量含slow通过；仅2源码文件变化，其余111及依赖不变。旧短探针PASS和PSCAD FAIL限域保持。",
       "acceptance": "局部、可独立运行验证的教学例逐项验收",
       "status": "in_progress",
       "files": [
@@ -731,7 +731,8 @@
         "c3fdf7957d1c52ee5a3ba51c6bf2c55dbea2151a",
         "fbfc278cffa37cb50f34553effd2f172373378f4",
         "1a9a5bdf4b2d89a18e496388bd6558b650a8e8aa",
-        "457ba4eadab46360cc27dfc65e3f2320630028bc"
+        "457ba4eadab46360cc27dfc65e3f2320630028bc",
+        "5ac9d46b96a8c36622620d7e4d72ea9f64e7274c"
       ],
       "blockers": [
         "完整参考运行当前受可用提交内存限制；保留原资源门，资源明显恢复后才封新HEAD运行包。C1整体仍进行中。"
@@ -744,7 +745,7 @@
         "evidence_sha256": "d92469cdd234477829ca5a5fa75a67648f17235fffadf3d3cbdaa73672375427",
         "native_executed": false
       },
-      "current_stage": "simscape_short_probe_numeric_verified_full_pair_preparation",
+      "current_stage": "simscape_full_models_compiled_run_resource_stopped",
       "interface_discovery": {
         "status": "qualified_native_satk_batch_interface",
         "simulink_model_tools_provided": false,
@@ -1460,7 +1461,7 @@
       ],
       "new_capabilities": [],
       "references": [],
-      "validation": "此前本地1300 passed（XML510.444s，含slow）零失败/错误/跳过；本轮小改锁定27包/Ruff/mypy39/27号6001点独立运行通过，未重跑全量。精确c3fdf79的新CI43825501731终态failure，两OS runner0/steps空，新注释确认账户billing lock，测试未执行/test_count=null。跨OS仍待外部解除后补验；不轮询这个或旧终态。",
+      "validation": "本轮本地1518 passed（491.92s，含slow），0失败/错误/跳过；锁定27包/Ruff/mypy39通过，113源码与依赖测试前后不变。本地结果不替代跨OS。精确c3fdf79的CI43825501731为已有账单锁终态，两OS runner0/steps空，未执行测试；外部解除后补验，不轮询或重启旧终态。",
       "acceptance": "本批测试与真实CI记录、教学导航、里程碑推送和恢复指令",
       "status": "blocked",
       "files": [
@@ -1473,7 +1474,8 @@
         "docs/development_roadmap/experiments/ci_9269350.json",
         "docs/development_roadmap/experiments/ci_ae9fe36.json",
         "docs/development_roadmap/experiments/ci_5314486.json",
-        "docs/development_roadmap/experiments/ci_c3fdf79.json"
+        "docs/development_roadmap/experiments/ci_c3fdf79.json",
+        "docs/development_roadmap/experiments/vsc_input_validation_20261116.json"
       ],
       "commits": [
         "90b2fcd",
@@ -1544,9 +1546,9 @@
     },
     "source113_unchanged_at_resume": true,
     "no_previous_native_or_tests_restarted": true,
-    "latest_checked_head": "1a9a5bdf4b2d89a18e496388bd6558b650a8e8aa",
+    "latest_checked_head": "5ac9d46b96a8c36622620d7e4d72ea9f64e7274c",
     "latest_goal_turn_classification": "progress",
-    "latest_progress": "Actual same-physics Simscape short simulation, direct81row/57time logging and unchanged19budget dual-math checks PASS; closed all owned processes, preserved pre-sim and report-format failures. Full pair/candidate pending.",
+    "latest_progress": "Small VSC raw-input prevalidation fix independently verified; full1518 including slow PASS. Full commercial reference remains pending under the preserved resource limits.",
     "latest_remote_head_verified_same": true
   },
   "pause_checkpoint_history": [
@@ -1619,21 +1621,25 @@
     }
   ],
   "current_source_snapshot": {
-    "path": "local_reference/native_static_reviews/d1_small_readability_ROOT_20261116T073540574524Z/source113.json",
-    "bytes": 13109,
-    "sha256": "fa156e8842c8c9b0e93bb241be8e377cd6c45126f852135ed34731f7ee1e472f"
+    "path": "local_reference/native_static_reviews/vsc_input_fix_ROOT_20261116T111042668097Z/source113.json",
+    "bytes": 12980,
+    "sha256": "f533bcd69b6b1bdcf4282932864a7a9e6573ad88b72f37ba358f38b7429cc492"
   },
   "latest_maintenance": {
-    "kind": "small_readability",
-    "status": "completed",
-    "evidence": {
-      "path": "local_reference/native_static_reviews/d1_small_readability_ROOT_20261116T073540574524Z/receipt.json",
-      "bytes": 1699,
-      "sha256": "b15d12bc69b8a9b263e174256acb95c99a98fde4b8190c2c8c4fe15dd57ed1a1"
+    "kind": "vsc_input_validation",
+    "status": "validated",
+    "record": {
+      "path": "docs/development_roadmap/experiments/vsc_input_validation_20261116.json",
+      "bytes": 4317,
+      "sha256": "47a74bdd234a87be113294d60b5979d6e6f7fc06b6d6e96e6e25b956a62292a2"
     },
-    "source112_unchanged": true,
-    "source27_summary_only_changed": true,
-    "full_pytest_rerun": false,
-    "commit": "c3fdf7957d1c52ee5a3ba51c6bf2c55dbea2151a"
+    "changed_sources": [
+      "pycy_emt_lite/controls/vsc.py",
+      "tests/test_controls.py"
+    ],
+    "other_source_files_unchanged": 111,
+    "dependency_files_unchanged": true,
+    "full_pytest_passed": 1518,
+    "actual_commit_recorded_in_closeout": true
   }
 }

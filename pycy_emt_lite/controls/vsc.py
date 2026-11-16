@@ -91,15 +91,21 @@ class VSCController:
         """读取同刻测量，生成下一步使用的调制；t=0 只初始化。"""
 
         name, cfg = self.name, self.config
-        time = row["time"]
+        time = _finite_real(row["time"], "VSCController.time")
         dt = 0.0 if self.last_time is None else time - self.last_time
         if (self.last_time is None and time != 0) or (self.last_time is not None and dt <= 0):
             raise ValueError("VSCController 须从 t=0 开始，每个递增求解时刻只采样一次。")
+        # 先校验整行测量，避免后面的非法量留下已推进的 PLL 或滤波状态。
         # 生成器按 "abc" 三相构造，长度恒为 3；cast 仅为向类型检查器声明固定三元组。
-        hv = cast("tuple[float, float, float]", tuple(row[f"v:{name}:hv:{p}"] for p in "abc"))
-        lv = cast("tuple[float, float, float]", tuple(row[f"v:{name}:lv:{p}"] for p in "abc"))
-        current = cast("tuple[float, float, float]", tuple(row[f"i:{name}:reactor:{p}"] for p in "abc"))
-        vdc = row[f"v:{name}:dc_p"] - row[f"v:{name}:dc_n"]
+        hv = cast("tuple[float, float, float]", tuple(
+            _finite_real(row[f"v:{name}:hv:{p}"], f"VSCController.v:{name}:hv:{p}") for p in "abc"))
+        lv = cast("tuple[float, float, float]", tuple(
+            _finite_real(row[f"v:{name}:lv:{p}"], f"VSCController.v:{name}:lv:{p}") for p in "abc"))
+        current = cast("tuple[float, float, float]", tuple(
+            _finite_real(row[f"i:{name}:reactor:{p}"], f"VSCController.i:{name}:reactor:{p}") for p in "abc"))
+        dc_p = _finite_real(row[f"v:{name}:dc_p"], f"VSCController.v:{name}:dc_p")
+        dc_n = _finite_real(row[f"v:{name}:dc_n"], f"VSCController.v:{name}:dc_n")
+        vdc = _finite_real(dc_p - dc_n, "VSCController.Vdc")
         alpha, beta = abc_to_alpha_beta(*hv)
         vac = math.hypot(alpha, beta) / (math.sqrt(2 / 3) * self.grid_voltage)
         if self.last_time is None:
