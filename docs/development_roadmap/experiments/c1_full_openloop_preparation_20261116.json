@@ -1,0 +1,150 @@
+{
+  "schema_version": 1,
+  "recorded_utc": "2026-11-16T03:13:00.066012+00:00",
+  "status": "FULL_OPENLOOP_RESEARCH_DRAFTS_REVIEWED_NOT_FROZEN",
+  "checked_head": "4c5f423dd1d20e23d51b271240b1edaf4a7edf55",
+  "branch": "codex/emt-examples-longterm",
+  "previous_goal_turn_classification": "progress",
+  "previous_milestone": "400us manual-vector native probe numerically qualified; full VSC not qualified",
+  "formal_new_examples_completed": 9,
+  "C1_status": "in_progress",
+  "evidence": {
+    "recipe_manifest": {
+      "path": "local_reference/c1_openloop_reference_research/20261116T030609659487Z_full_openloop_recipe_draft_v1/manifest.json",
+      "bytes": 7027,
+      "sha256": "b43088a0f188ee70de95fc5707a27ca282101b029ae1c7a00aada9b4e45ad759"
+    },
+    "recipe_proposal": {
+      "path": "local_reference/c1_openloop_reference_research/20261116T030609659487Z_full_openloop_recipe_draft_v1/proposal.json",
+      "bytes": 6940,
+      "sha256": "c01aa855199f1b6bb2c02bc9d74d52c7af9b90868d8058055f8ab2c04f35a461"
+    },
+    "control_review": {
+      "path": "local_reference/native_static_reviews/c1_full_openloop_control_oracle_20261116T030645697241Z/receipt.json",
+      "bytes": 12505,
+      "sha256": "959aefad5b1606304d71f317009368ff4fa80068c07c14ea8e6be3916a0157f5"
+    },
+    "budget_review": {
+      "path": "local_reference/native_static_reviews/c1_full_openloop_budget_research_20261116T030410022389Z/receipt.json",
+      "bytes": 1278,
+      "sha256": "c84c3f132e8935952cf014efcf5b14f12565c9f4c391b73512f59ae1adc610ea"
+    },
+    "budget_proposal": {
+      "path": "local_reference/native_static_reviews/c1_full_openloop_budget_research_20261116T030410022389Z/budget_proposal.json",
+      "bytes": 17286,
+      "sha256": "968333908c7b6d612395b44b075d342bdc24295e4be25dd8d11a289683735475"
+    },
+    "simplicity_review": {
+      "path": "local_reference/native_static_reviews/c1_full_openloop_simplicity_review_20261116T030859895018Z/receipt.json",
+      "bytes": 26779,
+      "sha256": "91b8db38c8b41f5dc9a76028033a1589884e42c4a11014fb02338108f7b6ddb5"
+    },
+    "recipe_control_review": {
+      "path": "local_reference/native_static_reviews/c1_full_recipe_control_review_20261116T031212920963Z/receipt.json",
+      "bytes": 16825,
+      "sha256": "092884ba7a62685d30e2d8976f3cc3c89e2a513f8692e59b11f0ed6eabb61b18"
+    },
+    "candidate_interface_and_energy_review": {
+      "path": "local_reference/native_static_reviews/c1_candidate_interface_energy_review_20261116T031213871361Z/receipt.json",
+      "bytes": 1645,
+      "sha256": "b3a1a14d080d34dadb46d26f0bb47f1ff398c769055b55aeb7e4b65af98727bc"
+    }
+  },
+  "actual_preparation": {
+    "recipe_files_verified": 23,
+    "predicted_components": 311,
+    "predicted_wires": 245,
+    "predicted_ports": 428,
+    "predicted_nets": 107,
+    "codec_roundtrips_passed": 311,
+    "static_geometry_pass": true,
+    "proposed_native_channels": 45,
+    "independent_control_checks": 27,
+    "applied_control_coarse_rows": 40002,
+    "applied_control_fine_rows": 80003,
+    "shared_rows": 40002,
+    "fine_midpoints": 40001,
+    "minimum_gate_tick_comparator_separation": 2.9400706790583264e-05
+  },
+  "proposed_physics": {
+    "dc_V": 400,
+    "grid_phase_rms_V": 120,
+    "frequency_Hz": 60,
+    "ramp_s": 0.02,
+    "R_ohm": 1,
+    "L_H": 0.01,
+    "Ron_ohm": 0.001,
+    "Goff_S": 1e-09,
+    "modulation": 0.85,
+    "delta_deg": -5,
+    "carrier_Hz": 1000,
+    "reference_hold_s": 0.0001,
+    "gate_hold_s": 5e-06,
+    "h_s": [
+      5e-06,
+      2.5e-06
+    ],
+    "formal_stop_s": 0.2,
+    "acquisition_stop_s": 0.200005
+  },
+  "proposed_windows": [
+    {
+      "name": "all",
+      "start_s": 0,
+      "end_s": 0.2
+    },
+    {
+      "name": "startup",
+      "start_s": 0,
+      "end_s": 0.02
+    },
+    {
+      "name": "transition",
+      "start_s": 0.02,
+      "end_s": 0.1
+    },
+    {
+      "name": "steady",
+      "start_s": 0.1,
+      "end_s": 0.2
+    }
+  ],
+  "research_scope": {
+    "native_reference_channels": "32 existing plant/control inputs plus 13 qualification/diagnostic observations; not a teaching API",
+    "control_oracle": "INTERNAL_SYNTHETIC_CONTROL_ORACLE_NOT_COMMERCIAL_DATA",
+    "fine_oracle_carrier_column": "carrier_at_gate_tick: predicts held applied gates, not fine-midpoint native continuous carrier/raw_g",
+    "numerical_forecast": "Independent analytic/Schur-TR estimate only; not commercial output or acceptance",
+    "engineering_current_scale_A": 10,
+    "universal_current_bound_A": 435.93635779311205,
+    "engineering_scale_is_not_a_safety_limit": true,
+    "budget_status": "PROPOSED_NOT_FROZEN; no thresholds adopted by this record"
+  },
+  "decisions": [
+    "Reuse CaseDefinition -> Circuit -> Simulator -> SimulationResult, existing VoltageSource/R/L/IdealSwitch; no new public controller framework or dependency.",
+    "Keep native pulse/sampler/internal observer inventory in ignored reference research; teaching output stays small.",
+    "A future candidate uses actual attached IdealSwitch.closed pure time callables; validate actual state:S and Ron/Goff in validation code rather than emulating PSCAD Pulse/INT/SAMP in teaching code.",
+    "Native raw carrier/comparator varies on each electrical tick; only the applied six gate/R states are held for5us.",
+    "Preserve every original row, startup, switching edge, endpoint and acquisition tail; no fit/shift or reconstructed measured DC current.",
+    "Do not adopt cross-h PWL jump-voltage errors as solver accuracy. Freeze continuous-state, shared-grid, same-h raw-point and integral definitions before execution.",
+    "Energy comparison must distinguish W calculated on each original sample then interpolated from squared interpolated currents; TR prefix work uses endpoint means, not trapezoids of instantaneous V*I.",
+    "Deleted ammeter/drop/rank2 checks remain NA; source fresh current -> standard force -> ownPGB and rank1 differential source identity remain required."
+  ],
+  "remaining_before_full_reference": [
+    "Resolve candidate minimum observation interface, same-h vs cross-h discontinuous metrics, exact energy interpolation/integration, and prospective numerical budgets.",
+    "In a new execution package, correct the TIME observer description to electrical5/2.5us grid and explicitly inventory the three geometrically rerouted pole-observer wires with unchanged endpoints. Preserve this draft.",
+    "Freeze and commit complete parameter/control/window/threshold protocol before full native output or candidate implementation.",
+    "Prepare new full builders/drivers/analyzers and independent byte/graph/code-order admission; prove new100us sampler t0/phase/width and same-tick held-time -> math -> gate sampler -> R -> solve.",
+    "Run isolated real5us/2.5us full references with complete45-channel mapping, raw archive, pointwise physics and independent self-refinement; only then implement the minimal teaching candidate.",
+    "After open loop, independently validate dq current -> PLL integration -> P feedforward/Vac -> real DC-capacitor Vdc and disturbances; D1 remains planned."
+  ],
+  "new_native_started": false,
+  "new_actual_OUT_read_or_hashed": false,
+  "candidate_written_or_run": false,
+  "full_openloop_reference_qualified": false,
+  "full_openloop_completed": false,
+  "source113_unchanged": true,
+  "dependency_files_unchanged": true,
+  "existing_full_regression": "1300 passed including slow; existing result, not rerun for research/docs-only changes",
+  "F1": "Latest recorded CI was blocked before runner by external billing lock; no new CI/account observation",
+  "goal_status": "active"
+}

@@ -3,7 +3,7 @@
   "updated_date": "2026-11-16",
   "timezone": "Asia/Shanghai",
   "branch": "codex/emt-examples-longterm",
-  "checkpoint_head": "63e51654499c44ac215ab776d8b58f994935d7c1",
+  "checkpoint_head": "4c5f423dd1d20e23d51b271240b1edaf4a7edf55",
   "current_task": "C1",
   "formal_new_examples_completed": 9,
   "status_values": [
@@ -670,7 +670,7 @@
         "pscad-derived-force-dsout-build-v5",
         "pscad-derived-force-dsout-bounded-probe-v5"
       ],
-      "validation": "既有11 PLL和12 SPWM补验证已完成。C1新400µs人工八态短探针在会话63693正常闭场：build0/Run一次/quit/owned[]，551项实际结构及INF映射与118项绑定复核、双路原17+Vs数值检查均通过，32通道全81点/80段保留；源/完整末位精度门合格，删除A/drop/rank2仍NA。仅短探针资格，完整SPWM开环、其余闭环链和候选未验收；本轮113源码/依赖未变，1300含slow为既有回归。",
+      "validation": "既有11 PLL和12 SPWM补验证已完成。C1新400µs人工八态短探针在会话63693正常闭场：build0/Run一次/quit/owned[]，551项实际结构及INF映射与118项绑定复核、双路原17+Vs数值检查均通过，32通道全81点/80段保留；源/完整末位精度门合格，删除A/drop/rank2仍NA。仅短探针资格，完整SPWM开环、其余闭环链和候选未验收；本轮113源码/依赖未变，1300含slow为既有回归。 完整0.2s开环已备静态接线/100us参考与5us门极草案、全网格内部控制检查及新量纲预算建议；均未冻结或取得新原生资格，研究观察不进入教学API。",
       "acceptance": "局部、可独立运行验证的教学例逐项验收",
       "status": "in_progress",
       "files": [
@@ -692,7 +692,8 @@
         "docs/development_roadmap/experiments/c1_pgb_split_build_only_20261112.json",
         "docs/development_roadmap/experiments/c1_output_intent_build_only_20261112.json",
         "docs/development_roadmap/experiments/c1_force_dsout_build_only_20261112.json",
-        "docs/development_roadmap/experiments/c1_force_dsout_bounded_numeric_20261116.json"
+        "docs/development_roadmap/experiments/c1_force_dsout_bounded_numeric_20261116.json",
+        "docs/development_roadmap/experiments/c1_full_openloop_preparation_20261116.json"
       ],
       "commits": [
         "b835e31785fab3fda247c333d23edbe9ce576dfa",
@@ -708,7 +709,8 @@
         "2e158872b1a55ee32836e34561981fb458d49bb7",
         "fb9aaa8612a2725d9a93ec248b604d39f2be57fb",
         "b2462365d5c40efd27400b0999cf6a8c668f3d91",
-        "63e51654499c44ac215ab776d8b58f994935d7c1"
+        "63e51654499c44ac215ab776d8b58f994935d7c1",
+        "4c5f423dd1d20e23d51b271240b1edaf4a7edf55"
       ],
       "blockers": [],
       "reference_feasibility": {
@@ -719,7 +721,7 @@
         "evidence_sha256": "d92469cdd234477829ca5a5fa75a67648f17235fffadf3d3cbdaa73672375427",
         "native_executed": false
       },
-      "current_stage": "open_loop_short_probe_qualified_full_protocol_next",
+      "current_stage": "open_loop_full_protocol_drafts_reviewed_not_frozen",
       "interface_discovery": {
         "status": "qualified_native_satk_batch_interface",
         "simulink_model_tools_provided": false,
@@ -1161,6 +1163,18 @@
         "candidate_executed": false,
         "formal_new_examples_completed": 9,
         "next_gate": "Freeze a separate complete openloop-SPWM protocol and dual-step reference before any candidate. Fix5us gate/100us reference ticks, initial000/111,20ms source ramp, windows/thresholds/point counts and replace outdated deleted-A/rank2 text in the old draft."
+      },
+      "full_openloop_preparation": {
+        "status": "FULL_OPENLOOP_RESEARCH_DRAFTS_REVIEWED_NOT_FROZEN",
+        "record": {
+          "path": "docs/development_roadmap/experiments/c1_full_openloop_preparation_20261116.json",
+          "bytes": 7604,
+          "sha256": "1c6a7698bdb989abefae7a28d6f31c10c1b5864cc0b6a205b407ee4f9e185903"
+        },
+        "native_executed": false,
+        "full_reference_qualified": false,
+        "candidate_executed": false,
+        "next_gate": "Resolve and commit the complete prospective protocol; then prepare and qualify real full native pair."
       }
     },
     {
@@ -1311,9 +1325,10 @@
     },
     "source113_unchanged_at_resume": true,
     "no_previous_native_or_tests_restarted": true,
-    "latest_checked_head": "63e51654499c44ac215ab776d8b58f994935d7c1",
+    "latest_checked_head": "4c5f423dd1d20e23d51b271240b1edaf4a7edf55",
     "latest_goal_turn_classification": "progress",
-    "latest_progress": "Single bounded native run and551/118 actual mapping plus independent dual numerical all17+Vs PASS; source113/dependencies unchanged; fullVSC not qualified."
+    "latest_progress": "Reviewed full open-loop static recipe, finite internal control oracle and independent budget/simplicity drafts; no full native/candidate execution; protocol not frozen.",
+    "latest_remote_head_verified_same": true
   },
   "pause_checkpoint_history": [
     {
@@ -1361,7 +1376,7 @@
       "historical_pause_only": true
     }
   ],
-  "current_stage": "open_loop_short_probe_qualified_full_protocol_next",
+  "current_stage": "open_loop_full_protocol_drafts_reviewed_not_frozen",
   "resume_checkpoint_history": [
     {
       "resumed_utc": "2026-11-11T13:24:16.085490+00:00",
