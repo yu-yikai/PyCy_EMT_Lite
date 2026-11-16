@@ -1,0 +1,761 @@
+{
+  "schema": "grid_connected_vsc_open_loop_reference_protocol_v1",
+  "status": "FROZEN_PROSPECTIVE_PROTOCOL_BEFORE_FULL_REFERENCE_AND_CANDIDATE",
+  "parameters_file": "parameters.json",
+  "execution_authorized": false,
+  "thresholds_frozen": true,
+  "full_openloop_qualified": false,
+  "candidate_authorized": false,
+  "windows": [
+    {
+      "name": "all",
+      "start_s": 0,
+      "end_s": 0.2
+    },
+    {
+      "name": "startup",
+      "start_s": 0,
+      "end_s": 0.02
+    },
+    {
+      "name": "transition",
+      "start_s": 0.02,
+      "end_s": 0.1
+    },
+    {
+      "name": "steady",
+      "start_s": 0.1,
+      "end_s": 0.2
+    }
+  ],
+  "raw_rows": {
+    "coarse": 40002,
+    "fine": 80003,
+    "formal_all_union_rows": 80001,
+    "formal_startup_union_rows": 8001,
+    "formal_transition_union_rows": 32001,
+    "formal_steady_union_rows": 40001,
+    "tail_retained_in_archive_and_pointwise_audits": true
+  },
+  "engineering_scales": {
+    "phase_current_A": 10,
+    "DC_current_A": 10,
+    "grid_phase_voltage_V": 200,
+    "bridge_or_branch_voltage_V": 400,
+    "three_phase_apparent_power_VA": 3600,
+    "resistor_loss_W": 300,
+    "switch_loss_W": 0.3,
+    "inductor_energy_J": 1.5,
+    "phase_R_voltage_V": 10
+  },
+  "universal_stability_bound_derivation": {
+    "G_S": 1000.000000001,
+    "z_ohm": 0.000999999999999,
+    "F_bound_formula": "sqrt(2)*120 + (2/3)*400*(Gon-Goff)/(Gon+Goff)",
+    "TR_stability": "i_k=rho*i_old+(F_k+F_old)/(2L/h+R+z); 0<rho=(2L/h-R-z)/(2L/h+R+z)<1, so |i|<=Fmax/(R+z) for i0=0.",
+    "analytic_bounds": {
+      "forcing_abs_V": 436.37229415090474,
+      "phase_current_abs_A": 435.93635779311205,
+      "pole_abs_V": 267.102603023926,
+      "source_current_abs_A": 435.93635899311204,
+      "inductor_voltage_abs_V": 872.7445883018095
+    },
+    "proposed_safety_guards": {
+      "phase_current_abs_with_radius_A": 440,
+      "DC_current_abs_with_radius_A": 440,
+      "any_plant_voltage_abs_with_radius_V": 900
+    },
+    "engineering_scale_is_not_safety_limit": true,
+    "synthetic_peak_is_not_universal_proof": true
+  },
+  "printed_precision_caps_SI": {
+    "every_plant_voltage_full_last_place_V": 5e-10,
+    "summed_DC_rail_full_last_places_V": 1e-09,
+    "phase_current_full_last_place_A": 1e-10,
+    "DC_source_current_full_last_place_A": 1e-10,
+    "full_last_place_including_zero": true,
+    "kA_kV_scaled_once": true,
+    "precision_violation_rejects_no_budget_retuning": true,
+    "control_reference_and_carrier_full_last_place": 1e-12,
+    "held_t_ref_full_last_place_s": 1e-12,
+    "TIME_native_full_last_place_s": 1e-12,
+    "definition": "For an ASCII decimal token including exponent, q is one FULL last printed place after SI conversion, including tokens numerically zero. Use center +/- q, never q/2, never drop zero trailing places; kV and kA scale by 1000 exactly once.",
+    "OUT_timestamp_full_last_place": "Every part/row retains its own actual center and full-place q<=1ps; no hidden-time precision inference. All six intervals (five timestamps and TIME_native) must have a common intersection; each center also meets2ps nominal grid, row0 exact0. Never replace centers with an interval midpoint.",
+    "OUT_timestamp_full_last_place_s": 1e-12
+  },
+  "source_allowance": {
+    "declared_three_phase_sin_libm_absolute_V": 1e-09,
+    "declared_constant_DC_arithmetic_absolute_V": 1e-10,
+    "maximum_ramped_source_derivative_V_per_s": 72462.79568371904,
+    "2ps_center_clock_times_derivative_V": 1.4492559136743808e-07,
+    "hard_grid_source_budget_V": 2e-07,
+    "scope": "Configured-grid source identity plus declared libm allowance. Printed TIME quantum/Lipschitz remains diagnostic and proves no hidden internal precision.",
+    "DC_allowance_application": "Add declared_constant_DC_arithmetic_absolute_V once to source-terminal400 residual and once to bridge400 residual. Never add twice within either gate."
+  },
+  "physical_residual_budgets": {
+    "TIME_configured_center_s": 2e-12,
+    "source_configured_grid_with_tokens_V": 2e-07,
+    "source_terminal_400V_with_tokens_V": 1e-07,
+    "bridge_400V_with_tokens_V": 1e-07,
+    "initial_phase_current_with_tokens_A": 1e-08,
+    "initial_DC_leakage_with_tokens_A": 1e-08,
+    "initial_pole_with_tokens_V": 1e-07,
+    "three_line_KCL_with_tokens_A": 1e-07,
+    "resistor_with_tokens_V": 2e-06,
+    "phase_KVL_with_tokens_V": 2e-06,
+    "full_TR_with_tokens_V": 5e-06,
+    "pole_Thevenin_with_tokens_V": 2e-06,
+    "pole_KCL_with_tokens_A": 3e-06,
+    "DC_rail_KCL_with_tokens_A": 5e-06,
+    "commonmode_with_tokens_V": 2e-06,
+    "instantaneous_power_with_tokens_W": 0.001,
+    "prefix_TR_energy_with_tokens_J": 1e-05,
+    "conditional_reduced_TR_current_A": 1e-05,
+    "conditional_reduced_TR_rail_V": 5e-06
+  },
+  "budget_propagation": {
+    "TR_current_rounding_amplification_ohm": [
+      4000,
+      8000
+    ],
+    "maximum_TR_token_radius_V": 1.6010000000000002e-06,
+    "pole_KCL_token_radius_A": 1.000100000001e-06,
+    "DC_rail_KCL_token_radius_A": 3.0001e-06,
+    "commonmode_token_radius_V": 1.1001e-09,
+    "prefix_energy_precision_bound_note": "Under |I|<=440A, |VL|<=900V and q caps, full product/prefix propagation is <2e-7J over80002 segments. Check every actual prefix;1e-5J includes arithmetic/conditioning margin.",
+    "conditional_current_sensitivity_end_A": 5.396666666666666e-06,
+    "conditional_prerequisites": [
+      "source-terminal",
+      "grid source family",
+      "bridge voltage identity",
+      "all six g/R same input",
+      "initial i/pole/DC leak",
+      "commonmode"
+    ],
+    "failed_prerequisite_means_predictions_diagnostic_never_rescues_other_failures": true,
+    "conditioning": [
+      {
+        "h_s": 5e-06,
+        "TR_current_coefficient_ohm": 4000,
+        "scaled_arrow_condition_infinity": 3469.368575416874
+      },
+      {
+        "h_s": 2.5e-06,
+        "TR_current_coefficient_ohm": 8000,
+        "scaled_arrow_condition_infinity": 13604.370242083543
+      }
+    ],
+    "conditioning_not_native_solver_proof": true,
+    "prefix_TR_energy_segment_scope": {
+      "formal_fine": 80000,
+      "acquisition_fine": 80002,
+      "formal_coarse": 40000,
+      "acquisition_coarse": 40001,
+      "all_prefixes_and_tail_checked": true
+    }
+  },
+  "reference_self_refinement_hard_continuous_all_windows": {
+    "iabc_A": {
+      "max_abs": 0.05,
+      "PWL_RMSE_abs": 0.025,
+      "engineering_scale": 10,
+      "max_abs_over_scale": 0.005,
+      "PWL_RMSE_over_scale": 0.0025,
+      "both_absolute_and_normalized_limits_required": true
+    },
+    "VRabc_V": {
+      "max_abs": 0.05,
+      "PWL_RMSE_abs": 0.025,
+      "engineering_scale": 10,
+      "max_abs_over_scale": 0.005,
+      "PWL_RMSE_over_scale": 0.0025,
+      "both_absolute_and_normalized_limits_required": true
+    },
+    "grid_abc_V": {
+      "max_abs": 0.0002,
+      "PWL_RMSE_abs": 0.0001,
+      "engineering_scale": 200,
+      "max_abs_over_scale": 1e-06,
+      "PWL_RMSE_over_scale": 5e-07,
+      "both_absolute_and_normalized_limits_required": true
+    },
+    "inductor_energy_J": {
+      "max_abs": 0.005,
+      "PWL_RMSE_abs": 0.0025,
+      "engineering_scale": 1.5,
+      "max_abs_over_scale": 0.0033333333333333335,
+      "PWL_RMSE_over_scale": 0.0016666666666666668,
+      "both_absolute_and_normalized_limits_required": true
+    }
+  },
+  "candidate_cross_h_continuous_all_windows": {
+    "iabc_A": {
+      "max_abs": 0.1,
+      "PWL_RMSE_abs": 0.05,
+      "engineering_scale": 10,
+      "max_abs_over_scale": 0.01,
+      "PWL_RMSE_over_scale": 0.005,
+      "both_absolute_and_normalized_limits_required": true
+    },
+    "VRabc_V": {
+      "max_abs": 0.1,
+      "PWL_RMSE_abs": 0.05,
+      "engineering_scale": 10,
+      "max_abs_over_scale": 0.01,
+      "PWL_RMSE_over_scale": 0.005,
+      "both_absolute_and_normalized_limits_required": true
+    },
+    "grid_abc_V": {
+      "max_abs": 0.0004,
+      "PWL_RMSE_abs": 0.0002,
+      "engineering_scale": 200,
+      "max_abs_over_scale": 2e-06,
+      "PWL_RMSE_over_scale": 1e-06,
+      "both_absolute_and_normalized_limits_required": true
+    },
+    "inductor_energy_J": {
+      "max_abs": 0.01,
+      "PWL_RMSE_abs": 0.005,
+      "engineering_scale": 1.5,
+      "max_abs_over_scale": 0.006666666666666667,
+      "PWL_RMSE_over_scale": 0.0033333333333333335,
+      "both_absolute_and_normalized_limits_required": true
+    },
+    "mapping": "Candidate5us vs qualified fine2.5us, fixed PWL union grid, no time fitting."
+  },
+  "discontinuous_quantities": {
+    "explanation": "Different sample intervals smear the same jump over different intervals; cross-h jump PWL max/RMSE is diagnostic. All original samples remain subject to own physics, exact input and same-h comparison.",
+    "all_original_samples_retained": true,
+    "all_fine_samples_pointwise_physical_and_metadata_audits_required": true,
+    "cross_h_PWL_full_window_metrics_reported_as_diagnostic": true,
+    "reference_cross_h_shared_grid_hard_peak_limits": {
+      "pole_and_DC_rails_V": 0.001,
+      "VLabc_V": 0.05,
+      "fresh_Jdc_A": 0.05
+    },
+    "cross_h_hard_integrals": "Shared-grid limits below, pointwise physics, all four Pg/Qg/Pdc/loss mean limits and every TR-energy prefix remain HARD.",
+    "candidate_cross_h_shared_grid_hard_peak_limits": {
+      "pole_and_DC_rails_V": 0.003,
+      "VLabc_V": 0.052,
+      "fresh_Jdc_A": 0.052
+    },
+    "candidate_shared_limit_derivation": "Triangle budget: same-h .002 plus reference self .001V poles/rails or .05V/.05A VL/freshJdc. Apply to every original shared point in all four formal windows AND entire acquisition, including tail.",
+    "reference_shared_scope": "Every original shared point in all four formal windows AND entire acquisition, including tail."
+  },
+  "mean_feature_limits_all_windows": {
+    "Pgrid_Qgrid_Pdc_W": {
+      "reference_self_abs": 10,
+      "candidate_cross_h_abs": 20,
+      "engineering_scale": 3600,
+      "reference_relative_upper": 0.002777777777777778,
+      "candidate_relative_upper": 0.005555555555555556
+    },
+    "R_loss_W": {
+      "reference_self_abs": 0.6,
+      "candidate_cross_h_abs": 1.2,
+      "engineering_scale": 300
+    },
+    "switch_loss_W": {
+      "reference_self_abs": 0.0006,
+      "candidate_cross_h_abs": 0.0012,
+      "engineering_scale": 0.3
+    },
+    "candidate_same_h": "Use same-h point-power gates for Pg/Qg/Pdc and reference_self_abs for same-h loss means."
+  },
+  "steady_integer_cycle_features": {
+    "window_s": [
+      0.1,
+      0.2
+    ],
+    "grid_cycles": 6,
+    "carrier_cycles": 100,
+    "internal_60Hz_cycle_boundary_PWL_interpolation_required": true,
+    "total_or_fundamental_I_RMS_A": {
+      "reference_self_abs": 0.025,
+      "candidate_cross_h_abs": 0.05,
+      "engineering_scale": 10
+    },
+    "fundamental_phase_deg": {
+      "reference_self_abs": 0.05,
+      "candidate_cross_h_abs": 0.1,
+      "minimum_fundamental_RMS_A": 1,
+      "phase_fit_or_time_shift_allowed": false
+    },
+    "nonfundamental_residual_RMS_excluding_DC_A": {
+      "reference_self_abs": 0.002,
+      "candidate_cross_h_abs": 0.004,
+      "engineering_scale": 10
+    },
+    "residual_ratio_to_fundamental": {
+      "reference_self_abs": 0.002,
+      "candidate_cross_h_abs": 0.004,
+      "scope": "Includes interharmonics, not a standards THD claim."
+    }
+  },
+  "control_numeric_hard_allowances": {
+    "held_t_ref_center_s": 2e-12,
+    "TIME_configured_center_s": 2e-12,
+    "reference_formula_abs_allowance": 1e-10,
+    "carrier_formula_abs_allowance": 1e-12,
+    "reference_global_Lipschitz_per_s": 362.9424506661589,
+    "carrier_global_Lipschitz_per_s": 4000,
+    "reference_rule": "abs(ref_center - .85*clip(held_center/.02,0,1)*sin(2*pi*60*held_center+phase+delta)) + q_ref <= reference_global_Lipschitz_per_s*q_held + reference_formula_abs_allowance",
+    "carrier_rule": "abs(carrier_center - triangle((TIME_native_center-.0005)*1000)) + q_carrier <= 4000*q_TIME_native + carrier_formula_abs_allowance",
+    "meaning": "Compatibility at actual logged input centers with full-place q. Not a proof of hidden internal-time intervals; never substitute ideal ticks into formula checks.",
+    "formula_allowance_derivation": "Canonical formula remains independent of vendor constants. Actual new FormCodec/generated graph must bind every omega/phase/modulation/ramp literal to the listed exact-or12g forms: literal contribution<=5e-11 over held<=.200000000002s, plus1e-12 sin/operation allowance; total1e-10 is prospective headroom, not a time shift. Carrier graph exact decimal literals plus1e-12 operation allowance. Reject any unproved graph/literal, rather than consume arbitrary headroom.",
+    "output_q_caps_dimensionless": {
+      "ref_a": 1e-12,
+      "ref_b": 1e-12,
+      "ref_c": 1e-12,
+      "carrier": 1e-12
+    },
+    "input_q_caps_s": {
+      "held_t_ref_s": 1e-12,
+      "TIME_native_s": 1e-12
+    },
+    "max_reference_RHS_at_input_q_cap": 4.629424506661589e-10,
+    "max_carrier_RHS_at_input_q_cap": 4.001e-09,
+    "held_time_rule": "For row i, j=(i//gate_stride)//20. abs(held_center-j*100us)<=2ps. At Pulse100=1 the sampler input is actual native TIME at that same row; held/TIME printed intervals must overlap after a declared 1e-15s copying allowance. Between pulses require identical held numeric values, without accumulating drift.",
+    "held_time_copy_abs_allowance_s": 1e-15,
+    "Pulse100_Pulse5_raw_g_applied_g": "Exactly 0 or 1 centers and the prospective integer schedule; no approximate Boolean, time shift, ambiguous-bit fallback or compatibility substitution.",
+    "R_inputs": "Exactly .001 or 1e9 ohm centers selected by actual applied g. Closed/open constants, generated conductance assignment and last printed place are archived; Boolean/R exactness is not relaxed by interval propagation.",
+    "nominal_margin_design_basis": {
+      "origin": "INTERNAL_SYNTHETIC_CONTROL_ORACLE_NOT_COMMERCIAL",
+      "all_gate_phase_comparisons": 120006,
+      "minimum_abs_reference_minus_carrier": 2.9400706790583264e-05,
+      "source": "Independent finite integer oracle; regenerate and bind its identity before qualification.",
+      "clock_perturbation_bound_formula": "Lref*2ps +4000*2ps +1e-9 declared total gate arithmetic/literal guard <9.726e-9, below2.940070679e-5 margin. Formula compatibility uses the separate tighter1e-10/1e-12 additive allowances.",
+      "fine_raw_phase_comparisons": 240009,
+      "fine_raw_minimum_separation": 2.0713983706066585e-07,
+      "fine_raw_minimum_location": {
+        "fine_row": 11785,
+        "phase": "a"
+      },
+      "fine_raw_scope": "Independent artificial canonical-vs12g control formulas, all80003 fine rows. No bit changes; minimum exceeds the9.726e-9 clock/arithmetic guard. Actual raw intervals and literal/graph identity still must pass; not commercial data."
+    },
+    "raw_comparator_interval_rule": "At every original row, including fine midpoints, form actual ref +/- q_ref and carrier +/- q_carrier. For upper=1 require ref_low>=carrier_high; for upper=0 require ref_high<carrier_low. Require actual raw bit equals that strict interval decision and lower=1-upper. Any overlap/indeterminate row is FAIL_UNRESOLVED_SAME_INPUT; never substitute carrier at a previous gate tick.",
+    "reference_literal_prior_bound": {
+      "held_time_abs_max_s": 0.200000000002,
+      "omega_per_s": {
+        "canonical_decimal": "376.99111843077515",
+        "allowed_12g": "376.991118431",
+        "absolute_rendering_error": "2.2485e-10"
+      },
+      "combined_phase_rad": [
+        {
+          "phase": "a",
+          "canonical_decimal": "-0.08726646259971647",
+          "allowed_12g": "-0.0872664625997"
+        },
+        {
+          "phase": "b",
+          "canonical_decimal": "-2.181661564992912",
+          "allowed_12g": "-2.18166156499"
+        },
+        {
+          "phase": "c",
+          "canonical_decimal": "2.007128639793479",
+          "allowed_12g": "2.00712863979"
+        }
+      ],
+      "max_phase_rendering_error_rad": "3.479e-12",
+      "other_literal_rendering_error": "0 for decimal .85 modulation,50 ramp gain,-.0005 shift,1,3,.5,1000,4 under exact-or12g rendering; binary/libm error is separately allowed1e-12.",
+      "formula": "abs(delta_ref)<=.85*(max_abs_held*abs(delta_omega)+max_abs_delta_phase)",
+      "computed_absolute_ref_bound": "4.11816500003822450e-11",
+      "hard_literal_contribution_cap": 5e-11,
+      "generated_graph_obligation": "The new actual archived FormCodec output and generated expressions must independently establish these forms/operation order. This prior bound is not automatic native qualification."
+    }
+  },
+  "purpose": "Prospective complete open-loop reference and candidate acceptance contract. No complete native output or candidate has been qualified by this draft. Root review and an immutable protocol/package/analysis identity freeze are required before execution.",
+  "native_channels": {
+    "count": 45,
+    "plant_count": 32,
+    "control_count": 13,
+    "canonical_names_are_not_native_column_indices": true,
+    "channels": [
+      {
+        "signal": "TIME_native_s",
+        "unit": "s"
+      },
+      {
+        "signal": "V_a_grid_kV",
+        "unit": "kV"
+      },
+      {
+        "signal": "V_b_grid_kV",
+        "unit": "kV"
+      },
+      {
+        "signal": "V_c_grid_kV",
+        "unit": "kV"
+      },
+      {
+        "signal": "V_a_pole_kV",
+        "unit": "kV"
+      },
+      {
+        "signal": "V_b_pole_kV",
+        "unit": "kV"
+      },
+      {
+        "signal": "V_c_pole_kV",
+        "unit": "kV"
+      },
+      {
+        "signal": "Vdc_p_kV",
+        "unit": "kV"
+      },
+      {
+        "signal": "Vdc_n_kV",
+        "unit": "kV"
+      },
+      {
+        "signal": "VR_a_kV",
+        "unit": "kV"
+      },
+      {
+        "signal": "VR_b_kV",
+        "unit": "kV"
+      },
+      {
+        "signal": "VR_c_kV",
+        "unit": "kV"
+      },
+      {
+        "signal": "VL_a_kV",
+        "unit": "kV"
+      },
+      {
+        "signal": "VL_b_kV",
+        "unit": "kV"
+      },
+      {
+        "signal": "VL_c_kV",
+        "unit": "kV"
+      },
+      {
+        "signal": "I_a_ac_to_bridge_kA",
+        "unit": "kA"
+      },
+      {
+        "signal": "I_b_ac_to_bridge_kA",
+        "unit": "kA"
+      },
+      {
+        "signal": "I_c_ac_to_bridge_kA",
+        "unit": "kA"
+      },
+      {
+        "signal": "I_dc_absorb_kA",
+        "unit": "kA"
+      },
+      {
+        "signal": "applied_g_a_u",
+        "unit": "1"
+      },
+      {
+        "signal": "applied_g_a_l",
+        "unit": "1"
+      },
+      {
+        "signal": "applied_g_b_u",
+        "unit": "1"
+      },
+      {
+        "signal": "applied_g_b_l",
+        "unit": "1"
+      },
+      {
+        "signal": "applied_g_c_u",
+        "unit": "1"
+      },
+      {
+        "signal": "applied_g_c_l",
+        "unit": "1"
+      },
+      {
+        "signal": "R_a_u_ohm",
+        "unit": "ohm"
+      },
+      {
+        "signal": "R_a_l_ohm",
+        "unit": "ohm"
+      },
+      {
+        "signal": "R_b_u_ohm",
+        "unit": "ohm"
+      },
+      {
+        "signal": "R_b_l_ohm",
+        "unit": "ohm"
+      },
+      {
+        "signal": "R_c_u_ohm",
+        "unit": "ohm"
+      },
+      {
+        "signal": "R_c_l_ohm",
+        "unit": "ohm"
+      },
+      {
+        "signal": "V_dc_source_kV",
+        "unit": "kV"
+      },
+      {
+        "signal": "held_t_ref_s",
+        "unit": "s"
+      },
+      {
+        "signal": "ref_a",
+        "unit": "1"
+      },
+      {
+        "signal": "ref_b",
+        "unit": "1"
+      },
+      {
+        "signal": "ref_c",
+        "unit": "1"
+      },
+      {
+        "signal": "carrier",
+        "unit": "1"
+      },
+      {
+        "signal": "Pulse100",
+        "unit": "1"
+      },
+      {
+        "signal": "Pulse5",
+        "unit": "1"
+      },
+      {
+        "signal": "raw_g_a_u",
+        "unit": "1"
+      },
+      {
+        "signal": "raw_g_a_l",
+        "unit": "1"
+      },
+      {
+        "signal": "raw_g_b_u",
+        "unit": "1"
+      },
+      {
+        "signal": "raw_g_b_l",
+        "unit": "1"
+      },
+      {
+        "signal": "raw_g_c_u",
+        "unit": "1"
+      },
+      {
+        "signal": "raw_g_c_l",
+        "unit": "1"
+      }
+    ],
+    "native_output_parts_columns": [
+      10,
+      10,
+      10,
+      10,
+      5
+    ],
+    "candidate_plant_mapping_count": 32,
+    "candidate_control_observer_output_required": false,
+    "candidate_TIME_g_R_are_binding_not_added_result_API": true,
+    "shared_direction_and_timing": {
+      "Vm": "Fresh same MainOut read before own PGB; grid/pole/rails relative to ground, VR/VL drop AC toward bridge; DC source terminal positive minus negative.",
+      "I": "Fresh own CBR read before own PGB; phase AC-to-bridge, DC positive-to-negative source (minus native ownBA).",
+      "applied_g_R": "Actual same-row held gates and resistances entering electrical solve.",
+      "control": "Actual shared100us held TIME and derived references; actual-TIME carrier/raw g; same integer100/5us pulse nets. See control for update order."
+    }
+  },
+  "control": {
+    "electrical_index": "Rows i=0..expected_rows-1 identify nominal t=i*h; actual TIME_native and every part timestamp center must satisfy abs(center-i*h)<=2e-12s. Index identity does not overwrite actual data.",
+    "gate_stride": {
+      "coarse": 1,
+      "fine": 2
+    },
+    "reference_stride": {
+      "coarse": 20,
+      "fine": 40
+    },
+    "gate_index": "k=i//gate_stride",
+    "reference_index": "j=k//20",
+    "reference_held_time": "s=j*100us",
+    "reference_formula": "r_p(s)=.85*clip(s/.02,0,1)*sin(2*pi*60*s+phase_p-pi/36)",
+    "canonical_gate_carrier": "c_k=abs((k mod 200)-100)/50-1, equivalent to triangle((k*5us-.0005)*1000)",
+    "continuous_raw_carrier": "triangle(x)=1-4*abs(frac(x)-.5); x=(actual TIME_native_s-.0005)*1000. Use actual TIME and the complete piecewise-continuous triangle at every row, including 2.5us midpoints.",
+    "upper_gate": "At each 5us gate tick, g_u=1 iff canonical r_p>=c_k, lower=1-upper. Hold all six applied g and R at intervening fine midpoints.",
+    "Pulse100": "1 iff i % reference_stride == 0, else 0; t0=1",
+    "Pulse5": "1 iff i % gate_stride == 0, else 0; t0=1",
+    "100us_native_implementation": "10kHz Start0 Mag1 noninterpolated impulse -> Real-to-INT -> shared scalar external-pulse SAMP5(TIME), initial0; its actual OUT drives all ramp and sine references.",
+    "5us_native_implementation": "200kHz Start0 Mag1 noninterpolated impulse -> Real-to-INT -> one INTEGER pulse net -> six scalar external-pulse SAMP5(rawg) -> same-row R; no bypass/stale array.",
+    "fresh_same_row_order": [
+      "Pulse100",
+      "held TIME sampler",
+      "ramp and sine references",
+      "actual-TIME carrier and comparator",
+      "Pulse5 and six gate samplers",
+      "six Ron/Roff products and resistance sums",
+      "same-row E_VARRLC electrical assignment/solve"
+    ],
+    "first_row": "parameters.initial_conditions must be proved by actual initialization/order. Native TIME and every OUT timestamp center must be EXACT0 at row0 (q is separate). No assumption of old sampler defaults.",
+    "shared_and_midpoint_hard": "All 40002 shared acquisition rows have exactly matching six applied g/R; all 40001 fine midpoints hold preceding 5us g/R. Reference held time, held ref values and actual update/hold sequence are independently qualified. Fine midpoint raw g/carrier may change and must be checked at actual TIME.",
+    "observation_dependencies": {
+      "control_PGB": "Each control producer -> its own PGB in the same native MainDyn step. Control PGB need not wait for MainOut or electrical measurements.",
+      "physical_PGB": "Each15Vm/4own-CBR fresh MainOut read -> its own PGB. DC specifically:negative ownBA -> standard force identity -> own PGB, all MainOut.",
+      "partial_order": "These are dependency branches, not an invented global PGB order; electrical input must still precede same-row solve."
+    }
+  },
+  "mapping_admission": {
+    "scope": "Read-only non-OUT evidence admission first. A mapper PASS proves structure/identity only, not native execution, raw-data admission or numerical qualification.",
+    "actual_provenance_required": [
+      "Immutable protocol/package identities; actual saved XML and all component definitions/full parameters/ports/connections/hierarchy.",
+      "All19 native branches:16 teaching electrical components plus3 zero-impedance phase ammeters, exact parameters/topology/initialization from parameters.json; no DC ammeter or DC earth shunt.",
+      "Actual generated instance/storage indices/dimensions, pulse INTEGER endpoints, SAMP initializations and same-row control/solve/MainOut order; no alias or bypass.",
+      "15 actual Vm and4 fresh own CBR chains before own PGB. DC:negative ownBA -> standard force identity -> own PGB; never old CUR or reconstructed current.",
+      "All45 actual INF/Map/writer/PGB names, units, groups, full parameters and bijective actual columns; never assume canonical order.",
+      "Fresh unique run/source/input snapshot, native/compiler versions, successful return/completion and normal quit."
+    ],
+    "raw_admission": "Mapper PASS first; immutable raw manifest binds mapper/analyzers/archiver/package and normal closure. Require exact five OUT and INF identities; reject missing/duplicate/extra files, wrong hashes, incomplete mapping/INF. Bind paths before read; reject alias/symlink/run escape/non-OUT JSON confusion. End rebind all bytes. Every pre-admission failure reports zero OUT reads.",
+    "no_column_cherry_pick": true,
+    "schema_or_precision_failures": "FAIL_DATA_ADMISSION; no numeric PASS; preserve the failing receipt and all original files.",
+    "fresh_run_only": "Do not promote old short/B1/full-draft model measurements or synthetic CSVs into this full reference."
+  },
+  "numeric_conventions": {
+    "parser": "ASCII finite decimal grammar, exact Decimal centers/full q and exact shape/counts. For each row check each of five timestamp centers against i*h within2ps, each q<=1ps, row0 exact0. Require common intersection of all five timestamp and TIME_native center+/-q intervals; keep original centers/bytes, no snapping. Native TIME also meets its qcap/grid/initial rules. Reject nonfinite/missing/duplicate/nonmonotone data. Actual PWL domain must cover windows, no extrapolation.",
+    "physical_interval_gate": "Propagate all full-place q through operations/products/powers/prefix sums, including zero tokens. Require |residual center|+radius+relevant declared allowance<=limit; report each term. Boolean/R inputs have exact separate rules.",
+    "source": "Configured nominal i*h plus-phase whole triple is HARD with source q and declared sin allowance. Actual-TIME and TIME-q source envelopes are diagnostic only, never a relaxed gate or per-phase family choice.",
+    "failure_reporting": "After valid data/input admission report every independent numerical residual despite a clock/source scalar failure. Invalid shape, nonfinite/qcap/safety or indeterminate raw Boolean may stop with explicit FAIL_DATA_OR_INPUT_ADMISSION; list unavailable downstream checks, never assume PASS or call a canonical-input residual proof of invalid actual input. Conditional predictions follow prerequisites. Result records physical_input_prerequisites_pass. If exact applied_g/actual_R fail, physics computed with canonical G is explicitly diagnostic; upstream input FAIL cannot yield actual-physics qualification."
+  },
+  "physical_residual_definitions": {
+    "variables": "e=grid Vm, u=pole Vm, n=negative rail Vm, vp=positive rail Vm, i=AC-to-bridge current, j=direct fresh DC absorbing source current, V=400, Gu/Gl from exact applied g and R; G=Gu+Gl=1000+1e-9, z=1/G, E_p=V*Gu_p/G. All in SI once.",
+    "source_terminal": "V_dc_source-400 and bridge vp-n-400 each include own propagated q plus exactly one declared constant-DC allowance. Bridge identity is rank1, not independent rank2 closure.",
+    "initial": "i0=0 and u0=0; j0=-3*400/(1e9+.001), not zero; both actual source fresh chain and bridge voltage remain independently required.",
+    "KCL": "sum(i); pole: i_p+Gu_p*(vp-u_p)-Gl_p*(u_p-n); DC positive/negative rail: j+sum(Gu*(vp-u)) and j+sum(Gl*(u-n)).",
+    "R_KVL_TR": "VR_p-R*i_p; e_p-VR_p-VL_p-u_p; (2L/h)*(i_p[k]-i_p[k-1])-VL_p[k]-VL_p[k-1].",
+    "pole_Thevenin": "u_p-n-E_p-z*i_p",
+    "commonmode": "n-mean_p(e_p-E_p-(R+z)*i_p); derive from the source sum, identical RL branches, zero initial sum of currents and pole equations. Not a substitute for three-line KCL/TR/source gates.",
+    "power": "(vp-n)*j + sum(VR*i + VL*i + Gu*(vp-u)^2 + Gl*(u-n)^2 - e*i)",
+    "energy": "W_k=.5*L*sum(i_p[k]^2). Prefix work D_1..k=sum_segments h/4*sum((VL_new+VL_old)*(i_new+i_old)); residual W_k-W_0-D_1..k for EVERY prefix including acquisition tail. Never trap(VL*i).",
+    "conditional_reduced_TR": "Measured-source-driven four-unknown discrete-network TR/Schur prediction: use logged e centers each step, canonical exact g/R,400V and zero initial i. It tests network propagation; it is NOT an independent configured-source oracle. Source-configured hard checks remain separate. Propagate input-token/source uncertainty with the declared sensitivity budget. Any prerequisite failure makes predictions diagnostic, unable to rescue failure."
+  },
+  "metric_definitions": {
+    "windows": "All four closed windows, every phase/signal separately, shared boundaries in both windows. No fitting, phase permutation, scaling, shift or sample deletion.",
+    "raw_tail": "All acquisition rows/prefixes, including tail, pass precision/time/control/input/physics/same-h gates. Formal statistics use the four fixed windows. Also require same-h acquisition-wide max/RMSE under the same limits.",
+    "PWL_difference": "PWL on each own actual time grid; insert fixed window endpoints, form full union knots. Error segment d,a,b has squared integral d*(a*a+a*b+b*b)/3. RMSE=sqrt(sum/T); max at all knots. Both SI and fixed-scale limits apply.",
+    "same_h_original_points": "First require nominal-index pairing, each center within2ps and paired centers within4ps. Compare all original values by index, without interpolation across jumps. max covers every original point; PWL_RMSE integrates the ERROR samples on common nominal i*h. This case-specific statistic does not claim continuous jump signals or use the generic continuous-only API.",
+    "W_PWL": "Compute W=.5L*sum(i^2) on EACH own original grid, then PWL W and compare. Never interpolate i then square. Mean W-PWL differs from .5L*PWL-current-RMS^2.",
+    "point_power_and_loss": "Own point snapshots:Pg=sum(e*i); Qg=1.5*(e_beta*i_alpha-e_alpha*i_beta); Pdc=(vp-n)*j; PR=sum(VR*i); Psw=sum(Gu*(vp-u)^2+Gl*(u-n)^2). Mean=exact PWL snapshot integral/T. Do not interpolate operands before products or substitute R*PWL-current-RMS^2.",
+    "Clarke": "alpha=(2/3)*(a-.5*b-.5*c), beta=(2/3)*(sqrt(3)/2)*(b-c); amplitude invariant. Pg uses direct abc dot product to retain any zero sequence. Qg>0 is inductive reactive power absorbed from AC; DC absorb positive.",
+    "continuous_total_RMS": "For each phase current PWL: mean=integral(i)/T; RMS=sqrt(integral(i^2)/T); one affine segment integral(i^2)=d*(i0^2+i0*i1+i1^2)/3. Includes DC.",
+    "fundamental": "On steady6-cycle window:a=2/T*integral(PWL_i*sin(2*pi*f*t)), b=2/T*integral(PWL_i*cos(2*pi*f*t)); affine-times-sin/cos exact integrals with stable differences/compensated sums. RMS1=hypot(a,b)/sqrt(2); phase=atan2(b,a)deg, absolute-time sine basis. Compare wrapped phase difference; no fit/search.",
+    "fundamental_affine_antiderivatives": "On segment slope m: integral i*sin(wt) dt = [-i*cos(wt)/w + m*sin(wt)/w^2]; integral i*cos(wt) dt = [i*sin(wt)/w + m*cos(wt)/w^2]. Evaluate with numerically stable differences; exact cycle boundaries inserted by PWL.",
+    "nonfundamental": "sqrt(RMS_total^2-mean^2-RMS1^2); subtract DC. Clamp negative radicand only within1e-12A^2 roundoff, else FAIL_METRIC. Ratio=residual/RMS1; includes interharmonics, not standard THD.",
+    "cycles": "Aggregate steady6-cycle features are hard. Also report six individual cycle features with boundaries .1+n/60, n0..6, inserted by PWL; per-cycle values are diagnostic until separately predeclared limits exist.",
+    "phase_and_ratio_prerequisite": "RMS1>=1A in EACH compared phase/run, fixed before observing data. If false, phase/ratio cannot be qualified: FAIL_PREREQUISITE, not silently N/A. Total/fundamental RMS and residual RMS remain required."
+  },
+  "same_h_candidate_hard_all_windows": {
+    "grid_abc_V": {
+      "max_abs": 4e-07,
+      "PWL_RMSE_abs": 2e-07,
+      "engineering_scale": 200,
+      "max_abs_over_scale": 1.9999999999999997e-09,
+      "PWL_RMSE_over_scale": 9.999999999999999e-10,
+      "both_absolute_and_normalized_limits_required": true
+    },
+    "all_other_plant_voltages_V": {
+      "max_abs": 0.002,
+      "PWL_RMSE_abs": 0.001,
+      "engineering_scale": 400,
+      "max_abs_over_scale": 5e-06,
+      "PWL_RMSE_over_scale": 2.5e-06,
+      "both_absolute_and_normalized_limits_required": true
+    },
+    "iabc_and_fresh_Jdc_A": {
+      "max_abs": 0.002,
+      "PWL_RMSE_abs": 0.001,
+      "engineering_scale": 10,
+      "max_abs_over_scale": 0.0002,
+      "PWL_RMSE_over_scale": 0.0001,
+      "both_absolute_and_normalized_limits_required": true
+    },
+    "Pg_Qg_Pdc_W": {
+      "max_abs": 1,
+      "PWL_RMSE_abs": 0.5,
+      "engineering_scale": 3600,
+      "max_abs_over_scale": 0.0002777777777777778,
+      "PWL_RMSE_over_scale": 0.0001388888888888889,
+      "both_absolute_and_normalized_limits_required": true
+    },
+    "energy_J": {
+      "max_abs": 0.001,
+      "PWL_RMSE_abs": 0.0005,
+      "engineering_scale": 1.5,
+      "max_abs_over_scale": 0.0006666666666666666,
+      "PWL_RMSE_over_scale": 0.0003333333333333333,
+      "both_absolute_and_normalized_limits_required": true
+    },
+    "exact_inputs": "TIME by2ps clock/pair rules; six applied g and six actual R exact at every original row. The32 count includes these13 inputs, not32 analog channels."
+  },
+  "candidate_binding": {
+    "future_only": true,
+    "identity": [
+      "Actual one-file source/import/closure identities before/after run.",
+      "CaseDefinition actual component types/ports/constants; attached six IdealSwitch.closed and Ron/Goff.",
+      "Every actual result state:switch and direct i:Vdc source current, frozen direction; no reconstructed commercial current."
+    ],
+    "control_check": "Evaluate actual attached callables on both entire grids/boundaries/midpoints against independent integer oracle; repeated-call/order purity and complementarity. Validate the held-reference function actually used, without exposing13 observers. Bind actual result state to native g and input R from actual constants/state to native R exactly; no native-gate replay.",
+    "minimal_path": "Existing CaseDefinition -> Circuit -> Simulator -> SimulationResult and existing IdealSwitch/source/R/L; no controls/vsc.py changes or post-solve controller sampling.",
+    "gaps": "Equal applied input does not establish native sampler internals. Feedback/deadtime/diodes/faults/nonlinear DC/other h require new contracts.",
+    "minimal_interface": {
+      "status": "FUTURE_ONLY_AFTER_REFERENCE_QUALIFICATION",
+      "definition": "define_case(*, time_step=TIME_STEP, stop_time=STOP_TIME)",
+      "teaching_default_stop_s": 0.2,
+      "validation_stop_s": 0.200005,
+      "input": "Six pure bool closed(time) callables attached to existing IdealSwitch components, with closed_resistance=.001 and open_conductance=1e-9. No public controller/state/Pulse/SAMP framework.",
+      "timing": "At supported h only: obtain electrical grid index round(time/h), verify actual time is within 2ps of that index*h, derive gate index by integer division and reference index gate_index//20. Reject off-grid time; do not floor a floating time/5us at a boundary. Gate evaluation is pure and independent of call order.",
+      "outputs": "Existing SimulationResult node voltages, branch currents and state:switch fields; no 13-channel native-observer teaching API."
+    }
+  },
+  "gate_classification": {
+    "HARD": "All applicable mapping/closure/raw identity/count/precision/clock/control/source/safety/physical residuals and reference/candidate metrics explicitly named above; every phase, point, prefix and window separately. Both abs and fixed engineering-normalized thresholds.",
+    "CONDITIONAL": "Only measured-source-driven reduced-TR network predictions after listed prerequisites; configured-source identity remains independently HARD. On failed actual g/R any canonical-input physics/predictions are diagnostic and cannot qualify actual input.",
+    "DIAGNOSTIC": "Different-h PWL jump max/RMSE; actual-TIME source/time-q envelopes; six individual cycle features without individual limits; analytic/synthetic engineering expectations; reduced-model conditioning estimate.",
+    "NOT_APPLICABLE": "Deleted series DC ammeter voltage-drop/old rank2 closure, candidate13 native internal-observer outputs and vendor-state-architecture equivalence. Record NA with reason, never PASS. Other time steps, control loops and nonlinear features are out of scope.",
+    "UNAVAILABLE": "No complete native reference or candidate results exist in this draft. Mark NOT_OBSERVED, not PASS/NA/completed."
+  },
+  "failure_policy": {
+    "any_hard_failure": "No overall qualification. Preserve every original run/archive/failed receipt; report all independent failures. Do not retune thresholds, delete samples, reorder phases, shift time or fit amplitude. A changed protocol needs a NEW identity, pre-run rationale and fresh run if inputs changed.",
+    "admission_failure": "Before non-OUT identity/mapping/archive admission, OUT reads remain zero. Malformed data, precision/safety or indeterminate input gives explicit admission FAIL and unavailable downstream checks, never numeric zeros/PASS. After valid admission, ordinary scalar numerical failures retain all independent residual reporting.",
+    "source_or_control_prerequisite": "Keep source/control hard failure and full independent physical residual reports. Mark dependent reduced predictions diagnostic.",
+    "disagreement": "Two independent analyses differing in admission, any hard result, units, q or metric definition blocks qualification until explained with fresh immutable receipts.",
+    "scope": "A complete open-loop PASS would not certify dq/PLL/P/Vac/Vdc/closing/faults or mark all C1 completed."
+  },
+  "budget_basis": {
+    "physics": "New L=.01H, h5/2.5us,20ms ramp/full.2s derivation, not example12/old400us limits.440A safety from universal435.936358A prior;10A is only error scale.",
+    "engineering_estimate": "Pure internal estimates roughly3.3Arms fundamental,+1.1kW,-.26kvar,7.33A peak and.96Arms residual inform scales/discretization limits, not hard targets or commercial data. Native self-refinement must pass unchanged before candidate.",
+    "local_design_evidence": [
+      "local_reference/native_static_reviews/c1_full_openloop_budget_research_20261116T030410022389Z/receipt.json",
+      "local_reference/native_static_reviews/c1_candidate_interface_energy_review_20261116T031213871361Z/receipt.json",
+      "local_reference/native_static_reviews/c1_full_openloop_control_oracle_20261116T030645697241Z/receipt.json",
+      "local_reference/c1_openloop_reference_research/20261116T030609659487Z_full_openloop_recipe_draft_v1/proposal.json"
+    ],
+    "self_contained": "All operative physical parameters and acceptance rules are public here; ignored evidence is provenance only."
+  },
+  "comparison_pairs": {
+    "reference_self": "Native5us versus native2.5us: continuous PWL, reference shared-point jump limits, all-window means and steady reference_self limits; each run first passes all45 qualification.",
+    "candidate_same_h": "Candidate5us/native5us and candidate2.5us/native2.5us: same_h_candidate_hard_all_windows over all original32 points, actual control/state/R binding, each run own physical gates. Mean Pg/Qg/Pdc follows same-h point gates, loss means use reference_self_abs; steady features use candidate_cross_h_abs (pointwise limits remain stricter).",
+    "candidate_cross_h": "Candidate5us versus qualified native2.5us: candidate_cross_h_continuous_all_windows, mean candidate_cross_h_abs and steady candidate_cross_h_abs; jump PWL diagnostic, declared shared-point limits remain hard. Shared points use candidate_cross_h_shared_grid_hard_peak_limits throughout acquisition."
+  },
+  "defined_utc": "2026-11-16T03:45:56.990228+00:00",
+  "fixed_before_new_full_native_or_candidate_output": true,
+  "implementation_gates": [
+    "Before a full numerical Run, bind every actual generated literal/expression/order/storage role to this prospective protocol. A separate no-Run build-only contract may obtain that generated evidence after protocol freeze.",
+    "Independently seal execution package, installed software/source/profile/resource guards, non-OUT mapping admission, post-mapping raw archive and two independent numerical analyzers before actual-data use.",
+    "Implement fixed same-h/raw-point and cross-h/PWL/W/60Hz statistics exactly; all original points and tail remain. No post-output redefinition.",
+    "Only after both complete native references and self-refinement qualify may a separate candidate-entry receipt enable the minimal teaching implementation. This protocol itself grants no Run or candidate execution."
+  ]
+}

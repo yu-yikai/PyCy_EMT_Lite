@@ -1,5 +1,12 @@
 # 恢复与下一步
 
+2026-11-16当前：完整开环规则已固定，入口[完整开环协议记录](experiments/c1_full_openloop_protocol_20261116.json)和[验收说明](../../validation/cases/grid_connected_vsc_open_loop/acceptance_plan.md)。进入时核b6f5775与实际远端一致；本次协议提交在结束检查点另核。
+
+1. 以实际协议提交HEAD新建5µs完整模型只构建执行包，maxRun0，保留3GiB/2GiB资源、源/profile/owned进程等原守卫；旧未授权草稿不修改自启。ROOT独立byte seal和实际用户环境预检后才Build。
+2. 正常闭场后独审实际311组件/45通道、分支/源新鲜度、100µs/5µs控制顺序、37维存储与全角色。只构建不能授Run或数值PASS。
+3. 根据已固定协议另封完整5/2.5µs数值包及两路分析器，完整映射先于OUT，双h自细化合格后才写最小教学候选。保留全部原始点/尾点/旧FAIL。
+4. 后续C1仍按dq电流→PLL整合→P前馈/Vac→真实DC电容Vdc及扰动推进，D1待办，F1仅在外部恢复后补验。
+
 2026-11-16当前入口：4c5f423已核实际远端一致，新增9项，C1完整开环协议尚未冻结。见[完整开环准备记录](experiments/c1_full_openloop_preparation_20261116.json)；下方旧记录按各自时间保留。
 
 1. 读取本轮记录及其本地三路设计收据。草案proposal是JSON；细网格oracle的carrier_at_gate_tick仅用于施加门极，原生中点carrier/raw_g另验。

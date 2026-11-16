@@ -3,7 +3,7 @@
   "updated_date": "2026-11-16",
   "timezone": "Asia/Shanghai",
   "branch": "codex/emt-examples-longterm",
-  "checkpoint_head": "4c5f423dd1d20e23d51b271240b1edaf4a7edf55",
+  "checkpoint_head": "b6f5775353e99f91c32d7860df47c4eb2db0bd9d",
   "current_task": "C1",
   "formal_new_examples_completed": 9,
   "status_values": [
@@ -670,7 +670,7 @@
         "pscad-derived-force-dsout-build-v5",
         "pscad-derived-force-dsout-bounded-probe-v5"
       ],
-      "validation": "既有11 PLL和12 SPWM补验证已完成。C1新400µs人工八态短探针在会话63693正常闭场：build0/Run一次/quit/owned[]，551项实际结构及INF映射与118项绑定复核、双路原17+Vs数值检查均通过，32通道全81点/80段保留；源/完整末位精度门合格，删除A/drop/rank2仍NA。仅短探针资格，完整SPWM开环、其余闭环链和候选未验收；本轮113源码/依赖未变，1300含slow为既有回归。 完整0.2s开环已备静态接线/100us参考与5us门极草案、全网格内部控制检查及新量纲预算建议；均未冻结或取得新原生资格，研究观察不进入教学API。",
+      "validation": "既有11 PLL和12 SPWM补验证已完成。400µs人工八态短探针实际闭场，551项映射/118绑定及双路17+Vs数值检查PASS，限32通道81点；删除DC电流表/drop/rank2仍NA。完整0.2s开环的参数、时序、全窗与新量纲预算经独立审查已在新商业/候选输出前固定。新kernel48项纯检查、独立定向/Schur审查及未授权完整构建草稿是准备证据，不是商业资格；完整新100µs原生链、双h数值参考和教学候选仍NOT_OBSERVED。113源码与依赖未变，既有1300含slow本轮未重跑。",
       "acceptance": "局部、可独立运行验证的教学例逐项验收",
       "status": "in_progress",
       "files": [
@@ -693,7 +693,11 @@
         "docs/development_roadmap/experiments/c1_output_intent_build_only_20261112.json",
         "docs/development_roadmap/experiments/c1_force_dsout_build_only_20261112.json",
         "docs/development_roadmap/experiments/c1_force_dsout_bounded_numeric_20261116.json",
-        "docs/development_roadmap/experiments/c1_full_openloop_preparation_20261116.json"
+        "docs/development_roadmap/experiments/c1_full_openloop_preparation_20261116.json",
+        "validation/cases/grid_connected_vsc_open_loop/parameters.json",
+        "validation/cases/grid_connected_vsc_open_loop/reference_protocol.json",
+        "validation/cases/grid_connected_vsc_open_loop/acceptance_plan.md",
+        "docs/development_roadmap/experiments/c1_full_openloop_protocol_20261116.json"
       ],
       "commits": [
         "b835e31785fab3fda247c333d23edbe9ce576dfa",
@@ -710,7 +714,8 @@
         "fb9aaa8612a2725d9a93ec248b604d39f2be57fb",
         "b2462365d5c40efd27400b0999cf6a8c668f3d91",
         "63e51654499c44ac215ab776d8b58f994935d7c1",
-        "4c5f423dd1d20e23d51b271240b1edaf4a7edf55"
+        "4c5f423dd1d20e23d51b271240b1edaf4a7edf55",
+        "b6f5775353e99f91c32d7860df47c4eb2db0bd9d"
       ],
       "blockers": [],
       "reference_feasibility": {
@@ -721,7 +726,7 @@
         "evidence_sha256": "d92469cdd234477829ca5a5fa75a67648f17235fffadf3d3cbdaa73672375427",
         "native_executed": false
       },
-      "current_stage": "open_loop_full_protocol_drafts_reviewed_not_frozen",
+      "current_stage": "open_loop_full_protocol_fixed_build_only_preparation",
       "interface_discovery": {
         "status": "qualified_native_satk_batch_interface",
         "simulink_model_tools_provided": false,
@@ -1175,6 +1180,36 @@
         "full_reference_qualified": false,
         "candidate_executed": false,
         "next_gate": "Resolve and commit the complete prospective protocol; then prepare and qualify real full native pair."
+      },
+      "open_loop_full_protocol": {
+        "status": "PROSPECTIVE_FULL_OPENLOOP_PROTOCOL_FIXED_NO_FULL_NATIVE_OR_CANDIDATE",
+        "record": {
+          "path": "docs/development_roadmap/experiments/c1_full_openloop_protocol_20261116.json",
+          "bytes": 5575,
+          "sha256": "d763148cba6cf9fe6b87771ba73bb43b8feb5e73c8e7a635f98c08dbdc84d81b"
+        },
+        "protocol_files": [
+          {
+            "path": "validation/cases/grid_connected_vsc_open_loop/parameters.json",
+            "bytes": 3603,
+            "sha256": "f5041eee9296c4088e74168cb444a10b016c10ee787d044629cb9492ab523dc1"
+          },
+          {
+            "path": "validation/cases/grid_connected_vsc_open_loop/reference_protocol.json",
+            "bytes": 41406,
+            "sha256": "d87a327ef601200b2ebb360403879206d8817697f78767999143226aecf26630"
+          },
+          {
+            "path": "validation/cases/grid_connected_vsc_open_loop/acceptance_plan.md",
+            "bytes": 8753,
+            "sha256": "5509985c979e02216599c4285932e5c0964a942898befe093bb6f59b866e7440"
+          }
+        ],
+        "rules_fixed_before_full_output": true,
+        "native_executed": false,
+        "full_reference_qualified": false,
+        "candidate_implemented": false,
+        "next_gate": "Create a new coarse full-model build-only package against the committed protocol HEAD, independent byte seal and actual-user preflight, then build without Run. Admit actual new graph/control/storage before separately sealing complete5us/2.5us numerical reference runs."
       }
     },
     {
@@ -1325,9 +1360,9 @@
     },
     "source113_unchanged_at_resume": true,
     "no_previous_native_or_tests_restarted": true,
-    "latest_checked_head": "4c5f423dd1d20e23d51b271240b1edaf4a7edf55",
+    "latest_checked_head": "b6f5775353e99f91c32d7860df47c4eb2db0bd9d",
     "latest_goal_turn_classification": "progress",
-    "latest_progress": "Reviewed full open-loop static recipe, finite internal control oracle and independent budget/simplicity drafts; no full native/candidate execution; protocol not frozen.",
+    "latest_progress": "Fixed complete prospective openloop protocol after independent literal/token/physics/metric review; new pure full numeric kernel and unauthorized full-build packages prepared, no new full native or candidate output.",
     "latest_remote_head_verified_same": true
   },
   "pause_checkpoint_history": [
@@ -1376,7 +1411,7 @@
       "historical_pause_only": true
     }
   ],
-  "current_stage": "open_loop_full_protocol_drafts_reviewed_not_frozen",
+  "current_stage": "open_loop_full_protocol_fixed_build_only_preparation",
   "resume_checkpoint_history": [
     {
       "resumed_utc": "2026-11-11T13:24:16.085490+00:00",

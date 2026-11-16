@@ -1,0 +1,118 @@
+{
+  "schema": "grid_connected_vsc_open_loop_parameters_v1",
+  "status": "FROZEN_PROSPECTIVE_PROTOCOL_BEFORE_FULL_REFERENCE_AND_CANDIDATE",
+  "execution_authorized": false,
+  "thresholds_frozen": true,
+  "dc_V": 400,
+  "grid_phase_rms_V": 120,
+  "frequency_Hz": 60,
+  "ramp_s": 0.02,
+  "R_ohm": 1,
+  "L_H": 0.01,
+  "Ron_ohm": 0.001,
+  "Goff_S": 1e-09,
+  "modulation": 0.85,
+  "delta_deg": -5,
+  "carrier_Hz": 1000,
+  "reference_hold_s": 0.0001,
+  "gate_hold_s": 5e-06,
+  "h_s": [
+    5e-06,
+    2.5e-06
+  ],
+  "formal_stop_s": 0.2,
+  "acquisition_stop_s": 0.200005,
+  "variants": {
+    "coarse": {
+      "h_s": 5e-06,
+      "expected_rows": 40002,
+      "acquisition_segments": 40001,
+      "formal_rows": 40001
+    },
+    "fine": {
+      "h_s": 2.5e-06,
+      "expected_rows": 80003,
+      "acquisition_segments": 80002,
+      "formal_rows": 80001
+    }
+  },
+  "phases": [
+    "a",
+    "b",
+    "c"
+  ],
+  "source_phase_rad": [
+    0,
+    -2.0943951023931953,
+    2.0943951023931953
+  ],
+  "phase_convention": "All three e_p(t)=sqrt(2)*grid_phase_rms_V*clip(t/ramp_s,0,1)*sin(2*pi*frequency_Hz*t+phase_p); one whole-triple plus-phase convention. Source ramp and angle use continuous electrical time, not held reference time.",
+  "carrier_shift_s": -0.0005,
+  "comparator_upper": "reference >= carrier; lower = 1-upper",
+  "switch_Roff_ohm": 1000000000.0,
+  "electrical_integrator": "trapezoidal; fixed h; no continuous switching-event relocation",
+  "topology": {
+    "branches": 19,
+    "description": "Three grounded-star AC sources, each followed by series R, L and native ideal phase ammeter, feed a complementary six-switch bridge. Floating ideal DC source joins its rails. The three native zero-impedance phase ammeters measure the same series branch currents; teaching needs16 electrical components and no added impedance. No DC ammeter or DC earth shunt.",
+    "branch_counts": {
+      "AC_source": 3,
+      "R": 3,
+      "L": 3,
+      "switch": 6,
+      "DC_source": 1,
+      "native_ideal_phase_ammeter": 3
+    },
+    "directions": {
+      "AC_current": "grid to bridge",
+      "VR_and_VL": "drop from grid toward bridge",
+      "grid_and_pole_voltage": "node minus ground",
+      "DC_rail_voltage": "each rail minus ground",
+      "DC_absorbing_source_current": "positive DC source NA to negative NB; negative of native ownBA current NB to NA",
+      "DC_source_terminal_voltage": "positive source terminal minus negative source terminal"
+    },
+    "teaching_electrical_components": 16,
+    "native_generated_branch_counts": {
+      "A": 3,
+      "RE": 4,
+      "RS": 6,
+      "R": 3,
+      "L": 3
+    },
+    "current_mapping": "The three native ideal phase ammeter currents map to existing candidate series inductor branch currents, all AC-to-bridge. The direct native DC source current maps to candidate i:Vdc; no DC ammeter."
+  },
+  "initial_conditions": {
+    "phase_inductor_current_A": [
+      0,
+      0,
+      0
+    ],
+    "held_reference_time_s": 0,
+    "references": [
+      0,
+      0,
+      0
+    ],
+    "carrier": 1,
+    "Pulse100": 1,
+    "Pulse5": 1,
+    "upper_gates": [
+      0,
+      0,
+      0
+    ],
+    "lower_gates": [
+      1,
+      1,
+      1
+    ],
+    "pole_voltage_V": [
+      0,
+      0,
+      0
+    ],
+    "DC_source_current_A_formula": "-3*dc_V/(switch_Roff_ohm+Ron_ohm)",
+    "DC_negative_rail_V_formula": "-dc_V*Goff_S/(1/Ron_ohm+Goff_S)",
+    "DC_leakage_is_retained": true,
+    "electrical_initialization": "Retain actual native zero-state initialization and solve; do not substitute the first positive-time sample or force measured leakage to zero."
+  }
+}
