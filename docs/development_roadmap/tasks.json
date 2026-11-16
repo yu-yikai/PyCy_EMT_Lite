@@ -3,7 +3,7 @@
   "updated_date": "2026-11-16",
   "timezone": "Asia/Shanghai",
   "branch": "codex/emt-examples-longterm",
-  "checkpoint_head": "b6f5775353e99f91c32d7860df47c4eb2db0bd9d",
+  "checkpoint_head": "1afde3a916c24edf21dce1c71ae6f825d04d9291",
   "current_task": "C1",
   "formal_new_examples_completed": 9,
   "status_values": [
@@ -670,7 +670,7 @@
         "pscad-derived-force-dsout-build-v5",
         "pscad-derived-force-dsout-bounded-probe-v5"
       ],
-      "validation": "既有11 PLL和12 SPWM补验证已完成。400µs人工八态短探针实际闭场，551项映射/118绑定及双路17+Vs数值检查PASS，限32通道81点；删除DC电流表/drop/rank2仍NA。完整0.2s开环的参数、时序、全窗与新量纲预算经独立审查已在新商业/候选输出前固定。新kernel48项纯检查、独立定向/Schur审查及未授权完整构建草稿是准备证据，不是商业资格；完整新100µs原生链、双h数值参考和教学候选仍NOT_OBSERVED。113源码与依赖未变，既有1300含slow本轮未重跑。",
+      "validation": "既有11 PLL/12 SPWM补验证和400µs短探针资格保持。完整开环协议已在1afde3a固定；完整5µs模型真实编译0错误，但输出清单误收13个datalabel而按58/45准入失败，session69502已exit1/Run0/正常quit/owned空。独立核45真实通道及19支路；两PGB谓词修正仅在新ignored稿和明确的collector重演通过，原FAIL保持。新版七常量/缓存语法已通过范围独审，未授Run；双h完整数值参考和教学候选仍未执行。113源码/依赖不变，1300含slow是既有实测，本轮未重跑。",
       "acceptance": "局部、可独立运行验证的教学例逐项验收",
       "status": "in_progress",
       "files": [
@@ -697,7 +697,8 @@
         "validation/cases/grid_connected_vsc_open_loop/parameters.json",
         "validation/cases/grid_connected_vsc_open_loop/reference_protocol.json",
         "validation/cases/grid_connected_vsc_open_loop/acceptance_plan.md",
-        "docs/development_roadmap/experiments/c1_full_openloop_protocol_20261116.json"
+        "docs/development_roadmap/experiments/c1_full_openloop_protocol_20261116.json",
+        "docs/development_roadmap/experiments/c1_full_openloop_build_attempt_20261116.json"
       ],
       "commits": [
         "b835e31785fab3fda247c333d23edbe9ce576dfa",
@@ -715,7 +716,8 @@
         "b2462365d5c40efd27400b0999cf6a8c668f3d91",
         "63e51654499c44ac215ab776d8b58f994935d7c1",
         "4c5f423dd1d20e23d51b271240b1edaf4a7edf55",
-        "b6f5775353e99f91c32d7860df47c4eb2db0bd9d"
+        "b6f5775353e99f91c32d7860df47c4eb2db0bd9d",
+        "1afde3a916c24edf21dce1c71ae6f825d04d9291"
       ],
       "blockers": [],
       "reference_feasibility": {
@@ -726,7 +728,7 @@
         "evidence_sha256": "d92469cdd234477829ca5a5fa75a67648f17235fffadf3d3cbdaa73672375427",
         "native_executed": false
       },
-      "current_stage": "open_loop_full_protocol_fixed_build_only_preparation",
+      "current_stage": "open_loop_full_compiled_postbuild_admission_failed",
       "interface_discovery": {
         "status": "qualified_native_satk_batch_interface",
         "simulink_model_tools_provided": false,
@@ -1210,6 +1212,22 @@
         "full_reference_qualified": false,
         "candidate_implemented": false,
         "next_gate": "Create a new coarse full-model build-only package against the committed protocol HEAD, independent byte seal and actual-user preflight, then build without Run. Admit actual new graph/control/storage before separately sealing complete5us/2.5us numerical reference runs."
+      },
+      "open_loop_full_build_attempt": {
+        "status": "COMPILED_WITH_ZERO_ERRORS_POSTBUILD_ADMISSION_FAILED",
+        "record": {
+          "path": "docs/development_roadmap/experiments/c1_full_openloop_build_attempt_20261116.json",
+          "bytes": 9808,
+          "sha256": "2a9dc86ae9202120577269e0a6f0e13b9a27451f2a9134763ba661f4c9106d3e"
+        },
+        "session_id": 69502,
+        "native_executed": true,
+        "native_build_errors": 0,
+        "run_calls": 0,
+        "original_admission_passed": false,
+        "candidate_executed": false,
+        "full_double_step_reference_qualified": false,
+        "new_execution_package_created": false
       }
     },
     {

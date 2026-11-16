@@ -1,5 +1,14 @@
 # 恢复与下一步
 
+2026-11-16当前：协议冻结提交为1afde3a；完整模型真实编译0错误但构建后准入失败，唯一session69502已闭场，不轮询或重启。新增完成9，C1仍进行中。
+
+1. 读取本轮构建记录及两路失败范围收据。保留原58项清单/FAIL，修正稿中的45项仅为collector重演。
+2. 读取新版常量/缓存守卫与两处PGB分类修正的独审收据，另封正式Run准入；不改电路、原协议和预算，不以旧failed run授Run。
+3. 另建5/2.5µs完整数值包与闭场/原始数据适配器，固定新HEAD/helper/合同和两路分析器。每套fresh-Build完整准入后只Run一次；完整INF/映射先于OUT，全点及尾点保留。
+4. 真实双h参考自细化合格后才实现最小教学候选。随后继续dq电流、PLL整合、P/Vac及真实DC电容Vdc；D1/F1状态保持。
+
+见[本轮完整构建记录](experiments/c1_full_openloop_build_attempt_20261116.json)。以下保留各阶段历史。
+
 2026-11-16当前：完整开环规则已固定，入口[完整开环协议记录](experiments/c1_full_openloop_protocol_20261116.json)和[验收说明](../../validation/cases/grid_connected_vsc_open_loop/acceptance_plan.md)。进入时核b6f5775与实际远端一致；本次协议提交在结束检查点另核。
 
 1. 以实际协议提交HEAD新建5µs完整模型只构建执行包，maxRun0，保留3GiB/2GiB资源、源/profile/owned进程等原守卫；旧未授权草稿不修改自启。ROOT独立byte seal和实际用户环境预检后才Build。
