@@ -3,7 +3,7 @@
   "updated_date": "2026-11-16",
   "timezone": "Asia/Shanghai",
   "branch": "codex/emt-examples-longterm",
-  "checkpoint_head": "1afde3a916c24edf21dce1c71ae6f825d04d9291",
+  "checkpoint_head": "fbcfb753f09c33c714a1453609bee3c6449fa668",
   "current_task": "C1",
   "formal_new_examples_completed": 9,
   "status_values": [
@@ -670,7 +670,7 @@
         "pscad-derived-force-dsout-build-v5",
         "pscad-derived-force-dsout-bounded-probe-v5"
       ],
-      "validation": "既有11 PLL/12 SPWM补验证和400µs短探针资格保持。完整开环协议已在1afde3a固定；完整5µs模型真实编译0错误，但输出清单误收13个datalabel而按58/45准入失败，session69502已exit1/Run0/正常quit/owned空。独立核45真实通道及19支路；两PGB谓词修正仅在新ignored稿和明确的collector重演通过，原FAIL保持。新版七常量/缓存语法已通过范围独审，未授Run；双h完整数值参考和教学候选仍未执行。113源码/依赖不变，1300含slow是既有实测，本轮未重跑。",
+      "validation": "完整开环PSCAD双步长已实跑并正常闭场；40002/80003点经双路复算，共模含词元残差10.838/37.498µV超过原2µV门，参考整体FAIL。g/R/时钟/源及其余逐点门、全部跨h比较通过；条件rail只作诊断。RunTime唯一注释修正另封政策，原v1准入FAIL保留。未实施候选；113源码/依赖未改，新增完成仍9。",
       "acceptance": "局部、可独立运行验证的教学例逐项验收",
       "status": "in_progress",
       "files": [
@@ -698,7 +698,8 @@
         "validation/cases/grid_connected_vsc_open_loop/reference_protocol.json",
         "validation/cases/grid_connected_vsc_open_loop/acceptance_plan.md",
         "docs/development_roadmap/experiments/c1_full_openloop_protocol_20261116.json",
-        "docs/development_roadmap/experiments/c1_full_openloop_build_attempt_20261116.json"
+        "docs/development_roadmap/experiments/c1_full_openloop_build_attempt_20261116.json",
+        "docs/development_roadmap/experiments/c1_full_openloop_dual_h_diagnostic_20261116.json"
       ],
       "commits": [
         "b835e31785fab3fda247c333d23edbe9ce576dfa",
@@ -717,7 +718,8 @@
         "63e51654499c44ac215ab776d8b58f994935d7c1",
         "4c5f423dd1d20e23d51b271240b1edaf4a7edf55",
         "b6f5775353e99f91c32d7860df47c4eb2db0bd9d",
-        "1afde3a916c24edf21dce1c71ae6f825d04d9291"
+        "1afde3a916c24edf21dce1c71ae6f825d04d9291",
+        "fbcfb753f09c33c714a1453609bee3c6449fa668"
       ],
       "blockers": [],
       "reference_feasibility": {
@@ -728,7 +730,7 @@
         "evidence_sha256": "d92469cdd234477829ca5a5fa75a67648f17235fffadf3d3cbdaa73672375427",
         "native_executed": false
       },
-      "current_stage": "open_loop_full_compiled_postbuild_admission_failed",
+      "current_stage": "open_loop_full_dual_h_commonmode_residual_failed",
       "interface_discovery": {
         "status": "qualified_native_satk_batch_interface",
         "simulink_model_tools_provided": false,
@@ -1228,6 +1230,33 @@
         "candidate_executed": false,
         "full_double_step_reference_qualified": false,
         "new_execution_package_created": false
+      },
+      "open_loop_full_dual_h_numeric": {
+        "status": "REAL_FULL_DUAL_H_NUMERIC_FAIL_COMMONMODE_HARD_GATE",
+        "record": {
+          "path": "docs/development_roadmap/experiments/c1_full_openloop_dual_h_diagnostic_20261116.json",
+          "bytes": 15246,
+          "sha256": "30626ecba27079d7b7238f3805118c7c04fe3036dff8271e1ec3543ac53d48a2"
+        },
+        "native_executed": true,
+        "native_sessions": [
+          98913,
+          25165
+        ],
+        "native_exec_exit_codes": [
+          0,
+          0
+        ],
+        "rows": [
+          40002,
+          80003
+        ],
+        "primary_and_independent_numeric_pass": false,
+        "cross_h_comparisons_pass": true,
+        "hard_commonmode_limit_V": 2e-06,
+        "full_reference_qualified": false,
+        "candidate_implemented": false,
+        "active_native_runs": 0
       }
     },
     {
@@ -1378,9 +1407,9 @@
     },
     "source113_unchanged_at_resume": true,
     "no_previous_native_or_tests_restarted": true,
-    "latest_checked_head": "b6f5775353e99f91c32d7860df47c4eb2db0bd9d",
+    "latest_checked_head": "fbcfb753f09c33c714a1453609bee3c6449fa668",
     "latest_goal_turn_classification": "progress",
-    "latest_progress": "Fixed complete prospective openloop protocol after independent literal/token/physics/metric review; new pure full numeric kernel and unauthorized full-build packages prepared, no new full native or candidate output.",
+    "latest_progress": "Executed real full dual-h references, preserved normal closure/raw archives and two independent numeric FAIL reports; diagnosed common-mode alternating component without changing frozen limits.",
     "latest_remote_head_verified_same": true
   },
   "pause_checkpoint_history": [
@@ -1429,7 +1458,7 @@
       "historical_pause_only": true
     }
   ],
-  "current_stage": "open_loop_full_protocol_fixed_build_only_preparation",
+  "current_stage": "open_loop_full_dual_h_commonmode_residual_failed",
   "resume_checkpoint_history": [
     {
       "resumed_utc": "2026-11-11T13:24:16.085490+00:00",
