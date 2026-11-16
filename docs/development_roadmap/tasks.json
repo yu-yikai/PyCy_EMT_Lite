@@ -3,7 +3,7 @@
   "updated_date": "2026-11-16",
   "timezone": "Asia/Shanghai",
   "branch": "codex/emt-examples-longterm",
-  "checkpoint_head": "8c68b175164a2f2ad6061078f3607027a5fd5dbd",
+  "checkpoint_head": "b57a2a8c06614cf8c626b0e189402063fa82dffd",
   "current_task": "C1",
   "formal_new_examples_completed": 9,
   "status_values": [
@@ -670,7 +670,7 @@
         "pscad-derived-force-dsout-build-v5",
         "pscad-derived-force-dsout-bounded-probe-v5"
       ],
-      "validation": "完整Simscape两档模型已编译，旧完整Run资源中止且sim调用数未观测。新完整规模合成分析40002/80003点、原逐点/跨h门及独审通过，仅属内部证据。真实R2025a无JVM守卫9项通过、model0/sim0；尚未证明无JVM Simscape、MAT重载或完整参考。既有1518全量及原短PASS/PSCAD FAIL保持。",
+      "validation": "真实R2025a无JVM400µs短探针sim1返回并保存完整MAT，随后日志单位类型检查失败；未重载、导出或数值验收。恢复driver静态独审通过，准备器/监控仍为待ROOT审查的草稿，未封包或执行。完整0.2s双档参考及候选未验收。原短PASS、PSCAD FAIL、合成分析及既有1518全量保持。",
       "acceptance": "局部、可独立运行验证的教学例逐项验收",
       "status": "in_progress",
       "files": [
@@ -705,7 +705,8 @@
         "docs/development_roadmap/experiments/c1_simscape_library_discovery_20261116.json",
         "docs/development_roadmap/experiments/c1_simscape_short_build_20261116.json",
         "docs/development_roadmap/experiments/c1_simscape_short_run_20261116.json",
-        "docs/development_roadmap/experiments/c1_simscape_full_resource_stop_20261116.json"
+        "docs/development_roadmap/experiments/c1_simscape_full_resource_stop_20261116.json",
+        "docs/development_roadmap/experiments/c1_nojvm_short_saved_mat_20261116.json"
       ],
       "commits": [
         "b835e31785fab3fda247c333d23edbe9ce576dfa",
@@ -732,10 +733,11 @@
         "fbfc278cffa37cb50f34553effd2f172373378f4",
         "1a9a5bdf4b2d89a18e496388bd6558b650a8e8aa",
         "457ba4eadab46360cc27dfc65e3f2320630028bc",
-        "5ac9d46b96a8c36622620d7e4d72ea9f64e7274c"
+        "5ac9d46b96a8c36622620d7e4d72ea9f64e7274c",
+        "b57a2a8c06614cf8c626b0e189402063fa82dffd"
       ],
       "blockers": [
-        "完整商业参考仍未合格：原Simscape完整Run资源中止；无JVM仅守卫能力通过，须另冻同物理短探针并实际核MAT重载，再决定完整双档运行。保留全部原资源门和失败。"
+        "完整商业参考仍未合格；本次短仿真已保存MAT但单位元数据检查失败。先独立封定只加载已有MAT的恢复包并完成重载/导出/原门，再决定完整双档运行；保持全部原资源门、物理、阈值和历史失败。"
       ],
       "reference_feasibility": {
         "status": "read_only_feasibility_only",
@@ -745,7 +747,7 @@
         "evidence_sha256": "d92469cdd234477829ca5a5fa75a67648f17235fffadf3d3cbdaa73672375427",
         "native_executed": false
       },
-      "current_stage": "offline_full_n_verified_nojvm_guard_pass_full_reference_pending",
+      "current_stage": "nojvm_short_simulation_returned_mat_saved_recovery_pending",
       "interface_discovery": {
         "status": "qualified_native_satk_batch_interface",
         "simulink_model_tools_provided": false,
@@ -1383,6 +1385,23 @@
           "bytes": 7558,
           "sha256": "2f272f08d962ce35a08130db007481d907f1281bf939b15077dba3e26273c380"
         }
+      },
+      "simscape_short_nojvm_compatibility": {
+        "record": {
+          "path": "docs/development_roadmap/experiments/c1_nojvm_short_saved_mat_20261116.json",
+          "bytes": 8976,
+          "sha256": "db83a4dc4df4cdf247be754ca84831b826ea65eee0daa033ec0601bfabc5c383"
+        },
+        "status": "ACTUAL_NOJVM_SHORT_SIM_RETURNED_MAT_SAVED_METADATA_FAIL_RECOVERY_PENDING",
+        "session": 99554,
+        "native_launches": 1,
+        "sim_calls": 1,
+        "simulation_returned": true,
+        "raw_mat_saved": true,
+        "recovery_executed": false,
+        "full_reference_qualified": false,
+        "candidate_implemented": false,
+        "active_native_sessions": 0
       }
     },
     {
@@ -1565,9 +1584,9 @@
     },
     "source113_unchanged_at_resume": true,
     "no_previous_native_or_tests_restarted": true,
-    "latest_checked_head": "8c68b175164a2f2ad6061078f3607027a5fd5dbd",
+    "latest_checked_head": "b57a2a8c06614cf8c626b0e189402063fa82dffd",
     "latest_goal_turn_classification": "progress",
-    "latest_progress": "Full-size synthetic analysis closed and independently verified. One actual no-JVM MATLAB guard-only probe passed nine checks, model0/sim0. Full commercial reference and candidate remain pending.",
+    "latest_progress": "Actual no-JVM Simscape short sim returned and complete MAT saved; new unit metadata check failed before reload/export. Original FAIL retained. MAT-only recovery driver statically reviewed; preparation/monitor drafts and execution remain pending.",
     "latest_remote_head_verified_same": true
   },
   "pause_checkpoint_history": [
@@ -1616,7 +1635,7 @@
       "historical_pause_only": true
     }
   ],
-  "current_stage": "offline_full_n_verified_nojvm_guard_pass_full_reference_pending",
+  "current_stage": "nojvm_short_simulation_returned_mat_saved_recovery_pending",
   "resume_checkpoint_history": [
     {
       "resumed_utc": "2026-11-11T13:24:16.085490+00:00",
