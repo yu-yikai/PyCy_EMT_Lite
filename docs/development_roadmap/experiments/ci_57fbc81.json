@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "target_head_sha": "57fbc81106a75e6f70e09413e4fd94cf45853b96",
+  "branch": "codex/emt-examples-longterm",
+  "workflow_run_id": 43856421332,
+  "run_url": "https://github.com/yu-yikai/PyCy_EMT_Lite/actions/runs/43856421332",
+  "event": "push",
+  "status": "completed",
+  "conclusion": "failure",
+  "created_at": "2026-11-16T11:17:22Z",
+  "updated_at": "2026-11-16T11:17:26Z",
+  "execution_started": false,
+  "test_count": null,
+  "cross_platform_pass_established": false,
+  "jobs": [
+    {
+      "id": 133261734144,
+      "name": "ci (ubuntu-latest)",
+      "head_sha": "57fbc81106a75e6f70e09413e4fd94cf45853b96",
+      "status": "completed",
+      "conclusion": "failure",
+      "runner_id": 0,
+      "steps": []
+    },
+    {
+      "id": 133261734540,
+      "name": "ci (windows-latest)",
+      "head_sha": "57fbc81106a75e6f70e09413e4fd94cf45853b96",
+      "status": "completed",
+      "conclusion": "failure",
+      "runner_id": 0,
+      "steps": []
+    }
+  ],
+  "failure_reason": "The job was not started because your account is locked due to a billing issue.",
+  "same_billing_lock_reconfirmed": true,
+  "scope": "Exact VSC input-validation maintenance commit. Ubuntu and Windows ran no checkout, tests, examples or build. Local1518 PASS is separate evidence; this CI provides no cross-platform qualification.",
+  "sources": [
+    {
+      "path": "local_reference/native_static_reviews/vsc_fix_ci_20261116T111929327122Z/runs.json",
+      "bytes": 12521,
+      "sha256": "6f09893ba8e78e5dd97148a113116276d91c0b0637f2398db47f0774c6ce0e95"
+    },
+    {
+      "path": "local_reference/native_static_reviews/vsc_fix_ci_20261116T111929327122Z/jobs.json",
+      "bytes": 1778,
+      "sha256": "7950966d9cac7c163b7ce659805f9ab300273f8b742b419d981cdf7054ffdde2"
+    },
+    {
+      "path": "local_reference/native_static_reviews/vsc_fix_ci_20261116T111929327122Z/receipt.json",
+      "bytes": 2624,
+      "sha256": "b3497c8e2c57da6848507ad513701a5a55afaddff2ceffc1aae78f49a6d7bff4"
+    }
+  ],
+  "observation": "Read-only observation of the newly pushed HEAD; no rerun, workflow change, billing access or old-run polling. The connector lacks the annotations endpoint, so two bounded anonymous public GETs were used.",
+  "next_action": "Wait for the external account billing lock to be removed before new cross-platform acceptance; do not retry this terminal run."
+}

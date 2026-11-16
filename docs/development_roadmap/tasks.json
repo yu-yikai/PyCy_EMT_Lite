@@ -3,7 +3,7 @@
   "updated_date": "2026-11-16",
   "timezone": "Asia/Shanghai",
   "branch": "codex/emt-examples-longterm",
-  "checkpoint_head": "5ac9d46b96a8c36622620d7e4d72ea9f64e7274c",
+  "checkpoint_head": "57fbc81106a75e6f70e09413e4fd94cf45853b96",
   "current_task": "C1",
   "formal_new_examples_completed": 9,
   "status_values": [
@@ -1461,7 +1461,7 @@
       ],
       "new_capabilities": [],
       "references": [],
-      "validation": "本轮本地1518 passed（491.92s，含slow），0失败/错误/跳过；锁定27包/Ruff/mypy39通过，113源码与依赖测试前后不变。本地结果不替代跨OS。精确c3fdf79的CI43825501731为已有账单锁终态，两OS runner0/steps空，未执行测试；外部解除后补验，不轮询或重启旧终态。",
+      "validation": "VSC修复57fbc81已提交推送；本地1518 passed（491.92s含slow），锁定27包/Ruff/mypy39通过。新精确HEAD的CI43856421332终态failure，两OS runner0/steps空；两项注释明确账户billing lock，测试未执行。跨OS仍待外部解除后补验，不重启该终态。",
       "acceptance": "本批测试与真实CI记录、教学导航、里程碑推送和恢复指令",
       "status": "blocked",
       "files": [
@@ -1475,7 +1475,8 @@
         "docs/development_roadmap/experiments/ci_ae9fe36.json",
         "docs/development_roadmap/experiments/ci_5314486.json",
         "docs/development_roadmap/experiments/ci_c3fdf79.json",
-        "docs/development_roadmap/experiments/vsc_input_validation_20261116.json"
+        "docs/development_roadmap/experiments/vsc_input_validation_20261116.json",
+        "docs/development_roadmap/experiments/ci_57fbc81.json"
       ],
       "commits": [
         "90b2fcd",
@@ -1487,7 +1488,8 @@
         "9269350887a867aee2740fed04155ade8f8757be",
         "ae9fe3629ad9617853979b0ef58d4d8319239592",
         "5314486fcb30929f79c62a5b15faf2e462529573",
-        "c3fdf7957d1c52ee5a3ba51c6bf2c55dbea2151a"
+        "c3fdf7957d1c52ee5a3ba51c6bf2c55dbea2151a",
+        "57fbc81106a75e6f70e09413e4fd94cf45853b96"
       ],
       "blockers": [
         "GitHub check-run两项注释：The job was not started because your account is locked due to a billing issue. 账户解除外部账单锁后才能补跑；不通过重复push或改代码绕过。"
@@ -1546,9 +1548,9 @@
     },
     "source113_unchanged_at_resume": true,
     "no_previous_native_or_tests_restarted": true,
-    "latest_checked_head": "5ac9d46b96a8c36622620d7e4d72ea9f64e7274c",
+    "latest_checked_head": "57fbc81106a75e6f70e09413e4fd94cf45853b96",
     "latest_goal_turn_classification": "progress",
-    "latest_progress": "Small VSC raw-input prevalidation fix independently verified; full1518 including slow PASS. Full commercial reference remains pending under the preserved resource limits.",
+    "latest_progress": "Committed and pushed the small VSC input-validation fix after full1518 PASS. Exact maintenance CI ran no tests due to confirmed billing lock; normal direct-base32MiB monitor fixture only is verified, fullN/commercial reference still pending.",
     "latest_remote_head_verified_same": true
   },
   "pause_checkpoint_history": [
@@ -1627,7 +1629,7 @@
   },
   "latest_maintenance": {
     "kind": "vsc_input_validation",
-    "status": "validated",
+    "status": "completed",
     "record": {
       "path": "docs/development_roadmap/experiments/vsc_input_validation_20261116.json",
       "bytes": 4317,
@@ -1640,6 +1642,24 @@
     "other_source_files_unchanged": 111,
     "dependency_files_unchanged": true,
     "full_pytest_passed": 1518,
-    "actual_commit_recorded_in_closeout": true
+    "actual_commit_recorded_in_closeout": true,
+    "commit": "57fbc81106a75e6f70e09413e4fd94cf45853b96",
+    "remote_head_verified_same": true
+  },
+  "offline_analysis_preparation": {
+    "status": "NORMAL_DIRECT_BASE_FIXTURE_ONLY_FULL_N_PENDING",
+    "stopped_synthetic_attempt": {
+      "path": "local_reference/c1_openloop_reference_research/20261116T110656455639Z_synthetic_math_fullN_v1/ROOT_redirector_failure.json",
+      "bytes": 1285,
+      "sha256": "fb66bd9a202900ef13425e89f25dfa4853011713c1371244a9863c10c386454a"
+    },
+    "normal_direct_base_fixture": {
+      "path": "local_reference/native_static_reviews/c1_math_base_interpreter_monitor_v2_20261116T111515394792Z/receipt.json",
+      "bytes": 4076,
+      "sha256": "bbb7897c678bc0a9762701550af16236818f3ad71a7dcb29e3ab7060e12de8e8"
+    },
+    "full_N_completed": false,
+    "commercial_reference_qualified": false,
+    "limits": "Only normal PID/32MiB/2s memory and exit path was executed. Error cleanup paths are static-only; early launcher exit/late marker remains an untested boundary. Do not reuse the v1 launcher-only monitor."
   }
 }
