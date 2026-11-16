@@ -3,7 +3,7 @@
   "updated_date": "2026-11-16",
   "timezone": "Asia/Shanghai",
   "branch": "codex/emt-examples-longterm",
-  "checkpoint_head": "a49544935e740172ab65ce25486c97396cb055c1",
+  "checkpoint_head": "05dd455251bfff341a20d14d35000c8b972ad657",
   "current_task": "C1",
   "formal_new_examples_completed": 9,
   "status_values": [
@@ -670,7 +670,7 @@
         "pscad-derived-force-dsout-build-v5",
         "pscad-derived-force-dsout-bounded-probe-v5"
       ],
-      "validation": "历史40002/80003点定向复核完成且全归档前后重绑。已观测初值的无驱动模式、瞬时打印量化均不足解释共模峰；门极不变时仍有增量。相依TR局部恒等相容、累计q过大，内部根因未证；原2µV FAIL和新增9保持。单变量节点排序5µs协议已另固定，尚无新包/native/候选。113源码/依赖未改，1300为既有全量。",
+      "validation": "节点排序单变量真实编译一次、0错误；19支路、45个计划输出及原完整物理与控制检查通过。节点编号未变化，按预设NOT_ACTIVATED门阻止Run。8170已exit1并正常关闭PSCAD，自有进程清空；81项非波形文件、33项原绑定与6项控制绑定已核真。无新增波形或合格参考，原2µV FAIL及新增完成9保持。已找到本机MATLAB/Simscape的静态研究线索，新模型尚未建立、编译或仿真。113个正式Python文件及依赖不变，1300为既有全量。",
       "acceptance": "局部、可独立运行验证的教学例逐项验收",
       "status": "in_progress",
       "files": [
@@ -700,7 +700,8 @@
         "docs/development_roadmap/experiments/c1_full_openloop_protocol_20261116.json",
         "docs/development_roadmap/experiments/c1_full_openloop_build_attempt_20261116.json",
         "docs/development_roadmap/experiments/c1_full_openloop_dual_h_diagnostic_20261116.json",
-        "docs/development_roadmap/experiments/c1_commonmode_constraint_followup_20261116.json"
+        "docs/development_roadmap/experiments/c1_commonmode_constraint_followup_20261116.json",
+        "docs/development_roadmap/experiments/c1_node_ordering_build_attempt_20261116.json"
       ],
       "commits": [
         "b835e31785fab3fda247c333d23edbe9ce576dfa",
@@ -721,7 +722,8 @@
         "b6f5775353e99f91c32d7860df47c4eb2db0bd9d",
         "1afde3a916c24edf21dce1c71ae6f825d04d9291",
         "fbcfb753f09c33c714a1453609bee3c6449fa668",
-        "a49544935e740172ab65ce25486c97396cb055c1"
+        "a49544935e740172ab65ce25486c97396cb055c1",
+        "05dd455251bfff341a20d14d35000c8b972ad657"
       ],
       "blockers": [],
       "reference_feasibility": {
@@ -732,7 +734,7 @@
         "evidence_sha256": "d92469cdd234477829ca5a5fa75a67648f17235fffadf3d3cbdaa73672375427",
         "native_executed": false
       },
-      "current_stage": "open_loop_commonmode_diagnosed_node_ordering_protocol_fixed",
+      "current_stage": "open_loop_node_option_not_activated_simscape_feasibility",
       "interface_discovery": {
         "status": "qualified_native_satk_batch_interface",
         "simulink_model_tools_provided": false,
@@ -1274,6 +1276,23 @@
         "new_native_started": false,
         "full_reference_qualified": false,
         "candidate_implemented": false
+      },
+      "node_ordering_diagnostic": {
+        "record": {
+          "path": "docs/development_roadmap/experiments/c1_node_ordering_build_attempt_20261116.json",
+          "bytes": 10003,
+          "sha256": "43fbf1abeaf79344260e0f68113bbf59a1ddbc3605e3a494188c58a0d18d515e"
+        },
+        "status": "REAL_BUILD_PASS_OBSERVABLE_NODE_GATE_NOT_ACTIVATED_RUN0_CLOSED",
+        "session": 8170,
+        "exit_code": 1,
+        "Build_calls": 1,
+        "Run_calls": 0,
+        "graph_activated": false,
+        "OUT_created": false,
+        "new_reference_qualified": false,
+        "candidate_implemented": false,
+        "active_native_sessions": 0
       }
     },
     {
@@ -1329,7 +1348,24 @@
       "status": "planned",
       "files": [],
       "commits": [],
-      "blockers": []
+      "blockers": [],
+      "small_readability_followups": [
+        {
+          "files": [
+            "README.md",
+            "README.zh-CN.md"
+          ],
+          "status": "ready",
+          "change": "说明在同一PowerShell终端移除MPLBACKEND后恢复图窗；不重复增加流程。"
+        },
+        {
+          "files": [
+            "examples/27_finite_r_bergeron_line.py"
+          ],
+          "status": "ready",
+          "change": "摘要的线路R/4-R/2-R/4及传播时间从现有常量格式化，避免改参数后文字仍写死。"
+        }
+      ]
     },
     {
       "id": "F1",
@@ -1424,9 +1460,9 @@
     },
     "source113_unchanged_at_resume": true,
     "no_previous_native_or_tests_restarted": true,
-    "latest_checked_head": "a49544935e740172ab65ce25486c97396cb055c1",
+    "latest_checked_head": "05dd455251bfff341a20d14d35000c8b972ad657",
     "latest_goal_turn_classification": "progress",
-    "latest_progress": "Completed exact historical all-row TR mode diagnosis with fresh archive admission; ruled out pure observed-initial mode/instantaneous print-only explanations, retained original FAIL and froze one node-ordering-only diagnostic protocol.",
+    "latest_progress": "Executed one real PSCAD ordering-only Build; original full guards passed but observable mapped-node activation did not. Preserved NOT_ACTIVATED/Run0/closed artifacts, retained original numeric FAIL, and identified a static same-physics MATLAB/Simscape reference route.",
     "latest_remote_head_verified_same": true
   },
   "pause_checkpoint_history": [
@@ -1475,7 +1511,7 @@
       "historical_pause_only": true
     }
   ],
-  "current_stage": "open_loop_commonmode_diagnosed_node_ordering_protocol_fixed",
+  "current_stage": "open_loop_node_option_not_activated_simscape_feasibility",
   "resume_checkpoint_history": [
     {
       "resumed_utc": "2026-11-11T13:24:16.085490+00:00",

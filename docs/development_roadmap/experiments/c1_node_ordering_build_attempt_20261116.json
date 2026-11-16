@@ -1,0 +1,199 @@
+{
+  "schema": "c1_node_ordering_build_attempt_v1",
+  "date": "2026-11-16",
+  "status": "REAL_BUILD_PASS_OBSERVABLE_NODE_GATE_NOT_ACTIVATED_RUN0_CLOSED",
+  "execution_head": "05dd455251bfff341a20d14d35000c8b972ad657",
+  "previous_goal_turn_classification": "progress",
+  "current_goal_turn_classification": "progress",
+  "summary": "真实PSCAD编译0错误；原物理/控制检查通过，但生成层语义节点未重编号。按预设门NOT_ACTIVATED停止，Run0，无新数值对照或参考资格。",
+  "single_project_setting_delta": {
+    "parameter": "optimize_nodes",
+    "baseline": true,
+    "diagnostic": false,
+    "other44_settings_identical": true
+  },
+  "native": {
+    "session": 8170,
+    "exit_code": 1,
+    "exit_tool_chunk": "7670ba",
+    "driver_invocations": 1,
+    "Build_calls": 1,
+    "Run_calls": 0,
+    "retries": 0,
+    "compile_errors": 0,
+    "elapsed_s": 361.96144650003407,
+    "version": "PSCAD5.0.0",
+    "compiler": "gf46",
+    "platform": "x86",
+    "last_stage": "finished_after_exception",
+    "quit_returned": true,
+    "remaining_owned": [],
+    "profile_source113_dependencies_unchanged": true
+  },
+  "generated_evidence": {
+    "components": 311,
+    "physical_native_branches": 19,
+    "planned_channels": 45,
+    "actual_numeric_INF_channels": null,
+    "original_control_helper_sha256": "7513bfee136ac93969dc1c82556e093d790e4a634b663f0393623a3cd518dda0",
+    "original_full_control_guard_passed": true,
+    "ROOT_full_control_replay_passed": true,
+    "pre_Run33_exact_unchanged": true,
+    "control6_exact_unchanged": true,
+    "two_routine_NODE_bindings": 28,
+    "non_ground_semantic_nodes": 14,
+    "graph_status": "GRAPH_PASS_NOT_ACTIVATED",
+    "directed_graph_passed": true,
+    "activation_passed": false,
+    "changed_semantic_nodes": [],
+    "mapped_nodes": {
+      "ground": 0,
+      "dc_p": 4,
+      "dc_n": 6,
+      "grid_a": 1,
+      "pole_a": 5,
+      "RL_a": 2,
+      "LA_a": 3,
+      "grid_b": 7,
+      "pole_b": 10,
+      "RL_b": 8,
+      "LA_b": 9,
+      "grid_c": 11,
+      "pole_c": 14,
+      "RL_c": 12,
+      "LA_c": 13
+    },
+    "project_settings_exact": true,
+    "actual_OUT_names": [],
+    "actual_INF_names": [],
+    "NONOUT_members": 81
+  },
+  "generated_text_observation": "DTA完整字节相同；Main可执行文本仅在将COMPONENT_ID与EMTDC_WARN的实际实例IID按对应角色替换后相同。此比较是观察说明，未重写原件或替代原物理/控制检查。",
+  "interpretation": "NOT_ACTIVATED仅表示预设的生成层可观察重编号门未满足；不能据此证明内部优化器无效果、数值误差不变或已改善。exit1来自Run前准入拒绝，非编译错误、非新数值FAIL。",
+  "evidence": {
+    "prospective_protocol": {
+      "path": "docs/development_roadmap/experiments/c1_commonmode_constraint_followup_20261116.json",
+      "bytes": 21491,
+      "sha256": "cdd0cb2028c9e98006d1e3396e0d0b93ff7d9db9c6b9457e3a24498f72bd606f"
+    },
+    "package_manifest": {
+      "path": "local_reference/c1_openloop_reference_research/20261116T065455522562Z_node_ordering_5us_v1/manifest.json",
+      "bytes": 8704,
+      "sha256": "c952e1d05d6b592d99927dced04c4ae4ae92a05ea1586bc8eb55630730cae694"
+    },
+    "ROOT_context_source_seal": {
+      "path": "local_reference/native_static_reviews/c1_ordering_ROOT_context_v2_20261116T065748050213Z/ROOT_source_seal.json",
+      "bytes": 1931,
+      "sha256": "02e07596eae728ac6ab5e8fbd1a7e6cde6aa4d782e75c77f8dcedf4906acdecd"
+    },
+    "ROOT_external_seal": {
+      "path": "local_reference/native_static_reviews/c1_ordering_ROOT_context_v2_20261116T065748050213Z/external_seal.json",
+      "bytes": 8056,
+      "sha256": "830a3c87607146de1798ecf925804336ed71c1f3c7ef5122d824721d16c32e65"
+    },
+    "actual_user_preflight": {
+      "path": "local_reference/native_static_reviews/c1_ordering_ROOT_preflight_20261116T070225054870Z/receipt.json",
+      "bytes": 1847,
+      "sha256": "3745273693273f1ea20b88069028a8d672ad9403d9846a4d97a5557b0f1b2269"
+    },
+    "ROOT_attempt_seal": {
+      "path": "local_reference/native_static_reviews/c1_ordering_ROOT_context_v2_20261116T065748050213Z/ROOT_attempt_seal.json",
+      "bytes": 1539,
+      "sha256": "e28115f3f0c6ae321fe54bf4419ac3fe78607bcbb46faebacf7af7bac917bb6b"
+    },
+    "ROOT_authoritative_closed": {
+      "path": "local_reference/native_static_reviews/c1_ordering_ROOT_closed_20261116T071423463052Z/receipt.json",
+      "bytes": 6521,
+      "sha256": "cf1d6b91cac079ba0e379d703d13e19b1ef73c4e3c002bf5e441b1b881e4b2f9"
+    },
+    "independent_package_review": {
+      "path": "local_reference/native_static_reviews/c1_ordering_package_independent_20261116T065813074572Z/receipt.json",
+      "bytes": 4875,
+      "sha256": "b7a8f72dc326e8be78091f9ad6a2f3d942a09d092e1b9a3e8d6bf5f82529715c"
+    },
+    "independent_closed_NONOUT_review": {
+      "path": "local_reference/native_static_reviews/c1_ordering_closed_independent_20261116T071651657202Z/receipt.json",
+      "bytes": 7514,
+      "sha256": "183dbb45751b3cff4dcada90d125ba9cd713c74f9c86da1f92149963047f20b4"
+    },
+    "independent_graph_replay": {
+      "path": "local_reference/native_static_reviews/c1_ordering_actual_build_graph_replay_20261116T071427865003Z/receipt.json",
+      "bytes": 16768,
+      "sha256": "81692e413954b71effb624b5422339a95de8aab2b28f80d01e920f9fad370c01"
+    },
+    "generated_text_observation": {
+      "path": "local_reference/native_static_reviews/c1_ordering_actual_build_text_note_20261116T071523754236Z/receipt.json",
+      "bytes": 1408,
+      "sha256": "6740c636fd0ec58106066f30ea2f0e470c9567c01cae390dc4fb3dd6f6785a09"
+    },
+    "adapter_numeric_interface_review": {
+      "path": "local_reference/native_static_reviews/c1_ordering_adapter_numeric_independent_20261116T070041814553Z/receipt.json",
+      "bytes": 4107,
+      "sha256": "37041c81889d6cba907e4e4be2a7fcdbb4886b3d392871e9da538709d2e45024"
+    },
+    "prepared_closed_raw_adapter_unused": {
+      "path": ".tmp/longterm/c1_ordering_closed_raw_live_v2_20261116.py",
+      "bytes": 31904,
+      "sha256": "b501e5d77b654f082881f88dba2402a672c9149442f3f4c923e96942560ec380"
+    },
+    "prepared_numeric_entry_unused": {
+      "path": "local_reference/native_static_reviews/c1_ordering_ROOT_context_v2_20261116T065748050213Z/numeric_entry.py",
+      "bytes": 11898,
+      "sha256": "3d979b2fd93d88ce906d7e3258c43478f1ad54c92b12cb5cabe1b387bb9db22c"
+    },
+    "static_alternative_reference_feasibility": {
+      "path": "local_reference/native_static_reviews/c1_matlab_feasibility_summary_20261116T071827872803Z/receipt.json",
+      "bytes": 5319,
+      "sha256": "99041bb4be94de928be968bb960c5d980b4fe16f98f1c4fe959e4576a9bcda87"
+    }
+  },
+  "run_manifest": {
+    "path": "local_reference/c1_openloop_reference_research/20261116T065455522562Z_node_ordering_5us_v1/n/20261116T070312999206Z/manifest.json",
+    "bytes": 26541,
+    "sha256": "4109511907bfabc69b9d775b96d5043d237bbe4e81dfaec26f1d9c7826dc7d09"
+  },
+  "terminal": {
+    "path": "local_reference/c1_openloop_reference_research/20261116T065455522562Z_node_ordering_5us_v1/n/20261116T070312999206Z/terminal.json",
+    "bytes": 6831,
+    "sha256": "a6bd466b11adc420f2d5b6e8488a274de12a8460ddcfcdad7cb97cc41cc12361"
+  },
+  "worker": {
+    "path": "local_reference/c1_openloop_reference_research/20261116T065455522562Z_node_ordering_5us_v1/n/20261116T070312999206Z/worker.json",
+    "bytes": 828937,
+    "sha256": "e07a4543def8ebaf019ef36193dd652d17f4096a3b0e111e76eff086bcf5b828"
+  },
+  "generated_admission": {
+    "path": "local_reference/c1_openloop_reference_research/20261116T065455522562Z_node_ordering_5us_v1/n/20261116T070312999206Z/generated_build_admission.json",
+    "bytes": 123818,
+    "sha256": "555f1a088446a874361af362adf9d54daf1e97905476683d53a97aa3c30ac836"
+  },
+  "graph_sidecar": {
+    "path": "local_reference/c1_openloop_reference_research/20261116T065455522562Z_node_ordering_5us_v1/n/20261116T070312999206Z/node_ordering_graph_admission.json",
+    "bytes": 23651,
+    "sha256": "582d952ed9f8a56fdd40636e5dd6bad19951f8532c7396e7f39be8d3565eddd0"
+  },
+  "new_numeric_outputs_created": false,
+  "closed_one_Run_admission_called": false,
+  "raw_archive_or_numeric_entry_called": false,
+  "OUT_read_or_hashed": false,
+  "prelaunch_tool_correction": "首次本地context把旧policy的解释键一起复制，未通过严格五常量形状检查；新v2在native前固定五常量并实际核metadata_policy。v1原件保留且从未启动native。",
+  "next_reference_research": {
+    "status": "STATIC_ROUTE_IDENTIFIED_NEW_MODEL_NOT_READY",
+    "route": "核对R2025a Simscape标准双向可变电阻及局部梯形求解能否表达同一浮置DC/三相16元件拓扑，复用已有B1/25真实-batch导出链。",
+    "observed": "本机MATLAB R2025a与R2026b可执行文件/版本存在；旧真实运行链及variable_resistor v=i*R、Rmin=0、thermal默认false源码已只读绑定。",
+    "not_observed": "当前license、新完整模型、端口/单位/初值、求解器离散方程、100µs/5µs控制时序、full45量和原全阈值尚未新验证。",
+    "before_new_native": "先按建模技能读完整标准元件源/接口，固定来源、等价拓扑/参数/初值/方向、求解器与逐步方程、控制/输出网格及原预算。正式候选仍须合格真实参考后实施。"
+  },
+  "formal_new_examples_completed": 9,
+  "C1_status": "in_progress",
+  "goal_status": "active",
+  "full_reference_qualified": false,
+  "candidate_implemented": false,
+  "original_2uV_full_dual_h_FAIL_preserved": true,
+  "source_files_unchanged": 113,
+  "dependencies_unchanged": true,
+  "new_regression_run": false,
+  "regression_note": "1300含slow为既有实际全量；本轮未改正式Python或依赖，未重跑，研究纯检查不并入该数。",
+  "teaching_scope": "全部新脚本/模型/原件均留忽略的研究层；继续复用CaseDefinition链及既有16元件，不增加公共框架。",
+  "active_native_sessions": 0
+}
