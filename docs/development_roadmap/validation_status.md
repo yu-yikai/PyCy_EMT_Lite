@@ -1,10 +1,10 @@
 # 验证状态
 
-2026-11-16：真实R2025a无JVM短探针sim1返回，simlog报告savable，完整MAT保存1243729B；随后日志单位类型检查失败，最终exit1。MAT重载、57量导出、时间核验及数值比较均未执行；不能记短链验收通过。首包CIM预检超时、launch0保持，实际失败查询未记录；新包实际运行及输入/进程闭场经独审核准。见[本轮证据](experiments/c1_nojvm_short_saved_mat_20261116.json)。
+2026-11-16：完整开环VSC的真实Simscape参考已通过资格验收：[资格报告](../../validation/cases/grid_connected_vsc_open_loop/qualified_reference_report.json)。两档40002/80003点、全部57量原时间位、原19门及辅助门、四窗/六周期和132跨h门通过；最终独审另核6960290次Time/Clock位及69个原始行，未将有限点审查冒称完整数学重跑。
 
-MAT-only恢复driver仅通过静态审查；准备器和监控仍待ROOT审查、封包及实际执行。原MAT哈希固定，计划model0/sim0，原失败及缺失的原保存前快照不补记通过。完整商业参考和新教学候选仍未合格。
+完整MAT重载后29个logsout数值摘要与tout前后一致；不宣称完整simlog树的任意对象元数据逐项相等。细档额外6个R_command日志仍40002点，正式导出57量均保持80003点。科学计数法文件大小仅由冻结窄规则精确核整数，原读取器FAIL保留。见[完整证据与边界](experiments/c1_nojvm_full_reference_20261116.json)。
 
-113源码及依赖不变，已有1518项含slow全量保持，本轮未重跑。新增完成9、C1进行中；F1仍为已确认的CI账单锁，两OS测试未执行。
+短MAT-only恢复通过81点原门；原运行FAIL不改称PASS。28号候选未实施、新增完成9、C1进行中。113源码/依赖不变，既有1518含slow未重跑；F1两OS测试仍受已有CI账单锁阻塞。
 
 ## 先前检查点
 

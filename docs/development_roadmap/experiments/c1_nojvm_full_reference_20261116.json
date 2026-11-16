@@ -1,0 +1,253 @@
+{
+  "schema": "c1_nojvm_full_openloop_reference_milestone_v1",
+  "recorded_utc": "2026-11-16T14:15:33.329370+00:00",
+  "execution_head": "fadb979f1dadd88962ae850478a6b864b95652a7",
+  "checkpoint_head": "fadb979f1dadd88962ae850478a6b864b95652a7",
+  "historical_model_build_head": "457ba4eadab46360cc27dfc65e3f2320630028bc",
+  "status": "QUALIFIED_REAL_SIMSCAPE_FULL_OPENLOOP_REFERENCE_ONLY",
+  "ROOT_reference_qualification": {
+    "path": "local_reference/c1_openloop_reference_research/20261116T135440675083Z_full_nojvm_actual_pair_math_v1/ROOT_reference_qualification.json",
+    "bytes": 5371,
+    "sha256": "53ff22f4c8f88f5cbf11fbefee36686ecfd1069ea9fc6818c23cc883c5a1beae"
+  },
+  "short_MAT_only_recovery": {
+    "original_session": 99554,
+    "original_metadata_FAIL_preserved": true,
+    "recovery_session": 36396,
+    "native_launches": 1,
+    "model_loads": 0,
+    "sim_calls": 0,
+    "fresh_disk_loads": 2,
+    "original_MAT_bytes": 1243729,
+    "original_MAT_sha256": "2f6c72097922a11d5ad5b945641b989abe09de457d396eb47f411f71c54cb183",
+    "copied_MAT_unchanged": true,
+    "two_disk_logging_snapshots_equal": true,
+    "snapshot_nodes": 161,
+    "numeric_series": 101,
+    "logsout": 29,
+    "observed_unit_classes": {
+      "Unit/char": 9,
+      "char/char": 20
+    },
+    "original_pre_save_live_comparison_observed": false,
+    "numeric_scope": "81 original points / 80 intervals / 57 quantities; both original numeric methods pass. Full-period/pair checks do not apply to this short recovery.",
+    "native_closure": {
+      "path": "local_reference/c1_openloop_reference_research/20261116T130507181248Z_simscape_short_nojvm_mat_recovery_v2/ROOT_native_closure.json",
+      "bytes": 14354,
+      "sha256": "2040bc76ca6cd45c6a667917c7f05e264ec3b40cbb914b7e3475833d001507cc"
+    },
+    "numeric_closure": {
+      "path": "local_reference/c1_openloop_reference_research/20261116T130507181248Z_simscape_short_nojvm_mat_recovery_v2/ROOT_closed_numeric.json",
+      "bytes": 32879,
+      "sha256": "95c42b174ab1e964447cc2d07bbed0bb9c565ddf0f0ec2b63a7b8a1da6c2ce42"
+    },
+    "independent_review": {
+      "path": "local_reference/native_static_reviews/c1_mat_recovery_closed_independent_20261116T131536763894Z/receipt.json",
+      "bytes": 5294,
+      "sha256": "95c80665967c3154b4ac1dfe6cab7aec791f0556740860020037f423424d8949"
+    }
+  },
+  "native_runs": [
+    {
+      "variant": "coarse",
+      "session": 15503,
+      "native_launches": 1,
+      "model_loads": 1,
+      "sim_calls": 1,
+      "exit_code": 0,
+      "rows": 40002,
+      "h_s": 5e-06,
+      "stop_s": 0.200005,
+      "matlab_version": "25.1.0.2973910 (R2025a) Update 1",
+      "elapsed_s": 68.8909924,
+      "native_resources": {
+        "metric": "available commit = CommitLimit - CommittedBytes",
+        "pre_available_commit_bytes": 7351537664,
+        "minimum_available_commit_bytes": 4687990784,
+        "peak_owned_private_bytes": 2612752384,
+        "samples": 23
+      },
+      "complete_MAT_saved_and_reloaded": true,
+      "reload_scope": "29 logsout numeric Time/Data class, shape and SHA plus tout match before/after; simlog savable. No arbitrary object metadata or complete simlog-tree numeric equality claim.",
+      "native_MAT": {
+        "path": "local_reference/c1_openloop_reference_research/20261116T132703273800Z_simscape_full_nojvm_run_coarse_v1/n/20261116T1333579652748Z/run/native_output.mat",
+        "bytes": 33435251,
+        "sha256": "46192f9e4f7b85193c484d6d202fc9b4c1341e961f6d1095731fd68b15d68c15"
+      },
+      "ROOT_raw_closed": {
+        "path": "local_reference/c1_openloop_reference_research/20261116T132703273800Z_simscape_full_nojvm_run_coarse_v1/ROOT_raw_closed.json",
+        "bytes": 6805,
+        "sha256": "149f941a5812a7e099e4621d450f9af1bc251cc5d18d1988d2a1408fdef55861"
+      },
+      "original_raw_guard_outcome": "FAIL_RECORDED",
+      "maxima": {
+        "commonmode_with_tokens_V": "3.089076676662666666656670666666676662666666656670666666676999999999990E-10",
+        "full_TR_with_tokens_V": "4.001000024000E-9",
+        "prefix_TR_energy_with_tokens_J": "1.50779302446833793717391744977039596500000000E-13"
+      },
+      "auxiliary_switch_RVI_upper_V": "8.793498000044304675044E-7"
+    },
+    {
+      "variant": "fine",
+      "session": 57383,
+      "native_launches": 1,
+      "model_loads": 1,
+      "sim_calls": 1,
+      "exit_code": 0,
+      "rows": 80003,
+      "h_s": 2.5e-06,
+      "stop_s": 0.200005,
+      "matlab_version": "25.1.0.2973910 (R2025a) Update 1",
+      "elapsed_s": 41.8319097,
+      "native_resources": {
+        "metric": "available commit = CommitLimit - CommittedBytes",
+        "pre_available_commit_bytes": 6661406720,
+        "minimum_available_commit_bytes": 3830280192,
+        "peak_owned_private_bytes": 2771787776,
+        "samples": 14
+      },
+      "complete_MAT_saved_and_reloaded": true,
+      "reload_scope": "29 logsout numeric Time/Data class, shape and SHA plus tout match before/after; simlog savable. No arbitrary object metadata or complete simlog-tree numeric equality claim.",
+      "native_MAT": {
+        "path": "local_reference/c1_openloop_reference_research/20261116T132704998471Z_simscape_full_nojvm_run_fine_v1/n/20261116T1346085917064Z/run/native_output.mat",
+        "bytes": 63073470,
+        "sha256": "5784a4d549356ce3519909d2b622d20525d8d7a295e7ed7097f859a6f137a798"
+      },
+      "ROOT_raw_closed": {
+        "path": "local_reference/c1_openloop_reference_research/20261116T132704998471Z_simscape_full_nojvm_run_fine_v1/ROOT_raw_closed.json",
+        "bytes": 6800,
+        "sha256": "709e26b248b8d3e104f6365e0cd93637ff7c180ae593bdd9c36a5f580755714e"
+      },
+      "original_raw_guard_outcome": "NOT_EXECUTED_WITHOUT_ARCHIVAL_ADAPTER",
+      "maxima": {
+        "commonmode_with_tokens_V": "5.000206676667999999989998666666676667999999989998666666676999999999990E-10",
+        "full_TR_with_tokens_V": "8.001000022000E-9",
+        "prefix_TR_energy_with_tokens_J": "1.5415977441063332881315341781458806050000000000E-13"
+      },
+      "auxiliary_switch_RVI_upper_V": "8.794923000052289399037E-7"
+    }
+  ],
+  "frozen_parameters": {
+    "path": "validation/cases/grid_connected_vsc_open_loop/parameters.json",
+    "bytes": 3603,
+    "sha256": "f5041eee9296c4088e74168cb444a10b016c10ee787d044629cb9492ab523dc1"
+  },
+  "frozen_reference_protocol": {
+    "path": "validation/cases/grid_connected_vsc_open_loop/reference_protocol.json",
+    "bytes": 41406,
+    "sha256": "d87a327ef601200b2ebb360403879206d8817697f78767999143226aecf26630"
+  },
+  "archival_size_adapter": {
+    "scope": "Only the native_output.bytes JSON number in these two fixed archives. Parse Decimal exactly, require a positive integer within the original 512MiB cap, then verify actual bytes/SHA. Ordinary descriptor guards remain unchanged.",
+    "contract": {
+      "path": "local_reference/c1_openloop_reference_research/20261116T134111343536Z_full_nojvm_MAT_size_archival_v1/contract.json",
+      "bytes": 4874,
+      "sha256": "f63231c8319b6f497ce0602364808a86cc477a72d3bd949867ce09e39bd6db24"
+    },
+    "coarse_original_FAILURE": {
+      "path": "local_reference/c1_openloop_reference_research/20261116T132703273800Z_simscape_full_nojvm_run_coarse_v1/ROOT_initial_raw_admission_failure.json",
+      "bytes": 1134,
+      "sha256": "3fe2ce997efe5d21b360069f66b2fbd9478f6f1e330bd94fc2c65741a1558b01"
+    },
+    "boundary_fixture_cases": 26,
+    "boundary_fixture_review": {
+      "path": "local_reference/native_static_reviews/c1_archival_size_v2_fixture_independent_20261116T134411186663Z/receipt.json",
+      "bytes": 4218,
+      "sha256": "3b90b557a311c1720b4336fb73cdc485d211000265ad4d8bcf6ed4f90e898d0a"
+    },
+    "waveforms_model_physics_or_thresholds_changed": false
+  },
+  "full_numeric_analysis": {
+    "session": 36134,
+    "native_calls": 0,
+    "exit_code": 0,
+    "result": {
+      "path": "local_reference/c1_openloop_reference_research/20261116T135440675083Z_full_nojvm_actual_pair_math_v1/monitor_output/analysis/result.json",
+      "bytes": 1624,
+      "sha256": "d08e6a075afcc11de50f819d9eaccd41183b95e374470d1b5fbdfcc2c6a5cb36"
+    },
+    "reports": {
+      "coarse_numeric.json": {
+        "path": "local_reference/c1_openloop_reference_research/20261116T135440675083Z_full_nojvm_actual_pair_math_v1/monitor_output/analysis/coarse_numeric.json",
+        "bytes": 24563,
+        "sha256": "c488c47dcdba16d068cb167f4e436735db7bb550198c3827d37e06e6a315de0a"
+      },
+      "fine_numeric.json": {
+        "path": "local_reference/c1_openloop_reference_research/20261116T135440675083Z_full_nojvm_actual_pair_math_v1/monitor_output/analysis/fine_numeric.json",
+        "bytes": 24598,
+        "sha256": "61055582975a638df18bdf584ba9bb19e539849a6b906a041e6edb96d075ae24"
+      },
+      "pair_numeric.json": {
+        "path": "local_reference/c1_openloop_reference_research/20261116T135440675083Z_full_nojvm_actual_pair_math_v1/monitor_output/analysis/pair_numeric.json",
+        "bytes": 126261,
+        "sha256": "531a29eba51556e94786e8051a6c45962d33cfe7259391d243b978c85e9634a3"
+      }
+    },
+    "ROOT_closure": {
+      "path": "local_reference/c1_openloop_reference_research/20261116T135440675083Z_full_nojvm_actual_pair_math_v1/ROOT_numeric_closure.json",
+      "bytes": 9284,
+      "sha256": "40fc1a1c195d505558028a1304e491668eb7b58f8ff8bc74e4bf05c71f3821aa"
+    },
+    "both_full_pointwise_methods_pass": true,
+    "all_19_original_budgets_and_auxiliary_gates_pass": true,
+    "original_57_quantity_Time_and_Clock_bits_pass": true,
+    "original_rows_and_tail_retained": true,
+    "pair_hard_gates": 132,
+    "windows": [
+      "all",
+      "startup",
+      "transition",
+      "steady"
+    ],
+    "steady_grid_cycles": 6,
+    "Decimal_union_points": 80008,
+    "Decimal_to_binary64_union_injective": true,
+    "offline_resources": {
+      "metric": "available physical memory (GlobalMemoryStatusEx.available_phys)",
+      "elapsed_s": 211.10902050009463,
+      "peak_private_bytes": 117612544,
+      "pre_available_bytes": 11894394880,
+      "minimum_available_bytes": 11505053696
+    },
+    "independent_final_scope": {
+      "path": "local_reference/native_static_reviews/c1_full_pair_closed_audit_independent_20261116T140618319055Z/scope.json",
+      "bytes": 4104,
+      "sha256": "56251905220c8b7de908ef0a10c3614db004410cd053c9024260ca47c388eef0"
+    },
+    "independent_monitor": {
+      "path": "local_reference/native_static_reviews/c1_actual_full_pair_monitor_closed_independent_20261116T140758713279Z/receipt.json",
+      "bytes": 5870,
+      "sha256": "abe78b40d4f1ad8de0fbfda602a575e3e3d215de247c62da940238e6a0f62abe"
+    },
+    "independent_audit_scope": "All 6,960,290 Time/Clock bit comparisons, 132 report hard gates and 69 selected raw rows with independent Decimal/full-place arithmetic. Final auditor did not rerun complete physical/spectral calculations."
+  },
+  "preserved_boundaries": {
+    "original_PSCAD_2uV_commonmode_FAIL": true,
+    "original_short_metadata_FAIL": true,
+    "original_normal_JVM_full_run_resource_stop": true,
+    "original_coarse_raw_reader_FAIL": true,
+    "fine_extra_six_R_command_logs": "40002 native ZOH points; other23 logs80003. Each own Time/Data is compared across reload. The57 exported physical/control quantities independently retain full80003 Time vectors.",
+    "full_openloop_reference_qualified": true,
+    "teaching_candidate_implemented": false,
+    "C1_status": "in_progress",
+    "formal_new_examples_completed": 9,
+    "active_workers": 0,
+    "closed_loop_or_cross_OS_qualified": false
+  },
+  "project_checks": {
+    "formal_Python_files": 113,
+    "source113_and_two_dependency_files_unchanged": true,
+    "source_snapshot": {
+      "path": "local_reference/native_static_reviews/vsc_input_fix_ROOT_20261116T111042668097Z/source113.json",
+      "bytes": 12980,
+      "sha256": "f533bcd69b6b1bdcf4282932864a7a9e6573ad88b72f37ba358f38b7429cc492"
+    },
+    "previous_full_pytest_passed": 1518,
+    "previous_full_pytest_s": 491.92,
+    "includes_slow": true,
+    "tests_rerun_this_milestone": false,
+    "prior_checks": "locked sync27 packages, full Ruff and mypy39 passed at the unchanged source snapshot",
+    "F1": "Exact57fbc81 CI43856421332 terminal billing lock, both OS tests not executed; no new poll/retrigger."
+  },
+  "next_action": "Create the minimal28 open-loop candidate using existing CaseDefinition, components and six pure switch callbacks; validate actual attached callbacks and all frozen same-h/cross-h gates. Keep research tools/raw native files ignored; do not count completion until all acceptance deliverables and a separate commit."
+}

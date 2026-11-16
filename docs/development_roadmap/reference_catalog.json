@@ -3266,6 +3266,46 @@
       "blockers": [
         "Freeze separate complete openloop-SPWM protocol and acquire/qualify real dual-step references before candidate implementation."
       ]
+    },
+    {
+      "id": "simscape-derived-grid-vsc-openloop-r2025a",
+      "name": "Frozen grid-connected open-loop VSC in Simscape R2025a",
+      "source_kind": "Locally constructed native model from the frozen equations and installed Simscape Foundation blocks; not an official MathWorks example.",
+      "status": "reference_ready",
+      "software_requirements": [
+        "MATLAB R2025a",
+        "Simulink",
+        "Simscape"
+      ],
+      "content_inspected": true,
+      "opened_in_native_software": true,
+      "simulation_succeeded": true,
+      "reference_numeric_data_obtained": true,
+      "full_reference_qualified": true,
+      "h_s": [
+        5e-06,
+        2.5e-06
+      ],
+      "samples": [
+        40002,
+        80003
+      ],
+      "acquisition_stop_s": 0.200005,
+      "local_path": "local_reference/c1_openloop_reference_research/20261116T135440675083Z_full_nojvm_actual_pair_math_v1",
+      "qualified_reference_report": {
+        "path": "validation/cases/grid_connected_vsc_open_loop/qualified_reference_report.json",
+        "bytes": 3269,
+        "sha256": "58718e58e4b32ae930efe7b4244ff4207f8fda048eec65307b80b96b7ece1277"
+      },
+      "research_record": {
+        "path": "docs/development_roadmap/experiments/c1_nojvm_full_reference_20261116.json",
+        "bytes": 12620,
+        "sha256": "fdc5f34724c4bc9ebc8a549c5136a9e0553437766325a8555510f064647301bd"
+      },
+      "allows_redistribution": "Installed-library/third-party originals not redistributed.",
+      "mathematical_compatibility": "Frozen16-element teaching circuit with3 ideal native current sensors;19 native physical branches. Same configured source, held reference/gates, finite Ron/Goff, directions and zero initial currents. No closed-loop or diode claim.",
+      "candidate_executed": false,
+      "original_PSCAD_FAIL_preserved": true
     }
   ],
   "scope_notes": [
@@ -3273,5 +3313,6 @@
     "No automatic diode commutation equivalence inferred from externally controlled switches.",
     "Original third-party models/results stay local unless redistribution terms are explicitly verified."
   ],
-  "version_source": "https://www.mathworks.com/help/simscape-electrical/release-notes.html"
+  "version_source": "https://www.mathworks.com/help/simscape-electrical/release-notes.html",
+  "last_reference_update": "2026-11-16"
 }

@@ -3,7 +3,7 @@
   "updated_date": "2026-11-16",
   "timezone": "Asia/Shanghai",
   "branch": "codex/emt-examples-longterm",
-  "checkpoint_head": "b57a2a8c06614cf8c626b0e189402063fa82dffd",
+  "checkpoint_head": "fadb979f1dadd88962ae850478a6b864b95652a7",
   "current_task": "C1",
   "formal_new_examples_completed": 9,
   "status_values": [
@@ -668,9 +668,10 @@
         "pscad-derived-dc-pgb-split-build-v5",
         "pscad-derived-output-intent-build-v5",
         "pscad-derived-force-dsout-build-v5",
-        "pscad-derived-force-dsout-bounded-probe-v5"
+        "pscad-derived-force-dsout-bounded-probe-v5",
+        "simscape-derived-grid-vsc-openloop-r2025a"
       ],
-      "validation": "真实R2025a无JVM400µs短探针sim1返回并保存完整MAT，随后日志单位类型检查失败；未重载、导出或数值验收。恢复driver静态独审通过，准备器/监控仍为待ROOT审查的草稿，未封包或执行。完整0.2s双档参考及候选未验收。原短PASS、PSCAD FAIL、合成分析及既有1518全量保持。",
+      "validation": "完整真实R2025a Simscape双档40002/80003点含尾点、57量时间位、原19门与辅助门、四窗/六周期及132跨h门通过，ROOT封存完整开环参考资格。短MAT-only恢复通过，但原失败保留。28号候选尚未实施；C1全链与跨OS未完成。",
       "acceptance": "局部、可独立运行验证的教学例逐项验收",
       "status": "in_progress",
       "files": [
@@ -706,7 +707,9 @@
         "docs/development_roadmap/experiments/c1_simscape_short_build_20261116.json",
         "docs/development_roadmap/experiments/c1_simscape_short_run_20261116.json",
         "docs/development_roadmap/experiments/c1_simscape_full_resource_stop_20261116.json",
-        "docs/development_roadmap/experiments/c1_nojvm_short_saved_mat_20261116.json"
+        "docs/development_roadmap/experiments/c1_nojvm_short_saved_mat_20261116.json",
+        "docs/development_roadmap/experiments/c1_nojvm_full_reference_20261116.json",
+        "validation/cases/grid_connected_vsc_open_loop/qualified_reference_report.json"
       ],
       "commits": [
         "b835e31785fab3fda247c333d23edbe9ce576dfa",
@@ -734,10 +737,11 @@
         "1a9a5bdf4b2d89a18e496388bd6558b650a8e8aa",
         "457ba4eadab46360cc27dfc65e3f2320630028bc",
         "5ac9d46b96a8c36622620d7e4d72ea9f64e7274c",
-        "b57a2a8c06614cf8c626b0e189402063fa82dffd"
+        "b57a2a8c06614cf8c626b0e189402063fa82dffd",
+        "fadb979f1dadd88962ae850478a6b864b95652a7"
       ],
       "blockers": [
-        "完整商业参考仍未合格；本次短仿真已保存MAT但单位元数据检查失败。先独立封定只加载已有MAT的恢复包并完成重载/导出/原门，再决定完整双档运行；保持全部原资源门、物理、阈值和历史失败。"
+        "开环参考已合格；下一步最小教学候选及原协议全部同h/跨h比较、内部测试、独立运行、图报告、说明和Git尚待完成。"
       ],
       "reference_feasibility": {
         "status": "read_only_feasibility_only",
@@ -747,7 +751,7 @@
         "evidence_sha256": "d92469cdd234477829ca5a5fa75a67648f17235fffadf3d3cbdaa73672375427",
         "native_executed": false
       },
-      "current_stage": "nojvm_short_simulation_returned_mat_saved_recovery_pending",
+      "current_stage": "full_simscape_openloop_reference_qualified_candidate_pending",
       "interface_discovery": {
         "status": "qualified_native_satk_batch_interface",
         "simulink_model_tools_provided": false,
@@ -1392,16 +1396,51 @@
           "bytes": 8976,
           "sha256": "db83a4dc4df4cdf247be754ca84831b826ea65eee0daa033ec0601bfabc5c383"
         },
-        "status": "ACTUAL_NOJVM_SHORT_SIM_RETURNED_MAT_SAVED_METADATA_FAIL_RECOVERY_PENDING",
+        "status": "ORIGINAL_METADATA_FAIL_PRESERVED_MAT_ONLY_RECOVERY_PASS_BOUNDED_SCOPE",
         "session": 99554,
         "native_launches": 1,
         "sim_calls": 1,
         "simulation_returned": true,
         "raw_mat_saved": true,
-        "recovery_executed": false,
+        "recovery_executed": true,
         "full_reference_qualified": false,
         "candidate_implemented": false,
-        "active_native_sessions": 0
+        "active_native_sessions": 0,
+        "recovery_session": 36396,
+        "original_run_rerun": false,
+        "recovery_record": {
+          "path": "docs/development_roadmap/experiments/c1_nojvm_full_reference_20261116.json",
+          "bytes": 12620,
+          "sha256": "fdc5f34724c4bc9ebc8a549c5136a9e0553437766325a8555510f064647301bd"
+        },
+        "original_pre_save_live_comparison_observed": false
+      },
+      "simscape_full_openloop_reference": {
+        "status": "QUALIFIED_REAL_SIMSCAPE_FULL_OPENLOOP_REFERENCE_ONLY",
+        "record": {
+          "path": "docs/development_roadmap/experiments/c1_nojvm_full_reference_20261116.json",
+          "bytes": 12620,
+          "sha256": "fdc5f34724c4bc9ebc8a549c5136a9e0553437766325a8555510f064647301bd"
+        },
+        "qualified_reference_report": {
+          "path": "validation/cases/grid_connected_vsc_open_loop/qualified_reference_report.json",
+          "bytes": 3269,
+          "sha256": "58718e58e4b32ae930efe7b4244ff4207f8fda048eec65307b80b96b7ece1277"
+        },
+        "full_reference_qualified": true,
+        "native_sessions": [
+          15503,
+          57383
+        ],
+        "offline_analysis_session": 36134,
+        "rows": [
+          40002,
+          80003
+        ],
+        "pair_hard_gates": 132,
+        "candidate_implemented": false,
+        "active_workers": 0,
+        "original_PSCAD_FAIL_preserved": true
       }
     },
     {
@@ -1584,9 +1623,9 @@
     },
     "source113_unchanged_at_resume": true,
     "no_previous_native_or_tests_restarted": true,
-    "latest_checked_head": "b57a2a8c06614cf8c626b0e189402063fa82dffd",
+    "latest_checked_head": "fadb979f1dadd88962ae850478a6b864b95652a7",
     "latest_goal_turn_classification": "progress",
-    "latest_progress": "Actual no-JVM Simscape short sim returned and complete MAT saved; new unit metadata check failed before reload/export. Original FAIL retained. MAT-only recovery driver statically reviewed; preparation/monitor drafts and execution remain pending.",
+    "latest_progress": "MAT-only short recovery and both actual no-JVM full Simscape variants passed; complete pointwise/pair math and independent raw-time/finite-point audit qualified the frozen open-loop reference. Candidate pending.",
     "latest_remote_head_verified_same": true
   },
   "pause_checkpoint_history": [
@@ -1635,7 +1674,7 @@
       "historical_pause_only": true
     }
   ],
-  "current_stage": "nojvm_short_simulation_returned_mat_saved_recovery_pending",
+  "current_stage": "full_simscape_openloop_reference_qualified_candidate_pending",
   "resume_checkpoint_history": [
     {
       "resumed_utc": "2026-11-11T13:24:16.085490+00:00",
@@ -1683,7 +1722,7 @@
     "remote_head_verified_same": true
   },
   "offline_analysis_preparation": {
-    "status": "FULL_N_INTERNAL_SYNTHETIC_VERIFIED_NOT_COMMERCIAL",
+    "status": "ACTUAL_FULL_NATIVE_PAIR_NUMERIC_PASS_REFERENCE_QUALIFIED",
     "stopped_synthetic_attempt": {
       "path": "local_reference/c1_openloop_reference_research/20261116T110656455639Z_synthetic_math_fullN_v1/ROOT_redirector_failure.json",
       "bytes": 1285,
@@ -1695,8 +1734,8 @@
       "sha256": "bbb7897c678bc0a9762701550af16236818f3ad71a7dcb29e3ab7060e12de8e8"
     },
     "full_N_completed": true,
-    "commercial_reference_qualified": false,
-    "limits": "Actual full-size generated fixtures and bounded monitor paths were measured; generated timeproof is not native Time/Clock/tout. The v1 redirector failure and unexecuted v3 missing-marker/already-exited branch remain explicit.",
+    "commercial_reference_qualified": true,
+    "limits": "Actual native57 Time/Clock scan, full original pointwise/pair gates and final independent finite raw audit passed. Original synthetic results remain internal; teaching candidate/closed-loop/cross-OS pending.",
     "record": {
       "path": "docs/development_roadmap/experiments/c1_offline_full_n_and_nojvm_guard_20261116.json",
       "bytes": 9749,
@@ -1717,6 +1756,11 @@
       "path": "local_reference/native_static_reviews/c1_synthetic_fullN_independent_20261116T114839971116Z/receipt.json",
       "bytes": 19163,
       "sha256": "8a28d68550e5d4f977ccc0b5e73adb687a96938e19f4c6a58267c2f48941aee2"
+    },
+    "actual_pair_record": {
+      "path": "docs/development_roadmap/experiments/c1_nojvm_full_reference_20261116.json",
+      "bytes": 12620,
+      "sha256": "fdc5f34724c4bc9ebc8a549c5136a9e0553437766325a8555510f064647301bd"
     }
   }
 }
