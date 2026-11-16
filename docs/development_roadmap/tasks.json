@@ -3,7 +3,7 @@
   "updated_date": "2026-11-16",
   "timezone": "Asia/Shanghai",
   "branch": "codex/emt-examples-longterm",
-  "checkpoint_head": "c3fdf7957d1c52ee5a3ba51c6bf2c55dbea2151a",
+  "checkpoint_head": "fbfc278cffa37cb50f34553effd2f172373378f4",
   "current_task": "C1",
   "formal_new_examples_completed": 9,
   "status_values": [
@@ -670,7 +670,7 @@
         "pscad-derived-force-dsout-build-v5",
         "pscad-derived-force-dsout-bounded-probe-v5"
       ],
-      "validation": "R2025a只读库发现真实exit0，11模块唯一、仅2个library、无新模型或仿真。首次预检CIM超时启动0保持，两包累计MATLAB启动1；63.918s正常闭场。实际电感g非零/i_L目标未启用、solver默认非局部TR，已核设置边界；Simscape模型许可及逐步时序仍待探针。原2µV FAIL/完成9保持。113源码与当前c3fdf79快照一致，27仅摘要改动已另验收；1300为既有全量。",
+      "validation": "同物理R2025a探针真实编译1次/仿真0次；80模块完整回读、19支路/14非地节点、参数/控制图、8采样率及29日志端口通过闭场核验，exit0。预检失败、v3配置失败和v4清单不完整均保留；累计3次MATLAB/2次编译/0次仿真。81行/同拍/原5µV TR及2µV共模门尚未实测；原PSCAD FAIL、完成9/C1进行中保持。113源码与依赖本轮未改，1300为既有全量。",
       "acceptance": "局部、可独立运行验证的教学例逐项验收",
       "status": "in_progress",
       "files": [
@@ -702,7 +702,8 @@
         "docs/development_roadmap/experiments/c1_full_openloop_dual_h_diagnostic_20261116.json",
         "docs/development_roadmap/experiments/c1_commonmode_constraint_followup_20261116.json",
         "docs/development_roadmap/experiments/c1_node_ordering_build_attempt_20261116.json",
-        "docs/development_roadmap/experiments/c1_simscape_library_discovery_20261116.json"
+        "docs/development_roadmap/experiments/c1_simscape_library_discovery_20261116.json",
+        "docs/development_roadmap/experiments/c1_simscape_short_build_20261116.json"
       ],
       "commits": [
         "b835e31785fab3fda247c333d23edbe9ce576dfa",
@@ -725,7 +726,8 @@
         "fbcfb753f09c33c714a1453609bee3c6449fa668",
         "a49544935e740172ab65ce25486c97396cb055c1",
         "05dd455251bfff341a20d14d35000c8b972ad657",
-        "c3fdf7957d1c52ee5a3ba51c6bf2c55dbea2151a"
+        "c3fdf7957d1c52ee5a3ba51c6bf2c55dbea2151a",
+        "fbfc278cffa37cb50f34553effd2f172373378f4"
       ],
       "blockers": [],
       "reference_feasibility": {
@@ -736,7 +738,7 @@
         "evidence_sha256": "d92469cdd234477829ca5a5fa75a67648f17235fffadf3d3cbdaa73672375427",
         "native_executed": false
       },
-      "current_stage": "simscape_library_verified_startup_probe_preparation",
+      "current_stage": "simscape_short_probe_build_verified_run_preparation",
       "interface_discovery": {
         "status": "qualified_native_satk_batch_interface",
         "simulink_model_tools_provided": false,
@@ -1310,6 +1312,21 @@
         "simulation_called": false,
         "reference_qualified": false,
         "active_native_sessions": 0
+      },
+      "simscape_short_probe_build": {
+        "record": {
+          "path": "docs/development_roadmap/experiments/c1_simscape_short_build_20261116.json",
+          "bytes": 6700,
+          "sha256": "d4278dc27bf5f9481dcab800deb9c51f194b92732ba687ebf3237c379724bf06"
+        },
+        "status": "ACTUAL_BUILD_STRUCTURAL_ADMISSION_PASS_NO_SIM",
+        "session": 63496,
+        "exit_code": 0,
+        "compile_calls": 1,
+        "simulation_called": false,
+        "metadata_complete": true,
+        "reference_qualified": false,
+        "active_native_sessions": 0
       }
     },
     {
@@ -1489,9 +1506,9 @@
     },
     "source113_unchanged_at_resume": true,
     "no_previous_native_or_tests_restarted": true,
-    "latest_checked_head": "c3fdf7957d1c52ee5a3ba51c6bf2c55dbea2151a",
+    "latest_checked_head": "fbfc278cffa37cb50f34553effd2f172373378f4",
     "latest_goal_turn_classification": "progress",
-    "latest_progress": "Completed/pushed minimal readability fixes and one real R2025a library API discovery; retained first preflight timeout (launch0), verified11 interfaces and closed launch1, identified actual initial-target/solver/converter settings; refreshed exact-HEAD CI billing-lock evidence. No new model/simulation/reference qualification.",
+    "latest_progress": "Built/compiled the same-physics Simscape short probe, retained failed/incomplete attempts, verified80-block actual metadata/19-branch graph/8rates and closed all owned runs. No simulation or new reference/candidate qualification.",
     "latest_remote_head_verified_same": true
   },
   "pause_checkpoint_history": [
@@ -1540,7 +1557,7 @@
       "historical_pause_only": true
     }
   ],
-  "current_stage": "simscape_library_verified_startup_probe_preparation",
+  "current_stage": "simscape_short_probe_build_verified_run_preparation",
   "resume_checkpoint_history": [
     {
       "resumed_utc": "2026-11-11T13:24:16.085490+00:00",
