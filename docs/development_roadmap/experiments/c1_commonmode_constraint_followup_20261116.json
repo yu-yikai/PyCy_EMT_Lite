@@ -1,0 +1,370 @@
+{
+  "schema": "c1_commonmode_constraint_followup_v1",
+  "date": "2026-11-16",
+  "status": "HISTORICAL_DIAGNOSIS_DONE_SINGLE_VARIABLE_PROTOCOL_FROZEN_NATIVE_PENDING",
+  "review_head": "a49544935e740172ab65ce25486c97396cb055c1",
+  "historical_execution_head": "fbcfb753f09c33c714a1453609bee3c6449fa668",
+  "original_full_dual_h_record": {
+    "path": "docs/development_roadmap/experiments/c1_full_openloop_dual_h_diagnostic_20261116.json",
+    "bytes": 15246,
+    "sha256": "30626ecba27079d7b7238f3805118c7c04fe3036dff8271e1ec3543ac53d48a2"
+  },
+  "formal_new_examples_completed": 9,
+  "C1_status": "in_progress",
+  "goal_status": "active",
+  "summary": "完整历史波形复核支持运行中的交替数值分量；不能仅由已观测初值的无驱动模式或瞬时打印量化解释。尚未定位商业求解器内部根因，原2µV FAIL保持。",
+  "definitions": {
+    "sigma": "三相导出同拍电流表CBR电流之和[A]，不等同未导出的内部历史状态",
+    "lambda": "三相电感压降之和[V]",
+    "c": "n-mean(e-E-(R+z)i)[V]",
+    "A": "2L/h[ohm]",
+    "E": "400Gu/(Gu+Gl)[V]",
+    "z": "1/(Gu+Gl)[ohm]"
+  },
+  "exact_relations_and_limits": [
+    "理想KVL/电阻/开关关系给出lambda+3c=0；实测用各自完整词元区间核相容。",
+    "TR给出lambda[k]+lambda[k-1]=A*(sigma[k]-sigma[k-1])，故理想c[k]=-c[k-1]-A/3*delta_sigma。",
+    "无驱动TR交替模式的极点是-1；减半h不使它衰减。三项局部关系相依，不能当作独立因果证明。"
+  ],
+  "observations": {
+    "coarse": {
+      "variant": "5us",
+      "rows": 40002,
+      "segments": 40001,
+      "initial_cm_V": {
+        "center": "-1.400149606015908272770043944147229956055852770043944147229957E-19",
+        "radius": "1.000000000000100000000000010009999999999990000000000009999999999990000E-10"
+      },
+      "cm_peak_center_V": "0.0000108379979866333329333133666670666866333329333133666670666866333",
+      "cm_peak_abs_plus_q_V": "0.00001083801508673333293331326666706668673333293331326666706668673330000000",
+      "cm_maximum_q_V": "1.000000000000100000000000010009999999999990000000000009999999999990000E-10",
+      "cm_observed_peak_lower_bound_V": "0.00001083798088653333293331346666706668653333293331346666706668653330000000",
+      "exported_same_row_ammeter_CBR_sum_peak_A": "1.211000E-10",
+      "three_current_maximum_print_q_A": "3.000E-13",
+      "source_sum_peak_V": "2.0000E-11",
+      "source_sum_with_declared_libm_intervals_excluding_zero": 0,
+      "cm_plus_sumVL_over3_intervals_excluding_zero": 0,
+      "summed_TR_intervals_excluding_zero": 0,
+      "cm_recurrence_intervals_excluding_zero": 0,
+      "adjacent_sign_reversals": 39871,
+      "undriven_initial_mode_difference_lower_bound_V": "0.00001083788088653319290835286507623840852893851859147106148140852890558528",
+      "final_current_driven_predictor_q_V": "0.00002706058575661600001000000000400100099999999999900000000000100000000000",
+      "accumulated_predictor_q_exceeds_observed_peak": true,
+      "unchanged_gate_segments": 38800,
+      "unchanged_gate_mode_increments_excluding_zero": 32325,
+      "closed20ms_and_tail_blocks": 11
+    },
+    "fine": {
+      "variant": "2p5us",
+      "rows": 80003,
+      "segments": 80002,
+      "initial_cm_V": {
+        "center": "-2.800349606075372203963377218076036622781923963377218076036623E-19",
+        "radius": "1.000000000000100000000000010009999999999990000000000009999999999990000E-10"
+      },
+      "cm_peak_center_V": "0.0000374975263286699998666746633334666586699998666746633334666586700",
+      "cm_peak_abs_plus_q_V": "0.00003749754039873999986667459333346665873999986667459333346665874000000000",
+      "cm_maximum_q_V": "1.000000000000100000000000010009999999999990000000000009999999999990000E-10",
+      "cm_observed_peak_lower_bound_V": "0.00003749751225859999986667473333346665859999986667473333346665860000000000",
+      "exported_same_row_ammeter_CBR_sum_peak_A": "1.4310000E-10",
+      "three_current_maximum_print_q_A": "3.000E-13",
+      "source_sum_peak_V": "2.0000E-11",
+      "source_sum_with_declared_libm_intervals_excluding_zero": 0,
+      "cm_plus_sumVL_over3_intervals_excluding_zero": 0,
+      "summed_TR_intervals_excluding_zero": 0,
+      "cm_recurrence_intervals_excluding_zero": 0,
+      "adjacent_sign_reversals": 79887,
+      "undriven_initial_mode_difference_lower_bound_V": "0.00003749741225860027989163534087068605393772167427939561165905393772180760",
+      "final_current_driven_predictor_q_V": "0.0001083043692344112000100000000080010009999999999990000000000010000000000",
+      "accumulated_predictor_q_exceeds_observed_peak": true,
+      "unchanged_gate_segments": 78801,
+      "unchanged_gate_mode_increments_excluding_zero": 65693,
+      "closed20ms_and_tail_blocks": 11
+    }
+  },
+  "evidence": {
+    "actual_targeted_diagnostic": {
+      "path": "local_reference/native_static_reviews/c1_historical_TR_targeted_actual_20261116T061419540779Z/receipt.json",
+      "bytes": 702973,
+      "sha256": "d1045c405274fa70f07e837fdac75a05a94bb8f70e853d228bf07205fbd88281"
+    },
+    "ROOT_saved_lexical_words_Fraction_check": {
+      "path": "local_reference/native_static_reviews/c1_ROOT_mode_saved_words_check_20261116T061846468655Z/receipt.json",
+      "bytes": 1047,
+      "sha256": "7b027b747572a219f4523f6fb25c69a431dc83a5cba7a96c8f3549f71adb74c7"
+    },
+    "findings_confirmation": {
+      "path": "local_reference/native_static_reviews/c1_historical_TR_findings_confirmation_final_20261116T061937781322Z/receipt.json",
+      "bytes": 5098,
+      "sha256": "134463e51f9667fbdfdada42f03047a226538fa193c12b679cfcd89db5fd7488"
+    },
+    "targeted_analysis_seal": {
+      "path": "local_reference/native_static_reviews/c1_ROOT_targeted_mode_seal_20261116T061419657345Z/seal.json",
+      "bytes": 2293,
+      "sha256": "c93a7d5d3abf38bc3cf764bd0c91f70d93315e2402d54ccf0d7a33e207ba70bd"
+    },
+    "archive_access_seal": {
+      "path": "local_reference/native_static_reviews/c1_ROOT_archive_seal_20261116T060236517881Z/seal.json",
+      "bytes": 3297,
+      "sha256": "0d9fbbf94741b23f89b7bee2e863a1032d8dec2418ce6a535e46ec9efc734e43"
+    },
+    "historical_archive_guard_review": {
+      "path": "local_reference/native_static_reviews/c1_archive_v2_independent_20261116T060123531717Z/receipt.json",
+      "bytes": 23400,
+      "sha256": "df9b6ecd77811f3b17e85358239411619e0ee37855d2b77ec4dfd514f0c5dfea"
+    },
+    "targeted_script_review": {
+      "path": "local_reference/native_static_reviews/c1_targeted_mode_v2_scope_independent_20261116T061331393144Z/receipt.json",
+      "bytes": 2237,
+      "sha256": "3d827426c58235c6a208e04a8b2749156e2f9afc61cd4ceacc7fa435bbaf6d30"
+    },
+    "targeted_script_pure": {
+      "path": "local_reference/native_static_reviews/c1_historical_TR_targeted_v2_pure_20261116T0610Z/receipt.json",
+      "bytes": 1312,
+      "sha256": "b79a95b4a83e24214e65fda2829a55e53dc37b18eabde0bfea43444e3e59541c"
+    },
+    "pure_TR_constraint_research": {
+      "path": "local_reference/native_static_reviews/c1_floating_TR_constraint_research_20261116T055914996075Z/receipt.json",
+      "bytes": 28977,
+      "sha256": "b93076d8e38ba5b43459baffd678df54b87c03c840e098b87df2f8eea1cc3d18"
+    },
+    "static_generated_source_and_official_docs": {
+      "path": "local_reference/native_static_reviews/c1_commonmode_static_root_cause_scope_20261116T060411508475Z/receipt.json",
+      "bytes": 13743,
+      "sha256": "dff5b1dc2cd19dad0bcb22ca6a45e8e91bc88783894f24873dd8ec2f557e2fbd"
+    },
+    "ROOT_single_variable_scope_review": {
+      "path": "local_reference/native_static_reviews/c1_node_ordering_draft_ROOT_review_20261116T060912727234Z/receipt.json",
+      "bytes": 970,
+      "sha256": "59b6a144ecb904dad3a7f5a601f43bfd29c9c561544d751e117998958d09ab95"
+    },
+    "old_graph_supplement_scope_gap_preserved": {
+      "path": "local_reference/native_static_reviews/c1_node_ordering_graph_independent_20261116T061745146557Z/receipt.json",
+      "bytes": 4206,
+      "sha256": "7f2fe6f0dbfb4a179444e668a6760863d83f237bf63db766a8595d4591bc6f46"
+    },
+    "graph_helper": {
+      "path": ".tmp/longterm/admit_c1_node_ordering_graph_v2_20261116.py",
+      "bytes": 15209,
+      "sha256": "ce7c91dfb97f90db6a81d196b462fda573f018c05126e1e61c754ea6b00a08ad"
+    },
+    "graph_pure": {
+      "path": "local_reference/native_static_reviews/c1_node_ordering_graph_v2_pure_20261116T062919288808Z/receipt.json",
+      "bytes": 15010,
+      "sha256": "d0bf4a4f4129472dd121438c83efe472e30c22e576c1afadbddc527ff6ef6485"
+    },
+    "graph_review": {
+      "path": "local_reference/native_static_reviews/c1_node_ordering_graph_v2_independent_20261116T063210356629Z/receipt.json",
+      "bytes": 4809,
+      "sha256": "934595ab258f335f6c35139b267df1e462ef7e032f930f8533a69c329271957d"
+    }
+  },
+  "analysis_session": 34509,
+  "analysis_exec_exit_code": 0,
+  "full_data_retained": "全40002/80003点、所有首尾点；固定闭20ms分块含共享端点及独立尾块。保存初21点与峰值邻域原始词元；ROOT另以Fraction精核52帧，仅作点代数检查。",
+  "what_is_not_proven": "未证明隐藏初始存储、实际矩阵/分解/历史更新或VVDC内部舍入中的哪一项产生误差。累计打印区间超过实测峰值，不能凭导出电流递推唯一归因；换相关联也不证明因果。",
+  "static_scope": "生成REAL按-fdefault-real-8/-fdefault-double-8编译；15个Vm及4个CBR在MainOut新鲜读取。七节点纯模型条件数估计仅解释尺度风险，不是实际商业矩阵测量。Goff变化或移除电流表不是本次对照。",
+  "official_sources": [
+    {
+      "url": "https://www.pscad.com/webhelp-v502-ol/EMTDC/Advanced_Features/chatter_detection_and_removal.htm",
+      "supports": "TR交替数值模式与halfstep抑制机理；非本机5.0.0内部根因证明。"
+    },
+    {
+      "url": "https://www.pscad.com/webhelp-v502-ol/EMTDC/Program_Structure/main_program_structure.htm",
+      "supports": "DSDYN→电气求解→DSOUT。"
+    },
+    {
+      "url": "https://www.pscad.com/webhelp-v502-ol/PSCAD/Application_Project_Options/Project_Settings/Mapping.htm",
+      "supports": "节点排序与频繁开关重排是分开的选项。"
+    },
+    {
+      "url": "https://www.pscad.com/webhelp-v502-ol/EMTDC/Electric_Network_Solution/switching_and_non-linear_elements.htm",
+      "supports": "小导通电阻的矩阵尺度/精度风险；不单凭文档确定本例根因。"
+    }
+  ],
+  "next_single_variable_diagnostic": {
+    "schema": "c1_node_ordering_single_variable_prospective_protocol_v1",
+    "status": "FROZEN_PROSPECTIVE_PROTOCOL_NOT_EXECUTION_AUTHORITY",
+    "execution_authorized": false,
+    "native_run_authorized": false,
+    "reference_qualification_authorized": false,
+    "candidate_authorized": false,
+    "purpose": "Single prospective representation-only diagnostic against the immutable coarse native FAIL; no new teaching API.",
+    "baseline": {
+      "package_manifest": {
+        "path": "local_reference/c1_openloop_reference_research/20261116T044024784659Z_full_openloop_runs_v1/5us/manifest.json",
+        "bytes": 7349,
+        "sha256": "b361f247f18790ed50ccf6ceff60224f9101b041717aa2ac1888901430ac62c0"
+      },
+      "numeric_report": {
+        "path": "local_reference/native_static_reviews/c1_full_primary_numeric_20261116T053922297770Z/receipt.json",
+        "bytes": 124389,
+        "sha256": "9dadbcafede74903ffa4bc2793071be1632b893d404c78fb7ff5faa7079e754b"
+      },
+      "variant": "5us",
+      "original_numeric_verdict": "FAIL",
+      "original_commonmode_upper_V": 1.0838015086733e-05,
+      "threshold_V": 2e-06,
+      "approximate_value_only": "The report hash, not this abbreviated numeric value, identifies baseline."
+    },
+    "frozen_basis": {
+      "parameters": {
+        "path": "validation/cases/grid_connected_vsc_open_loop/parameters.json",
+        "bytes": 3603,
+        "sha256": "f5041eee9296c4088e74168cb444a10b016c10ee787d044629cb9492ab523dc1"
+      },
+      "reference_protocol": {
+        "path": "validation/cases/grid_connected_vsc_open_loop/reference_protocol.json",
+        "bytes": 41406,
+        "sha256": "d87a327ef601200b2ebb360403879206d8817697f78767999143226aecf26630"
+      },
+      "channels": {
+        "path": "local_reference/c1_openloop_reference_research/20261116T044024784659Z_full_openloop_runs_v1/5us/inputs/channels.json",
+        "bytes": 11180,
+        "sha256": "4ddfe1f9525af6c9dab93ebabc9ed0fe14709a91c7d236122e046d51c9bb33a4"
+      },
+      "old_contract": {
+        "path": "local_reference/c1_openloop_reference_research/20261116T044024784659Z_full_openloop_runs_v1/5us/bounded_run_contract.json",
+        "bytes": 7838,
+        "sha256": "076bd7ff2e6155d2ae31e5929283e876fd67468507a7fb5164a46be1788ad770"
+      }
+    },
+    "unchanged": {
+      "physics": "16 teaching elements /19 native branches; four sources, three1ohm R, three.01H L, sixsame variableR, threeidealphaseA; floating400VDC, no earth shunt. All parameters/source waveforms/control/initial state/directions match frozen parameters exactly.",
+      "components": 311,
+      "native_channels": 45,
+      "OUT_parts": 5,
+      "h_s": 5e-06,
+      "formal_stop_s": 0.2,
+      "acquisition_stop_s": 0.200005,
+      "expected_rows": 40002,
+      "row0_TIME_exact_zero": true,
+      "reference_hold_s": 0.0001,
+      "gate_hold_s": 5e-06,
+      "same_tick_order_and_fresh_DSOUT": true,
+      "options": {
+        "time_duration": 0.200005,
+        "time_step": 5.0,
+        "sample_step": 5.0,
+        "chatter_threshold": 0.001,
+        "branch_threshold": 0.0005,
+        "StartType": "STANDARD",
+        "PlotType": "OUT",
+        "output_filename": "c1_full_openloop_reference.out",
+        "SnapType": "NONE",
+        "SnapTime": 0.3,
+        "snapshot_filename": "Untitled.snp",
+        "MrunType": "STANDALONE",
+        "Mruns": 1,
+        "description": "C1 full open-loop VSC reference",
+        "startup_filename": "",
+        "Preprocessor": "",
+        "sparsity_threshold": 200,
+        "detect_chatter": false,
+        "remove_chatter": false,
+        "interpolate_switching": false,
+        "optimize_nodes": false,
+        "remove_time_offset": true,
+        "use_ideal_branch": true,
+        "network_splitting": true,
+        "move_switching": true,
+        "send_output_ch": true,
+        "start_sim_debug": false,
+        "sparse_algorithm": true,
+        "live_output": false,
+        "runtime_debugging": false,
+        "feed_forward": true,
+        "signal_flow": true,
+        "bus_matching": false,
+        "array_bounds": false,
+        "floating_underflow": false,
+        "integer_overflow": false,
+        "echo_network": false,
+        "echo_runtime": false,
+        "echo_input": false,
+        "link_matlab": false,
+        "enable_animation": false,
+        "preprocessor_enable": false,
+        "argument_mismatch": false,
+        "uncalled_routines": false,
+        "uninitialized_variable": false
+      },
+      "all_other_numeric_gates": "Inherit the exact frozen reference_protocol hash, all original points/full q/tail/windows/physical/control/input/current/energy/feature gates. No changed threshold, fitting, snapping, sample exclusion, or selected window. Conditional gates retain their prerequisite status; unavailable different-h diagnostic comparison cannot mean PASS.",
+      "TR_equation": "(2L/h)(i[k]-i[k-1])-VL[k]-VL[k-1]; no halfstep, switching interpolation or chatter removal.",
+      "physical_residual_budgets_inherited_exactly": {
+        "path": "validation/cases/grid_connected_vsc_open_loop/reference_protocol.json",
+        "bytes": 41406,
+        "sha256": "d87a327ef601200b2ebb360403879206d8817697f78767999143226aecf26630"
+      }
+    },
+    "planned_single_run_budget": {
+      "fresh_builds": 1,
+      "max_Run_calls": 1,
+      "retries": 0,
+      "total_limit_s": 720,
+      "stage_limits_s": {
+        "launch": 60,
+        "build": 180,
+        "run": 120,
+        "other": 20
+      },
+      "minimum_free_commit_bytes": 3221225472,
+      "monitor_minimum_free_commit_bytes": 2147483648
+    },
+    "before_any_execution": [
+      "ROOT reviews/freezes this separate research protocol and creates a new expectedHEAD/new isolated package. This draft itself grants zero execution authority.",
+      "New exact package/helper/source113/dependency/master/profile/ownership/resource/noOUT preflight and explicit oneRun contract; no old file/package modification.",
+      "FreshBuild must pass full19physical/45metadata/311codec/control/storage/timing checks beforeRun, using updated exact bindings, without weakening guards for unknown generation.",
+      "Build evidence must show mapped semantic-node numbering / generatedDTA node labels really differ from baseline beyond comments, with a bijection proving identical role-labelled electrical graph, values, orientations, controls and output producer paths. Actual compiled source carries the same physics. Record NOT_ACTIVATED and do not claim a contrast if reordering has no effective mapping change.",
+      "Close/admit all required nonOUT/lifecycle/actualINF45 metadata before any raw read. Any nativeRunTime comment policy must be separately explicit/frozen and full-byte-proven; no generic hash exception."
+    ],
+    "analysis_and_reporting": {
+      "scope": "Only5us full acquisition plus all applicable frozen windows/gates. No full two-h reference qualification. One run reported completely regardless of pass/fail.",
+      "baseline_comparison": "Preserve baseline report and oldFAIL. Compare residuals and parity/zero-sequence diagnostics only after explicit valid raw admission. Any improvement is representation sensitivity, not proof of a unique internal cause.",
+      "no_cherry_picking": "Do not search node permutations/options, retry to select PASS, or substitute this result for originalFAIL.",
+      "later_full_reference": "A decision to seek qualification requires a separately frozen complete dual-h protocol and full gates; this diagnostic does not authorize it."
+    },
+    "implementation_scope": "Native validation layer only. No publicPyCy/controller/API/framework/dependency changes.",
+    "official_option_evidence": "https://www.pscad.com/webhelp-v502-ol/PSCAD/Application_Project_Options/Project_Settings/Mapping.htm",
+    "not_executed": true,
+    "frozen_utc": "2026-11-16T06:32:29.532784+00:00",
+    "fixed_before_any_new_variant_build_or_Run": true,
+    "single_frozen_delta": {
+      "project_parameter": "optimize_nodes",
+      "baseline": true,
+      "diagnostic": false,
+      "all_other_project_options_identical": true
+    },
+    "generated_graph_supplement": {
+      "graph_helper": {
+        "path": ".tmp/longterm/admit_c1_node_ordering_graph_v2_20261116.py",
+        "bytes": 15209,
+        "sha256": "ce7c91dfb97f90db6a81d196b462fda573f018c05126e1e61c754ea6b00a08ad"
+      },
+      "graph_pure": {
+        "path": "local_reference/native_static_reviews/c1_node_ordering_graph_v2_pure_20261116T062919288808Z/receipt.json",
+        "bytes": 15010,
+        "sha256": "d0bf4a4f4129472dd121438c83efe472e30c22e576c1afadbddc527ff6ef6485"
+      },
+      "graph_review": {
+        "path": "local_reference/native_static_reviews/c1_node_ordering_graph_v2_independent_20261116T063210356629Z/receipt.json",
+        "bytes": 4809,
+        "sha256": "934595ab258f335f6c35139b267df1e462ef7e032f930f8533a69c329271957d"
+      }
+    },
+    "activation_gate": "Complete original physical/control guard AND directed19-role graph/value equivalence AND14semantic-node/both-routine NODE-binding/actual-Map bijections AND at least one changed actual mapped semantic-node ID. Unknown syntax or any failure rejects before Run. Same observable generated mapping means NOT_ACTIVATED at this gate and no Run; this does not prove the internal optimizer order or effect is unchanged.",
+    "new_package_requirement": "New isolated package must pin the actual clean development HEAD containing this protocol, immutable inputs/helpers and exact45 project settings. No old package or live-admission guard is modified. ROOT separately reviews the package and performs actual-user preflight before at most one Run.",
+    "raw_metadata_requirement": "All original generated/closed/INF/OUT identity guards remain. Any RunTime-comment policy must be prospectively explicit, limited to that unique comment, with complete byte proof; it does not relabel old v1 FAIL.",
+    "matrix_interpretation": "A pure permutation leaves spectral condition number unchanged. This tests sensitivity to representation/rounding, not an asserted improvement in condition number or a unique solver-internal cause."
+  },
+  "preserved_tool_history": "历史归档v1未覆盖闭场外部seal树，v2补足；原定向脚本输出目录约束缺口由v2收紧；原graph补充漏NODE槽绑定，由新版本补足。旧稿/纯检查/独审记录保留，均不转记原生数值FAIL。",
+  "new_native_started": false,
+  "new_execution_package_created": false,
+  "source_files_unchanged": 113,
+  "dependencies_unchanged": true,
+  "regression": "1300含slow为既有实际全量，本轮无正式Python或依赖改动，未重跑；研究纯检查不并入该数。",
+  "teaching": "继续复用16个既有电气元件、CaseDefinition链及纯时间门极；诊断观察/排序检查留忽略的验证研究层，不添加公共框架。",
+  "candidate_implemented": false,
+  "full_reference_qualified": false,
+  "active_native_sessions": 0
+}

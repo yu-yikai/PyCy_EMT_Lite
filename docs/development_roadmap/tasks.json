@@ -3,7 +3,7 @@
   "updated_date": "2026-11-16",
   "timezone": "Asia/Shanghai",
   "branch": "codex/emt-examples-longterm",
-  "checkpoint_head": "fbcfb753f09c33c714a1453609bee3c6449fa668",
+  "checkpoint_head": "a49544935e740172ab65ce25486c97396cb055c1",
   "current_task": "C1",
   "formal_new_examples_completed": 9,
   "status_values": [
@@ -670,7 +670,7 @@
         "pscad-derived-force-dsout-build-v5",
         "pscad-derived-force-dsout-bounded-probe-v5"
       ],
-      "validation": "完整开环PSCAD双步长已实跑并正常闭场；40002/80003点经双路复算，共模含词元残差10.838/37.498µV超过原2µV门，参考整体FAIL。g/R/时钟/源及其余逐点门、全部跨h比较通过；条件rail只作诊断。RunTime唯一注释修正另封政策，原v1准入FAIL保留。未实施候选；113源码/依赖未改，新增完成仍9。",
+      "validation": "历史40002/80003点定向复核完成且全归档前后重绑。已观测初值的无驱动模式、瞬时打印量化均不足解释共模峰；门极不变时仍有增量。相依TR局部恒等相容、累计q过大，内部根因未证；原2µV FAIL和新增9保持。单变量节点排序5µs协议已另固定，尚无新包/native/候选。113源码/依赖未改，1300为既有全量。",
       "acceptance": "局部、可独立运行验证的教学例逐项验收",
       "status": "in_progress",
       "files": [
@@ -699,7 +699,8 @@
         "validation/cases/grid_connected_vsc_open_loop/acceptance_plan.md",
         "docs/development_roadmap/experiments/c1_full_openloop_protocol_20261116.json",
         "docs/development_roadmap/experiments/c1_full_openloop_build_attempt_20261116.json",
-        "docs/development_roadmap/experiments/c1_full_openloop_dual_h_diagnostic_20261116.json"
+        "docs/development_roadmap/experiments/c1_full_openloop_dual_h_diagnostic_20261116.json",
+        "docs/development_roadmap/experiments/c1_commonmode_constraint_followup_20261116.json"
       ],
       "commits": [
         "b835e31785fab3fda247c333d23edbe9ce576dfa",
@@ -719,7 +720,8 @@
         "4c5f423dd1d20e23d51b271240b1edaf4a7edf55",
         "b6f5775353e99f91c32d7860df47c4eb2db0bd9d",
         "1afde3a916c24edf21dce1c71ae6f825d04d9291",
-        "fbcfb753f09c33c714a1453609bee3c6449fa668"
+        "fbcfb753f09c33c714a1453609bee3c6449fa668",
+        "a49544935e740172ab65ce25486c97396cb055c1"
       ],
       "blockers": [],
       "reference_feasibility": {
@@ -730,7 +732,7 @@
         "evidence_sha256": "d92469cdd234477829ca5a5fa75a67648f17235fffadf3d3cbdaa73672375427",
         "native_executed": false
       },
-      "current_stage": "open_loop_full_dual_h_commonmode_residual_failed",
+      "current_stage": "open_loop_commonmode_diagnosed_node_ordering_protocol_fixed",
       "interface_discovery": {
         "status": "qualified_native_satk_batch_interface",
         "simulink_model_tools_provided": false,
@@ -1257,6 +1259,21 @@
         "full_reference_qualified": false,
         "candidate_implemented": false,
         "active_native_runs": 0
+      },
+      "commonmode_constraint_followup": {
+        "record": {
+          "path": "docs/development_roadmap/experiments/c1_commonmode_constraint_followup_20261116.json",
+          "bytes": 21491,
+          "sha256": "cdd0cb2028c9e98006d1e3396e0d0b93ff7d9db9c6b9457e3a24498f72bd606f"
+        },
+        "historical_targeted_analysis_closed": true,
+        "analysis_session": 34509,
+        "analysis_exit_code": 0,
+        "prospective_single_delta": "optimize_nodes:true->false; other44 settings/physics/old budgets fixed",
+        "new_execution_package_created": false,
+        "new_native_started": false,
+        "full_reference_qualified": false,
+        "candidate_implemented": false
       }
     },
     {
@@ -1407,9 +1424,9 @@
     },
     "source113_unchanged_at_resume": true,
     "no_previous_native_or_tests_restarted": true,
-    "latest_checked_head": "fbcfb753f09c33c714a1453609bee3c6449fa668",
+    "latest_checked_head": "a49544935e740172ab65ce25486c97396cb055c1",
     "latest_goal_turn_classification": "progress",
-    "latest_progress": "Executed real full dual-h references, preserved normal closure/raw archives and two independent numeric FAIL reports; diagnosed common-mode alternating component without changing frozen limits.",
+    "latest_progress": "Completed exact historical all-row TR mode diagnosis with fresh archive admission; ruled out pure observed-initial mode/instantaneous print-only explanations, retained original FAIL and froze one node-ordering-only diagnostic protocol.",
     "latest_remote_head_verified_same": true
   },
   "pause_checkpoint_history": [
@@ -1458,7 +1475,7 @@
       "historical_pause_only": true
     }
   ],
-  "current_stage": "open_loop_full_dual_h_commonmode_residual_failed",
+  "current_stage": "open_loop_commonmode_diagnosed_node_ordering_protocol_fixed",
   "resume_checkpoint_history": [
     {
       "resumed_utc": "2026-11-11T13:24:16.085490+00:00",
