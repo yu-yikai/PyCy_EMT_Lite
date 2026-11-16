@@ -78,7 +78,7 @@ If something goes wrong, check these points first:
 | `pyproject.toml` or the example file is not found | Return to the folder containing both `pyproject.toml` and `examples`; do not run from inside the ZIP or the `examples` subfolder. |
 | `ModuleNotFoundError: pycy_emt_lite` | Run `uv sync --locked` from the project root, then use `uv run python ...`. |
 | The summary has printed but the terminal is still busy | Check for a figure window waiting to be closed; multiple figures appear in sequence. |
-| No figure window appears | `MPLBACKEND=Agg` intentionally skips display. Set `SAVE_RESULT_FIGURE` to `1` in the relevant example if you need saved images. |
+| No figure window appears | `MPLBACKEND=Agg` intentionally skips display. In the same PowerShell terminal, run `Remove-Item Env:MPLBACKEND -ErrorAction SilentlyContinue`, then rerun the example to restore the default interactive backend. Set `SAVE_RESULT_FIGURE` to `1` in the relevant example if you need saved images. |
 
 ## 2. Learning order
 

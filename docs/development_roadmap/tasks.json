@@ -3,7 +3,7 @@
   "updated_date": "2026-11-16",
   "timezone": "Asia/Shanghai",
   "branch": "codex/emt-examples-longterm",
-  "checkpoint_head": "05dd455251bfff341a20d14d35000c8b972ad657",
+  "checkpoint_head": "61647b6e2244fd32ef56e6304dcee30519c32037",
   "current_task": "C1",
   "formal_new_examples_completed": 9,
   "status_values": [
@@ -1355,15 +1355,25 @@
             "README.md",
             "README.zh-CN.md"
           ],
-          "status": "ready",
-          "change": "说明在同一PowerShell终端移除MPLBACKEND后恢复图窗；不重复增加流程。"
+          "status": "completed",
+          "change": "说明在同一PowerShell终端移除MPLBACKEND后恢复图窗；不重复增加流程。",
+          "evidence": {
+            "path": "local_reference/native_static_reviews/d1_small_readability_ROOT_20261116T073540574524Z/receipt.json",
+            "bytes": 1699,
+            "sha256": "b15d12bc69b8a9b263e174256acb95c99a98fde4b8190c2c8c4fe15dd57ed1a1"
+          }
         },
         {
           "files": [
             "examples/27_finite_r_bergeron_line.py"
           ],
-          "status": "ready",
-          "change": "摘要的线路R/4-R/2-R/4及传播时间从现有常量格式化，避免改参数后文字仍写死。"
+          "status": "completed",
+          "change": "摘要的线路R/4-R/2-R/4及传播时间从现有常量格式化，避免改参数后文字仍写死。",
+          "evidence": {
+            "path": "local_reference/native_static_reviews/d1_small_readability_ROOT_20261116T073540574524Z/receipt.json",
+            "bytes": 1699,
+            "sha256": "b15d12bc69b8a9b263e174256acb95c99a98fde4b8190c2c8c4fe15dd57ed1a1"
+          }
         }
       ]
     },
@@ -1460,9 +1470,9 @@
     },
     "source113_unchanged_at_resume": true,
     "no_previous_native_or_tests_restarted": true,
-    "latest_checked_head": "05dd455251bfff341a20d14d35000c8b972ad657",
+    "latest_checked_head": "61647b6e2244fd32ef56e6304dcee30519c32037",
     "latest_goal_turn_classification": "progress",
-    "latest_progress": "Executed one real PSCAD ordering-only Build; original full guards passed but observable mapped-node activation did not. Preserved NOT_ACTIVATED/Run0/closed artifacts, retained original numeric FAIL, and identified a static same-physics MATLAB/Simscape reference route.",
+    "latest_progress": "Completed two minimal beginner-readability fixes: same-terminal figure-backend reset and parameter-derived example27 summary, with identical default stdout and unchanged simulation AST; C1 same-physics Simscape investigation continues.",
     "latest_remote_head_verified_same": true
   },
   "pause_checkpoint_history": [
@@ -1533,5 +1543,22 @@
       "latest_remote_head_verified_same": true,
       "latest_goal_turn_classification": "progress_before_explicit_pause"
     }
-  ]
+  ],
+  "current_source_snapshot": {
+    "path": "local_reference/native_static_reviews/d1_small_readability_ROOT_20261116T073540574524Z/source113.json",
+    "bytes": 13109,
+    "sha256": "fa156e8842c8c9b0e93bb241be8e377cd6c45126f852135ed34731f7ee1e472f"
+  },
+  "latest_maintenance": {
+    "kind": "small_readability",
+    "status": "completed",
+    "evidence": {
+      "path": "local_reference/native_static_reviews/d1_small_readability_ROOT_20261116T073540574524Z/receipt.json",
+      "bytes": 1699,
+      "sha256": "b15d12bc69b8a9b263e174256acb95c99a98fde4b8190c2c8c4fe15dd57ed1a1"
+    },
+    "source112_unchanged": true,
+    "source27_summary_only_changed": true,
+    "full_pytest_rerun": false
+  }
 }

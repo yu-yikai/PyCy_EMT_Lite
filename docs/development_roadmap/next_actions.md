@@ -2,15 +2,15 @@
 
 2026-11-16：节点排序单变量已实建并按预设NOT_ACTIVATED门停止，Run0；原完整双h仍未过2µV。新增完成9、C1进行中、目标active。
 
-入口：[节点排序实建记录](experiments/c1_node_ordering_build_attempt_20261116.json)。checkpoint为本次提交前05dd455；与实际Git及结束检查点交叉核对。
+入口：[节点排序实建记录](experiments/c1_node_ordering_build_attempt_20261116.json)。checkpoint为本次提交前61647b6；与实际Git及结束检查点交叉核对。
 
 1. 先读五状态并核分支、HEAD、工作区和实际远端。最新8170已exit1终态、Build1/0errors、Run0、正常quit/owned[]；旧98913/25165/34509等也已终态。不要轮询或重启旧句柄/driver。
 2. 读取新记录及ROOT/独立闭场收据。实际45设置仅optimize_nodes True→False，19有向角色图、28 NODE绑定和14非地语义节点保持；未观察到预设重编号，按门阻Run。它不是数值FAIL，也不能证明内部优化器没有效果。全部81非OUT保留，无OUT/INF数值输出；新normal-oneRun闭场/raw/numeric入口从未调用，不应对Run0尝试这些入口。
 3. 先做本机R2025a/Simscape同物理参考的最小可行性研究：已有真实B1/25 -batch链和标准双向variable_resistor源码证据。核完整端口/单位/Rmin/热端口/依赖、浮置DC初值与Solver Configuration局部梯形逐步方程，保持16元件物理、100µs/5µs控制、双h完整窗/45量/原预算。新来源/参数/初值/方向/求解器/时序/比较窗/阈值在新native和候选前另固定；安装和旧Run不能代替新模型、当前license或全门。
-4. 独立小可读性改进已列D1队列：中英README补同终端恢复图窗方法；27号算例摘要从现有R及传播时间常量格式化。各自小改、保持现有接口，与研究提交分开；不为它们添加通用框架。
+4. 两处小可读性改进已完成：中英README补同终端恢复图窗方法；27号摘要从现有参数格式化，默认stdout及仿真计算不变。新的113文件快照见tasks.current_source_snapshot；旧快照有且仅有27号摘要hash变化，旧native/分析器不可绕过其固定源码守卫。
 5. 原2µV FAIL及旧实验全记录保持。排序包已耗一次Build且Run0，不重试/搜索通过排列。现live context/driver固定05dd455；文档提交后不要在新HEAD直接重跑。后续只读复核先用精确旧Git/快照的归档准入，不改旧包；新native另封当前HEAD/输入/资源/owned/profile守卫。F1账单锁仅既有记录，本轮无新CI观察。
 
-113正式Python及依赖未改；1300含slow为既有全量，本轮未重跑。所有商业原件/研究脚本在忽略目录；本轮公共改动仅证据与状态。
+正式Python仍113个，27号仅摘要改动、其余112个及依赖不变；新的源码快照已保存。锁定同步/Ruff/mypy/27号6001点独立运行通过，1300含slow为既有全量，本轮未重跑。所有商业原件/研究脚本在忽略目录。
 
 ## 本机命令
 

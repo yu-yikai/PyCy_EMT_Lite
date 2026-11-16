@@ -67,11 +67,12 @@ def print_summary(result: SimulationResult) -> None:
     time = result.series("time")
     receiving = result.series("v:recv")
     first = next((t for t, v in zip(time, receiving, strict=True) if abs(v) > 1e-9), None)
-    print(f"线路R={LINE_RESISTANCE:g}Ω分为25/50/25Ω；两半线Z={SURGE_IMPEDANCE:g}Ω，"
+    print(f"线路R={LINE_RESISTANCE:g}Ω分为{LINE_RESISTANCE / 4:g}/{LINE_RESISTANCE / 2:g}/"
+          f"{LINE_RESISTANCE / 4:g}Ω；两半线Z={SURGE_IMPEDANCE:g}Ω，"
           f"各延迟{TRAVEL_TIME / 2e-6:g}µs，attenuation=1。")
     if first is not None:
         print(f"收端首个非零采样：{first * 1e3:.3f}ms；默认源首个非零采样0.501ms，"
-              "单程传播0.300ms。")
+              f"单程传播{TRAVEL_TIME * 1e3:.3f}ms。")
     dc_current = SOURCE_FINAL_VOLTAGE / (SOURCE_RESISTANCE + LINE_RESISTANCE + LOAD_RESISTANCE)
     print(f"末点：Vk={result.series('v:send')[-1]:.6f}V，Vm={receiving[-1]:.6f}V，"
           f"Ik={result.series('i:Rs')[-1]:.6f}A，Im_out={result.series('i:Rload')[-1]:.6f}A。")

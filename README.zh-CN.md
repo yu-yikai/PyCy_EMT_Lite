@@ -77,7 +77,7 @@ uv run --locked pytest -o addopts= -q -p no:cacheprovider --basetemp=.tmp/pytest
 | 找不到 `pyproject.toml` 或示例文件 | 回到同时包含 `pyproject.toml` 和 `examples` 的目录；不要在 ZIP 内或 `examples` 子目录运行。 |
 | `ModuleNotFoundError: pycy_emt_lite` | 在项目根目录执行 `uv sync --locked`，再使用 `uv run python ...`。 |
 | 已打印摘要但终端还不能输入 | 检查是否有图窗等待关闭；多幅图会依次显示。 |
-| 没有图窗 | 若设置了 `MPLBACKEND=Agg`，会按设计跳过显示。需要图片时将对应示例的 `SAVE_RESULT_FIGURE` 改为 `1`。 |
+| 没有图窗 | 若设置了 `MPLBACKEND=Agg`，会按设计跳过显示。在同一 PowerShell 终端运行 `Remove-Item Env:MPLBACKEND -ErrorAction SilentlyContinue`，再运行示例，即可恢复默认交互后端。需要图片时将对应示例的 `SAVE_RESULT_FIGURE` 改为 `1`。 |
 
 ## 2. 学习顺序
 
