@@ -5,6 +5,8 @@
 
 from __future__ import annotations
 
+from itertools import pairwise
+
 import numpy as np
 import pytest
 
@@ -294,8 +296,10 @@ def test_precompute_switched_rlc_matches_all_rows_events_and_call_counts(method,
         result = simulator.run()
         if mode == "precompute":
             assert len(set(counts)) == 1 and counts[0] > 8
+            times = result.series("time")
             assert len(simulator._precomputed) == 8 * (1 + len({
-                simulator._effective_time_step(float(h)) for h in np.diff(result.series("time"))
+                simulator._effective_time_step(float(left), float(right))
+                for left, right in pairwise(times)
             }))
             assert solver.last_diagnostics.reused_factorization
         assert solver.solve_count == len(result.rows) + 2  # 两个同刻多事件各只求一次右侧。
@@ -436,7 +440,7 @@ def test_precompute_rejects_undeclared_step_without_factorizing(monkeypatch) -> 
     ]), SimulationConfig(.1, .1, linear_solver_mode="precompute"))
     original = simulator._effective_time_step
     # 模拟运行时出现一个未在准备网格中的 h；即使纯电阻的 A 相同也必须拒绝。
-    monkeypatch.setattr(simulator, "_effective_time_step", lambda h: .05 if calls else original(h))
+    monkeypatch.setattr(simulator, "_effective_time_step", lambda left, right: .05 if calls else original(left, right))
     with pytest.raises(RuntimeError, match="仿真时间 0.1.*precompute.*未声明.*h=0.05"):
         simulator.run()
     assert simulator.solver.factorization_count == 1 and simulator.solver.solve_count == 1

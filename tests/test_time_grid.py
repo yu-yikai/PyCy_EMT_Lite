@@ -13,6 +13,7 @@ from pycy_emt_lite import (
     Breaker,
     BreakerCloseEvent,
     BreakerOpenEvent,
+    Capacitor,
     CaseDefinition,
     Circuit,
     Resistor,
@@ -133,6 +134,54 @@ def test_insert_event_near_replaced_grid_point_keeps_terminal_stop_time() -> Non
     assert [row["time"] for row in result.rows].count(stop_time) == 1
     assert result.rows[-2]["time"] == event_time
     assert result.event_log[0]["time"] == event_time
+
+
+@pytest.mark.parametrize("method", ["trapezoidal", "backward_euler"])
+@pytest.mark.parametrize("mode", ["reuse", "precompute"])
+@pytest.mark.parametrize("stop_offset", [0, 8])
+def test_rc_fixed_grid_reuses_one_dynamic_matrix(method, mode, stop_offset) -> None:
+    step = .1
+    stop = 2.0 + stop_offset * math.ulp(2.0)
+    simulator = Simulator(Circuit.from_components("fixed_rc", [
+        VoltageSource("V", "s", "0", 1.), Resistor("R", "s", "c", 1.),
+        Capacitor("C", "c", "0", 1., initial_voltage=0.),
+    ]), SimulationConfig(step, stop, method=method, linear_solver_mode=mode))
+
+    result = simulator.run()
+
+    # RC=1s；每个基础步长均按配置h推进，响应有独立离散闭式解。
+    retention = (2-step)/(2+step) if method == "trapezoidal" else 1/(1+step)
+    expected = 1-retention**np.arange(21)
+    np.testing.assert_allclose(result.series("v:c"), expected, rtol=0, atol=128*np.finfo(float).eps)
+    assert len(result.rows) == 21 and result.rows[-1]["time"] == stop
+    assert simulator.solver.factorization_count == 2  # 初值矩阵一份，固定动态矩阵一份。
+
+
+@pytest.mark.parametrize("method", ["trapezoidal", "backward_euler"])
+@pytest.mark.parametrize("mode", ["reuse", "precompute"])
+def test_rc_insert_near_replaced_stop_keeps_both_real_intervals(method, mode) -> None:
+    stop = .5 + math.ulp(.5)
+    event = .5 - 16*math.ulp(.25)
+    simulator = Simulator(Circuit.from_components("inserted_rc", [
+        VoltageSource("V", "s", "0", 1.), Resistor("R", "s", "c", 1e9),
+        # RC仍为1s；小C使极短步长的电流不触发已有测量精度保护。
+        Capacitor("C", "c", "0", 1e-9, initial_voltage=0.),
+        # 此支路只改变源电流，理想源驱动的RC关系不变。
+        Breaker("MARK", "s", "0", closed=True, closed_resistance=1.),
+    ]), SimulationConfig(.1, stop, method=method, linear_solver_mode=mode),
+        events=[BreakerOpenEvent(event, "MARK")])
+
+    result = simulator.run()
+
+    # 此事件未被终点去重合并；最后区间只有9个ULP，不能按完整h推进。
+    assert stop-event == 9*math.ulp(.5)
+    intervals = [.1]*4 + [event-.4, stop-event]
+    retention = [(2-d)/(2+d) if method == "trapezoidal" else 1/(1+d) for d in intervals]
+    expected = [1-math.prod(retention[:k]) for k in range(7)]
+    np.testing.assert_allclose(result.series("v:c"), expected, rtol=0, atol=128*np.finfo(float).eps)
+    assert len(result.rows) == 7
+    assert [row["time"] for row in result.rows[-2:]] == [event, stop]
+    assert result.event_log[0]["time"] == event and result.rows[-2]["state:MARK"] == 0
 
 
 def test_insert_event_near_grid_uses_grid_representative() -> None:

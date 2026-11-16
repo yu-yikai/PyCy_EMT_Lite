@@ -13,7 +13,7 @@ from __future__ import annotations
 import math
 from collections.abc import Callable, Iterable, Mapping
 from dataclasses import dataclass, replace
-from itertools import product
+from itertools import pairwise, product
 from numbers import Integral, Real
 from types import MappingProxyType
 from typing import Literal, cast
@@ -43,7 +43,7 @@ from pycy_emt_lite.core.solvers import (
 )
 from pycy_emt_lite.core.stamping import _InitialConditions
 from pycy_emt_lite.events import EventQueue, SimulationEvent
-from pycy_emt_lite.events.base import _time_close, _time_tolerance
+from pycy_emt_lite.events.base import _time_close
 from pycy_emt_lite.io.results import SimulationResult
 
 EventTimePolicy = Literal["insert", "quantize_up", "require_aligned"]
@@ -238,7 +238,7 @@ class Simulator:
             if index == 0:
                 actual_time_step = 0.0
             else:
-                actual_time_step = self._effective_time_step(float(time - times[index - 1]))
+                actual_time_step = self._effective_time_step(float(times[index - 1]), float(time))
             due_events = self.event_queue.pop_due(float(time))
             context = StampContext(
                 node_manager=self.circuit.node_manager,
@@ -333,8 +333,9 @@ class Simulator:
                 f"precompute 状态数 {count} 超过上限 {self.config.precompute_max_states}；"
                 "请声明较小的完整状态集合或使用 reuse。"
             )
-        # 使用与主循环相同的差分和归一化，保留事件插点的全部实际正 h。
-        steps = sorted({self._effective_time_step(float(h)) for h in np.diff(times)})
+        # 与主循环使用相同端点，保留事件插点的全部实际正 h。
+        steps = sorted({self._effective_time_step(float(left), float(right))
+                        for left, right in pairwise(times)})
         size = self.circuit.size
         initial_size = size + sum(type(c) is Capacitor for c in self.circuit.components)
         # 每份按原 A、LU、准备期字节键三份 float64 矩阵，再计主元和查表键。
@@ -615,13 +616,18 @@ class Simulator:
             return False
         return _time_close(time, nearest_step * self.config.time_step)
 
-    def _effective_time_step(self, raw_time_step: float) -> float:
-        """把浮点误差造成的步长微小偏差归一到配置步长。"""
+    def _effective_time_step(self, left: float, right: float) -> float:
+        """相邻基础网格点使用设定步长；事件插点使用实际区间长度。"""
 
-        tolerance = _time_tolerance(raw_time_step, self.config.time_step)
-        if abs(raw_time_step - self.config.time_step) <= tolerance:
-            return self.config.time_step
-        return raw_time_step
+        step = self.config.time_step
+        index = round(left / step)
+        next_index = index + 1
+        # 与 _time_points 的生成方式一致，末点保留声明的 stop_time。
+        base_right = (self.config.stop_time if next_index == round(self.config.stop_time / step)
+                      else next_index * step)
+        if left == index * step and right == base_right:
+            return step
+        return right - left
 
     @staticmethod
     def _sorted_unique_times(points: Iterable[float]) -> list[float]:
