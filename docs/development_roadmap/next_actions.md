@@ -1,11 +1,11 @@
 # 恢复与下一步
 
-2026-11-16当前：先核五状态、实际Git与[候选FAIL报告](../../validation/cases/grid_connected_vsc_open_loop/validation_report.json)。checkpoint为已提交的固定h修复bbb1e2d；候选研究快照提交后须交叉核实际HEAD。1566项含slow通过覆盖source_snapshot3950a1cd的120源码及2依赖；后续仅文档/状态更新。63596和17585均终态，无剩余运行，不复用已消耗manifest。
+2026-11-16当前：先核五状态、实际Git与[候选FAIL报告](../../validation/cases/grid_connected_vsc_open_loop/validation_report.json)。checkpoint为已推送的研究快照8386c4e，其父提交bbb1e2d为独立步长修复；恢复时交叉核实际后续提交。1566项含slow通过覆盖source_snapshot3950a1cd的120源码及2依赖；后续仅文档/状态更新。63596和17585均终态，无剩余运行，不复用已消耗manifest。
 
 1. 下一项仅做已存40002点的驱动账本：读取忽略目录c1_fixed_h_zero_solve_ledger_plan_20261116T154539272172Z/plan.json，execution_authorized=false。先独审公式、初值与实际state/h，写分析器并定向验证，再按新HEAD另封ROOT执行包；当前没有分析器或新求解器改动。
 2. 账本区分组装系数、求解残差、历史构造和输出相减对交替模态的累积作用；零新solve/trajectory/native，不删点、不投影、不换积分法、不改原2µV门。观测分解不能冒充干预因果。必要的后续单因素轨迹须另封协议，不直接改公共求解器。
 3. 28号仍未验收，新增完成9/C1进行中。已完成默认独立运行、两路完整比较、图和项目回归；后续修复必须重新冻结并完整重验，物理门及Git验收全部齐备才计完成。教学保持161行、现有16元件与CaseDefinition链，无新依赖/框架。
-4. 本轮远端直连在提升权限后仍连接重置；保留本地提交，网络恢复后正常核远端并推送开发分支。F1保留旧精确HEAD账单锁证据，本轮没有新CI观察。
+4. 早先远端直连查询连接重置，随后常规推送成功，8386c4e及父提交已在开发分支；下次按实际HEAD和远端交叉核对。F1保留旧精确HEAD账单锁证据，本轮没有新CI观察。
 
 ## 已记录里程碑
 

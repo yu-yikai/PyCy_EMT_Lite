@@ -1,6 +1,6 @@
 # 持久进度
 
-2026-11-16当前：固定步长识别已做最小修复并单独提交bbb1e2d；1566项含slow回归、锁定同步、Ruff/mypy及28号默认独立Agg运行（40001点）通过。原协议双路比较仍确认5µs档仅共模失败：2487点，峰值2.533675µV>2µV；细档物理及150/150同h、132跨h比较通过。候选未验收，新增完成仍9，C1进行中。见[修复证据](experiments/fixed_time_grid_step_repair_20261116.json)和[候选状态](../../validation/cases/grid_connected_vsc_open_loop/validation_report.json)。下一步为现存全点轨迹的零新解驱动分解，计划尚未执行。当前记录checkpoint为bbb1e2d；远端查询因连接重置失败，不能声称本轮已推送。
+2026-11-16当前：固定步长识别已做最小修复并单独提交bbb1e2d；1566项含slow回归、锁定同步、Ruff/mypy及28号默认独立Agg运行（40001点）通过。原协议双路比较仍确认5µs档仅共模失败：2487点，峰值2.533675µV>2µV；细档物理及150/150同h、132跨h比较通过。候选未验收，新增完成仍9，C1进行中。见[修复证据](experiments/fixed_time_grid_step_repair_20261116.json)和[候选状态](../../validation/cases/grid_connected_vsc_open_loop/validation_report.json)。下一步为现存全点轨迹的零新解驱动分解，计划尚未执行。当前记录checkpoint为8386c4e；步长修复和候选研究快照已正常推送开发分支，早先直连查询重置记录保留。
 
 ## 已记录里程碑
 
