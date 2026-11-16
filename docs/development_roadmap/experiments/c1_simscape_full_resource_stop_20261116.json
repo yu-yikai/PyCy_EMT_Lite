@@ -1,0 +1,386 @@
+{
+  "schema": "c1_simscape_full_builds_and_resource_stop_v1",
+  "date": "2026-11-16",
+  "execution_head": "457ba4eadab46360cc27dfc65e3f2320630028bc",
+  "status": "BOTH_FULL_MODELS_COMPILED_COARSE_RUN_RESOURCE_STOP_NO_FULL_NUMERIC",
+  "summary": "两个完整步长模型已实际编译并通过结构独审；5µs运行触及可用提交内存门而闭场，未取得报告或原始波形，细步长未运行。",
+  "current_goal_turn_classification": "progress",
+  "goal_status": "active",
+  "actual_builds": [
+    {
+      "variant": "coarse",
+      "h_s": 5e-06,
+      "session": 66960,
+      "exit_code": 0,
+      "elapsed_terminal_s": 44.4258677,
+      "elapsed_console_s": 44.435487,
+      "compile_calls": 1,
+      "simulation_calls": 0,
+      "planned_acquisition_rows": 40002,
+      "actual_waveform_rows_observed": null,
+      "model_slx": {
+        "path": "local_reference/c1_openloop_reference_research/20261116T094018491269Z_simscape_full_build_coarse_v1/n/20261116T0942180838790Z/build/c1_simscape_full.slx",
+        "bytes": 298788,
+        "sha256": "2ec16ca3ee219ebcaa00ff2b8207804b644907b1ce3ce558bd78c43add671569"
+      },
+      "ROOT_closed": {
+        "path": "local_reference/c1_openloop_reference_research/20261116T094018491269Z_simscape_full_build_coarse_v1/ROOT_closed_review.json",
+        "bytes": 20923,
+        "sha256": "8b6f3274400c2a19ec1aa9f75066a543c6534c83d72fa8f2fa2381a65d4565e4"
+      },
+      "independent_closed": {
+        "path": "local_reference/native_static_reviews/c1_simscape_full_coarse_closed_independent_20261116T094935588451Z/receipt.json",
+        "bytes": 10810,
+        "sha256": "80bfcc155c35a4d935cd8b74b854953ff89f0acdd1a4db918db48b1f3112c1e7"
+      }
+    },
+    {
+      "variant": "fine",
+      "h_s": 2.5e-06,
+      "session": 35474,
+      "exit_code": 0,
+      "elapsed_terminal_s": 46.6419851,
+      "elapsed_console_s": 46.6528674,
+      "compile_calls": 1,
+      "simulation_calls": 0,
+      "planned_acquisition_rows": 80003,
+      "actual_waveform_rows_observed": null,
+      "model_slx": {
+        "path": "local_reference/c1_openloop_reference_research/20261116T094123240661Z_simscape_full_build_fine_v1/n/20261116T0948281419231Z/build/c1_simscape_full.slx",
+        "bytes": 299388,
+        "sha256": "7e7dfe637287a8a46a43606af46b8e9323eee41d040ae1c2278c3e0ce5caa56e"
+      },
+      "ROOT_closed": {
+        "path": "local_reference/c1_openloop_reference_research/20261116T094123240661Z_simscape_full_build_fine_v1/ROOT_closed_review.json",
+        "bytes": 20893,
+        "sha256": "9d10247ae54b87a199fc52554745927a4102abd8f4d93c0fb119b219f7a7651d"
+      },
+      "independent_closed": {
+        "path": "local_reference/native_static_reviews/c1_simscape_full_fine_closed_independent_20261116T095409222368Z/receipt.json",
+        "bytes": 6485,
+        "sha256": "44d75abc50c0cfa38864dfa7fe1c64183c132f2692ed1a4f7b9c71c98e5e322f"
+      }
+    }
+  ],
+  "actual_shared_structure": {
+    "blocks": 92,
+    "electrical_branches": 19,
+    "nonground_electrical_nodes": 14,
+    "logged_outputs": 29,
+    "original_ZOH_states": 8,
+    "original_compiled_rates_s": [
+      0.0001,
+      5e-06,
+      5e-06,
+      5e-06,
+      5e-06,
+      5e-06,
+      5e-06,
+      5e-06
+    ],
+    "added_no_feedback_observer_branches": 6,
+    "added_blocks": 12,
+    "observer_compiled_input_types": [
+      "boolean",
+      "double"
+    ],
+    "observer_compiled_output_type": "double",
+    "observer_compiled_sample_time": [
+      0,
+      0
+    ],
+    "scope": "Compiled rate0 is continuous; this does not prove full runtime Time/N or numerical qualification."
+  },
+  "fixed_full_scope": {
+    "formal_window_s": [
+      0,
+      0.2
+    ],
+    "acquisition_stop_s": 0.200005,
+    "expected_rows": {
+      "coarse": 40002,
+      "fine": 80003
+    },
+    "unique_quantities": 57,
+    "main_columns": 45,
+    "auxiliary_columns_including_duplicate_TIME": 13,
+    "original19_physical_budgets_unchanged": true,
+    "actual_switch_auxiliary_limit_V": 2e-06,
+    "original_four_windows_and_six_cycles_and_full_pair_gates_required": true,
+    "native_times": "All57 original Time vectors and actual Clock Data must be bitwise equal to original tout; no omission/interpolation/replacement.",
+    "print_format": "%.15e",
+    "printed_precision": "Full last-place including zero, SI conversion once; do not replace printed centers.",
+    "BE": "Diagnostic only; cannot replace full TR5µV/commonmode2µV gates."
+  },
+  "native_execution": {
+    "total_launches_this_turn": 3,
+    "explicit_build_compile_calls": 2,
+    "full_run_attempts": 1,
+    "coarse_session": 43696,
+    "authoritative_terminal_tool_chunk": "605502",
+    "exec_shell_exit_code": 1,
+    "native_exit_code": -1,
+    "reason": "available_commit_limit",
+    "elapsed_terminal_s": 24.266601,
+    "elapsed_console_s": 24.2792685,
+    "simulation_calls": null,
+    "simulation_calls_status": "NOT_OBSERVED; no run_report. Do not infer sim0 or sim1.",
+    "run_directory_exists": true,
+    "exact_copied_model_preserved": true,
+    "native_batch_log_bytes": 0,
+    "run_report_MAT_and_CSV_available": false,
+    "numerical_analysis_executed": false,
+    "fine_launched": false,
+    "remaining_owned": [],
+    "cleanup_errors": [],
+    "cleanup_actions_count": 10,
+    "existing_process_intervention": false,
+    "note": "A closed resource stop is evidence integrity PASS, not Run/export/numerical PASS."
+  },
+  "resources": {
+    "samples": 7,
+    "pre_available_commit_bytes": 5038231552,
+    "minimum_sampled_available_commit_bytes": 2136539136,
+    "maximum_sampled_owned_private_bytes": 2784952320,
+    "minimum_available_commit_limit_bytes": 2147483648,
+    "owned_private_limit_bytes": 6442450944,
+    "wall_limit_s": 300,
+    "post_failure_available_commit_bytes": 5098491904,
+    "original_native_preflight_available_commit_bytes": 3221225472,
+    "next_ROOT_operational_preflight_advice_bytes": 8589934592,
+    "advice_scope": "Extra conservative ROOT observation before a new package; original native3→2GiB/6GiB/300s guards are not weakened.",
+    "old_preexisting_MATLAB_processes_untouched_and_same_creation_identity": true
+  },
+  "prepared_packages": {
+    "coarse": {
+      "ROOT_seal": {
+        "path": "local_reference/c1_openloop_reference_research/20261116T100627635729Z_simscape_full_run_coarse_v1/ROOT_seal.json",
+        "bytes": 13489,
+        "sha256": "71d28ff18845140d1311cc6168f85a490b9a9ed61cbebef07d6c0a4af985164d"
+      },
+      "ROOT_admission": {
+        "path": "local_reference/c1_openloop_reference_research/20261116T100627635729Z_simscape_full_run_coarse_v1/ROOT_admission.json",
+        "bytes": 3580,
+        "sha256": "ba8795efb462ecdd82baa98188b0043d66a132a7d9faa1c964a10ef7ef871cdb"
+      },
+      "consumed": true,
+      "runnable_after_checkpoint_HEAD_changes": false
+    },
+    "fine": {
+      "ROOT_seal": {
+        "path": "local_reference/c1_openloop_reference_research/20261116T100821664223Z_simscape_full_run_fine_v1/ROOT_seal.json",
+        "bytes": 13458,
+        "sha256": "ff36b66edc0b3c72d6460d8e370ddf5329e2eecf04da7e510693f3b03fdbe6d4"
+      },
+      "ROOT_admission": {
+        "path": "local_reference/c1_openloop_reference_research/20261116T100821664223Z_simscape_full_run_fine_v1/ROOT_admission.json",
+        "bytes": 3577,
+        "sha256": "c0bd897cac98c9f35bbb1b957fbe94e54a158f70718290a46807d2749f4c5556"
+      },
+      "consumed": false,
+      "runnable_after_checkpoint_HEAD_changes": false
+    }
+  },
+  "preserved_findings": {
+    "coarse_build_saved_default_field_auditor_failure": "Old auditor missing omitted default Inputs++; preserved. New offline v2 checks native pre/post readback, saved2in1out, configuration readback and compiled types; no new native call.",
+    "offline_wrapper_initial_test_failure": "3b2ef6 asserted88 instead of correct80 Win64 process-memory struct bytes; before child launch. Corrected API test95f800 and controlled finite fixture passed.",
+    "report_scalar_fix": "Originalb66f retained and unexecuted. Newedb7808f converts report NumPy scalars by item() only; nonfinite/array rejected before opening. Both native admissions bind the pre-output supersession.",
+    "original_PSCAD_full_commonmode_FAIL_preserved": true,
+    "prior_Simscape_400us_numeric_PASS_scope_unchanged": true
+  },
+  "tests": {
+    "author_full_ascii_pure_checks": 32,
+    "independent_ascii_pure_checks": 28,
+    "synthetic_full_pair_primary_hard_gates": 132,
+    "raw_closure_author_pure_checks": 22,
+    "scope": "Overlapping research checks, not additional project tests or actual commercial waveforms. FullN dual-Decimal pointwise runtime and peak memory remain unmeasured.",
+    "latest_project_full_pytest_count": 1300,
+    "includes_slow": true,
+    "full_pytest_rerun_this_turn": false
+  },
+  "source": {
+    "source113_snapshot": {
+      "path": "local_reference/native_static_reviews/d1_small_readability_ROOT_20261116T073540574524Z/source113.json",
+      "bytes": 13109,
+      "sha256": "fa156e8842c8c9b0e93bb241be8e377cd6c45126f852135ed34731f7ee1e472f"
+    },
+    "exact113_unchanged_this_turn": true,
+    "core_and_dependencies_unchanged": true,
+    "prior_c3fdf79_scope": "27 summary only changed there; other112 were unchanged. This turn changes none of113.",
+    "dependencies": [
+      {
+        "path": "pyproject.toml",
+        "bytes": 2053,
+        "sha256": "f32f1496a4e4beb93b9cd3ec318871611b68e1d9765c69b081aed4e9326f5672"
+      },
+      {
+        "path": "uv.lock",
+        "bytes": 111321,
+        "sha256": "79769bb628c8191d5b36db63cff767062e0e5a65b253d41208a3568696e3b5d9"
+      }
+    ]
+  },
+  "bindings": {
+    "build_pair_structural_index": {
+      "path": "local_reference/native_static_reviews/c1_simscape_full_fine_closed_independent_20261116T095409222368Z/build_pair_index.json",
+      "bytes": 6893,
+      "sha256": "35f036b99dfa0502ba30d99d548d8c0b0ab6ce2de8bb73b8230df94eed558e54"
+    },
+    "full_run_freezer": {
+      "path": ".tmp/longterm/prepare_c1_simscape_full_run_20261116.py",
+      "bytes": 17772,
+      "sha256": "7eecb737ee160eec3f4b850d6771d06ae72d8b3425e4cea0add3b807bb997850"
+    },
+    "full_run_freezer_author_static": {
+      "path": "local_reference/native_static_reviews/c1_simscape_full_run_freezer_static_20261116T100604726761Z/receipt.json",
+      "bytes": 5815,
+      "sha256": "c1e621a86e1368e1e91c9693661cd1cb2ad1e4cf1d61da4b56258d71fa19e0df"
+    },
+    "freezer_and_coarse_package_independent": {
+      "path": "local_reference/native_static_reviews/c1_simscape_full_run_preparer_independent_20261116T100801912436Z/receipt.json",
+      "bytes": 10923,
+      "sha256": "84d891435e8274e62dcad7b7a6789da6913bef8653d49d506e42c6348c63aead"
+    },
+    "fine_package_independent": {
+      "path": "local_reference/native_static_reviews/c1_simscape_full_fine_package_independent_20261116T100907798975Z/receipt.json",
+      "bytes": 2669,
+      "sha256": "dd02a8a4e80b69886d410539767632fdc8047ddb0144f04c006835f4a706b016"
+    },
+    "full_math_independent": {
+      "path": "local_reference/native_static_reviews/c1_simscape_full_ascii_independent_20261116T100050403275Z/receipt.json",
+      "bytes": 8536,
+      "sha256": "8b75584eb7d4f0207ec3e2b8fa5b17068d71cbeda2cb4d88265e2ca0914bc7c8"
+    },
+    "full_math_author_pure": {
+      "path": "local_reference/native_static_reviews/c1_simscape_full_ascii_pure_20261116T094516948394Z/receipt.json",
+      "bytes": 1505,
+      "sha256": "85d6b31635af300c08e7ef094976db22a4f02c1939a15a32a60da4994358993a"
+    },
+    "full_export_interface_independent": {
+      "path": "local_reference/native_static_reviews/c1_simscape_full_export_interface_independent_20261116T094620438286Z/receipt.json",
+      "bytes": 2455,
+      "sha256": "cc30c3b833fcd776eb3933675e3d3f0aba0edddd4f4ae4b68dc18bacb1fe9ed5"
+    },
+    "full_driver_observer_static": {
+      "path": "local_reference/native_static_reviews/c1_simscape_full_driver_v2_observer_readback_static_20261116T094845470147Z/receipt.json",
+      "bytes": 1987,
+      "sha256": "37b76afa2a9f4a6c487cd5d7d3a409d88b9c988ae997337d63be15b742bc6d28"
+    },
+    "native_monitor_static": {
+      "path": "local_reference/native_static_reviews/c1_simscape_full_single_run_monitor_v1_20261116T095013243403Z/static_receipt.json",
+      "bytes": 1801,
+      "sha256": "54d6304c460725141af3e51869d5c7559fa4b9184d6651ca9eb6c3483e5899ce"
+    },
+    "raw_closure_helper": {
+      "path": ".tmp/longterm/review_c1_simscape_full_raw_closed_20261116.py",
+      "bytes": 15806,
+      "sha256": "f8bd124004386269f53b8ce53a098fd174f0c5e93c73c4c88b536df00b4c5265"
+    },
+    "raw_closure_author_static": {
+      "path": "local_reference/native_static_reviews/c1_full_raw_closure_author_20261116T101432111452Z/receipt.json",
+      "bytes": 1530,
+      "sha256": "634f0b5b6a2b2de0b6b95c2288a1b1e03a04a6902f7046f50c391c3c28dc7dd2"
+    },
+    "offline_worker_monitor_independent": {
+      "path": "local_reference/native_static_reviews/c1_full_raw_closure_author_20261116T101432111452Z/offline_worker_independent_review.json",
+      "bytes": 2837,
+      "sha256": "fd5792be2c86f03e8f67a097faf22c4f33c38e385485617fcb7934fb1e50f33c"
+    },
+    "offline_monitor_controlled_fixture": {
+      "path": "local_reference/native_static_reviews/c1_full_math_monitor_fixture_20261116T100535962663Z/receipt.json",
+      "bytes": 1158,
+      "sha256": "3d4115e8e105d5ee4e90e76bb0c166d58ed1c9f7ce2d9384b42963111faed6f0"
+    },
+    "offline_serialization_fixture": {
+      "path": "local_reference/native_static_reviews/c1_full_math_scalar_serialization_20261116T101208100398Z/receipt.json",
+      "bytes": 891,
+      "sha256": "e4d1619e042c4b79eecfe0dc14774c17fe323dd20c912aac29110bec72df613e"
+    },
+    "ROOT_failed_run_review": {
+      "path": "local_reference/c1_openloop_reference_research/20261116T100627635729Z_simscape_full_run_coarse_v1/ROOT_failed_run_review.json",
+      "bytes": 6380,
+      "sha256": "b4421b9615a7ee8f6e2e7fe23721bbedfbe2cab3ebcaf14703ee13acb7cf4f11"
+    },
+    "independent_failed_run_integrity": {
+      "path": "local_reference/native_static_reviews/c1_simscape_full_resource_stop_independent_20261116T102046955772Z/receipt.json",
+      "bytes": 31912,
+      "sha256": "deefa40f22b4f1396b93ac6ba7ea17a36d22b0a8ffa9e4a5da73eec153c46df7"
+    },
+    "post_failure_host_resource": {
+      "path": "local_reference/c1_openloop_reference_research/20261116T100627635729Z_simscape_full_run_coarse_v1/ROOT_resource_after_failure.json",
+      "bytes": 570,
+      "sha256": "557955b1127682f9e1ff37f95db37b4ba720b6c70b3d3448a5704301b97bdb94"
+    }
+  },
+  "research_tools": {
+    "full_builder": {
+      "path": ".tmp/longterm/build_c1_simscape_full_v1_20261116.m",
+      "bytes": 17834,
+      "sha256": "70ca0a97a742442973d8e2c8d5556eeca725111cce646281547b2ec93e8970e7"
+    },
+    "full_driver": {
+      "path": ".tmp/longterm/run_c1_simscape_full_v2_20261116.m",
+      "bytes": 10525,
+      "sha256": "f403596c2c9ae577ad9c959eb463c57945381321da4eb149e3ef2f6d590dac80"
+    },
+    "full_exporter": {
+      "path": ".tmp/longterm/export_c1_simscape_full_v1_20261116.m",
+      "bytes": 7788,
+      "sha256": "6b308cd54676cbe89f466348a441115171d89540a877ea9496789f87db99a34a"
+    },
+    "full_export_spec": {
+      "path": ".tmp/longterm/c1_simscape_full_export_spec_v1_20261116.json",
+      "bytes": 7620,
+      "sha256": "b381846978282c54a84a5bbf45483e90f17ef8e9ebe87c83522a741f04306085"
+    },
+    "full_ascii_math_adapter": {
+      "path": ".tmp/longterm/analyze_c1_simscape_full_ascii_20261116.py",
+      "bytes": 15293,
+      "sha256": "dc86417f3d4eea05138f7988ce33c77dd11caaa81791904a69fdf81936a7fe9f"
+    },
+    "original_independent_math": {
+      "path": ".tmp/longterm/independent_c1_full_numeric_20261116.py",
+      "bytes": 41934,
+      "sha256": "12c65b66222365ad4110620f26ba4f16ec3432085ed4d177ed7b002ec7d5346b"
+    },
+    "original_primary_kernel": {
+      "path": ".tmp/longterm/c1_full_openloop_numeric_kernel_20261116.py",
+      "bytes": 27487,
+      "sha256": "5fa8c2910b7fa702a3f6bdf691867b377cdbfef6c2bd0acb3cbe9442bcfa7ba7"
+    },
+    "original_primary_metrics": {
+      "path": ".tmp/longterm/c1_full_openloop_metrics_20261116.py",
+      "bytes": 12242,
+      "sha256": "1c2246a43c486bdd457069f3f3ddab9e2dc66bd7896e0bb342ed7ad3b45a3df7"
+    },
+    "original_offline_worker": {
+      "path": ".tmp/longterm/analyze_c1_simscape_full_pair_worker_20261116.py",
+      "bytes": 8169,
+      "sha256": "b66f483c22bae630d6aa9ee897fb91dab18b0ea9cb6567c852a159c1ac84a898"
+    },
+    "selected_offline_worker_v2": {
+      "path": ".tmp/longterm/analyze_c1_simscape_full_pair_worker_v2_20261116.py",
+      "bytes": 8355,
+      "sha256": "edb7808fe2821dbf841536dd8ca4cfbe5cdb4a27ac4da0025549fd1caaf21ad5"
+    },
+    "offline_monitor": {
+      "path": ".tmp/longterm/monitor_c1_simscape_full_pair_math_20261116.py",
+      "bytes": 9104,
+      "sha256": "02761dec2fa6f7979cb50f82fd81b498e7c1ffbfb58763375404b453f08a4f9d"
+    }
+  },
+  "acceptance": {
+    "formal_new_examples_completed": 9,
+    "C1": "in_progress",
+    "D1": "planned",
+    "F1": "blocked_external_CI_billing",
+    "full_Simscape_reference_qualified": false,
+    "candidate_implemented": false,
+    "complete_C1_chain_accepted": false,
+    "new_CI_observation": false,
+    "latest_CI_exact_head": "c3fdf7957d1c52ee5a3ba51c6bf2c55dbea2151a",
+    "latest_CI_run": 43825501731
+  },
+  "simplicity": "Research assets stay ignored. No public API, component, dependency or duplicate teaching example added; future candidate reuses CaseDefinition → Circuit → Simulator → SimulationResult.",
+  "next": "After materially improved available commit, prepare fresh current-HEAD packages, admit historical builds against unchanged113/physics, run coarse then fine with original guards, admit full raw and execute selected bounded v2 math worker. All original gates must pass before any teaching candidate."
+}

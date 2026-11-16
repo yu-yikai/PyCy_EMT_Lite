@@ -3,7 +3,7 @@
   "updated_date": "2026-11-16",
   "timezone": "Asia/Shanghai",
   "branch": "codex/emt-examples-longterm",
-  "checkpoint_head": "1a9a5bdf4b2d89a18e496388bd6558b650a8e8aa",
+  "checkpoint_head": "457ba4eadab46360cc27dfc65e3f2320630028bc",
   "current_task": "C1",
   "formal_new_examples_completed": 9,
   "status_values": [
@@ -670,7 +670,7 @@
         "pscad-derived-force-dsout-build-v5",
         "pscad-derived-force-dsout-bounded-probe-v5"
       ],
-      "validation": "同物理Simscape400µs短探针真实sim1/exit0闭场；57量81原点/80区间及时间位一致，原19预算经两种数学实现复算通过；控制/源/精度及六开关端点/RVI辅助门通过。第一次sim0的类型读取失败和报告序列化失败保留。完整0.2s双h尚未验证；旧PSCAD FAIL保持，新增9/C1进行中。113正式Python/依赖未改；1300为既有测试。",
+      "validation": "Simscape完整两h模型各compile1/sim0，92模块与原19支路/29日志/8保持及6连续观察器经独审通过。5µs完整Run尝试因可用提交内存低于2GiB中止并清理，仅有原模型副本，无report/MAT/CSV；实际sim调用数未观测，细步长未启动。完整数值资格/候选待完成，旧400µs PASS和PSCAD FAIL限域保持。113源码/依赖未改，1300为既有测试。",
       "acceptance": "局部、可独立运行验证的教学例逐项验收",
       "status": "in_progress",
       "files": [
@@ -704,7 +704,8 @@
         "docs/development_roadmap/experiments/c1_node_ordering_build_attempt_20261116.json",
         "docs/development_roadmap/experiments/c1_simscape_library_discovery_20261116.json",
         "docs/development_roadmap/experiments/c1_simscape_short_build_20261116.json",
-        "docs/development_roadmap/experiments/c1_simscape_short_run_20261116.json"
+        "docs/development_roadmap/experiments/c1_simscape_short_run_20261116.json",
+        "docs/development_roadmap/experiments/c1_simscape_full_resource_stop_20261116.json"
       ],
       "commits": [
         "b835e31785fab3fda247c333d23edbe9ce576dfa",
@@ -729,9 +730,12 @@
         "05dd455251bfff341a20d14d35000c8b972ad657",
         "c3fdf7957d1c52ee5a3ba51c6bf2c55dbea2151a",
         "fbfc278cffa37cb50f34553effd2f172373378f4",
-        "1a9a5bdf4b2d89a18e496388bd6558b650a8e8aa"
+        "1a9a5bdf4b2d89a18e496388bd6558b650a8e8aa",
+        "457ba4eadab46360cc27dfc65e3f2320630028bc"
       ],
-      "blockers": [],
+      "blockers": [
+        "完整参考运行当前受可用提交内存限制；保留原资源门，资源明显恢复后才封新HEAD运行包。C1整体仍进行中。"
+      ],
       "reference_feasibility": {
         "status": "read_only_feasibility_only",
         "record": "local_reference/c1_pll_reference_research/20261111T013530229954Z/feasibility.md",
@@ -1344,6 +1348,23 @@
         "numeric_pass": true,
         "full_reference_qualified": false,
         "active_native_sessions": 0
+      },
+      "simscape_full_models_and_resource_stop": {
+        "record": {
+          "path": "docs/development_roadmap/experiments/c1_simscape_full_resource_stop_20261116.json",
+          "bytes": 17876,
+          "sha256": "860c6783e90998e2c77d394a53f5e987667365bd9311a3973cb2167f1eb647ff"
+        },
+        "status": "BOTH_FULL_MODELS_COMPILED_COARSE_RUN_RESOURCE_STOP_NO_FULL_NUMERIC",
+        "actual_full_models_compiled": 2,
+        "full_run_attempts": 1,
+        "coarse_session": 43696,
+        "coarse_native_exit_code": -1,
+        "coarse_simulation_calls_observed": null,
+        "fine_launched": false,
+        "full_reference_qualified": false,
+        "candidate_implemented": false,
+        "active_native_sessions": 0
       }
     },
     {
@@ -1574,7 +1595,7 @@
       "historical_pause_only": true
     }
   ],
-  "current_stage": "simscape_short_probe_numeric_verified_full_pair_preparation",
+  "current_stage": "simscape_full_models_compiled_run_resource_stopped",
   "resume_checkpoint_history": [
     {
       "resumed_utc": "2026-11-11T13:24:16.085490+00:00",
