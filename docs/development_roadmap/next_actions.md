@@ -1,16 +1,17 @@
 # 恢复与下一步
 
-2026-11-16：节点排序单变量已实建并按预设NOT_ACTIVATED门停止，Run0；原完整双h仍未过2µV。新增完成9、C1进行中、目标active。
+2026-11-16：同电路Simscape参考的真实库接口发现已完成；新短探针尚未固定、建立或运行。新增完成9、C1进行中、目标active。
 
-入口：[节点排序实建记录](experiments/c1_node_ordering_build_attempt_20261116.json)。checkpoint为本次提交前61647b6；与实际Git及结束检查点交叉核对。
+入口：[接口发现记录](experiments/c1_simscape_library_discovery_20261116.json)。checkpoint为本次提交前c3fdf79；实际Git、远端与结束检查点交叉核对。
 
-1. 先读五状态并核分支、HEAD、工作区和实际远端。最新8170已exit1终态、Build1/0errors、Run0、正常quit/owned[]；旧98913/25165/34509等也已终态。不要轮询或重启旧句柄/driver。
-2. 读取新记录及ROOT/独立闭场收据。实际45设置仅optimize_nodes True→False，19有向角色图、28 NODE绑定和14非地语义节点保持；未观察到预设重编号，按门阻Run。它不是数值FAIL，也不能证明内部优化器没有效果。全部81非OUT保留，无OUT/INF数值输出；新normal-oneRun闭场/raw/numeric入口从未调用，不应对Run0尝试这些入口。
-3. 先做本机R2025a/Simscape同物理参考的最小可行性研究：已有真实B1/25 -batch链和标准双向variable_resistor源码证据。核完整端口/单位/Rmin/热端口/依赖、浮置DC初值与Solver Configuration局部梯形逐步方程，保持16元件物理、100µs/5µs控制、双h完整窗/45量/原预算。新来源/参数/初值/方向/求解器/时序/比较窗/阈值在新native和候选前另固定；安装和旧Run不能代替新模型、当前license或全门。
-4. 两处小可读性改进已完成：中英README补同终端恢复图窗方法；27号摘要从现有参数格式化，默认stdout及仿真计算不变。新的113文件快照见tasks.current_source_snapshot；旧快照有且仅有27号摘要hash变化，旧native/分析器不可绕过其固定源码守卫。
-5. 原2µV FAIL及旧实验全记录保持。排序包已耗一次Build且Run0，不重试/搜索通过排列。现live context/driver固定05dd455；文档提交后不要在新HEAD直接重跑。后续只读复核先用精确旧Git/快照的归档准入，不改旧包；新native另封当前HEAD/输入/资源/owned/profile守卫。F1账单锁仅既有记录，本轮无新CI观察。
+1. 先读五状态并核Git。76308已exit0终态，唯一MATLAB启动已闭场；只加载fl_lib/nesl_utility，11接口唯一，无新模型或仿真。不要轮询或重启旧句柄、driver或已消耗的包。旧8170/98913/25165/34509等也已终态。
+2. 下一步先固定并建立从0开始的400µs同物理SPWM短探针。复用原参数/16电气元件/19原生支路/方向；明确L=.01H、r=0、g=0、i_L=0/high且i_L_specify=on，六R=.001/1e9，AC公共星点接地、DC浮置，不加Floating Reference电容或DC接地支路。实例化后核实际端口域/连接和初值，不把库端口计数当编译资格。
+3. 根据真实discovery和95a477参数建议另固定solver/converter/时序：局部TR、LocalSolverSampleTime、DoDCoff、正则化/滤波关闭；LOCAL容差枚举已核，数值建议仍须前验固定。连续AC使用V/provide input-only，缺导数则显式失败并另立版本，不静默滤波；真保持R使用Ohm/zero。完整回读实际PS R、100µs参考/5µs门极、首步与换相方程。保留原逐段TR5µV/共模2µV、原点和全部首末点，不预断BE作用于哪个实际采样段。
+4. 新建模/编译/仿真须新HEAD独立封包、资源与输入守卫；当前发现包只授予库读取，不能直接改function或复用为仿真包。模型运行许可、直接DC源电流日志、全部控制/物理/输出绑定均待实测。短探针不代替原完整双h参考；完整参考合格前不实施教学候选。原PSCAD2µV FAIL及全部失败原件保持。
+5. 源码当前113文件快照见tasks.current_source_snapshot；c3fdf79仅27号摘要改动，其余112个及依赖不变。两处可读性小改已验收提交。旧113全部不变只适用于其历史执行，不绕过旧准入的固定HEAD/hash。
+6. 新CI43825501731精确针对c3fdf79，已终态：账单锁、两OS runner0/steps空。原始API与公开记录ci_c3fdf79.json已保存，不重复轮询/触发；外部解除后再补跨OS。首次CIM超时/启动0及后续库发现的启动1均保留，观察边界见ROOT/独立闭场收据。
 
-正式Python仍113个，27号仅摘要改动、其余112个及依赖不变；新的源码快照已保存。锁定同步/Ruff/mypy/27号6001点独立运行通过，1300含slow为既有全量，本轮未重跑。所有商业原件/研究脚本在忽略目录。
+本轮小改的锁定同步/Ruff/mypy/27号6001点独立运行通过；1300含slow为此前全量，未重跑。所有商业原件、研究脚本和接口原始数据留忽略目录；不增加公共框架。
 
 ## 本机命令
 

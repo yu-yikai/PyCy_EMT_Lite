@@ -3,7 +3,7 @@
   "updated_date": "2026-11-16",
   "timezone": "Asia/Shanghai",
   "branch": "codex/emt-examples-longterm",
-  "checkpoint_head": "61647b6e2244fd32ef56e6304dcee30519c32037",
+  "checkpoint_head": "c3fdf7957d1c52ee5a3ba51c6bf2c55dbea2151a",
   "current_task": "C1",
   "formal_new_examples_completed": 9,
   "status_values": [
@@ -670,7 +670,7 @@
         "pscad-derived-force-dsout-build-v5",
         "pscad-derived-force-dsout-bounded-probe-v5"
       ],
-      "validation": "节点排序单变量真实编译一次、0错误；19支路、45个计划输出及原完整物理与控制检查通过。节点编号未变化，按预设NOT_ACTIVATED门阻止Run。8170已exit1并正常关闭PSCAD，自有进程清空；81项非波形文件、33项原绑定与6项控制绑定已核真。无新增波形或合格参考，原2µV FAIL及新增完成9保持。已找到本机MATLAB/Simscape的静态研究线索，新模型尚未建立、编译或仿真。113个正式Python文件及依赖不变，1300为既有全量。",
+      "validation": "R2025a只读库发现真实exit0，11模块唯一、仅2个library、无新模型或仿真。首次预检CIM超时启动0保持，两包累计MATLAB启动1；63.918s正常闭场。实际电感g非零/i_L目标未启用、solver默认非局部TR，已核设置边界；Simscape模型许可及逐步时序仍待探针。原2µV FAIL/完成9保持。113源码与当前c3fdf79快照一致，27仅摘要改动已另验收；1300为既有全量。",
       "acceptance": "局部、可独立运行验证的教学例逐项验收",
       "status": "in_progress",
       "files": [
@@ -701,7 +701,8 @@
         "docs/development_roadmap/experiments/c1_full_openloop_build_attempt_20261116.json",
         "docs/development_roadmap/experiments/c1_full_openloop_dual_h_diagnostic_20261116.json",
         "docs/development_roadmap/experiments/c1_commonmode_constraint_followup_20261116.json",
-        "docs/development_roadmap/experiments/c1_node_ordering_build_attempt_20261116.json"
+        "docs/development_roadmap/experiments/c1_node_ordering_build_attempt_20261116.json",
+        "docs/development_roadmap/experiments/c1_simscape_library_discovery_20261116.json"
       ],
       "commits": [
         "b835e31785fab3fda247c333d23edbe9ce576dfa",
@@ -723,7 +724,8 @@
         "1afde3a916c24edf21dce1c71ae6f825d04d9291",
         "fbcfb753f09c33c714a1453609bee3c6449fa668",
         "a49544935e740172ab65ce25486c97396cb055c1",
-        "05dd455251bfff341a20d14d35000c8b972ad657"
+        "05dd455251bfff341a20d14d35000c8b972ad657",
+        "c3fdf7957d1c52ee5a3ba51c6bf2c55dbea2151a"
       ],
       "blockers": [],
       "reference_feasibility": {
@@ -734,7 +736,7 @@
         "evidence_sha256": "d92469cdd234477829ca5a5fa75a67648f17235fffadf3d3cbdaa73672375427",
         "native_executed": false
       },
-      "current_stage": "open_loop_node_option_not_activated_simscape_feasibility",
+      "current_stage": "simscape_library_verified_startup_probe_preparation",
       "interface_discovery": {
         "status": "qualified_native_satk_batch_interface",
         "simulink_model_tools_provided": false,
@@ -1293,6 +1295,21 @@
         "new_reference_qualified": false,
         "candidate_implemented": false,
         "active_native_sessions": 0
+      },
+      "simscape_library_discovery": {
+        "record": {
+          "path": "docs/development_roadmap/experiments/c1_simscape_library_discovery_20261116.json",
+          "bytes": 9237,
+          "sha256": "90c3c05b094ed853acd4972aba2a7ace3d3a413f0f4554d6fc3a2c0104452626"
+        },
+        "status": "ACTUAL_R2025A_LIBRARY_API_VERIFIED_NO_MODEL_OR_SIMULATION",
+        "session": 76308,
+        "exit_code": 0,
+        "total_MATLAB_launches": 1,
+        "model_created": false,
+        "simulation_called": false,
+        "reference_qualified": false,
+        "active_native_sessions": 0
       }
     },
     {
@@ -1388,7 +1405,7 @@
       ],
       "new_capabilities": [],
       "references": [],
-      "validation": "最新本地1300 passed（XML510.444s，含slow）零失败/错误/跳过；锁定27包/Ruff/mypy39通过。精确5314486的CI43060348386终态failure，两OS均runner0/steps空，注释再次确认账户billing lock，测试未执行/test_count=null；23–27及本次入口跨OS仍待外部解除后补验，不轮询该终态。",
+      "validation": "此前本地1300 passed（XML510.444s，含slow）零失败/错误/跳过；本轮小改锁定27包/Ruff/mypy39/27号6001点独立运行通过，未重跑全量。精确c3fdf79的新CI43825501731终态failure，两OS runner0/steps空，新注释确认账户billing lock，测试未执行/test_count=null。跨OS仍待外部解除后补验；不轮询这个或旧终态。",
       "acceptance": "本批测试与真实CI记录、教学导航、里程碑推送和恢复指令",
       "status": "blocked",
       "files": [
@@ -1400,7 +1417,8 @@
         "docs/development_roadmap/experiments/ci_41a6685.json",
         "docs/development_roadmap/experiments/ci_9269350.json",
         "docs/development_roadmap/experiments/ci_ae9fe36.json",
-        "docs/development_roadmap/experiments/ci_5314486.json"
+        "docs/development_roadmap/experiments/ci_5314486.json",
+        "docs/development_roadmap/experiments/ci_c3fdf79.json"
       ],
       "commits": [
         "90b2fcd",
@@ -1411,7 +1429,8 @@
         "41a6685da241b5a759786963b81e236728afbd98",
         "9269350887a867aee2740fed04155ade8f8757be",
         "ae9fe3629ad9617853979b0ef58d4d8319239592",
-        "5314486fcb30929f79c62a5b15faf2e462529573"
+        "5314486fcb30929f79c62a5b15faf2e462529573",
+        "c3fdf7957d1c52ee5a3ba51c6bf2c55dbea2151a"
       ],
       "blockers": [
         "GitHub check-run两项注释：The job was not started because your account is locked due to a billing issue. 账户解除外部账单锁后才能补跑；不通过重复push或改代码绕过。"
@@ -1470,9 +1489,9 @@
     },
     "source113_unchanged_at_resume": true,
     "no_previous_native_or_tests_restarted": true,
-    "latest_checked_head": "61647b6e2244fd32ef56e6304dcee30519c32037",
+    "latest_checked_head": "c3fdf7957d1c52ee5a3ba51c6bf2c55dbea2151a",
     "latest_goal_turn_classification": "progress",
-    "latest_progress": "Completed two minimal beginner-readability fixes: same-terminal figure-backend reset and parameter-derived example27 summary, with identical default stdout and unchanged simulation AST; C1 same-physics Simscape investigation continues.",
+    "latest_progress": "Completed/pushed minimal readability fixes and one real R2025a library API discovery; retained first preflight timeout (launch0), verified11 interfaces and closed launch1, identified actual initial-target/solver/converter settings; refreshed exact-HEAD CI billing-lock evidence. No new model/simulation/reference qualification.",
     "latest_remote_head_verified_same": true
   },
   "pause_checkpoint_history": [
@@ -1521,7 +1540,7 @@
       "historical_pause_only": true
     }
   ],
-  "current_stage": "open_loop_node_option_not_activated_simscape_feasibility",
+  "current_stage": "simscape_library_verified_startup_probe_preparation",
   "resume_checkpoint_history": [
     {
       "resumed_utc": "2026-11-11T13:24:16.085490+00:00",
@@ -1559,6 +1578,7 @@
     },
     "source112_unchanged": true,
     "source27_summary_only_changed": true,
-    "full_pytest_rerun": false
+    "full_pytest_rerun": false,
+    "commit": "c3fdf7957d1c52ee5a3ba51c6bf2c55dbea2151a"
   }
 }
