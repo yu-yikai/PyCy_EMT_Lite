@@ -3,7 +3,7 @@
   "updated_date": "2026-11-16",
   "timezone": "Asia/Shanghai",
   "branch": "codex/emt-examples-longterm",
-  "checkpoint_head": "57fbc81106a75e6f70e09413e4fd94cf45853b96",
+  "checkpoint_head": "8c68b175164a2f2ad6061078f3607027a5fd5dbd",
   "current_task": "C1",
   "formal_new_examples_completed": 9,
   "status_values": [
@@ -670,7 +670,7 @@
         "pscad-derived-force-dsout-build-v5",
         "pscad-derived-force-dsout-bounded-probe-v5"
       ],
-      "validation": "完整两h Simscape模型各compile1/sim0及结构独审通过；5µs完整Run因可用提交内存低于2GiB中止，无report/MAT/CSV，实际sim调用数未观测，细档未启动。完整参考/候选待完成。另修复VSC非法测量提前污染状态，218新回归及本轮1518全量含slow通过；仅2源码文件变化，其余111及依赖不变。旧短探针PASS和PSCAD FAIL限域保持。",
+      "validation": "完整Simscape两档模型已编译，旧完整Run资源中止且sim调用数未观测。新完整规模合成分析40002/80003点、原逐点/跨h门及独审通过，仅属内部证据。真实R2025a无JVM守卫9项通过、model0/sim0；尚未证明无JVM Simscape、MAT重载或完整参考。既有1518全量及原短PASS/PSCAD FAIL保持。",
       "acceptance": "局部、可独立运行验证的教学例逐项验收",
       "status": "in_progress",
       "files": [
@@ -735,7 +735,7 @@
         "5ac9d46b96a8c36622620d7e4d72ea9f64e7274c"
       ],
       "blockers": [
-        "完整参考运行当前受可用提交内存限制；保留原资源门，资源明显恢复后才封新HEAD运行包。C1整体仍进行中。"
+        "完整商业参考仍未合格：原Simscape完整Run资源中止；无JVM仅守卫能力通过，须另冻同物理短探针并实际核MAT重载，再决定完整双档运行。保留全部原资源门和失败。"
       ],
       "reference_feasibility": {
         "status": "read_only_feasibility_only",
@@ -745,7 +745,7 @@
         "evidence_sha256": "d92469cdd234477829ca5a5fa75a67648f17235fffadf3d3cbdaa73672375427",
         "native_executed": false
       },
-      "current_stage": "simscape_full_models_compiled_run_resource_stopped",
+      "current_stage": "offline_full_n_verified_nojvm_guard_pass_full_reference_pending",
       "interface_discovery": {
         "status": "qualified_native_satk_batch_interface",
         "simulink_model_tools_provided": false,
@@ -1366,6 +1366,23 @@
         "full_reference_qualified": false,
         "candidate_implemented": false,
         "active_native_sessions": 0
+      },
+      "nojvm_guard_capability": {
+        "record": {
+          "path": "docs/development_roadmap/experiments/c1_offline_full_n_and_nojvm_guard_20261116.json",
+          "bytes": 9749,
+          "sha256": "9a8edb9d74caeb88167677886eaedb63677e1357eeac23d589ce486b974f564b"
+        },
+        "status": "FINITE_GUARD_CAPABILITY_PASS_ONLY",
+        "native_launches": 1,
+        "model_calls": 0,
+        "simulation_calls": 0,
+        "capability_only": true,
+        "independent_receipt": {
+          "path": "local_reference/native_static_reviews/c1_nojvm_actual_closure_independent_20261116T115920555599Z/receipt.json",
+          "bytes": 7558,
+          "sha256": "2f272f08d962ce35a08130db007481d907f1281bf939b15077dba3e26273c380"
+        }
       }
     },
     {
@@ -1548,9 +1565,9 @@
     },
     "source113_unchanged_at_resume": true,
     "no_previous_native_or_tests_restarted": true,
-    "latest_checked_head": "57fbc81106a75e6f70e09413e4fd94cf45853b96",
+    "latest_checked_head": "8c68b175164a2f2ad6061078f3607027a5fd5dbd",
     "latest_goal_turn_classification": "progress",
-    "latest_progress": "Committed and pushed the small VSC input-validation fix after full1518 PASS. Exact maintenance CI ran no tests due to confirmed billing lock; normal direct-base32MiB monitor fixture only is verified, fullN/commercial reference still pending.",
+    "latest_progress": "Full-size synthetic analysis closed and independently verified. One actual no-JVM MATLAB guard-only probe passed nine checks, model0/sim0. Full commercial reference and candidate remain pending.",
     "latest_remote_head_verified_same": true
   },
   "pause_checkpoint_history": [
@@ -1599,7 +1616,7 @@
       "historical_pause_only": true
     }
   ],
-  "current_stage": "simscape_full_models_compiled_run_resource_stopped",
+  "current_stage": "offline_full_n_verified_nojvm_guard_pass_full_reference_pending",
   "resume_checkpoint_history": [
     {
       "resumed_utc": "2026-11-11T13:24:16.085490+00:00",
@@ -1647,7 +1664,7 @@
     "remote_head_verified_same": true
   },
   "offline_analysis_preparation": {
-    "status": "NORMAL_DIRECT_BASE_FIXTURE_ONLY_FULL_N_PENDING",
+    "status": "FULL_N_INTERNAL_SYNTHETIC_VERIFIED_NOT_COMMERCIAL",
     "stopped_synthetic_attempt": {
       "path": "local_reference/c1_openloop_reference_research/20261116T110656455639Z_synthetic_math_fullN_v1/ROOT_redirector_failure.json",
       "bytes": 1285,
@@ -1658,8 +1675,29 @@
       "bytes": 4076,
       "sha256": "bbb7897c678bc0a9762701550af16236818f3ad71a7dcb29e3ab7060e12de8e8"
     },
-    "full_N_completed": false,
+    "full_N_completed": true,
     "commercial_reference_qualified": false,
-    "limits": "Only normal PID/32MiB/2s memory and exit path was executed. Error cleanup paths are static-only; early launcher exit/late marker remains an untested boundary. Do not reuse the v1 launcher-only monitor."
+    "limits": "Actual full-size generated fixtures and bounded monitor paths were measured; generated timeproof is not native Time/Clock/tout. The v1 redirector failure and unexecuted v3 missing-marker/already-exited branch remain explicit.",
+    "record": {
+      "path": "docs/development_roadmap/experiments/c1_offline_full_n_and_nojvm_guard_20261116.json",
+      "bytes": 9749,
+      "sha256": "9a8edb9d74caeb88167677886eaedb63677e1357eeac23d589ce486b974f564b"
+    },
+    "monitor_v3_finite_receipt": {
+      "path": "local_reference/native_static_reviews/c1_math_monitor_v3_finite_20261116T112957760849Z/receipt.json",
+      "bytes": 8357,
+      "sha256": "1301700cbc7e5c8353a626e013da27f767b46b01b3034cc483dcf7c166e2a1a7"
+    },
+    "monitor_v3_independent_receipt": {
+      "path": "local_reference/native_static_reviews/c1_math_monitor_v3_independent_20261116T113438976698Z/receipt.json",
+      "bytes": 14889,
+      "sha256": "f8ab0e8b9c6ff90dfb1196d3ec5f984068a08a3e0f1c234e04b66f30bb067ff0"
+    },
+    "synthetic_numeric_gates_pass": true,
+    "full_N_independent_receipt": {
+      "path": "local_reference/native_static_reviews/c1_synthetic_fullN_independent_20261116T114839971116Z/receipt.json",
+      "bytes": 19163,
+      "sha256": "8a28d68550e5d4f977ccc0b5e73adb687a96938e19f4c6a58267c2f48941aee2"
+    }
   }
 }
