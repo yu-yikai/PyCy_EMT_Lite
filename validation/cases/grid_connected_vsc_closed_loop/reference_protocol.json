@@ -1,0 +1,118 @@
+{
+  "schema": "grid_connected_vsc_closed_loop_reference_protocol_v1",
+  "date": "2026-11-19",
+  "status": "FROZEN_BEFORE_FULL_NATIVE_REFERENCE_AND_FORMAL_CANDIDATE",
+  "scope": "Known-angle dq current loop on the case 28 three-phase bridge",
+  "basis": {
+    "plant_parameters": {
+      "path": "validation/cases/grid_connected_vsc_open_loop/parameters.json",
+      "sha256": "f5041eee9296c4088e74168cb444a10b016c10ee787d044629cb9492ab523dc1"
+    },
+    "plant_validation": {
+      "path": "validation/cases/grid_connected_vsc_open_loop/reference_protocol.json",
+      "sha256": "d87a327ef601200b2ebb360403879206d8817697f78767999143226aecf26630"
+    },
+    "controller_architecture": {
+      "path": "docs/specs/algorithms/known-angle-dq-current/known-angle-dq-current-system-architecture.md",
+      "sha256": "1ed0d7d3c563ff0dc37cde374a03177c468374e9db2132c659cc863a87a29991"
+    },
+    "qualified_coarse_short": {
+      "path": "docs/development_roadmap/experiments/c1_known_angle_dq_pscad_feedback_20261118.json",
+      "sha256": "5976c923a3a08253155cf7af819b348c2e7cc5024a3826c1b54dfe537c874ac2"
+    },
+    "qualified_fine_short": {
+      "path": "docs/development_roadmap/experiments/c1_known_angle_dq_pscad_feedback_fine_20261119.json",
+      "sha256": "3b0c964fe50aa40a1631590c63a4d4c0bafc0f50135560ef6933fd05545f6920"
+    }
+  },
+  "plant": {
+    "topology": "Three positive-sequence AC sources, three series R-L branches, six complementary finite-R switches, floating stiff DC source, trapezoidal integration",
+    "grid_phase_rms_V": 120,
+    "grid_ramp_s": 0.02,
+    "series_R_ohm": 1,
+    "series_L_H": 0.01,
+    "dc_V": 400,
+    "switch_Ron_ohm": 0.001,
+    "switch_Roff_ohm": 1000000000,
+    "initial_phase_currents_A": [0, 0, 0],
+    "voltage_and_current_direction": "Grid voltages measured to ground before the series R; AC current positive from grid to bridge; DC source current positive into its positive terminal"
+  },
+  "grid_frequency_Hz": 60,
+  "acquisition_stop_s": 0.200005,
+  "formal_stop_s": 0.2,
+  "electrical_grids": [
+    {"id": "5us", "step_s": 0.000005, "rows": 40002},
+    {"id": "2p5us", "step_s": 0.0000025, "rows": 80003}
+  ],
+  "controller": {
+    "dq_angle": "2*pi*60*t - pi/2, amplitude-invariant transform",
+    "sample_period_s": 0.0001,
+    "gate_period_s": 0.000005,
+    "carrier_Hz": 1000,
+    "carrier_shift_s": -0.0005,
+    "initial_integrators_V": [0, 0],
+    "initial_held_reference": [0, 0, 0],
+    "initial_upper_gates": [0, 0, 0],
+    "initial_command_A": [0, 0],
+    "bridge_vector_limit_V": 190,
+    "control_order": "After solving each positive 100 us sample, read this row's measured e and i, compute PI trial integrals with Kp=L*2*pi*100 and Ki=R*2*pi*100, add voltage feedforward and cross coupling, and limit the bridge voltage vector. Preserve both old integrals when limited. Lock the next abc reference after this update and apply it at the following 5 us gate tick. Upper is reference >= carrier. Hold actual reference, gates and R at every fine half-step.",
+    "command_index": "On the integer sampling grid apply a command beginning at its scheduled sample. A command's new modulation reference cannot affect that sample's electrical solution."
+  },
+  "scenarios": {
+    "main": {
+      "command_steps": {"d": {"time_s": 0.04, "current_A": 2}, "q": {"time_s": 0.08, "current_A": 1.5}},
+      "tracking_start_s": 0.11,
+      "tracking_target_A": [2, 1.5],
+      "tracking_power_signs": {"Pg": 1, "Qg": -1, "Pdc": 1},
+      "window_boundaries_s": [0, 0.02, 0.04, 0.07, 0.08, 0.11, 0.16, 0.2]
+    },
+    "d_only": {
+      "command_steps": {"d": {"time_s": 0.04, "current_A": 2}, "q": null},
+      "tracking_start_s": 0.07,
+      "tracking_target_A": [2, 0],
+      "tracking_power_signs": {"Pg": 1, "Pdc": 1},
+      "window_boundaries_s": [0, 0.02, 0.04, 0.07, 0.12, 0.2]
+    }
+  },
+  "tracking_cycles": 3,
+  "tracking_error_limit_A": 0.4,
+  "tracking_rule": "For each run, independently transform the measured three-phase current at every original electrical point. Use the PWL time mean on each complete cycle starting at tracking_start_s + k/60 for k=0,1,2. Require both axes individually within 0.4 A of command and verify the declared mean power signs on each cycle.",
+  "native_output": {"title": "C1 dq current feedback long", "stem": "c1_dq_feedback_long", "feedback": "c1_feedback.csv"},
+  "pscad": {
+    "version": "5.0",
+    "toolchain": "GFortran 4.6 x86",
+    "sparsity_threshold": 1,
+    "generated_network": {"subsystems": 1, "ungrounded_nodes": 14, "branches": 19},
+    "output_sample_step": "Match the actual electrical step. Capture the original INF and all five OUT parts with 45 channels plus the 29-column feedback log.",
+    "admission": "Read back settings, declared controller source, graph and monitor wiring before execution. Check generated solver threshold and physical network. Save exact input and raw output identities, tool version and a clean native terminal receipt in a separate run directory for every grid and scenario."
+  },
+  "native_run_checks": {
+    "clock": "Exactly the declared rows. Original TIME within 2 ps of nominal, full last place at most 1 ps, all five OUT times compatible with the TIME signal. Preserve original tokens, including the acquisition tail.",
+    "physics": "Reuse all 19 limits and precision caps from the bound case 28 protocol, including the common-mode residual limit of 2 uV. Check every original point, trapezoidal interval and energy prefix.",
+    "control": "Recompute from each run's measured e, i and configured commands. Check initial state, all accepted integrals and saturation flags, pending and applied reference, carrier, the six actual gates and resistances, edge witnesses and all fine half-step holds."
+  },
+  "same_step": {
+    "comparison": "For each scenario and electrical step compare independently solved native and PyCy runs. Pair original row indices, no interpolation across a jump. Each own time center within 2 ps of index*h and within 4 ps of its partner.",
+    "hard_windows": "The full formal interval, every adjacent pair of scenario window boundaries, and the acquisition interval including the tail.",
+    "numeric_checks_per_window": 23,
+    "numeric_budget_key_in_case_28": "same_h_candidate_hard_all_windows",
+    "numeric_rule": "Use the original absolute and fixed-scale peak and nominal-grid PWL error RMS for the 19 analog signals, Pg, Qg, Pdc and W.",
+    "exact_inputs": "Match six actual gate series, six resistance series and the saturation flag row for row throughout acquisition."
+  },
+  "paired_scenarios": {
+    "q_application_s": 0.080005,
+    "before_q_application": "On each platform and at each step, compare the two original electrical trajectories before q_application_s with the same-step bounds and exact gate/R states. The 80 ms controller sample may already hold a different pending reference.",
+    "q_effect": "On each platform and at each step, use the main scenario's three tracking cycles to compute main minus d-only cycle means. Require the d change within 0.4 A of zero and the q change within 0.4 A of +1.5 A."
+  },
+  "cross_step": {
+    "comparison": "Compare the two independently solved grids on each platform and scenario. Use original clock pairing at common 5 us rows within 4 ps and integrate each continuous dq trace on its own original clock.",
+    "cycle_mean_dq_difference_limit_A": 0.1,
+    "dq_pwl_RMS_difference_limit_A": 0.2,
+    "cycle_windows": "Every complete 60 Hz cycle in [0, 0.2] and each of the three tracking cycles. Compute d and q separately.",
+    "RMS_windows": "The full formal interval and each adjacent pair of scenario window boundaries. Integrate squared difference on the union of original PWL knots independently for d and q.",
+    "basis": "The cross-step allowance is one-quarter of the 0.4 A tracking budget for each cycle mean and one-half for the time RMS over each window.",
+    "reported_diagnostics": "Across the two grids report actual shared-grid gate differences, dq peak differences, phase current RMS and 60 Hz fundamental, and Pg/Qg/Pdc means over fixed windows. Exact gate/R parity remains a same-step check."
+  },
+  "alignment": "No fitted phase, time offset, rescaling, signal rearrangement, discarded intervals or switching masks.",
+  "qualification": "Both scenarios at both electrical steps must pass their own data, physical, feedback and tracking checks and the paired-scenario and cross-step gates before qualifying the full reference. Both platform pairs then require the same-step checks before formal teaching acceptance."
+}
