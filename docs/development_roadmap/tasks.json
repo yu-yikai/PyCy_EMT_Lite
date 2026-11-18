@@ -3,7 +3,7 @@
   "updated_date": "2026-11-18",
   "timezone": "Asia/Shanghai",
   "branch": "codex/emt-examples-longterm",
-  "checkpoint_head": "a777c00c283498ab2dd9a1542a4454b7cf8c5e4a",
+  "checkpoint_head": "21fe18a238de6a4ad18379154b00b8f40a9bbddb",
   "current_task": "C1",
   "formal_new_examples_completed": 10,
   "status_values": [
@@ -728,7 +728,8 @@
         "docs/development_roadmap/experiments/c1_lu_refinement_intervention_20261118.json",
         "docs/specs/algorithms/known-angle-dq-current/known-angle-dq-current-implementation-test.md",
         "docs/specs/algorithms/known-angle-dq-current/known-angle-dq-current-system-architecture.md",
-        "docs/development_roadmap/experiments/c1_known_angle_dq_design_checks_20261118.json"
+        "docs/development_roadmap/experiments/c1_known_angle_dq_design_checks_20261118.json",
+        "docs/development_roadmap/experiments/c1_known_angle_dq_native_startup_20261118.json"
       ],
       "commits": [
         "b835e31785fab3fda247c333d23edbe9ce576dfa",
@@ -776,7 +777,7 @@
         "evidence_sha256": "d92469cdd234477829ca5a5fa75a67648f17235fffadf3d3cbdaa73672375427",
         "native_executed": false
       },
-      "current_stage": "known_angle_dq_control_reference_design_draft",
+      "current_stage": "known_angle_dq_native_probe_login_blocked",
       "open_loop_candidate_preparation": {
         "record": {
           "path": "docs/development_roadmap/experiments/c1_openloop_candidate_preparation_20261116.json",
@@ -1582,7 +1583,7 @@
         "acceptance_commit": "a777c00c283498ab2dd9a1542a4454b7cf8c5e4a"
       },
       "known_angle_current_loop": {
-        "status": "spec_draft_local_checks_pass",
+        "status": "native_probe_login_blocked",
         "record": {
           "path": "docs/development_roadmap/experiments/c1_known_angle_dq_design_checks_20261118.json",
           "bytes": 1604,
@@ -1590,7 +1591,8 @@
         },
         "candidate_implemented": false,
         "native_reference_executed": false,
-        "next": "固定参考建模合同并实施真实R2025a控制向量与短电路时序探针。"
+        "native_startup_record": "docs/development_roadmap/experiments/c1_known_angle_dq_native_startup_20261118.json",
+        "next": "确认R2025a登录和许可后，在新隔离目录运行固定121行控制探针。控制验证通过后再接短电气网络。"
       }
     },
     {
@@ -1824,7 +1826,7 @@
       }
     }
   ],
-  "current_stage": "known_angle_dq_control_reference_design_draft",
+  "current_stage": "known_angle_dq_native_probe_login_blocked",
   "resume_checkpoint_history": [
     {
       "resumed_utc": "2026-11-11T13:24:16.085490+00:00",

@@ -1,7 +1,11 @@
 # 恢复与下一步
 
-2026-11-18。恢复时核对HEAD与已验收28号提交a777c00。按规格草案先冻结首轮Simulink控制输入向量及实际R2025a参数，原生导出验证本拍试积分、限幅恢复与下一门极拍生效。之后短接既有Simscape电气网络，实际导出并核波形、回读与采样次序。
-[设计检查](experiments/c1_known_angle_dq_design_checks_20261118.json)
+2026-11-18。已知角度dq控制探针已固定121行输入，R2025a在进入脚本前出现MathWorks登录窗口。先在普通交互式R2025a确认登录及许可，再从本仓运行以下入口，验证新隔离首选项目录的授权并检查原生输出。控制探针通过后，再接短Simscape电气网络验证波形和采样次序。
+[启动记录](experiments/c1_known_angle_dq_native_startup_20261118.json)
+
+```powershell
+& .\.tmp\longterm\resume_c1_native_controller_probe_20261118.ps1
+```
 
 2026-11-18当前。28号开环已验收，C1下一项为已知角度dq电流环。先从已合格的本地Simscape物理网络建立真实PI控制参考，固定前馈测量点、dq相角和符号、初始积分状态、限幅、采样顺序及一拍生效约定。先核t=0、独立d/q阶跃和限幅释放，再冻结完整双步长验收方案。复用既有PI、dq变换、门极和CaseDefinition流程。
 [28号验收报告](../../validation/cases/grid_connected_vsc_open_loop/validation_report.json)

@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "date": "2026-11-18",
+  "head": "21fe18a238de6a4ad18379154b00b8f40a9bbddb",
+  "platform": "MATLAB R2025a / Simulink",
+  "scope": "600µs control-only probe with 121 fixed input rows at 5µs and six PI updates at 100µs",
+  "fixed_vectors_sha256": "390667141b86451605296ec2a4c9d53f47cd34d9e79cfdd1d50d47f53aca7281",
+  "status": "blocked_at_native_login_startup",
+  "actual_launches": 2,
+  "function_entries_observed": 0,
+  "model_builds_observed": 0,
+  "simulation_calls_observed": 0,
+  "all_owned_process_sets_closed": true,
+  "closure": {
+    "path": "local_reference/native_static_reviews/c1_known_angle_native_control_20261118T132743219386Z/closure.json",
+    "bytes": 9820,
+    "sha256": "2fc67a203154fe35f7e1f01ee1d4472c5a78dcf4b309b152b037c7c2c3a10c34"
+  },
+  "recovery_receipt": {
+    "path": "local_reference/native_static_reviews/c1_known_angle_native_control_20261118T132743219386Z/recovery_receipt.json",
+    "bytes": 2718,
+    "sha256": "f6279041230debb193aefdc990e4448389f6fc9187b6bf8d580c0efe8a364d07"
+  },
+  "observation": "The first package failed before launch during process inventory. Two subsequent launches timed out before the batch function. The retry exposed an owned MathWorks Service Host login window and an empty batch log.",
+  "next": "Confirm sign-in and license readiness in ordinary R2025a. Verify that a fresh isolated batch reaches the fixed probe before evaluating native outputs.",
+  "formal_example_accepted": false
+}

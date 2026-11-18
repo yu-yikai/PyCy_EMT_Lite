@@ -1,7 +1,7 @@
 # 验证状态
 
-2026-11-18。已知角度dq控制草案完成纯数学、PI饱和恢复及整数拍号检查，并以平均RL例核初步增益。下一验证范围为实际原生参考探针。已验收的开环结果和Windows1573项检查见28号报告。
-[设计检查](experiments/c1_known_angle_dq_design_checks_20261118.json)
+2026-11-18。已知角度dq控制草案完成纯数学、PI饱和恢复、整数拍号和平均RL增益检查。固定121行控制探针在R2025a登录阶段受阻，尚无模型编译或原生输出。已验收的开环结果和Windows1573项检查见28号报告。
+[设计检查](experiments/c1_known_angle_dq_design_checks_20261118.json) · [启动记录](experiments/c1_known_angle_dq_native_startup_20261118.json)
 
 2026-11-18当前。正式28号双档全部40002/80003点与真实Simscape对标通过。5µs、2.5µs各通过19项物理门和150组同档比较，跨档132组通过。两路结论一致，原2µV共模阈值保持，实测上界0.310070/0.011836µV。锁定同步、Ruff、mypy、1573项完整回归及默认独立运行通过。发布范围为开环电路。
 [28号验收报告](../../validation/cases/grid_connected_vsc_open_loop/validation_report.json)
