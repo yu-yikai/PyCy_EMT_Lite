@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "date": "2026-11-18",
+  "platform": "PSCAD 5.0 / EMTDC, gfortran 4.6 x86",
+  "status": "native_control_only_pass",
+  "scope": "One 600 µs EMTDC run of a native controller component with prescribed dq measurements and carrier. The donor circuit is electrically independent of this component.",
+  "step_s": 0.000005,
+  "native_runs": 1,
+  "rows": 121,
+  "columns": 33,
+  "control_update_rows": [20, 40, 60, 80, 100, 120],
+  "next_gate_application_rows": [21, 41, 61, 81, 101],
+  "saturation_started_at_row": 40,
+  "saturation_released_at_row": 60,
+  "all_gate_bits_exact": true,
+  "raw_native_csv_sha256": "e12773592ffc76ca7f69899f816e018e12749ee54403e9b1a46f055c9d821c96",
+  "closure": {
+    "path": "local_reference/native_static_reviews/c1_pscad_controller_prospective_20261118/n/20261118T142848065707Z/closure.json",
+    "bytes": 3439,
+    "sha256": "18993a1d85f58541a195ab3be371b83183327cb0d84cacb387736e2cb7d3a91d"
+  },
+  "independent_decimal_review": {
+    "path": "local_reference/native_static_reviews/c1_pscad_controller_prospective_20261118/n/20261118T142848065707Z/root_decimal_review.json",
+    "bytes": 1829,
+    "sha256": "6da7548c2badc2f38bcc5c13e623c06862c4e9a9faf70692a658fd7632a9d5e1"
+  },
+  "electrical_feedback_executed": false,
+  "formal_example_accepted": false
+}

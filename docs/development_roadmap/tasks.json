@@ -3,7 +3,7 @@
   "updated_date": "2026-11-18",
   "timezone": "Asia/Shanghai",
   "branch": "codex/emt-examples-longterm",
-  "checkpoint_head": "287aa5ee00b8b6bc6c9638a66cf4136dc0029a70",
+  "checkpoint_head": "f9f2a9e67ff9412b6e8825858cc18d3ebd3a8763",
   "current_task": "C1",
   "formal_new_examples_completed": 10,
   "status_values": [
@@ -729,7 +729,8 @@
         "docs/specs/algorithms/known-angle-dq-current/known-angle-dq-current-implementation-test.md",
         "docs/specs/algorithms/known-angle-dq-current/known-angle-dq-current-system-architecture.md",
         "docs/development_roadmap/experiments/c1_known_angle_dq_design_checks_20261118.json",
-        "docs/development_roadmap/experiments/c1_known_angle_dq_native_startup_20261118.json"
+        "docs/development_roadmap/experiments/c1_known_angle_dq_native_startup_20261118.json",
+        "docs/development_roadmap/experiments/c1_known_angle_dq_pscad_control_20261118.json"
       ],
       "commits": [
         "b835e31785fab3fda247c333d23edbe9ce576dfa",
@@ -777,7 +778,7 @@
         "evidence_sha256": "d92469cdd234477829ca5a5fa75a67648f17235fffadf3d3cbdaa73672375427",
         "native_executed": false
       },
-      "current_stage": "known_angle_dq_native_probe_login_blocked",
+      "current_stage": "known_angle_dq_pscad_control_pass_electrical_feedback_pending",
       "open_loop_candidate_preparation": {
         "record": {
           "path": "docs/development_roadmap/experiments/c1_openloop_candidate_preparation_20261116.json",
@@ -1583,16 +1584,18 @@
         "acceptance_commit": "a777c00c283498ab2dd9a1542a4454b7cf8c5e4a"
       },
       "known_angle_current_loop": {
-        "status": "native_probe_login_blocked",
+        "status": "pscad_native_control_only_pass",
         "record": {
           "path": "docs/development_roadmap/experiments/c1_known_angle_dq_design_checks_20261118.json",
           "bytes": 1604,
           "sha256": "77cf66ed4033a0e7c2716d68ea47d1c142b61bfcd52bf18246ee506ee76d8fd9"
         },
         "candidate_implemented": false,
-        "native_reference_executed": false,
+        "native_reference_executed": true,
+        "native_electrical_feedback_executed": false,
         "native_startup_record": "docs/development_roadmap/experiments/c1_known_angle_dq_native_startup_20261118.json",
-        "next": "确认R2025a登录和许可后，在新隔离目录运行固定121行控制探针。控制验证通过后再接短电气网络。"
+        "native_control_record": "docs/development_roadmap/experiments/c1_known_angle_dq_pscad_control_20261118.json",
+        "next": "固定短桥物理输入、采样读值及下一拍施加的生成映射，再运行真实电气反馈探针。Simulink恢复仍待MathWorks登录及许可确认。"
       }
     },
     {
@@ -1739,7 +1742,9 @@
       "files": [
         "docs/development_roadmap/04_long_term_roadmap.md"
       ],
-      "commits": [],
+      "commits": [
+        "f9f2a9e67ff9412b6e8825858cc18d3ebd3a8763"
+      ],
       "blockers": []
     }
   ],
@@ -1829,7 +1834,7 @@
       }
     }
   ],
-  "current_stage": "known_angle_dq_native_probe_login_blocked",
+  "current_stage": "known_angle_dq_pscad_control_pass_electrical_feedback_pending",
   "resume_checkpoint_history": [
     {
       "resumed_utc": "2026-11-11T13:24:16.085490+00:00",

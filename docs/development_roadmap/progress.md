@@ -1,7 +1,10 @@
 # 持久进度
 
-2026-11-18。28号验收提交a777c00已推送并核对远端，10个新增完成。已知角度dq电流环已固定短控制向量并准备标准块建模脚本。R2025a两次启动均在进入脚本前超时，重试看见MathWorks登录窗口，自有进程已收尾。
+2026-11-18。28号电气网络的Python回调已通过两档600µs时序诊断，六次采样、五次新门极生效和细档半拍保持均实测。Simulink R2025a和R2026b批处理均在进入脚本前停于登录阶段，自有进程已收尾。正式新增保持10项，C1仍在推进原生控制参考。
 [设计检查](experiments/c1_known_angle_dq_design_checks_20261118.json) · [启动记录](experiments/c1_known_angle_dq_native_startup_20261118.json)
+
+2026-11-18。PSCAD的EMTDC控制器以5µs网格完成121行原生短探针。6次更新、5次下一拍生效和积分限幅恢复通过独立复算。C1下一项为实际电压、电流反馈接入及短电气运行。G1已交付远期研究计划。
+[原生控制记录](experiments/c1_known_angle_dq_pscad_control_20261118.json) · [G1计划](04_long_term_roadmap.md#g1-远期研究计划)
 
 2026-11-18。Ubuntu全量发现PLL合成夹具的换行哈希和24号启动一致约束两处问题，分别提交2479b6d、287aa5e修复。Windows与Ubuntu各1573项通过，24、28号重新对标通过。托管CI仍待账单锁解除。
 [跨系统验证记录](experiments/f1_ubuntu_a777c00_20261118.json)

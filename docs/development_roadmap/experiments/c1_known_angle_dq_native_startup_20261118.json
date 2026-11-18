@@ -22,6 +22,48 @@
     "sha256": "f6279041230debb193aefdc990e4448389f6fc9187b6bf8d580c0efe8a364d07"
   },
   "observation": "The first package failed before launch during process inventory. Two subsequent launches timed out before the batch function. The retry exposed an owned MathWorks Service Host login window and an empty batch log.",
-  "next": "Confirm sign-in and license readiness in ordinary R2025a. Verify that a fresh isolated batch reaches the fixed probe before evaluating native outputs.",
+  "alternate_release": {
+    "platform": "MATLAB R2026b / Simulink, default JVM",
+    "actual_launches": 1,
+    "elapsed_s": 303.6902598,
+    "status": "blocked_at_native_login_startup",
+    "function_entries_observed": 0,
+    "model_builds_observed": 0,
+    "simulation_calls_observed": 0,
+    "all_owned_process_sets_closed": true,
+    "closure": {
+      "path": "local_reference/native_static_reviews/c1_known_angle_native_control_r2026b_20261118T141316023044Z/closure.json",
+      "bytes": 3709,
+      "sha256": "6c9609de2fd247621428b238f397e051c00f6e27411ca1b381db3d3b5a99ed11"
+    }
+  },
+  "python_bridge_timing": {
+    "status": "PASS",
+    "scope": "Four 600µs runs of existing case 28 comparing post-solve publication of prescribed references with an independent fixed-gate replay.",
+    "step_s": [0.000005, 0.0000025],
+    "rows_per_run": [121, 241],
+    "rows_exact_against_replay": true,
+    "control_updates_per_grid": 6,
+    "observed_next_gate_publications_per_grid": 5,
+    "initial_R_KCL_KVL_and_TR": "PASS",
+    "native_simulation_calls": 0,
+    "receipt": {
+      "path": "local_reference/native_static_reviews/c1_pure_feedback_schedule_20261118T141447802482Z/receipt.json",
+      "bytes": 2286,
+      "sha256": "d62b171fae1887ef20abd5d73f4fb93647f5d54339e08c41743dc93b775d7d88"
+    }
+  },
+  "corrected_recovery": {
+    "scope": "Use the library Sqrt block in a fresh package. The fixed input CSV is unchanged from the original R2025a attempt.",
+    "path": ".tmp/longterm/resume_c1_native_controller_probe_releases_20261118.ps1",
+    "bytes": 1011,
+    "sha256": "732a93aa42f4da6bb9ed69e1c8b92b74897485fcf624d825e3ac347f301cb150",
+    "r2025a_preparation": {
+      "path": "local_reference/native_static_reviews/c1_known_angle_native_control_r2025a_sqrt_20261118T142217504191Z/preparation_receipt.json",
+      "bytes": 743,
+      "sha256": "8a4bda3ae8834878869a06abd412b4263e0cd4a883a060da8532f6380908caaf"
+    }
+  },
+  "next": "Confirm sign-in and Simulink license readiness in ordinary R2025a. Use the corrected entry to verify that a fresh isolated batch can reach the fixed probe.",
   "formal_example_accepted": false
 }
