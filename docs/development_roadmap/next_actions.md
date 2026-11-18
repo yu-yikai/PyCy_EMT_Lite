@@ -10,8 +10,8 @@
 & .\.tmp\longterm\resume_c1_native_controller_probe_releases_20261118.ps1 -Release R2025a
 ```
 
-2026-11-18。修复后的Windows和WSL2 Ubuntu含slow全量均已通过。最新查询确认分支上次托管CI仍为43856421332，Windows和Ubuntu均因账单锁未启动。账户恢复后在开发分支运行一次 `gh workflow run ci.yml --ref codex/emt-examples-longterm`，保存对应提交、两套runner实际步骤和测试产物。
-[跨系统验证记录](experiments/f1_ubuntu_a777c00_20261118.json)
+2026-11-18。Windows和WSL2 Ubuntu全量、24个教学入口、发行包与库外安装均已实测。分支上次托管CI为43856421332，两套runner均因账单锁未启动。账户恢复后在开发分支运行一次 `gh workflow run ci.yml --ref codex/emt-examples-longterm`，保存对应提交、两套runner实际步骤和测试产物。
+[测试记录](experiments/f1_ubuntu_a777c00_20261118.json) · [CLI与发行包记录](experiments/f1_cli_wheel_cbdc9b1_20261118.json)
 
 2026-11-18当前。28号开环已验收，C1下一项为已知角度dq电流环。先从已合格的本地Simscape物理网络建立真实PI控制参考，固定前馈测量点、dq相角和符号、初始积分状态、限幅、采样顺序及一拍生效约定。先核t=0、独立d/q阶跃和限幅释放，再冻结完整双步长验收方案。复用既有PI、dq变换、门极和CaseDefinition流程。
 [28号验收报告](../../validation/cases/grid_connected_vsc_open_loop/validation_report.json)

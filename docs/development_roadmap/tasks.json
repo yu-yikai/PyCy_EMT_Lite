@@ -3,7 +3,7 @@
   "updated_date": "2026-11-18",
   "timezone": "Asia/Shanghai",
   "branch": "codex/emt-examples-longterm",
-  "checkpoint_head": "f9f2a9e67ff9412b6e8825858cc18d3ebd3a8763",
+  "checkpoint_head": "c179c0b86dcc085033a2ba6178729284d7f353f4",
   "current_task": "C1",
   "formal_new_examples_completed": 10,
   "status_values": [
@@ -1692,6 +1692,7 @@
       "new_capabilities": [],
       "references": [],
       "validation": "a777c00的Ubuntu全量1568通过、5失败。2479b6d修复PLL合成归档源码哈希，287aa5e修正初始化QR行关系系数。修复后本机Windows和WSL2 Ubuntu 24.04.4各1573项含slow通过，锁定同步、Ruff、mypy通过。24号38项及28号双档原生对标回归通过。现有GitHub CI43856421332终态failure，两OS runner0、steps空，账户billing lock，待外部解除后补验托管运行。",
+      "local_cli_and_package": "cbdc9b1的Windows和WSL2 Ubuntu各24个教学入口、sdist/wheel及库外wheel安装通过。Ubuntu临时CLI目录回收前未观察到末次源文件检查，运行日志和发行包已核对。",
       "acceptance": "本批测试与真实CI记录、教学导航、里程碑推送和恢复指令",
       "status": "blocked",
       "files": [
@@ -1707,7 +1708,8 @@
         "docs/development_roadmap/experiments/ci_c3fdf79.json",
         "docs/development_roadmap/experiments/vsc_input_validation_20261116.json",
         "docs/development_roadmap/experiments/ci_57fbc81.json",
-        "docs/development_roadmap/experiments/f1_ubuntu_a777c00_20261118.json"
+        "docs/development_roadmap/experiments/f1_ubuntu_a777c00_20261118.json",
+        "docs/development_roadmap/experiments/f1_cli_wheel_cbdc9b1_20261118.json"
       ],
       "commits": [
         "90b2fcd",

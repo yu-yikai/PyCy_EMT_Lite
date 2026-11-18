@@ -9,6 +9,9 @@
 2026-11-18。Ubuntu全量发现PLL合成夹具的换行哈希和24号启动一致约束两处问题，分别提交2479b6d、287aa5e修复。Windows与Ubuntu各1573项通过，24、28号重新对标通过。托管CI仍待账单锁解除。
 [跨系统验证记录](experiments/f1_ubuntu_a777c00_20261118.json)
 
+2026-11-18。Windows和Ubuntu各24个独立教学入口、两种发行包、库外安装与2 A电阻冒烟测试通过。托管CI待补验。
+[CLI与发行包记录](experiments/f1_cli_wheel_cbdc9b1_20261118.json)
+
 2026-11-18当前。28号开环并网VSC完成真实Simscape双步长验收，正式新增达到10个。普通稠密LU对残差作一次修正，两档原物理门、同档及跨档比较和1573项含slow回归均通过。C1进入已知角度dq电流环参考阶段。
 [28号验收报告](../../validation/cases/grid_connected_vsc_open_loop/validation_report.json)
 
