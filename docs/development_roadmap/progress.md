@@ -1,5 +1,8 @@
 # 持久进度
 
+2026-11-19。C1 已知角度 dq 电流环的 5 µs 和 2.5 µs 短窗均完成真实 PSCAD 同档对标。细档用稀疏求解门限 1 通过原电气判据，23 项数值指标和 12 路门极、电阻比较通过。C1 进入完整长窗参考阶段。Python 两工况双步长长窗内部检查通过，最大周期平均跟踪误差约 0.063 A。正式新增算例共 10 个。
+[细档和长窗记录](experiments/c1_known_angle_dq_pscad_feedback_fine_20261119.json)
+
 2026-11-18。28号电气网络的Python回调已通过两档600µs固定参考的时序诊断，六次采样、五次新门极生效和细档半拍保持均实测。Simulink R2025a和R2026b批处理均在进入脚本前停于登录阶段，自有进程已收尾。
 [设计检查](experiments/c1_known_angle_dq_design_checks_20261118.json) · [启动记录](experiments/c1_known_angle_dq_native_startup_20261118.json)
 

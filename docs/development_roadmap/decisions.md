@@ -1,5 +1,8 @@
 # 技术决策
 
+2026-11-19。PSCAD 细档的单因素对照把稀疏求解门限从 200 改到 1。实际生成网表仍为 14 个非地节点、19 条支路，两次施加门极和电阻逐点一致。首次超限和对照通过均保留，完整长窗继续使用原 2 µV 上限。两档独立闭环的公共网格已观察到门极差异，同步长的精确门极要求继续适用。
+[细档和长窗记录](experiments/c1_known_angle_dq_pscad_feedback_fine_20261119.json) · [PSCAD 网络求解设置](https://www.pscad.com/webhelp-v5-ol/PSCAD/Application_Project_Options/Project_Settings/Network.htm#Solution_Options)
+
 2026-11-18。下一电流环先使用已知角度与直接dq电流指令。前馈取串联R前的电网节点。现有 `on_step` 足以在100µs读取已求解量并于下一5µs门极拍生效，细档半拍沿用旧门极。Simulink恢复入口使用标准Sqrt块。121行控制探针需取得实际原生输出并核试积分和饱和释放，之后接电气网络。
 [设计检查](experiments/c1_known_angle_dq_design_checks_20261118.json) · [启动记录](experiments/c1_known_angle_dq_native_startup_20261118.json)
 

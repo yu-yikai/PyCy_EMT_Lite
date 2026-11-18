@@ -1,0 +1,192 @@
+{
+  "schema_version": 1,
+  "date": "2026-11-19",
+  "status": "short_fine_same_step_pass_with_pscad_threshold_1",
+  "scope": "Known-angle dq current feedback on the case 28 bridge",
+  "short": {
+    "duration_s": 0.0006,
+    "electrical_step_s": 2.5e-06,
+    "gate_step_s": 5e-06,
+    "controller_step_s": 0.0001,
+    "rows": 241,
+    "control_update_rows": [
+      40,
+      80,
+      120,
+      160,
+      200,
+      240
+    ],
+    "new_reference_application_rows": [
+      42,
+      82,
+      122,
+      162,
+      202
+    ],
+    "held_half_steps": 120,
+    "first_application": {
+      "time_s": [
+        0.0001,
+        0.0001025,
+        0.000105
+      ],
+      "upper_gates": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ]
+      ]
+    },
+    "saturation_entry_and_release_rows": [
+      80,
+      120
+    ],
+    "pscad_default": {
+      "sparsity_threshold": 200,
+      "native_worker_exit": 0,
+      "native_run_count": 1,
+      "original_physical_limits_passed": false,
+      "failed_gate": "commonmode_with_tokens_V",
+      "common_mode_limit_V": 2e-06,
+      "common_mode_with_token_radius_V": [
+        {
+          "index": 167,
+          "time_s": 0.0004175,
+          "upper_bound_V": 2.088733820433334e-06
+        },
+        {
+          "index": 168,
+          "time_s": 0.00042,
+          "upper_bound_V": 2.079087727633333e-06
+        }
+      ],
+      "gate_transitions_at_failed_rows": false,
+      "same_step_comparison_admitted": false,
+      "closure": {
+        "path": "local_reference/native_static_reviews/c1_pscad_feedback_short_fine_20261119/n/20261118T160251718764Z/closure.json",
+        "bytes": 7198,
+        "sha256": "acda604f65efd258ddd6819c84dc3f933c900efcd2291b23f43cd736a2842632"
+      },
+      "numeric_report": {
+        "path": "local_reference/native_static_reviews/c1_pscad_feedback_short_fine_20261119/n/20261118T160251718764Z/root_feedback_numeric.json",
+        "bytes": 15350,
+        "sha256": "ff874ed5729a7d6375c9912b5d27562c4f46cccb9eae8658f4b789c4622b55f6"
+      }
+    },
+    "pycy": {
+      "live_feedback_through_case_definition": true,
+      "native_reference_used": false,
+      "original_physical_limits_passed": true,
+      "common_mode_with_token_radius_V": 1.1282746578000134e-08,
+      "report": {
+        "path": "local_reference/native_static_reviews/c1_pycy_fine_electrical_feedback_20261118T160241971197Z/report.json",
+        "bytes": 15788,
+        "sha256": "31337b7f5ffe12e224cc7511eb742743d23601c1a06ed68718856ca193ef61ca"
+      }
+    },
+    "pscad_threshold_1": {
+      "pscad_version": "5.0",
+      "fortran_toolchain": "gf46 x86",
+      "native_run_count": 1,
+      "sparsity_threshold": 1,
+      "unchanged_graph": {
+        "subsystems": 1,
+        "ungrounded_nodes": 14,
+        "branches": 19
+      },
+      "original_physical_limits_passed": true,
+      "common_mode_with_token_radius_V": 5.586543209566666e-07,
+      "common_mode_peak_index": 110,
+      "gate_and_resistance_changes_vs_default_rows": 0,
+      "closure": {
+        "path": "local_reference/native_static_reviews/c1_pscad_feedback_short_fine_sparse1_20261119/n/20261118T161843425222Z/closure.json",
+        "bytes": 17599,
+        "sha256": "93bb5f92469ab15928958d9177576399e099dbb69cde79084d6a04f2124b26b0"
+      },
+      "numeric_report": {
+        "path": "local_reference/native_static_reviews/c1_pscad_feedback_short_fine_sparse1_20261119/n/20261118T161843425222Z/root_feedback_numeric.json",
+        "bytes": 14717,
+        "sha256": "7439e1700e7add86b0133a0f62c1cf469291df81890cc169a68b32049dbd76ca"
+      }
+    },
+    "same_step_comparison": {
+      "original_analog_power_and_energy_metrics_passed": 23,
+      "original_exact_gate_and_resistance_series_passed": 12,
+      "saturation_states_exact": true,
+      "max_phase_current_difference_A": 3.4466429710278135e-11,
+      "report": {
+        "path": "local_reference/native_static_reviews/c1_fine_feedback_compare_20261118T162706020576Z/report.json",
+        "bytes": 14796,
+        "sha256": "5796a5a6a5a15aa976be9d45907b3734bd3fa5d4b4ef737163404d629ac2708e"
+      }
+    }
+  },
+  "full_window_pycy_feasibility": {
+    "native_reference_used": false,
+    "duration_s": 0.200005,
+    "electrical_steps_s": [
+      5e-06,
+      2.5e-06
+    ],
+    "rows_by_step": [
+      40002,
+      80003
+    ],
+    "d_step_s": 0.04,
+    "q_step_s_main_run": 0.08,
+    "cycle_average_targets_A": [
+      2.0,
+      1.5
+    ],
+    "cycle_average_error_limit_A": 0.4,
+    "three_cycle_range_s": {
+      "d_then_q": [
+        0.11,
+        0.16
+      ],
+      "d_only_observation": [
+        0.07,
+        0.12
+      ]
+    },
+    "max_cycle_mean_error_A": {
+      "d_then_q": 0.06268664410107094,
+      "d_only_observation": 0.058559410565981615
+    },
+    "cross_step_upper_gate_difference_rows": {
+      "d_then_q": 88,
+      "d_only_observation": 72
+    },
+    "all_four_internal_physical_checks_passed": true,
+    "max_internal_common_mode_V": 4.794200418966399e-07,
+    "internal_physics_report": {
+      "path": "local_reference/native_static_reviews/c1_pycy_full_tracking_feasibility_20261118T160634375625Z/window_physics.json",
+      "bytes": 19108,
+      "sha256": "1c2d57f7d6e9a9937145b1d073354824b8ed5eb7d6a485304bbc2d954aafc011"
+    },
+    "report": {
+      "path": "local_reference/native_static_reviews/c1_pycy_full_tracking_feasibility_20261118T160634375625Z/report.json",
+      "bytes": 14768,
+      "sha256": "8deddb79355ce7c39af1710cca396f7b9dc98742b0647dbee76cc4d89891891a"
+    },
+    "cross_grid_observations": {
+      "path": "local_reference/native_static_reviews/c1_pycy_full_tracking_feasibility_20261118T160634375625Z/cross_grid_observations.json",
+      "bytes": 1108,
+      "sha256": "f830c3060c0afd5f92ac3fd279c17cb0b395e24f31217539a04caa71b55f1983"
+    }
+  },
+  "formal_example_accepted": false,
+  "tested_head": "b245712af22d20205a6883b8ce3767e4d21cbb54"
+}

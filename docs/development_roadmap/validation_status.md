@@ -1,5 +1,8 @@
 # 验证状态
 
+2026-11-19。PSCAD 5.0 的两次 2.5 µs／600 µs 运行均满足 241 行反馈时序、120 个半拍保持和限幅恢复。默认设置有两点共模约束残差超限，峰值 2.088734 µV。稀疏求解门限设为 1 后，原物理判据全过，共模上界 0.558654 µV，限值仍为 2 µV。与使用自身反馈的 Python 同档比较时，23 项数值指标、12 路门极和电阻及饱和状态均通过。Python 长窗已做两工况双步长内部物理检查。
+[细档和长窗记录](experiments/c1_known_angle_dq_pscad_feedback_fine_20261119.json)
+
 2026-11-18。固定参考经 `on_step` 连接28号网络，两档121/241点均与固定门极独立驱动逐行一致，初流、电阻关系、KCL、KVL及梯形关系通过。Simulink两版共三次实际启动均未进入函数，无原生控制波形。已验收的开环结果见28号报告。
 [设计检查](experiments/c1_known_angle_dq_design_checks_20261118.json) · [启动记录](experiments/c1_known_angle_dq_native_startup_20261118.json)
 
