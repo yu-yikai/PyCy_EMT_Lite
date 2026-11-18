@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "date": "2026-11-18",
+  "status": "short_same_step_closed_loop_pass",
+  "scope": "600 µs experimental current feedback on the case 28 bridge, with diagnostic setpoints and a 5 µs electrical and gate grid",
+  "time_step_s": 0.000005,
+  "rows": 121,
+  "pscad": {
+    "native_runs": 1,
+    "raw_plant_channels": 45,
+    "raw_feedback_columns": 29,
+    "original_physical_limits_passed": true,
+    "common_mode_with_token_radius_V": 0.0000014460648214333337,
+    "common_mode_limit_V": 0.000002,
+    "first_next_tick_gate_witness": {"sample_time_s": 0.0001, "application_time_s": 0.000105, "upper_before": [0, 0, 0], "upper_after": [0, 1, 0]},
+    "closure": {
+      "path": "local_reference/native_static_reviews/c1_pscad_feedback_short_run_20261118/n/20261118T152318128297Z/closure.json",
+      "bytes": 7202,
+      "sha256": "f8198678d3116672ed2ae8c49951ab1e14b019c4ec798e10da23aa708af9e026"
+    },
+    "independent_numeric_report_sha256": "28d4b6e96ae60b375cf8226511dc447e7dbd22ea52640fa4eb58bc619089c7af"
+  },
+  "pycy": {
+    "live_feedback_through_case_definition": true,
+    "same_step_metrics_passed": 23,
+    "exact_gate_and_resistance_series_passed": 12,
+    "saturation_states_exact": true,
+    "max_phase_current_difference_A": 3.59063889732e-11,
+    "report": {
+      "path": "local_reference/native_static_reviews/c1_pycy_short_electrical_feedback_20261118T153859106050Z/report.json",
+      "bytes": 13153,
+      "sha256": "29901ce3018f727aa98e368e962124a0c78086c63cd17de1aefdbf88fe8567d6"
+    },
+    "figure": {
+      "path": "local_reference/native_static_reviews/c1_pycy_short_electrical_feedback_20261118T153859106050Z/comparison.png",
+      "bytes": 74098,
+      "sha256": "ae0b88c6a66853f0bf6b4d85eb3e7461230156c463c3c0502970e362e6424e5b"
+    }
+  },
+  "formal_example_accepted": false
+}

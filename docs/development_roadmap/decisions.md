@@ -3,8 +3,8 @@
 2026-11-18。下一电流环先使用已知角度与直接dq电流指令。前馈取串联R前的电网节点。现有 `on_step` 足以在100µs读取已求解量并于下一5µs门极拍生效，细档半拍沿用旧门极。Simulink恢复入口使用标准Sqrt块。121行控制探针需取得实际原生输出并核试积分和饱和释放，之后接电气网络。
 [设计检查](experiments/c1_known_angle_dq_design_checks_20261118.json) · [启动记录](experiments/c1_known_angle_dq_native_startup_20261118.json)
 
-2026-11-18。准入PSCAD独立控制器短探针。EMTDC只读取冻结输入，预期值在运行后由外部比较器使用。原生原始日志保存双精度文本。后续接入真实样本并在下一电气步施加门极，使用原电气门限。
-[原生控制记录](experiments/c1_known_angle_dq_pscad_control_20261118.json)
+2026-11-18。PSCAD先以冻结输入核准控制器，再将真实反馈接入原桥。5µs短对标按实际电气网格验证了下一门极拍生效。2.5µs原生实现应单独锁存施加参考，半拍保留旧参考、门极和电阻。继续沿用原物理限值。
+[原生控制记录](experiments/c1_known_angle_dq_pscad_control_20261118.json) · [短闭环记录](experiments/c1_known_angle_dq_pscad_feedback_20261118.json)
 
 2026-11-18。初值约束的相关行系数用原归一化矩阵计算残差，并复用QR因子修正一次。对三相等电感的浮动星点，这恢复了本应相等的三相系数。PLL合成夹具用当前测试副本计算自己的哈希，正式归档继续校验原始字节。
 [跨系统验证记录](experiments/f1_ubuntu_a777c00_20261118.json)

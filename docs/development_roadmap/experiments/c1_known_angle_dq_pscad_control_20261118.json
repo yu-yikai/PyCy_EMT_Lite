@@ -37,6 +37,28 @@
       "sha256": "0cda553bc66f05afc9d5c178f8270d04013ff0465a105c1b75222d09947600fa"
     }
   },
-  "electrical_feedback_executed": false,
+  "first_live_build": {
+    "status": "monitor_file_sharing_failure_before_compile",
+    "build_calls": 0,
+    "run_calls": 0,
+    "closure": {
+      "path": "local_reference/native_static_reviews/c1_pscad_feedback_short_build_live_20261118/n/20261118T145342491434Z/aborted_monitor_closure.json",
+      "bytes": 2328,
+      "sha256": "94489a74b196a2c7204a8afc443dcd39ea6a7ba3949672ca6a406bea410b435a"
+    }
+  },
+  "live_feedback_build": {
+    "status": "structural_causality_admission_pass",
+    "build_calls": 1,
+    "run_calls": 0,
+    "build_errors_or_warnings": 0,
+    "electrical_generated_input_byte_identical_to_open_loop": true,
+    "closure": {
+      "path": "local_reference/native_static_reviews/c1_pscad_feedback_short_build_live_r2_20261118/n/20261118T150157436724Z/closure.json",
+      "bytes": 3179,
+      "sha256": "d5407ff75f5572f487b54064a5a6c122202c7eff5de94c493523934276628057"
+    }
+  },
+  "subsequent_electrical_feedback_record": "c1_known_angle_dq_pscad_feedback_20261118.json",
   "formal_example_accepted": false
 }

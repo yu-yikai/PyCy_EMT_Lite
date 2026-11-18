@@ -3,8 +3,8 @@
 2026-11-18。固定参考经 `on_step` 连接28号网络，两档121/241点均与固定门极独立驱动逐行一致，初流、电阻关系、KCL、KVL及梯形关系通过。Simulink两版共三次实际启动均未进入函数，无原生控制波形。已验收的开环结果见28号报告。
 [设计检查](experiments/c1_known_angle_dq_design_checks_20261118.json) · [启动记录](experiments/c1_known_angle_dq_native_startup_20261118.json)
 
-2026-11-18。真实PSCAD 5.0/EMTDC运行一次，121行33列。固定输入工况的双轴积分、限幅、调制参考和门极通过两路复算。电气接入首次重载构建报81个错误，未启动Run。后续先核同会话构建的测量和门极实际映射。
-[原生控制记录](experiments/c1_known_angle_dq_pscad_control_20261118.json)
+2026-11-18。PSCAD 5.0完成一次600µs实际闭环运行。121点的原电气门全部通过，共模含精度上界1.446065µV，低于2µV。Python使用自身反馈，121点的门极、电阻、限幅标志逐点一致，23项同档比较通过。范围为5µs短探针。
+[短闭环记录](experiments/c1_known_angle_dq_pscad_feedback_20261118.json) · [接入构建记录](experiments/c1_known_angle_dq_pscad_control_20261118.json)
 
 2026-11-18。Windows及WSL2 Ubuntu 24.04.4均完成锁定同步、Ruff、mypy和1573项含slow回归。Ubuntu原1568通过、5失败及新248项专项和完整复验均留档。24号恢复原38项原生对标，28号40002/80003点的输出与已验收结果逐位相同，两路原门全过。
 [跨系统验证记录](experiments/f1_ubuntu_a777c00_20261118.json)

@@ -18,4 +18,6 @@
 
 已在28号电气网络上用固定参考验证 `on_step` 接线。两档在100 µs采集源侧相电压和电感电流，105 µs才施加首个新门极。细档102.5 µs沿用旧门极。两档各自与同门极表的独立驱动结果逐行一致。该试验覆盖Python电气网格和回调交接。 [试验记录](../../../development_roadmap/experiments/c1_known_angle_dq_native_startup_20261118.json)
 
-PSCAD 的 EMTDC 控制器已在固定121行输入上通过独立复算。电气网格 200 µs 行触发限幅，300 µs 行解除限幅。窗内5次新参考均在下一5 µs拍生效。下一次试验接入实测电流和前馈电压，检查采样、门极和电气量。 [原生控制记录](../../../development_roadmap/experiments/c1_known_angle_dq_pscad_control_20261118.json)
+PSCAD 的 EMTDC 控制器已在固定121行输入上通过独立复算。电气网格 200 µs 行触发限幅，300 µs 行解除限幅。窗内5次新参考均在下一5 µs拍生效。 [原生控制记录](../../../development_roadmap/experiments/c1_known_angle_dq_pscad_control_20261118.json)
+
+5 µs短桥已用实际相电压和相电流驱动两端控制器，121点电气与门极通过同档比较。细档沿用600 µs诊断工况和原物理门限，采集241行。每次在正100 µs采样后保存待用参考，施加参考按5 µs门极拍锁存。首对边界须同时记录100 µs采样后的待用参考、102.5 µs半拍的旧参考与旧门极，以及105 µs首个新门极。 [短闭环对标](../../../development_roadmap/experiments/c1_known_angle_dq_pscad_feedback_20261118.json)

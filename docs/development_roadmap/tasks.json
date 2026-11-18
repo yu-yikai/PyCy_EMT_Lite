@@ -3,7 +3,7 @@
   "updated_date": "2026-11-18",
   "timezone": "Asia/Shanghai",
   "branch": "codex/emt-examples-longterm",
-  "checkpoint_head": "c179c0b86dcc085033a2ba6178729284d7f353f4",
+  "checkpoint_head": "98407223cb0ac0ad6cdd17e87de7f1bd067b92cf",
   "current_task": "C1",
   "formal_new_examples_completed": 10,
   "status_values": [
@@ -730,7 +730,8 @@
         "docs/specs/algorithms/known-angle-dq-current/known-angle-dq-current-system-architecture.md",
         "docs/development_roadmap/experiments/c1_known_angle_dq_design_checks_20261118.json",
         "docs/development_roadmap/experiments/c1_known_angle_dq_native_startup_20261118.json",
-        "docs/development_roadmap/experiments/c1_known_angle_dq_pscad_control_20261118.json"
+        "docs/development_roadmap/experiments/c1_known_angle_dq_pscad_control_20261118.json",
+        "docs/development_roadmap/experiments/c1_known_angle_dq_pscad_feedback_20261118.json"
       ],
       "commits": [
         "b835e31785fab3fda247c333d23edbe9ce576dfa",
@@ -778,7 +779,7 @@
         "evidence_sha256": "d92469cdd234477829ca5a5fa75a67648f17235fffadf3d3cbdaa73672375427",
         "native_executed": false
       },
-      "current_stage": "known_angle_dq_pscad_control_pass_live_feedback_build_pending",
+      "current_stage": "known_angle_dq_short_feedback_same_step_pass",
       "open_loop_candidate_preparation": {
         "record": {
           "path": "docs/development_roadmap/experiments/c1_openloop_candidate_preparation_20261116.json",
@@ -1584,7 +1585,7 @@
         "acceptance_commit": "a777c00c283498ab2dd9a1542a4454b7cf8c5e4a"
       },
       "known_angle_current_loop": {
-        "status": "pscad_native_control_only_pass",
+        "status": "pscad_pycy_short_electrical_feedback_pass",
         "record": {
           "path": "docs/development_roadmap/experiments/c1_known_angle_dq_design_checks_20261118.json",
           "bytes": 1604,
@@ -1592,10 +1593,13 @@
         },
         "candidate_implemented": false,
         "native_reference_executed": true,
-        "native_electrical_feedback_executed": false,
+        "native_electrical_feedback_executed": true,
+        "native_electrical_feedback_build_admitted": true,
+        "short_pycy_prototype_executed": true,
         "native_startup_record": "docs/development_roadmap/experiments/c1_known_angle_dq_native_startup_20261118.json",
         "native_control_record": "docs/development_roadmap/experiments/c1_known_angle_dq_pscad_control_20261118.json",
-        "next": "首次保存画布重载构建失败。沿既有Automation API在同一会话建桥并接反馈，先核实际电气测量与下一拍施加的生成映射。"
+        "short_feedback_record": "docs/development_roadmap/experiments/c1_known_angle_dq_pscad_feedback_20261118.json",
+        "next": "另封2.5µs真实短探针核半拍保持，然后固定完整双档d/q指令和真实电气参考，再验收教学候选。"
       }
     },
     {
@@ -1836,7 +1840,7 @@
       }
     }
   ],
-  "current_stage": "known_angle_dq_pscad_control_pass_live_feedback_build_pending",
+  "current_stage": "known_angle_dq_short_feedback_same_step_pass",
   "resume_checkpoint_history": [
     {
       "resumed_utc": "2026-11-11T13:24:16.085490+00:00",
