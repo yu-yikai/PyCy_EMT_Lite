@@ -1733,9 +1733,9 @@
       "dependencies": [],
       "new_capabilities": [],
       "references": [],
-      "validation": "当前只定义边界",
+      "validation": "远期计划覆盖自动换流、非线性MNA、复杂机电磁暂态、一致初始化、独立稀疏研究、大网及MMC/新能源，明确首个物理试验和后续进入条件。",
       "acceptance": "仅规划，不在近期实施大型框架",
-      "status": "planned",
+      "status": "completed",
       "files": [
         "docs/development_roadmap/04_long_term_roadmap.md"
       ],
