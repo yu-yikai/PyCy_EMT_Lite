@@ -1,0 +1,97 @@
+{
+  "schema": "c1_vsc_refinement_extra_residual_screen_experiment_v1",
+  "date": "2026-11-18",
+  "summary": "使用原容差外加一个各右端项最大绝对残差单调不增的筛选，双步长候选共模门均失败。选步复算发现该筛选会拒绝明显改善精确解距离的修正。",
+  "status": "ARCHIVED_DUAL_NUMERIC_FAIL",
+  "execution_head": "ca6cf3a79aa737fc0b5b37f105fdc34e5cfdb22a",
+  "rows": [
+    40002,
+    80003
+  ],
+  "commonmode_limit_V": "0.000002",
+  "physical": {
+    "coarse": {
+      "both_physical_pass": false,
+      "failed_gates": [
+        "commonmode_with_tokens_V",
+        "conditional_reduced_TR_rail_V"
+      ],
+      "reported_aggregate_gate_failure_count": 5576,
+      "commonmode_failure_points_independent_report": 4788,
+      "maximum_full_q_commonmode_V": "0.000003318511285257333200001409333466665257333200001409333466665257400000000",
+      "worst_row": 9471,
+      "unchanged_commonmode_limit_V": "0.000002",
+      "conditional_prediction_status": "DIAGNOSTIC_ONLY_PREREQUISITE_FAILED",
+      "same_h_gate_groups": 150,
+      "both_same_h_paths_pass": true,
+      "primary_report": {
+        "path": "local_reference/c1_openloop_reference_research/20261118T122146595503Z_candidate_refined_lu_pair_v3/monitor_output/analysis/primary/coarse_physical.json",
+        "bytes": 16364,
+        "sha256": "18f6d41d45170bd101a019a7f568b03fe1f7097ed84fef9046761ebd40afaeac"
+      },
+      "independent_report": {
+        "path": "local_reference/c1_openloop_reference_research/20261118T122146595503Z_candidate_refined_lu_pair_v3/monitor_output/analysis/coarse_independent_physical.json",
+        "bytes": 21587,
+        "sha256": "48cec02acc68df575cc6d16ea8d260b5ef620ee96ec65f0d883ad6d4d418ab8b"
+      }
+    },
+    "fine": {
+      "both_physical_pass": false,
+      "failed_gates": [
+        "commonmode_with_tokens_V",
+        "conditional_reduced_TR_rail_V"
+      ],
+      "reported_aggregate_gate_failure_count": 102772,
+      "commonmode_failure_points_independent_report": 55005,
+      "maximum_full_q_commonmode_V": "0.00001391704471925733320000140933346666525733320000140933346666525730000000",
+      "worst_row": 79096,
+      "unchanged_commonmode_limit_V": "0.000002",
+      "conditional_prediction_status": "DIAGNOSTIC_ONLY_PREREQUISITE_FAILED",
+      "same_h_gate_groups": 150,
+      "both_same_h_paths_pass": true,
+      "primary_report": {
+        "path": "local_reference/c1_openloop_reference_research/20261118T122146595503Z_candidate_refined_lu_pair_v3/monitor_output/analysis/primary/fine_physical.json",
+        "bytes": 16326,
+        "sha256": "2f81d00cc80636e7b3f3bb25ea98459760963ad22dbfcbcb161d16ec560c5aa8"
+      },
+      "independent_report": {
+        "path": "local_reference/c1_openloop_reference_research/20261118T122146595503Z_candidate_refined_lu_pair_v3/monitor_output/analysis/fine_independent_physical.json",
+        "bytes": 21608,
+        "sha256": "f3490b9d6bd9830a8a1a81092c957eb7834c445f855cceef2ce564cad27a4a56"
+      }
+    }
+  },
+  "same_h_and_cross_h_pass": true,
+  "physical_all19_pass": false,
+  "candidate_accepted": false,
+  "formal_new_examples_completed_at_execution": 9,
+  "native_calls": 0,
+  "references": {
+    "manifest": {
+      "path": "local_reference/c1_openloop_reference_research/20261118T122146595503Z_candidate_refined_lu_pair_v3/manifest.json",
+      "bytes": 96620,
+      "sha256": "750b648d31aa86e45f2fc5f320bbf59f3e238228514a98a604234876d3fd0614"
+    },
+    "source_snapshot": {
+      "path": "local_reference/c1_openloop_reference_research/20261118T122146595503Z_candidate_refined_lu_pair_v3/source_snapshot.json",
+      "bytes": 21266,
+      "sha256": "06da9fea4edcc21591a57532128427e2525ed0c49114a48da7fc569fbbae3c9c"
+    },
+    "terminal": {
+      "path": "local_reference/c1_openloop_reference_research/20261118T122146595503Z_candidate_refined_lu_pair_v3/monitor_output/terminal.json",
+      "bytes": 1924,
+      "sha256": "a9a13149eabc11cc0544743b5de15efa4ca2dd64ccd629dee41085ec483c0101"
+    },
+    "closed_independent": {
+      "path": "local_reference/native_static_reviews/c1_refined_lu_pair_v1_closed_independent_20261118T123218268103Z/receipt.json",
+      "bytes": 5902,
+      "sha256": "1301944351254988ffa14d0bbf00c7c10cee7f5ce319d484efba66c0fc0f76f9"
+    },
+    "selected_steps_diagnosis": {
+      "path": "local_reference/native_static_reviews/c1_nonworsening_gate_diagnosis_20261118T122923875206Z/receipt.json",
+      "bytes": 40217,
+      "sha256": "c0fe5ffdb68529c7d47e6c00cef966c6bfedec8856d3164cc3d7b11defd6d4f7"
+    }
+  },
+  "followup": "采用原有首解和结果容差检查，对指数范围内的值执行一次残差修正，重新验证两档候选。"
+}

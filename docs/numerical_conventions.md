@@ -222,8 +222,11 @@ assert abs(result.rows[0]["i:C"] - 6.0) < 1e-12
 缓存只属于一个 Simulator，最多保存上一份 LU；A1→A2→A1 要重新分解三次，不保留多拓扑历史。
 初值/事件右侧增广矩阵也参与相同判断，现有一次修正使用该矩阵的 LU，不减少源/门极/状态/回调执行。
 显式 `solver=` 的现有自定义后端在 `rebuild` 保持原行为；`reuse/precompute` 当前只接受 DenseLinearSolver 实例，否则在占用电路前报错。
-`factorization_count` 为实际分解次数，`solve_count` 为实际求解次数；Simulator 每次新分解的 `reused_factorization=False`，
-命中上一份分解（包括一致修正）时为 True。precompute 的准备分解也计入次数，循环内每次求解的该标志均为 True。
+稠密求解器先检查首解。若数值范围允许，用原 LU 解一次残差方程 `A Δx = b − Ax`。
+若修正解通过原有残差检查，求解器返回修正解，否则保留通过检查的首解。诊断对应实际返回的解。
+`factorization_count` 统计实际分解，`solve_count` 统计求解器接收的方程请求，包括 Simulator 的初值一致修正。
+求解器内部用原 LU 解残差的动作计在原请求内。Simulator 每次新分解的 `reused_factorization=False`，
+命中上一份分解时为 True。precompute 的准备分解也计入次数，循环内每次求解的该标志均为 True。
 分解减少不代表全流程必然加速。[N4 成本验收](audit_20261005/项目问题与改进计划.md#network-solver-n4)
 已完成两个小网络三策略及 HVDC 两策略的准备/循环/总时间和进程生命周期峰值工作集测量。
 这些本机结果未核定通用或稳定的总流程加速；大量开关网络仍使用 rebuild/reuse，不为测量开放 HVDC precompute。

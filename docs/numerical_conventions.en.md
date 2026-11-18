@@ -236,8 +236,11 @@ without an approximate threshold or a switch-only key: parameters, actual h, sat
 The cache belongs to one Simulator and holds only its previous LU; A1→A2→A1 needs three factorizations and does not retain a topology history.
 Augmented initial/event-right matrices use the same check; the existing single correction uses that matrix's LU. Source/gate/state/callback execution is not reduced.
 An explicit custom `solver=` keeps its original behavior under `rebuild`; `reuse/precompute` currently accept only DenseLinearSolver instances and otherwise raise before claiming the circuit.
-`factorization_count` counts actual factorizations and `solve_count` counts actual solves. In Simulator, `reused_factorization=False` for a fresh factorization,
-and True for reuse of the previous one, including a consistent-state correction. Preparation factorizations in precompute also count, and every solve inside its loop reports True.
+The dense solver checks the first solution and, when the operands are in range, uses the same LU factors to solve the residual equation `A Δx = b − Ax` once.
+It returns the corrected solution if it passes the original residual checks. Otherwise it retains the checked first solution. Diagnostics describe the returned solution.
+`factorization_count` counts actual factorizations. `solve_count` counts equation requests, including Simulator's consistent-state correction.
+The internal residual correction is part of its original request. In Simulator, `reused_factorization=False` for a fresh factorization,
+and True for reuse of the previous one. Preparation factorizations in precompute also count, and every solve inside its loop reports True.
 Fewer factorizations do not establish an end-to-end speedup. [N4 cost acceptance](audit_20261005/项目问题与改进计划.md#network-solver-n4)
 completed preparation/loop/total-time and process-lifetime peak-working-set measurements for three strategies on two small networks
 and two strategies on HVDC. These local results do not establish a general or stable end-to-end speedup. Networks with many
