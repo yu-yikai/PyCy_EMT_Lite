@@ -76,13 +76,25 @@ class _InitialConditions:
         scale = np.max(np.abs(matrix), axis=1)
         scale[scale == 0] = 1.0
         scaled = matrix / scale[:, None]
-        _, triangular, order = qr(scaled.T, pivoting=True)
+        orthogonal, triangular, order = qr(scaled.T, pivoting=True)
         threshold = np.finfo(float).eps * len(rhs) * np.max(np.abs(triangular))
         rank = int(np.count_nonzero(np.abs(np.diag(triangular)) > threshold))
         if rank == len(rhs):
             return matrix, rhs
 
-        weights = solve_triangular(triangular[:rank, :rank], triangular[:rank, rank:])
+        independent_rows = scaled[order[:rank]]
+        upper = triangular[:rank, :rank]
+        weights = solve_triangular(upper, triangular[:rank, rank:])
+        # 回到原归一化矩阵核对行关系。高电压会放大关系系数的微小误差，
+        # 因此准确累加每列残差，再复用 QR 因子修正一次。
+        negative_columns = (-independent_rows.T).tolist()
+        basis_transpose = orthogonal[:, :rank].T
+        for coefficients, row in zip(weights.T, scaled[order[rank:]], strict=True):
+            operands = [1.0, *coefficients.tolist()]
+            residual = [math.sumprod([float(value), *column], operands)
+                        for value, column in zip(row, negative_columns, strict=True)]
+            coefficients += solve_triangular(upper, basis_transpose @ residual)
+
         dependent = np.zeros((len(rhs) - rank, len(rhs)))
         dependent[:, order[rank:]] = np.eye(len(rhs) - rank)
         dependent[:, order[:rank]] = -weights.T
@@ -104,7 +116,7 @@ class _InitialConditions:
 
         # A*xdot = derivative*x + derivative_rhs；相关行满足 dependent*A=0，
         # 因而只需补 dependent*derivative*x = -dependent*derivative_rhs。
-        completed = np.vstack((scaled[order[:rank]], dependent @ derivative))
+        completed = np.vstack((independent_rows, dependent @ derivative))
         completed_rhs = np.concatenate((rhs[order[:rank]] / scale[order[:rank]], -dependent @ derivative_rhs))
         completed_scale = np.max(np.abs(completed), axis=1)
         completed_scale[completed_scale == 0] = 1.0
