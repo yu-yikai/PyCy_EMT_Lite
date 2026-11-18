@@ -24,6 +24,19 @@
     "bytes": 1829,
     "sha256": "6da7548c2badc2f38bcc5c13e623c06862c4e9a9faf70692a658fd7632a9d5e1"
   },
+  "first_electrical_build": {
+    "status": "saved_canvas_reload_build_failed",
+    "build_calls": 1,
+    "run_calls": 0,
+    "build_errors": 81,
+    "build_warnings": 3423,
+    "finding": "The reloaded saved canvas reported overlaps, signal source contention and floating input ports. The next attempt will construct the existing bridge and attach feedback in the same Automation API session.",
+    "closure": {
+      "path": "local_reference/native_static_reviews/c1_pscad_feedback_short_build_20261118/n/20261118T144325811615Z/failure_closure.json",
+      "bytes": 2459,
+      "sha256": "0cda553bc66f05afc9d5c178f8270d04013ff0465a105c1b75222d09947600fa"
+    }
+  },
   "electrical_feedback_executed": false,
   "formal_example_accepted": false
 }

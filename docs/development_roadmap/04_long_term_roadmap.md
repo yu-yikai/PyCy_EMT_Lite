@@ -29,7 +29,7 @@
 |---|---|
 | 分段线性自动换流 | 用单二极管 R/L 支路验证导通和关断判据，再验证半桥的换流瞬间。用明确的电压、电流方向、零点附近行为与能量守恒核对真实器件参考。 |
 | 通用非线性 MNA | 先选一条有解析导数的非线性支路，核对残差、雅可比、迭代收敛及失败报告。利用小步长和真实参考识别误差来自器件方程、迭代还是离散。 |
-| 复杂电机与变压器 | 先分开研究电机机械功率平衡与变压器磁化曲线。用可核的磁链数据、空载和暂态波形验证。磁滞另检查往返轨迹和单周期损耗。 [Simscape 模型资料](https://www.mathworks.com/help/pdf_doc/simscape/simscape_ug.pdf) |
+| 复杂电机与变压器 | 先分开研究电机机械功率平衡与变压器磁化曲线。用可核的磁链数据、空载和暂态波形验证。磁滞另检查往返轨迹和单周期损耗。 [圆转子同步机](https://www.mathworks.com/help/simscape-electrical/ref/synchronousmachineroundrotor.html) · [非线性变压器](https://www.mathworks.com/help/simscape-electrical/ref/nonlineartransformer.html) |
 | 完整 EMT 初始化 | 从现有瞬时 RLC 一致性扩到单电源周期稳态，再接闭环控制及拓扑事件。检查首步状态连续性、周期残差和不一致条件拒绝，用已知稳态与原生冷启动分别复核。 |
 | 39/118 节点网络 | 先完成小网物理及初始化对标，随后固定可溯源的节点、支路和潮流数据。另取得动态元件、控制、扰动和原生波形，按实际物理范围命名。 [39 节点数据](https://matpower.org/docs/ref/matpower6.0/case39.html) · [118 节点数据](https://matpower.org/docs/ref/matpower4.0/case118.html) |
 | MMC 与高保真新能源场站 | 单站和简化双端验收后，用一个可独立对标的物理子系统起步。MMC 先核桥臂能量和子模块电压。新能源场站先核单机直流侧能量、限幅和并网扰动，再组合多机。 |

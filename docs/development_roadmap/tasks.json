@@ -778,7 +778,7 @@
         "evidence_sha256": "d92469cdd234477829ca5a5fa75a67648f17235fffadf3d3cbdaa73672375427",
         "native_executed": false
       },
-      "current_stage": "known_angle_dq_pscad_control_pass_electrical_feedback_pending",
+      "current_stage": "known_angle_dq_pscad_control_pass_live_feedback_build_pending",
       "open_loop_candidate_preparation": {
         "record": {
           "path": "docs/development_roadmap/experiments/c1_openloop_candidate_preparation_20261116.json",
@@ -1595,7 +1595,7 @@
         "native_electrical_feedback_executed": false,
         "native_startup_record": "docs/development_roadmap/experiments/c1_known_angle_dq_native_startup_20261118.json",
         "native_control_record": "docs/development_roadmap/experiments/c1_known_angle_dq_pscad_control_20261118.json",
-        "next": "固定短桥物理输入、采样读值及下一拍施加的生成映射，再运行真实电气反馈探针。Simulink恢复仍待MathWorks登录及许可确认。"
+        "next": "首次保存画布重载构建失败。沿既有Automation API在同一会话建桥并接反馈，先核实际电气测量与下一拍施加的生成映射。"
       }
     },
     {
@@ -1836,7 +1836,7 @@
       }
     }
   ],
-  "current_stage": "known_angle_dq_pscad_control_pass_electrical_feedback_pending",
+  "current_stage": "known_angle_dq_pscad_control_pass_live_feedback_build_pending",
   "resume_checkpoint_history": [
     {
       "resumed_utc": "2026-11-11T13:24:16.085490+00:00",
