@@ -1,142 +1,159 @@
 {
   "schema": "grid_connected_vsc_open_loop_validation_status_v1",
-  "status": "CANDIDATE_NUMERIC_FAIL_NOT_ACCEPTED",
-  "passed": false,
-  "candidate_accepted": false,
-  "formal_example_accepted": false,
-  "formal_new_examples_completed": 9,
+  "status": "FORMAL_OPEN_LOOP_EXAMPLE_ACCEPTED",
+  "passed": true,
+  "candidate_accepted": true,
+  "formal_example_accepted": true,
+  "formal_new_examples_completed": 10,
   "C1_status": "in_progress",
-  "summary": "5µs档共模物理门仍未通过；固定h修复已通过独立RC闭式与回归验证，其余比较通过不能抵消候选物理失败。",
+  "summary": "28号开环并网VSC已完成真实Simscape双步长对标与教学验收。",
   "reference_qualified": true,
-  "reference_platform": "Actual locally built and run R2025a Simscape model; not an official MathWorks example.",
-  "execution_head": "3c3c3ca1dcc025b7bee130f3c90f20f58b37b1d1",
-  "source_binding": {
-    "path": "local_reference/c1_openloop_reference_research/20261116T153547253025Z_candidate_fixed_h_pair_v2/source_snapshot.json",
-    "bytes": 22164,
-    "sha256": "3950a1cd10021020f3523f7e302e9e319f0d5e5210d2caef3c4984b47d88b709"
+  "reference_platform": "Actual locally built and run R2025a Simscape model.",
+  "execution": {
+    "head": "ca6cf3a79aa737fc0b5b37f105fdc34e5cfdb22a",
+    "branch": "codex/emt-examples-longterm",
+    "status": [
+      " M docs/numerical_conventions.en.md",
+      " M docs/numerical_conventions.md",
+      " M pycy_emt_lite/core/solvers.py",
+      " M tests/test_solvers.py",
+      "?? docs/development_roadmap/experiments/c1_lu_refinement_intervention_20261118.json",
+      "?? docs/development_roadmap/experiments/c1_refinement_residual_screen_20261118.json"
+    ]
   },
   "candidate_rows": {
     "coarse": 40002,
     "fine": 80003
   },
-  "all_original_points_windows_cycles_and_tail_retained": true,
   "physical": {
     "coarse": {
-      "passed": false,
-      "only_gate": [
-        "commonmode_with_tokens_V"
-      ],
-      "points": 2487,
-      "first_row": 33446,
-      "worst_row": 33719,
-      "maximum_full_q_V": "0.000002533674891383200133321816799866678183200133321816799866678183200000000",
-      "unchanged_limit_V": "0.000002"
+      "passed": true,
+      "independent_pass": true,
+      "failure_count": 0,
+      "commonmode_max_full_q_V": "3.100700895909998666680756667999985909998666680756667999985910000000000E-7",
+      "commonmode_worst_row": 33760
     },
     "fine": {
       "passed": true,
-      "commonmode_maximum_full_q_V": "9.315606118300013332181699986667818300013332181699986667818300000000000E-8"
+      "independent_pass": true,
+      "failure_count": 0,
+      "commonmode_max_full_q_V": "1.183634599073320000140926679999859073320000140926679999859070000000000E-8",
+      "commonmode_worst_row": 62338
     }
   },
-  "both_independent_statistical_paths": {
-    "coarse_same_h": {
-      "passed": true,
-      "gate_groups": 150
+  "commonmode_limit_V": "0.000002",
+  "native_calls_this_run": 0,
+  "both_statistical_paths": {
+    "same_h_gate_groups": {
+      "coarse": 150,
+      "fine": 150
     },
-    "fine_same_h": {
-      "passed": true,
-      "gate_groups": 150
-    },
-    "cross_h": {
-      "passed": true,
-      "gate_groups": 132
-    }
+    "cross_h_gate_groups": 132,
+    "all_pass": true,
+    "formal_windows": 4,
+    "acquisition_tail_retained": true,
+    "steady_state_cycles": 6,
+    "per_cycle_metrics": "diagnostic"
   },
-  "conditional_coarse_predictions": "DIAGNOSTIC_ONLY_PREREQUISITE_FAILED",
   "checks": {
     "locked_sync_packages": 27,
     "ruff": "PASS",
-    "mypy": {
-      "status": "PASS",
-      "source_files": 39
-    },
+    "mypy_source_files": 39,
     "pytest": {
-      "passed": 1566,
-      "failures": 0,
+      "passed": 1573,
       "errors": 0,
+      "failures": 0,
       "skipped": 0,
       "includes_slow": true,
-      "seconds": "518.071",
-      "session_id": 17585,
+      "seconds": "723.071",
+      "session_id": 89657,
       "exit_code": 0
     },
-    "source_scope": "Exact 120 Python files and two dependency files in source_snapshot; all 363 frozen bindings rechecked after both terminal runs."
-  },
-  "default_independent_cli": {
-    "exit_code": 0,
-    "rows": 40001,
-    "stop_s": 0.2,
-    "backend": "Agg",
-    "actual_entry": "examples/28_grid_connected_vsc_open_loop.py"
-  },
-  "native_calls_this_comparison": 0,
-  "run_closed": true,
-  "monitor": {
-    "exit_code": 1,
-    "elapsed_s": 314.1786662999075,
-    "peak_private_bytes": 698101760,
-    "minimum_available_bytes": 11350212608,
-    "reason": "worker_nonzero_exit",
-    "remaining_owned": [],
-    "cleanup_errors": []
-  },
-  "comparison_image": {
-    "path": "local_reference/c1_openloop_reference_research/20261116T153547253025Z_candidate_fixed_h_pair_v2/monitor_output/analysis/primary/comparison.png",
-    "bytes": 1547890,
-    "sha256": "345928d581f593e246366e02519dddc7b4d537c7579580e409ade2f02c05a3a9"
+    "default_cli": {
+      "rows": 40001,
+      "stop_s": 0.2,
+      "backend": "Agg",
+      "exit_code": 0,
+      "session_id": 31477
+    },
+    "comparison_figure_visually_checked": true
   },
   "references": {
-    "root_closure": {
-      "path": "local_reference/c1_openloop_reference_research/20261116T153547253025Z_candidate_fixed_h_pair_v2/ROOT_numeric_closure.json",
-      "bytes": 10401,
-      "sha256": "b6f409150c1d3be55e6bfc55242c456be379ae47244386cae3c42ead9286e6c1"
+    "execution_manifest": {
+      "path": "local_reference/c1_openloop_reference_research/20261118T123641205507Z_candidate_refined_lu_pair_v4/manifest.json",
+      "bytes": 97294,
+      "sha256": "f18397fd53dc848367b46790d26bda12c13651ebdc463ba6b2c21744e2ac2f30"
     },
-    "independent_closure": {
-      "path": "local_reference/native_static_reviews/c1_candidate_fixed_h_closed_independent_20261116T154532250855Z/receipt.json",
-      "bytes": 7062,
-      "sha256": "a07dc98cd66adbb0d93fe8f3f763a96ec5a9b81b2624021a906287de5aa8e325"
+    "source_snapshot": {
+      "path": "local_reference/c1_openloop_reference_research/20261118T123641205507Z_candidate_refined_lu_pair_v4/source_snapshot.json",
+      "bytes": 21359,
+      "sha256": "cfa632091b425649e15d6edda42dbd682a7395e340923d45fe8b03c8280fb6f6"
     },
-    "first_failure": {
-      "path": "docs/development_roadmap/experiments/c1_candidate_first_pair_failure_20261116.json",
-      "bytes": 6768,
-      "sha256": "2101dbf7b368d930d274aa2ce8e6d585cbd419ccb03fc47c960ae420f17f192d"
+    "run_terminal": {
+      "path": "local_reference/c1_openloop_reference_research/20261118T123641205507Z_candidate_refined_lu_pair_v4/monitor_output/terminal.json",
+      "bytes": 1912,
+      "sha256": "00129dd148b6360cc253cc7c2812d4c26b61c3a9a367e770ad3c75a272bb696f"
     },
-    "fixed_step_repair": {
-      "path": "docs/development_roadmap/experiments/fixed_time_grid_step_repair_20261116.json",
-      "bytes": 3924,
-      "sha256": "c0d6287ab94d07876d2f03f5d8666eeeb4ab8cf173297f055ed6fa21e46318a0"
+    "worker_result": {
+      "path": "local_reference/c1_openloop_reference_research/20261118T123641205507Z_candidate_refined_lu_pair_v4/monitor_output/analysis/result.json",
+      "bytes": 547,
+      "sha256": "bae6ce5fee69532628c5d44084774fa74c961c02a7cc563c787e0f7cb5864b20"
+    },
+    "primary_report": {
+      "path": "local_reference/c1_openloop_reference_research/20261118T123641205507Z_candidate_refined_lu_pair_v4/monitor_output/analysis/primary/report.json",
+      "bytes": 3001,
+      "sha256": "2e732474c4207cf97a2596d0d4c112fbb8d43a8a8fb855dd0794c6486db833f4"
+    },
+    "closed_independent": {
+      "path": "local_reference/native_static_reviews/c1_refined_lu_pair_v2_closed_independent_20261118T125118983657Z/receipt.json",
+      "bytes": 6919,
+      "sha256": "ef3f09cf92f93a35ed0dcf846899e7ea8a5f2ce379748c4e746fc692dfc52f5a"
     },
     "qualified_reference": {
       "path": "validation/cases/grid_connected_vsc_open_loop/qualified_reference_report.json",
       "bytes": 3269,
       "sha256": "58718e58e4b32ae930efe7b4244ff4207f8fda048eec65307b80b96b7ece1277"
     },
-    "source_snapshot": {
-      "path": "local_reference/c1_openloop_reference_research/20261116T153547253025Z_candidate_fixed_h_pair_v2/source_snapshot.json",
-      "bytes": 22164,
-      "sha256": "3950a1cd10021020f3523f7e302e9e319f0d5e5210d2caef3c4984b47d88b709"
+    "first_failure": {
+      "path": "docs/development_roadmap/experiments/c1_candidate_first_pair_failure_20261116.json",
+      "bytes": 6768,
+      "sha256": "2101dbf7b368d930d274aa2ce8e6d585cbd419ccb03fc47c960ae420f17f192d"
+    },
+    "guarded_refinement_failure": {
+      "path": "docs/development_roadmap/experiments/c1_refinement_residual_screen_20261118.json",
+      "bytes": 4697,
+      "sha256": "91d384dbe64491b0a34306e87cee090d45e4bfa5aa3acedcc8ed28c127241c83"
+    },
+    "unconditional_refinement_study": {
+      "path": "docs/development_roadmap/experiments/c1_lu_refinement_intervention_20261118.json",
+      "bytes": 3192,
+      "sha256": "2b6d4574606e5139c5d0f90ad9ba70b35328a553d83600fca1dc14ac29a2a46c"
+    },
+    "production_v2_coarse_study": {
+      "path": "local_reference/native_static_reviews/c1_production_v2_coarse_20261118T123420016536Z/closure.json",
+      "bytes": 4916,
+      "sha256": "1fade4760b7dd42bb902afa3cb3bd8217ab953975b2267d30e35cf805163c64c"
+    },
+    "full_pytest_xml": {
+      "path": ".tmp/longterm/c1-full-refinement-20261118-v2.xml",
+      "bytes": 226926,
+      "sha256": "0e62a4d61fc2b1d14f55b90c51847c7e2f0b92fd3cbbd8fd1918f4b314966f17"
+    },
+    "full_pytest_log": {
+      "path": ".tmp/longterm/c1-full-refinement-20261118-v2.log",
+      "bytes": 1816,
+      "sha256": "43cb4ce8c01791ee8b37015e2e1af55ea5eda5a5719257cdeb8e12e6b24b1964"
     },
     "default_cli_log": {
-      "path": ".tmp/longterm/c1-default-fixed-h-20261116-v1.log",
+      "path": ".tmp/longterm/c1-default-refinement-20261118-v3.log",
       "bytes": 462,
       "sha256": "ed5ce9218af0159a319364dec771d358f0c4b6fc8c2bfd76979891729764493d"
     },
-    "full_pytest_xml": {
-      "path": ".tmp/longterm/c1-final-20261116-v2.xml",
-      "bytes": 225976,
-      "sha256": "06fe3a75799f92c9bb5ef4498e98fadc8536ef7c8e6bdba1a99a542dd212805b"
+    "comparison_figure": {
+      "path": "local_reference/c1_openloop_reference_research/20261118T123641205507Z_candidate_refined_lu_pair_v4/monitor_output/analysis/primary/comparison.png",
+      "bytes": 1547984,
+      "sha256": "f5b98b9e5ab8d7a176c6f2aafdb350ce352a5b1969eb1514806ec0c11d53dabf"
     }
   },
-  "scope": "Open-loop fixed-modulation candidate only. Closed-loop and cross-OS acceptance remain separate. Original failure archives and thresholds remain unchanged.",
-  "next_step": "先从现存完整轨迹分解组装、求解残差、历史与输出舍入对交替模态的驱动；计划未执行，尚无solver修复或新候选资格。",
-  "post_execution_documentation_changes": "After both executions closed and bindings were verified, only status/report documents and README/manifest status were updated. All 120 Python files, dependencies, physical parameters and acceptance protocol remain identical to the tested snapshot."
+  "scope": "固定调制开环电路，使用已有真实R2025a参考数据。后续闭环层和跨OS工程验证分别记录。"
 }

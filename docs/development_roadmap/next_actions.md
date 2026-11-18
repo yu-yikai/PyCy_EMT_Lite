@@ -1,5 +1,8 @@
 # 恢复与下一步
 
+2026-11-18当前。28号开环已验收，C1下一项为已知角度dq电流环。先从已合格的本地Simscape物理网络建立真实PI控制参考，固定前馈测量点、dq相角和符号、初始积分状态、限幅、采样顺序及一拍生效约定。先核t=0、独立d/q阶跃和限幅释放，再冻结完整双步长验收方案。复用既有PI、dq变换、门极和CaseDefinition流程。
+[28号验收报告](../../validation/cases/grid_connected_vsc_open_loop/validation_report.json)
+
 2026-11-18当前：82923已exit0，完整粗档精度干预通过两套原19门，127.072s，峰值约290.8MiB，自有进程已退出。见[研究记录](experiments/c1_decimal80_precision_intervention_20261118.json)。下一项在忽略目录临时替换raw求解为普通LU加一次准确残差修正，先固定合同再跑完整粗档。math.sumprod输入需显式Python float，并把b与乘积放入同一次累加。当前局部probe在3个历史18维系统接近D80解，但极端输入仍有NaN/下溢边界，正式core修改前须确定范围处理、原始坏解拒绝和初始化补解行为。probe路径及hash在本记录。正式源码120及2依赖仍匹配1566项既有回归快照。
 
 2026-11-18当前：全点驱动分解已完成，见[记录](experiments/c1_observed_forcing_ledger_20261118.json)。14180已exit0，11.261s，峰值约50.8MiB，自有进程已退出。下一步把每个重放步由原float stamp和当前float历史生成的A/b交给Decimal80求解，再回float进入既有状态更新。合同、脚本、源快照和输出目录另行冻结后，运行完整40002点及双路原19物理门。当前处于单因素对照准备阶段，正式候选仍待验收。

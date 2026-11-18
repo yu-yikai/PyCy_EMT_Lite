@@ -3,9 +3,9 @@
   "updated_date": "2026-11-18",
   "timezone": "Asia/Shanghai",
   "branch": "codex/emt-examples-longterm",
-  "checkpoint_head": "368b352d60bcd16a1bdc9a58e999831965e6275b",
+  "checkpoint_head": "6634277c68e856cd81311149b91dc8bf55f61ea2",
   "current_task": "C1",
-  "formal_new_examples_completed": 9,
+  "formal_new_examples_completed": 10,
   "status_values": [
     "planned",
     "ready",
@@ -671,7 +671,7 @@
         "pscad-derived-force-dsout-bounded-probe-v5",
         "simscape-derived-grid-vsc-openloop-r2025a"
       ],
-      "validation": "真实Simscape参考资格保持。固定h修复bbb1e2d通过1566含slow、锁定同步/Ruff/mypy及默认独立40001点运行。新完整双路比较粗档仅共模2487点、2.533675µV>2µV；细档物理和150/150/132比较通过。候选未验收，新增9，C1与跨OS未完成；零新解驱动账本仅有计划。",
+      "validation": "28号开环两档40002/80003点与真实Simscape参考通过双路原19项物理门、两档各150及跨档132组比较。默认独立运行和1573项含slow回归通过。C1进入已知角度dq电流环的参考建立。",
       "acceptance": "局部、可独立运行验证的教学例逐项验收",
       "status": "in_progress",
       "files": [
@@ -723,7 +723,9 @@
         "validation/cases/grid_connected_vsc_open_loop/validation_report.json",
         "docs/development_roadmap/experiments/fixed_time_grid_step_repair_20261116.json",
         "docs/development_roadmap/experiments/c1_observed_forcing_ledger_20261118.json",
-        "docs/development_roadmap/experiments/c1_decimal80_precision_intervention_20261118.json"
+        "docs/development_roadmap/experiments/c1_decimal80_precision_intervention_20261118.json",
+        "docs/development_roadmap/experiments/c1_refinement_residual_screen_20261118.json",
+        "docs/development_roadmap/experiments/c1_lu_refinement_intervention_20261118.json"
       ],
       "commits": [
         "b835e31785fab3fda247c333d23edbe9ce576dfa",
@@ -756,11 +758,11 @@
         "3c3c3ca1dcc025b7bee130f3c90f20f58b37b1d1",
         "bbb1e2d7dd669cade3621f4b0d5853d69ca43300",
         "8386c4e564314cd507c6c190d33f9c287f4ad762",
-        "368b352d60bcd16a1bdc9a58e999831965e6275b"
+        "368b352d60bcd16a1bdc9a58e999831965e6275b",
+        "6634277c68e856cd81311149b91dc8bf55f61ea2"
       ],
       "blockers": [
-        "5µs候选共模物理硬门未通过；固定h修复未解决此误差，必须保留原门、全点及两次失败。",
-        "下一步先独审并另封全点零新解驱动账本，分解观测结果不等于修复因果；正式候选接受须后续完整重验。"
+        "已知角度dq电流环须先固定拓扑、符号、初值、采样生效顺序和原生参考，再验收候选。"
       ],
       "reference_feasibility": {
         "status": "read_only_feasibility_only",
@@ -770,7 +772,7 @@
         "evidence_sha256": "d92469cdd234477829ca5a5fa75a67648f17235fffadf3d3cbdaa73672375427",
         "native_executed": false
       },
-      "current_stage": "compensated_lu_refinement_research_preparation",
+      "current_stage": "openloop_example_28_accepted_known_angle_current_loop_next",
       "open_loop_candidate_preparation": {
         "record": {
           "path": "docs/development_roadmap/experiments/c1_openloop_candidate_preparation_20261116.json",
@@ -1542,15 +1544,37 @@
         "active_workers": 0
       },
       "next_compensated_refinement": {
-        "status": "planned",
-        "formal_core_changes": false,
-        "full_trajectory_executed": false,
+        "status": "completed_full_dual_validation",
+        "formal_core_changes": true,
+        "full_trajectory_executed": true,
         "local_probe": {
           "path": "local_reference/native_static_reviews/c1_iterative_refinement_local_probe_20261118T080140610921Z/receipt.json",
           "bytes": 4379,
           "sha256": "e53f872aaa02f7238b33126eb7772e619bdeaf980ef83b3d721d181a640705e0"
         },
-        "requires_existing_numeric_boundary_semantics": true
+        "requires_existing_numeric_boundary_semantics": true,
+        "report": {
+          "path": "validation/cases/grid_connected_vsc_open_loop/validation_report.json",
+          "bytes": 6374,
+          "sha256": "230218ff96d7ab45e59bfb8519f725bceb7777514355ea0cb298cf8e50e01829"
+        }
+      },
+      "open_loop_formal_acceptance": {
+        "example": 28,
+        "status": "accepted",
+        "report": {
+          "path": "validation/cases/grid_connected_vsc_open_loop/validation_report.json",
+          "bytes": 6374,
+          "sha256": "230218ff96d7ab45e59bfb8519f725bceb7777514355ea0cb298cf8e50e01829"
+        },
+        "formal_new_examples_completed": 10,
+        "source_snapshot": {
+          "path": "local_reference/c1_openloop_reference_research/20261118T123641205507Z_candidate_refined_lu_pair_v4/source_snapshot.json",
+          "bytes": 21359,
+          "sha256": "cfa632091b425649e15d6edda42dbd682a7395e340923d45fe8b03c8280fb6f6"
+        },
+        "validated_solver_commit": "6634277c68e856cd81311149b91dc8bf55f61ea2",
+        "acceptance_commit_subject": "feat: accept the grid-connected VSC open-loop example [skip ci]"
       }
     },
     {
@@ -1784,7 +1808,7 @@
       }
     }
   ],
-  "current_stage": "compensated_lu_refinement_research_preparation",
+  "current_stage": "openloop_example_28_accepted_known_angle_current_loop_next",
   "resume_checkpoint_history": [
     {
       "resumed_utc": "2026-11-11T13:24:16.085490+00:00",
@@ -1826,31 +1850,24 @@
     }
   ],
   "current_source_snapshot": {
-    "path": "local_reference/c1_openloop_reference_research/20261116T153547253025Z_candidate_fixed_h_pair_v2/source_snapshot.json",
-    "bytes": 22164,
-    "sha256": "3950a1cd10021020f3523f7e302e9e319f0d5e5210d2caef3c4984b47d88b709"
+    "path": "local_reference/c1_openloop_reference_research/20261118T123641205507Z_candidate_refined_lu_pair_v4/source_snapshot.json",
+    "bytes": 21359,
+    "sha256": "cfa632091b425649e15d6edda42dbd682a7395e340923d45fe8b03c8280fb6f6"
   },
   "latest_maintenance": {
-    "kind": "fixed_time_grid_step_semantics",
-    "status": "verified_and_committed",
+    "kind": "dense_lu_one_residual_refinement",
+    "status": "verified",
+    "full_pytest_passed": 1573,
     "record": {
-      "path": "docs/development_roadmap/experiments/fixed_time_grid_step_repair_20261116.json",
-      "bytes": 3924,
-      "sha256": "c0d6287ab94d07876d2f03f5d8666eeeb4ab8cf173297f055ed6fa21e46318a0"
+      "path": "validation/cases/grid_connected_vsc_open_loop/validation_report.json",
+      "bytes": 6374,
+      "sha256": "230218ff96d7ab45e59bfb8519f725bceb7777514355ea0cb298cf8e50e01829"
     },
-    "commit": "bbb1e2d7dd669cade3621f4b0d5853d69ca43300",
     "changed_sources": [
-      "pycy_emt_lite/core/simulation.py",
-      "tests/test_solvers.py",
-      "tests/test_time_grid.py"
+      "pycy_emt_lite/core/solvers.py",
+      "tests/test_solvers.py"
     ],
-    "other_python_files_unchanged_from_first_pair": 117,
-    "dependency_files_unchanged": true,
-    "full_pytest_passed": 1566,
-    "candidate_accepted": false,
-    "remote_head_reverified": true,
-    "remote_last_pushed_head": "8386c4e564314cd507c6c190d33f9c287f4ad762",
-    "remote_verification_method": "Successful ordinary push of HEAD to refs/heads/codex/emt-examples-longterm; contains the fixed-h commit."
+    "commit": "6634277c68e856cd81311149b91dc8bf55f61ea2"
   },
   "offline_analysis_preparation": {
     "status": "ACTUAL_FULL_NATIVE_PAIR_NUMERIC_PASS_REFERENCE_QUALIFIED",
@@ -1913,6 +1930,28 @@
       "actual_commit_recorded_in_closeout": true,
       "commit": "57fbc81106a75e6f70e09413e4fd94cf45853b96",
       "remote_head_verified_same": true
+    },
+    {
+      "kind": "fixed_time_grid_step_semantics",
+      "status": "verified_and_committed",
+      "record": {
+        "path": "docs/development_roadmap/experiments/fixed_time_grid_step_repair_20261116.json",
+        "bytes": 3924,
+        "sha256": "c0d6287ab94d07876d2f03f5d8666eeeb4ab8cf173297f055ed6fa21e46318a0"
+      },
+      "commit": "bbb1e2d7dd669cade3621f4b0d5853d69ca43300",
+      "changed_sources": [
+        "pycy_emt_lite/core/simulation.py",
+        "tests/test_solvers.py",
+        "tests/test_time_grid.py"
+      ],
+      "other_python_files_unchanged_from_first_pair": 117,
+      "dependency_files_unchanged": true,
+      "full_pytest_passed": 1566,
+      "candidate_accepted": false,
+      "remote_head_reverified": true,
+      "remote_last_pushed_head": "8386c4e564314cd507c6c190d33f9c287f4ad762",
+      "remote_verification_method": "Successful ordinary push of HEAD to refs/heads/codex/emt-examples-longterm; contains the fixed-h commit."
     }
   ]
 }
