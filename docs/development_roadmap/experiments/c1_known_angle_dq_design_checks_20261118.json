@@ -1,0 +1,38 @@
+{
+  "schema": "c1_known_angle_current_controller_design_checks_v1",
+  "date": "2026-11-18",
+  "status": "PROSPECTIVE_CONTROL_DRAFT_WITH_LOCAL_ALGEBRA_CHECKS",
+  "tested_head": "a777c00c283498ab2dd9a1542a4454b7cf8c5e4a",
+  "scope": "使用现有Python变换与PI进行短向量检查，另用解耦平均RL方程核初步调参。下一阶段先建立Simulink真实控制和电路探针。",
+  "maximum_transform_error": 5.551115123125783e-16,
+  "PI_and_saturation_recovery": "PASS",
+  "gate_index_ratios": [
+    1,
+    2
+  ],
+  "averaged_RL_30ms_post_step_maximum_errors_A": [
+    0.00010968972016556222,
+    8.226729012417167e-05
+  ],
+  "native_calls": 0,
+  "new_fulltrajectories": 0,
+  "closed_loop_candidate_accepted": false,
+  "specifications": [
+    {
+      "path": "docs/specs/algorithms/known-angle-dq-current/known-angle-dq-current-implementation-test.md",
+      "bytes": 2570,
+      "sha256": "c92985c5f82b1e970d1ff9353ee76c0f2127ea4475a824b9bad8af5507cdc42f"
+    },
+    {
+      "path": "docs/specs/algorithms/known-angle-dq-current/known-angle-dq-current-system-architecture.md",
+      "bytes": 3947,
+      "sha256": "1ed0d7d3c563ff0dc37cde374a03177c468374e9db2132c659cc863a87a29991"
+    }
+  ],
+  "local_receipt": {
+    "path": "local_reference/native_static_reviews/c1_known_angle_dq_pure_20261118T130026677085Z/receipt.json",
+    "bytes": 1120,
+    "sha256": "12227d5459267ef2b72026fa4c4892c4244f04ef8664b0a73318ec5209cbec28"
+  },
+  "post_check_review": "独立审读确认公式与拍序，明确PI只用最终桥端矢量限幅并修正源码链接。纯检查按这一PI配置执行。"
+}

@@ -1,5 +1,8 @@
 # 持久进度
 
+2026-11-18。28号验收提交a777c00已推送并核对远端，10个新增完成。下一层已知角度dq电流环已有参考控制草案，短向量验证了坐标、采样时钟和积分状态。真实原生控制探针待建。
+[设计检查](experiments/c1_known_angle_dq_design_checks_20261118.json)
+
 2026-11-18当前。28号开环并网VSC完成真实Simscape双步长验收，正式新增达到10个。普通稠密LU对残差作一次修正，两档原物理门、同档及跨档比较和1573项含slow回归均通过。C1进入已知角度dq电流环参考阶段。
 [28号验收报告](../../validation/cases/grid_connected_vsc_open_loop/validation_report.json)
 

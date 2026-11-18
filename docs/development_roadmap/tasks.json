@@ -3,7 +3,7 @@
   "updated_date": "2026-11-18",
   "timezone": "Asia/Shanghai",
   "branch": "codex/emt-examples-longterm",
-  "checkpoint_head": "6634277c68e856cd81311149b91dc8bf55f61ea2",
+  "checkpoint_head": "a777c00c283498ab2dd9a1542a4454b7cf8c5e4a",
   "current_task": "C1",
   "formal_new_examples_completed": 10,
   "status_values": [
@@ -725,7 +725,10 @@
         "docs/development_roadmap/experiments/c1_observed_forcing_ledger_20261118.json",
         "docs/development_roadmap/experiments/c1_decimal80_precision_intervention_20261118.json",
         "docs/development_roadmap/experiments/c1_refinement_residual_screen_20261118.json",
-        "docs/development_roadmap/experiments/c1_lu_refinement_intervention_20261118.json"
+        "docs/development_roadmap/experiments/c1_lu_refinement_intervention_20261118.json",
+        "docs/specs/algorithms/known-angle-dq-current/known-angle-dq-current-implementation-test.md",
+        "docs/specs/algorithms/known-angle-dq-current/known-angle-dq-current-system-architecture.md",
+        "docs/development_roadmap/experiments/c1_known_angle_dq_design_checks_20261118.json"
       ],
       "commits": [
         "b835e31785fab3fda247c333d23edbe9ce576dfa",
@@ -759,7 +762,8 @@
         "bbb1e2d7dd669cade3621f4b0d5853d69ca43300",
         "8386c4e564314cd507c6c190d33f9c287f4ad762",
         "368b352d60bcd16a1bdc9a58e999831965e6275b",
-        "6634277c68e856cd81311149b91dc8bf55f61ea2"
+        "6634277c68e856cd81311149b91dc8bf55f61ea2",
+        "a777c00c283498ab2dd9a1542a4454b7cf8c5e4a"
       ],
       "blockers": [
         "已知角度dq电流环须先固定拓扑、符号、初值、采样生效顺序和原生参考，再验收候选。"
@@ -772,7 +776,7 @@
         "evidence_sha256": "d92469cdd234477829ca5a5fa75a67648f17235fffadf3d3cbdaa73672375427",
         "native_executed": false
       },
-      "current_stage": "openloop_example_28_accepted_known_angle_current_loop_next",
+      "current_stage": "known_angle_dq_control_reference_design_draft",
       "open_loop_candidate_preparation": {
         "record": {
           "path": "docs/development_roadmap/experiments/c1_openloop_candidate_preparation_20261116.json",
@@ -1574,7 +1578,19 @@
           "sha256": "cfa632091b425649e15d6edda42dbd682a7395e340923d45fe8b03c8280fb6f6"
         },
         "validated_solver_commit": "6634277c68e856cd81311149b91dc8bf55f61ea2",
-        "acceptance_commit_subject": "feat: accept the grid-connected VSC open-loop example [skip ci]"
+        "acceptance_commit_subject": "feat: accept the grid-connected VSC open-loop example [skip ci]",
+        "acceptance_commit": "a777c00c283498ab2dd9a1542a4454b7cf8c5e4a"
+      },
+      "known_angle_current_loop": {
+        "status": "spec_draft_local_checks_pass",
+        "record": {
+          "path": "docs/development_roadmap/experiments/c1_known_angle_dq_design_checks_20261118.json",
+          "bytes": 1604,
+          "sha256": "77cf66ed4033a0e7c2716d68ea47d1c142b61bfcd52bf18246ee506ee76d8fd9"
+        },
+        "candidate_implemented": false,
+        "native_reference_executed": false,
+        "next": "固定参考建模合同并实施真实R2025a控制向量与短电路时序探针。"
       }
     },
     {
@@ -1808,7 +1824,7 @@
       }
     }
   ],
-  "current_stage": "openloop_example_28_accepted_known_angle_current_loop_next",
+  "current_stage": "known_angle_dq_control_reference_design_draft",
   "resume_checkpoint_history": [
     {
       "resumed_utc": "2026-11-11T13:24:16.085490+00:00",
