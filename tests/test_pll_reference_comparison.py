@@ -233,6 +233,9 @@ def archive(tmp_path, monkeypatch):
         destination = tmp_path / item["path"]
         destination.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(ROOT / item["path"], destination)
+        # The synthetic protocol describes the copies from this Git checkout.
+        item["sha256"] = hashlib.sha256(destination.read_bytes()).hexdigest()
+    write_json(case / "reference_protocol.json", protocol)
     local = tmp_path / "local_reference/SYNTHETIC_PLL"
     local.mkdir(parents=True)
     index = np.arange(10001)
