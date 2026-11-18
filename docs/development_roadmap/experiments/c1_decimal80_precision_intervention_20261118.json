@@ -1,0 +1,114 @@
+{
+  "schema": "c1_decimal80_precision_intervention_experiment_v1",
+  "date": "2026-11-18",
+  "status": "COMPLETE_COARSE_PRECISION_INTERVENTION_PHYSICAL_PASS",
+  "summary": "完整粗档40002点研究对照保留原float矩阵组装、当前轨迹float历史和输出，把每次线性求解改成Decimal80后回float。共模最大含打印精度上界由约2.533675µV降至0.310077µV，两套独立核均通过原19项物理门。",
+  "intervention": "每个重放步先按既有代码用当前float历史生成binary64 A/b，再用Decimal80部分主元LU求解并回float。初值一致求解采用同一精度干预。",
+  "execution_head": "368b352d60bcd16a1bdc9a58e999831965e6275b",
+  "rows": 40002,
+  "actual_raw_solve_calls": 40002,
+  "initial_solve_calls": 1,
+  "decimal_factors": 9,
+  "maximum_scaled_Decimal80_residual": "2.4176559762977789175403398550221466261303206518669644065724445938555103560054637E-77",
+  "original_TIME_and_6g_bits_preserved": true,
+  "actual_callback_binding_verified": true,
+  "patch_restored": true,
+  "primary_all19_physical_pass": true,
+  "independent_all19_physical_pass": true,
+  "baseline_commonmode_maximum_full_q_V": "0.000002533674891383200133321816799866678183200133321816799866678183200000000",
+  "intervention_commonmode_maximum_full_q_V": "3.100772895909998666680756667999985909998666680756667999985910000000000E-7",
+  "unchanged_commonmode_limit_V": "0.000002",
+  "trajectory_runs": 1,
+  "native_calls": 0,
+  "formal_source_python_changes": 0,
+  "monitor": {
+    "exit_code": 0,
+    "elapsed_s": 127.07247819999975,
+    "peak_private_bytes": 304939008,
+    "minimum_available_bytes": 11636838400,
+    "remaining_owned": [],
+    "cleanup_errors": []
+  },
+  "scope": "本次结果属于完整粗档的求解精度干预研究。当前正式候选待验收，后续精简实现需要项目回归、独立运行、双步长同h/跨h完整比较与Git验收。",
+  "candidate_accepted": false,
+  "formal_new_examples_completed": 9,
+  "C1_status": "in_progress",
+  "next_step": "在忽略目录先验证普通LU的一次准确残差修正。现有局部probe显示有限输入的sumprod仍可能出现溢出NaN或subnormal损失，正式实现需处理数值范围并保留既有错误拒绝行为。",
+  "references": {
+    "ROOT_closure": {
+      "path": "local_reference/native_static_reviews/c1_decimal80_replay_ROOT_20261118T075205231287Z/ROOT_closure.json",
+      "bytes": 5408,
+      "sha256": "2b53bdb63323d5d7de3446e5f6812eb1142b6e1f35f4a9a581f0c719a25350d0"
+    },
+    "manifest": {
+      "path": "local_reference/native_static_reviews/c1_decimal80_replay_ROOT_20261118T075205231287Z/manifest.json",
+      "bytes": 158360,
+      "sha256": "0feac7667a272e25ec01fed300ae29eda137ca0e4e3b8e9faf665ce4d08ae7a8"
+    },
+    "contract": {
+      "path": "local_reference/native_static_reviews/c1_decimal80_replay_ROOT_20261118T075205231287Z/contract.json",
+      "bytes": 3681,
+      "sha256": "3ca6a378ec554400c185f855f46cbaacfe58eb64e99c35134fd8359048f22078"
+    },
+    "execution_seal": {
+      "path": "local_reference/native_static_reviews/c1_decimal80_replay_ROOT_20261118T075205231287Z/execution_seal.json",
+      "bytes": 2349,
+      "sha256": "b40c644db66da4a4615811de759f78debc96cd99dbfc93a3456742105d0b60c9"
+    },
+    "ROOT_admission": {
+      "path": "local_reference/native_static_reviews/c1_decimal80_replay_ROOT_20261118T075205231287Z/ROOT_admission.json",
+      "bytes": 639,
+      "sha256": "83325e095fdc9669303a0a60040aa20c6a69497b57766e6614a53163ab2e4f9a"
+    },
+    "receipt": {
+      "path": "local_reference/native_static_reviews/c1_decimal80_replay_ROOT_20261118T075205231287Z/monitor_output/analysis/receipt.json",
+      "bytes": 4276,
+      "sha256": "a835d09b411e8b55975ac8fec50cef37337b334fb81f2d1ad9ab1dd334caf886"
+    },
+    "solve_diagnostics": {
+      "path": "local_reference/native_static_reviews/c1_decimal80_replay_ROOT_20261118T075205231287Z/monitor_output/analysis/solve_diagnostics.json",
+      "bytes": 3027,
+      "sha256": "c88839ce983d5f6cfd1b541fbb2cf3d1105b456cd3bb9c0ce0de80f05fffe66b"
+    },
+    "primary_physical": {
+      "path": "local_reference/native_static_reviews/c1_decimal80_replay_ROOT_20261118T075205231287Z/monitor_output/analysis/coarse_primary_physical.json",
+      "bytes": 4323,
+      "sha256": "77f64b8c194d74ad1bcd592837ef4292e1263be213bf9d535a670f1e8e0aea57"
+    },
+    "independent_physical": {
+      "path": "local_reference/native_static_reviews/c1_decimal80_replay_ROOT_20261118T075205231287Z/monitor_output/analysis/coarse_independent_physical.json",
+      "bytes": 13172,
+      "sha256": "d0c21b26c62763ce4fbb93d6dc6bf2b17456bdba2838c6a946a823cec91b245e"
+    },
+    "monitor_terminal": {
+      "path": "local_reference/native_static_reviews/c1_decimal80_replay_ROOT_20261118T075205231287Z/monitor_output/terminal.json",
+      "bytes": 1908,
+      "sha256": "3ce929b94205a3a897b0925a1393ac14859fe36ef411b327d2479f23308bebff"
+    },
+    "closed_independent": {
+      "path": "local_reference/native_static_reviews/c1_decimal80_replay_closed_independent_20261118T080009184395Z/receipt.json",
+      "bytes": 7023,
+      "sha256": "f214f8fb3991851d1cb5d411ca104d491b095a50e0e7badaa74e82e6276dd50f"
+    },
+    "driver_checks_before_count_condition_update": {
+      "path": "local_reference/native_static_reviews/c1_decimal80_driver_checks_20261118T074926361445Z/receipt.json",
+      "bytes": 4824,
+      "sha256": "1ced175a384d4fe4abcdfe81aa3faab578d5a3c756a808ed2f3b7ecdf0921796"
+    },
+    "source_snapshot": {
+      "path": "local_reference/c1_openloop_reference_research/20261116T153547253025Z_candidate_fixed_h_pair_v2/source_snapshot.json",
+      "bytes": 22164,
+      "sha256": "3950a1cd10021020f3523f7e302e9e319f0d5e5210d2caef3c4984b47d88b709"
+    },
+    "ledger_closure": {
+      "path": "local_reference/native_static_reviews/c1_zero_solve_ledger_ROOT_20261118T072813477485Z/ROOT_closure.json",
+      "bytes": 8528,
+      "sha256": "b2f706f17e62e26836a487b918db484e475a4cfe3dff4e23584ce1efe6f4e15f"
+    },
+    "refinement_local_probe": {
+      "path": "local_reference/native_static_reviews/c1_iterative_refinement_local_probe_20261118T080140610921Z/receipt.json",
+      "bytes": 4379,
+      "sha256": "e53f872aaa02f7238b33126eb7772e619bdeaf980ef83b3d721d181a640705e0"
+    }
+  }
+}

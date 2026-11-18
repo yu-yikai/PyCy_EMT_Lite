@@ -3,7 +3,7 @@
   "updated_date": "2026-11-18",
   "timezone": "Asia/Shanghai",
   "branch": "codex/emt-examples-longterm",
-  "checkpoint_head": "7a10fc9e1b1d7184412f1edc55a6edb7740a422d",
+  "checkpoint_head": "368b352d60bcd16a1bdc9a58e999831965e6275b",
   "current_task": "C1",
   "formal_new_examples_completed": 9,
   "status_values": [
@@ -722,7 +722,8 @@
         "validation/cases/grid_connected_vsc_open_loop/physics.py",
         "validation/cases/grid_connected_vsc_open_loop/validation_report.json",
         "docs/development_roadmap/experiments/fixed_time_grid_step_repair_20261116.json",
-        "docs/development_roadmap/experiments/c1_observed_forcing_ledger_20261118.json"
+        "docs/development_roadmap/experiments/c1_observed_forcing_ledger_20261118.json",
+        "docs/development_roadmap/experiments/c1_decimal80_precision_intervention_20261118.json"
       ],
       "commits": [
         "b835e31785fab3fda247c333d23edbe9ce576dfa",
@@ -754,7 +755,8 @@
         "fadb979f1dadd88962ae850478a6b864b95652a7",
         "3c3c3ca1dcc025b7bee130f3c90f20f58b37b1d1",
         "bbb1e2d7dd669cade3621f4b0d5853d69ca43300",
-        "8386c4e564314cd507c6c190d33f9c287f4ad762"
+        "8386c4e564314cd507c6c190d33f9c287f4ad762",
+        "368b352d60bcd16a1bdc9a58e999831965e6275b"
       ],
       "blockers": [
         "5µs候选共模物理硬门未通过；固定h修复未解决此误差，必须保留原门、全点及两次失败。",
@@ -768,7 +770,7 @@
         "evidence_sha256": "d92469cdd234477829ca5a5fa75a67648f17235fffadf3d3cbdaa73672375427",
         "native_executed": false
       },
-      "current_stage": "coarse_decimal80_single_factor_replay_preparation",
+      "current_stage": "compensated_lu_refinement_research_preparation",
       "open_loop_candidate_preparation": {
         "record": {
           "path": "docs/development_roadmap/experiments/c1_openloop_candidate_preparation_20261116.json",
@@ -1527,10 +1529,28 @@
         "active_workers": 0
       },
       "next_single_factor_replay": {
-        "status": "preparation",
-        "trajectory_executed": false,
+        "status": "completed_research_intervention",
+        "trajectory_executed": true,
         "formal_candidate_accepted": false,
-        "intervention": "Decimal80 solve of each replay-step original binary64 A/b, then return float64 to existing history/output path."
+        "intervention": "Decimal80 solve of each replay-step original binary64 A/b, then return float64 to existing history/output path.",
+        "record": {
+          "path": "docs/development_roadmap/experiments/c1_decimal80_precision_intervention_20261118.json",
+          "bytes": 6304,
+          "sha256": "54034cb29ae81895bcbe43927f39c989e1f270917d134a387692b2833e09cd21"
+        },
+        "all19_primary_and_independent_physical_pass": true,
+        "active_workers": 0
+      },
+      "next_compensated_refinement": {
+        "status": "planned",
+        "formal_core_changes": false,
+        "full_trajectory_executed": false,
+        "local_probe": {
+          "path": "local_reference/native_static_reviews/c1_iterative_refinement_local_probe_20261118T080140610921Z/receipt.json",
+          "bytes": 4379,
+          "sha256": "e53f872aaa02f7238b33126eb7772e619bdeaf980ef83b3d721d181a640705e0"
+        },
+        "requires_existing_numeric_boundary_semantics": true
       }
     },
     {
@@ -1764,7 +1784,7 @@
       }
     }
   ],
-  "current_stage": "coarse_decimal80_single_factor_replay_preparation",
+  "current_stage": "compensated_lu_refinement_research_preparation",
   "resume_checkpoint_history": [
     {
       "resumed_utc": "2026-11-11T13:24:16.085490+00:00",
