@@ -1,0 +1,205 @@
+{
+  "schema": "c1_observed_forcing_ledger_experiment_v1",
+  "date": "2026-11-18",
+  "status": "COMPLETE_OBSERVED_COARSE_TRAJECTORY_LEDGER",
+  "summary": "对已保存粗档的全部40002点和40001区间进行了Decimal80误差分解。原峰值点的共模幅值主要由桥端方程求解残差与矩阵组装系数舍入的交替累积项组成。下一项完整粗档单因素对照将检验求解精度干预后的轨迹。",
+  "execution_head": "7a10fc9e1b1d7184412f1edc55a6edb7740a422d",
+  "rows": 40002,
+  "positive_intervals": 40001,
+  "csv_npz_uint64_values_verified": 1480074,
+  "actual_A_keys": 8,
+  "all_effective_steps_nominal": true,
+  "precision_digits": 80,
+  "adequacy_maxima": {
+    "rows": 40001,
+    "quantities": {
+      "KCL_identity_A": {
+        "min": "-4.5930441006261305E-74",
+        "min_row": 4475,
+        "max": "4.4121778335020776E-74",
+        "max_row": 29786,
+        "maximum_abs": "4.5930441006261305E-74",
+        "maximum_abs_row": 4475,
+        "last": "9.912557376397049E-80",
+        "last_row": 40001,
+        "rows": 40001
+      },
+      "TR_identity_V": {
+        "min": "-1.381408691431250E-75",
+        "min_row": 39032,
+        "max": "1.282516479451562E-75",
+        "max_row": 35129,
+        "maximum_abs": "1.381408691431250E-75",
+        "maximum_abs_row": 39032,
+        "last": "-7.675830841171875E-76",
+        "last_row": 40001,
+        "rows": 40001
+      },
+      "signed_prefix_identity_V": {
+        "min": "-1.34163329490019686E-68",
+        "min_row": 14534,
+        "max": "6.9260480845800193E-69",
+        "max_row": 35061,
+        "maximum_abs": "1.34163329490019686E-68",
+        "maximum_abs_row": 14534,
+        "last": "3.6897146310646414E-69",
+        "last_row": 40001,
+        "rows": 40001
+      },
+      "commonmode_reconstruction_V": {
+        "min": "-4.4705906776846715E-69",
+        "min_row": 14533,
+        "max": "4.47211098300065620E-69",
+        "max_row": 14534,
+        "maximum_abs": "4.47211098300065620E-69",
+        "maximum_abs_row": 14534,
+        "last": "1.2299048770215472E-69",
+        "last_row": 40001,
+        "rows": 40001
+      }
+    }
+  },
+  "selected_cm_contributions_V": [
+    {
+      "row": 33446,
+      "nominal_index_time_s": "0.167230",
+      "commonmode_raw_V": "-0.00000207306078438832503941537477706705329963927631777376567159889290099506777",
+      "eta_V": "-2.98429895213537545540069376228401427631777376567159889290099506777E-12",
+      "prefix_cm_equivalent_assembled_coefficients_V": "-2.5381128510497469864166198244647275090812303251396148653788144416896140288189589E-7",
+      "prefix_cm_equivalent_bridge_solve_residual_V": "-0.0000018194079995753822332760067052921768026251336299442999114738198253289231758662145",
+      "prefix_cm_equivalent_initial_current_boundary_V": "-0E-41",
+      "prefix_cm_equivalent_history_rounding_V": "1.3760317018398444179015874050656602219842970363591671006561576962353108758660468E-10",
+      "prefix_cm_equivalent_inductor_solve_residual_V": "2.4275572409535047401138374372830067832164778361040291694920450601487899789333333E-11",
+      "prefix_cm_equivalent_voltage_subtraction_V": "-3.9415160949161144198574952085818177393202373555899005926524599393208733333333333E-13"
+    },
+    {
+      "row": 33719,
+      "nominal_index_time_s": "0.168595",
+      "commonmode_raw_V": "0.00000253367471706724716206369701512909829157509399553599041707217234291626116",
+      "eta_V": "5.15846523301299018565305329262751259399553599041707217234291626116E-12",
+      "prefix_cm_equivalent_assembled_coefficients_V": "3.1021351094319668122147010673452986319977388712505645544982074277822419425608407E-7",
+      "prefix_cm_equivalent_bridge_solve_residual_V": "0.0000022236159163571965356033073278170427701250054195246356076197504766204943375349310",
+      "prefix_cm_equivalent_initial_current_boundary_V": "0E-41",
+      "prefix_cm_equivalent_history_rounding_V": "-1.3734737479907938628953617120109775899739814042163398316206788752110122079583801E-10",
+      "prefix_cm_equivalent_inductor_solve_residual_V": "-2.2906223547781867944452743957652821727224708624477659801751092614821233122666667E-11",
+      "prefix_cm_equivalent_voltage_subtraction_V": "3.8489996779350296791643939178131844531619935404857339259857932726542066666666667E-13"
+    },
+    {
+      "row": 40001,
+      "nominal_index_time_s": "0.200005",
+      "commonmode_raw_V": "0.0000019347077948117406509550899946269689784446174367216687061580322721940087966666667",
+      "eta_V": "8.3529366897354649903702039307354703013050020394913656055273421300000000E-15",
+      "prefix_cm_equivalent_assembled_coefficients_V": "2.3689247093723083837371403089991415026827110803386294074865042743601312546327590E-7",
+      "prefix_cm_equivalent_bridge_solve_residual_V": "0.0000016980124265642880151849915607270806631361595342550905240122538542299924216100993",
+      "prefix_cm_equivalent_initial_current_boundary_V": "0E-41",
+      "prefix_cm_equivalent_history_rounding_V": "-1.7903436011536504925036297358273820876111349065583100756093217535558128246630468E-10",
+      "prefix_cm_equivalent_inductor_solve_residual_V": "-1.8467981406570057840691099199401099265821973410552769444282633215441566456E-11",
+      "prefix_cm_equivalent_voltage_subtraction_V": "3.9129880704276801046670255237361274342859177958568276759857932726542066666666667E-13"
+    }
+  ],
+  "raw_cm_definition": "Decimal.from_float(saved binary64 nodes/currents), then frozen commonmode formula with exact declared decimal Ron/Goff/R/Vdc. Physical JSON full-q extrema supply original diagnostic indices only.",
+  "window_selection": "Closed intervals on original integer index k times nominal h. Actual binary64 Time and effective h remain original.",
+  "actual_time_boundary_membership_differences": {
+    "all": [
+      {
+        "row": 40000,
+        "actual_time_hex": "0x1.999999999999ap-3",
+        "nominal_member": true,
+        "actual_binary_center_member": false
+      }
+    ],
+    "startup": [
+      {
+        "row": 4000,
+        "actual_time_hex": "0x1.47ae147ae147bp-6",
+        "nominal_member": true,
+        "actual_binary_center_member": false
+      }
+    ],
+    "transition": [
+      {
+        "row": 20000,
+        "actual_time_hex": "0x1.999999999999ap-4",
+        "nominal_member": true,
+        "actual_binary_center_member": false
+      }
+    ],
+    "steady": [
+      {
+        "row": 40000,
+        "actual_time_hex": "0x1.999999999999ap-3",
+        "nominal_member": true,
+        "actual_binary_center_member": false
+      }
+    ]
+  },
+  "scope": "结论描述已保存粗档轨迹中各数值驱动的有符号累积。初值与全部采样时刻均保留，后续完整干预实验用于因果检验。",
+  "monitor": {
+    "exit_code": 0,
+    "elapsed_s": 11.261065799997596,
+    "peak_private_bytes": 53276672,
+    "minimum_available_bytes": 16705937408,
+    "remaining_owned": [],
+    "cleanup_errors": []
+  },
+  "numerical_solves": 0,
+  "trajectory_runs": 0,
+  "native_calls": 0,
+  "source_python_changes": 0,
+  "full_pytest": "既有1566项含slow通过，120源码与2依赖逐字节吻合，本轮复用该结果。",
+  "candidate_accepted": false,
+  "formal_new_examples_completed": 9,
+  "C1_status": "in_progress",
+  "references": {
+    "ROOT_closure": {
+      "path": "local_reference/native_static_reviews/c1_zero_solve_ledger_ROOT_20261118T072813477485Z/ROOT_closure.json",
+      "bytes": 8528,
+      "sha256": "b2f706f17e62e26836a487b918db484e475a4cfe3dff4e23584ce1efe6f4e15f"
+    },
+    "manifest": {
+      "path": "local_reference/native_static_reviews/c1_zero_solve_ledger_ROOT_20261118T072813477485Z/manifest.json",
+      "bytes": 160212,
+      "sha256": "a9c01bb0f1f1222a194e434adde8fe4ff09ee2e9c8f0d9c82515bf56158da320"
+    },
+    "execution_seal": {
+      "path": "local_reference/native_static_reviews/c1_zero_solve_ledger_ROOT_20261118T072813477485Z/execution_seal.json",
+      "bytes": 2256,
+      "sha256": "017754ce56e13b61ca5d9a93e7cc7c9ca7994664d5ed88ad9d7ae92e2dcbebd4"
+    },
+    "ROOT_admission": {
+      "path": "local_reference/native_static_reviews/c1_zero_solve_ledger_ROOT_20261118T072813477485Z/ROOT_admission.json",
+      "bytes": 554,
+      "sha256": "25d4af9de7c9e02f0a66bf4c45476dbba1b2b886a09518bc35c4f732846f43cf"
+    },
+    "receipt": {
+      "path": "local_reference/native_static_reviews/c1_zero_solve_ledger_ROOT_20261118T072813477485Z/monitor_output/analysis/receipt.json",
+      "bytes": 216983,
+      "sha256": "edbd44389c7e3104700d76f223b691db9e43287dfcb76ecbc1b9b2852ae5c4a6"
+    },
+    "monitor_terminal": {
+      "path": "local_reference/native_static_reviews/c1_zero_solve_ledger_ROOT_20261118T072813477485Z/monitor_output/terminal.json",
+      "bytes": 1907,
+      "sha256": "dedfdb5079e9846b194f0721167308016ddc2fde6498ec672d75a41213491602"
+    },
+    "math_review": {
+      "path": "local_reference/native_static_reviews/c1_zero_solve_ledger_closed_math_review_20261118T073518130011Z/receipt.json",
+      "bytes": 7476,
+      "sha256": "fd8226b810e0ae138d011ba4637a3f1f03522eb167ecf6d1ce82b27db240d1b0"
+    },
+    "integrity_review": {
+      "path": "local_reference/native_static_reviews/c1_zero_solve_ledger_closed_independent_20261118T073508914547Z/receipt.json",
+      "bytes": 4522,
+      "sha256": "7de77dd1508a7355d9db276b149da74f5abb2555d765aad98318c405efbf3fad"
+    },
+    "source_snapshot": {
+      "path": "local_reference/c1_openloop_reference_research/20261116T153547253025Z_candidate_fixed_h_pair_v2/source_snapshot.json",
+      "bytes": 22164,
+      "sha256": "3950a1cd10021020f3523f7e302e9e319f0d5e5210d2caef3c4984b47d88b709"
+    },
+    "plan": {
+      "path": "local_reference/native_static_reviews/c1_fixed_h_zero_solve_ledger_plan_20261116T154539272172Z/plan.json",
+      "bytes": 14622,
+      "sha256": "154f0b73e990da283a53f4b9bc80afdf4e3bc2b1d7dfea70895c8b5024f73993"
+    }
+  }
+}

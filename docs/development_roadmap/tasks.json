@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
-  "updated_date": "2026-11-16",
+  "updated_date": "2026-11-18",
   "timezone": "Asia/Shanghai",
   "branch": "codex/emt-examples-longterm",
-  "checkpoint_head": "8386c4e564314cd507c6c190d33f9c287f4ad762",
+  "checkpoint_head": "7a10fc9e1b1d7184412f1edc55a6edb7740a422d",
   "current_task": "C1",
   "formal_new_examples_completed": 9,
   "status_values": [
@@ -721,7 +721,8 @@
         "validation/cases/grid_connected_vsc_open_loop/metrics.py",
         "validation/cases/grid_connected_vsc_open_loop/physics.py",
         "validation/cases/grid_connected_vsc_open_loop/validation_report.json",
-        "docs/development_roadmap/experiments/fixed_time_grid_step_repair_20261116.json"
+        "docs/development_roadmap/experiments/fixed_time_grid_step_repair_20261116.json",
+        "docs/development_roadmap/experiments/c1_observed_forcing_ledger_20261118.json"
       ],
       "commits": [
         "b835e31785fab3fda247c333d23edbe9ce576dfa",
@@ -767,7 +768,7 @@
         "evidence_sha256": "d92469cdd234477829ca5a5fa75a67648f17235fffadf3d3cbdaa73672375427",
         "native_executed": false
       },
-      "current_stage": "openloop_candidate_numeric_failed_fixed_h_verified_zero_solve_ledger_planned",
+      "current_stage": "coarse_decimal80_single_factor_replay_preparation",
       "open_loop_candidate_preparation": {
         "record": {
           "path": "docs/development_roadmap/experiments/c1_openloop_candidate_preparation_20261116.json",
@@ -1508,10 +1509,28 @@
           "bytes": 14622,
           "sha256": "154f0b73e990da283a53f4b9bc80afdf4e3bc2b1d7dfea70895c8b5024f73993"
         },
-        "execution_authorized": false,
-        "analyzer_written": false,
-        "executed": false,
-        "new_solver_or_trajectory_authorized_by_plan": false
+        "execution_authorized": true,
+        "analyzer_written": true,
+        "executed": true,
+        "new_solver_or_trajectory_authorized_by_plan": false,
+        "status": "completed_observed_ledger",
+        "execution_seal": {
+          "path": "local_reference/native_static_reviews/c1_zero_solve_ledger_ROOT_20261118T072813477485Z/execution_seal.json",
+          "bytes": 2256,
+          "sha256": "017754ce56e13b61ca5d9a93e7cc7c9ca7994664d5ed88ad9d7ae92e2dcbebd4"
+        },
+        "record": {
+          "path": "docs/development_roadmap/experiments/c1_observed_forcing_ledger_20261118.json",
+          "bytes": 9852,
+          "sha256": "890e4a09f8a3c6f1e5142305679bb5a3542b6028d1bad0b5db91c16463456649"
+        },
+        "active_workers": 0
+      },
+      "next_single_factor_replay": {
+        "status": "preparation",
+        "trajectory_executed": false,
+        "formal_candidate_accepted": false,
+        "intervention": "Decimal80 solve of each replay-step original binary64 A/b, then return float64 to existing history/output path."
       }
     },
     {
@@ -1661,43 +1680,23 @@
   ],
   "execution_status": "active",
   "pause_checkpoint": {
-    "path": "local_reference/c1_openloop_reference_research/pause_checkpoints/20261112T004850063339Z/pause.json",
-    "bytes": 3587,
-    "sha256": "d79fc87db723617ae06b4d507b7ef4905db3e66b3ba2022bb16753c67573026c",
-    "reason": "explicit_user_goal_paused",
-    "paused_utc": "2026-11-12T00:48:50.063339+00:00",
-    "last_pushed_milestone": "63e51654499c44ac215ab776d8b58f994935d7c1",
-    "task": "C1",
-    "task_status": "in_progress",
-    "native_started_this_turn": false,
-    "known_owned_runs_remaining": 0,
-    "resume_requires_explicit_user_instruction": false,
-    "formal_new_examples_completed": 9,
-    "historical_pause_only": true,
-    "resumed_by": {
-      "path": "local_reference/c1_openloop_reference_research/resume_checkpoints/20261116T022604926321Z/resume.json",
-      "bytes": 2656,
-      "sha256": "f5ede11533040fa53aa4be58c0b8a507afff22c8267ccb50bfb2ecfaaef448e3"
-    }
+    "record": {
+      "path": "local_reference/c1_openloop_reference_research/pause_checkpoints/20261116T160442401648Z/pause.json",
+      "bytes": 1555,
+      "sha256": "cde5aa19d53f853d09f3e0f8a6b9b22e59d4b9719c2a14e5b37a636ef6b98631"
+    },
+    "head": "7a10fc9e1b1d7184412f1edc55a6edb7740a422d",
+    "status": "paused_before_ledger_implementation",
+    "explicit_user_request": true
   },
   "goal_status": "active",
   "resume_checkpoint": {
-    "resumed_utc": "2026-11-16T02:26:04.926321+00:00",
-    "authorization": "active_goal_continuation_user_instruction",
-    "checked_head": "63e51654499c44ac215ab776d8b58f994935d7c1",
-    "remote_head_verified_same": true,
-    "previous_goal_turn_classification": "no_progress_status_only",
     "record": {
-      "path": "local_reference/c1_openloop_reference_research/resume_checkpoints/20261116T022604926321Z/resume.json",
-      "bytes": 2656,
-      "sha256": "f5ede11533040fa53aa4be58c0b8a507afff22c8267ccb50bfb2ecfaaef448e3"
+      "path": "local_reference/c1_openloop_reference_research/resume_checkpoints/20261118T071130521842Z/resume.json",
+      "bytes": 429,
+      "sha256": "7297debd39e5d5471b43b7b62bb5cd5845c10c078bba68d09997a7631456b8be"
     },
-    "source113_unchanged_at_resume": true,
-    "no_previous_native_or_tests_restarted": true,
-    "latest_checked_head": "fadb979f1dadd88962ae850478a6b864b95652a7",
-    "latest_goal_turn_classification": "progress",
-    "latest_progress": "MAT-only short recovery and both actual no-JVM full Simscape variants passed; complete pointwise/pair math and independent raw-time/finite-point audit qualified the frozen open-loop reference. Candidate pending.",
-    "latest_remote_head_verified_same": true
+    "explicit_user_resume": true
   },
   "pause_checkpoint_history": [
     {
@@ -1743,9 +1742,29 @@
       "resume_requires_explicit_user_instruction": true,
       "formal_new_examples_completed": 9,
       "historical_pause_only": true
+    },
+    {
+      "path": "local_reference/c1_openloop_reference_research/pause_checkpoints/20261112T004850063339Z/pause.json",
+      "bytes": 3587,
+      "sha256": "d79fc87db723617ae06b4d507b7ef4905db3e66b3ba2022bb16753c67573026c",
+      "reason": "explicit_user_goal_paused",
+      "paused_utc": "2026-11-12T00:48:50.063339+00:00",
+      "last_pushed_milestone": "63e51654499c44ac215ab776d8b58f994935d7c1",
+      "task": "C1",
+      "task_status": "in_progress",
+      "native_started_this_turn": false,
+      "known_owned_runs_remaining": 0,
+      "resume_requires_explicit_user_instruction": false,
+      "formal_new_examples_completed": 9,
+      "historical_pause_only": true,
+      "resumed_by": {
+        "path": "local_reference/c1_openloop_reference_research/resume_checkpoints/20261116T022604926321Z/resume.json",
+        "bytes": 2656,
+        "sha256": "f5ede11533040fa53aa4be58c0b8a507afff22c8267ccb50bfb2ecfaaef448e3"
+      }
     }
   ],
-  "current_stage": "openloop_candidate_numeric_failed_fixed_h_verified_zero_solve_ledger_planned",
+  "current_stage": "coarse_decimal80_single_factor_replay_preparation",
   "resume_checkpoint_history": [
     {
       "resumed_utc": "2026-11-11T13:24:16.085490+00:00",
@@ -1766,6 +1785,24 @@
       "latest_checked_head": "63e51654499c44ac215ab776d8b58f994935d7c1",
       "latest_remote_head_verified_same": true,
       "latest_goal_turn_classification": "progress_before_explicit_pause"
+    },
+    {
+      "resumed_utc": "2026-11-16T02:26:04.926321+00:00",
+      "authorization": "active_goal_continuation_user_instruction",
+      "checked_head": "63e51654499c44ac215ab776d8b58f994935d7c1",
+      "remote_head_verified_same": true,
+      "previous_goal_turn_classification": "no_progress_status_only",
+      "record": {
+        "path": "local_reference/c1_openloop_reference_research/resume_checkpoints/20261116T022604926321Z/resume.json",
+        "bytes": 2656,
+        "sha256": "f5ede11533040fa53aa4be58c0b8a507afff22c8267ccb50bfb2ecfaaef448e3"
+      },
+      "source113_unchanged_at_resume": true,
+      "no_previous_native_or_tests_restarted": true,
+      "latest_checked_head": "fadb979f1dadd88962ae850478a6b864b95652a7",
+      "latest_goal_turn_classification": "progress",
+      "latest_progress": "MAT-only short recovery and both actual no-JVM full Simscape variants passed; complete pointwise/pair math and independent raw-time/finite-point audit qualified the frozen open-loop reference. Candidate pending.",
+      "latest_remote_head_verified_same": true
     }
   ],
   "current_source_snapshot": {
