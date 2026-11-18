@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "date": "2026-11-18",
+  "commit": "a777c00c283498ab2dd9a1542a4454b7cf8c5e4a",
+  "platform": "Ubuntu 24.04.4 LTS, WSL2, x86_64",
+  "python": "3.14.5",
+  "verified_git_files_before_and_after": 315,
+  "passed_checks": ["locked sync", "Ruff", "mypy", "example 28 (Agg, 40001 samples)", "build", "wheel smoke"],
+  "pytest_with_slow_and_coverage": {
+    "passed": 1568,
+    "failed": 5,
+    "errors": 0,
+    "skipped": 0,
+    "elapsed_s": 672.654,
+    "tests_xml_sha256": "c1933de034715b0f55c57187e68045e416a108da5e414b1a0de0200bfd319a21"
+  },
+  "failures": [
+    "Four synthetic PLL archive tests bound source copies to hashes produced on a CRLF checkout.",
+    "Example 24 phase-A startup inductor voltage was −6.871960661018791e−7 V with a zero source value and a 1e−7 V test limit."
+  ],
+  "receipt": {
+    "path": "local_reference/native_static_reviews/f1_ubuntu_exact_a777c00_20261118T130218540993Z/validation_a777c00/receipt.json",
+    "bytes": 8320,
+    "sha256": "240be77957fb9e54fe40441dc7987073b0c8c50129674e00f190beebd0a2ef14"
+  },
+  "initial_constraint_diagnosis": {
+    "finding": "On Linux the unrefined LU and a Decimal80 solve both reproduce the startup error from the original completed matrix. Accurate correction of the QR dependency coefficients makes the three phase weights equal and reduces the phase-A error to 2.67e−32 V in the short probe.",
+    "receipt": "local_reference/native_static_reviews/f1_ubuntu_exact_a777c00_20261118T130218540993Z/transformer_initial_diagnosis/receipt.json",
+    "sha256": "11ff6a0d06f0cb7f2c9f75c460f091d64595b10b03c4675ecafe7acd4876656b"
+  },
+  "repair_commits": [
+    "2479b6d2422a3d7e13a321dece00899bd0669f83",
+    "287aa5ee00b8b6bc6c9638a66cf4136dc0029a70"
+  ],
+  "windows_regression": {
+    "locked_sync_ruff_mypy": "PASS",
+    "pytest_with_slow": {"passed": 1573, "failed": 0, "errors": 0, "skipped": 0, "elapsed_s": 747.334},
+    "tests_xml": ".tmp/longterm/pytest-f1-windows-qr-20261118T134543041Z.xml",
+    "sha256": "ad017a88d17316374c35be5e9e37bb1678e13e94e3b6caa967427629bdb5220b"
+  },
+  "ubuntu_regression": {
+    "patch_sha256": "2f522812d84053c0496b20ed44488c737886dd718f45398caa0f439c01644382",
+    "verified_files_before_and_after": 315,
+    "locked_sync_ruff_mypy": "PASS",
+    "targeted_passed": 248,
+    "pytest_with_slow_and_coverage": {"passed": 1573, "failed": 0, "errors": 0, "skipped": 0, "elapsed_s": 658.212},
+    "example_28_samples": 40001,
+    "receipt": "local_reference/native_static_reviews/f1_ubuntu_exact_a777c00_20261118T130218540993Z/root_patch_20261118T134758635479Z/linux_validation_retry_temp_parent/receipt.json",
+    "sha256": "f4baf1d8d38f369e70930b64e8715750c850387c79a888b1dcf23807b0d0ced9"
+  },
+  "commercial_regression_after_repair": {
+    "example_24": {
+      "passed_checks": 38,
+      "candidate_samples": 100001,
+      "report": "local_reference/three_phase_transformer_chain/comparison_results/20261118T134953766485Z/report.json",
+      "sha256": "31f11e8dc0b4d86793f0672170ad71cdad06393d23fb4db727806da38c467405"
+    },
+    "example_28": {
+      "candidate_samples": [40002, 80003],
+      "waveforms_bitwise_equal_to_accepted_run": true,
+      "passed_original_limits_on_both_paths": true,
+      "receipt": "local_reference/native_static_reviews/c1_initial_qr_pair_closed_independent_20261118T135636475484Z/receipt.json",
+      "sha256": "3471a00988b7ea326ed1306b70287985e629e657e24f800982790db6f6a74434"
+    }
+  },
+  "scope": "Local operating-system tests and reruns against qualified native archives. Hosted CI remains a separate F1 requirement."
+}
