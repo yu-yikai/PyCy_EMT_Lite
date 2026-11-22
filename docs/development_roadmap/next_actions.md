@@ -1,7 +1,7 @@
 # 恢复与下一步
 
-2026-11-22。主工况的双档原生、同档和跨档判据均已通过。依次运行已冻结的两档仅 d 阶跃，保留真实回执和完整时钟。各自通过原电气、控制与跟踪后，对四份原生报告一起计算同档、跨档和主工况／仅 d 阶跃成组指标。成组通过后完成正式教学算例与独立运行、测试和交付。
-[主工况验证](experiments/c1_pscad_main_both_steps_20261122.json) · [仅 d 阶跃冻结协议](../../validation/cases/grid_connected_vsc_closed_loop/pscad_closed_loop_d_only_variants.json)
+2026-11-22。四工况参考、PyCy 原型比较和成组验收均已通过。接下来实现 29 号已知角度 dq 电流环，复用 28 号的物理接线以及既有双 PI、dq 变换和载波。保留 28 号开环门极回调与现有验收行为。在正式入口中演示 100 µs 求解后采样、下一 5 µs 门极生效、细档半步保持、限幅和两轴积分回滚。用新入口重新跑四工况并对照已合格参考，覆盖两档时序、限幅恢复和独立实例状态，补齐中英文入口、图和报告后运行原回归。
+[完整参考报告](../../validation/cases/grid_connected_vsc_closed_loop/qualified_reference_report.json) · [控制设计](../specs/algorithms/known-angle-dq-current/known-angle-dq-current-system-architecture.md)
 
 若 Git 直连重置且 Windows 已有本机系统代理，可在仓库根目录借用该代理做单次推送。2026-11-22 已在本机实测成功。
 

@@ -1,5 +1,8 @@
 # 技术决策
 
+2026-11-22。认定直流负端求解参考点与整数角度约简适用于已验收的四工况。交流中性点差分观测、物理支路和全部原门限沿用。正式 PyCy 教学入口保持电网接地点和浮置直流源的物理表示，沿用既有双 PI、转轴变换和求解后回调。
+[完整参考报告](../../validation/cases/grid_connected_vsc_closed_loop/qualified_reference_report.json)
+
 2026-11-22。两档主工况对标通过后，仅 d 阶跃从各自已合格的实际原生控制源删除 80 ms 的 q 赋值一行。保留 q 轴调节、每步原零初始化及门极施加时序，并独立核对成组比较的共同前段。
 [仅 d 阶跃冻结协议](../../validation/cases/grid_connected_vsc_closed_loop/pscad_closed_loop_d_only_variants.json)
 

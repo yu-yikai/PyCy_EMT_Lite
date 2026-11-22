@@ -1,0 +1,231 @@
+{
+  "schema_version": 1,
+  "date": "2026-11-22",
+  "status": "four_native_variants_qualified_pycy_prototype_compared",
+  "scope": "Known-angle AC-side dq current loop with a floating 400 V source. One main and one d-only case, two electrical steps.",
+  "commercial_source": {
+    "engine": "PSCAD 5.0 / GFortran 4.6 x86",
+    "reference_zero": "DC negative while channels retained their AC-neutral differential reference",
+    "raw_storage": "local_reference/native_static_reviews"
+  },
+  "protocol": {
+    "path": "validation/cases/grid_connected_vsc_closed_loop/reference_protocol.json",
+    "bytes": 8581,
+    "sha256": "53c1eb1c237fc4bd78ff83feb614023fc7d06b4b1700e7df09e1cd4de8236f06"
+  },
+  "d_only_prospective": {
+    "path": "validation/cases/grid_connected_vsc_closed_loop/pscad_closed_loop_d_only_variants.json",
+    "bytes": 3446,
+    "sha256": "f3a86abd9e52ca675e708725dc9934f9c278c2666c8cc512320128dcf5a9103b"
+  },
+  "d_only_independent_admission_preflight": {
+    "path": "local_reference/native_static_reviews/c1_gauge_reduced_angle_d_only_audit_20261122/offline_admission_receipt.json",
+    "bytes": 5018,
+    "sha256": "4bab855cb0ed4d2ff152cc51fb73c0f8cfbf524faf675a467a0f66eed622ba4f"
+  },
+  "d_only_coarse_anchor_replay": {
+    "path": "local_reference/native_static_reviews/c1_gauge_reduced_angle_d_only_audit_20261122/actual_coarse_main_anchor_replay.json",
+    "bytes": 2077,
+    "sha256": "a6ad5805ec98136e9e93a67bb530b078b8d5592eb07e6621ae25dd5753abdfa0"
+  },
+  "d_only_validation_preflight": {
+    "path": "local_reference/native_static_reviews/c1_d_only_precise_angle_preflight_20261122T102023267255Z/report.json",
+    "bytes": 1602,
+    "sha256": "74b17c972cf8f078699c1a8078d4e10ebe8686a1e1e35fb75832ebfc917684a4"
+  },
+  "native_runs": {
+    "main_2p5us": {
+      "rows": 80003,
+      "updates": 2000,
+      "gate_applications": 2000,
+      "fine_half_steps_held": 40001,
+      "common_mode_upper_bound_V": 2.75153333333332e-08,
+      "eq_max_error_V": 5.953574683007231e-14,
+      "maximum_cycle_tracking_error_A": 0.06268664177495342,
+      "native_execution": {
+        "path": "local_reference/native_static_reviews/c1_pscad_reference_point_reduced_angle_2p5us_20261122/n/20261122T095821385399Z/native_execution_receipt.json",
+        "bytes": 6175,
+        "sha256": "7d9ac5b638b40b7f0986f6d1f63731327892235fc2e5fb4867845849af4866a5"
+      },
+      "generated_admission": {
+        "path": "local_reference/native_static_reviews/c1_pscad_reference_point_reduced_angle_2p5us_20261122/n/20261122T095821385399Z/pre_run_admission.json",
+        "bytes": 4092,
+        "sha256": "8aef1a01c043f0b90f3e51280ae9a9fd917e7fd4ccafba3e80b46208a8769b67"
+      },
+      "terminal": {
+        "path": "local_reference/native_static_reviews/c1_pscad_reference_point_reduced_angle_2p5us_20261122/n/20261122T095821385399Z/terminal.json",
+        "bytes": 7065,
+        "sha256": "168401d95931c9fa39af745b7c499a85e7689ea22bd53b637a41d22314b2c681"
+      },
+      "independent_numeric": {
+        "path": "local_reference/native_static_reviews/c1_pscad_long_stream_review_precise_angle_20261122T100626540021Z/report.json",
+        "bytes": 21522,
+        "sha256": "6bb04e791f630f347dac296de89d7a4c785de16466a8bdf344e3ffea0889e710"
+      }
+    },
+    "main_5us": {
+      "rows": 40002,
+      "updates": 2000,
+      "gate_applications": 2000,
+      "fine_half_steps_held": 0,
+      "common_mode_upper_bound_V": 1.0352989990000133e-08,
+      "eq_max_error_V": 6.129365327724425e-14,
+      "maximum_cycle_tracking_error_A": 0.057379308129587914,
+      "native_execution": {
+        "path": "local_reference/native_static_reviews/c1_pscad_reference_point_reduced_angle_5us_main_20261122/n/20261122T101529924426Z/native_execution_receipt.json",
+        "bytes": 7004,
+        "sha256": "46673ca1f022430b42e2728545b99c9f3e5bb54fd688d0598bbaf967d6226107"
+      },
+      "generated_admission": {
+        "path": "local_reference/native_static_reviews/c1_pscad_reference_point_reduced_angle_5us_main_20261122/n/20261122T101529924426Z/pre_run_admission.json",
+        "bytes": 4931,
+        "sha256": "f4348e07c5d3f4153e6e25994c6d71876b9383e25ad1c4060f57c3a495611af8"
+      },
+      "terminal": {
+        "path": "local_reference/native_static_reviews/c1_pscad_reference_point_reduced_angle_5us_main_20261122/n/20261122T101529924426Z/terminal.json",
+        "bytes": 7595,
+        "sha256": "46d96125569953cbef7e0db2635b766163f75745bc9462b46d06c95e178c6e6e"
+      },
+      "independent_numeric": {
+        "path": "local_reference/native_static_reviews/c1_pscad_long_stream_review_precise_coarse_20261122T102203102625Z/report.json",
+        "bytes": 19457,
+        "sha256": "de6fcef251cb2213d038bdba25c3a2fa451ed3720cfc5ca360187b25d68e4de5"
+      }
+    },
+    "d_only_2p5us": {
+      "rows": 80003,
+      "updates": 2000,
+      "gate_applications": 2000,
+      "fine_half_steps_held": 40001,
+      "common_mode_upper_bound_V": 4.648469335999987e-08,
+      "eq_max_error_V": 5.953574683007231e-14,
+      "maximum_cycle_tracking_error_A": 0.058559409517140816,
+      "native_execution": {
+        "path": "local_reference/native_static_reviews/c1_pscad_reference_point_reduced_angle_2p5us_d_only_20261122/n/20261122T102940843635Z/native_execution_receipt.json",
+        "bytes": 4665,
+        "sha256": "b9fd31ddd8db2786e8e197e73f20e9117613e9a20c4b4ae424cd1e224a30fda4"
+      },
+      "generated_admission": {
+        "path": "local_reference/native_static_reviews/c1_pscad_reference_point_reduced_angle_2p5us_d_only_20261122/n/20261122T102940843635Z/pre_run_admission.json",
+        "bytes": 2365,
+        "sha256": "757db9949ee3f5941fab61e7d6811e5f54f82b2b175615791ac452469474663f"
+      },
+      "terminal": {
+        "path": "local_reference/native_static_reviews/c1_pscad_reference_point_reduced_angle_2p5us_d_only_20261122/n/20261122T102940843635Z/terminal.json",
+        "bytes": 7101,
+        "sha256": "591e7d8a48155e5f2b6f103ff1c86e6a1ca33ff06aa5804a7914ea2a74dd2116"
+      },
+      "independent_numeric": {
+        "path": "local_reference/native_static_reviews/c1_pscad_long_stream_review_precise_d_only_20261122T104016718847Z/report.json",
+        "bytes": 20968,
+        "sha256": "3eefd5e53a17cc3246322a3295ab84cc1602cac720fe05af50836761c8753301"
+      }
+    },
+    "d_only_5us": {
+      "rows": 40002,
+      "updates": 2000,
+      "gate_applications": 2000,
+      "fine_half_steps_held": 0,
+      "common_mode_upper_bound_V": 9.404866866666267e-09,
+      "eq_max_error_V": 6.129365327724425e-14,
+      "maximum_cycle_tracking_error_A": 0.036060137820168814,
+      "native_execution": {
+        "path": "local_reference/native_static_reviews/c1_pscad_reference_point_reduced_angle_5us_d_only_20261122/n/20261122T104018940008Z/native_execution_receipt.json",
+        "bytes": 4659,
+        "sha256": "1d47552d19bedd914ec153b000d31166a47127a3434c50c0246e1024d1d52e9d"
+      },
+      "generated_admission": {
+        "path": "local_reference/native_static_reviews/c1_pscad_reference_point_reduced_angle_5us_d_only_20261122/n/20261122T104018940008Z/pre_run_admission.json",
+        "bytes": 2363,
+        "sha256": "d85bd72b257a697ecd22692b6cca31149c96bbae631725dc84d38ed705d49bf7"
+      },
+      "terminal": {
+        "path": "local_reference/native_static_reviews/c1_pscad_reference_point_reduced_angle_5us_d_only_20261122/n/20261122T104018940008Z/terminal.json",
+        "bytes": 7074,
+        "sha256": "e42d9c5bad00a216a2d4627c21666adb6c187fb541093996175d9a52b9d13907"
+      },
+      "independent_numeric": {
+        "path": "local_reference/native_static_reviews/c1_pscad_long_stream_review_precise_d_only_20261122T104650963400Z/report.json",
+        "bytes": 18682,
+        "sha256": "bdcdf00a5e8d6a94c49f4cd85f4fdd9a7202f9c95d733c47228c8dde709d22ee"
+      }
+    }
+  },
+  "total_native_rows": 240010,
+  "controls_and_electrical_limits_retained": true,
+  "original_common_mode_limit_V": 2e-06,
+  "original_eq_limit_V": 1e-12,
+  "same_step": {
+    "independent_archived_pycy_prototype": true,
+    "windows": 32,
+    "all_passed": true,
+    "continuous_checks": 736,
+    "exact_gate_r_and_saturation_checks": 416
+  },
+  "native_cross_step": {
+    "main": {
+      "cycle_windows": 15,
+      "rms_windows": 8,
+      "maximum_cycle_mean_dq_difference_A": 0.04354539102593691,
+      "maximum_window_dq_rmse_A": 0.08141387971245442,
+      "shared_gate_difference_rows_diagnostic": 88
+    },
+    "d_only": {
+      "cycle_windows": 15,
+      "rms_windows": 6,
+      "maximum_cycle_mean_dq_difference_A": 0.0390664218666712,
+      "maximum_window_dq_rmse_A": 0.06527443299987273,
+      "shared_gate_difference_rows_diagnostic": 72
+    }
+  },
+  "paired_scenarios": {
+    "5us": {
+      "exact_shared_prefix_checks_passed": true,
+      "prefix_rows": 16001,
+      "main_minus_d_only_cycle_effect_A": [
+        [
+          0.030854704962286483,
+          1.5671449843951124
+        ],
+        [
+          0.03688714632488388,
+          1.5299790565473923
+        ],
+        [
+          0.06732482059233158,
+          1.5489075172560025
+        ]
+      ]
+    },
+    "2p5us": {
+      "exact_shared_prefix_checks_passed": true,
+      "prefix_rows": 32002,
+      "main_minus_d_only_cycle_effect_A": [
+        [
+          0.06174842656088875,
+          1.5358154594059439
+        ],
+        [
+          0.05960328264659642,
+          1.5509809172383373
+        ],
+        [
+          0.0651274922825531,
+          1.5672802318473078
+        ]
+      ]
+    }
+  },
+  "comparison": {
+    "path": "local_reference/native_static_reviews/c1_long_window_metrics_20261122T104758901316Z/report.json",
+    "bytes": 589490,
+    "sha256": "8d3a24b4acf26d2181605bd87a55c255b02b60789656df2906d39e9ba3b994ed"
+  },
+  "cycle_means_figure": {
+    "path": "local_reference/native_static_reviews/c1_long_window_metrics_20261122T104758901316Z/dq_cycle_means.png",
+    "bytes": 91901,
+    "sha256": "d29570babb95011658b5966109d7b7279eccf30fbcdd9ef306ce1e8a47fc4a03"
+  },
+  "whole_native_reference_qualified": true,
+  "formal_example_accepted": false
+}

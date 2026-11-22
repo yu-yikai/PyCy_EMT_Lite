@@ -1,7 +1,7 @@
 # 持久进度
 
-2026-11-22。C1 两档主工况均已完成真实 PSCAD 长窗和同档 PyCy 比较，主工况粗细档比较也通过。已冻结两档仅 d 阶跃准入。正式新增算例共 10 个。
-[两档主工况结果](experiments/c1_pscad_main_both_steps_20261122.json)
+2026-11-22。C1 已知角度 dq 电流环取得完整长窗参考资格。主工况和仅 d 阶跃各两档均真实运行，合计 240,010 点。同档 PyCy 原型比较、两场景跨档及两档成组比较全部通过。正式教学算例待实现和验收，正式新增算例共 10 个。
+[完整参考报告](../../validation/cases/grid_connected_vsc_closed_loop/qualified_reference_report.json)
 
 2026-11-22。C1 已完成数值参考点对照的真实 PSCAD 细档主工况。80,003 点的原电气判据与跟踪检查通过，共模残差峰值为 0.0275 µV。原控制 (e_q) 判据仍有超限，完整长窗参考待验。正式新增算例共 10 个。
 [数值参考点实测](experiments/c1_pscad_reference_point_trial_20261122.json)
