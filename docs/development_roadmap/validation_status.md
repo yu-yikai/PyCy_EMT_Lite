@@ -1,5 +1,8 @@
 # 验证状态
 
+2026-11-22。电源精度两档共 120,005 点。原 19 项物理、18 个同档窗口、严格 PLL 状态及全部中点保持通过。固定候选对照的最大 PLL 相角差 2.665e-15 rad，原生跨档周期均值差 0.04845 A、分窗 RMS 差 0.07194 A。新正式入口对标待执行。
+[电源精度双档参考报告](../../validation/cases/grid_connected_vsc_pll/source_precision_reference_report.json)
+
 2026-11-22。PSCAD 粗档电源对照通过原 19 项全点电气判据和全部九个同档窗口。PLL 相角误差峰值 2.665e-15 rad，门限 1e-11 rad。频率、积分与归一化误差均满足冻结门限。
 [粗档电源精度结果](../../validation/cases/grid_connected_vsc_pll/source_precision_trial_result.json)
 

@@ -3,7 +3,7 @@
   "updated_date": "2026-11-22",
   "timezone": "Asia/Shanghai",
   "branch": "codex/emt-examples-longterm",
-  "checkpoint_head": "d86c56ff8307e5efa58f67e51fb3d2303cac65ca",
+  "checkpoint_head": "c9f67165aa77cface04cb8727d7a9997c676d428",
   "current_task": "C1",
   "formal_new_examples_completed": 11,
   "status_values": [
@@ -760,7 +760,8 @@
         "validation/cases/grid_connected_vsc_pll/source_precision_trial.json",
         "validation/cases/grid_connected_vsc_pll/validation_report.json",
         "validation/cases/grid_connected_vsc_pll/source_precision_trial_result.json",
-        "validation/cases/grid_connected_vsc_pll/source_precision_fine_trial.json"
+        "validation/cases/grid_connected_vsc_pll/source_precision_fine_trial.json",
+        "validation/cases/grid_connected_vsc_pll/source_precision_reference_report.json"
       ],
       "commits": [
         "b835e31785fab3fda247c333d23edbe9ce576dfa",
@@ -805,7 +806,8 @@
         "0c096aaef58148d9fd619b5398108cb8c8c5bd18",
         "951617ae348507a0ae922531f89abd2ad7170d90",
         "6997230697350af42d1e68dda71562e072525a7b",
-        "d86c56ff8307e5efa58f67e51fb3d2303cac65ca"
+        "d86c56ff8307e5efa58f67e51fb3d2303cac65ca",
+        "c9f67165aa77cface04cb8727d7a9997c676d428"
       ],
       "blockers": [],
       "reference_feasibility": {
@@ -816,7 +818,7 @@
         "evidence_sha256": "d92469cdd234477829ca5a5fa75a67648f17235fffadf3d3cbdaa73672375427",
         "native_executed": false
       },
-      "current_stage": "pll_coarse_precision_pass_fine_trial_frozen",
+      "current_stage": "pll_refined_native_reference_qualified_public_recheck_pending",
       "open_loop_candidate_preparation": {
         "record": {
           "path": "docs/development_roadmap/experiments/c1_openloop_candidate_preparation_20261116.json",
@@ -1663,13 +1665,13 @@
         }
       },
       "pll_integrated_reference": {
-        "status": "coarse_pscad_source_precision_trial_passed_fine_trial_pending",
+        "status": "both_source_precision_native_grids_qualified",
         "protocol": {
           "path": "validation/cases/grid_connected_vsc_pll/reference_protocol.json",
           "sha256": "78ba092cc8099390023d3fcaa449c8479d269dcd5fa7ec315b267d968e1da767",
           "bytes": 6164
         },
-        "next": "运行冻结的 2.5 µs 原生长窗。与固定细档 PyCy 复算原判据，再做新原生双档比较和新的正式 PyCy 验收。",
+        "next": "在正式比较 CLI 中绑定两份已合格的电源精度参考和真实原始数据。独立重跑两档 PyCy，以原窗口与门限完整比较，提交最终验收。",
         "short_reference_report": {
           "path": "validation/cases/grid_connected_vsc_pll/short_reference_report.json",
           "bytes": 4779,
@@ -1732,6 +1734,19 @@
           "path": "validation/cases/grid_connected_vsc_pll/source_precision_fine_trial.json",
           "sha256": "58cad98134208020b858b377572bb1e704bace490ce95af728864371eda827ad",
           "bytes": 3510
+        },
+        "source_precision_reference_report": {
+          "path": "validation/cases/grid_connected_vsc_pll/source_precision_reference_report.json",
+          "sha256": "91ac883c30a0297154ac8b0592fdec540d7bfd0247af1da894403bbfdcae8492",
+          "bytes": 5249
+        },
+        "fine_precision_execution": {
+          "package": {
+            "path": "local_reference/native_static_reviews/c1_pscad_pll_source_precision_2p5us_20261122/prospective.json",
+            "sha256": "5294ae91382aa42905d960c2c34b4b0fbcc3046bbeb6e4b6e98bec985e492d83",
+            "bytes": 12443
+          },
+          "run": "local_reference/native_static_reviews/c1_pscad_pll_source_precision_2p5us_20261122/n/20261122T131217916343Z"
         }
       }
     },
@@ -1984,7 +1999,7 @@
       }
     }
   ],
-  "current_stage": "pll_coarse_precision_pass_fine_trial_frozen",
+  "current_stage": "pll_refined_native_reference_qualified_public_recheck_pending",
   "resume_checkpoint_history": [
     {
       "resumed_utc": "2026-11-11T13:24:16.085490+00:00",

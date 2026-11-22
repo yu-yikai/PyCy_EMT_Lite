@@ -1,5 +1,8 @@
 # 持久进度
 
+2026-11-22。两档整数拍电源精度对照已取得参考资格。5 µs 和 2.5 µs 分别真实运行 40,002 点和 80,003 点，严格 PLL 状态、原全点物理、同档和跨档均通过。正式新增保持 11 个，转入新公开对标验收。
+[电源精度双档参考报告](../../validation/cases/grid_connected_vsc_pll/source_precision_reference_report.json)
+
 2026-11-22。5 µs PSCAD 电源精度对照通过。40,002 点通过原电气判据、九个同档窗口及严格的 PLL 状态门限。正式新增仍为 11 个，细档独立对照待运行。
 [粗档电源精度结果](../../validation/cases/grid_connected_vsc_pll/source_precision_trial_result.json)
 

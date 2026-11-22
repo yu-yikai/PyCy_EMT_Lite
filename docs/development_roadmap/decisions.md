@@ -1,5 +1,8 @@
 # 技术决策
 
+2026-11-22。两档均用整数电气拍生成同一理想电源，源支路、反馈差分测点和门极时序已独立验证。分别试验后再绑定新原生双档，先前参考与候选首轮 FAIL 继续保留。
+[电源精度双档参考报告](../../validation/cases/grid_connected_vsc_pll/source_precision_reference_report.json)
+
 2026-11-22。原生电源波形改由整数电气拍生成，仍使用原三条理想源支路与求解后的差分电压。准入把新增三路信号的独立存储槽逐一对应到实际生成代码。原 FAIL 和首次准入拒绝均保留。
 [粗档电源精度结果](../../validation/cases/grid_connected_vsc_pll/source_precision_trial_result.json)
 

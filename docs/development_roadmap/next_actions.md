@@ -1,5 +1,8 @@
 # 恢复与下一步
 
+2026-11-22。绑定电源精度双档参考报告、原生回执、原始 INF/OUT/CSV、独立报告和跨档哈希。让 30 号正式比较入口读取这两档参考并新运行两档 PyCy。保持原过门条件及旧 FAIL 记录，整理新图、报告、测试及教学验收。
+[电源精度双档参考报告](../../validation/cases/grid_connected_vsc_pll/source_precision_reference_report.json)
+
 2026-11-22。粗档新参考波形和固定 PyCy 粗档已通过所有原判据。按冻结协议在独立目录运行 2.5 µs 对照，保留 80,003 点和全部中点保持。核验细档后重做原生跨档与两档最新 PyCy 同档对标。
 [粗档电源精度结果](../../validation/cases/grid_connected_vsc_pll/source_precision_trial_result.json) · [细档对照协议](../../validation/cases/grid_connected_vsc_pll/source_precision_fine_trial.json)
 
