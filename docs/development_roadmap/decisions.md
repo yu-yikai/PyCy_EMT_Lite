@@ -1,5 +1,8 @@
 # 技术决策
 
+2026-11-22。验证角度约简时，PSCAD 继续记录原配置角，只有正弦和余弦用步号折返后的等价角。独立复算从配置和时钟计算高精度角，所有原限值保持有效。粗档沿用自身控制存储、20 步更新和下一步施加，只调整同一数值参考点和三角函数入参。
+[细档结果](experiments/c1_pscad_angle_arithmetic_trial_20261122.json) · [后续工况准入](../../validation/cases/grid_connected_vsc_closed_loop/pscad_closed_loop_remaining_variants.json)
+
 2026-11-22。PSCAD 的求解零点移到直流负端，八个电压仍由原生表计相对交流中性点测得。首次构建因节点别名核对被拒。改用生成代码的实际查表索引后，同一电路通过 19 条支路、45 路输出及控制顺序核对，完成一次真实复验。运行后重新核对刷新过的生成映射和可执行文件，以完整原始波形和进程终态补发数值读取收据。
 [实测与准入记录](experiments/c1_pscad_reference_point_trial_20261122.json)
 

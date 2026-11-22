@@ -1,5 +1,18 @@
 # 恢复与下一步
 
+2026-11-22。细档主工况已经原生合格并通过同档对标。按已冻结的兼容准入运行 5 µs 主工况，严格验收 40,002 行后计算同档及主工况跨档指标。两个仅 d 阶跃的原生工况和成组验收仍为后续步骤。
+[细档结果](experiments/c1_pscad_angle_arithmetic_trial_20261122.json) · [粗档冻结条件](../../validation/cases/grid_connected_vsc_closed_loop/pscad_closed_loop_remaining_variants.json)
+
+若 Git 直连重置且 Windows 已有本机系统代理，可在仓库根目录借用该代理做单次推送。2026-11-22 已在本机实测成功。
+
+```powershell
+$github = [uri]'https://github.com'
+$systemProxy = [System.Net.WebRequest]::GetSystemWebProxy().GetProxy($github)
+if ($systemProxy -ne $github -and $systemProxy.IsLoopback -and $systemProxy.Scheme -in @('http','https') -and !$systemProxy.UserInfo) {
+    git -c safe.directory=D:/VibeCoding/PyCy_EMT_Lite -c "http.proxy=$($systemProxy.AbsoluteUri)" push origin HEAD:refs/heads/codex/emt-examples-longterm
+}
+```
+
 2026-11-22。细档数值参考点对照已通过原电气判据。沿用已核验的网表，下一项单独冻结角度算术对照。在细档用整数步号 (j) 计算 (r = (3j + 5000) mod 20000 - 10000)，以 (pi r / 10000) 计算正余弦并保留原角度日志。判据以独立高精度配置角复算，继续沿用 1 pV 控制限值和原 19 项全点电气判据。再依长窗协议验证粗档、仅 d 阶跃、成组比较和教学候选。
 [数值参考点实测](experiments/c1_pscad_reference_point_trial_20261122.json) · [冻结长窗协议](../../validation/cases/grid_connected_vsc_closed_loop/reference_protocol.json)
 

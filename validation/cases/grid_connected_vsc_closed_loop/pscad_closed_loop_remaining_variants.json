@@ -1,0 +1,56 @@
+{
+  "schema": "c1_pscad_closed_loop_remaining_variants_v1",
+  "date": "2026-11-22",
+  "status": "frozen_before_coarse_main_build_or_run",
+  "scope": "Qualify 5 us main before the two remaining d-only native runs under the original four-variant protocol.",
+  "reference_protocol": {
+    "path": "validation/cases/grid_connected_vsc_closed_loop/reference_protocol.json",
+    "sha256": "53c1eb1c237fc4bd78ff83feb614023fc7d06b4b1700e7df09e1cd4de8236f06"
+  },
+  "accepted_fine_main": {
+    "record": {
+      "path": "docs/development_roadmap/experiments/c1_pscad_angle_arithmetic_trial_20261122.json",
+      "sha256": "f3ab13d436ff4fb00a52b092dc0be636ac28656c54e6fb44804dac9e47fa2b8c"
+    },
+    "numerical_report": {
+      "path": "local_reference/native_static_reviews/c1_pscad_long_stream_review_precise_angle_20261122T100626540021Z/report.json",
+      "sha256": "6bb04e791f630f347dac296de89d7a4c785de16466a8bdf344e3ffea0889e710"
+    },
+    "comparison_report": {
+      "path": "local_reference/native_static_reviews/c1_long_window_metrics_20261122T100740880901Z/report.json",
+      "sha256": "cba4885b0c9b2b0ff793daa11b1fb1d53f7d618098b061c9d784b052905e713b"
+    },
+    "run": "local_reference/native_static_reviews/c1_pscad_reference_point_reduced_angle_2p5us_20261122/n/20261122T095821385399Z",
+    "execution_receipt_sha256": "7d9ac5b638b40b7f0986f6d1f63731327892235fc2e5fb4867845849af4866a5",
+    "generated_main_dta_sha256": "63404eb42eb0e395030d785f6feafb6defa15de910c02a34701d237fb0777f59"
+  },
+  "coarse_baseline": {
+    "run": "local_reference/native_static_reviews/c1_pscad_feedback_long_main_5us_live_20261119/n/20261118T165557277225Z",
+    "execution_receipt_sha256": "3e65aac10f43a898fe6c7daf3f5153e14b939c56a55fc76c3b2933bd20a75eed",
+    "generated_main_f_sha256": "32d8374efe45b9ea7184e7b1b456197b1522dd941d76e5e1d29eee91bb6fe417",
+    "generated_main_dta_sha256": "58df14a8b112721eb39289aec090ddfcfbc2f8cd9e65e020b42e30e614b5f549",
+    "generated_vdiv_map_sha256": "00056c8ecb8fdd697a8570023da9594899d2c5135bb809562227c67b9b51f279",
+    "control_source_sha256": "053684365e3ca82e74efa6067388cd26b56aa542ee6eaf919cc896909545e1e2"
+  },
+  "variants": {
+    "main_5us": {
+      "scenario": "main",
+      "grid": "5us",
+      "step_s": 5e-06,
+      "rows": 40002,
+      "exact_trig_statements": [
+        "C1_C = COS(C1_P*DBLE(MODULO(6*C1_J+5000,20000)-10000)/10000.0D0)",
+        "C1_S = SIN(C1_P*DBLE(MODULO(6*C1_J+5000,20000)-10000)/10000.0D0)"
+      ],
+      "unwrapped_angle_statement": "C1_THETA = C1_W*DBLE(C1_J)*5.0D-6-C1_P/2.0D0"
+    }
+  },
+  "admission": {
+    "physical": "Use the exact fine-run DC-negative numerical reference point and original native measurements relative to AC neutral. Require the 19 oriented branch roles, 14 non-ground nodes, all measure polarities and 45 output slots.",
+    "control": "Use the archived coarse sequence, with 20-step controller updates, retained coarse STORF 62 allocation, pending values applied on the next 5 us row, and both original main command edges. Permit only the two reduced trig operands besides the proven gauge transformation. Keep original unwrapped logging and control arithmetic.",
+    "execution": "One isolated same-session native Build and a conditional Run. Save complete raw output on original clock through 0.200005 s and verify generated semantic admission after runtime refresh.",
+    "numerical": "Use the prevalidated independent configured-angle high-precision expected path and original per-field bounds including 1 pV on e_q. Apply all 19 original electrical limits, timing, t0, exact state and tracking controls on all 40002 rows."
+  },
+  "comparison": "On coarse qualification compare against independently solved same-grid PyCy in all original windows and evaluate the native fine/coarse main pair. Both d-only native runs remain required before paired-scenario, full reference and formal example acceptance.",
+  "remaining_d_only": "The two d-only variants retain each grid's own clock, state, reference point and reduced-angle law and omit only the 80 ms q command. Authorize and bind their own scope before native execution."
+}
