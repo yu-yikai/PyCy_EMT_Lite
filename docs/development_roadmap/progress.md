@@ -1,5 +1,8 @@
 # 持久进度
 
+2026-11-23。34 号双端 VSC 教学候选的初值、逐点比较阈值和验收范围已固定。将用两档已有原生长窗独立验证正式入口。
+[34 号候选协议](../../validation/cases/two_terminal_vsc_hvdc/candidate_protocol.json)
+
 2026-11-23。双端 VSC-HVDC 两档 550.005 ms PSCAD 长窗通过。A 站升功率后，B 站由吸收约 190 W 转为向电网送出约 221 W。母线峰值约 403.2 V，末 50 ms 均值约 399.6 V。两站的控制递推和电路能量逐步核过。接下来固定教学版比较判据。正式新增仍为 15 个。
 [双端 PSCAD 长窗报告](experiments/d1_dual_vsc_long_native_20261123.json)
 

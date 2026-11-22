@@ -3,7 +3,7 @@
   "updated_date": "2026-11-23",
   "timezone": "Asia/Shanghai",
   "branch": "codex/emt-examples-longterm",
-  "checkpoint_head": "42503b9f36c7ff611f25b066c972f70d9651ff2f",
+  "checkpoint_head": "d081afc7d62c3b27156c1046e5dfea7b43229c7b",
   "current_task": "D1",
   "formal_new_examples_completed": 15,
   "status_values": [
@@ -1917,8 +1917,9 @@
       "validation": "33 号平衡 PJM5 五母线负荷阶跃通过 5 µs、2.5 µs PSCAD 对标，360002 行。Windows 1601 项含 slow、Ubuntu WSL2 默认入口和 6 项专测通过。双端 VSC 的 PSCAD 双档 550.005 ms 长窗和跨步长验证通过，进入 34 号教学候选。",
       "acceptance": "不将直流等效称完整PV，不将拓扑称完整标准EMT",
       "status": "in_progress",
-      "current_stage": "two_terminal_vsc_long_native_pass_candidate_next",
+      "current_stage": "two_terminal_vsc_candidate_protocol_frozen",
       "files": [
+        "validation/cases/two_terminal_vsc_hvdc/candidate_protocol.json",
         "docs/development_roadmap/experiments/d1_dual_vsc_long_protocol_20261123.json",
         "docs/development_roadmap/experiments/d1_dual_vsc_long_native_20261123.json",
         "docs/development_roadmap/experiments/d1_dual_vsc_active_protocol_20261123.json",
@@ -1950,7 +1951,8 @@
         "67671dfd42894a2214793635c1e8cf6341eb2303",
         "9613c380e0ef09f30cc0b658559695f5142e80f7",
         "660cd09516647089f5f57371939a02bc312bd628",
-        "42503b9f36c7ff611f25b066c972f70d9651ff2f"
+        "42503b9f36c7ff611f25b066c972f70d9651ff2f",
+        "d081afc7d62c3b27156c1046e5dfea7b43229c7b"
       ],
       "blockers": [],
       "pjm5_load_step_example": {
@@ -2032,6 +2034,21 @@
         "paired_positive_rows": 331003,
         "native_channels": 82,
         "candidate_accepted": false
+      },
+      "two_terminal_vsc_candidate_protocol": {
+        "status": "frozen_before_public_implementation",
+        "number": 34,
+        "report": {
+          "path": "validation/cases/two_terminal_vsc_hvdc/candidate_protocol.json",
+          "sha256": "208813716603912293cd0d4bc68a12aed9c6562e8feaed74904c1e1e089a1014",
+          "bytes": 6983
+        },
+        "diagnostic_rows": [
+          110001,
+          220002
+        ],
+        "diagnostic_switch_mismatches": 0,
+        "formal_candidate_accepted": false
       },
       "small_network_native_reference": {
         "status": "pscad_short_and_independent_full_grids_pass",
@@ -2265,7 +2282,7 @@
       }
     }
   ],
-  "current_stage": "two_terminal_vsc_long_native_pass_candidate_next",
+  "current_stage": "two_terminal_vsc_candidate_protocol_frozen",
   "resume_checkpoint_history": [
     {
       "resumed_utc": "2026-11-11T13:24:16.085490+00:00",
