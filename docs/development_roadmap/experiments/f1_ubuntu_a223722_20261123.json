@@ -1,0 +1,44 @@
+{
+  "schema": "f1_local_ubuntu_full_qualification_v1",
+  "date": "2026-11-23",
+  "scope": "Local Ubuntu WSL2 exact-source qualification with all slow tests. Hosted jobs have a separate status.",
+  "source_commit": "a223722c50f53863571710864cb3df5d66f0966d",
+  "platform": "Ubuntu 24.04.4 LTS x86_64, WSL2 kernel 6.6.87.2",
+  "python": "3.14.5",
+  "source_files_verified_before_and_after": 369,
+  "locked_sync_ruff_mypy": "PASS",
+  "full_pytest": {
+    "passed": 1590,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "elapsed_s": 588.764
+  },
+  "proof": {
+    "source_archive": {
+      "path": "local_reference/native_static_reviews/c1_dc_bridge_pycy_20261123/source.tar",
+      "sha256": "32c065b16024cdc6fccb9ea18aa9840be53f0b80085c6f1909351559e7238e5a",
+      "bytes": 4720640
+    },
+    "run_script": {
+      "path": "local_reference/native_static_reviews/f1_ubuntu_a223722_20261123/run_full.sh",
+      "sha256": "e9d7854b57dbdb46059c905c248ff955192fdd89a3e6ae49bcdb5c3a40a67a18",
+      "bytes": 2100
+    },
+    "archive_manifest": {
+      "path": "local_reference/native_static_reviews/f1_ubuntu_a223722_20261123/source_files.sha256",
+      "sha256": "c72141293f99d0600dcbf0c21d2d493aa97e377a795ce64fdad8cd399cf8c36f",
+      "bytes": 44088
+    },
+    "log": {
+      "path": "local_reference/native_static_reviews/f1_ubuntu_a223722_20261123/full.log",
+      "sha256": "45eea735f9218f694c197a0af1a898ee64048db0d5500a80c40665986e0646a5",
+      "bytes": 4409
+    },
+    "junit": {
+      "path": "local_reference/native_static_reviews/f1_ubuntu_a223722_20261123/pytest.xml",
+      "sha256": "98450354af11f2b1570cd5d18c502ab060c6e167d8803e6e1c34d77f4dfe1062",
+      "bytes": 229433
+    }
+  }
+}
