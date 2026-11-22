@@ -1,0 +1,175 @@
+{
+  "schema": "d1_dual_vsc_parked_native_result_v1",
+  "date": "2026-11-23",
+  "status": "PASS_NATIVE_D1_DUAL_VSC_PARKED_PHYSICS",
+  "freeze_commit": "d70bd64c7fd394cd48451b9cae0b93dd4e8c72a9",
+  "protocol": {
+    "path": "docs/development_roadmap/experiments/d1_dual_vsc_parked_protocol_20261123.json",
+    "sha256": "ca77f191d46490a6e1b51fe5969ca69d1223451a533645fcc90bede6c5b16c5c",
+    "bytes": 5379
+  },
+  "scope": "Cold precharge and marker load using two parked bridges and a bipolar T link.",
+  "run_directory": "local_reference/native_static_reviews/d1_dual_vsc_native_20261123/cold_5us/n/20261122T211537105081Z",
+  "native": {
+    "pscad_version": "5.0.0",
+    "emtdc_build": "20210219",
+    "compiler": "gf46",
+    "platform": "x86",
+    "integration_evidence": "Trapezoidal branch and energy residuals on the original electrical rows.",
+    "build_errors": 0,
+    "build_warnings": 0,
+    "runs": 1,
+    "physical_branches": 39,
+    "channels": 52,
+    "step_s": 5e-06,
+    "stop_s": 0.403,
+    "rows_including_zero": 80601,
+    "max_original_clock_error_s": 0.0,
+    "run_returned": true,
+    "no_remaining_owned_processes": true
+  },
+  "archive": {
+    "launch": {
+      "path": "local_reference/native_static_reviews/d1_dual_vsc_native_20261123/cold_5us/launch.json",
+      "sha256": "6930b0d723fade910b247264827de8bbbbd7f76dfcf7f75e5079c69dd04dcc88",
+      "bytes": 6880
+    },
+    "native_driver": {
+      "path": "local_reference/native_static_reviews/d1_dual_vsc_native_20261123/cold_5us/native_driver.py",
+      "sha256": "cd615b78b3ce5bcc85c30c23346ea83b4a66657cd478b5f4bb22873abbf48e18",
+      "bytes": 17165
+    },
+    "bound_inputs": {
+      "path": "local_reference/native_static_reviews/d1_dual_vsc_native_20261123/cold_5us/n/20261122T211537105081Z/sealed_inputs.json",
+      "sha256": "3367c618b4ab72c91f59c852143f3cecf47dd05ffd35ae7e249c27ebbeb6ae2e",
+      "bytes": 1331
+    },
+    "saved_project": {
+      "path": "local_reference/native_static_reviews/d1_dual_vsc_native_20261123/cold_5us/n/20261122T211537105081Z/project/vdiv.pscx",
+      "sha256": "18533056081f6c428b801cf7bea32fabca75393fff05d9cfafc19949eba82428",
+      "bytes": 243644
+    },
+    "compiled_admission": {
+      "path": "local_reference/native_static_reviews/d1_dual_vsc_native_20261123/cold_5us/n/20261122T211537105081Z/pre_run_admission.json",
+      "sha256": "1687a7f83f9f26c4bec3141f18bb2edd9b1490626d74118f869352d0dd4fdd6b",
+      "bytes": 13234
+    },
+    "worker": {
+      "path": "local_reference/native_static_reviews/d1_dual_vsc_native_20261123/cold_5us/n/20261122T211537105081Z/worker.json",
+      "sha256": "853adca427779b1cfd05b3329fd67ba6b8498a5e38e1e66d6f923c7a0284b767",
+      "bytes": 11397
+    },
+    "terminal": {
+      "path": "local_reference/native_static_reviews/d1_dual_vsc_native_20261123/cold_5us/n/20261122T211537105081Z/terminal.json",
+      "sha256": "a6a5b4a5fb56f2a6793b75b32308847babee731a8a154e0c82affe4ea99e062d",
+      "bytes": 8016
+    },
+    "original_vendor_stdout": {
+      "path": "local_reference/native_static_reviews/d1_dual_vsc_native_20261123/cold_5us/n/20261122T211537105081Z/run_output.txt",
+      "sha256": "d2630203108eb73fe8f579a7265e5c82d73d9140c64177c955880577d8c5885e",
+      "bytes": 3182
+    },
+    "native_receipt": {
+      "path": "local_reference/native_static_reviews/d1_dual_vsc_native_20261123/cold_5us/n/20261122T211537105081Z/native_execution_receipt.json",
+      "sha256": "2b46b4eedcc0ca9e407534e3fc0ead541e030f4caf8a290491c3f3074e832029",
+      "bytes": 13903
+    },
+    "numerical_review": {
+      "path": "local_reference/native_static_reviews/d1_dual_vsc_native_20261123/cold_5us/n/20261122T211537105081Z/native_physics.json",
+      "sha256": "faf3a305e3473cdca60ed2644a9ed719c1491241d5d659732dde494411773971",
+      "bytes": 11301
+    },
+    "review_script": {
+      "path": "local_reference/native_static_reviews/d1_dual_vsc_emt_20261123/parked_dc.py",
+      "sha256": "151836390e6afbb589d4d100221619a95bfbbfe425d7ee1ac4afac5e7f034187",
+      "bytes": 15890
+    },
+    "independent_prediction": {
+      "path": "local_reference/native_static_reviews/d1_dual_vsc_emt_20261123/expected_parked.json",
+      "sha256": "652150df02e15baab329749c5b20a5d047a1d1437aab2a9ff5b599edd429ff6c",
+      "bytes": 11331
+    },
+    "pycy_feasibility_script": {
+      "path": "local_reference/native_static_reviews/d1_dual_vsc_emt_20261123/pycy_parked.py",
+      "sha256": "0a6d058d08594bd695383090eee99108256f489f7a01a74a1796c9c69a4d6dda",
+      "bytes": 7032
+    },
+    "pycy_feasibility": {
+      "path": "local_reference/native_static_reviews/d1_dual_vsc_emt_20261123/pycy_parked.json",
+      "sha256": "e744dcb920ac070d8c10d74b0bbf619f68c2bd827c23d6cc8bcb867f327dffd2",
+      "bytes": 5162
+    }
+  },
+  "generated_sha256": {
+    "Main.f": "58a2bea5dc64d7a58081326a9f61f2ccb6764d526df20e01d3e9029ebcd9a3ff",
+    "Main.dta": "68390cc18af205e0e4d25aefb8b19e88ab6ed891fb31fcf9fcd1baaed0648b99",
+    "Station.f": "32d389bd2212262ebc860c29bf0eaeb5a623ac1c6546d1524d255d596e565d2b",
+    "Station.dta": "a75941fb5e50354ee8a1e5cd378f24f2100cfb6c88af2fd9986e51b5a5fbb0c0",
+    "vdiv.mak": "3326cbcf1348c38c254498faa23a8513a9b7811407397ec6604f2904f5c0dcb5",
+    "vdiv.map": "d9625f3a63a9f4f12b5745782958cfad3f87aaea8fae23f3245b78a36ed92320",
+    "vdiv.exe": "62f7cd2fa66174849b4033c7af61d61a52322716c4e0ef7a6f9648c3bd5a4a23"
+  },
+  "raw_sha256": {
+    "dual_vsc.inf": "5d86e644c2fa38feb18cad07e60797b2cbcb6a7807a80bbeb21853fac3f4dbaf",
+    "dual_vsc_01.out": "34c74eb7eaaf31178d80e16bc3da3aa08d151b608fae382e7c4d2c1727ed04cf",
+    "dual_vsc_02.out": "f1c10422f1a63358e3a09eafdd255437f983950bbd81ca5dfcd189aa3744ea38",
+    "dual_vsc_03.out": "e1ae2c16dcf51d2fe090ffa5469af2e8b9080b35e89d9ca9a275f413ce373390",
+    "dual_vsc_04.out": "8130fc7e317c0651e1d63765b53aa456ab1ddf1b02568932ffbf7c78cf7d4eba",
+    "dual_vsc_05.out": "35e34b6ca79948f7e50ff60c3a6efdc49fb97e5acdf96a0ea73602941ddf9d17",
+    "dual_vsc_06.out": "2abe5ab4dfbd0514a967ab32e7fec85d1b87b859749890f0db349f5fc3a94a01"
+  },
+  "native_physics": {
+    "clock_s": 5.551115123125783e-17,
+    "source_v": 0.0,
+    "differential_readback_v": 1.0118128557223827e-11,
+    "initial_voltage_v": 0.0,
+    "initial_current_a": 0.0,
+    "kcl_a": 2.2366911674052222e-10,
+    "resistor_voltage_v": 1.0118128557223827e-11,
+    "tr_line_voltage_v": 8.021565633953287e-10,
+    "tr_ac_voltage_v": 1.0088374580167747e-11,
+    "tr_cap_charge_c": 9.995504424167575e-14,
+    "tr_energy_j": 6.882320650609518e-11,
+    "abs_cumulative_energy_j": 1.137538607222968e-08,
+    "initial_energy_j": 0.0,
+    "parked_ac_phase_current_a": 2.4123707955432e-14,
+    "independent_pole_voltage_peak_v": 2.920330643974012e-10,
+    "independent_link_current_peak_a": 1.703637169487779e-10,
+    "exact_resistance_schedule": true
+  },
+  "native_readiness": {
+    "plateau_pole_to_nominal_v": 6.056079996596964e-06,
+    "plateau_link_current_abs_a": 2.7363025218674e-06,
+    "load_current_on_edge_a": 0.9999987202740999,
+    "final_each_positive_half_link_current_a": [
+      0.045132961329585004,
+      0.045716925607354
+    ],
+    "final_each_negative_half_link_current_a": [
+      -0.045132961265955,
+      -0.045716925541535995
+    ],
+    "b_differential_voltage_drop_after_load_v": 0.3930848703400329,
+    "storage_drop_after_load_j": 0.8002095712819255
+  },
+  "pycy_native_witness_comparison": {
+    "paired_ticks": [
+      0,
+      1,
+      79998,
+      80002,
+      80199,
+      80200,
+      80600
+    ],
+    "max_pole_abs_v": 2.5502799871901516e-10,
+    "max_line_abs_a": 6.135002661122294e-11
+  },
+  "checks": {
+    "ruff": true,
+    "mypy": true,
+    "windows_existing_vsc_focused_tests": 41
+  },
+  "next_stage": "same_topology_snapshot_and_independent_station_feedback",
+  "candidate_accepted": false
+}
