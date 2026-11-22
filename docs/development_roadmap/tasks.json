@@ -3,7 +3,7 @@
   "updated_date": "2026-11-23",
   "timezone": "Asia/Shanghai",
   "branch": "codex/emt-examples-longterm",
-  "checkpoint_head": "d5325dd513c78d9c91add92932665ed7a8f7e0f5",
+  "checkpoint_head": "83a9fe1c8489ba24b50eb77cdc4679691db909a4",
   "current_task": "C1",
   "formal_new_examples_completed": 13,
   "status_values": [
@@ -766,7 +766,8 @@
         "examples/31_grid_connected_vsc_power_vac.py",
         "tests/test_grid_connected_vsc_power_vac.py",
         "validation/cases/grid_connected_vsc_power_vac/README.md",
-        "validation/cases/grid_connected_vsc_power_vac/acceptance_report.json"
+        "validation/cases/grid_connected_vsc_power_vac/acceptance_report.json",
+        "docs/development_roadmap/experiments/c1_dc_bus_startup_20261123.json"
       ],
       "commits": [
         "b835e31785fab3fda247c333d23edbe9ce576dfa",
@@ -824,7 +825,20 @@
         "evidence_sha256": "d92469cdd234477829ca5a5fa75a67648f17235fffadf3d3cbdaa73672375427",
         "native_executed": false
       },
-      "current_stage": "power_vac_example31_accepted_dynamic_dc_reference_next",
+      "current_stage": "dc_bus_passive_snapshot_qualified_bridge_probe_next",
+      "dynamic_dc_startup": {
+        "status": "passive_pscad_snapshot_and_continuation_pass",
+        "report": {
+          "path": "docs/development_roadmap/experiments/c1_dc_bus_startup_20261123.json",
+          "sha256": "b0859320ee3e1bb1e0559cc90d46af34ff37c66f6f62cf98f68e9b0170fb3d7e",
+          "bytes": 9803
+        },
+        "pycy_short_rows": [402, 803],
+        "pscad_restart_intervals": 401,
+        "simscape_batch_status": "stalled_before_script",
+        "bridge_closed_loop_reference_qualified": false,
+        "candidate_accepted": false
+      },
       "pcc_feeder_probe": {
         "protocol": "docs/development_roadmap/experiments/c1_pcc_feeder_native_probe_20261122.json",
         "internal_feasibility_passed": true,
@@ -2035,7 +2049,7 @@
       }
     }
   ],
-  "current_stage": "power_vac_example31_accepted_dynamic_dc_reference_next",
+  "current_stage": "dc_bus_passive_snapshot_qualified_bridge_probe_next",
   "resume_checkpoint_history": [
     {
       "resumed_utc": "2026-11-11T13:24:16.085490+00:00",
