@@ -1,0 +1,137 @@
+{
+  "schema": "d1_dual_vsc_native_snapshot_protocol_v1",
+  "date": "2026-11-23",
+  "source_parent": "e2d74da0c4b574963547c98fbc012e6ee69efe32",
+  "scope": "Same-topology native PSCAD restart for two parked VSCs, six finite AC feeders and a bipolar T link. The marker load is already drawing current at the time of the snapshot.",
+  "references": {
+    "parked_protocol": {
+      "path": "docs/development_roadmap/experiments/d1_dual_vsc_parked_protocol_20261123.json",
+      "sha256": "ca77f191d46490a6e1b51fe5969ca69d1223451a533645fcc90bede6c5b16c5c"
+    },
+    "parked_result": {
+      "path": "docs/development_roadmap/experiments/d1_dual_vsc_parked_native_20261123.json",
+      "sha256": "d88f45fdf513c08050021e9368ddc407261b00aa808f709c7ce268a4c4cefa61"
+    },
+    "parked_native_project": {
+      "path": "local_reference/native_static_reviews/d1_dual_vsc_native_20261123/cold_5us/n/20261122T211537105081Z/project/vdiv.pscx",
+      "sha256": "18533056081f6c428b801cf7bea32fabca75393fff05d9cfafc19949eba82428"
+    },
+    "single_station_native_snapshot": {
+      "path": "docs/development_roadmap/experiments/c1_dc_parked_bridge_20261123.json",
+      "sha256": "e09296c7b89f9bcb216ac1af988fdd6c280b36560311bc0a21ab5ff5f12cd2f9"
+    }
+  },
+  "timing": {
+    "precharge_open_s": 0.4,
+    "load_close_s": 0.401,
+    "seed_stop_s": 0.403,
+    "snapshot_s": 0.402,
+    "restart_duration_s": 0.001,
+    "source_start_tick": 1
+  },
+  "grids": {
+    "5us": {
+      "step_s": 0.000005,
+      "precharge_open_tick": 80000,
+      "load_close_tick": 80200,
+      "snapshot_tick": 80400,
+      "seed_rows_including_zero": 80601,
+      "restart_rows": 200,
+      "first_resume_absolute_s": 0.402005
+    },
+    "2p5us": {
+      "step_s": 0.0000025,
+      "precharge_open_tick": 160000,
+      "load_close_tick": 160400,
+      "snapshot_tick": 160800,
+      "seed_rows_including_zero": 161201,
+      "restart_rows": 400,
+      "first_resume_absolute_s": 0.4020025
+    }
+  },
+  "circuit_extension": {
+    "feeder_per_ac_phase": {
+      "placement": "The ideal grid phase terminal feeds the new series RL branch. Its far terminal is the PCC and feeds the existing R/L filter and bridge pole.",
+      "resistance_ohm": 0.8,
+      "inductance_h": 0.008,
+      "initial_current_a": 0
+    },
+    "voltage_channel": "V_{a,b}_{a,b,c}_pcc_kV (PCC minus that station's floating star)",
+    "current_channel": "I_{a,b}_{a,b,c}_feeder_kA (source towards PCC)",
+    "retained_channels": 52,
+    "added_channels": 12,
+    "physical_branches": 45,
+    "ac_phases_per_station": 3,
+    "grid_phase_voltage_v": 0,
+    "upper_and_lower_switches": "Upper 1 GΩ and lower 1 mΩ at both stations."
+  },
+  "native_execution": {
+    "target": "PSCAD 5.0 / EMTDC gf46 x86",
+    "raw_stem": "dual_vsc",
+    "snapshot_filename": "dual_vsc.snp",
+    "snapshot_policy": "ONLY_ONCE in seed. Restart from exact saved snapshot.",
+    "physical_channels": 64,
+    "one_original_row_per_electrical_step": true,
+    "same_canonical_model_per_grid": true,
+    "generated_identity": [
+      "Main.f",
+      "Main.dta",
+      "Station.dta"
+    ],
+    "same_pgb_mapping": true,
+    "interpolate_switching": false,
+    "detect_chatter": false,
+    "remove_chatter": false
+  },
+  "physical_limits": {
+    "clock_s": 2e-12,
+    "snapshot_to_seed_voltage_v": 0.000002,
+    "snapshot_to_seed_current_a": 0.000002,
+    "overlap_voltage_v": 0.000002,
+    "overlap_current_a": 0.000002,
+    "exact_switch_resistance": true,
+    "kcl_a": 0.000002,
+    "tr_line_voltage_v": 0.00005,
+    "tr_ac_voltage_v": 0.00005,
+    "tr_cap_charge_c": 5e-10,
+    "tr_energy_j": 2e-7,
+    "abs_cumulative_energy_j": 0.001,
+    "parked_ac_current_a": 1e-7,
+    "independent_pole_voltage_peak_v": 0.0001,
+    "independent_link_current_peak_a": 0.00001
+  },
+  "snapshot_readiness": {
+    "a_to_m_positive_a": [
+      0.005,
+      0.01
+    ],
+    "m_to_b_positive_a": [
+      0.014,
+      0.02
+    ],
+    "a_to_m_negative_a": [
+      -0.01,
+      -0.005
+    ],
+    "m_to_b_negative_a": [
+      -0.02,
+      -0.014
+    ],
+    "b_differential_v": [
+      399.79,
+      399.81
+    ],
+    "stored_energy_j": [
+      803.58,
+      803.62
+    ]
+  },
+  "acceptance": [
+    "Bind original seed and restart inputs and outputs by SHA-256. Require generated physical source/netlist and PGB identities and prove exact same snapshot bytes available before the restart solve.",
+    "Decode the native clock and six capacitor voltages, six capacitor companion currents, four line currents, six filter currents and six feeder currents directly from the snapshot. Match named states to the original seed row and check the signed nonzero current at the snapshot.",
+    "Pair the original restart first positive row onward with the seed at the same absolute ticks. Check every voltage and current channel and all switch/clock words over the full overlap.",
+    "Use the decoded snapshot as the left endpoint of the first restored interval. Check capacitor charge, line and AC trapezoidal laws, node currents and stored energy throughout the restart."
+  ],
+  "follow_on": "Enable the AC sources and independent station controls in a later qualified native experiment with the same physical feeder-and-bridge arrangement. Exercise station A PCC active/reactive power and station B DC voltage/reactive power.",
+  "candidate_accepted_at_freeze": false
+}
