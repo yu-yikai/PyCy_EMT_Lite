@@ -1,0 +1,360 @@
+{
+  "schema": "pycy_two_terminal_vsc_hvdc_example_acceptance_v1",
+  "date": "2026-11-23",
+  "example": 34,
+  "passed": true,
+  "formal_example_accepted": true,
+  "formal_new_examples_completed": 16,
+  "source_parent": "aa0564fb9602445a620689cdd248eba3946fcc59",
+  "scope": "Two grid-following VSCs and a bipolar T link initialized from measured precharged state. Station A follows PCC P/Q commands, station B controls DC voltage and Q.",
+  "candidate_protocol": {
+    "path": "validation/cases/two_terminal_vsc_hvdc/candidate_protocol.json",
+    "sha256": "208813716603912293cd0d4bc68a12aed9c6562e8feaed74904c1e1e089a1014",
+    "bytes": 6983
+  },
+  "native_reference": {
+    "path": "docs/development_roadmap/experiments/d1_dual_vsc_long_native_20261123.json",
+    "sha256": "f6e4c2efc2f30737619d083920d89c352baea19991bc9c2d09f219d4e30ee300",
+    "bytes": 12014
+  },
+  "comparison": {
+    "reference_platform": "PSCAD 5.0.0 / EMTDC 5",
+    "report": {
+      "path": "local_reference/d1_dual_vsc_candidate_20261123/formal_comparison_v1/report.json",
+      "sha256": "cbc90f0957a2b62402f783286f642782f8e97dc27437ad1ab061956dd879a618",
+      "bytes": 2211
+    },
+    "input_manifest": {
+      "path": "local_reference/d1_dual_vsc_candidate_20261123/formal_comparison_v1/inputs.json",
+      "sha256": "0142afab19e21452878ee3fa912ac2425e708f925f03202a0b522734e34fabad",
+      "bytes": 63655
+    },
+    "verified_original_input_count": 250,
+    "rows": {
+      "native_positive": 330003,
+      "candidate_including_initial": 330005
+    },
+    "row_count_note": "The sealed native report has a typo in its aggregate count. Its per-grid counts and original files are unchanged.",
+    "figure": {
+      "path": "local_reference/d1_dual_vsc_candidate_20261123/formal_comparison_v1/waveform_overlay.png",
+      "sha256": "ffae94b94eb3653692f5515eb809e01c8155d5f532d435a457cb54f4d720b056",
+      "bytes": 251436
+    },
+    "case_grids": {
+      "5us": {
+        "candidate_rows_including_initial": 110002,
+        "native_positive_rows": 110001,
+        "clock_max_error_s": 1.1102230246251565e-16,
+        "switch_word_mismatches": 0,
+        "max_voltage_difference_v": 1.5809462183824508e-08,
+        "max_current_difference_a": 1.0128886618332444e-09,
+        "max_applied_modulation_difference_pu": 3.766387179915398e-08,
+        "max_kcl_residual_a": 3.2891511736465873e-10,
+        "max_interval_energy_residual_j": 7.850608184367669e-13,
+        "windows": {
+          "baseline": {
+            "a_p_mean_w": 249.60487261307958,
+            "a_q_mean_var": 32.007186902263214,
+            "b_p_mean_w": 188.56184004251173,
+            "b_q_mean_var": -46.385825258721944,
+            "b_dc_mean_v": 400.1478959541281,
+            "dc_sent_w": 230.13290367578574,
+            "dc_received_w": 229.6336406286638,
+            "dc_series_loss_w": 0.329878830572431
+          },
+          "response": {
+            "a_p_mean_w": 651.1238399368636,
+            "a_q_mean_var": 31.340934485290777,
+            "b_p_mean_w": -192.84526857390128,
+            "b_q_mean_var": -49.38156617729515,
+            "b_dc_mean_v": 403.00791057462374,
+            "dc_sent_w": 616.4428106225243,
+            "dc_received_w": 613.8579363213627,
+            "dc_series_loss_w": 2.327486223563234
+          },
+          "recovered": {
+            "a_p_mean_w": 650.1230507527495,
+            "a_q_mean_var": 30.193124244639563,
+            "b_p_mean_w": -220.70136528437064,
+            "b_q_mean_var": -52.307275813106784,
+            "b_dc_mean_v": 399.6244739505119,
+            "dc_sent_w": 632.0185001683989,
+            "dc_received_w": 629.464393743475,
+            "dc_series_loss_w": 2.4814078745751544
+          },
+          "b_dc_peak_after_ramp_start_v": 403.15046726971326,
+          "b_dc_recovered_abs_error_v": 0.3755260494880872
+        },
+        "report": {
+          "path": "local_reference/d1_dual_vsc_candidate_20261123/formal_comparison_v1/5us/report.json",
+          "sha256": "a5996e0b134433a0c1c8e25d057f53e534594a2c7bfa8028116b3608bf9932fe",
+          "bytes": 13056
+        },
+        "waveforms": {
+          "candidate_waveforms.npz": {
+            "path": "local_reference/d1_dual_vsc_candidate_20261123/formal_comparison_v1/5us/candidate_waveforms.npz",
+            "sha256": "7f548219b708a5a1cd3ac91bed6ae1d076aaf2abc1bf1321b131008b5a9cf36f",
+            "bytes": 102089790
+          },
+          "native_waveforms.npz": {
+            "path": "local_reference/d1_dual_vsc_candidate_20261123/formal_comparison_v1/5us/native_waveforms.npz",
+            "sha256": "20dbf919659c4e791d12c7a999d9f5e14d96b362124269362bd5046983559781",
+            "bytes": 73046252
+          }
+        }
+      },
+      "2p5us": {
+        "candidate_rows_including_initial": 220003,
+        "native_positive_rows": 220002,
+        "clock_max_error_s": 1.1102230246251565e-16,
+        "switch_word_mismatches": 0,
+        "max_voltage_difference_v": 1.492679757575388e-09,
+        "max_current_difference_a": 2.226174800057379e-10,
+        "max_applied_modulation_difference_pu": 2.0989940896498638e-09,
+        "max_kcl_residual_a": 7.097771259623187e-10,
+        "max_interval_energy_residual_j": 1.1119551460159194e-12,
+        "windows": {
+          "baseline": {
+            "a_p_mean_w": 249.20579412972108,
+            "a_q_mean_var": 32.066294090638706,
+            "b_p_mean_w": 189.9522548572813,
+            "b_q_mean_var": -47.46883351294957,
+            "b_dc_mean_v": 400.1500265760555,
+            "dc_sent_w": 228.87325318853482,
+            "dc_received_w": 228.37268256111713,
+            "dc_series_loss_w": 0.3262483767409275
+          },
+          "response": {
+            "a_p_mean_w": 649.6395643623246,
+            "a_q_mean_var": 33.718530992391436,
+            "b_p_mean_w": -191.63109919367201,
+            "b_q_mean_var": -49.32706893793847,
+            "b_dc_mean_v": 403.01128153805143,
+            "dc_sent_w": 615.1789253060851,
+            "dc_received_w": 612.6086894020071,
+            "dc_series_loss_w": 2.3181100976909557
+          },
+          "recovered": {
+            "a_p_mean_w": 648.9195847495131,
+            "a_q_mean_var": 31.92289784851565,
+            "b_p_mean_w": -221.6681466997971,
+            "b_q_mean_var": -54.01468427290112,
+            "b_dc_mean_v": 399.63956170345887,
+            "dc_sent_w": 632.2109471935362,
+            "dc_received_w": 629.6713568924546,
+            "dc_series_loss_w": 2.482823078978605
+          },
+          "b_dc_peak_after_ramp_start_v": 403.1742572054694,
+          "b_dc_recovered_abs_error_v": 0.36043829654113324
+        },
+        "report": {
+          "path": "local_reference/d1_dual_vsc_candidate_20261123/formal_comparison_v1/2p5us/report.json",
+          "sha256": "4ebac16110fb648bca69264aa948263aee1b4c7727b2b5e1e8c16ba060a85f04",
+          "bytes": 13086
+        },
+        "waveforms": {
+          "candidate_waveforms.npz": {
+            "path": "local_reference/d1_dual_vsc_candidate_20261123/formal_comparison_v1/2p5us/candidate_waveforms.npz",
+            "sha256": "180a33095a92710a409e361bea560907b15acb0fe953e0548e87e7756fd1b4bf",
+            "bytes": 204170718
+          },
+          "native_waveforms.npz": {
+            "path": "local_reference/d1_dual_vsc_candidate_20261123/formal_comparison_v1/2p5us/native_waveforms.npz",
+            "sha256": "8ecd5f5b8d20651e1859c4024de2b7a73f4c5a0c06ab0a3477de706775f76475",
+            "bytes": 146086916
+          }
+        }
+      }
+    },
+    "cross_grid": {
+      "values": {
+        "baseline": {
+          "a_p_mean_w": 0.39907848335849394,
+          "a_q_mean_var": 0.059107188375492115,
+          "b_p_mean_w": 1.3904148147695707,
+          "b_q_mean_var": 1.0830082542276287,
+          "b_dc_mean_v": 0.00213062192739244,
+          "dc_sent_w": 1.2596504872509229,
+          "dc_received_w": 1.2609580675466816,
+          "dc_series_loss_w": 0.0036304538315035106
+        },
+        "response": {
+          "a_p_mean_w": 1.4842755745390832,
+          "a_q_mean_var": 2.377596507100659,
+          "b_p_mean_w": 1.214169380229265,
+          "b_q_mean_var": 0.05449723935667805,
+          "b_dc_mean_v": 0.0033709634276988254,
+          "dc_sent_w": 1.2638853164392003,
+          "dc_received_w": 1.249246919355528,
+          "dc_series_loss_w": 0.009376125872278429
+        },
+        "recovered": {
+          "a_p_mean_w": 1.2034660032363718,
+          "a_q_mean_var": 1.7297736038760867,
+          "b_p_mean_w": 0.9667814154264533,
+          "b_q_mean_var": 1.7074084597943369,
+          "b_dc_mean_v": 0.01508775294695397,
+          "dc_sent_w": 0.19244702513731227,
+          "dc_received_w": 0.2069631489796393,
+          "dc_series_loss_w": 0.001415204403450776
+        },
+        "b_dc_peak_after_ramp_start_v": 0.023789935756155955
+      },
+      "limits": {
+        "a_p_mean_w": 6,
+        "a_q_mean_var": 6,
+        "b_p_mean_w": 6,
+        "b_q_mean_var": 6,
+        "b_dc_mean_v": 0.08,
+        "dc_sent_w": 7,
+        "dc_received_w": 7,
+        "dc_series_loss_w": 0.08,
+        "b_dc_peak_after_ramp_start_v": 0.08
+      },
+      "passed": true
+    }
+  },
+  "sources": [
+    {
+      "path": "examples/34_two_terminal_vsc_hvdc.py",
+      "sha256": "c3316721890e6ece862fe81cbb058d888b19bdcb13f2b4d89313019a931b18f6",
+      "bytes": 10036
+    },
+    {
+      "path": "pycy_emt_lite/converters/_grid_vsc_current_loop.py",
+      "sha256": "ef55f01e25b585b190e857abad93175dba9800f1d553295e93f5d5c8043f6649",
+      "bytes": 7719
+    },
+    {
+      "path": "tests/test_two_terminal_vsc_hvdc.py",
+      "sha256": "9047f4380430f45b0cf77359c57b6c7ed7b4da48d2f84ddae1ee61822682e96f",
+      "bytes": 5679
+    },
+    {
+      "path": "validation/cases/two_terminal_vsc_hvdc/checks.py",
+      "sha256": "c3297c2f8365c3648d3c8d1b276ddd45555b7d37af5981836ad2f756596a97ad",
+      "bytes": 11646
+    },
+    {
+      "path": "validation/cases/two_terminal_vsc_hvdc/compare.py",
+      "sha256": "314e3a240edc25b4b52fcf869556799832b958e763669edbc5a9de168418f402",
+      "bytes": 23813
+    },
+    {
+      "path": "validation/cases/two_terminal_vsc_hvdc/plots.py",
+      "sha256": "c0bdbbc51d12fb7ccbe2ecce7fde37a95fa5d3b0ecd4e32d3eb4ba3dc2c655e1",
+      "bytes": 2426
+    },
+    {
+      "path": "validation/cases/two_terminal_vsc_hvdc/README.md",
+      "sha256": "bc0baaa708dfe61a9c98970d56a9b12e1b53e5d70a5691d9e227e784b8de59e6",
+      "bytes": 3800
+    },
+    {
+      "path": "pyproject.toml",
+      "sha256": "f32f1496a4e4beb93b9cd3ec318871611b68e1d9765c69b081aed4e9326f5672",
+      "bytes": 2053,
+      "canonical_git_sha256": "fecb494f39ac403780b5212733f629ed96df755c387309303cbb7a1a5858f3ac"
+    },
+    {
+      "path": "uv.lock",
+      "sha256": "79769bb628c8191d5b36db63cff767062e0e5a65b253d41208a3568696e3b5d9",
+      "bytes": 111321,
+      "canonical_git_sha256": "c005c082fe28330d046534bd74861d83cb4e784620e1d7913945a9a39856ac0a"
+    }
+  ],
+  "tests": {
+    "windows": {
+      "tests": 1609,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "duration_s": 867.443,
+      "includes_slow": true,
+      "default_case_rows": 110002,
+      "logs": [
+        {
+          "path": "local_reference/d1_dual_vsc_candidate_20261123/windows_sync.log",
+          "sha256": "6b56c09a0c576a35f09fad4bba83f0ee8e1183d3a00a648bde2f8cfd38d80188",
+          "bytes": 57
+        },
+        {
+          "path": "local_reference/d1_dual_vsc_candidate_20261123/windows_ruff.log",
+          "sha256": "a4443afdcfb6d7363adb285762515ccf7cf50473b1a05c20c1a50f6bed4d26b0",
+          "bytes": 20
+        },
+        {
+          "path": "local_reference/d1_dual_vsc_candidate_20261123/windows_mypy.log",
+          "sha256": "a2767b4f5fbc495fbc163c1c3983210351cf45f12ec5302828989d1065383f9b",
+          "bytes": 45
+        },
+        {
+          "path": "local_reference/d1_dual_vsc_candidate_20261123/windows_pytest.log",
+          "sha256": "77807cbe351eabb7e9dfa9e877c80da475ac90bf41f6cabea90dc7f030e70fae",
+          "bytes": 1897
+        },
+        {
+          "path": "local_reference/d1_dual_vsc_candidate_20261123/windows_pytest.xml",
+          "sha256": "c112f91fac9bdfc990e61a22a072df386e55e595727c26e848c1e05cff51014b",
+          "bytes": 232129
+        },
+        {
+          "path": "local_reference/d1_dual_vsc_candidate_20261123/windows_standalone.log",
+          "sha256": "91a8ed2886532d5582824320cb04b83e4a8dc577f5feac9e0cec15abe33f6cb8",
+          "bytes": 316
+        }
+      ]
+    },
+    "ubuntu_wsl2": {
+      "standalone_and_focused_passed": true,
+      "focused_tests": 8,
+      "default_case_rows": 110002,
+      "source_and_run_evidence": [
+        {
+          "path": "local_reference/d1_dual_vsc_candidate_20261123/wsl_base.tar",
+          "sha256": "8bd08ce00a3fd9f91f5bbd67146fce4ff39ab888c7474c0399794a6a271fb3ab",
+          "bytes": 5048320
+        },
+        {
+          "path": "local_reference/d1_dual_vsc_candidate_20261123/wsl_overlay.tar",
+          "sha256": "2b3337acdf9186c1333ec650f4b3ec3d74a9cf4a16ff802d1eb863c2090ecbfa",
+          "bytes": 30720
+        },
+        {
+          "path": "local_reference/d1_dual_vsc_candidate_20261123/run_wsl.sh",
+          "sha256": "37a9d220660d056792e9fbe1916cdf375a8b91137023ee062afb958ccfddd009",
+          "bytes": 1845
+        },
+        {
+          "path": "local_reference/d1_dual_vsc_candidate_20261123/wsl_sources.sha256",
+          "sha256": "0b9d4e76298d3a3230be274ffcc73b2ee0509dda7945c28c638887528958f98f",
+          "bytes": 48064
+        },
+        {
+          "path": "local_reference/d1_dual_vsc_candidate_20261123/wsl_validation.log",
+          "sha256": "ce5ad8eaf4c309e00046c67f2cd2a10e33f1f67b63487cd197ee99928918c5a9",
+          "bytes": 2782
+        }
+      ],
+      "initial_cache_attempt": {
+        "path": "local_reference/d1_dual_vsc_candidate_20261123/wsl_cache_retry.log",
+        "sha256": "5c58627fe78904bcacee8888dc89fe119b63ec68de06eafca1663a040d4d02f8",
+        "bytes": 810
+      }
+    },
+    "legacy_28_to_32": {
+      "bitwise_equal": true,
+      "runs": 14,
+      "report": {
+        "path": "local_reference/d1_dual_vsc_candidate_20261123/legacy_after/report.json",
+        "sha256": "848abfc53ad7837884f5bbafae9de4b2a569efc86ca7c12663c973e02f256d39",
+        "bytes": 5792
+      },
+      "verifier": {
+        "path": "local_reference/d1_dual_vsc_candidate_20261123/verify_legacy_startup.py",
+        "sha256": "05a8264fe3bd76afb3cf0354b440180dc9db5550c0c906cd8a1b0a4476ee5630",
+        "bytes": 3366
+      }
+    }
+  }
+}

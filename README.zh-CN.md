@@ -109,6 +109,7 @@ uv run --locked pytest -o addopts= -q -p no:cacheprovider --basetemp=.tmp/pytest
 | 并网 VSC 锁相环电流闭环 | [30](examples/30_grid_connected_vsc_pll.py) | 在 11 和 29 之后，观察锁相环怎样从实测网压估计相角，并把它用于电流控制。附[运行说明及验收状态](validation/cases/grid_connected_vsc_pll/README.md)。 |
 | 并网 VSC 有功前馈与 PCC 调压 | [31](examples/31_grid_connected_vsc_power_vac.py) | 在 30 之后加入馈线，比较相同有功目标下固定无功电流的压降和调压结果。附[运行和 PSCAD 对标说明](validation/cases/grid_connected_vsc_power_vac/README.md)。 |
 | 并网 VSC 直流母线调压 | [32](examples/32_grid_connected_vsc_dc_voltage.py) | 在 30 之后将直流定压源换成电容，观察负荷投入后，并网电流怎样恢复母线电压。附[运行和 PSCAD 对标说明](validation/cases/grid_connected_vsc_dc_voltage/README.md)。 |
+| 双端 VSC-HVDC | [34](examples/34_two_terminal_vsc_hvdc.py) | 在 31 和 32 之后，提高 A 站有功给定，观察 B 站如何从电网吸收有功改为向电网送出有功，同时调节直流母线电压。附[运行和 PSCAD 对标说明](validation/cases/two_terminal_vsc_hvdc/README.md)。 |
 | VSC-HVDC 综合仿真 | [18](examples/18_three_terminal_vsc_hvdc.py) | 沿三个两电平桥、独立 PLL/dq 闭环和双极 DC 网络，跟踪交流故障后的电压、功率变化。 |
 
 [19级联RC真实Simscape对标](validation/cases/cascaded_rc/README.md)给出参数、固定验收、结果和复现命令。教学程序只绘制自身波形，独立验证程序读取真实参考。

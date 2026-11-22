@@ -34,6 +34,7 @@ def create_current_loop(
     time_step: float, *, scenario: str = "main", pll: SRFPLL | None = None,
     feeder: tuple[float, float] | None = None, reference: ReferenceCallback | None = None,
     dc_link: tuple[Component, ...] | None = None,
+    carrier_for_gate: Callable[[int], float] | None = None,
 ) -> tuple[tuple[Component, ...], StepCallback]:
     """给桥接线装上电流控制，并可接入求解后执行的外环参考。"""
     steps_per_gate = round(GATE_PERIOD / time_step)
@@ -62,6 +63,8 @@ def create_current_loop(
         return pending if gate_tick > last_sample_tick else previous
 
     def carrier_at(gate_tick: int) -> float:
+        if carrier_for_gate is not None:
+            return carrier_for_gate(gate_tick)
         return triangular_carrier(gate_tick * GATE_PERIOD + CARRIER_TIME_SHIFT, SWITCHING_FREQUENCY)
 
     def gate_pair(phase: str) -> tuple[Callable[[float], bool], Callable[[float], bool]]:

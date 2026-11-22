@@ -1,5 +1,8 @@
 # 持久进度
 
+2026-11-23。34 号双端 VSC-HVDC 已完成验收，正式新增 16 个。两档实际 PSCAD 与 PyCy 同档及各自跨档检查通过。A 站将有功给定从 250 W 提至 650 W 后，B 站由从电网吸收约 190 W 转为向电网送出约 221 W，末 50 ms 的母线均值约 399.6 V。
+[34 号验收报告](../../validation/cases/two_terminal_vsc_hvdc/acceptance_report.json)
+
 2026-11-23。34 号双端 VSC 教学候选的初值、逐点比较阈值和验收范围已固定。将用两档已有原生长窗独立验证正式入口。
 [34 号候选协议](../../validation/cases/two_terminal_vsc_hvdc/candidate_protocol.json)
 

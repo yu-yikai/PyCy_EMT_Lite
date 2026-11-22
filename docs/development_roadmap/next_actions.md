@@ -1,5 +1,8 @@
 # 恢复与下一步
 
+2026-11-23。34 号已验收。按[教学指南](../../validation/cases/two_terminal_vsc_hvdc/README.md)运行独立算例，需要复核时用同一指南的对标入口读取验收报告绑定的两档 PSCAD 归档。D1 接下来先验证等效储能的直流端口。用固定开路电压、串联内阻和一组并联 RC 表示端口，在接入单站 VSC 前用充电、静置、放电脉冲核对原生编译、端电压、极化电压、支路电流和逐区间能量。草案在忽略目录 `local_reference/d1_storage_source_screen_20261123/one_rc_port_short_draft.md`，已核 PSCAD 原始工程来源。
+[34 号验收报告](../../validation/cases/two_terminal_vsc_hvdc/acceptance_report.json)
+
 2026-11-23。双端 VSC-HVDC 的双档 PSCAD 长窗及跨步长比较通过。按[双端 PSCAD 长窗报告](experiments/d1_dual_vsc_long_native_20261123.json)访问原始回执。用报告绑定的 `audit_long.py`，以同档两个回执所在目录传入 `--seed`、`--restart`，并给定 `--grid` 和新的 `--report`。两档报告可交给 `compare_long_grids.py` 核对三个功率窗。
 
 34 号候选的初始状态、波形比较阈值和验证项目已固定。按[34 号候选协议](../../validation/cases/two_terminal_vsc_hvdc/candidate_protocol.json)实现现有桥与电流环的双站组合，教学从有功方向、双极线路功率和母线电压恢复入手。用已封存的 28–32 号启动轨迹验证旧例，再完成两档 PyCy/PSCAD 对标、图、文档及 Windows/Ubuntu 检查。保留等效新能源和储能接口的后续验证。
