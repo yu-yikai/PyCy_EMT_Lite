@@ -1,5 +1,8 @@
 # 持久进度
 
+2026-11-22。5 µs 两组原生求解和相干窗配对完成。使能前 48,001 个电气点和 48,000 个控制点逐点一致。两个 50 ms 稳态窗的电压改善都超过 1.20 V。基础协议原单周期失配保留，继续细档验证。
+[粗档配对实证](../../validation/cases/grid_connected_vsc_power_vac/coherent_window_coarse_pair.json)
+
 2026-11-22。PSCAD 5 µs 调节组已独立运行 130,002 点。控制、开关和馈线过门，调节后三个单周波过门。使能前一个单周波跌落不足 0.8 V，保留原 FAIL。用同份原始波形定位到馈线电感频域积分的边界项，另行冻结 50 ms 相干窗试验。
 [实测窗口诊断与后续试验](../../validation/cases/grid_connected_vsc_power_vac/fundamental_window_trial.json)
 

@@ -1,5 +1,8 @@
 # 恢复与下一步
 
+2026-11-22。粗档两组相干窗均通过，原判定保留。核对按冻结协议运行的 2.5 µs 调节组和固定 q 组。每组应有 260,003 点、650 个外环拍、6,500 个内环拍及实际下一门极拍，含细档中点保持。完成后再比较两个步长并确定候选验收口径。
+[粗档配对](../../validation/cases/grid_connected_vsc_power_vac/coherent_window_coarse_pair.json)
+
 2026-11-22。保留 5 µs 调节组首个单周波压降 FAIL。先完成固定 q 的原生轨迹及前缀一致性诊断。再按[相干窗试验](../../validation/cases/grid_connected_vsc_power_vac/fundamental_window_trial.json)运行两组独立 2.5 µs 参考，复核 50 ms 基波结果和未变的全部逐点判据。原候选门槛仍待处理，公开候选未开始。
 
 2026-11-22。按[外环参考协议](../../validation/cases/grid_connected_vsc_power_vac/reference_protocol.json)先实时重建并运行 5 µs 调节组。生成代码应把当行测得的三个 PCC 电压送入控制器，再核 130,002 点的完整采集、外环递推、馈线及周期性能。再运行其余三组，核对配对和原生跨步长。

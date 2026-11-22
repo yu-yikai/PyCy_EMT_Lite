@@ -3,7 +3,7 @@
   "updated_date": "2026-11-22",
   "timezone": "Asia/Shanghai",
   "branch": "codex/emt-examples-longterm",
-  "checkpoint_head": "0e92da43d1472211a1efe6886396e3a2ad287ea9",
+  "checkpoint_head": "34a6429eaec1f1788987c996e136132f3b9e85d5",
   "current_task": "C1",
   "formal_new_examples_completed": 12,
   "status_values": [
@@ -820,7 +820,7 @@
         "evidence_sha256": "d92469cdd234477829ca5a5fa75a67648f17235fffadf3d3cbdaa73672375427",
         "native_executed": false
       },
-      "current_stage": "power_vac_regulated_5us_original_gate_failed_coherence_trial_frozen",
+      "current_stage": "power_vac_5us_coherent_pair_pass_fine_trial_next",
       "pcc_feeder_probe": {
         "protocol": "docs/development_roadmap/experiments/c1_pcc_feeder_native_probe_20261122.json",
         "internal_feasibility_passed": true,
@@ -831,6 +831,7 @@
         "power_and_vac_protocol": "validation/cases/grid_connected_vsc_power_vac/reference_protocol.json",
         "power_and_vac_5us_regulated": "original_pre_enable_voltage_gate_failed",
         "power_and_vac_window_trial": "validation/cases/grid_connected_vsc_power_vac/fundamental_window_trial.json",
+        "power_and_vac_window_coarse_pair": "validation/cases/grid_connected_vsc_power_vac/coherent_window_coarse_pair.json",
         "power_and_vac_candidate": "not_started"
       },
       "open_loop_candidate_preparation": {
@@ -2023,7 +2024,7 @@
       }
     }
   ],
-  "current_stage": "power_vac_regulated_5us_original_gate_failed_coherence_trial_frozen",
+  "current_stage": "power_vac_5us_coherent_pair_pass_fine_trial_next",
   "resume_checkpoint_history": [
     {
       "resumed_utc": "2026-11-11T13:24:16.085490+00:00",

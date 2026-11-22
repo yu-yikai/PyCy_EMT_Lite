@@ -1,5 +1,8 @@
 # 验证状态
 
+2026-11-22。粗档固定 q 和调节组各 130,002 个原生点。两个相干稳态窗的 PCC 电压分别提高 1.206 V 和 1.221 V，吸收基波无功减少 143.3 var 和 145.6 var。原单周波压降失配在两工况前缀一致复现。
+[配对结果与原报告哈希](../../validation/cases/grid_connected_vsc_power_vac/coherent_window_coarse_pair.json)
+
 2026-11-22。5 µs 调节组通过 650 次外环、6,500 次内环及门极应用和 390,003 个馈线相间隔检查。使能前第二周期只跌 0.683 V，基础协议 FAIL。原波形的 50 ms 诊断为使能前 118.787 V、调节后 120.019 V，相干窗的跨步长验证仍待原生运行。
 [失败证据和诊断](../../validation/cases/grid_connected_vsc_power_vac/fundamental_window_trial.json)
 

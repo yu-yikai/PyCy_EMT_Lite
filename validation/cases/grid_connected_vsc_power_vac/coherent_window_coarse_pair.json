@@ -1,0 +1,36 @@
+{
+  "task": "C1",
+  "scope": "两组独立 PSCAD 5 µs 原生档案的 50 ms 相干窗配对复读。",
+  "trial": "validation/cases/grid_connected_vsc_power_vac/fundamental_window_trial.json",
+  "trial_sha256": "c478914ee2c5af94155aaa162dda38dced696947901cf9355aeb20ad8aa0650f",
+  "held": {
+    "run": "local_reference/native_static_reviews/c1_power_vac_native_5us_held_20261122/n/20261122T150647993132Z",
+    "receipt_sha256": "bafb8d6979684072aa4ffea1896fc20cb9a0d9f683c8d713bc26f540b5798a4e",
+    "original_review_sha256": "6f533c4d6578f96a67f03f78584c860b373ac0fe25436d52494558dc6780815d"
+  },
+  "regulated": {
+    "run": "local_reference/native_static_reviews/c1_power_vac_native_5us_regulated_v2_20261122/n/20261122T145340654973Z",
+    "receipt_sha256": "7335b05a91c5ff280518d4d5615c730031e89a9a91785dc0edbd5031190a7c11",
+    "original_review_sha256": "caf6fa93cea50887c44ac24d9d466f740d87e8470e26b3521560805d90cc4c34",
+    "coherent_pair_report_sha256": "591c58b8fb45b72c606fe5987ea6aa2d6af7b0487acf05b484550a65ebdbb236"
+  },
+  "prebuild_abort": {
+    "run": "local_reference/native_static_reviews/c1_power_vac_native_5us_regulated_20261122/n/20261122T144947909634Z",
+    "terminal_sha256": "b95be2497cea5575a7b869d38c237a8b53354833ab9d78de22b0674bf64a99f2",
+    "reason": "发现编译准入脚本的错误消息引用未定义变量，提前停止本任务拥有的实例，修复并验证准入后独立重试。",
+    "build_calls": 0,
+    "run_calls": 0
+  },
+  "findings": {
+    "rows_each": 130002,
+    "outer_and_inner_samples_each": [650, 6500],
+    "exact_physical_and_control_prefix_rows": [48001, 48000],
+    "original_single_cycle_gate": "两组使能前均有一个周波的压降 0.682689 V，基础协议原结论为 FAIL。",
+    "coherent_trial": "两组原非电压判据、四个相干窗及完全一致的前缀均通过。",
+    "paired_settled_windows_s": [[0.55, 0.60], [0.60, 0.65]],
+    "paired_voltage_improvements_v_rms": [1.205980118066563, 1.2212061666867413],
+    "paired_q_reductions_var": [143.31985916326983, 145.55096274593106]
+  },
+  "status": "PASS_COARSE_COHERENT_PAIR_DIAGNOSTIC_ONLY",
+  "next": "两组 2.5 µs 原生独立运行，确认实际 5 µs 门极间的中点保持并与粗档交叉核对。"
+}
