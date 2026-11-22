@@ -1,5 +1,8 @@
 # 恢复与下一步
 
+2026-11-22。用户已恢复目标。按冻结协议在同一 PSCAD 会话内构建细档对照，将直流负端作为求解零点，八个观测量仍直接测量相对交流中性点的电压。核对生成网表、测量接线、采样设置和控制逻辑后，再运行完整 80,003 点并逐点核验 2 µV 共模上限。
+[数值参考点对照协议](../../validation/cases/grid_connected_vsc_closed_loop/pscad_reference_point_trial.json)
+
 2026-11-19。已按用户指令暂停，所有本轮原生仿真均闭场。恢复后先核长窗冻结提交 587cb54、状态文件和两档失败收据。优先准备求解器数值参考点平移的独立 PSCAD 对照。保留以交流中性点为基准的原生差分观测、同一物理网络和全部原判据。原生准入前核对 19 条支路、45 个输出和 8 路差分电压。若 MathWorks 可正常签出许可，也可恢复原 Simscape 路线。
 [冻结协议](../../validation/cases/grid_connected_vsc_closed_loop/reference_protocol.json) · [长窗记录](experiments/c1_known_angle_dq_pscad_full_20261119.json)
 

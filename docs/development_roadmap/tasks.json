@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
-  "updated_date": "2026-11-19",
+  "updated_date": "2026-11-22",
   "timezone": "Asia/Shanghai",
   "branch": "codex/emt-examples-longterm",
-  "checkpoint_head": "587cb544e0c401a0112b13bd81f5fab162bfcbc3",
+  "checkpoint_head": "05cf89f5e4b167169c6102adf2b9d48d6626296c",
   "current_task": "C1",
   "formal_new_examples_completed": 10,
   "status_values": [
@@ -783,7 +783,7 @@
         "evidence_sha256": "d92469cdd234477829ca5a5fa75a67648f17235fffadf3d3cbdaa73672375427",
         "native_executed": false
       },
-      "current_stage": "known_angle_dq_long_native_main_physics_fail_paused",
+      "current_stage": "known_angle_dq_pscad_reference_point_trial",
       "open_loop_candidate_preparation": {
         "record": {
           "path": "docs/development_roadmap/experiments/c1_openloop_candidate_preparation_20261116.json",
@@ -1605,7 +1605,8 @@
         "short_feedback_record": "docs/development_roadmap/experiments/c1_known_angle_dq_pscad_feedback_20261118.json",
         "fine_feedback_record": "docs/development_roadmap/experiments/c1_known_angle_dq_pscad_feedback_fine_20261119.json",
         "full_feedback_record": "docs/development_roadmap/experiments/c1_known_angle_dq_pscad_full_20261119.json",
-        "next": "等待用户恢复。先核冻结协议与两档原生失败证据，再按原窗和原判据准备数值参考点对照。"
+        "reference_point_trial": "validation/cases/grid_connected_vsc_closed_loop/pscad_reference_point_trial.json",
+        "next": "按冻结的数值参考点协议构建细档对照，生成网表和原生测量通过核对后运行。"
       }
     },
     {
@@ -1760,7 +1761,7 @@
       "blockers": []
     }
   ],
-  "execution_status": "paused",
+  "execution_status": "active",
   "pause_checkpoint": {
     "record": {
       "path": "docs/development_roadmap/experiments/c1_known_angle_dq_pscad_full_20261119.json",
@@ -1771,7 +1772,7 @@
     "status": "paused_after_both_native_main_runs_failed_original_physics",
     "explicit_user_request": true
   },
-  "goal_status": "paused",
+  "goal_status": "active",
   "resume_checkpoint": {
     "record": {
       "path": "local_reference/c1_openloop_reference_research/resume_checkpoints/20261118T071130521842Z/resume.json",
@@ -1846,7 +1847,7 @@
       }
     }
   ],
-  "current_stage": "known_angle_dq_long_native_main_physics_fail_paused",
+  "current_stage": "known_angle_dq_pscad_reference_point_trial",
   "resume_checkpoint_history": [
     {
       "resumed_utc": "2026-11-11T13:24:16.085490+00:00",

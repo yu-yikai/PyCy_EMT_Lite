@@ -1,0 +1,48 @@
+{
+  "schema": "c1_pscad_reference_point_trial_v1",
+  "date": "2026-11-22",
+  "status": "frozen_before_build_or_run",
+  "scope": "PSCAD 5.0 main scenario at 2.5 us on the complete original acquisition window",
+  "reference_protocol": {
+    "path": "validation/cases/grid_connected_vsc_closed_loop/reference_protocol.json",
+    "sha256": "53c1eb1c237fc4bd78ff83feb614023fc7d06b4b1700e7df09e1cd4de8236f06"
+  },
+  "baseline": {
+    "record": "docs/development_roadmap/experiments/c1_known_angle_dq_pscad_full_20261119.json",
+    "record_sha256": "f8ad8f5dc8062e4be06fe724655b898045aeb6a53d9e4a6e81fa142466e8685c",
+    "fine_run": "local_reference/native_static_reviews/c1_pscad_feedback_long_main_2p5us_live_20261119/n/20261118T164428532385Z",
+    "execution_receipt_sha256": "90705c172358fd013c3d3b374db13dc5b7829e2a1ae5fda379fbf0573f9b0410",
+    "generated_sha256": {
+      "Main.dta": "58df14a8b112721eb39289aec090ddfcfbc2f8cd9e65e020b42e30e614b5f549",
+      "Main.f": "d025681ac7ca79dabf9dbc301db4b2a401cee647d53218ee5bc8fda7212510df",
+      "vdiv.map": "5fb0de1b2f8889622ffbccc4df3951aca61e95215a24975dfbaae531e53af802"
+    }
+  },
+  "change": {
+    "solver_zero": "DC negative terminal",
+    "old_zero": "One shared explicit AC neutral of the same three ideal source branches",
+    "equivalence": "Subtract the old DC negative potential from every node in one time row. Each oriented branch voltage difference, branch current, and trapezoidal history is invariant. All reported physical voltages keep their original reference terminals.",
+    "native_voltage_differences_with_ac_neutral_as_negative_terminal": [
+      "V_a_grid_kV", "V_b_grid_kV", "V_c_grid_kV",
+      "V_a_pole_kV", "V_b_pole_kV", "V_c_pole_kV",
+      "Vdc_p_kV", "Vdc_n_kV"
+    ],
+    "negative_rail_observation": "Measure solver node zero minus the explicit AC neutral as a native differential voltage. Its physical value is generally nonzero.",
+    "feedback_observation": "Use the same independently solved phase currents and the three fresh native differential grid-voltage values before the series resistors."
+  },
+  "admission": {
+    "graph": "After Build, verify a complete bijection of generated nodes, the original 19 oriented branch roles and parameters, and no added electrical path via the neutral or the voltage measurements. Confirm the unique numerical reference and 14 nonzero nodes.",
+    "measurements": "Confirm all eight native differential endpoints, seven original branch/DC voltage endpoints, four original signed current operands, and causal order into all original 45 PGB signals and the feedback calculation. Capture the original INF, all five OUT parts and all 29 diagnostic columns.",
+    "settings_and_causality": "Require the original long main settings, fine clock, sparse threshold 1, control source, angle arithmetic, command schedule, initialization, and sampling/application order. The time step stays 2.5 us and the final row is at 0.200005 s.",
+    "execution": "Use the original licensed same-session automation path and isolated directory. A gate refusal prevents Run. Bind the execution receipt and unchanged baseline inputs to the new artifacts."
+  },
+  "analysis": {
+    "original_strict_checker_sha256": "efb94fdf90199196dee2814ceedc04da6e0607cd6e1db65b2deacf2648e40f8b",
+    "rules": "Use the same original control, clock, 19 physical and tracking gates through all 80003 original rows. The common-mode bound stays 2 uV. Retain the first strict rejection. A complete run with a debug-column rejection may be inspected using the existing independent full-row diagnostic, which records the original failure and grants no reference qualification.",
+    "success_scope": "An individual native run qualifies only after every original gate passes. This one-grid experiment does not establish both scenarios, dual-step qualification or candidate acceptance."
+  },
+  "pscad_help": [
+    "https://www.pscad.com/webhelp-pscad-v5.1.0-ol/Master_Library_Models/Sources/Voltage_Source_Model_2/simp_1p_source.htm",
+    "https://pscad.com/webhelp-v502-ol/Master_Library_Models/Meters/volt_meters.htm"
+  ]
+}
