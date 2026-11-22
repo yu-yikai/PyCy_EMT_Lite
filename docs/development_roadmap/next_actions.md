@@ -1,5 +1,9 @@
 # 恢复与下一步
 
+2026-11-23。两档原生长窗已验收。先按[长窗报告](experiments/c1_dc_live_feedback_long_20261123.json)核对各档种子、续算回执以及对应的原始文件。原生入口和单档复算命令见忽略目录 `local_reference/native_static_reviews/c1_dc_bridge_feedback_native_long_20261123/README.md`。成组复算用相邻目录 `c1_dc_long_protocol_20261123/audit_long_windows.py` 的 `pair` 命令，输入粗档、细档的 `windows.json` 和新的输出路径。
+
+32 号从现有三相桥、PLL 和电流环搭建。用 5 mF 电容的 400 V 初压及三相电感零初流独立求解初值，从实测差分电压驱动 1 ms PI 外环。按整数电气步触发 0.400 s 的 320 Ω 负荷投入，使新阻值参与当行积分。优先在算例脚本中解释负荷扰动和电容储能，用现有入口运行两档新波形，按已固定的逐点及窗口门限与 PSCAD 对标，再完成图、教学说明和回归。
+
 2026-11-23。两档闭环短窗通过。按[短窗证据](experiments/c1_dc_live_feedback_short_20261123.json)核对原生波形、37 列日志和各档种子、续算回执。运行入口在忽略目录 `local_reference/native_static_reviews/c1_dc_bridge_feedback_native_canonical_20261123/`。每档均从同一份保存工程走同一加载路径；生成的 Main.f、Main.dta 和快照须逐字节核对。
 
 长窗参数、判据和两档 Fortran 已存于 `local_reference/native_static_reviews/c1_dc_long_protocol_20261123/`。从短窗已验收接线建立新长窗参考，把相对负荷阶跃移至 0.400 s，续算至 0.800005 s。先把原始输出逐行复核和窗口均值检查接入长窗，再分别生成并续算原生快照，核对恢复、功率、跨步长和实际时序。长窗通过后进入公开教学候选。
