@@ -3,7 +3,7 @@
   "updated_date": "2026-11-23",
   "timezone": "Asia/Shanghai",
   "branch": "codex/emt-examples-longterm",
-  "checkpoint_head": "d70bd64c7fd394cd48451b9cae0b93dd4e8c72a9",
+  "checkpoint_head": "02512f5faa5ec93708648856aa23bd2f9dc278b4",
   "current_task": "D1",
   "formal_new_examples_completed": 15,
   "status_values": [
@@ -1914,11 +1914,13 @@
       ],
       "new_capabilities": [],
       "references": [],
-      "validation": "33 号平衡 PJM5 五母线负荷阶跃通过 5 µs、2.5 µs PSCAD 对标，360002 行。Windows 1601 项含 slow、Ubuntu WSL2 默认入口和 6 项专测通过。双端 VSC 预充和负荷试验的 PSCAD 原生 80601 行逐点通过，快照与两站闭环待验证。",
+      "validation": "33 号平衡 PJM5 五母线负荷阶跃通过 5 µs、2.5 µs PSCAD 对标，360002 行。Windows 1601 项含 slow、Ubuntu WSL2 默认入口和 6 项专测通过。双端 VSC 的 PSCAD 双档快照和 200、400 点续算通过，进入两站独立闭环原生短窗。",
       "acceptance": "不将直流等效称完整PV，不将拓扑称完整标准EMT",
       "status": "in_progress",
-      "current_stage": "two_terminal_vsc_parked_native_pass_snapshot_next",
+      "current_stage": "two_terminal_vsc_snapshot_pass_active_native_next",
       "files": [
+        "docs/development_roadmap/experiments/d1_dual_vsc_snapshot_protocol_20261123.json",
+        "docs/development_roadmap/experiments/d1_dual_vsc_snapshot_native_20261123.json",
         "docs/development_roadmap/experiments/d1_dual_vsc_parked_protocol_20261123.json",
         "docs/development_roadmap/experiments/d1_dual_vsc_parked_native_20261123.json",
         "docs/development_roadmap/experiments/d1_pjm5_emt_protocol_20261123.json",
@@ -1938,7 +1940,9 @@
         "81eb9e7cba2cd76362dd04da37a61eb4df819d34",
         "2cc19b8ae4be7221d7ee6177bc836264434d8b52",
         "dca32e7b34ec954844bf2015b89fd96cd4a640e6",
-        "d70bd64c7fd394cd48451b9cae0b93dd4e8c72a9"
+        "d70bd64c7fd394cd48451b9cae0b93dd4e8c72a9",
+        "e2d74da0c4b574963547c98fbc012e6ee69efe32",
+        "02512f5faa5ec93708648856aa23bd2f9dc278b4"
       ],
       "blockers": [],
       "pjm5_load_step_example": {
@@ -1973,6 +1977,25 @@
         "native_rows_including_zero": 80601,
         "native_measurement_channels": 52,
         "warm_snapshot_validated": false,
+        "closed_loop_reference_qualified": false,
+        "candidate_accepted": false
+      },
+      "two_terminal_vsc_native_snapshot": {
+        "status": "pscad_native_two_grid_snapshot_pass",
+        "report": {
+          "path": "docs/development_roadmap/experiments/d1_dual_vsc_snapshot_native_20261123.json",
+          "sha256": "6247febd9d79ff7c9700a9eb0cd1a5b5d27319dc4fd95c9b889de6a315f0bd69",
+          "bytes": 10283
+        },
+        "seed_rows": [
+          80601,
+          161201
+        ],
+        "resume_rows": [
+          200,
+          400
+        ],
+        "native_channels": 64,
         "closed_loop_reference_qualified": false,
         "candidate_accepted": false
       },
@@ -2208,7 +2231,7 @@
       }
     }
   ],
-  "current_stage": "two_terminal_vsc_parked_native_pass_snapshot_next",
+  "current_stage": "two_terminal_vsc_snapshot_pass_active_native_next",
   "resume_checkpoint_history": [
     {
       "resumed_utc": "2026-11-11T13:24:16.085490+00:00",
