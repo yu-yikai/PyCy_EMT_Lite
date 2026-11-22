@@ -1,5 +1,8 @@
 # 恢复与下一步
 
+2026-11-22。粗档原始输出及补充运行来源核验通过。用本地细档隔离包启动 2.5 µs 原生短窗，采集 243 点。通过生成准入后运行一次。按同一判据核对六次更新、六次门极生效和 121 个细档中点，再准备两档 0.200005 s 长窗。
+[PLL 短窗记录](../../validation/cases/grid_connected_vsc_pll/short_reference_report.json)
+
 2026-11-22。按已冻结协议启动隔离的 PSCAD 5 µs 短窗，原生采集到 605 µs。构建后先核对 19 条支路、差分电压和 MainOut 到 MainDyn 的门极路径，再运行一次。保留原始 INF、五个 OUT 和 32 列 CSV，并独立复算六个 PLL 样本及下一门极拍。粗档通过后再做 2.5 µs 短窗和独立长窗。
 [接入参考协议](../../validation/cases/grid_connected_vsc_pll/reference_protocol.json)
 

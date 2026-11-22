@@ -1,5 +1,8 @@
 # 验证状态
 
+2026-11-22。PLL 粗档真实运行 122 点，19 项电气判据全部通过，共模残差峰值含末位精度上界约为 0.223 nV。六次采样和下一门极拍均通过，首个样本因初始超前产生负的频率修正，第二个样本切换到实测电压归一化。
+[PLL 短窗记录](../../validation/cases/grid_connected_vsc_pll/short_reference_report.json)
+
 2026-11-22。并网 PLL 协议的 29 号电路与 11 号离散定义哈希、短窗行数和末次生效时刻已核。耦合 PLL 的原生短窗待运行。
 [接入参考协议](../../validation/cases/grid_connected_vsc_pll/reference_protocol.json)
 

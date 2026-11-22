@@ -1,5 +1,8 @@
 # 技术决策
 
+2026-11-22。粗档运行监视未采到短时求解器 PID。保留原自动闭场拒绝，以实际运行日志、批处理、编译产物、七份原始输出的哈希和独立闭场 WMI 查询补核来源。粗档数值仍按原冻结协议复算。
+[PLL 短窗记录](../../validation/cases/grid_connected_vsc_pll/short_reference_report.json)
+
 2026-11-22。PLL 初始角超前 15°，以实际同刻三相差分电压更新。先用旧角频率推进角度，再计算 dq 误差，新角用于电流正反变换。继续采用标称频率计算电感交叉项和既有门极保持。长窗电流验收以电源配置角独立变换。
 [接入参考协议](../../validation/cases/grid_connected_vsc_pll/reference_protocol.json)
 

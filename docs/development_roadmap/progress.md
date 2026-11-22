@@ -1,5 +1,8 @@
 # 持久进度
 
+2026-11-22。已完成并网 PLL 的 5 µs PSCAD 原生短窗。605 µs 共 122 点，19 项电气判据、六次 PLL 更新与下一拍门极均通过。C1 继续验证 2.5 µs 中点保持，正式新增仍为 11 个。
+[PLL 短窗记录](../../validation/cases/grid_connected_vsc_pll/short_reference_report.json)
+
 2026-11-22。冻结并网 PLL 接入的参考协议。算例 29 已验收，正式新增共 11 个。现在准备 PSCAD 5 µs 原生短窗和独立数值核验。
 [接入参考协议](../../validation/cases/grid_connected_vsc_pll/reference_protocol.json)
 

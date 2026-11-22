@@ -3,7 +3,7 @@
   "updated_date": "2026-11-22",
   "timezone": "Asia/Shanghai",
   "branch": "codex/emt-examples-longterm",
-  "checkpoint_head": "302772282779c5bcd8e7612026deefbb4031ea57",
+  "checkpoint_head": "c635f684fbfe01cbb4ea94f0b10c0aa5a3ecd626",
   "current_task": "C1",
   "formal_new_examples_completed": 11,
   "status_values": [
@@ -749,7 +749,8 @@
         "validation/cases/grid_connected_vsc_closed_loop/README.md",
         "validation/cases/grid_connected_vsc_closed_loop/compare.py",
         "validation/cases/grid_connected_vsc_closed_loop/validation_report.json",
-        "validation/cases/grid_connected_vsc_pll/reference_protocol.json"
+        "validation/cases/grid_connected_vsc_pll/reference_protocol.json",
+        "validation/cases/grid_connected_vsc_pll/short_reference_report.json"
       ],
       "commits": [
         "b835e31785fab3fda247c333d23edbe9ce576dfa",
@@ -787,7 +788,8 @@
         "a777c00c283498ab2dd9a1542a4454b7cf8c5e4a",
         "b245712af22d20205a6883b8ce3767e4d21cbb54",
         "ae4fd239ef1a91b75042b9d291f1548d5a5e132f",
-        "302772282779c5bcd8e7612026deefbb4031ea57"
+        "302772282779c5bcd8e7612026deefbb4031ea57",
+        "c635f684fbfe01cbb4ea94f0b10c0aa5a3ecd626"
       ],
       "blockers": [],
       "reference_feasibility": {
@@ -798,7 +800,7 @@
         "evidence_sha256": "d92469cdd234477829ca5a5fa75a67648f17235fffadf3d3cbdaa73672375427",
         "native_executed": false
       },
-      "current_stage": "pll_reference_protocol_frozen_native_short_pending",
+      "current_stage": "pll_coarse_short_qualified_fine_short_pending",
       "open_loop_candidate_preparation": {
         "record": {
           "path": "docs/development_roadmap/experiments/c1_openloop_candidate_preparation_20261116.json",
@@ -1645,13 +1647,18 @@
         }
       },
       "pll_integrated_reference": {
-        "status": "protocol_frozen_native_short_pending",
+        "status": "coarse_short_qualified_fine_pending",
         "protocol": {
           "path": "validation/cases/grid_connected_vsc_pll/reference_protocol.json",
           "sha256": "78ba092cc8099390023d3fcaa449c8479d269dcd5fa7ec315b267d968e1da767",
           "bytes": 6164
         },
-        "next": "先核 PSCAD 5 µs 短窗的守恒、同刻反馈和门极施加。再做 2.5 µs 短窗和两档独立长窗。"
+        "next": "运行独立 2.5 µs 短窗，核对 243 点、六次采样和门极应用以及中点保持，再准备两档长窗。",
+        "short_reference_report": {
+          "path": "validation/cases/grid_connected_vsc_pll/short_reference_report.json",
+          "bytes": 2478,
+          "sha256": "9cae2947ef1b45159d33f010ac40da2cde3fe11104b9426947cd040d10e675ba"
+        }
       }
     },
     {
@@ -1903,7 +1910,7 @@
       }
     }
   ],
-  "current_stage": "pll_reference_protocol_frozen_native_short_pending",
+  "current_stage": "pll_coarse_short_qualified_fine_short_pending",
   "resume_checkpoint_history": [
     {
       "resumed_utc": "2026-11-11T13:24:16.085490+00:00",
