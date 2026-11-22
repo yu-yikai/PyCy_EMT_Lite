@@ -1,0 +1,462 @@
+{
+  "schema": "d1_dual_vsc_native_long_protocol_v1",
+  "date": "2026-11-23",
+  "source_parent": "660cd09516647089f5f57371939a02bc312bd628",
+  "scope": "Verify both original PSCAD continuation grids through 550.005 ms. Exercise a change in station A active-power command, the signed station B converter response, the bipolar link, and DC voltage recovery.",
+  "references": {
+    "qualified_native_short": {
+      "path": "docs/development_roadmap/experiments/d1_dual_vsc_active_native_20261123.json",
+      "sha256": "4fceeb47b5a2337cff8c140fff5c32e697285927a3eeb435f8fd29f4b004d579"
+    },
+    "active_short_protocol": {
+      "path": "docs/development_roadmap/experiments/d1_dual_vsc_active_protocol_20261123.json",
+      "sha256": "b974517e31ef4bd6f019905e7f63bafff635f8b2a15b72bde0ee8030571a5791"
+    },
+    "pycy_long_screen": {
+      "path": "local_reference/native_static_reviews/d1_dual_vsc_active_20261123/pycy_power_direction_screen.py",
+      "sha256": "9eb4d60edf80a0312959092d3a9edf435fb00672d5d2acafe52fbbeb04dc7781"
+    },
+    "pycy_long_5us": {
+      "path": "local_reference/native_static_reviews/d1_dual_vsc_active_20261123/pycy_power_direction_5us.json",
+      "sha256": "cdcafc8d4d41c7c9fcdc6bee1bdad1d27eb49b2d64cbc273695e0c62213f05f5"
+    },
+    "pycy_long_2p5us": {
+      "path": "local_reference/native_static_reviews/d1_dual_vsc_active_20261123/pycy_power_direction_2p5us.json",
+      "sha256": "f328753efee70e419b11b7de9d91dc86453513456bed57991d6eeab68ebfb2ef"
+    }
+  },
+  "timing": {
+    "precharge_open_s": 0.4,
+    "load_close_s": 0.401,
+    "seed_stop_s": 0.452005,
+    "snapshot_s": 0.402,
+    "restart_duration_s": 0.550005,
+    "source_start_tick": 1,
+    "first_timing_window_s": 0.002005,
+    "power_metrics_window_s": [
+      0.5,
+      0.55
+    ],
+    "restart_stop_absolute_s": 0.952005,
+    "seed_overlap_duration_s": 0.050005,
+    "power_windows_s": {
+      "baseline": [
+        0.14,
+        0.19
+      ],
+      "response": [
+        0.25,
+        0.3
+      ],
+      "recovered": [
+        0.5,
+        0.55
+      ]
+    }
+  },
+  "grids": {
+    "5us": {
+      "step_s": 0.000005,
+      "precharge_open_tick": 80000,
+      "load_close_tick": 80200,
+      "snapshot_tick": 80400,
+      "seed_rows_including_zero": 90402,
+      "restart_rows": 110001,
+      "first_resume_absolute_s": 0.402005,
+      "inner_ticks": 20,
+      "gate_ticks": 1,
+      "outer_ticks": 200,
+      "first_gate_apply_tick": 21,
+      "last_relative_tick": 110001,
+      "seed_tail_rows": 10001
+    },
+    "2p5us": {
+      "step_s": 0.0000025,
+      "precharge_open_tick": 160000,
+      "load_close_tick": 160400,
+      "snapshot_tick": 160800,
+      "seed_rows_including_zero": 180803,
+      "restart_rows": 220002,
+      "first_resume_absolute_s": 0.4020025,
+      "inner_ticks": 40,
+      "gate_ticks": 2,
+      "outer_ticks": 400,
+      "first_gate_apply_tick": 42,
+      "last_relative_tick": 220002,
+      "seed_tail_rows": 20002
+    }
+  },
+  "plant": {
+    "physical_branches": 45,
+    "dc_load_ohm": 400,
+    "pole_capacitance_f": {
+      "terminal": 0.01,
+      "midpoint": 0.0001
+    },
+    "dc_line_half": {
+      "r_ohm": 0.25,
+      "l_h": 0.002
+    },
+    "filter_per_phase": {
+      "r_ohm": 1,
+      "l_h": 0.01
+    },
+    "feeder_per_phase": {
+      "r_ohm": 0.8,
+      "l_h": 0.008
+    },
+    "phase_grid_source": {
+      "rms_v": 120,
+      "frequency_hz": 60,
+      "ramp_s": 0.02,
+      "phase_offsets_rad": [
+        0,
+        -2.0943951023931953,
+        2.0943951023931953
+      ],
+      "waveform": "At relative t>0, sqrt(2)*120*min(t/0.020,1)*sin(2*pi*60*t+phase_offset), measured from each source phase to its own floating star."
+    },
+    "switch_resistance_ohm": {
+      "closed": 0.001,
+      "open": 1000000000
+    },
+    "directions": "Positive phase current flows from the ideal source through PCC into the converter. Positive P and Q describe AC power absorbed at that PCC. Both DC path current axes point A to midpoint to B."
+  },
+  "control": {
+    "absolute_seed_members": "Save at 0.402 s before control starts. The cold seed continues to 0.452005 s and flushes both complete early traces. Restart from the exact snapshot with the same compiled model and close both log files at relative 0.550005 s.",
+    "parked_initial": {
+      "upper_closed": false,
+      "lower_closed": true,
+      "pll_angle_rad": 4.71238898038469,
+      "pll_omega_rad_s": 376.99111843077515,
+      "all_other_control_states_zero": true,
+      "separate_state_storage": true,
+      "real_state_words_per_station": 25,
+      "integer_state_words_per_station": 1
+    },
+    "pll": {
+      "proportional": 100,
+      "integral": 1000,
+      "error_voltage_floor_v": 1
+    },
+    "current": {
+      "update_period_s": 0.0001,
+      "bandwidth_hz": 100,
+      "total_r_ohm": 1.8,
+      "total_l_h": 0.018,
+      "phase_peak_reference_limit_a": 4,
+      "voltage_modulation_limit": 0.95
+    },
+    "outer": {
+      "update_period_s": 0.001,
+      "filtered_pcc_time_constant_s": 0.01,
+      "minimum_pcc_rms_v": 24,
+      "station_a": {
+        "p_end_w": 250,
+        "q_end_var": 40,
+        "p_high_w": 650
+      },
+      "station_b": {
+        "dc_target_v": 400,
+        "voltage_pi_proportional": 0.276,
+        "voltage_pi_integral": 4.96,
+        "q_end_var": -40
+      },
+      "setpoint_ramp_start_s": 0.02,
+      "setpoint_ramp_end_s": 0.03,
+      "high_power_ramp_start_s": 0.2,
+      "high_power_ramp_end_s": 0.22
+    },
+    "gate": {
+      "period_s": 0.000005,
+      "pwm_hz": 1000,
+      "carrier": "Let g=floor(relative_tick/gate_ticks), k=g mod 200. The carrier is 1−k/50 for k≤100 and k/50−3 otherwise. Upper closes on applied reference ≥ carrier, lower is complementary. Fine-grid midpoints retain the last gate.",
+      "publication": "Use actual solved samples. A command computed at a 100 µs inner tick first affects the solve at the next 5 µs gate tick; keep the fine-grid midpoint value. The physically applied references are recorded separately from the pending and issued references."
+    },
+    "equations": [
+      "At an inner tick, integrate angle with the previous PLL frequency, then update normalized q-axis feedback. Transform using the solved source voltage relative to the station neutral.",
+      "Low-pass solved PCC dq every electrical step with backward Euler and the extrapolated source angle. On a 1 ms outer row below the PCC magnitude floor, zero the references and leave the voltage PI integrator unchanged.",
+      "On an enabled outer row, A uses P*/(1.5|V_PCC|). B uses signed PI(400−Vdc) with conditional integration. Clip the active current to ±4 A. Compute q_PCC=−Q*/(1.5|V_PCC|) and clip by the remaining current radius, then rotate to the source frame.",
+      "Use the newly calculated outer request on the same solved inner row. Use existing dq feedforward and current PI with 100 Hz bandwidth and total phase series R/L. Limit the output vector at .95*(Vdc/2) and roll back both current integrators when saturated. Inverse transform and divide by the measured half-bus voltage.",
+      "At 1 ms outer ticks from 200 ms through 220 ms, add 400 W to the 250 W steady command by a linear ramp at station A. Relative tick 200 ms adds zero and 220 ms adds 400 W. Station B sets its active current from signed voltage PI throughout.",
+      "P=1.5*(vd*id+vq*iq) and Q=1.5*(vq*id−vd*iq) use measured PCC voltages and phase currents. Each three-cycle window is half-open on the original electrical grid. The DC send and receive powers are the dot products of the two measured pole-to-ground voltages and consistently oriented rail currents at each end."
+    ]
+  },
+  "native_execution": {
+    "target": "PSCAD 5.0 / EMTDC gf46 x86",
+    "raw_stem": "dual_vsc",
+    "snapshot_filename": "dual_vsc.snp",
+    "physical_channels": 82,
+    "retained_plant_channels": 64,
+    "gate_resistance_channels": "R_{a,b}_{a,b,c}_{upper,lower}_ohm",
+    "applied_reference_channels": "Ref_{a,b}_{a,b,c}_pu",
+    "log_filenames": {
+      "a": "d1_vsc_a_feedback.csv",
+      "b": "d1_vsc_b_feedback.csv"
+    },
+    "log_columns": [
+      "j",
+      "time_s",
+      "ea_kv",
+      "eb_kv",
+      "ec_kv",
+      "pa_kv",
+      "pb_kv",
+      "pc_kv",
+      "ia_ka",
+      "ib_ka",
+      "ic_ka",
+      "vdc_kv",
+      "inner_tick",
+      "outer_tick",
+      "pcc_ready",
+      "theta_rad",
+      "omega_rad_s",
+      "pll_integrator",
+      "pll_error",
+      "theta_row_rad",
+      "pcc_d_v",
+      "pcc_q_v",
+      "p_ref_w",
+      "q_ref_var",
+      "ip_ref_a",
+      "iq_pcc_ref_a",
+      "id_ref_a",
+      "iq_ref_a",
+      "dc_integrator",
+      "id_integrator",
+      "iq_integrator",
+      "vd_raw_v",
+      "vq_raw_v",
+      "vd_out_v",
+      "vq_out_v",
+      "v_limit_v",
+      "saturated",
+      "pending_a",
+      "pending_b",
+      "pending_c",
+      "issued_a",
+      "issued_b",
+      "issued_c"
+    ],
+    "generated_identity": [
+      "Main.f",
+      "Main.dta",
+      "Station.f",
+      "Station.dta"
+    ],
+    "same_pgb_mapping": true,
+    "interpolate_switching": false,
+    "detect_chatter": false,
+    "remove_chatter": false,
+    "run_limit_s_by_role": {
+      "seed": {
+        "5us": 300,
+        "2p5us": 300
+      },
+      "restart": {
+        "5us": 300,
+        "2p5us": 450
+      }
+    },
+    "overall_guard_limit_s": 900,
+    "short_run_time_basis_s": {
+      "5us": 14.65,
+      "2p5us": 29.24
+    },
+    "overlap": "Check the entire actual seed tail against the long restart prefix and against the prior qualified short native restart on each grid.",
+    "seed_flush": "After writing the last early log row, flush each log while its unit is open. Close both normally at the final long tick of the longer run."
+  },
+  "physical_limits": {
+    "clock_s": 2e-12,
+    "overlap_voltage_v": 0.0001,
+    "overlap_current_a": 0.000002,
+    "overlap_modulation": 2e-7,
+    "overlap_control_log": 0.000002,
+    "native_source_voltage_v": 0.00002,
+    "same_row_log_voltage_v": 0.000002,
+    "same_row_log_current_a": 0.000002,
+    "control_recurrence": 0.000002,
+    "applied_reference_pu": 2e-7,
+    "gate_tie_pu": 2e-12,
+    "exact_gate_resistance": true,
+    "kcl_a": 0.000002,
+    "tr_line_voltage_v": 0.00005,
+    "tr_ac_voltage_v": 0.00005,
+    "tr_cap_charge_c": 5e-10,
+    "tr_energy_j": 2e-7,
+    "abs_cumulative_energy_j": 0.001
+  },
+  "control_acceptance": {
+    "inner_updates_per_station": 5500,
+    "outer_due_per_station": 550,
+    "first_enabled_outer_s": 0.011,
+    "fine_gate_midpoints": 110001,
+    "first_sample_pending_abs_peak_pu": [
+      0.002,
+      0.006
+    ],
+    "a_p_mean_w": [
+      620,
+      680
+    ],
+    "a_q_mean_var": [
+      10,
+      60
+    ],
+    "b_p_mean_w": [
+      -245,
+      -195
+    ],
+    "b_q_mean_var": [
+      -75,
+      -25
+    ],
+    "b_dc_min_v": [
+      395,
+      400
+    ],
+    "b_dc_final_v": [
+      399.1,
+      400.4
+    ],
+    "b_dc_integrator_final_a": [
+      -1.2,
+      -0.7
+    ],
+    "b_active_request_final_peak_a": [
+      -1.15,
+      -0.65
+    ],
+    "final_positive_half_link_current_a": [
+      1.45,
+      1.7
+    ],
+    "final_negative_half_link_current_a": [
+      -1.7,
+      -1.45
+    ]
+  },
+  "candidate_accepted_at_freeze": false,
+  "long_window_acceptance": {
+    "baseline": {
+      "a_p_mean_w": [
+        225,
+        275
+      ],
+      "a_q_mean_var": [
+        10,
+        60
+      ],
+      "b_p_mean_w": [
+        160,
+        215
+      ],
+      "b_q_mean_var": [
+        -70,
+        -25
+      ],
+      "b_dc_mean_v": [
+        399.25,
+        400.8
+      ],
+      "dc_sent_w": [
+        205,
+        255
+      ],
+      "dc_received_w": [
+        205,
+        255
+      ],
+      "dc_series_loss_w": [
+        0.2,
+        0.5
+      ]
+    },
+    "response": {
+      "a_p_mean_w": [
+        620,
+        680
+      ],
+      "a_q_mean_var": [
+        10,
+        60
+      ],
+      "b_p_mean_w": [
+        -225,
+        -160
+      ],
+      "b_q_mean_var": [
+        -75,
+        -25
+      ],
+      "b_dc_mean_v": [
+        402,
+        405
+      ],
+      "dc_sent_w": [
+        580,
+        650
+      ],
+      "dc_received_w": [
+        575,
+        647
+      ],
+      "dc_series_loss_w": [
+        1.85,
+        2.8
+      ]
+    },
+    "recovered": {
+      "a_p_mean_w": [
+        620,
+        680
+      ],
+      "a_q_mean_var": [
+        10,
+        60
+      ],
+      "b_p_mean_w": [
+        -245,
+        -195
+      ],
+      "b_q_mean_var": [
+        -75,
+        -25
+      ],
+      "b_dc_mean_v": [
+        399.25,
+        400.5
+      ],
+      "dc_sent_w": [
+        602,
+        662
+      ],
+      "dc_received_w": [
+        599,
+        660
+      ],
+      "dc_series_loss_w": [
+        2,
+        3.1
+      ]
+    },
+    "b_dc_peak_after_ramp_start_v": [
+      402,
+      405
+    ],
+    "b_dc_recovered_abs_error_v": 0.75,
+    "cross_grid_max_abs": {
+      "a_p_mean_w": 6,
+      "a_q_mean_var": 6,
+      "b_p_mean_w": 6,
+      "b_q_mean_var": 6,
+      "b_dc_mean_v": 0.08,
+      "dc_sent_w": 7,
+      "dc_received_w": 7,
+      "dc_series_loss_w": 0.08,
+      "b_dc_peak_v": 0.08
+    },
+    "check_direction": "Require positive P_B in the baseline, negative P_B in response and recovered windows, and positive line powers and line series dissipation in all three windows."
+  }
+}
