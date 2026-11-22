@@ -1,0 +1,42 @@
+{
+  "schema": "c1_pscad_angle_arithmetic_trial_v1",
+  "date": "2026-11-22",
+  "status": "frozen_before_build_or_run",
+  "scope": "One PSCAD 5.0 fine main trial with the admitted DC negative numerical reference point",
+  "reference_protocol": {
+    "path": "validation/cases/grid_connected_vsc_closed_loop/reference_protocol.json",
+    "sha256": "53c1eb1c237fc4bd78ff83feb614023fc7d06b4b1700e7df09e1cd4de8236f06"
+  },
+  "reference_point_trial": {
+    "path": "validation/cases/grid_connected_vsc_closed_loop/pscad_reference_point_trial.json",
+    "sha256": "225822f011176b016695b755bb30ddeefab86ba7721b8fdf4f02cc84cd260b99"
+  },
+  "baseline": {
+    "record": "docs/development_roadmap/experiments/c1_pscad_reference_point_trial_20261122.json",
+    "record_sha256": "5e32e8ce0d58301ef9120c2cb00ea51e99a20354f30b340b5c39138174f4e787",
+    "run": "local_reference/native_static_reviews/c1_pscad_reference_point_retry_2p5us_20261122/n/20261122T092721288470Z",
+    "execution_receipt_sha256": "11688de372686f3d01f6bb3363402cebabfa271375196b25494bf9ada2f5c051",
+    "generated_main_f_sha256": "f4790b7f4d041788f28a1c78c69b93bf14ac96089d1b20eed8ca47f1e69926f3",
+    "generated_main_dta_sha256": "63404eb42eb0e395030d785f6feaf6defa15de910c02a34701d237fb0777f59",
+    "configured_angle_reanalysis_sha256": "bb0d6abb23246c9a55ae20bd304a3f86b6379b6604c77b90d778879f3db58a64"
+  },
+  "source_delta": {
+    "exact_statements": [
+      "C1_C = COS(C1_P*DBLE(MODULO(3*C1_J+5000,20000)-10000)/10000.0D0)",
+      "C1_S = SIN(C1_P*DBLE(MODULO(3*C1_J+5000,20000)-10000)/10000.0D0)"
+    ],
+    "angle_identity": "At h = 2.5 us the configured angle divided by pi is (3*j-5000)/10000. Integer MODULO with period 20000 keeps the angle in [-pi,pi). The two arguments differ from the original configured angle by an integer number of turns.",
+    "invariants": "Keep the original unwrapped C1_THETA for logging, source and reference-point geometry, all controller inputs, operation order, initial state, integrals, saturation, delayed application, carrier, hold, native meters and output order."
+  },
+  "admission": {
+    "generated": "Compare 19 oriented branch roles and 14 non-ground nodes, all original fresh voltages and signed currents, 45 PGB slots, the separate 29-field feedback log, solver settings, time grid and generated control. Admit only the two exact trigonometric operand changes after the established alias and independent observation-order checks.",
+    "execution": "Use one isolated same-session licensed Build and a conditional Run. Preserve original snapshots and raw output through all 80003 rows on the 2.5 us grid through 0.200005 s. After native completion recheck semantic build admission if temporary generated map or executable bytes have been refreshed."
+  },
+  "verification": {
+    "legacy_long_driver_sha256": "efb94fdf90199196dee2814ceedc04da6e0607cd6e1db65b2deacf2648e40f8b",
+    "expected_trigonometry": "Independently reconstruct the configured angle from the exact row clock and high-precision pi. Evaluate the equivalent dq projections with at least 80-digit decimal trigonometry. Check the original unwrapped angle log separately. The observed angle log is never an input to the expected transforms.",
+    "original_limits": "Retain every original per-field control bound including 1 pV on e_q, exact discrete and clock checks, the 19 full-window electrical limits including 2 uV common-mode, and all tracking and power-direction checks. Preserve failures without discarding original samples.",
+    "scope_of_pass": "An admitted complete fine main run may qualify that single native run. Whole reference and teaching acceptance still require both scenarios and both electrical grids under the frozen full-window protocol."
+  },
+  "compiler_help": "https://gcc.gnu.org/onlinedocs/gfortran/MODULO.html"
+}
