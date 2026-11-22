@@ -99,6 +99,17 @@ def test_six_cycle_ramp_plus_dc_has_closed_form_fixed_60hz_features():
     assert result["fixed_frequency_Hz"] == 60 and result["nonfundamental_is_standard_THD"] is False
 
 
+def test_fundamental_coefficients_of_finely_sampled_phase_voltage():
+    step = 2.5e-6
+    knots = .55 + np.arange(20_001) * step
+    peak = 120 * math.sqrt(2)
+    voltage = peak * np.sin(math.tau * 60 * knots)
+    sine, cosine = metrics.fundamental_coefficients(knots, voltage)
+    # The triangular basis of linear interpolation has a sinc-squared frequency response.
+    assert sine == pytest.approx(peak * np.sinc(60 * step)**2, rel=0, abs=2e-10)
+    assert cosine == pytest.approx(0, rel=0, abs=2e-10)
+
+
 def test_zero_fundamental_cannot_qualify_phase_or_residual_ratio():
     time = np.linspace(.1, .2, 13)
     table = {"TIME_native_s": time, **{f"I_{p}_ac_to_bridge_kA": np.zeros_like(time) for p in "abc"}}

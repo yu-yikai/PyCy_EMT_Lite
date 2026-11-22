@@ -150,10 +150,9 @@ def snapshots(data):
                 'PR': np.sum(vr * i, axis=0), 'Psw': np.sum(upper * (vp - pole)**2 + lower * (pole - vn)**2, axis=0)}
 
 
-def features(time, current, start, end):
-    """Fixed60Hz sine/cosine projection of each affine segment, no fitting."""
-    t, y = clip(time, current, start, end)
-    duration = end - start
+def fundamental_coefficients(t, y):
+    """Return the fixed 60 Hz sine and cosine coefficients on a clipped PWL window."""
+    duration = t[-1] - t[0]
     d = np.diff(t)
     z = (2 * math.pi * 60) * d / 2
     theta = (2 * math.pi * 60) * (t[:-1] + d / 2)
@@ -167,6 +166,13 @@ def features(time, current, start, end):
     even, odd = average * d * np.sinc(z / math.pi), change * d * j / 2
     sine = 2 * math.fsum(even * np.sin(theta) + odd * np.cos(theta)) / duration
     cosine = 2 * math.fsum(even * np.cos(theta) - odd * np.sin(theta)) / duration
+    return sine, cosine
+
+
+def features(time, current, start, end):
+    """Fixed60Hz sine/cosine projection of each affine segment, no fitting."""
+    t, y = clip(time, current, start, end)
+    sine, cosine = fundamental_coefficients(t, y)
     dc = mean(t, y)
     mean_square = square_mean(t, y)
     fundamental_square = (sine * sine + cosine * cosine) / 2
