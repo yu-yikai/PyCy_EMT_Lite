@@ -2,9 +2,9 @@
 
 2026-11-23。32 号已验收，C1 完成。在现有原生归档可用时，按[教学指南](../../validation/cases/grid_connected_vsc_dc_voltage/README.md)运行两档对标。检查已完成的对比，用[验收报告](../../validation/cases/grid_connected_vsc_dc_voltage/acceptance_report.json)中的输入、结果和图哈希。
 
-D1 的[PJM5 原生参考](experiments/d1_pjm5_pscad_reference_20261123.json)已通过。复算命令见 `local_reference/native_static_reviews/d1_pjm5_emt_20261123/README.md`，按报告核对每档执行回执和原始 INF/OUT。长窗来自 `d1_pjm5_pscad_reload_20261123/` 中的两次独立运行。保留首轮编译准入、重存尺寸和冷启动日志的原始拒绝记录。
+2026-11-23。33 号已验收。按[教学指南](../../validation/cases/pjm5_load_step/README.md)运行 PyCy 并复算 PSCAD 同档对比。读取[验收报告](../../validation/cases/pjm5_load_step/acceptance_report.json)核对两档输入、原始差值和图。
 
-冻结正式 PyCy 同档判据，再用现有 `ThreePhasePiLine`、给定源和固定阻抗元件搭建候选。线路参数传两端电容之和。用源斜率给定一致初值，核对源端直接并联电容的原始电流、奇偶拍差值和区间电荷。用整数拍驱动 0.300 s 负荷电阻。教学图优先显示 2 号母线电压与两条进线分担。
+D1 下一个是简化双端 VSC-HVDC。先读 `local_reference/native_static_reviews/d1_two_terminal_vsc_source_screen_20261123/report.json`，按其中哈希检查本机 `VSCTrans.pscx` 和生成文件。用 18 号的双极 T 型连接和 32 号已实测的桥、预充与门极时序，固定两站的控制职责、功率符号、初值及测量方向。先做 5 µs 原生短窗，核对两极电流、各端电容和线路储能及下一门极拍。保留等效新能源和储能接口的后续验证。
 
 2026-11-23。两档闭环短窗通过。按[短窗证据](experiments/c1_dc_live_feedback_short_20261123.json)核对原生波形、37 列日志和各档种子、续算回执。运行入口在忽略目录 `local_reference/native_static_reviews/c1_dc_bridge_feedback_native_canonical_20261123/`。每档均从同一份保存工程走同一加载路径；生成的 Main.f、Main.dta 和快照须逐字节核对。
 

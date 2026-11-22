@@ -3,9 +3,9 @@
   "updated_date": "2026-11-23",
   "timezone": "Asia/Shanghai",
   "branch": "codex/emt-examples-longterm",
-  "checkpoint_head": "2560127f0faf63290ff76e710abbc483bba96f8a",
+  "checkpoint_head": "2cc19b8ae4be7221d7ee6177bc836264434d8b52",
   "current_task": "D1",
-  "formal_new_examples_completed": 14,
+  "formal_new_examples_completed": 15,
   "status_values": [
     "planned",
     "ready",
@@ -1914,19 +1914,51 @@
       ],
       "new_capabilities": [],
       "references": [],
-      "validation": "范围命名准确、真实参考和阶段复审",
+      "validation": "33 号平衡 PJM5 五母线负荷阶跃通过 5 µs、2.5 µs PSCAD 对标，360002 行。Windows 1601 项含 slow、Ubuntu WSL2 默认入口和 6 项专测通过。其余 D1 候选逐项验证。",
       "acceptance": "不将直流等效称完整PV，不将拓扑称完整标准EMT",
       "status": "in_progress",
-      "current_stage": "pjm5_emt_native_reference_qualified_candidate_next",
+      "current_stage": "two_terminal_vsc_pscad_short_probe_next",
       "files": [
         "docs/development_roadmap/experiments/d1_pjm5_emt_protocol_20261123.json",
-        "docs/development_roadmap/experiments/d1_pjm5_pscad_reference_20261123.json"
+        "docs/development_roadmap/experiments/d1_pjm5_pscad_reference_20261123.json",
+        "examples/33_pjm5_load_step.py",
+        "tests/test_pjm5_load_step.py",
+        "validation/cases/pjm5_load_step/README.md",
+        "validation/cases/pjm5_load_step/candidate_protocol.json",
+        "validation/cases/pjm5_load_step/compare.py",
+        "validation/cases/pjm5_load_step/checks.py",
+        "validation/cases/pjm5_load_step/plots.py",
+        "validation/cases/pjm5_load_step/acceptance_report.json"
       ],
       "commits": [
         "3e0afbf45ea34675fead6caede1fa64dd1d718e8",
-        "2560127f0faf63290ff76e710abbc483bba96f8a"
+        "2560127f0faf63290ff76e710abbc483bba96f8a",
+        "81eb9e7cba2cd76362dd04da37a61eb4df819d34",
+        "2cc19b8ae4be7221d7ee6177bc836264434d8b52"
       ],
       "blockers": [],
+      "pjm5_load_step_example": {
+        "status": "completed",
+        "number": 33,
+        "acceptance_report": {
+          "path": "validation/cases/pjm5_load_step/acceptance_report.json",
+          "sha256": "0f6bba0d4d239d3c34670d04a2d37796a62593cfc255387486ac941aee290b15",
+          "bytes": 10085
+        },
+        "paired_rows_with_initial": [120001, 240001],
+        "windows_pytest_including_slow": 1601,
+        "ubuntu_focused_tests": 6
+      },
+      "two_terminal_vsc_source_screen": {
+        "status": "installed_source_reviewed_native_probe_next",
+        "report": {
+          "path": "local_reference/native_static_reviews/d1_two_terminal_vsc_source_screen_20261123/report.json",
+          "sha256": "f53e0229a81754b1c5a93ce3e41088058913b61f753ac9a5304f231af4f61e8a",
+          "bytes": 13141
+        },
+        "native_reference_qualified": false,
+        "candidate_accepted": false
+      },
       "small_network_native_reference": {
         "status": "pscad_short_and_independent_full_grids_pass",
         "report": {
@@ -1936,7 +1968,7 @@
         },
         "native_rows_including_zero": [401, 120001, 240001],
         "native_measurement_channels": 95,
-        "candidate_accepted": false
+        "candidate_accepted": true
       },
       "small_network_emt_protocol": {
         "status": "frozen_after_independent_tr_screen_before_native",
@@ -1946,13 +1978,12 @@
           "bytes": 7352
         },
         "native_reference_qualified": true,
-        "candidate_accepted": false
+        "candidate_accepted": true
       },
       "small_network_source_screen": {
-        "status": "static_topology_screened_native_reference_qualified",
+        "status": "pjm5_derived_teaching_example_accepted",
         "source": "https://github.com/power-grid-lib/pglib-opf/blob/dc6be4b2f85ca0e776952ec22cbd4c22396ea5a3/pglib_opf_case5_pjm.m",
         "scope": "IEEE PES PGLib-OPF v23.07。采用五母线、六条线路的平衡网状拓扑，复用三相π线路、给定电源和固定阻抗负荷。数据按 CC BY 4.0 署名并注明改动。",
-        "remaining": "冻结 PyCy 对标入口及同档门限，用现有三相 π 线路和固定阻抗元件搭建教学算例。",
         "receipt": {
           "path": "local_reference/native_static_reviews/d1_pglib_case5_screen_20261122/report.json",
           "bytes": 4711,
@@ -2160,7 +2191,7 @@
       }
     }
   ],
-  "current_stage": "pjm5_emt_native_reference_qualified_candidate_next",
+  "current_stage": "two_terminal_vsc_pscad_short_probe_next",
   "resume_checkpoint_history": [
     {
       "resumed_utc": "2026-11-11T13:24:16.085490+00:00",

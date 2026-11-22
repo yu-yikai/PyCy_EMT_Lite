@@ -1,0 +1,247 @@
+{
+  "schema": "pjm5_load_step_example_acceptance_v1",
+  "date": "2026-11-23",
+  "example": 33,
+  "passed": true,
+  "formal_example_accepted": true,
+  "formal_new_examples_completed": 15,
+  "source_parent": "2cc19b8ae4be7221d7ee6177bc836264434d8b52",
+  "scope": "Balanced three-phase EMT teaching network derived from PGLib PJM5. Five buses, six independent per-phase pi lines, and one fixed-impedance load step.",
+  "candidate_protocol": {
+    "path": "validation/cases/pjm5_load_step/candidate_protocol.json",
+    "sha256": "c8d6e90fa0025cd4a2775eb536a47c7bd4d99d28f104c6af416196364c733880",
+    "bytes": 4923
+  },
+  "native_reference": {
+    "path": "docs/development_roadmap/experiments/d1_pjm5_pscad_reference_20261123.json",
+    "sha256": "88c7505d43b40f649a9b41ba1396be63dc73b5c007d75115f9d4e4bd5629a7c2",
+    "bytes": 18518
+  },
+  "comparison": {
+    "reference_platform": "PSCAD 5.0.0 / EMTDC 5",
+    "report": {
+      "path": "local_reference/d1_pjm5_candidate_20261123/comparison_first/report.json",
+      "sha256": "1d13721b43c982e20badce13084de8bc3cf67e3bc2f81735c1de3d942ad5201b",
+      "bytes": 3663
+    },
+    "inputs": {
+      "path": "local_reference/d1_pjm5_candidate_20261123/comparison_first/inputs.json",
+      "sha256": "05fb34481b597b2ea99dfb4fac90154d25d8bc99d877c7ea150819d06f321ec6",
+      "bytes": 21106
+    },
+    "independent_hash_check": {
+      "path": "local_reference/d1_pjm5_candidate_20261123/independent_hash_check.log",
+      "sha256": "f3cc839a60d231fdb60c4ea95bf174935cc4bd7f73562fb4e5a159486813002b",
+      "bytes": 80
+    },
+    "figure": {
+      "path": "local_reference/d1_pjm5_candidate_20261123/comparison_first/waveform_overlay.png",
+      "sha256": "1e4223ccb63c5192f3e20b154ec90f1ee9aaede232708552c44b09c6c55a4a57",
+      "bytes": 100622
+    },
+    "candidate_cases": {
+      "5us": {
+        "rows_including_zero": 120001,
+        "electrical_clock_max_error_s": 1.1102230246251565e-16,
+        "load_edge_and_resistance_exact": true,
+        "bus_voltage_raw_peak_difference_v": 1.4231773093342781e-08,
+        "line_series_raw_peak_difference_a": 2.8256863515707664e-10,
+        "source_current_raw_peak_difference_a": 0.16359008530500319,
+        "source_current_expected_pattern_residual_a": 3.6365545019734213e-09,
+        "source_current_interval_average_difference_a": 4.2163605940004345e-10,
+        "maximum_kcl_residual_a": 3.11928260998684e-12,
+        "maximum_interval_energy_residual_j": 3.0095682890252107e-11,
+        "pre_window": {
+          "stage": "pre",
+          "window_s": [
+            0.24,
+            0.29
+          ],
+          "bus2_v_rms": 132259.1467842368,
+          "path_import_w": {
+            "12": 24557131.904606022,
+            "23": 5203286.046375473
+          },
+          "added_load_w": 52.47744572428288
+        },
+        "post_window": {
+          "stage": "post",
+          "window_s": [
+            0.55,
+            0.6
+          ],
+          "bus2_v_rms": 132243.76503797135,
+          "path_import_w": {
+            "12": 26912963.329722144,
+            "23": 7799388.088190452
+          },
+          "added_load_w": 4958907.388870938
+        },
+        "settled_bus2_change_v": -15.38174626545515,
+        "settled_import_increment_w": {
+          "12": 2355831.425116122,
+          "23": 2596102.041814979
+        },
+        "evidence": {
+          "comparison": {
+            "path": "local_reference/d1_pjm5_candidate_20261123/comparison_first/5us/report.json",
+            "sha256": "f408217e0e3b73c4a0f4b737ee2c05f4d5b00c638437a2412c491352cbbdb3a6",
+            "bytes": 15130
+          },
+          "candidate_waveforms.npz": {
+            "path": "local_reference/d1_pjm5_candidate_20261123/comparison_first/5us/candidate_waveforms.npz",
+            "sha256": "2d12bee0efcc175f0dba039a343254c0e248199bd04488dd6f34952965b1d6cb",
+            "bytes": 125764064
+          },
+          "reference_waveforms.npz": {
+            "path": "local_reference/d1_pjm5_candidate_20261123/comparison_first/5us/reference_waveforms.npz",
+            "sha256": "a2458cce9b30709b93c30f0c6b45253e44657d797996887a38ac59afa8fbe4ae",
+            "bytes": 126724322
+          },
+          "raw_differences.npz": {
+            "path": "local_reference/d1_pjm5_candidate_20261123/comparison_first/5us/raw_differences.npz",
+            "sha256": "490d93272b2745aa2bb98e0ac4bc6f22d5fa899e45cbfda2a4aa7dd8b931b54c",
+            "bytes": 125764064
+          }
+        }
+      },
+      "2p5us": {
+        "rows_including_zero": 240001,
+        "electrical_clock_max_error_s": 1.1102230246251565e-16,
+        "load_edge_and_resistance_exact": true,
+        "bus_voltage_raw_peak_difference_v": 1.4581019058823586e-08,
+        "line_series_raw_peak_difference_a": 2.82170731225051e-10,
+        "source_current_raw_peak_difference_a": 0.16359010408214658,
+        "source_current_expected_pattern_residual_a": 1.9823889751968693e-08,
+        "source_current_interval_average_difference_a": 4.416733645484783e-10,
+        "maximum_kcl_residual_a": 6.501466032204917e-12,
+        "maximum_interval_energy_residual_j": 2.953456749998917e-11,
+        "pre_window": {
+          "stage": "pre",
+          "window_s": [
+            0.24,
+            0.29
+          ],
+          "bus2_v_rms": 132259.14674266436,
+          "path_import_w": {
+            "12": 24557131.887368836,
+            "23": 5203286.044903744
+          },
+          "added_load_w": 52.477445691292885
+        },
+        "post_window": {
+          "stage": "post",
+          "window_s": [
+            0.55,
+            0.6
+          ],
+          "bus2_v_rms": 132243.7649970483,
+          "path_import_w": {
+            "12": 26912963.31109291,
+            "23": 7799388.085335857
+          },
+          "added_load_w": 4958907.3858018555
+        },
+        "settled_bus2_change_v": -15.38174561606138,
+        "settled_import_increment_w": {
+          "12": 2355831.423724074,
+          "23": 2596102.040432113
+        },
+        "evidence": {
+          "comparison": {
+            "path": "local_reference/d1_pjm5_candidate_20261123/comparison_first/2p5us/report.json",
+            "sha256": "fc41ce9eeb2cb5e18d898dab7c629505da958d83ab244ab53c40a91019a7ec9e",
+            "bytes": 15129
+          },
+          "candidate_waveforms.npz": {
+            "path": "local_reference/d1_pjm5_candidate_20261123/comparison_first/2p5us/candidate_waveforms.npz",
+            "sha256": "28399da312c22df734cdbf73f6061642ad25ee227c15498e1e163ab0cbf3d03a",
+            "bytes": 251524064
+          },
+          "reference_waveforms.npz": {
+            "path": "local_reference/d1_pjm5_candidate_20261123/comparison_first/2p5us/reference_waveforms.npz",
+            "sha256": "8aa4df78218e34d2c482200e9922cfc487caa5a50487081d1cd57dc3cf12bee8",
+            "bytes": 253444322
+          },
+          "raw_differences.npz": {
+            "path": "local_reference/d1_pjm5_candidate_20261123/comparison_first/2p5us/raw_differences.npz",
+            "sha256": "5d6c57b4afc5e06630d7b1f41b5207133f85faa9b704dd975224a8fc3f524899",
+            "bytes": 251524064
+          }
+        }
+      }
+    }
+  },
+  "sources": {
+    "examples/33_pjm5_load_step.py": {
+      "path": "examples/33_pjm5_load_step.py",
+      "sha256": "1ea42092cf17aae96428b000d0a34d122d5a8087416ddd129506980e71721130",
+      "bytes": 5998
+    },
+    "validation/cases/pjm5_load_step/compare.py": {
+      "path": "validation/cases/pjm5_load_step/compare.py",
+      "sha256": "a78f4055b041cf5dad92dd189a9478b08bc058995fb966eca8faabf360293cbd",
+      "bytes": 16906
+    },
+    "validation/cases/pjm5_load_step/checks.py": {
+      "path": "validation/cases/pjm5_load_step/checks.py",
+      "sha256": "37f2aef7cd7ab101402b3fdbbd0ffb700ee9ca7fd6e6a2a9f1b4633bc6d3db38",
+      "bytes": 9886
+    },
+    "validation/cases/pjm5_load_step/plots.py": {
+      "path": "validation/cases/pjm5_load_step/plots.py",
+      "sha256": "e0f386dd385aa29eefe29449b42abc4dd28c73e716a2b9474ae38520f3f3135a",
+      "bytes": 2696
+    }
+  },
+  "tests": {
+    "python": "3.14.5",
+    "locked_sync_ruff_mypy": "PASS",
+    "windows_pytest_including_slow": 1601,
+    "windows_pytest_log": {
+      "path": "local_reference/d1_pjm5_candidate_20261123/pytest_windows.log",
+      "sha256": "afce48fe9df31e5ad6bad70c631f57a05de48b7e958b604c83e7747e257144f0",
+      "bytes": 1897
+    },
+    "windows_default_entry": {
+      "path": "local_reference/d1_pjm5_candidate_20261123/standalone_windows.log",
+      "sha256": "1e16001a0e500d65cc4fe5c0392d33ee2c54487bf1b49a5445ef63eaaee0a6fc",
+      "bytes": 186
+    },
+    "windows_default_source": {
+      "path": "local_reference/d1_pjm5_candidate_20261123/windows_default_source.json",
+      "sha256": "3243cedec4ea17c20505181c0258b09d859c972cbb9e1fc923b8848898b435d5",
+      "bytes": 160
+    },
+    "ubuntu_default_and_six_focused": {
+      "path": "local_reference/d1_pjm5_candidate_20261123/standalone_ubuntu.log",
+      "sha256": "70fe4aa28d7461fd2dc6dffd4e69bc9a81e2cbb4a5522af4ce13e35745919540",
+      "bytes": 2752
+    },
+    "ubuntu_run_command": {
+      "path": "local_reference/d1_pjm5_candidate_20261123/run_wsl.sh",
+      "sha256": "54eebdbe56b2005d2eac282d6fc5dfc0943d9c0be82dd8de211824c11eee912c",
+      "bytes": 2171
+    },
+    "ubuntu_base_archive": {
+      "path": "local_reference/d1_pjm5_candidate_20261123/wsl_base.tar",
+      "sha256": "d87e9ff16a872c77ab33b66932bc62101b8193e391a987c9b0003186ceae47e4",
+      "bytes": 4884480
+    },
+    "ubuntu_overlay_archive": {
+      "path": "local_reference/d1_pjm5_candidate_20261123/wsl_overlay.tar",
+      "sha256": "6e95df6f853777db554abbadea5631110f9339a8dc566905f332d9dd342bd24a",
+      "bytes": 20480
+    },
+    "ubuntu_source_manifest": {
+      "path": "local_reference/d1_pjm5_candidate_20261123/wsl_sources.sha256",
+      "sha256": "78fa42f3b3dad565a34e998d25eacf7cdafab926b21ea3c99a94a6c45c04f85c",
+      "bytes": 45993
+    },
+    "targeted_test_source": {
+      "path": "tests/test_pjm5_load_step.py",
+      "sha256": "fe35ebac092a6f3ce51afd0ae051dd9fa80a6376fa93edcef172707cf4419c33",
+      "bytes": 4700
+    }
+  }
+}
