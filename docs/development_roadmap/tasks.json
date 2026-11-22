@@ -3,7 +3,7 @@
   "updated_date": "2026-11-22",
   "timezone": "Asia/Shanghai",
   "branch": "codex/emt-examples-longterm",
-  "checkpoint_head": "89df3e2d302e8b5ca9adf04ccb87bd5e39a15f28",
+  "checkpoint_head": "42a41edbf7c284104db8b1cf88c44b649ef761d7",
   "current_task": "C1",
   "formal_new_examples_completed": 12,
   "status_values": [
@@ -820,12 +820,13 @@
         "evidence_sha256": "d92469cdd234477829ca5a5fa75a67648f17235fffadf3d3cbdaa73672375427",
         "native_executed": false
       },
-      "current_stage": "pcc_feeder_internal_feasibility_pass_native_probe_frozen",
+      "current_stage": "pcc_feeder_native_compiled_layout_frozen",
       "pcc_feeder_probe": {
         "protocol": "docs/development_roadmap/experiments/c1_pcc_feeder_native_probe_20261122.json",
         "internal_feasibility_passed": true,
         "measurement_replay": "docs/development_roadmap/experiments/c1_pcc_measurement_replay_20261122.json",
-        "native_short_probe": "pending",
+        "compiled_layout": "docs/development_roadmap/experiments/c1_pcc_feeder_native_layout_20261122.json",
+        "native_short_probe": "compiled_without_solver_acquisition_pending",
         "power_and_vac_candidate": "not_started"
       },
       "open_loop_candidate_preparation": {
@@ -2018,7 +2019,7 @@
       }
     }
   ],
-  "current_stage": "pcc_feeder_internal_feasibility_pass_native_probe_frozen",
+  "current_stage": "pcc_feeder_native_compiled_layout_frozen",
   "resume_checkpoint_history": [
     {
       "resumed_utc": "2026-11-11T13:24:16.085490+00:00",
