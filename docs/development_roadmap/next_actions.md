@@ -1,7 +1,7 @@
 # 恢复与下一步
 
-2026-11-22。细档主工况已经原生合格并通过同档对标。按已冻结的兼容准入运行 5 µs 主工况，严格验收 40,002 行后计算同档及主工况跨档指标。两个仅 d 阶跃的原生工况和成组验收仍为后续步骤。
-[细档结果](experiments/c1_pscad_angle_arithmetic_trial_20261122.json) · [粗档冻结条件](../../validation/cases/grid_connected_vsc_closed_loop/pscad_closed_loop_remaining_variants.json)
+2026-11-22。主工况的双档原生、同档和跨档判据均已通过。依次运行已冻结的两档仅 d 阶跃，保留真实回执和完整时钟。各自通过原电气、控制与跟踪后，对四份原生报告一起计算同档、跨档和主工况／仅 d 阶跃成组指标。成组通过后完成正式教学算例与独立运行、测试和交付。
+[主工况验证](experiments/c1_pscad_main_both_steps_20261122.json) · [仅 d 阶跃冻结协议](../../validation/cases/grid_connected_vsc_closed_loop/pscad_closed_loop_d_only_variants.json)
 
 若 Git 直连重置且 Windows 已有本机系统代理，可在仓库根目录借用该代理做单次推送。2026-11-22 已在本机实测成功。
 

@@ -1,5 +1,8 @@
 # 技术决策
 
+2026-11-22。两档主工况对标通过后，仅 d 阶跃从各自已合格的实际原生控制源删除 80 ms 的 q 赋值一行。保留 q 轴调节、每步原零初始化及门极施加时序，并独立核对成组比较的共同前段。
+[仅 d 阶跃冻结协议](../../validation/cases/grid_connected_vsc_closed_loop/pscad_closed_loop_d_only_variants.json)
+
 2026-11-22。验证角度约简时，PSCAD 继续记录原配置角，只有正弦和余弦用步号折返后的等价角。独立复算从配置和时钟计算高精度角，所有原限值保持有效。粗档沿用自身控制存储、20 步更新和下一步施加，只调整同一数值参考点和三角函数入参。
 [细档结果](experiments/c1_pscad_angle_arithmetic_trial_20261122.json) · [后续工况准入](../../validation/cases/grid_connected_vsc_closed_loop/pscad_closed_loop_remaining_variants.json)
 
