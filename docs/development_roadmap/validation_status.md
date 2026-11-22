@@ -1,5 +1,8 @@
 # 验证状态
 
+2026-11-22。两档四组 8 个相干跨步长窗均通过，基波电压、有功和基波无功最大差为 0.03646 V、1.770 W 和 2.984 var。每个细档工况核过 130,001 个保持中点。Windows 全量 1,586 项含 slow，WSL2 专项 30 项，锁定同步、Ruff 和 mypy 均通过。
+[双档结果与软件检查](../../validation/cases/grid_connected_vsc_power_vac/coherent_reference_report.json)
+
 2026-11-22。粗档固定 q 和调节组各 130,002 个原生点。两个相干稳态窗的 PCC 电压分别提高 1.206 V 和 1.221 V，吸收基波无功减少 143.3 var 和 145.6 var。原单周波压降失配在两工况前缀一致复现。
 [配对结果与原报告哈希](../../validation/cases/grid_connected_vsc_power_vac/coherent_window_coarse_pair.json)
 

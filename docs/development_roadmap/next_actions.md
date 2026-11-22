@@ -1,5 +1,7 @@
 # 恢复与下一步
 
+2026-11-22。读取[双档原生参考](../../validation/cases/grid_connected_vsc_power_vac/coherent_reference_report.json)绑定的四组归档与[候选协议](../../validation/cases/grid_connected_vsc_power_vac/reference_protocol.json)。实现时优先复用私有电流环和现有 PLL、PI、低通，分别加馈线测点和采样后的外环参考。独立运行两工况两步长，做原生同档与跨档比较，保留原单周波诊断并用冻结的 50 ms 窗评估基波。最后核双系统入口、图、测试和教学说明。原生复读脚本在 `local_reference/native_static_reviews/c1_power_vac_design_20261122/`，原始数据按报告回执逐一核验。
+
 2026-11-22。粗档两组相干窗均通过，原判定保留。核对按冻结协议运行的 2.5 µs 调节组和固定 q 组。每组应有 260,003 点、650 个外环拍、6,500 个内环拍及实际下一门极拍，含细档中点保持。完成后再比较两个步长并确定候选验收口径。
 [粗档配对](../../validation/cases/grid_connected_vsc_power_vac/coherent_window_coarse_pair.json)
 

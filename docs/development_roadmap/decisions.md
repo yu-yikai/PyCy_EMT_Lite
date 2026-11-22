@@ -1,5 +1,8 @@
 # 技术决策
 
+2026-11-22。独立细档证实 50 ms 共周期窗的适用性，后续候选使用它对照 PCC 基波电压和无功。原逐点、逐周期有功和无功及限幅要求保留，原单周波电压结果随报告显示。基波正弦和余弦积分抽成同一验证函数复用，细档分别复算连续载波和 5 µs 门极拍。
+[证据和候选口径](../../validation/cases/grid_connected_vsc_power_vac/coherent_reference_report.json)
+
 2026-11-22。60 Hz 单周波仅跨 16⅔ 个 1 kHz 载波周期。首个失配窗的馈线边界项为 0.974 V 峰值，计入后复量重构误差约 1.52 µV。为区分基波和载波窗效应，另用 50 ms 固定窗验证，原单周波结果和判据留在基础协议。
 [窗口试验](../../validation/cases/grid_connected_vsc_power_vac/fundamental_window_trial.json)
 

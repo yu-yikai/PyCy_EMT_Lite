@@ -1,5 +1,8 @@
 # 持久进度
 
+2026-11-22。P 前馈与 PCC 电压外环的 PSCAD 双步长参考完成，四组共 780,010 点。两档固定 q 与调节组相干比较、逐点前缀和跨步长核对均通过。四份原单周波失配结果仍在。C1 转入公开候选，正式新增仍为 12 个。
+[双档原生参考](../../validation/cases/grid_connected_vsc_power_vac/coherent_reference_report.json)
+
 2026-11-22。5 µs 两组原生求解和相干窗配对完成。使能前 48,001 个电气点和 48,000 个控制点逐点一致。两个 50 ms 稳态窗的电压改善都超过 1.20 V。基础协议原单周期失配保留，继续细档验证。
 [粗档配对实证](../../validation/cases/grid_connected_vsc_power_vac/coherent_window_coarse_pair.json)
 
