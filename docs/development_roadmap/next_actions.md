@@ -1,5 +1,9 @@
 # 恢复与下一步
 
+2026-11-23。两档闭环短窗通过。按[短窗证据](experiments/c1_dc_live_feedback_short_20261123.json)核对原生波形、37 列日志和各档种子、续算回执。运行入口在忽略目录 `local_reference/native_static_reviews/c1_dc_bridge_feedback_native_canonical_20261123/`。每档均从同一份保存工程走同一加载路径；生成的 Main.f、Main.dta 和快照须逐字节核对。
+
+长窗参数、判据和两档 Fortran 已存于 `local_reference/native_static_reviews/c1_dc_long_protocol_20261123/`。从短窗已验收接线建立新长窗参考，把相对负荷阶跃移至 0.400 s，续算至 0.800005 s。先把原始输出逐行复核和窗口均值检查接入长窗，再分别生成并续算原生快照，核对恢复、功率、跨步长和实际时序。长窗通过后进入公开教学候选。
+
 2026-11-23。两档带桥预充和续算已完成。按[带桥短窗证据](experiments/c1_dc_parked_bridge_20261123.json)核对各自的种子、快照和恢复回执。带桥续算入口在忽略目录 `local_reference/native_static_reviews/c1_dc_bridge_snapshot_restore_v2_20261123/`。续算前生成的 Main.f、Main.dta 和快照必须与相应种子逐字节一致。保留逐点对地电压 2 µV 诊断的两份 FAIL。
 
 下一步用同一浮置电路和 `local_reference/native_static_reviews/c1_dc_pscad_feedback_design_20261123/` 中的两档 Fortran 草案，新建闭环种子与续算模型。先核对同一求解行的差分母线电压、1 ms 外环、100 µs 内环、下一 5 µs 门极拍和细档中点保持。短窗通过后再冻结负荷阶跃长窗和闭环比较门限。

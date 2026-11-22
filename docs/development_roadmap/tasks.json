@@ -3,7 +3,7 @@
   "updated_date": "2026-11-23",
   "timezone": "Asia/Shanghai",
   "branch": "codex/emt-examples-longterm",
-  "checkpoint_head": "c44f8ace66ae801ddba08285e0480777768b9d3a",
+  "checkpoint_head": "f467c4c9957e028f8a46dfad52dbb73bfe382aa3",
   "current_task": "C1",
   "formal_new_examples_completed": 13,
   "status_values": [
@@ -768,7 +768,8 @@
         "validation/cases/grid_connected_vsc_power_vac/README.md",
         "validation/cases/grid_connected_vsc_power_vac/acceptance_report.json",
         "docs/development_roadmap/experiments/c1_dc_bus_startup_20261123.json",
-        "docs/development_roadmap/experiments/c1_dc_parked_bridge_20261123.json"
+        "docs/development_roadmap/experiments/c1_dc_parked_bridge_20261123.json",
+        "docs/development_roadmap/experiments/c1_dc_live_feedback_short_20261123.json"
       ],
       "commits": [
         "b835e31785fab3fda247c333d23edbe9ce576dfa",
@@ -826,7 +827,24 @@
         "evidence_sha256": "d92469cdd234477829ca5a5fa75a67648f17235fffadf3d3cbdaa73672375427",
         "native_executed": false
       },
-      "current_stage": "dc_bus_parked_bridge_qualified_live_feedback_next",
+      "current_stage": "dc_bus_live_short_qualified_long_reference_next",
+      "dynamic_dc_live_short": {
+        "status": "pscad_native_feedback_and_physics_pass_both_steps",
+        "report": {
+          "path": "docs/development_roadmap/experiments/c1_dc_live_feedback_short_20261123.json",
+          "sha256": "463ade114432026f96fedb7d5aa681c5eab20855bd6a7dc116900e954fdd5202",
+          "bytes": 17827
+        },
+        "positive_native_rows": [401, 802],
+        "fine_midpoints_held": 401,
+        "long_protocol": {
+          "path": "local_reference/native_static_reviews/c1_dc_long_protocol_20261123/protocol.json",
+          "sha256": "8c91a6cc68587fcd58f49d0f56538cb751c23f5d2cdfc9f3902fef81fe9c7a61",
+          "bytes": 2964
+        },
+        "long_native_qualified": false,
+        "candidate_accepted": false
+      },
       "dynamic_dc_parked_bridge": {
         "status": "pscad_native_physical_checks_pass_both_steps",
         "report": {
@@ -2068,7 +2086,7 @@
       }
     }
   ],
-  "current_stage": "dc_bus_parked_bridge_qualified_live_feedback_next",
+  "current_stage": "dc_bus_live_short_qualified_long_reference_next",
   "resume_checkpoint_history": [
     {
       "resumed_utc": "2026-11-11T13:24:16.085490+00:00",
