@@ -1,5 +1,8 @@
 # 恢复与下一步
 
+2026-11-22。粗档长窗已通过。细档首次启动在建图目录保护处退出，随后用 `c1_pscad_pll_long_2p5us_v2_20261122` 隔离包重试。先核该包 `n/20261122T121136814535Z` 的实际状态和终态，再核验 80,003 点并与粗档比较。
+[PLL 长窗记录](../../validation/cases/grid_connected_vsc_pll/full_reference_report.json)
+
 2026-11-22。两档 PLL 短窗已验收。保留已冻结主工况，分别在原生 PSCAD 运行至 0.200005 s。每档通过全点电气、控制复算、110–160 ms 锁相及三周期电流跟踪与功率判据后，再做原生跨档比较。
 [PLL 双步长短窗结果](../../validation/cases/grid_connected_vsc_pll/short_reference_report.json)
 

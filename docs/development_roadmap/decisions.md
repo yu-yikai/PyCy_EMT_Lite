@@ -1,5 +1,8 @@
 # 技术决策
 
+2026-11-22。细档长窗把来自已验证归档的建图文件复制到当前隔离包，使构建目录检查和当前运行文件一致。保留首次目录保护退出的回执。
+[PLL 长窗记录](../../validation/cases/grid_connected_vsc_pll/full_reference_report.json)
+
 2026-11-22。细档反馈仍在求解后采样。2.5 µs 中点用原参考、门极和电阻求解，再将待施加参考交给随后的 5 µs 门极拍。短窗实现按两档原生输出复核，长窗仅扩展采集时长与保留原 d、q 指令时刻。
 [PLL 双步长短窗结果](../../validation/cases/grid_connected_vsc_pll/short_reference_report.json)
 

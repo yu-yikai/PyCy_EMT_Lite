@@ -1,5 +1,8 @@
 # 持久进度
 
+2026-11-22。5 µs PLL 主工况 PSCAD 长窗正常闭场，40,002 点通过全点电气和控制核验。110–160 ms 的锁相与三周期电流跟踪通过。细档长窗待完成，正式新增仍为 11 个。
+[PLL 长窗记录](../../validation/cases/grid_connected_vsc_pll/full_reference_report.json)
+
 2026-11-22。5 µs 与 2.5 µs 两档并网 PLL 均完成原生 PSCAD 短窗及独立核验。两档共 365 点，各通过六次采样及门极应用，细档通过 121 个中点保持。C1 转入两档长窗参考，正式新增仍为 11 个。
 [PLL 双步长短窗结果](../../validation/cases/grid_connected_vsc_pll/short_reference_report.json)
 

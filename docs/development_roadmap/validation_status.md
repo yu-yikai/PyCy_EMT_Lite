@@ -1,5 +1,8 @@
 # 验证状态
 
+2026-11-22。PLL 粗档 40,002 点通过原 19 项电气判据、2,000 次反馈和随后的门极施加。稳态验收窗相角误差峰值 0.630°、频率误差峰值 0.01949 Hz，最大周期平均电流误差 0.06497 A。三周期功率方向通过。
+[PLL 长窗记录](../../validation/cases/grid_connected_vsc_pll/full_reference_report.json)
+
 2026-11-22。PLL 细档 243 点通过原 19 项电气、六次反馈和门极顺序及 121 个实际中点保持。两档短窗范围为 0–605 µs，长窗锁定与电流跟踪待验。
 [PLL 双步长短窗结果](../../validation/cases/grid_connected_vsc_pll/short_reference_report.json)
 
