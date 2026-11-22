@@ -1,5 +1,8 @@
 # 持久进度
 
+2026-11-22。冻结并网 PLL 接入的参考协议。算例 29 已验收，正式新增共 11 个。现在准备 PSCAD 5 µs 原生短窗和独立数值核验。
+[接入参考协议](../../validation/cases/grid_connected_vsc_pll/reference_protocol.json)
+
 2026-11-22。29 号已知角度 dq 电流环完成教学验收。四次独立 PyCy 运行与四份真实 PSCAD 波形通过同档、跨档和成组比较。两系统默认脚本均完成 40,001 点，Windows 1581 项含 slow 回归通过。正式新增算例共 11 个。C1 进入集成 PLL 的参考准备。
 [29 号验收报告](../../validation/cases/grid_connected_vsc_closed_loop/validation_report.json)
 

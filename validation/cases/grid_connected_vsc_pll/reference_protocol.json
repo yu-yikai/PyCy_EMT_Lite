@@ -1,0 +1,81 @@
+{
+  "schema": "grid_connected_vsc_pll_reference_v1",
+  "date": "2026-11-22",
+  "scope": "One grid-connected bridge with a stiff 400 V DC source and direct d/q current commands. Estimate the grid angle from the same solved three-phase voltage used for feedforward.",
+  "basis": {
+    "plant_and_current_loop": {
+      "path": "validation/cases/grid_connected_vsc_closed_loop/reference_protocol.json",
+      "sha256": "53c1eb1c237fc4bd78ff83feb614023fc7d06b4b1700e7df09e1cd4de8236f06"
+    },
+    "qualified_plant_native_runs": {
+      "path": "validation/cases/grid_connected_vsc_closed_loop/qualified_reference_report.json",
+      "sha256": "ef609369fe275a96af667023c44a9b418a31d750b041d88109eb41851c0550cd"
+    },
+    "pll_discrete_semantics": {
+      "path": "validation/cases/pll_dynamic_response/reference_protocol.json",
+      "sha256": "dc6a48e221062d72816f882ae0ec70933ea887c91bf96396df8b0b436691036a"
+    },
+    "sources": {
+      "srf_pll": "https://doi.org/10.66800/0103",
+      "current_control": "https://doi.org/10.66800/0106",
+      "native_order": "https://www.pscad.com/webhelp-v5-ol/EMTDC/Program_Structure/dsdyn_and_dsout_subroutines.htm"
+    }
+  },
+  "plant": "Use the known-angle main case's positive-sequence 60 Hz, 120 V phase RMS supply with 20 ms linear ramp, 1 ohm and 10 mH per phase, zero initial line currents and original finite-R switches. Keep current positive grid to bridge. Use real differential measurements before R relative to the AC neutral, even when the native solve references DC minus.",
+  "pll": {
+    "initial_angle": "19*pi/12 rad in [0,2*pi), a +15-degree lead over the configured initial grid vector (-pi/2)",
+    "nominal_Hz": 60,
+    "initial_correction_integral_rad_s": 0,
+    "kp": 100,
+    "ki": 1000,
+    "normalization_floor_V": 1,
+    "sample_period_s": 0.0001,
+    "step": [
+      "At t0 observe declared theta and nominal omega; no update despite the zero-voltage ramp.",
+      "At each positive 100 us tick after solving, advance theta by old omega times 100 us and wrap in [0,2*pi). Require |old omega times 100 us| < pi.",
+      "Read same-row e_abc, form amplitude-invariant e_d/e_q with the advanced theta, and compute err = e_q / max(abs(e_d), abs(e_q), 1 V).",
+      "Set xi_new = xi_old + Ki*100 us*err and omega_new = omega_nominal + Kp*err + xi_new. The new omega advances the next sample.",
+      "Use the advanced theta for the measured-current Park transform and the inverse modulation transform. Keep nominal omega*L for current loop decoupling.",
+      "Hold theta, omega and xi on all non-sampling rows. The error log is zero on those rows and at t0."
+    ],
+    "state_replay_limits_abs": {
+      "theta_circular_rad": 1e-11,
+      "omega_rad_s": 1e-9,
+      "xi_rad_s": 1e-11,
+      "normalized_error": 1e-11,
+      "sample_grid_and_current_transforms_V_or_A": 1e-12
+    }
+  },
+  "current_and_gates": "Use main-only d = 2 A from 40 ms, q = 1.5 A from 80 ms; keep the two current PIs, 190 V radial limit and both-integral rollback as in 29. Pending reference is published for the next 5 us gate tick with upper = ref >= carrier. The 2.5 us half-step retains the previous applied reference, gates and resistance.",
+  "acquisition": {
+    "short": {
+      "stop_s": 0.000605,
+      "rows_5us": 122,
+      "rows_2p5us": 243,
+      "control_samples_and_next_gate_applications_each": 6,
+      "witnesses": "Observe t0 without update, the 1 V floor at the first positive sample and measured-voltage normalization at the second, negative first positive-time q error and frequency correction, and every apply tick including 605 us. Short scope tests startup and feedback wiring."
+    },
+    "full": {
+      "stop_s": 0.200005,
+      "formal_stop_s": 0.2,
+      "rows_5us": 40002,
+      "rows_2p5us": 80003,
+      "control_samples_and_next_gate_applications_each": 2000,
+      "tracking_window_s": [0.11, 0.16],
+      "window_boundaries_s": [0, 0.02, 0.04, 0.07, 0.08, 0.11, 0.16, 0.2]
+    }
+  },
+  "native_admission": {
+    "engine": "PSCAD 5.0 / GFortran 4.6 x86",
+    "physical_contract": "Keep 14 nonzero nodes, 19 branches, sparse threshold 1, original DC-minus solve reference, eight AC-neutral differential meters, and all 45 native output channels.",
+    "bindings": "Check actual generated measurement producers, MainOut control and next-tick MainDyn PWM/resistance consumers before the run, then recheck the settings and physical netlist after the run.",
+    "capture": "Retain original INF, five OUT parts, and native CSV. Use the original 29 CSV fields with theta now the held PLL angle and append omega, xi, sample-only normalized error for 32 columns. Bind unrounded CSV sample voltages/currents to the corresponding native OUT channels within their printed precision."
+  },
+  "full_gates": {
+    "pll_lock": "At each positive 100 us sample in inclusive 110–160 ms require positive grid e_d, absolute principal angle difference <= 1 degree and |omega/(2*pi) - 60| <= 0.05 Hz. The configured grid angle is 2*pi*60*t - pi/2; cross-check the phase of the measured abc there. Keep startup history and at least one full angle wrap.",
+    "tracking": "Use the true grid angle to recompute current dq from actual phase currents, independent of the angle used by the controller. In each of three 60 Hz cycles in 110–160 ms require each mean within 0.4 A of (2,1.5) and Pg>0, Qg<0, Pdc>0.",
+    "same_grid": "Retain all original 19 physical budgets and 29 main's 23 continuous/13 exact checks per comparison window, including full original tail. Compare theta/omega/xi/normalized error by their absolute state budgets on original samples. Validate each run from its own measured feedback.",
+    "cross_grid": "On each platform retain the 29 main limits of 0.10 A cycle mean difference and 0.20 A window PWL RMS difference in true-grid dq. Compare native and PyCy on matching grids without phase or time fitting.",
+    "qualification": "First build and qualify actual short native output. Then independently build/run both complete native grids and qualify the outputs before formal candidate acceptance. The standalone Simulink PLL proves discrete block semantics for its own inputs."
+  }
+}

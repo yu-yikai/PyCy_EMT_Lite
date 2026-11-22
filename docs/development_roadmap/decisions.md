@@ -1,5 +1,8 @@
 # 技术决策
 
+2026-11-22。PLL 初始角超前 15°，以实际同刻三相差分电压更新。先用旧角频率推进角度，再计算 dq 误差，新角用于电流正反变换。继续采用标称频率计算电感交叉项和既有门极保持。长窗电流验收以电源配置角独立变换。
+[接入参考协议](../../validation/cases/grid_connected_vsc_pll/reference_protocol.json)
+
 2026-11-22。28 和 29 共用三相桥接线及电气时钟，分别保留自己的门极回调。29 在求解后用现有 PI 和 dq 变换计算待施加参考。持续到下一门极拍的时序放在教学入口，商业对标放在验证目录。PLL 接入沿用 29 的同一电路和电流指令，先单独验证相角估计，再接入外环。
 [29 号验收报告](../../validation/cases/grid_connected_vsc_closed_loop/validation_report.json)
 

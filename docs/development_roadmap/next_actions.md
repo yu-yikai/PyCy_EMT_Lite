@@ -1,5 +1,8 @@
 # 恢复与下一步
 
+2026-11-22。按已冻结协议启动隔离的 PSCAD 5 µs 短窗，原生采集到 605 µs。构建后先核对 19 条支路、差分电压和 MainOut 到 MainDyn 的门极路径，再运行一次。保留原始 INF、五个 OUT 和 32 列 CSV，并独立复算六个 PLL 样本及下一门极拍。粗档通过后再做 2.5 µs 短窗和独立长窗。
+[接入参考协议](../../validation/cases/grid_connected_vsc_pll/reference_protocol.json)
+
 2026-11-22。29 号已验收，正式新增共 11 个。PLL 接入沿用 29 号的 19 条支路、三相差分电压、100 µs 求解后采样和下一 5 µs 门极生效。以 11 号的离散更新顺序为依据，先冻结初始角偏差、采样变量、角度与频率的锁定窗口及限值。再取得原生 PSCAD 短窗并扩至两档长窗，同时核对门极和电流跟踪。
 [29 号验收报告](../../validation/cases/grid_connected_vsc_closed_loop/validation_report.json) · [既有 PLL 参考](../../validation/cases/pll_dynamic_response/README.md)
 

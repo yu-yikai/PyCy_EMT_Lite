@@ -1,5 +1,8 @@
 # 验证状态
 
+2026-11-22。并网 PLL 协议的 29 号电路与 11 号离散定义哈希、短窗行数和末次生效时刻已核。耦合 PLL 的原生短窗待运行。
+[接入参考协议](../../validation/cases/grid_connected_vsc_pll/reference_protocol.json)
+
 2026-11-22。公开 29 号入口四次运行共 240,010 点，原电气及控制检查均通过。32 个同档窗口通过 736 项连续量和 416 项离散量核对，最大周期平均跟踪误差为 0.06269 A。两平台跨档及两工况成组比较通过。Windows 1581 项含 slow 回归通过，WSL2 Ubuntu 完成 29 号默认独立运行及 28、29 号的 27 项专项测试。共用接线后的 28 号两档原波形和比较结果与正式验收时逐字节一致。
 [29 号验收报告](../../validation/cases/grid_connected_vsc_closed_loop/validation_report.json)
 
