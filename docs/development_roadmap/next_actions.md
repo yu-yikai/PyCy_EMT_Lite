@@ -1,8 +1,10 @@
 # 恢复与下一步
 
-2026-11-23。双端 VSC-HVDC 双档原生启控短窗通过。按[原生双站闭环报告](experiments/d1_dual_vsc_active_native_20261123.json)核验原生种子、续算、82 路波形和两站日志。本机用项目 Python 运行报告绑定的 `audit_active.py`，用对应档的 `--grid`、`--seed`、`--restart` 与新的 `--report` 路径复核。
+2026-11-23。双端 VSC-HVDC 的双档 PSCAD 长窗及跨步长比较通过。按[双端 PSCAD 长窗报告](experiments/d1_dual_vsc_long_native_20261123.json)访问原始回执。用报告绑定的 `audit_long.py`，以同档两个回执所在目录传入 `--seed`、`--restart`，并给定 `--grid` 和新的 `--report`。两档报告可交给 `compare_long_grids.py` 核对三个功率窗。
 
-下一步固定原生长窗。保留含馈线的双站拓扑和 0.402 s 快照，在恢复后 200–220 ms 将 A 站有功给定由 250 W 平滑升至 650 W。对照报告绑定的 PyCy 双档试算，冻结 140–190 ms 基线、250–300 ms 响应和 500–550 ms 末段，验证 B 端有功从吸收到送出、直流电压恢复和正负极线路功率。两档原生长窗通过后再进入正式教学候选与跨平台验收。保留等效新能源和储能接口的后续验证。
+下一步固定 34 号候选的初始状态、波形比较阈值和测试。优先用现有桥与电流环生成两个独立站点，教学从有功方向、双极线路功率和母线电压恢复入手。用已封存的 28–32 号启动轨迹验证旧例，再完成两档 PyCy/PSCAD 对标、图、文档及 Windows/Ubuntu 检查。保留等效新能源和储能接口的后续验证。
+
+2026-11-23。双端 VSC-HVDC 双档原生启控短窗通过。按[原生双站闭环报告](experiments/d1_dual_vsc_active_native_20261123.json)核验原生种子、续算、82 路波形和两站日志。本机用项目 Python 运行报告绑定的 `audit_active.py`，用对应档的 `--grid`、`--seed`、`--restart` 与新的 `--report` 路径复核。
 
 2026-11-23。双端 VSC-HVDC 的 5 µs 和 2.5 µs PSCAD 快照续算均通过。按[双档原生快照报告](experiments/d1_dual_vsc_snapshot_native_20261123.json)绑定种子、续算、原始波形和逐行检查。用项目 Python 运行报告中绑定的 `audit_warm_v2.py`，传入 `--grid 5us` 或 `--grid 2p5us`，以两个回执所在目录作为 `--seed`、`--restart`，将复核写入新的 `--report` 路径。
 

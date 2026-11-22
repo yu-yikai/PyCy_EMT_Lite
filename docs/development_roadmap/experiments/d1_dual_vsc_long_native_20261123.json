@@ -1,0 +1,331 @@
+{
+  "schema": "d1_dual_vsc_native_long_result_v1",
+  "status": "PASS_NATIVE_LONG_AND_CROSS_GRID",
+  "date": "2026-11-23",
+  "frozen_protocol_commit": "42503b9f36c7ff611f25b066c972f70d9651ff2f",
+  "protocol": {
+    "path": "docs/development_roadmap/experiments/d1_dual_vsc_long_protocol_20261123.json",
+    "sha256": "deaac3a637428a3f1dafc1d7d35deb06bd9f5f26925a9240d82dcf683118405d",
+    "bytes": 13264
+  },
+  "native": {
+    "pscad_version": "5.0.0",
+    "emtdc_build": "20210219",
+    "compiler": "gf46",
+    "platform": "x86",
+    "physical_branches": 45,
+    "pgb_channels": 82,
+    "logger_columns_per_station": 43,
+    "cold_seeds": 2,
+    "independent_long_restarts": 2,
+    "snapshot_absolute_s": 0.402,
+    "continuation_s": 0.550005,
+    "paired_positive_rows": 331003
+  },
+  "grids": {
+    "5us": {
+      "step_s": 5e-06,
+      "native_rows": {
+        "seed": 90402,
+        "restart": 110001
+      },
+      "snapshot_sha256": "7f89bfdfaa168b2e145a36429e803749766b19b75d8073573cebe97b1c69380d",
+      "new_seed_and_continuation_overlap": {
+        "rows": 10001,
+        "raw_maxima": {
+          "voltage_v": 2.0100032749326147e-09,
+          "current_a": 4.821100116347843e-10,
+          "modulation_pu": 1.3146006505593277e-10,
+          "clock_s": 0.0,
+          "resistance_ohm": 0.0
+        },
+        "controller_maxima_si": {
+          "a": 4.634516326262883e-09,
+          "b": 2.8599004053830868e-08
+        },
+        "exact_discrete_logs": true,
+        "passed": true
+      },
+      "verified_short_and_continuation_overlap": {
+        "rows": 10001,
+        "raw_maxima": {
+          "voltage_v": 0.0,
+          "current_a": 0.0,
+          "modulation_pu": 0.0,
+          "clock_s": 0.0,
+          "resistance_ohm": 0.0
+        },
+        "controller_maxima_si": {
+          "a": 0.0,
+          "b": 0.0
+        },
+        "exact_discrete_logs": true,
+        "passed": true
+      },
+      "windows": {
+        "baseline": {
+          "a_p_mean_w": 249.60487258976895,
+          "a_q_mean_var": 32.007186803875996,
+          "b_p_mean_w": 188.56184001773676,
+          "b_q_mean_var": -46.38582535992232,
+          "b_dc_mean_v": 400.1478959609281,
+          "dc_sent_w": 230.1329036801295,
+          "dc_received_w": 229.63364063212154,
+          "dc_series_loss_w": 0.3298788305724292
+        },
+        "response": {
+          "a_p_mean_w": 651.1238399137518,
+          "a_q_mean_var": 31.34093434102498,
+          "b_p_mean_w": -192.84526862016196,
+          "b_q_mean_var": -49.381566330347574,
+          "b_dc_mean_v": 403.00791058479456,
+          "dc_sent_w": 616.4428106424496,
+          "dc_received_w": 613.8579363404962,
+          "dc_series_loss_w": 2.3274862235935694
+        },
+        "recovered": {
+          "a_p_mean_w": 650.1230507183153,
+          "a_q_mean_var": 30.19312402397019,
+          "b_p_mean_w": -220.7013653550759,
+          "b_q_mean_var": -52.307276047392584,
+          "b_dc_mean_v": 399.6244739658985,
+          "dc_sent_w": 632.0185002007146,
+          "dc_received_w": 629.4643937752215,
+          "dc_series_loss_w": 2.4814078746363526
+        },
+        "b_dc_peak_after_ramp_start_v": 403.15046728008,
+        "b_dc_recovered_abs_error_v": 0.3755260341014832
+      },
+      "physical_residuals": {
+        "kcl_a": 5.285999415960418e-10,
+        "tr_line_voltage_v": 9.415768338627561e-11,
+        "tr_ac_voltage_v": 4.1114844862022437e-10,
+        "tr_cap_charge_c": 9.981570759276699e-14,
+        "tr_energy_j": 6.617892291029687e-11,
+        "abs_cumulative_energy_j": 9.694000655159883e-08
+      },
+      "final_line_currents_a": [
+        1.5654108049941,
+        1.5664977576813002,
+        -1.5654108049975999,
+        -1.5664977576857
+      ],
+      "controller": {
+        "a": {
+          "inner_updates": 5500,
+          "outer_due": 550,
+          "control_recurrence": 1.346620592812542e-10,
+          "fine_gate_midpoints": 0,
+          "first_applied_error_pu": 4.9439619065339e-17
+        },
+        "b": {
+          "inner_updates": 5500,
+          "outer_due": 550,
+          "control_recurrence": 2.006572685786523e-11,
+          "fine_gate_midpoints": 0,
+          "first_applied_error_pu": 3.0357660829594124e-17
+        }
+      },
+      "original_runs": {
+        "seed": {
+          "path": "local_reference/native_static_reviews/d1_dual_vsc_long_20261123/5us/seed/n/20261122T230457393295Z/snapshot_result.json",
+          "sha256": "24ee449469cad5b9e98170e5af66d39041a47f25172657312cf4a199d758e388",
+          "bytes": 27616
+        },
+        "restart": {
+          "path": "local_reference/native_static_reviews/d1_dual_vsc_long_20261123/5us/restart/n/20261122T230746532034Z/snapshot_result.json",
+          "sha256": "ef8bf25bf511333f90ac92c71d23bd982e6f9406f885d9bb1e5b5f8ae0abbccf",
+          "bytes": 22790
+        }
+      },
+      "independent_audit": {
+        "path": "local_reference/native_static_reviews/d1_dual_vsc_long_20261123/5us/restart/n/20261122T230746532034Z/long_audit.json",
+        "sha256": "3f7e7fde20918ff1138868b2ffd9174c9a08208056e717f1bbb80bc5aa5d7e46",
+        "bytes": 13855
+      }
+    },
+    "2p5us": {
+      "step_s": 2.5e-06,
+      "native_rows": {
+        "seed": 180803,
+        "restart": 220002
+      },
+      "snapshot_sha256": "04e405c043af1cae8c497668485d717c7a93f948d1de9d2601db48deb14aee52",
+      "new_seed_and_continuation_overlap": {
+        "rows": 20002,
+        "raw_maxima": {
+          "voltage_v": 1.2001510896197942e-10,
+          "current_a": 4.44090023001692e-10,
+          "modulation_pu": 7.005507285384738e-14,
+          "clock_s": 0.0,
+          "resistance_ohm": 0.0
+        },
+        "controller_maxima_si": {
+          "a": 7.943645741192995e-11,
+          "b": 8.609779555968089e-11
+        },
+        "exact_discrete_logs": true,
+        "passed": true
+      },
+      "verified_short_and_continuation_overlap": {
+        "rows": 20002,
+        "raw_maxima": {
+          "voltage_v": 0.0,
+          "current_a": 0.0,
+          "modulation_pu": 0.0,
+          "clock_s": 0.0,
+          "resistance_ohm": 0.0
+        },
+        "controller_maxima_si": {
+          "a": 0.0,
+          "b": 0.0
+        },
+        "exact_discrete_logs": true,
+        "passed": true
+      },
+      "windows": {
+        "baseline": {
+          "a_p_mean_w": 249.20579413052732,
+          "a_q_mean_var": 32.0662940937852,
+          "b_p_mean_w": 189.95225485868386,
+          "b_q_mean_var": -47.468833507362156,
+          "b_dc_mean_v": 400.1500265756794,
+          "dc_sent_w": 228.87325325155825,
+          "dc_received_w": 228.37268262353965,
+          "dc_series_loss_w": 0.3262483769202344
+        },
+        "response": {
+          "a_p_mean_w": 649.6395643634237,
+          "a_q_mean_var": 33.718530999031415,
+          "b_p_mean_w": -191.63109919078013,
+          "b_q_mean_var": -49.32706892846348,
+          "b_dc_mean_v": 403.01128153742087,
+          "dc_sent_w": 615.1789253704228,
+          "dc_received_w": 612.6086894654159,
+          "dc_series_loss_w": 2.3181100981780514
+        },
+        "recovered": {
+          "a_p_mean_w": 648.919584751541,
+          "a_q_mean_var": 31.922897861206344,
+          "b_p_mean_w": -221.66814669500064,
+          "b_q_mean_var": -54.01468425706517,
+          "b_dc_mean_v": 399.63956170241806,
+          "dc_sent_w": 632.2109472558222,
+          "dc_received_w": 629.6713569537964,
+          "dc_series_loss_w": 2.482823079477061
+        },
+        "b_dc_peak_after_ramp_start_v": 403.17425720484,
+        "b_dc_recovered_abs_error_v": 0.36043829758193624
+      },
+      "physical_residuals": {
+        "kcl_a": 9.67796287554279e-10,
+        "tr_line_voltage_v": 1.745700251021276e-10,
+        "tr_ac_voltage_v": 8.064944267971441e-10,
+        "tr_cap_charge_c": 1.0001360170017903e-13,
+        "tr_energy_j": 7.00339251124846e-11,
+        "abs_cumulative_energy_j": 9.966230883148708e-08
+      },
+      "final_line_currents_a": [
+        1.5543041498572001,
+        1.5553661366145,
+        -1.5543041498296999,
+        -1.5553661365863
+      ],
+      "controller": {
+        "a": {
+          "inner_updates": 5500,
+          "outer_due": 550,
+          "control_recurrence": 4.1026737562788185e-10,
+          "fine_gate_midpoints": 110001,
+          "first_applied_error_pu": 3.946495907847236e-17
+        },
+        "b": {
+          "inner_updates": 5500,
+          "outer_due": 550,
+          "control_recurrence": 5.874767339264508e-11,
+          "fine_gate_midpoints": 110001,
+          "first_applied_error_pu": 4.683753385137379e-17
+        }
+      },
+      "original_runs": {
+        "seed": {
+          "path": "local_reference/native_static_reviews/d1_dual_vsc_long_20261123/2p5us/seed/n/20261122T231147944519Z/snapshot_result.json",
+          "sha256": "a86ce4650a1020a9a4546685a3b6163b822b2173e27bd50469db3a0f4ce92fe3",
+          "bytes": 27627
+        },
+        "restart": {
+          "path": "local_reference/native_static_reviews/d1_dual_vsc_long_20261123/2p5us/restart/n/20261122T231650957344Z/snapshot_result.json",
+          "sha256": "46887af87e5178391340b3534d3c91e8add9c9a0bc71773e1d879f3c5d9cc6f2",
+          "bytes": 22795
+        }
+      },
+      "independent_audit": {
+        "path": "local_reference/native_static_reviews/d1_dual_vsc_long_20261123/2p5us/restart/n/20261122T231650957344Z/long_audit.json",
+        "sha256": "8caa1fec9a846b069fb85c0b4a54a48b94cf0a31959c2b7040430704c908bdf2",
+        "bytes": 13878
+      }
+    }
+  },
+  "audit": {
+    "path": "local_reference/native_static_reviews/d1_dual_vsc_long_20261123/audit_long.py",
+    "sha256": "d7b2aa1eeb1d89a006e1f69ec1b77b018e990c2dcf1030ec7d3f0e8aa778fbb6",
+    "bytes": 14237
+  },
+  "window_checker": {
+    "path": "local_reference/native_static_reviews/d1_dual_vsc_long_20261123/trace_windows.py",
+    "sha256": "75167642046663fd60fc9f2af587dee3d5d0a2d2f9646cde4d3d5cd1f2ac75db",
+    "bytes": 4707
+  },
+  "cross_grid": {
+    "path": "local_reference/native_static_reviews/d1_dual_vsc_long_20261123/verification/native_long_cross_grid.json",
+    "sha256": "b132607d419e4dfb53b5b638b4301f47bbaa00e67d546a3896adbcb3511a5c3b",
+    "bytes": 2467
+  },
+  "cross_grid_window_differences": {
+    "baseline": {
+      "a_p_mean_w": 0.3990784592416219,
+      "a_q_mean_var": 0.059107289909206884,
+      "b_p_mean_w": 1.390414840947102,
+      "b_q_mean_var": 1.083008147439834,
+      "b_dc_mean_v": 0.0021306147513087126,
+      "dc_sent_w": 1.2596504285712342,
+      "dc_received_w": 1.2609580085818948,
+      "dc_series_loss_w": 0.0036304536521948316
+    },
+    "response": {
+      "a_p_mean_w": 1.4842755503281069,
+      "a_q_mean_var": 2.3775966580064356,
+      "b_p_mean_w": 1.2141694293818261,
+      "b_q_mean_var": 0.0544974018840918,
+      "b_dc_mean_v": 0.0033709526263123735,
+      "dc_sent_w": 1.263885272026755,
+      "dc_received_w": 1.2492468750803027,
+      "dc_series_loss_w": 0.009376125415518022
+    },
+    "recovered": {
+      "a_p_mean_w": 1.2034659667742744,
+      "a_q_mean_var": 1.7297738372361557,
+      "b_p_mean_w": 0.9667813399247507,
+      "b_q_mean_var": 1.707408209672586,
+      "b_dc_mean_v": 0.01508773651954698,
+      "dc_sent_w": 0.1924470551076638,
+      "dc_received_w": 0.20696317857482427,
+      "dc_series_loss_w": 0.0014152048407085616
+    },
+    "b_dc_peak_v": 0.023789924759967107
+  },
+  "pre_candidate": {
+    "coarse_stock_pycy_diagnostic": {
+      "path": "local_reference/native_static_reviews/d1_dual_vsc_long_20261123/verification/coarse_pycy_diagnostic/diagnostic.json",
+      "sha256": "b65090d54ea497504dcbe46c803284bd696d62e04e3a06e9a0a1837a9f59fb1a",
+      "bytes": 63428
+    },
+    "legacy_28_to_32_startup_baseline": {
+      "path": "local_reference/native_static_reviews/d1_dual_vsc_long_20261123/verification/legacy_28_to_32_baseline/baseline.json",
+      "sha256": "14cd3045722b019ba5d9ba19a2c7890f2a01b5b2e96e7a133e39f115873011b8",
+      "bytes": 6181
+    }
+  },
+  "next_stage": "freeze_same_grid_teaching_candidate_criteria_then_implement_and_accept",
+  "candidate_accepted": false
+}
