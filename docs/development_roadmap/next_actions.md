@@ -1,5 +1,10 @@
 # 恢复与下一步
 
+2026-11-22。两档 PLL 短窗已验收。保留已冻结主工况，分别在原生 PSCAD 运行至 0.200005 s。每档通过全点电气、控制复算、110–160 ms 锁相及三周期电流跟踪与功率判据后，再做原生跨档比较。
+[PLL 双步长短窗结果](../../validation/cases/grid_connected_vsc_pll/short_reference_report.json)
+
+本机两档长窗包位于 `local_reference/native_static_reviews/` 下的 `c1_pscad_pll_long_5us_20261122` 和 `c1_pscad_pll_long_2p5us_20261122`。先核各自的 `prospective.json` 与任务状态。使用已验证的 PSCAD 自动化 Python，粗档运行 `pll_probe.py --arm validation/cases/grid_connected_vsc_pll/short_reference_report.json`，细档运行 `pll_probe.py --arm`。逐档用各包的 `native_driver.py` 启动，检查前一次运行的终态后再开始下一档。用项目锁定的 Python 执行 `python -B -m local_reference.native_static_reviews.c1_pll_full_oracle_20261122.verify_pll_full`，每档先用 `run` 核验原生回执，再用 `pair` 核验两档报告及各自 SHA-256。
+
 2026-11-22。粗档原始输出及补充运行来源核验通过。用本地细档隔离包启动 2.5 µs 原生短窗，采集 243 点。通过生成准入后运行一次。按同一判据核对六次更新、六次门极生效和 121 个细档中点，再准备两档 0.200005 s 长窗。
 [PLL 短窗记录](../../validation/cases/grid_connected_vsc_pll/short_reference_report.json)
 

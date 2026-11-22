@@ -1,5 +1,8 @@
 # 验证状态
 
+2026-11-22。PLL 细档 243 点通过原 19 项电气、六次反馈和门极顺序及 121 个实际中点保持。两档短窗范围为 0–605 µs，长窗锁定与电流跟踪待验。
+[PLL 双步长短窗结果](../../validation/cases/grid_connected_vsc_pll/short_reference_report.json)
+
 2026-11-22。PLL 粗档真实运行 122 点，19 项电气判据全部通过，共模残差峰值含末位精度上界约为 0.223 nV。六次采样和下一门极拍均通过，首个样本因初始超前产生负的频率修正，第二个样本切换到实测电压归一化。
 [PLL 短窗记录](../../validation/cases/grid_connected_vsc_pll/short_reference_report.json)
 

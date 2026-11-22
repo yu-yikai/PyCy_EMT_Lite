@@ -1,5 +1,8 @@
 # 持久进度
 
+2026-11-22。5 µs 与 2.5 µs 两档并网 PLL 均完成原生 PSCAD 短窗及独立核验。两档共 365 点，各通过六次采样及门极应用，细档通过 121 个中点保持。C1 转入两档长窗参考，正式新增仍为 11 个。
+[PLL 双步长短窗结果](../../validation/cases/grid_connected_vsc_pll/short_reference_report.json)
+
 2026-11-22。已完成并网 PLL 的 5 µs PSCAD 原生短窗。605 µs 共 122 点，19 项电气判据、六次 PLL 更新与下一拍门极均通过。C1 继续验证 2.5 µs 中点保持，正式新增仍为 11 个。
 [PLL 短窗记录](../../validation/cases/grid_connected_vsc_pll/short_reference_report.json)
 

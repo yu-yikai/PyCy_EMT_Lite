@@ -3,7 +3,7 @@
   "updated_date": "2026-11-22",
   "timezone": "Asia/Shanghai",
   "branch": "codex/emt-examples-longterm",
-  "checkpoint_head": "c635f684fbfe01cbb4ea94f0b10c0aa5a3ecd626",
+  "checkpoint_head": "31f1490fe75acf97afbed8f26fe97e3f912e30e5",
   "current_task": "C1",
   "formal_new_examples_completed": 11,
   "status_values": [
@@ -789,7 +789,8 @@
         "b245712af22d20205a6883b8ce3767e4d21cbb54",
         "ae4fd239ef1a91b75042b9d291f1548d5a5e132f",
         "302772282779c5bcd8e7612026deefbb4031ea57",
-        "c635f684fbfe01cbb4ea94f0b10c0aa5a3ecd626"
+        "c635f684fbfe01cbb4ea94f0b10c0aa5a3ecd626",
+        "31f1490fe75acf97afbed8f26fe97e3f912e30e5"
       ],
       "blockers": [],
       "reference_feasibility": {
@@ -800,7 +801,7 @@
         "evidence_sha256": "d92469cdd234477829ca5a5fa75a67648f17235fffadf3d3cbdaa73672375427",
         "native_executed": false
       },
-      "current_stage": "pll_coarse_short_qualified_fine_short_pending",
+      "current_stage": "pll_both_native_short_grids_qualified_full_pending",
       "open_loop_candidate_preparation": {
         "record": {
           "path": "docs/development_roadmap/experiments/c1_openloop_candidate_preparation_20261116.json",
@@ -1647,17 +1648,32 @@
         }
       },
       "pll_integrated_reference": {
-        "status": "coarse_short_qualified_fine_pending",
+        "status": "both_short_grids_qualified_full_pending",
         "protocol": {
           "path": "validation/cases/grid_connected_vsc_pll/reference_protocol.json",
           "sha256": "78ba092cc8099390023d3fcaa449c8479d269dcd5fa7ec315b267d968e1da767",
           "bytes": 6164
         },
-        "next": "运行独立 2.5 µs 短窗，核对 243 点、六次采样和门极应用以及中点保持，再准备两档长窗。",
+        "next": "分别运行 5 µs 与 2.5 µs 原生主工况至 0.200005 s。核验 19 项物理判据、锁相与真实电网坐标系电流跟踪，再比较两档结果。",
         "short_reference_report": {
           "path": "validation/cases/grid_connected_vsc_pll/short_reference_report.json",
-          "bytes": 2478,
-          "sha256": "9cae2947ef1b45159d33f010ac40da2cde3fe11104b9426947cd040d10e675ba"
+          "bytes": 4779,
+          "sha256": "27f1708981769b37ec66fb5f5f5f914e594c3661db57fda660993c3dcacfa5c3"
+        },
+        "full_preparation": {
+          "status": "frozen_packages_short_prerequisites_qualified",
+          "5us": {
+            "path": "local_reference/native_static_reviews/c1_pscad_pll_long_5us_20261122/prospective.json",
+            "sha256": "4735ce9e4b2831ef5717e3842153badf78e70abbf01e4319881ffae5c084673f"
+          },
+          "2p5us": {
+            "path": "local_reference/native_static_reviews/c1_pscad_pll_long_2p5us_20261122/prospective.json",
+            "sha256": "8bc8f661216803ca4c0ca84e63c168cd2c6578e5f383b5d852db234bc9e6624d"
+          },
+          "oracle": {
+            "path": "local_reference/native_static_reviews/c1_pll_full_oracle_20261122/verify_pll_full.py",
+            "sha256": "ba77675cd1b697dbbad9f1c870226f1c60027b1d910fdc6e2143d8cbebd65565"
+          }
         }
       }
     },
@@ -1910,7 +1926,7 @@
       }
     }
   ],
-  "current_stage": "pll_coarse_short_qualified_fine_short_pending",
+  "current_stage": "pll_both_native_short_grids_qualified_full_pending",
   "resume_checkpoint_history": [
     {
       "resumed_utc": "2026-11-11T13:24:16.085490+00:00",

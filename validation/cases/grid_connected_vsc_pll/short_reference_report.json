@@ -1,7 +1,7 @@
 {
   "schema": "grid_connected_vsc_pll_short_reference_v1",
   "date": "2026-11-22",
-  "status": "coarse_short_qualified_fine_pending",
+  "status": "both_short_grids_qualified_full_pending",
   "scope": "PSCAD coupled PLL startup, 0 to 605 us. Full window pending.",
   "prospective_protocol": {
     "path": "validation/cases/grid_connected_vsc_pll/reference_protocol.json",
@@ -48,7 +48,54 @@
       },
       "emtdc_pid_observed": false,
       "owned_processes_remaining": 0
+    },
+    "2p5us": {
+      "passed": true,
+      "rows": 243,
+      "updates": 6,
+      "next_gate_applications": 6,
+      "fine_half_steps_held": 121,
+      "physical_budgets_passed": 19,
+      "common_mode_upper_bound_V": 1.0000000000001e-10,
+      "first_frequency_correction_Hz": -3.4987804237086806,
+      "max_pll_angle_replay_error_rad": 8.881784197001252e-16,
+      "max_pll_frequency_replay_error_rad_s": 9.663381206337363e-13,
+      "terminal": {
+        "path": "local_reference/native_static_reviews/c1_pscad_pll_short_2p5us_v3_20261122/n/20261122T115053862595Z/terminal.json",
+        "bytes": 5288,
+        "sha256": "cc07903be57826d0d3bc246825c193fabfd59ffac2da081c4af15f1c7f868963"
+      },
+      "generated_admission": {
+        "path": "local_reference/native_static_reviews/c1_pscad_pll_short_2p5us_v3_20261122/n/20261122T115053862595Z/pre_run_admission.json",
+        "bytes": 2182,
+        "sha256": "d7efd25c02570d6de36ee696fe56645611e1186913e8fbd7df0d698fc01fbced"
+      },
+      "physics_and_feedback": {
+        "path": "local_reference/native_static_reviews/c1_pscad_pll_short_2p5us_v3_20261122/n/20261122T115053862595Z/independent_numeric_2p5us.json",
+        "bytes": 14475,
+        "sha256": "4d6db587f2121e38a7622ab236f0ae99ebe0da142445cf550e1781f72ff9c8ec"
+      },
+      "native_execution_receipt": {
+        "path": "local_reference/native_static_reviews/c1_pscad_pll_short_2p5us_v3_20261122/n/20261122T115053862595Z/native_execution_receipt.json",
+        "bytes": 3464,
+        "sha256": "d2481358f65c9e40649e1f988b72dd18820c005d8c4376fa5a0f294c80fc2629"
+      },
+      "emtdc_pid_observed": true,
+      "owned_processes_remaining": 0
     }
   },
-  "formal_example_accepted": false
+  "formal_example_accepted": false,
+  "fine_prelaunch_path_failure_preserved": {
+    "status": "failed_in_worker_before_native_launch",
+    "terminal": {
+      "path": "local_reference/native_static_reviews/c1_pscad_pll_short_2p5us_v2_20261122/n/20261122T114822593884Z/terminal.json",
+      "bytes": 1271,
+      "sha256": "aaf7aa6b2b89814d1d290a7dafeaf3e14481c814ef9cb325519c5be8e71ad04a"
+    },
+    "stderr": {
+      "path": "local_reference/native_static_reviews/c1_pscad_pll_short_2p5us_v2_20261122/n/20261122T114822593884Z/worker.stderr.txt",
+      "bytes": 1280,
+      "sha256": "14ec7adf80053f54f7ff9b262c9b8e5e182b476f1c3223587a616f5fa7b6d8a8"
+    }
+  }
 }

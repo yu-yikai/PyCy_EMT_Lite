@@ -1,5 +1,8 @@
 # 技术决策
 
+2026-11-22。细档反馈仍在求解后采样。2.5 µs 中点用原参考、门极和电阻求解，再将待施加参考交给随后的 5 µs 门极拍。短窗实现按两档原生输出复核，长窗仅扩展采集时长与保留原 d、q 指令时刻。
+[PLL 双步长短窗结果](../../validation/cases/grid_connected_vsc_pll/short_reference_report.json)
+
 2026-11-22。粗档运行监视未采到短时求解器 PID。保留原自动闭场拒绝，以实际运行日志、批处理、编译产物、七份原始输出的哈希和独立闭场 WMI 查询补核来源。粗档数值仍按原冻结协议复算。
 [PLL 短窗记录](../../validation/cases/grid_connected_vsc_pll/short_reference_report.json)
 
