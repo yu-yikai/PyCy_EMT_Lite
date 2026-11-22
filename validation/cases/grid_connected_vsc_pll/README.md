@@ -33,6 +33,7 @@ run_case(define_case(time_step=2.5e-6))
 ## 复核 PSCAD 对标
 
 真实 PSCAD 5.0 参考已完成双档[短窗](short_reference_report.json)和[长窗](full_reference_report.json)核验。
+正式比较使用两份按整数电气拍生成电源电压的新归档，PLL 仍读取求解后的差分电压。[电源精度参考](source_precision_reference_report.json)
 [冻结协议](reference_protocol.json)给出 110–160 ms 的锁相和电流跟踪判据。
 比较命令从 30 号入口重新运行两档，需要 `local_reference/` 中有与报告哈希匹配的原始参考归档。
 
@@ -42,4 +43,4 @@ uv run --locked python -m validation.cases.grid_connected_vsc_pll.compare
 
 两档采集延至 0.200005 s，保留最后一次采样生效的门极拍。报告、对照波形及各档候选输入快照保存在独立的 `local_reference/` 目录。
 
-首轮同档比较的电气量、门极、锁相和跟踪检查通过。两平台的 PLL 内部状态差超出了冻结门限，比较命令以失败结束，算例继续待验收。用各自测得的三相电压独立复算，重现了该差异。[首轮验证报告](validation_report.json) · [电源精度对照](source_precision_trial.json)
+30 号已通过正式验收。两档共 18 个同档窗口的电气量、门极和 PLL 状态检查均通过。首轮状态误差超限与后续单变量对照均留有证据。[验收报告](acceptance_report.json) · [首轮验证报告](validation_report.json)

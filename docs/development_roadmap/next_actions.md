@@ -1,5 +1,8 @@
 # 恢复与下一步
 
+2026-11-22。30 号已验收。下一项保留已验证的 PLL、电流环和门极时序，在理想电源与并网点之间加入明确的三相电网阻抗，使 Vac 成为可调量。先固定 P 前馈、Vac 外环的测量面、符号与限值及原生参考，再做候选。
+[30 号验收报告](../../validation/cases/grid_connected_vsc_pll/acceptance_report.json)
+
 2026-11-22。绑定电源精度双档参考报告、原生回执、原始 INF/OUT/CSV、独立报告和跨档哈希。让 30 号正式比较入口读取这两档参考并新运行两档 PyCy。保持原过门条件及旧 FAIL 记录，整理新图、报告、测试及教学验收。
 [电源精度双档参考报告](../../validation/cases/grid_connected_vsc_pll/source_precision_reference_report.json)
 

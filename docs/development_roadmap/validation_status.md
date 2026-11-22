@@ -1,5 +1,8 @@
 # 验证状态
 
+2026-11-22。30 号新同档比较 18 窗通过 414 项连续量、234 项逐点一致及 72 项 PLL 状态检查。最大相角差 2.665e-15 rad，周期跟踪误差最大 0.06665 A。两平台跨步长通过。最终参考入口切换后复跑 31 项专项及 Ruff 和 mypy，通过的 1,585 项 Windows 全量覆盖相同的教学及测试源码。
+[30 号验收报告](../../validation/cases/grid_connected_vsc_pll/acceptance_report.json)
+
 2026-11-22。电源精度两档共 120,005 点。原 19 项物理、18 个同档窗口、严格 PLL 状态及全部中点保持通过。固定候选对照的最大 PLL 相角差 2.665e-15 rad，原生跨档周期均值差 0.04845 A、分窗 RMS 差 0.07194 A。新正式入口对标待执行。
 [电源精度双档参考报告](../../validation/cases/grid_connected_vsc_pll/source_precision_reference_report.json)
 

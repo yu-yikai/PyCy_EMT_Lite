@@ -3,9 +3,9 @@
   "updated_date": "2026-11-22",
   "timezone": "Asia/Shanghai",
   "branch": "codex/emt-examples-longterm",
-  "checkpoint_head": "c9f67165aa77cface04cb8727d7a9997c676d428",
+  "checkpoint_head": "0bd7535d6065db964690c80842c81183cfb22e44",
   "current_task": "C1",
-  "formal_new_examples_completed": 11,
+  "formal_new_examples_completed": 12,
   "status_values": [
     "planned",
     "ready",
@@ -671,7 +671,7 @@
         "pscad-derived-force-dsout-bounded-probe-v5",
         "simscape-derived-grid-vsc-openloop-r2025a"
       ],
-      "validation": "28 号开环通过真实 Simscape 双步长对标，共用接线后复验波形及判据逐字节一致。29 号已知角度 dq 电流环在两工况双步长下通过真实 PSCAD 同档、跨档及成组比较，Windows 1581 项含 slow 回归及 Windows/WSL2 独立默认入口通过。",
+      "validation": "28 号开环通过真实 Simscape 双步长对标，共用接线后复验波形及判据逐字节一致。29 号已知角度 dq 电流环在两工况双步长下通过真实 PSCAD 同档、跨档及成组比较，Windows 1581 项含 slow 回归及 Windows/WSL2 独立默认入口通过。 30 号使用电源精度双档 PSCAD 参考重新独立对标，18 窗、原电气及 PLL 状态门限全部通过，正式交付。",
       "acceptance": "局部、可独立运行验证的教学例逐项验收",
       "status": "in_progress",
       "files": [
@@ -761,7 +761,8 @@
         "validation/cases/grid_connected_vsc_pll/validation_report.json",
         "validation/cases/grid_connected_vsc_pll/source_precision_trial_result.json",
         "validation/cases/grid_connected_vsc_pll/source_precision_fine_trial.json",
-        "validation/cases/grid_connected_vsc_pll/source_precision_reference_report.json"
+        "validation/cases/grid_connected_vsc_pll/source_precision_reference_report.json",
+        "validation/cases/grid_connected_vsc_pll/acceptance_report.json"
       ],
       "commits": [
         "b835e31785fab3fda247c333d23edbe9ce576dfa",
@@ -807,7 +808,8 @@
         "951617ae348507a0ae922531f89abd2ad7170d90",
         "6997230697350af42d1e68dda71562e072525a7b",
         "d86c56ff8307e5efa58f67e51fb3d2303cac65ca",
-        "c9f67165aa77cface04cb8727d7a9997c676d428"
+        "c9f67165aa77cface04cb8727d7a9997c676d428",
+        "0bd7535d6065db964690c80842c81183cfb22e44"
       ],
       "blockers": [],
       "reference_feasibility": {
@@ -818,7 +820,7 @@
         "evidence_sha256": "d92469cdd234477829ca5a5fa75a67648f17235fffadf3d3cbdaa73672375427",
         "native_executed": false
       },
-      "current_stage": "pll_refined_native_reference_qualified_public_recheck_pending",
+      "current_stage": "pll_example30_accepted_power_and_vac_reference_next",
       "open_loop_candidate_preparation": {
         "record": {
           "path": "docs/development_roadmap/experiments/c1_openloop_candidate_preparation_20261116.json",
@@ -1665,13 +1667,13 @@
         }
       },
       "pll_integrated_reference": {
-        "status": "both_source_precision_native_grids_qualified",
+        "status": "accepted_example30",
         "protocol": {
           "path": "validation/cases/grid_connected_vsc_pll/reference_protocol.json",
           "sha256": "78ba092cc8099390023d3fcaa449c8479d269dcd5fa7ec315b267d968e1da767",
           "bytes": 6164
         },
-        "next": "在正式比较 CLI 中绑定两份已合格的电源精度参考和真实原始数据。独立重跑两档 PyCy，以原窗口与门限完整比较，提交最终验收。",
+        "next": "冻结有可控 PCC 的三相电网电路、P 前馈和 Vac 外环符号、测量面及独立商业参考。",
         "short_reference_report": {
           "path": "validation/cases/grid_connected_vsc_pll/short_reference_report.json",
           "bytes": 4779,
@@ -1747,6 +1749,16 @@
             "bytes": 12443
           },
           "run": "local_reference/native_static_reviews/c1_pscad_pll_source_precision_2p5us_20261122/n/20261122T131217916343Z"
+        },
+        "formal_acceptance": {
+          "example": 30,
+          "report": {
+            "path": "validation/cases/grid_connected_vsc_pll/acceptance_report.json",
+            "sha256": "81a6edaccaeb5b8b2fd8a111ffa0b292fcb8e6ffd75bf784e3ae75122fc9b416",
+            "bytes": 5217
+          },
+          "formal_new_examples_completed": 12,
+          "acceptance_commit_subject": "feat: accept PLL-controlled VSC example 30 [skip ci]"
         }
       }
     },
@@ -1999,7 +2011,7 @@
       }
     }
   ],
-  "current_stage": "pll_refined_native_reference_qualified_public_recheck_pending",
+  "current_stage": "pll_example30_accepted_power_and_vac_reference_next",
   "resume_checkpoint_history": [
     {
       "resumed_utc": "2026-11-11T13:24:16.085490+00:00",
@@ -2041,9 +2053,9 @@
     }
   ],
   "current_source_snapshot": {
-    "path": "local_reference/native_static_reviews/c1_example30_comparison_20261122T122946122172Z/inputs.json",
-    "sha256": "51daebd001265c9469d3fa023b17145a528c8861b4ed1e0ad53c1780a7ae5268",
-    "bytes": 15850
+    "path": "local_reference/native_static_reviews/c1_example30_precision_official_20261122/inputs.json",
+    "sha256": "fde7bf52a5f177a5dd7c892b34107bbc50bc080344ddd48c9612e89e98a34539",
+    "bytes": 17631
   },
   "latest_maintenance": {
     "kind": "dense_lu_one_residual_refinement",

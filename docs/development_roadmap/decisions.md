@@ -1,5 +1,8 @@
 # 技术决策
 
+2026-11-22。30 号正式比较入口绑定两份新 PSCAD 原生归档，使用同一组控制和误差判据。首轮 FAIL 及源精度试验独立保留。外环下一步从可调并网点开始。
+[30 号验收报告](../../validation/cases/grid_connected_vsc_pll/acceptance_report.json)
+
 2026-11-22。两档均用整数电气拍生成同一理想电源，源支路、反馈差分测点和门极时序已独立验证。分别试验后再绑定新原生双档，先前参考与候选首轮 FAIL 继续保留。
 [电源精度双档参考报告](../../validation/cases/grid_connected_vsc_pll/source_precision_reference_report.json)
 

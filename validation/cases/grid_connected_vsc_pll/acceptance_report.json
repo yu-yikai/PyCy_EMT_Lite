@@ -1,0 +1,134 @@
+{
+  "schema": "grid_connected_vsc_pll_example_acceptance_v1",
+  "date": "2026-11-22",
+  "example": 30,
+  "status": "FORMAL_PLL_CURRENT_CONTROL_EXAMPLE_ACCEPTED",
+  "passed": true,
+  "formal_example_accepted": true,
+  "formal_new_examples_completed": 12,
+  "scope": "Single grid-connected bridge, fixed ideal DC source and direct d/q current commands with measured-voltage SRFPLL.",
+  "native_reference": {
+    "path": "validation/cases/grid_connected_vsc_pll/source_precision_reference_report.json",
+    "sha256": "91ac883c30a0297154ac8b0592fdec540d7bfd0247af1da894403bbfdcae8492",
+    "bytes": 5249
+  },
+  "initial_failed_comparison": {
+    "path": "validation/cases/grid_connected_vsc_pll/validation_report.json",
+    "sha256": "fffbc156ca6b90933b8505a09b76ff8f6a44b0e7c7b8da06e0468988d4ca3e86",
+    "bytes": 7805
+  },
+  "fresh_candidate_grids": {
+    "5us": {
+      "rows": 40002,
+      "physical_budgets_passed": 19,
+      "control_updates": 2000,
+      "next_gate_applications": 2000,
+      "fine_half_steps_held": 0,
+      "maximum_phase_error_deg": 0.6297686795503009,
+      "maximum_frequency_error_Hz": 0.0194854164863969,
+      "maximum_cycle_tracking_error_A": 0.06497079961330288,
+      "strict_same_grid_pll_state_maxima": {
+        "theta": 2.6645352591003757e-15,
+        "omega": 1.6484591469634324e-12,
+        "xi": 5.5011550870176507e-14,
+        "normalized_error": 1.567496132892643e-14
+      },
+      "candidate_report": {
+        "path": "local_reference/native_static_reviews/c1_example30_precision_official_20261122/5us/report.json",
+        "sha256": "acc87ea6f47e2a5f68f8c65f7e48e5d6c8f1de41bf2d083ecd260fbf7b016dde",
+        "bytes": 11303
+      }
+    },
+    "2p5us": {
+      "rows": 80003,
+      "physical_budgets_passed": 19,
+      "control_updates": 2000,
+      "next_gate_applications": 2000,
+      "fine_half_steps_held": 40001,
+      "maximum_phase_error_deg": 0.6297686795503009,
+      "maximum_frequency_error_Hz": 0.0194854164863969,
+      "maximum_cycle_tracking_error_A": 0.06664577172299424,
+      "strict_same_grid_pll_state_maxima": {
+        "theta": 1.7763568394002505e-15,
+        "omega": 1.5916157281026244e-12,
+        "xi": 4.468647674116255e-14,
+        "normalized_error": 1.567496132892643e-14
+      },
+      "candidate_report": {
+        "path": "local_reference/native_static_reviews/c1_example30_precision_official_20261122/2p5us/report.json",
+        "sha256": "b7edb5e2ba737b0e0f5793e03e2c6adea966a6d103ec50325b2b71bc84fbb73b",
+        "bytes": 13057
+      }
+    }
+  },
+  "same_step": {
+    "windows": 18,
+    "continuous": 414,
+    "exact": 234,
+    "pll_state": 72,
+    "passed": true
+  },
+  "cross_grid": {
+    "PyCy": {
+      "cycle_mean_max_A": 0.048450263771163904,
+      "window_rms_max_A": 0.0719447355094662
+    },
+    "PSCAD": {
+      "cycle_mean_max_A": 0.048450263771161683,
+      "window_rms_max_A": 0.07194473550946677
+    }
+  },
+  "comparison": {
+    "report": {
+      "path": "local_reference/native_static_reviews/c1_example30_precision_official_20261122/report.json",
+      "sha256": "308148540f60a53041a8b252f15a869a759e1ce59d0d43e4bc8600ea9ffd9aa8",
+      "bytes": 384137
+    },
+    "inputs": {
+      "path": "local_reference/native_static_reviews/c1_example30_precision_official_20261122/inputs.json",
+      "sha256": "fde7bf52a5f177a5dd7c892b34107bbc50bc080344ddd48c9612e89e98a34539",
+      "bytes": 17631
+    },
+    "figure": {
+      "path": "local_reference/native_static_reviews/c1_example30_precision_official_20261122/pll_and_current_comparison.png",
+      "sha256": "e83a7945394d1b4008f764d1b68d0ecdd566c4c153a6c79469c05b8b08c26c8c",
+      "bytes": 559208
+    }
+  },
+  "new_reference_reader_checks": {
+    "windows_28_29_30_focused": 31,
+    "junit": {
+      "path": "local_reference/native_static_reviews/example30_release_checks_20261122/refined-focused.xml",
+      "sha256": "810f92e9eb435bc067fbd3a1ab2bf91f23bcfd1d4519ae730ed612e3b7c3db55",
+      "bytes": 4863
+    },
+    "ruff": {
+      "path": "local_reference/native_static_reviews/example30_release_checks_20261122/refined-ruff.log",
+      "sha256": "a4443afdcfb6d7363adb285762515ccf7cf50473b1a05c20c1a50f6bed4d26b0",
+      "bytes": 20
+    },
+    "mypy": {
+      "path": "local_reference/native_static_reviews/example30_release_checks_20261122/refined-mypy.log",
+      "sha256": "a2767b4f5fbc495fbc163c1c3983210351cf45f12ec5302828989d1065383f9b",
+      "bytes": 45
+    },
+    "reference_rejection_probe": {
+      "path": "local_reference/native_static_reviews/example30_release_checks_20261122/refined-reference-negative.log",
+      "sha256": "1c09e0ec63b917e9cf86ebb7c0edc8ace94e5ac49813b1bc65dbe72f7c977b6c",
+      "bytes": 228
+    },
+    "fresh_dual_comparison": true
+  },
+  "unchanged_teaching_code_and_test_suite": {
+    "test_and_source_anchor": "d86c56ff8307e5efa58f67e51fb3d2303cac65ca",
+    "windows_full_with_slow": 1585,
+    "wsl2_focused": 31,
+    "windows_and_wsl2_default_rows_each": 40001,
+    "case29_native_replay_bit_for_bit": true,
+    "earlier_evidence": {
+      "path": "validation/cases/grid_connected_vsc_pll/validation_report.json",
+      "sha256": "fffbc156ca6b90933b8505a09b76ff8f6a44b0e7c7b8da06e0468988d4ca3e86",
+      "bytes": 7805
+    }
+  }
+}

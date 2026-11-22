@@ -1,5 +1,8 @@
 # 持久进度
 
+2026-11-22。30 号并网 PLL 电流闭环正式验收。公开入口两档独立重跑，通过新 PSCAD 双步长参考全部冻结判据。正式新增共 12 个。C1 转入 P 前馈和交流电压外环参考准备。
+[30 号验收报告](../../validation/cases/grid_connected_vsc_pll/acceptance_report.json)
+
 2026-11-22。两档整数拍电源精度对照已取得参考资格。5 µs 和 2.5 µs 分别真实运行 40,002 点和 80,003 点，严格 PLL 状态、原全点物理、同档和跨档均通过。正式新增保持 11 个，转入新公开对标验收。
 [电源精度双档参考报告](../../validation/cases/grid_connected_vsc_pll/source_precision_reference_report.json)
 

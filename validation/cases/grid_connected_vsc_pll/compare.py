@@ -31,7 +31,14 @@ DIRECTORY = Path(__file__).resolve().parent
 CACHE = ROOT / "local_reference"
 EXAMPLE = ROOT / "examples/30_grid_connected_vsc_pll.py"
 PROTOCOL_SHA = "78ba092cc8099390023d3fcaa449c8479d269dcd5fa7ec315b267d968e1da767"
-QUALIFICATION_SHA = "255e251c54c3146bc13a26a528c200e8af80e78cf3e1a1a62707afef66a9789d"
+QUALIFICATION_SHA = "91ac883c30a0297154ac8b0592fdec540d7bfd0247af1da894403bbfdcae8492"
+ORIGINAL_REFERENCE_SHA = "255e251c54c3146bc13a26a528c200e8af80e78cf3e1a1a62707afef66a9789d"
+TRIALS = {
+    "5us": ("source_precision_trial.json", "2e8ea0935a3ac8cf62c42bd1a208e198174cdd27a7c45a1a01fda3c29377acd0"),
+    "2p5us": ("source_precision_fine_trial.json", "58cad98134208020b858b377572bb1e704bace490ce95af728864371eda827ad"),
+}
+SOURCE_TRIAL_CLOSED = "NATIVE_PLL_SOURCE_TRIAL_CLOSED_FOR_NUMERIC_REVIEW"
+SOURCE_BUILD_PASSED = "PASS_NATIVE_PLL_SOURCE_TRIAL_GENERATED"
 TIME = dq_case.TIME
 PLL_FIELDS = {
     "theta": ("theta", "theta_circular_rad"),
@@ -41,11 +48,22 @@ PLL_FIELDS = {
 }
 
 
-def load_reference(protocol, current, qualification, plant_sha):
-    """Read the qualified SI projections only after checking original archive identity."""
-    metrics.require(qualification["whole_native_reference_qualified"] is True
-                    and qualification["protocol"]["sha256"] == PROTOCOL_SHA, "PLL reference is not qualified")
+def load_reference(protocol, current, qualification):
+    """Admit the refined projections through the archived native execution and paired reports."""
+    metrics.require(qualification["schema"] == "grid_connected_vsc_pll_source_precision_reference_v1"
+                    and qualification["reference_protocol"]["sha256"] == PROTOCOL_SHA
+                    and set(qualification["grids"]) == set(TRIALS), "Refined PLL reference is not qualified")
     native, evidence = {}, {}
+
+    def same_file(record, path, digest):
+        return record["path"] == path.relative_to(ROOT).as_posix() and record["sha256"] == digest
+
+    def tracked(record, name, digest):
+        path = DIRECTORY/name
+        metrics.require(same_file(record, path, digest), f"Unexpected frozen source: {name}")
+        data = dq_case.frozen_json(path, digest)
+        evidence[path] = sha256(path)
+        return data
 
     def admit(path, digest, size=None):
         path = path.resolve(strict=True)
@@ -58,55 +76,100 @@ def load_reference(protocol, current, qualification, plant_sha):
         path = admit(ROOT/record["path"], record["sha256"], record["bytes"])
         return path, json.loads(path.read_bytes())
 
-    _, pair = load(qualification["cross_grid"]["report"])
-    metrics.require(pair["status"] == "PASS_NATIVE_PLL_FULL_CROSS_GRID"
-                    and pair["protocol_sha256"] == PROTOCOL_SHA and pair["comparison"]["passed"] is True,
-                    "Original native cross-grid gate did not pass")
+    original = tracked(qualification["original_native_reference"], "full_reference_report.json", ORIGINAL_REFERENCE_SHA)
+    metrics.require(original["whole_native_reference_qualified"] is True, "Original reference evidence differs")
+    _, pair = load(qualification["native_cross_grid"])
+    metrics.require(pair["status"] == "PASS_NATIVE_PLL_SOURCE_PRECISION_CROSS_GRID"
+                    and pair["protocol_sha256"] == PROTOCOL_SHA and pair["passed"] is True
+                    and pair["comparison"]["passed"] is True and set(pair["references"]) == set(TRIALS)
+                    and len(pair["comparison"]["means"]) == 15 and len(pair["comparison"]["waveforms"]) == 8,
+                    "Refined native cross-grid gate did not pass")
     stem = current["native_output"]["stem"]
     expected_raw = {f"{stem}.inf", current["native_output"]["feedback"],
                     *(f"{stem}_{part:02d}.out" for part in range(1, 6))}
+    expected_generated = {"Main.dta", "Main.f", "Station.dta", "Station.f", "vdiv.mak", "vdiv.map", "vdiv.exe"}
     samples = protocol["acquisition"]["full"]["control_samples_and_next_gate_applications_each"]
+    runs = set()
     for grid in current["electrical_grids"]:
         label, rows, step = grid["id"], grid["rows"], grid["step_s"]
-        expected_updates = list(range(round(protocol["pll"]["sample_period_s"]/step), rows,
-                                      round(protocol["pll"]["sample_period_s"]/step)))
+        sample_ticks = round(protocol["pll"]["sample_period_s"]/step)
+        expected_updates = list(range(sample_ticks, rows, sample_ticks))
         gate_ticks = round(current["controller"]["gate_period_s"]/step)
+        expected_holds = rows//2 if gate_ticks == 2 else 0
         entry = qualification["grids"][label]
+        trial = tracked(entry["trial"], *TRIALS[label])
+        metrics.require(trial["execution"]["grid"] == label and trial["execution"]["rows"] == rows
+                        and trial["reference_protocol"]["sha256"] == PROTOCOL_SHA, f"Invalid trial protocol: {label}")
         execution_path, execution = load(entry["execution_receipt"])
         numeric_path, numeric = load(entry["numerical_report"])
+        inputs_path, inputs = load(entry["inputs"])
+        projection = entry["native_waveforms"]
         run = execution_path.parent
+        metrics.require(run not in runs and run != (ROOT/original["grids"][label]["execution_receipt"]["path"]).parent,
+                        f"Expected an independent refined archive: {label}")
+        runs.add(run)
         runtime = execution["native_runtime"]
         archive = run / "project/vdiv.gf46"
-        metrics.require(execution["status"] == "NATIVE_PLL_FULL_RUN_CLOSED_FOR_NUMERIC_REVIEW"
-                        and execution["protocol_sha256"] == PROTOCOL_SHA
-                        and execution["rows"] == rows == entry["rows"]
+        metrics.require(execution["status"] == SOURCE_TRIAL_CLOSED and execution["grid"] == label
+                        and execution["protocol_sha256"] == PROTOCOL_SHA and execution["trial_sha256"] == TRIALS[label][1]
+                        and execution["rows"] == rows == entry["rows"] and len(expected_updates) == samples
                         and execution["all_out_clocks_exact_on_original_grid"] is True
                         and execution["sample_updates"] == expected_updates
                         and execution["expected_next_gate_applications"] == [j + gate_ticks for j in expected_updates]
+                        and execution.get("fine_half_steps_held", 0) == expected_holds
                         and runtime["emtdc_pid_observed"] is True
                         and runtime["emtdc_process_identity"]["name"].lower() == "vdiv.exe"
-                        and set(execution["raw_files"]) == expected_raw, f"Invalid execution evidence: {label}")
+                        and set(execution["raw_files"]) == expected_raw
+                        and set(execution["post_run_generated_sha256"]) == expected_generated,
+                        f"Invalid refined execution evidence: {label}")
         terminal = json.loads(admit(run/"terminal.json", execution["terminal_sha256"]).read_bytes())
         generated = json.loads(admit(run/"pre_run_admission.json", execution["pre_run_admission_sha256"]).read_bytes())
-        build_status = "PASS_PLL_FULL_5US_GENERATED" if label == "5us" else "PASS_PLL_FULL_GENERATED"
+        source_audit = json.loads(admit(run/"source_build_audit.json", execution["source_build_audit_sha256"]).read_bytes())
+        proof = source_audit["proof"]
         metrics.require(terminal["worker_returncode"] == 0 and terminal["source_hash_unchanged"] is True
                         and terminal["stop_reason"] is None and not terminal["remaining_owned"]
-                        and generated["status"] == build_status, f"Invalid build or closeout: {label}")
+                        and generated["status"] == source_audit["status"] == SOURCE_BUILD_PASSED
+                        and generated["proof"] == proof and proof["body_outside_source_delta_equal"] is True
+                        and proof["solved_differential_voltage_producers_unchanged"] is True and proof["channels"] == 45,
+                        f"Invalid refined build or closeout: {label}")
+        metrics.require(proof["dimensions"]["NODES"] == 14 and proof["dimensions"]["BRANCHES"] == 19
+                        and proof["settings"]["SPARSE_LIMIT"] == "1"
+                        and set(generated["generated_files"]) == expected_generated
+                        and all(generated["generated_files"][name] == execution["post_run_generated_sha256"][name]
+                                for name in expected_generated - {"vdiv.map", "vdiv.exe"}),
+                        f"Retained generated physical inputs differ: {label}")
         for name, digest in (execution["raw_files"] | execution["post_run_generated_sha256"]).items():
             admit(archive/name, digest)
         for name, digest in runtime["vendor_run_artifacts_sha256"].items():
             admit(run/name, digest)
-        anchor = {"path": entry["execution_receipt"]["path"], "sha256": entry["execution_receipt"]["sha256"],
-                  "raw_files": execution["raw_files"]}
-        metrics.require(numeric["status"] == "PASS_NATIVE_PLL_FULL_NUMERICAL"
-                        and numeric["protocol_sha256"] == PROTOCOL_SHA and numeric["physical_protocol_sha256"] == plant_sha
-                        and numeric["execution_receipt"] == anchor and pair["references"][label]["execution"] == anchor
-                        and pair["references"][label]["sha256"] == entry["numerical_report"]["sha256"]
-                        and (numeric["electrical_grid"], numeric["rows"], numeric["step_s"]) == (label, rows, step)
-                        and numeric["pll_updates"] == numeric["next_gate_applications"] == samples
-                        and numeric["physical"]["observed_pass"] and numeric["physical"]["failure_count"] == 0
-                        and all(cycle["passed"] for cycle in numeric["tracking"]), f"Invalid numerical receipt: {label}")
-        path = admit(numeric_path.parent/"plant32_si_with_pll.npz", numeric["si_npz_sha256"])
+        metrics.require(all(inputs["inputs"].get(path.relative_to(ROOT).as_posix()) == digest
+                            for path, digest in evidence.items() if path.is_relative_to(run)),
+                        f"Numerical inputs did not bind the refined execution bytes: {label}")
+        native_checks = numeric["native_checks"]
+        pairing = pair["references"][label]
+        status = "COARSE" if label == "5us" else "FINE"
+        path = admit(ROOT/projection["path"], projection["sha256"], projection["bytes"])
+        metrics.require(numeric["status"] == f"PASS_NATIVE_PLL_SOURCE_PRECISION_{status}_TRIAL" and numeric["passed"] is True
+                        and numeric["protocol_sha256"] == inputs["protocol_sha256"] == PROTOCOL_SHA
+                        and numeric["trial_sha256"] == inputs["trial_sha256"] == pairing["trial_sha256"] == TRIALS[label][1]
+                        and inputs_path.parent == numeric_path.parent == path.parent
+                        and numeric["inputs_sha256"] == entry["inputs"]["sha256"]
+                        and same_file(pairing["execution"], execution_path, entry["execution_receipt"]["sha256"])
+                        and same_file(pairing["numerical_report"], numeric_path, entry["numerical_report"]["sha256"])
+                        and projection["sha256"] == numeric["si_npz_sha256"]
+                        and same_file(pairing["projection"], path, projection["sha256"])
+                        and (native_checks["electrical_grid"], native_checks["rows"], native_checks["step_s"]) == (label, rows, step)
+                        and native_checks["pll_updates"] == native_checks["next_gate_applications"] == samples
+                        and native_checks["fine_half_steps_held"] == expected_holds
+                        and native_checks["physical"]["observed_pass"] and native_checks["physical"]["failure_count"] == 0
+                        and len(numeric["same_step"]) == len(numeric["pll_state_same_step"]) == 9
+                        and all(check["passed"] for key in ("native_tracking", "same_step", "pll_state_same_step")
+                                for check in numeric[key]), f"Invalid refined numerical receipt: {label}")
+        if label == "2p5us":
+            anchor = {"path": entry["execution_receipt"]["path"], "sha256": entry["execution_receipt"]["sha256"],
+                      "raw_files": execution["raw_files"]}
+            metrics.require(numeric["execution_receipt"] == pairing["execution"] == anchor,
+                            "Fine trial numerical execution binding differs")
         with np.load(path, allow_pickle=False) as source:
             trace = {name: source[name] for name in (*physics.names(), "saturated", "sample_update", *PLL_FIELDS)}
         dq_case.check_clock(trace, grid)
@@ -288,7 +351,7 @@ def plot_comparison(path, candidate, native, frequency):
 
 def run_comparison(destination):
     protocol_path = DIRECTORY / "reference_protocol.json"
-    qualification_path = DIRECTORY / "full_reference_report.json"
+    qualification_path = DIRECTORY / "source_precision_reference_report.json"
     protocol = dq_case.frozen_json(protocol_path, PROTOCOL_SHA)
     qualification = dq_case.frozen_json(qualification_path, QUALIFICATION_SHA)
     current_input = protocol["basis"]["plant_and_current_loop"]
@@ -297,7 +360,7 @@ def run_comparison(destination):
     plant_input = current["basis"]["plant_validation"]
     plant_path = ROOT / plant_input["path"]
     plant = dq_case.frozen_json(plant_path, plant_input["sha256"])
-    native, native_inputs = load_reference(protocol, current, qualification, plant_input["sha256"])
+    native, native_inputs = load_reference(protocol, current, qualification)
     case = current["scenarios"]["main"]
     limits = plant[current["same_step"]["numeric_budget_key_in_case_28"]]
     destination.mkdir(parents=True, exist_ok=False)
@@ -351,7 +414,7 @@ def run_comparison(destination):
                     and all(sha256(path) == digest for path, digest in native_inputs.items()),
                     "Candidate or reference inputs changed during comparison")
     report = destination/"report.json"
-    save_json(report, {"passed": passed, "native_engine": qualification["engine"], "inputs_sha256": sha256(manifest),
+    save_json(report, {"passed": passed, "native_engine": protocol["native_admission"]["engine"], "inputs_sha256": sha256(manifest),
                        "candidate_runs": reports, "native_checks": native_checks, "same_step": numerical,
                        "pll_state_same_step": state, "cross_step": cross, "figure_sha256": sha256(figure)})
     return report, passed
