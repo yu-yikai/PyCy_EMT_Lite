@@ -1,5 +1,8 @@
 # 持久进度
 
+2026-11-22。PSCAD 5 µs 调节组已独立运行 130,002 点。控制、开关和馈线过门，调节后三个单周波过门。使能前一个单周波跌落不足 0.8 V，保留原 FAIL。用同份原始波形定位到馈线电感频域积分的边界项，另行冻结 50 ms 相干窗试验。
+[实测窗口诊断与后续试验](../../validation/cases/grid_connected_vsc_power_vac/fundamental_window_trial.json)
+
 2026-11-22。C1 有功前馈及 PCC 电压外环全程原生参考协议已固定。平均模型筛选支持 500 W 工况和 120 V 相有效值目标。正式新增仍为 12 个，先执行 PSCAD 双档两工况。
 [外环参考协议](../../validation/cases/grid_connected_vsc_power_vac/reference_protocol.json)
 

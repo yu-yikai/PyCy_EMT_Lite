@@ -1,5 +1,8 @@
 # 技术决策
 
+2026-11-22。60 Hz 单周波仅跨 16⅔ 个 1 kHz 载波周期。首个失配窗的馈线边界项为 0.974 V 峰值，计入后复量重构误差约 1.52 µV。为区分基波和载波窗效应，另用 50 ms 固定窗验证，原单周波结果和判据留在基础协议。
+[窗口试验](../../validation/cases/grid_connected_vsc_power_vac/fundamental_window_trial.json)
+
 2026-11-22。P 与 Vac 均取 PCC。先在 PCC 电压对齐坐标中计算有功电流和电压 PI 给出的无功电流，再转到源端 PLL 坐标。沿用原电流环和限幅规则，以总串联 R/L 计算原 100 Hz 调参公式。
 [测量和限值](../../validation/cases/grid_connected_vsc_power_vac/reference_protocol.json)
 

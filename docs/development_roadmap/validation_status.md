@@ -1,5 +1,8 @@
 # 验证状态
 
+2026-11-22。5 µs 调节组通过 650 次外环、6,500 次内环及门极应用和 390,003 个馈线相间隔检查。使能前第二周期只跌 0.683 V，基础协议 FAIL。原波形的 50 ms 诊断为使能前 118.787 V、调节后 120.019 V，相干窗的跨步长验证仍待原生运行。
+[失败证据和诊断](../../validation/cases/grid_connected_vsc_power_vac/fundamental_window_trial.json)
+
 2026-11-22。外环平均模型的三组响应速度扫描中，稳态 PCC 相电压从基线 118.803 V 恢复至约 119.986 V，桥压所需峰值低于 170.01 V。该筛选供冻结工况，正式判据由独立 PSCAD 开关波形验证。
 [已固定的外环参考协议](../../validation/cases/grid_connected_vsc_power_vac/reference_protocol.json)
 
