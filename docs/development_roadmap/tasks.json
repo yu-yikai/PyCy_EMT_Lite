@@ -3,7 +3,7 @@
   "updated_date": "2026-11-23",
   "timezone": "Asia/Shanghai",
   "branch": "codex/emt-examples-longterm",
-  "checkpoint_head": "f467c4c9957e028f8a46dfad52dbb73bfe382aa3",
+  "checkpoint_head": "e0bbf254d9030caf3e51fc401693f59c451b7bb4",
   "current_task": "C1",
   "formal_new_examples_completed": 13,
   "status_values": [
@@ -1895,6 +1895,17 @@
           "bytes": 4711,
           "sha256": "47ad26b98130264f25f8c0ecddcf973e9557c705112764f768064ad6c000f8d5"
         }
+      },
+      "small_network_phasor_probe": {
+        "status": "dataset_and_steady_state_kcl_verified",
+        "dataset_sha256": "cadf7501a15c2d508820493cef6acc85757274197e74c40bcec4fc4ecf619e6f",
+        "receipt": {
+          "path": "local_reference/native_static_reviews/d1_pglib_case5_kcl_20261123/report.json",
+          "bytes": 11353,
+          "sha256": "7fcc68d6584a5be8ad6cc72046ffbe7efbe992c1f3bcbd7218857398380811c1"
+        },
+        "native_reference_qualified": false,
+        "candidate_accepted": false
       },
       "small_readability_followups": [
         {
