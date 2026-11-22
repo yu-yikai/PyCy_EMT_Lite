@@ -3,7 +3,7 @@
   "updated_date": "2026-11-23",
   "timezone": "Asia/Shanghai",
   "branch": "codex/emt-examples-longterm",
-  "checkpoint_head": "530dd74ec1f39027e1b7f33500255e0fd84550c6",
+  "checkpoint_head": "b81e7dfc9a4867d29c9c5bfeb7caf785c63a0193",
   "current_task": "D1",
   "formal_new_examples_completed": 14,
   "status_values": [
@@ -1916,16 +1916,30 @@
       "references": [],
       "validation": "范围命名准确、真实参考和阶段复审",
       "acceptance": "不将直流等效称完整PV，不将拓扑称完整标准EMT",
-      "status": "ready",
-      "current_stage": "pjm5_emt_reference_protocol_next",
-      "files": [],
-      "commits": [],
+      "status": "in_progress",
+      "current_stage": "pjm5_emt_protocol_frozen_native_short_next",
+      "files": [
+        "docs/development_roadmap/experiments/d1_pjm5_emt_protocol_20261123.json"
+      ],
+      "commits": [
+        "3e0afbf45ea34675fead6caede1fa64dd1d718e8"
+      ],
       "blockers": [],
+      "small_network_emt_protocol": {
+        "status": "frozen_after_independent_tr_screen_before_native",
+        "report": {
+          "path": "docs/development_roadmap/experiments/d1_pjm5_emt_protocol_20261123.json",
+          "sha256": "f2d51e205f7b1a1a0b14118f7dc20b9a6e94bca0c4522292f001cc67a9ccd5c2",
+          "bytes": 7352
+        },
+        "native_reference_qualified": false,
+        "candidate_accepted": false
+      },
       "small_network_source_screen": {
         "status": "static_topology_screened_native_reference_pending",
         "source": "https://github.com/power-grid-lib/pglib-opf/blob/dc6be4b2f85ca0e776952ec22cbd4c22396ea5a3/pglib_opf_case5_pjm.m",
         "scope": "IEEE PES PGLib-OPF v23.07。采用五母线、六条线路的平衡网状拓扑，复用三相π线路、给定电源和固定阻抗负荷。数据按 CC BY 4.0 署名并注明改动。",
-        "remaining": "固定 EMT 电源、负荷、冷启动、负荷投入边沿、测量和双步长判据，然后建立并运行真实参考。",
+        "remaining": "按已固定的 EMT 模型和判据，构建并运行原生短窗和两档全长参考。",
         "receipt": {
           "path": "local_reference/native_static_reviews/d1_pglib_case5_screen_20261122/report.json",
           "bytes": 4711,
@@ -2133,7 +2147,7 @@
       }
     }
   ],
-  "current_stage": "pjm5_emt_reference_protocol_next",
+  "current_stage": "pjm5_emt_protocol_frozen_native_short_next",
   "resume_checkpoint_history": [
     {
       "resumed_utc": "2026-11-11T13:24:16.085490+00:00",

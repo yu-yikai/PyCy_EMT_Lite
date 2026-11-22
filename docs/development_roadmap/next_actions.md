@@ -2,7 +2,7 @@
 
 2026-11-23。32 号已验收，C1 完成。在现有原生归档可用时，按[教学指南](../../validation/cases/grid_connected_vsc_dc_voltage/README.md)运行两档对标。检查已完成的对比，用[验收报告](../../validation/cases/grid_connected_vsc_dc_voltage/acceptance_report.json)中的输入、结果和图哈希。
 
-D1 先读 `local_reference/native_static_reviews/d1_pglib_case5_kcl_20261123/report.json` 和同目录的 `check_kcl.py`。核对 230 kV、五母线六线路、4 号母线供电及 2 号母线投入名义 5 MW 平衡电阻负荷。固定电源接地与相序、零储能启动和升压斜坡、负荷开关阻值与边沿、完整周波比较窗及双步长判据。用五个母线电压和六条线路两端电流复核潮流方向与 KCL，图上优先显示 2 号母线电压和两条供电路径。保持稳态试算的证据边界，随后取得独立原生 EMT 数据。
+D1 的[原生协议](experiments/d1_pjm5_emt_protocol_20261123.json)已固定。核对其中模型及独立计算的哈希。用忽略目录 `local_reference/native_static_reviews/d1_pjm5_pscad_20261123/` 构建 PSCAD 原生工程，先按 5 µs、2 ms 短窗核对编译接线和 95 路原生测量。短窗通过后独立运行两档 0.600 s 全窗，逐点检查 KCL、支路和储能，并按固定窗复核 2 号母线电压及两条进线功率。再决定教学候选的对标入口。
 
 2026-11-23。两档闭环短窗通过。按[短窗证据](experiments/c1_dc_live_feedback_short_20261123.json)核对原生波形、37 列日志和各档种子、续算回执。运行入口在忽略目录 `local_reference/native_static_reviews/c1_dc_bridge_feedback_native_canonical_20261123/`。每档均从同一份保存工程走同一加载路径；生成的 Main.f、Main.dta 和快照须逐字节核对。
 
