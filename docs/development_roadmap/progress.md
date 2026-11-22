@@ -1,7 +1,7 @@
 # 持久进度
 
-2026-11-22。用户恢复 C1。两档原生长窗失败已单独提交。数值参考点对照已冻结，先以 2.5 µs 完整主工况复验。正式新增算例共 10 个。
-[数值参考点对照协议](../../validation/cases/grid_connected_vsc_closed_loop/pscad_reference_point_trial.json)
+2026-11-22。C1 已完成数值参考点对照的真实 PSCAD 细档主工况。80,003 点的原电气判据与跟踪检查通过，共模残差峰值为 0.0275 µV。原控制 (e_q) 判据仍有超限，完整长窗参考待验。正式新增算例共 10 个。
+[数值参考点实测](experiments/c1_pscad_reference_point_trial_20261122.json)
 
 2026-11-19。按用户指令暂停。C1 长窗协议已推送至 587cb54。PSCAD 主工况已完成 5 µs／40,002 点和 2.5 µs／80,003 点。两档跟踪及功率方向通过诊断检查，共模约束残差均越限，长窗参考资格待取得。正式新增算例共 10 个。
 [长窗记录](experiments/c1_known_angle_dq_pscad_full_20261119.json)

@@ -1,0 +1,140 @@
+{
+  "schema_version": 1,
+  "date": "2026-11-22",
+  "status": "native_fine_main_electrical_and_tracking_pass_control_limit_fail",
+  "prospective_commit": "dd778214a2397b755448731e6dcd03e1131a31d8",
+  "protocol": {
+    "path": "validation/cases/grid_connected_vsc_closed_loop/pscad_reference_point_trial.json",
+    "bytes": 4106,
+    "sha256": "225822f011176b016695b755bb30ddeefab86ba7721b8fdf4f02cc84cd260b99"
+  },
+  "resume_evidence": {
+    "path": "local_reference/native_static_reviews/c1_resume_evidence_20261122T090927225592Z/report.json",
+    "bytes": 9810,
+    "sha256": "3c01b81b034d1d9f230f6cb5447160286e93dc42913e03f8fc970f769c429c90"
+  },
+  "original_5us_control_reanalysis": {
+    "original_threshold_V": 1e-12,
+    "measured_update_count": 2000,
+    "definite_exceedances_after_precision_correction": 68,
+    "first_definite_row": 34820,
+    "peak_nominal_error_V": 1.587982e-12
+  },
+  "independent_audit_preflight": {
+    "path": "local_reference/native_static_reviews/c1_gauge_audit_20261122/offline_mutation_receipt.json",
+    "bytes": 1601,
+    "sha256": "a8921c6222c87d8b73e9b7f5c9b8fb35868b87c464c6c5be038990fdebbfea4b"
+  },
+  "sandbox_prelaunch": {
+    "path": "local_reference/native_static_reviews/c1_pscad_reference_point_trial_2p5us_20261122/n/20261122T091238584942Z/prelaunch_stop.json",
+    "bytes": 157,
+    "sha256": "c3901fab43bb82397e44712b2e097d85ae40a9fdd7166fc1bb3779e8e0c49b60"
+  },
+  "first_native_build": {
+    "builds": 1,
+    "runs": 0,
+    "native_build_errors": 0,
+    "remaining_owned_processes": 0,
+    "reason": "Generated lookup aliases do not use their numeric suffix as the DTA index. The original gate refused before Run.",
+    "closure": {
+      "path": "local_reference/native_static_reviews/c1_pscad_reference_point_trial_2p5us_20261122/n/20261122T091327387887Z/native_admission_refused_closure.json",
+      "bytes": 2431,
+      "sha256": "37c6b22ff2226994a94f7582931256bfbb997868f10650c054d1b61c3e2a22e5"
+    },
+    "terminal": {
+      "path": "local_reference/native_static_reviews/c1_pscad_reference_point_trial_2p5us_20261122/n/20261122T091327387887Z/terminal.json",
+      "bytes": 9687,
+      "sha256": "fc7c7de1aac5a9d7c49181f049e22758e484971f351762dd98cb4e9ca4e1c715"
+    }
+  },
+  "whole_reference_qualified": false,
+  "formal_example_accepted": false,
+  "admission_recovery": {
+    "reason": "Check compiled symbol-to-node lookups and preserve the provably independent adjacent Pulse100 cast and SAMP5 order.",
+    "archived_actual_build_replay": {
+      "path": "local_reference/native_static_reviews/c1_gauge_audit_aliases_20261122/archived_build_replay.json",
+      "bytes": 3873,
+      "sha256": "176c8bab59c7edc0fa09038134b9b5e63db5b5c70e9fc7a36539b8a61f8c234a"
+    },
+    "mutation_regression": {
+      "path": "local_reference/native_static_reviews/c1_gauge_audit_aliases_20261122/offline_mutation_receipt.json",
+      "bytes": 1982,
+      "sha256": "4d23be1c2c48796d965dc15a1ad9d9c639ed380e8dab60c0c8c4449facb8fb40"
+    },
+    "admission_driver_sha256": "9b4fb16c2912b1f439c5d0a8501b3bdeadf0df03106eeede4e1273e6a29ab7b7",
+    "original_gauge_wiring_and_protocol_retained": true
+  },
+  "retry_native_run": {
+    "builds": 1,
+    "runs": 1,
+    "elapsed_s": 614.6175782000064,
+    "remaining_owned_processes": 0,
+    "rows": 80003,
+    "original_grid_clocks": true,
+    "pre_run_generated_admission": {
+      "path": "local_reference/native_static_reviews/c1_pscad_reference_point_retry_2p5us_20261122/n/20261122T092721288470Z/pre_run_admission.json",
+      "bytes": 4387,
+      "sha256": "17bf5d16103cd6a5af3e026248b77083c588bbf4b6e4b1fbd51427ad66c350ef"
+    },
+    "native_execution": {
+      "path": "local_reference/native_static_reviews/c1_pscad_reference_point_retry_2p5us_20261122/n/20261122T092721288470Z/native_execution_receipt.json",
+      "bytes": 5891,
+      "sha256": "11688de372686f3d01f6bb3363402cebabfa271375196b25494bf9ada2f5c051"
+    },
+    "terminal": {
+      "path": "local_reference/native_static_reviews/c1_pscad_reference_point_retry_2p5us_20261122/n/20261122T092721288470Z/terminal.json",
+      "bytes": 6365,
+      "sha256": "96e4a9172446fa86da9f7e08b32b53ae38b47b5339291dfce217fc1aa93abee7"
+    },
+    "original_wrapper_refusal": {
+      "path": "local_reference/native_static_reviews/c1_pscad_reference_point_retry_2p5us_20261122/n/20261122T092721288470Z/native_execution_refused.json",
+      "bytes": 52,
+      "sha256": "a56eb41e325fe029305e7ac846e10fbba80e04afc009fc11134a00f1f39e8a8d"
+    },
+    "wrapper_recovery": "EMTDC completed normally. The launcher refreshed the executable and map; replay confirmed identical generated control, physical topology, samples and output order. Read-only recovery bound all captured files.",
+    "original_checker_rejection": {
+      "path": "local_reference/native_static_reviews/c1_pscad_long_stream_review_20261122T094109938322Z/report.json",
+      "bytes": 363,
+      "sha256": "183acce23e8f06fa93fec2356eb85402a9445aef38541b810a283951e731ab07"
+    },
+    "full_electrical_diagnostic": {
+      "path": "local_reference/native_static_reviews/c1_pscad_long_debug_diagnostic_20261122T094157323388Z/report.json",
+      "bytes": 21353,
+      "sha256": "c820b358ceafc23fc2be4296dec354196c0c4c68c4e4c7fa69415a528ab0d59a"
+    },
+    "electrical_gates_passed": true,
+    "tracking_passed": true,
+    "maximum_cycle_tracking_error_A": 0.06268664177495342,
+    "original_2uV_common_mode_limit_V": 2e-06,
+    "baseline_common_mode_peak_V": 2.246892399702e-05,
+    "reference_point_common_mode_peak_V": 2.75153333333332e-08,
+    "peak_index": 52513,
+    "single_run_qualified": false
+  },
+  "independent_angle_reanalysis": {
+    "configured_angle_precision_digits": 90,
+    "original_limit_V": 1e-12,
+    "actual_samples": 2000,
+    "definite_original_eq_failures": 67,
+    "first_definite_row": 69640,
+    "worst_row": 75840,
+    "worst_nominal_error_V": 1.588129e-12,
+    "reduced_angle_same_input_max_with_radius_V": 8.7908e-14,
+    "reduced_angle_rerun_native": false,
+    "native_data_audit": {
+      "path": "local_reference/native_static_reviews/c1_reference_point_actual_angle_diagnostic_20261122T094214589836Z/report.json",
+      "bytes": 4287,
+      "sha256": "bb0d6abb23246c9a55ae20bd304a3f86b6379b6604c77b90d778879f3db58a64"
+    },
+    "both_baseline_grids_offline_replay": {
+      "path": "local_reference/native_static_reviews/c1_reduced_angle_actual_inputs_20261122T093058390510Z/report.json",
+      "bytes": 7542,
+      "sha256": "d538273d985b235e65206c7f602ffe5537b49208604554f6ece9d745a722a243"
+    },
+    "legacy_checker_projection_rounding": {
+      "path": "local_reference/native_static_reviews/c1_reduced_angle_actual_inputs_20261122T093058390510Z/legacy_expected_projection.json",
+      "bytes": 1659,
+      "sha256": "fda1cd7a0df15143a24679d0f605faae9c9e3b5f58e936da3e2152943ac6840a"
+    }
+  }
+}

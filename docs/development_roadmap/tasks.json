@@ -3,7 +3,7 @@
   "updated_date": "2026-11-22",
   "timezone": "Asia/Shanghai",
   "branch": "codex/emt-examples-longterm",
-  "checkpoint_head": "05cf89f5e4b167169c6102adf2b9d48d6626296c",
+  "checkpoint_head": "9593727cb61b36c06e2d818c7bbe26fe9a773552",
   "current_task": "C1",
   "formal_new_examples_completed": 10,
   "status_values": [
@@ -671,7 +671,7 @@
         "pscad-derived-force-dsout-bounded-probe-v5",
         "simscape-derived-grid-vsc-openloop-r2025a"
       ],
-      "validation": "28号开环两档40002/80003点与真实Simscape参考通过双路原19项物理门、两档各150及跨档132组比较，默认独立运行和1573项含slow回归通过。已知角度dq短闭环双档通过真实PSCAD同档对标，细档使用稀疏求解门限1。完整长窗待商业参考。",
+      "validation": "28号开环两档40002/80003点与真实Simscape参考通过双路原19项物理门、两档各150及跨档132组比较，默认独立运行和1573项含slow回归通过。已知角度dq短闭环双档通过真实PSCAD同档对标。细档完整主工况在直流负端作求解零点后通过原19项电气判据，配置角的e_q控制判据仍待通过。",
       "acceptance": "局部、可独立运行验证的教学例逐项验收",
       "status": "in_progress",
       "files": [
@@ -734,7 +734,9 @@
         "docs/development_roadmap/experiments/c1_known_angle_dq_pscad_feedback_20261118.json",
         "docs/development_roadmap/experiments/c1_known_angle_dq_pscad_feedback_fine_20261119.json",
         "docs/development_roadmap/experiments/c1_known_angle_dq_pscad_full_20261119.json",
-        "validation/cases/grid_connected_vsc_closed_loop/reference_protocol.json"
+        "validation/cases/grid_connected_vsc_closed_loop/reference_protocol.json",
+        "validation/cases/grid_connected_vsc_closed_loop/pscad_reference_point_trial.json",
+        "docs/development_roadmap/experiments/c1_pscad_reference_point_trial_20261122.json"
       ],
       "commits": [
         "b835e31785fab3fda247c333d23edbe9ce576dfa",
@@ -783,7 +785,7 @@
         "evidence_sha256": "d92469cdd234477829ca5a5fa75a67648f17235fffadf3d3cbdaa73672375427",
         "native_executed": false
       },
-      "current_stage": "known_angle_dq_pscad_reference_point_trial",
+      "current_stage": "known_angle_dq_fine_main_electrical_pass_angle_pending",
       "open_loop_candidate_preparation": {
         "record": {
           "path": "docs/development_roadmap/experiments/c1_openloop_candidate_preparation_20261116.json",
@@ -1589,7 +1591,7 @@
         "acceptance_commit": "a777c00c283498ab2dd9a1542a4454b7cf8c5e4a"
       },
       "known_angle_current_loop": {
-        "status": "pscad_short_pass_long_main_both_steps_physics_fail",
+        "status": "pscad_short_pass_fine_long_reference_point_physics_pass_angle_fail",
         "record": {
           "path": "docs/development_roadmap/experiments/c1_known_angle_dq_design_checks_20261118.json",
           "bytes": 1604,
@@ -1606,7 +1608,8 @@
         "fine_feedback_record": "docs/development_roadmap/experiments/c1_known_angle_dq_pscad_feedback_fine_20261119.json",
         "full_feedback_record": "docs/development_roadmap/experiments/c1_known_angle_dq_pscad_full_20261119.json",
         "reference_point_trial": "validation/cases/grid_connected_vsc_closed_loop/pscad_reference_point_trial.json",
-        "next": "按冻结的数值参考点协议构建细档对照，生成网表和原生测量通过核对后运行。"
+        "reference_point_record": "docs/development_roadmap/experiments/c1_pscad_reference_point_trial_20261122.json",
+        "next": "沿用已通过原电气判据的细档网表，单独冻结角度约简和独立高精度配置角复算，再做真实长窗控制验收。"
       }
     },
     {
@@ -1786,9 +1789,9 @@
   "goal_status": "active",
   "resume_checkpoint": {
     "record": {
-      "path": "local_reference/c1_openloop_reference_research/resume_checkpoints/20261118T071130521842Z/resume.json",
-      "bytes": 429,
-      "sha256": "7297debd39e5d5471b43b7b62bb5cd5845c10c078bba68d09997a7631456b8be"
+      "path": "local_reference/native_static_reviews/c1_resume_evidence_20261122T090927225592Z/report.json",
+      "bytes": 9810,
+      "sha256": "3c01b81b034d1d9f230f6cb5447160286e93dc42913e03f8fc970f769c429c90"
     },
     "explicit_user_resume": true
   },
@@ -1858,7 +1861,7 @@
       }
     }
   ],
-  "current_stage": "known_angle_dq_pscad_reference_point_trial",
+  "current_stage": "known_angle_dq_fine_main_electrical_pass_angle_pending",
   "resume_checkpoint_history": [
     {
       "resumed_utc": "2026-11-11T13:24:16.085490+00:00",
