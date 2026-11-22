@@ -1663,6 +1663,17 @@
       "files": [],
       "commits": [],
       "blockers": [],
+      "small_network_source_screen": {
+        "status": "static_topology_screened_native_reference_pending",
+        "source": "https://github.com/power-grid-lib/pglib-opf/blob/dc6be4b2f85ca0e776952ec22cbd4c22396ea5a3/pglib_opf_case5_pjm.m",
+        "scope": "IEEE PES PGLib-OPF v23.07。采用五母线、六条线路的平衡网状拓扑，复用三相π线路、给定电源和固定阻抗负荷。数据按 CC BY 4.0 署名并注明改动。",
+        "remaining": "C1 完成后另封 EMT 电源、负荷、初值和扰动，再建立并运行真实参考。",
+        "receipt": {
+          "path": "local_reference/native_static_reviews/d1_pglib_case5_screen_20261122/report.json",
+          "bytes": 4711,
+          "sha256": "47ad26b98130264f25f8c0ecddcf973e9557c705112764f768064ad6c000f8d5"
+        }
+      },
       "small_readability_followups": [
         {
           "files": [
