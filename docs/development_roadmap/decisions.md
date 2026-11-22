@@ -1,5 +1,8 @@
 # 技术决策
 
+2026-11-22。原生电源波形改由整数电气拍生成，仍使用原三条理想源支路与求解后的差分电压。准入把新增三路信号的独立存储槽逐一对应到实际生成代码。原 FAIL 和首次准入拒绝均保留。
+[粗档电源精度结果](../../validation/cases/grid_connected_vsc_pll/source_precision_trial_result.json)
+
 2026-11-22。29 与 30 复用同一私有电流环函数。30 的估计相角由既有 SRFPLL 提供，保留标称频率解耦与门极时序。首轮用各平台各自的实际采样电压复算，重现了状态差异，继续按冻结限值核验电源数值生成的单变量对照。
 [30 号首轮验证](../../validation/cases/grid_connected_vsc_pll/validation_report.json) · [电源精度对照协议](../../validation/cases/grid_connected_vsc_pll/source_precision_trial.json)
 

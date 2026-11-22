@@ -1,5 +1,8 @@
 # 验证状态
 
+2026-11-22。PSCAD 粗档电源对照通过原 19 项全点电气判据和全部九个同档窗口。PLL 相角误差峰值 2.665e-15 rad，门限 1e-11 rad。频率、积分与归一化误差均满足冻结门限。
+[粗档电源精度结果](../../validation/cases/grid_connected_vsc_pll/source_precision_trial_result.json)
+
 2026-11-22。30 号两档 18 个同档窗通过 414 项连续量和 234 项离散量检查。PLL 相角差峰值 2.594e-10 rad，高于 1e-11 rad 门限。Ruff、mypy、Windows 1,585 项含慢速回归与 WSL2 专项 31 项通过。两系统教学入口可运行，正式验收待完成。
 [30 号首轮验证](../../validation/cases/grid_connected_vsc_pll/validation_report.json) · [电源精度对照协议](../../validation/cases/grid_connected_vsc_pll/source_precision_trial.json)
 

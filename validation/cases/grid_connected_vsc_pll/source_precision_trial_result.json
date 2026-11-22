@@ -1,0 +1,76 @@
+{
+  "schema": "grid_connected_vsc_pll_source_precision_coarse_v1",
+  "date": "2026-11-22",
+  "status": "coarse_pscad_source_precision_trial_passed_fine_trial_pending",
+  "scope": "A single 5 us diagnostic against the fixed coarse PyCy case 30 data. Formal acceptance requires matched full runs on both grids.",
+  "trial": {
+    "path": "validation/cases/grid_connected_vsc_pll/source_precision_trial.json",
+    "sha256": "2e8ea0935a3ac8cf62c42bd1a208e198174cdd27a7c45a1a01fda3c29377acd0",
+    "bytes": 4045
+  },
+  "original_candidate_validation": {
+    "path": "validation/cases/grid_connected_vsc_pll/validation_report.json",
+    "sha256": "fffbc156ca6b90933b8505a09b76ff8f6a44b0e7c7b8da06e0468988d4ca3e86",
+    "bytes": 7805
+  },
+  "first_run": {
+    "status": "built_without_errors_and_stopped_before_run_at_storage_admission",
+    "terminal": {
+      "path": "local_reference/native_static_reviews/c1_pscad_pll_source_precision_5us_20261122/n/20261122T124522755889Z/terminal.json",
+      "sha256": "0fa708ff65fc63d4cf29e00af7cad2270949e4f855a7648f6b47bc781e3d3157",
+      "bytes": 2817
+    },
+    "worker_stderr": {
+      "path": "local_reference/native_static_reviews/c1_pscad_pll_source_precision_5us_20261122/n/20261122T124522755889Z/worker.stderr.txt",
+      "sha256": "c1d59799dbcf85d0cb764771930bb6bbacf129ff678c7b2830503eb3ddf0ec09",
+      "bytes": 1983
+    }
+  },
+  "retry": {
+    "prospective": {
+      "path": "local_reference/native_static_reviews/c1_pscad_pll_source_precision_5us_v2_20261122/prospective.json",
+      "sha256": "e9a145ad3640912015479b752b0fa70030b3885ddd9bceb3eb51cde6559488c0",
+      "bytes": 11076
+    },
+    "generated_preflight": {
+      "path": "local_reference/native_static_reviews/c1_pscad_pll_source_precision_5us_v2_20261122/retry_preflight.json",
+      "sha256": "b641562fc758d1e3f2254f693cdeca1401ed2dfbcc65acd383ff30b8cb4c7952",
+      "bytes": 1027
+    },
+    "native_execution": {
+      "path": "local_reference/native_static_reviews/c1_pscad_pll_source_precision_5us_v2_20261122/n/20261122T125549132970Z/native_execution_receipt.json",
+      "sha256": "816d5a99238487e791cf50587b453d9badf23ab61e3fd00ff21fbb6af945e9e5",
+      "bytes": 46491
+    },
+    "generated_audit": {
+      "path": "local_reference/native_static_reviews/c1_pscad_pll_source_precision_5us_v2_20261122/n/20261122T125549132970Z/source_build_audit.json",
+      "sha256": "c4cb8d35785c3a4e04f9a8262b1f7d4648a5aebc535b2064a6eb76bad319bb2d",
+      "bytes": 1852
+    },
+    "terminal": {
+      "path": "local_reference/native_static_reviews/c1_pscad_pll_source_precision_5us_v2_20261122/n/20261122T125549132970Z/terminal.json",
+      "sha256": "52dfd131e16959f93fd0b0342efceb200331fdd231d197075d39fb71e78cb220",
+      "bytes": 4978
+    },
+    "numerical_report": {
+      "path": "local_reference/native_static_reviews/c1_pll_source_precision_5us_numerical_20261122T125549132970Z/report.json",
+      "sha256": "479ce6e8abf5dd004f74933b4664515838ed6c9b2742956dc60ca0617a7a5d1d",
+      "bytes": 158036
+    }
+  },
+  "rows": 40002,
+  "physical_budgets_passed": 19,
+  "same_grid_windows_passed": 9,
+  "pll_state_windows_passed": 9,
+  "same_grid_max_pll_state_abs": {
+    "theta": 2.6645352591003757e-15,
+    "omega": 1.6484591469634324e-12,
+    "xi": 5.5011550870176507e-14,
+    "normalized_error": 1.567496132892643e-14
+  },
+  "sampled_grid_voltage_peak_difference_V": {
+    "original": 2.317395673512561e-08,
+    "trial": 6.87805368215777e-12
+  },
+  "formal_example_accepted": false
+}

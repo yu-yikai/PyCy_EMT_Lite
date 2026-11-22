@@ -1,0 +1,52 @@
+{
+  "schema": "grid_connected_vsc_pll_source_precision_fine_trial_v1",
+  "date": "2026-11-22",
+  "scope": "One independent 2.5 us PSCAD long-window diagnostic for the same ideal grid waveform as the qualified coarse precision trial.",
+  "reference_protocol": {
+    "path": "validation/cases/grid_connected_vsc_pll/reference_protocol.json",
+    "sha256": "78ba092cc8099390023d3fcaa449c8479d269dcd5fa7ec315b267d968e1da767"
+  },
+  "original_native_reference": {
+    "path": "validation/cases/grid_connected_vsc_pll/full_reference_report.json",
+    "sha256": "255e251c54c3146bc13a26a528c200e8af80e78cf3e1a1a62707afef66a9789d"
+  },
+  "coarse_trial": {
+    "path": "validation/cases/grid_connected_vsc_pll/source_precision_trial.json",
+    "sha256": "2e8ea0935a3ac8cf62c42bd1a208e198174cdd27a7c45a1a01fda3c29377acd0"
+  },
+  "coarse_trial_result": {
+    "path": "validation/cases/grid_connected_vsc_pll/source_precision_trial_result.json",
+    "sha256": "211af1843f0ec6fcdd23051c4c7b7d3a24ab470b1e9ca2ff5b06c8200f7b9d57"
+  },
+  "coarse_numerical_report": {
+    "path": "local_reference/native_static_reviews/c1_pll_source_precision_5us_numerical_20261122T125549132970Z/report.json",
+    "sha256": "479ce6e8abf5dd004f74933b4664515838ed6c9b2742956dc60ca0617a7a5d1d"
+  },
+  "failed_candidate_comparison": {
+    "path": "local_reference/native_static_reviews/c1_example30_comparison_20261122T122946122172Z/report.json",
+    "sha256": "bf338459dbdfca0db7cdcf0f7d8446bf7fbc5e19c77f20e53d1b73049ad342ce"
+  },
+  "fixed_fine_candidate": {
+    "path": "local_reference/native_static_reviews/c1_example30_comparison_20261122T122946122172Z/2p5us/waveforms.npz",
+    "sha256": "3596d23e103d1f8245fd69d416a5ec4509cca0f77f9f05a6ad15f423b973b0dd"
+  },
+  "numerical_factor": {
+    "source": "Reuse the coarse trial construction and formula with the actual 2.5 us DELT. Native MainDyn computes the three signed instantaneous kV signals at j*DELT and updates the original three ideal source_1 branches before solving.",
+    "invariants": "Keep the original fine physical network, DC-negative numerical reference, sparse threshold 1, actual differential voltage and current measurements, nominal physical source, controller and setpoints, all 45 native outputs, exact 5 us gate scheduling, and the 2.5 us midpoint holds."
+  },
+  "execution": {
+    "grid": "2p5us",
+    "stop_s": 0.200005,
+    "rows": 80003,
+    "control_samples_and_next_gate_applications": 2000,
+    "fine_half_steps_held": 40001,
+    "source": "Independent native build and run, generated-code admission and original native INF/five OUT/CSV in a new local ignored directory, same PSCAD/GFortran as the coarse study.",
+    "receipt_status": "NATIVE_PLL_SOURCE_TRIAL_CLOSED_FOR_NUMERIC_REVIEW",
+    "bind": "Bind this file's trial_sha256 in addition to original protocol_sha256."
+  },
+  "acceptance": {
+    "same_grid": "Against the sealed original fine PyCy result, keep all original physical, timing, switching, current, PLL-state, lock, tracking and power limits on the original clocks and all nine windows.",
+    "native_grids": "Compare the new independent coarse and fine native trials on their original time grids using the unchanged 15 cycle-mean windows and eight PWL RMS windows, with respective 0.10 A and 0.20 A limits.",
+    "formal": "Qualification of the two new references is followed by a fresh public dual-grid PyCy comparison and the normal example acceptance. Preserve the original native references and initial failed comparison as evidence."
+  }
+}

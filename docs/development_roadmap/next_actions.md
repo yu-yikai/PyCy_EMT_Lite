@@ -1,5 +1,8 @@
 # 恢复与下一步
 
+2026-11-22。粗档新参考波形和固定 PyCy 粗档已通过所有原判据。按冻结协议在独立目录运行 2.5 µs 对照，保留 80,003 点和全部中点保持。核验细档后重做原生跨档与两档最新 PyCy 同档对标。
+[粗档电源精度结果](../../validation/cases/grid_connected_vsc_pll/source_precision_trial_result.json) · [细档对照协议](../../validation/cases/grid_connected_vsc_pll/source_precision_fine_trial.json)
+
 2026-11-22。保留 30 号首轮输入快照和对标 FAIL 证据。粗档单变量对照用原理想源的外部瞬时输入生成同一电压，PLL 仍读取求解后的差分电压。先核本地 `c1_pscad_pll_source_precision_5us_20261122/n/20261122T124522755889Z` 原生运行及终态。闭场后用 `c1_pll_source_precision_numeric_20261122.verify_source_trial` 绑定新回执和已存 PyCy 粗档波形，沿用冻结的全部判据。
 [30 号首轮验证](../../validation/cases/grid_connected_vsc_pll/validation_report.json) · [电源精度对照协议](../../validation/cases/grid_connected_vsc_pll/source_precision_trial.json)
 

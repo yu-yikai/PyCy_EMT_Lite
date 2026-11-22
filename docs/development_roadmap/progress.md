@@ -1,5 +1,8 @@
 # 持久进度
 
+2026-11-22。5 µs PSCAD 电源精度对照通过。40,002 点通过原电气判据、九个同档窗口及严格的 PLL 状态门限。正式新增仍为 11 个，细档独立对照待运行。
+[粗档电源精度结果](../../validation/cases/grid_connected_vsc_pll/source_precision_trial_result.json)
+
 2026-11-22。30 号教学入口可独立运行，Windows 和 WSL2 默认各 40,001 点。29 号四组复验逐位一致。两档 PSCAD 对标的电气、门极、锁相及跟踪通过，PLL 状态误差超限。正式新增保持 11 个，进入原生电源精度对照。
 [30 号首轮验证](../../validation/cases/grid_connected_vsc_pll/validation_report.json) · [电源精度对照协议](../../validation/cases/grid_connected_vsc_pll/source_precision_trial.json)
 
