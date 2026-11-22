@@ -3,7 +3,7 @@
   "updated_date": "2026-11-22",
   "timezone": "Asia/Shanghai",
   "branch": "codex/emt-examples-longterm",
-  "checkpoint_head": "0f0ee74de587a09e9290931f50a0c81fa115d6d4",
+  "checkpoint_head": "89df3e2d302e8b5ca9adf04ccb87bd5e39a15f28",
   "current_task": "C1",
   "formal_new_examples_completed": 12,
   "status_values": [
@@ -824,6 +824,7 @@
       "pcc_feeder_probe": {
         "protocol": "docs/development_roadmap/experiments/c1_pcc_feeder_native_probe_20261122.json",
         "internal_feasibility_passed": true,
+        "measurement_replay": "docs/development_roadmap/experiments/c1_pcc_measurement_replay_20261122.json",
         "native_short_probe": "pending",
         "power_and_vac_candidate": "not_started"
       },

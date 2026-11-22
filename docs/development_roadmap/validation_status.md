@@ -1,5 +1,8 @@
 # 验证状态
 
+2026-11-22。2.5 µs PyCy 复验通过六项预试验判据，PCC 基波从 118.92 V 升至 122.15 V。双档回放以完整 60 Hz 基波估计为参照，逐电气行滤波、每 1 ms 读取的最大偏差为 0.182 V RMS，100 µs 抽样后平均再滤波的最大偏差为 1.570 V RMS。
+[两档报告与哈希](experiments/c1_pcc_measurement_replay_20261122.json)
+
 2026-11-22。PCC 有限网阻的 PyCy 预试验通过六项约定检查。正 q 轴基波电流增加 1.490 A 峰值，PCC 基波升高 3.210 V RMS，两工况 PCC 有功均约 500 W，新增支路离散电压残差峰值 2.51e-12 V。PSCAD 短窗预定判据已冻结，待原生执行。
 [数据身份与阈值](experiments/c1_pcc_feeder_native_probe_20261122.json)
 
