@@ -1,0 +1,92 @@
+{
+  "task": "C1",
+  "scope": "单站三相 VSC 的 PCC 有功前馈和交流电压外环，先取得独立 PSCAD 参考。",
+  "basis": {
+    "accepted_case_30": "0f0ee74de587a09e9290931f50a0c81fa115d6d4",
+    "pcc_native_startup": "docs/development_roadmap/experiments/c1_pcc_feeder_native_result_20261122.json",
+    "pcc_measurement_replay": "docs/development_roadmap/experiments/c1_pcc_measurement_replay_20261122.json",
+    "averaged_design_screen": {
+      "path": "local_reference/native_static_reviews/c1_power_vac_design_20261122/averaged_estimate.json",
+      "sha256": "3debd12c72a0a26f3d4417349fb919468f9154cdab5a515da567bc59e93b10ab",
+      "estimated_held_v_rms": 118.8031,
+      "estimated_regulated_v_rms": 119.9854,
+      "estimated_bridge_phase_peak_v_below": 170.01,
+      "scope": "平均模型扫描电流响应 50–150 Hz，供选定工况及余量，独立于 PSCAD 参考。"
+    },
+    "vector_current_control_note": "https://imperix.com/doc/implementation/vector-current-control"
+  },
+  "plant": {
+    "ac_source": "平衡三相 120 V 相有效值，60 Hz，幅值从零在 20 ms 内线性上升。沿用 30 号整数电气拍源波形和相位顺序。",
+    "direction": "每相线路电流以理想源经馈线、PCC、桥侧滤波器流入变流器为正。PCC 相电压相对交流中性点。",
+    "per_phase_feeder_r_ohm": 0.8,
+    "per_phase_feeder_l_h": 0.008,
+    "per_phase_bridge_filter_r_ohm": 1.0,
+    "per_phase_bridge_filter_l_h": 0.01,
+    "initial_inductor_current_a": 0.0,
+    "dc_voltage_v": 400.0,
+    "switch_channel": "30 号互补理想开关、原通断电阻及原三角载波，1 kHz。直流端为理想定压。",
+    "solver": "固定步长梯形积分，开关与门极拍对齐。"
+  },
+  "control": {
+    "pll": "源端 PLL 沿用 30 号初值、增益、归一化和 100 µs 求解后更新。非更新行以最近角度加该拍保存的角频率乘已过整数电气步来推进本行相角，仅用于变换。",
+    "t0": "电流 PI、Vac PI、PCC 两个滤波器和电流指令初始为零。t=0 不推进滤波和控制。",
+    "pcc_voltage": "用本行角度对本行实际 PCC abc 相电压做幅值不变 dq，分别按后退欧拉 (old+(h/τ)*input)/(1+h/τ) 更新，τ=10 ms。每个正 1 ms 拍在更新后读取 vd_f、vq_f。M=hypot(vd_f,vq_f) 为相峰值，Vac=M/sqrt(2)。",
+    "outer_update_period_s": 0.001,
+    "power_reference_w": 500.0,
+    "power_ramp_s": [0.12, 0.14],
+    "power_schedule": "第 k 个整毫秒拍的 P*=500*clip((k−120)/20,0,1) W，保存到下一外环拍。P 为 PCC 吸收有功。",
+    "voltage_reference_v_rms_phase": 120.0,
+    "voltage_control_enable_s": 0.24,
+    "voltage_floor_v_rms_phase": 24.0,
+    "low_voltage_behavior": "M<24sqrt(2) V 时本拍电流指令为零，Vac 积分保持。",
+    "current_reference_limit_a_peak": 2.5,
+    "active_reference": "iP=clip(P*/(1.5*M),−2.5,2.5)。在 PCC 电压对齐坐标中先保留 iP，iq_max=sqrt(max(2.5²−iP²,0))。",
+    "reactive_reference_held": "整个工况 iQ=0，表示在 PCC 电压对齐坐标中无基波无功指令。",
+    "reactive_reference_regulated": "240 ms 前 iQ=0。240 ms 起 PI 输入 120−Vac，Kp=.15 A/V，Ki=6 A/(V·s)。积分器以零开始，首个使能拍按正常 PI 递推。",
+    "vac_pi_limit": "试探积分到 z′，试探输出 Kp*error+z′，以 ±iq_max 限幅。试探输出越界且积分增量同向时保留上次积分，指令仍为限幅后的试探输出。反向允许积分。对应现有 PIController.step。",
+    "projection": "c=vd_f/M，s=vq_f/M。id*=c*iP−s*iQ，iq*=s*iP+c*iQ。两轴指令保持至下一外环拍。定义 Q1=(3/2) Im(V1*conj(I1))，正 iQ 对应负吸收无功。",
+    "inner_loop": "在正 100 µs 电气行上读本行电流及源端电压。同拍先完成 PLL、PCC 滤波、到期的外环，再执行原电流 PI。Rtotal=1.8 Ω、Ltotal=.018 H，沿用 100 Hz 的 Kp=2π*100*Ltotal、Ki=2π*100*Rtotal，原标称频率交叉耦合改用 Ltotal。",
+    "modulation": "保留原 190 V 电压矢量径向限幅，饱和保持原电流 PI 积分。Vac PI 按独立的电流参考圆处理。新调制在下一 5 µs 门极拍生效，2.5 µs 中点保持。",
+    "outer_logger": ["j", "time_s", "v_pcc_a_kv", "v_pcc_b_kv", "v_pcc_c_kv", "theta_row_rad", "v_pcc_d_filt_v", "v_pcc_q_filt_v", "outer_tick_flag", "p_ref_w", "iP_ref_a", "iQ_ref_a", "x_vac_a", "id_ref_a", "iq_ref_a"]
+  },
+  "acquisition": {
+    "platform": "PSCAD/EMTDC 5.0.0，gf46/x86。每工况独立实时创建、编译、运行、归档，原生测量路径和采样直接绑定生成代码。",
+    "conditions": ["held", "regulated"],
+    "electrical_step_s": [0.000005, 0.0000025],
+    "solver_tail_s": 0.650005,
+    "rows_by_grid": [130002, 260003],
+    "current_sample_and_next_gate_per_run": 6500,
+    "outer_update_per_run": 650,
+    "native_measurements": "固定原有 48 路标签、端点、符号、单位及实时生产者。新增 PCC 输入从当行原生差分采样到控制器。生成输出编号须与该工程实际 map 一一绑定，读回按名称。",
+    "files": "原始 INF、全点 OUT、原电流环全点 CSV 和外环全点 CSV，以及生成代码、网表、版本、输入快照、退出回执及 SHA-256。"
+  },
+  "native_gates": {
+    "feeder_trapezoid_max_v": 5e-6,
+    "outer_replayed_filter_abs_v": 2e-9,
+    "outer_replayed_current_or_integrator_abs_a": 2e-10,
+    "source_pll_angle_abs_rad": 1e-11,
+    "source_pll_frequency_or_integrator_abs_rad_per_s": 1e-9,
+    "row_timing": "检查全点时钟、控制更新、下一拍切换及细档中点保持。独立复算控制状态并核同一求解行的实测输入。",
+    "paired_prefix": "同一电气步长下两组工况的物理输出和实际门极在 240.005 ms 前逐点一致。控制轨迹在 240 ms 前逐点一致。"
+  },
+  "performance_gates": {
+    "windows_s": {"mid": [0.17, 0.22], "settled": [0.60, 0.65]},
+    "cycles": "各窗三个完整 60 Hz 周期，使用标定绝对时钟，按相邻行线性插值至窗端点后积分。PCC 有功由逐行 sum(v_pcc*i) 周期均值独立得到。V1 与 Q1 从波形的 60 Hz 基波复量提取。",
+    "pcc_power_target_w": 500.0,
+    "pcc_power_abs_error_w_each_cycle": 25.0,
+    "held_sag_min_v_rms_each_cycle": 0.8,
+    "held_q_abs_max_var_each_cycle": 25.0,
+    "regulated_v_abs_error_v_rms_each_settled_cycle": 0.35,
+    "regulated_q_max_var_each_settled_cycle": -90.0,
+    "paired_v_improvement_min_v_rms_each_settled_cycle": 0.7,
+    "paired_q_reduction_min_var_each_settled_cycle": 90.0,
+    "radial_voltage_limit_max_fraction_each_cycle": 0.02,
+    "cross_h_each_cycle": {"fundamental_voltage_delta_v_rms": 0.10, "active_power_delta_w": 10.0, "fundamental_reactive_power_delta_var": 10.0}
+  },
+  "candidate_gates": {
+    "admission": "两工况两档均取得实际参考、通过同档配对和原生跨步长。公开候选须再独立运行，使用原始物理测量比较。",
+    "windows_s": [[0.0, 0.02], [0.02, 0.12], [0.12, 0.14], [0.14, 0.24], [0.24, 0.35], [0.35, 0.60], [0.60, 0.65], [0.65, 0.650005], [0.0, 0.650005]],
+    "same_h": "同一原生电气行，无移相。继承 30 号相应连续量/逐点量的预算，PCC 电压峰差 2 mV、RMS 差 1 mV。PCC 有功及基波无功周期比较分别用 1 W、1 var 绝对预算。另需同样通过物理、外环递推及周期判据。",
+    "release": "公开算例独立运行、对标图和报告、启动/限幅/时序专项、全量测试、教学说明、单独提交及开发分支推送。"
+  }
+}

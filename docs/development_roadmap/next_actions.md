@@ -1,5 +1,7 @@
 # 恢复与下一步
 
+2026-11-22。按[外环参考协议](../../validation/cases/grid_connected_vsc_power_vac/reference_protocol.json)先实时重建并运行 5 µs 调节组。生成代码应把当行测得的三个 PCC 电压送入控制器，再核 130,002 点的完整采集、外环递推、馈线及周期性能。再运行其余三组，核对配对和原生跨步长。
+
 2026-11-22。PCC 原生 5 µs 短窗已通过。下一步固定 PCC 有功和相电压有效值的测量、外环更新和限值，以及固定 q 与电压调节两组对照。源端 PLL 保留作坐标参考，P 与 Vac 均取 PCC。先核对两档原生控制轨迹，再开始候选。沿用通过的实时构建步骤，在独立目录密封新输入。
 [原生短窗结果](experiments/c1_pcc_feeder_native_result_20261122.json) · [测量回放](experiments/c1_pcc_measurement_replay_20261122.json)
 

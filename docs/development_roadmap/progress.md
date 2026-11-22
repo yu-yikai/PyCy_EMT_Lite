@@ -1,5 +1,8 @@
 # 持久进度
 
+2026-11-22。C1 有功前馈及 PCC 电压外环全程原生参考协议已固定。平均模型筛选支持 500 W 工况和 120 V 相有效值目标。正式新增仍为 12 个，先执行 PSCAD 双档两工况。
+[外环参考协议](../../validation/cases/grid_connected_vsc_power_vac/reference_protocol.json)
+
 2026-11-22。有限电网及 PCC 测点通过 PSCAD 原生 5 µs 短窗验证。一次原生实时构建和求解得到完整 122 点。六次采样及后一拍应用和 363 个馈线离散电压检查全部通过。C1 进入 P 前馈与 Vac 外环协议准备，正式新增共 12 个。
 [PSCAD 原生短窗结果](experiments/c1_pcc_feeder_native_result_20261122.json)
 

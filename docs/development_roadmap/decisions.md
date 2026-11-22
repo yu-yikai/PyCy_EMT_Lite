@@ -1,5 +1,8 @@
 # 技术决策
 
+2026-11-22。P 与 Vac 均取 PCC。先在 PCC 电压对齐坐标中计算有功电流和电压 PI 给出的无功电流，再转到源端 PLL 坐标。沿用原电流环和限幅规则，以总串联 R/L 计算原 100 Hz 调参公式。
+[测量和限值](../../validation/cases/grid_connected_vsc_power_vac/reference_protocol.json)
+
 2026-11-22。短窗采用同一 PSCAD 实例实时构建并求解。保存副本独立重载触发控制信号源冲突，归档保留。外环准备继续使用源端同步角和已验证的 PCC 差分电压，确保教学接线只增加馈线及独立测点。
 [原生启动、编译和证据](experiments/c1_pcc_feeder_native_result_20261122.json)
 

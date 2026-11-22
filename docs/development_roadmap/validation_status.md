@@ -1,5 +1,8 @@
 # 验证状态
 
+2026-11-22。外环平均模型的三组响应速度扫描中，稳态 PCC 相电压从基线 118.803 V 恢复至约 119.986 V，桥压所需峰值低于 170.01 V。该筛选供冻结工况，正式判据由独立 PSCAD 开关波形验证。
+[已固定的外环参考协议](../../validation/cases/grid_connected_vsc_power_vac/reference_protocol.json)
+
 2026-11-22。PSCAD 5 µs PCC 短窗采集 48 路、122 点，全部按原生编译布局绑定。馈线残差上界峰值 2.01e-10 V，门限 5e-6 V。独立复读 PyCy 同档前 122 点，PCC 电压最大差 9.07e-9 V，电流最大差 1.44e-12 A。P 前馈与 Vac 外环长窗仍待验证。
 [原生结果与哈希](experiments/c1_pcc_feeder_native_result_20261122.json)
 
