@@ -1,5 +1,8 @@
 # 持久进度
 
+2026-11-22。30 号教学入口可独立运行，Windows 和 WSL2 默认各 40,001 点。29 号四组复验逐位一致。两档 PSCAD 对标的电气、门极、锁相及跟踪通过，PLL 状态误差超限。正式新增保持 11 个，进入原生电源精度对照。
+[30 号首轮验证](../../validation/cases/grid_connected_vsc_pll/validation_report.json) · [电源精度对照协议](../../validation/cases/grid_connected_vsc_pll/source_precision_trial.json)
+
 2026-11-22。并网 PLL 两档 PSCAD 长窗均取得参考资格，共 120,005 点。全点电气、控制复算、锁相、跟踪、功率方向和两档比较均通过。C1 进入正式教学实现与跨平台对标，正式新增仍为 11 个。
 [PLL 双步长原生长窗](../../validation/cases/grid_connected_vsc_pll/full_reference_report.json)
 

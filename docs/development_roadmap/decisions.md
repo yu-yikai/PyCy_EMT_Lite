@@ -1,5 +1,8 @@
 # 技术决策
 
+2026-11-22。29 与 30 复用同一私有电流环函数。30 的估计相角由既有 SRFPLL 提供，保留标称频率解耦与门极时序。首轮用各平台各自的实际采样电压复算，重现了状态差异，继续按冻结限值核验电源数值生成的单变量对照。
+[30 号首轮验证](../../validation/cases/grid_connected_vsc_pll/validation_report.json) · [电源精度对照协议](../../validation/cases/grid_connected_vsc_pll/source_precision_trial.json)
+
 2026-11-22。原生 PLL 相角加入电流正反变换。两档实现验证采样、限幅及门极施加顺序，跨档继续按电网配置角检查电流均值和波形。教学只增加由电压估计相角的演示，外环仍按后续独立阶段验收。
 [PLL 双步长原生长窗](../../validation/cases/grid_connected_vsc_pll/full_reference_report.json)
 

@@ -89,6 +89,11 @@ class SRFPLL:
             if getattr(self, parameter) != original:
                 raise ValueError(f"SRFPLL.{parameter} 在构造后已修改；请创建新的 PLL 实例，当前不支持配置重建。")
 
+    @property
+    def integrator(self) -> float:
+        """频率修正的 PI 积分量，单位 rad/s。"""
+        return self._controller.integrator
+
     def step(self, voltages_abc: tuple[float, float, float], time_step: float) -> PLLState:
         """从上次时刻推进到当前电压采样时刻。
 

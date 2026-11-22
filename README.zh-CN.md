@@ -105,6 +105,7 @@ uv run --locked pytest -o addopts= -q -p no:cacheprovider --basetemp=.tmp/pytest
 | 同步Buck电压闭环 | [26](examples/26_synchronous_buck.py) | 在02和12之后连接已有低通、PI与限幅积木，观察启动过冲和脉冲负荷恢复；附[电路、有效域与真实Simulink对标](validation/cases/synchronous_buck/README.md)。 |
 | 并网VSC开环 | [28](examples/28_grid_connected_vsc_open_loop.py) | 在05和12之后把三相电网接到六开关桥，观察相电流、浮置直流轨和两种控制采样周期。附[电路及真实Simscape对标](validation/cases/grid_connected_vsc_open_loop/README.md)。 |
 | 并网 VSC 已知角度电流闭环 | [29](examples/29_grid_connected_vsc_closed_loop.py) | 在 28 之后观察 d、q 电流阶跃，理解何时采样、何时施加门极，以及限幅时如何处理积分。附[运行和 PSCAD 对标说明](validation/cases/grid_connected_vsc_closed_loop/README.md)。 |
+| 并网 VSC 锁相环电流闭环 | [30](examples/30_grid_connected_vsc_pll.py) | 在 11 和 29 之后，观察锁相环怎样从实测网压估计相角，并把它用于电流控制。附[运行说明及验收状态](validation/cases/grid_connected_vsc_pll/README.md)。 |
 | VSC-HVDC 综合仿真 | [18](examples/18_three_terminal_vsc_hvdc.py) | 沿三个两电平桥、独立 PLL/dq 闭环和双极 DC 网络，跟踪交流故障后的电压、功率变化。 |
 
 [19级联RC真实Simscape对标](validation/cases/cascaded_rc/README.md)给出参数、固定验收、结果和复现命令。教学程序只绘制自身波形，独立验证程序读取真实参考。

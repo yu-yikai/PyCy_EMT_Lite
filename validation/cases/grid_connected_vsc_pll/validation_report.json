@@ -1,0 +1,219 @@
+{
+  "schema": "grid_connected_vsc_pll_candidate_validation_v1",
+  "date": "2026-11-22",
+  "example": 30,
+  "status": "INITIAL_COMPARISON_PLL_STATE_FAIL",
+  "formal_example_accepted": false,
+  "formal_new_examples_completed": 11,
+  "initial_reference": {
+    "path": "validation/cases/grid_connected_vsc_pll/full_reference_report.json",
+    "sha256": "255e251c54c3146bc13a26a528c200e8af80e78cf3e1a1a62707afef66a9789d",
+    "bytes": 4790
+  },
+  "protocol": {
+    "path": "validation/cases/grid_connected_vsc_pll/reference_protocol.json",
+    "sha256": "78ba092cc8099390023d3fcaa449c8479d269dcd5fa7ec315b267d968e1da767",
+    "bytes": 6164
+  },
+  "case_entry": "examples/30_grid_connected_vsc_pll.py",
+  "grids": {
+    "5us": {
+      "rows": 40002,
+      "native_time_tail_retained": true,
+      "physical_budgets_passed": 19,
+      "same_grid_pll_state_max_abs": {
+        "theta": {
+          "max_abs": 1.3353496086665473e-10,
+          "limit": 1e-11,
+          "passed": false
+        },
+        "omega": {
+          "max_abs": 1.1626184459601063e-09,
+          "limit": 1e-09,
+          "passed": false
+        },
+        "xi": {
+          "max_abs": 7.820839531547108e-10,
+          "limit": 1e-11,
+          "passed": false
+        },
+        "normalized_error": {
+          "max_abs": 9.639551309947869e-12,
+          "limit": 1e-11,
+          "passed": true
+        }
+      },
+      "same_grid_pll_state_windows_passed": 1,
+      "sampled_voltage_peak_difference_V": 2.3173956735126027e-08,
+      "pll_lock": {
+        "sample_rows": 501,
+        "angle_wraps": 12,
+        "minimum_grid_d_V": 169.69537618987584,
+        "maximum_phase_error_rad": 0.010991536984089834,
+        "maximum_frequency_error_Hz": 0.0194854164863969,
+        "maximum_measured_phase_disagreement_rad": 3.552713678800501e-15,
+        "measured_phase_consistency_limit_rad": 2.357022603955158e-09,
+        "passed": true
+      },
+      "maximum_cycle_tracking_error_A": 0.06497079961330288,
+      "control_updates": 2000,
+      "next_gate_applications": 2000,
+      "fine_half_steps_held": 0
+    },
+    "2p5us": {
+      "rows": 80003,
+      "native_time_tail_retained": true,
+      "physical_budgets_passed": 19,
+      "same_grid_pll_state_max_abs": {
+        "theta": {
+          "max_abs": 2.5938984293816247e-10,
+          "limit": 1e-11,
+          "passed": false
+        },
+        "omega": {
+          "max_abs": 5.638639777316712e-09,
+          "limit": 1e-09,
+          "passed": false
+        },
+        "xi": {
+          "max_abs": 2.307128155187854e-09,
+          "limit": 1e-11,
+          "passed": false
+        },
+        "normalized_error": {
+          "max_abs": 4.8894557673484496e-11,
+          "limit": 1e-11,
+          "passed": false
+        }
+      },
+      "same_grid_pll_state_windows_passed": 1,
+      "sampled_voltage_peak_difference_V": 4.957503226328167e-08,
+      "pll_lock": {
+        "sample_rows": 501,
+        "angle_wraps": 12,
+        "minimum_grid_d_V": 169.69537618987584,
+        "maximum_phase_error_rad": 0.010991536984089834,
+        "maximum_frequency_error_Hz": 0.0194854164863969,
+        "maximum_measured_phase_disagreement_rad": 3.552713678800501e-15,
+        "measured_phase_consistency_limit_rad": 2.357022603955158e-09,
+        "passed": true
+      },
+      "maximum_cycle_tracking_error_A": 0.06664577172299424,
+      "control_updates": 2000,
+      "next_gate_applications": 2000,
+      "fine_half_steps_held": 40001
+    }
+  },
+  "same_grid_electrical_and_gate_checks": {
+    "windows_passed": 18,
+    "continuous_passed": 414,
+    "exact_passed": 234
+  },
+  "cross_grid": {
+    "PyCy": {
+      "cycle_mean_max_A": 0.048450263771163904,
+      "window_rms_max_A": 0.0719447355094662
+    },
+    "PSCAD": {
+      "cycle_mean_max_A": 0.04845026508409189,
+      "window_rms_max_A": 0.07194473569157825
+    }
+  },
+  "failure_analysis": {
+    "replay": {
+      "path": "local_reference/native_static_reviews/c1_example30_comparison_20261122T122946122172Z/pll_measured_voltage_replay.json",
+      "sha256": "7de0c56b77ce124b108ae8849fb94639eb170143ec3b8eacef57a0127a21a935",
+      "bytes": 2006
+    },
+    "source_precision_trial": {
+      "path": "validation/cases/grid_connected_vsc_pll/source_precision_trial.json",
+      "sha256": "2e8ea0935a3ac8cf62c42bd1a208e198174cdd27a7c45a1a01fda3c29377acd0",
+      "bytes": 4045
+    },
+    "scope": "The measured-voltage replay reproduces the state differences. The origin of the native source numerical drift is investigated separately."
+  },
+  "comparison": {
+    "inputs": {
+      "path": "local_reference/native_static_reviews/c1_example30_comparison_20261122T122946122172Z/inputs.json",
+      "sha256": "51daebd001265c9469d3fa023b17145a528c8861b4ed1e0ad53c1780a7ae5268",
+      "bytes": 15850
+    },
+    "report": {
+      "path": "local_reference/native_static_reviews/c1_example30_comparison_20261122T122946122172Z/report.json",
+      "sha256": "bf338459dbdfca0db7cdcf0f7d8446bf7fbc5e19c77f20e53d1b73049ad342ce",
+      "bytes": 384229
+    },
+    "figure": {
+      "path": "local_reference/native_static_reviews/c1_example30_comparison_20261122T122946122172Z/pll_and_current_comparison.png",
+      "sha256": "77a7f7a6103bedb885b88aae816e26ac45eb11262f4c7a364a23e4e58c05937f",
+      "bytes": 559209
+    }
+  },
+  "case29_regression": {
+    "four_traces_equal_bit_for_bit": true,
+    "report": {
+      "path": "local_reference/native_static_reviews/c1_example29_after_pll_refactor_20261122/report.json",
+      "sha256": "674fb1e9e1a280511b0788febf5937a4495887cd3d1cc3d0350cc0f7c30691ce",
+      "bytes": 724295
+    }
+  },
+  "windows": {
+    "python": "3.14.5",
+    "locked_sync": {
+      "path": "local_reference/native_static_reviews/example30_release_checks_20261122/sync.log",
+      "sha256": "a476f980dc053e6ce264bf8caa51747ca13e2f20fb693ffc7dd8b02db25a05df",
+      "bytes": 57
+    },
+    "ruff": {
+      "path": "local_reference/native_static_reviews/example30_release_checks_20261122/ruff.log",
+      "sha256": "a4443afdcfb6d7363adb285762515ccf7cf50473b1a05c20c1a50f6bed4d26b0",
+      "bytes": 20
+    },
+    "mypy": {
+      "path": "local_reference/native_static_reviews/example30_release_checks_20261122/mypy.log",
+      "sha256": "a2767b4f5fbc495fbc163c1c3983210351cf45f12ec5302828989d1065383f9b",
+      "bytes": 45
+    },
+    "tests": {
+      "tests": 1585,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "includes_slow": true,
+      "junit": {
+        "path": "local_reference/native_static_reviews/example30_release_checks_20261122/windows-pytest.xml",
+        "sha256": "e9f8e30ac3b9c1f71d03fe71aa65e3db53f1c00d7d3cdda26ad66f3ceb9131e4",
+        "bytes": 228679
+      }
+    },
+    "default_40001_rows": {
+      "path": "local_reference/native_static_reviews/example30_release_checks_20261122/default.log",
+      "sha256": "7e809441ad2fc005d35c74514e3e7c569691356be0dd83cb300492a3919324e6",
+      "bytes": 283
+    }
+  },
+  "wsl2_ubuntu_24_04_4": {
+    "python": "3.14.5",
+    "28_29_30_focused": {
+      "tests": 31,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "junit": {
+        "path": "local_reference/native_static_reviews/c1_example30_wsl_20261122T123207641597544Z/tests.xml",
+        "sha256": "8c6e5af1dc3456bce93e72df4753e368cd086b3f61319493ff01e7ee1860adf2",
+        "bytes": 4863
+      }
+    },
+    "default_40001_rows": {
+      "path": "local_reference/native_static_reviews/c1_example30_wsl_20261122T123207641597544Z/cli.log",
+      "sha256": "430ddc35fab67ec05ecd0db74e103d737245537511aaed08cb541ad2b5507776",
+      "bytes": 280
+    },
+    "run": {
+      "path": "local_reference/native_static_reviews/c1_example30_wsl_20261122T123207641597544Z/run.log",
+      "sha256": "6338f5f194d6666873ad167f882a6c823aca31c72c74e665d779927c08fec6b9",
+      "bytes": 2360
+    }
+  }
+}

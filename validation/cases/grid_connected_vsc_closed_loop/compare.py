@@ -64,9 +64,10 @@ def cycle_means(time, values, interval):
     return [float(metrics.mean(*metrics.clip(time, signal, *interval))) for signal in values]
 
 
-def rotating_frame(data, names, frequency):
-    time = data[TIME]
-    angles = (2 * pi * frequency * time - pi / 2) + np.array([0., -2*pi/3, 2*pi/3])[:, None]
+def rotating_frame(data, names, frequency, *, angle=None):
+    if angle is None:
+        angle = 2 * pi * frequency * data[TIME] - pi / 2
+    angles = angle + np.array([0., -2*pi/3, 2*pi/3])[:, None]
     phase_values = np.stack([data[key] for key in names])
     return (2 / 3) * np.stack([np.sum(phase_values * np.cos(angles), axis=0),
                                 -np.sum(phase_values * np.sin(angles), axis=0)])
@@ -259,7 +260,7 @@ def load_reference(protocol, qualification):
     return native, inputs
 
 
-def check_feedback(data, observed, protocol, scenario, grid):
+def check_feedback(data, observed, protocol, scenario, grid, *, angle=None):
     """Recompute the controller from solved voltages and currents."""
     settings = protocol["controller"]
     plant = protocol["plant"]
@@ -276,9 +277,10 @@ def check_feedback(data, observed, protocol, scenario, grid):
     carrier_phase_tick = (gate_tick + shift) % carrier_ticks
     carrier = 1 - 4 * np.abs(carrier_phase_tick - carrier_ticks / 2) / carrier_ticks
     frequency = protocol["grid_frequency_Hz"]
-    angle = 2*pi*frequency*data[TIME] - pi/2
-    voltages = rotating_frame(data, VOLTAGES, frequency).T
-    currents = native_dq(data, frequency).T
+    if angle is None:
+        angle = 2*pi*frequency*data[TIME] - pi/2
+    voltages = rotating_frame(data, VOLTAGES, frequency, angle=angle).T
+    currents = rotating_frame(data, CURRENTS, frequency, angle=angle).T
     command = np.zeros((len(updates) + 1, 2))
     for column, axis in enumerate("dq"):
         step = case["command_steps"][axis]
@@ -420,6 +422,10 @@ def snapshot_sources(destination, plant_protocol_path):
         *(ROOT / "validation/common").rglob("*.py"),
         *(ROOT / "validation/cases/grid_connected_vsc_open_loop").rglob("*.py"),
     ]
+    return snapshot_inputs(destination, sources)
+
+
+def snapshot_inputs(destination, sources):
     bindings = {}
     for source in sorted(sources):
         relative = source.relative_to(ROOT)

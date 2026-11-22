@@ -1,5 +1,8 @@
 # 验证状态
 
+2026-11-22。30 号两档 18 个同档窗通过 414 项连续量和 234 项离散量检查。PLL 相角差峰值 2.594e-10 rad，高于 1e-11 rad 门限。Ruff、mypy、Windows 1,585 项含慢速回归与 WSL2 专项 31 项通过。两系统教学入口可运行，正式验收待完成。
+[30 号首轮验证](../../validation/cases/grid_connected_vsc_pll/validation_report.json) · [电源精度对照协议](../../validation/cases/grid_connected_vsc_pll/source_precision_trial.json)
+
 2026-11-22。PLL 两档原生长窗通过原 19 项电气判据，各 2,000 次采样和门极应用，细档保持 40,001 个中点。验收窗最大相角误差 0.6298°、频率误差 0.01949 Hz、周期平均跟踪误差 0.06665 A。原生跨步长最大周期均值差 0.04845 A、最大分窗 RMS 差 0.07194 A。
 [PLL 双步长原生长窗](../../validation/cases/grid_connected_vsc_pll/full_reference_report.json)
 

@@ -1,5 +1,8 @@
 # 恢复与下一步
 
+2026-11-22。保留 30 号首轮输入快照和对标 FAIL 证据。粗档单变量对照用原理想源的外部瞬时输入生成同一电压，PLL 仍读取求解后的差分电压。先核本地 `c1_pscad_pll_source_precision_5us_20261122/n/20261122T124522755889Z` 原生运行及终态。闭场后用 `c1_pll_source_precision_numeric_20261122.verify_source_trial` 绑定新回执和已存 PyCy 粗档波形，沿用冻结的全部判据。
+[30 号首轮验证](../../validation/cases/grid_connected_vsc_pll/validation_report.json) · [电源精度对照协议](../../validation/cases/grid_connected_vsc_pll/source_precision_trial.json)
+
 2026-11-22。PLL 两档 PSCAD 长窗参考已合格。先核协议、两份原生回执和跨档报告，再以私有共用函数保留 29 号的电流 PI、限幅与门极时序，新教学入口通过既有 SRFPLL 从实测三相电压获得相角。使用两档新 PyCy 轨迹执行原时钟同档比较，检查六路门极、电阻、限幅、锁相及真实电网坐标系的三周期跟踪。复跑受影响的 29 号对标、专项和全量回归并完成图与教学后验收。
 [PLL 双步长原生长窗](../../validation/cases/grid_connected_vsc_pll/full_reference_report.json)
 

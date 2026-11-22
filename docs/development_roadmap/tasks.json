@@ -3,7 +3,7 @@
   "updated_date": "2026-11-22",
   "timezone": "Asia/Shanghai",
   "branch": "codex/emt-examples-longterm",
-  "checkpoint_head": "0c096aaef58148d9fd619b5398108cb8c8c5bd18",
+  "checkpoint_head": "6997230697350af42d1e68dda71562e072525a7b",
   "current_task": "C1",
   "formal_new_examples_completed": 11,
   "status_values": [
@@ -751,7 +751,14 @@
         "validation/cases/grid_connected_vsc_closed_loop/validation_report.json",
         "validation/cases/grid_connected_vsc_pll/reference_protocol.json",
         "validation/cases/grid_connected_vsc_pll/short_reference_report.json",
-        "validation/cases/grid_connected_vsc_pll/full_reference_report.json"
+        "validation/cases/grid_connected_vsc_pll/full_reference_report.json",
+        "examples/30_grid_connected_vsc_pll.py",
+        "pycy_emt_lite/converters/_grid_vsc_current_loop.py",
+        "tests/test_grid_connected_vsc_pll.py",
+        "validation/cases/grid_connected_vsc_pll/README.md",
+        "validation/cases/grid_connected_vsc_pll/compare.py",
+        "validation/cases/grid_connected_vsc_pll/source_precision_trial.json",
+        "validation/cases/grid_connected_vsc_pll/validation_report.json"
       ],
       "commits": [
         "b835e31785fab3fda247c333d23edbe9ce576dfa",
@@ -793,7 +800,9 @@
         "c635f684fbfe01cbb4ea94f0b10c0aa5a3ecd626",
         "31f1490fe75acf97afbed8f26fe97e3f912e30e5",
         "57ad0fdc709c6104ea85b3706de813ebc9def95b",
-        "0c096aaef58148d9fd619b5398108cb8c8c5bd18"
+        "0c096aaef58148d9fd619b5398108cb8c8c5bd18",
+        "951617ae348507a0ae922531f89abd2ad7170d90",
+        "6997230697350af42d1e68dda71562e072525a7b"
       ],
       "blockers": [],
       "reference_feasibility": {
@@ -804,7 +813,7 @@
         "evidence_sha256": "d92469cdd234477829ca5a5fa75a67648f17235fffadf3d3cbdaa73672375427",
         "native_executed": false
       },
-      "current_stage": "pll_full_pscad_reference_qualified_candidate_pending",
+      "current_stage": "pll_case30_state_comparison_failed_source_precision_trial",
       "open_loop_candidate_preparation": {
         "record": {
           "path": "docs/development_roadmap/experiments/c1_openloop_candidate_preparation_20261116.json",
@@ -1651,13 +1660,13 @@
         }
       },
       "pll_integrated_reference": {
-        "status": "both_native_full_grids_and_cross_grid_qualified",
+        "status": "candidate_run_complete_initial_pll_state_fail",
         "protocol": {
           "path": "validation/cases/grid_connected_vsc_pll/reference_protocol.json",
           "sha256": "78ba092cc8099390023d3fcaa449c8479d269dcd5fa7ec315b267d968e1da767",
           "bytes": 6164
         },
-        "next": "实现可独立运行的 PLL 教学入口，复用 29 号的电路和电流控制。以两档新 PyCy 独立运行与已合格 PSCAD 参考逐项比较，再完成图、专项测试、全量回归和教学验收。",
+        "next": "用已封输入的 5 µs PSCAD 电源精度对照检验原状态门限。保留原四项 PLL 状态误差和已冻结的全部电气判据。",
         "short_reference_report": {
           "path": "validation/cases/grid_connected_vsc_pll/short_reference_report.json",
           "bytes": 4779,
@@ -1687,6 +1696,29 @@
           "path": "validation/cases/grid_connected_vsc_pll/full_reference_report.json",
           "sha256": "255e251c54c3146bc13a26a528c200e8af80e78cf3e1a1a62707afef66a9789d",
           "bytes": 4790
+        },
+        "candidate_validation": {
+          "path": "validation/cases/grid_connected_vsc_pll/validation_report.json",
+          "sha256": "fffbc156ca6b90933b8505a09b76ff8f6a44b0e7c7b8da06e0468988d4ca3e86",
+          "bytes": 7805
+        },
+        "source_precision_trial": {
+          "path": "validation/cases/grid_connected_vsc_pll/source_precision_trial.json",
+          "sha256": "2e8ea0935a3ac8cf62c42bd1a208e198174cdd27a7c45a1a01fda3c29377acd0",
+          "bytes": 4045
+        },
+        "source_precision_execution": {
+          "native_package": {
+            "path": "local_reference/native_static_reviews/c1_pscad_pll_source_precision_5us_20261122/prospective.json",
+            "sha256": "cb0b1100d21628b39d01156766581bf3a2f6228f69c89678c6ac8c8aed968a94",
+            "bytes": 10986
+          },
+          "run": "local_reference/native_static_reviews/c1_pscad_pll_source_precision_5us_20261122/n/20261122T124522755889Z",
+          "oracle": {
+            "path": "local_reference/native_static_reviews/c1_pll_source_precision_numeric_20261122/verify_source_trial.py",
+            "sha256": "cedec583e0eafc4f51fc76d747965efe2e62444f66cffff749a57f5f93629eb5",
+            "bytes": 10752
+          }
         }
       }
     },
@@ -1939,7 +1971,7 @@
       }
     }
   ],
-  "current_stage": "pll_full_pscad_reference_qualified_candidate_pending",
+  "current_stage": "pll_case30_state_comparison_failed_source_precision_trial",
   "resume_checkpoint_history": [
     {
       "resumed_utc": "2026-11-11T13:24:16.085490+00:00",
@@ -1981,9 +2013,9 @@
     }
   ],
   "current_source_snapshot": {
-    "path": "local_reference/native_static_reviews/c1_example29_comparison_20261122T110553870690Z/inputs.json",
-    "sha256": "ac8d39b7b8a9795e3e8ca5fa8d3fa74af139cb8100c450d02f59d53f266970f7",
-    "bytes": 18371
+    "path": "local_reference/native_static_reviews/c1_example30_comparison_20261122T122946122172Z/inputs.json",
+    "sha256": "51daebd001265c9469d3fa023b17145a528c8861b4ed1e0ad53c1780a7ae5268",
+    "bytes": 15850
   },
   "latest_maintenance": {
     "kind": "dense_lu_one_residual_refinement",
