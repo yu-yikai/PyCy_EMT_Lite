@@ -2,7 +2,9 @@
 
 2026-11-23。32 号已验收，C1 完成。在现有原生归档可用时，按[教学指南](../../validation/cases/grid_connected_vsc_dc_voltage/README.md)运行两档对标。检查已完成的对比，用[验收报告](../../validation/cases/grid_connected_vsc_dc_voltage/acceptance_report.json)中的输入、结果和图哈希。
 
-D1 的[原生协议](experiments/d1_pjm5_emt_protocol_20261123.json)已固定。核对其中模型及独立计算的哈希。用忽略目录 `local_reference/native_static_reviews/d1_pjm5_pscad_20261123/` 构建 PSCAD 原生工程，先按 5 µs、2 ms 短窗核对编译接线和 95 路原生测量。短窗通过后独立运行两档 0.600 s 全窗，逐点检查 KCL、支路和储能，并按固定窗复核 2 号母线电压及两条进线功率。再决定教学候选的对标入口。
+D1 的[PJM5 原生参考](experiments/d1_pjm5_pscad_reference_20261123.json)已通过。复算命令见 `local_reference/native_static_reviews/d1_pjm5_emt_20261123/README.md`，按报告核对每档执行回执和原始 INF/OUT。长窗来自 `d1_pjm5_pscad_reload_20261123/` 中的两次独立运行。保留首轮编译准入、重存尺寸和冷启动日志的原始拒绝记录。
+
+冻结正式 PyCy 同档判据，再用现有 `ThreePhasePiLine`、给定源和固定阻抗元件搭建候选。线路参数传两端电容之和。用源斜率给定一致初值，核对源端直接并联电容的原始电流、奇偶拍差值和区间电荷。用整数拍驱动 0.300 s 负荷电阻。教学图优先显示 2 号母线电压与两条进线分担。
 
 2026-11-23。两档闭环短窗通过。按[短窗证据](experiments/c1_dc_live_feedback_short_20261123.json)核对原生波形、37 列日志和各档种子、续算回执。运行入口在忽略目录 `local_reference/native_static_reviews/c1_dc_bridge_feedback_native_canonical_20261123/`。每档均从同一份保存工程走同一加载路径；生成的 Main.f、Main.dta 和快照须逐字节核对。
 
