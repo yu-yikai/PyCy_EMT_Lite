@@ -1,5 +1,8 @@
 # 技术决策
 
+2026-11-22。有限电网探针只改变源端到原桥侧滤波器之间的三相串联支路，沿用原源端 PLL、电流环和门极时序。PCC 取两段 R/L 之间对交流中性点的差分电压。PyCy 预试验中，100 µs 原始抽样带来的基波幅值偏差约 0.9 V，后续需先验证基波估计。
+[PCC 短窗协议](experiments/c1_pcc_feeder_native_probe_20261122.json)
+
 2026-11-22。30 号正式比较入口绑定两份新 PSCAD 原生归档，使用同一组控制和误差判据。首轮 FAIL 及源精度试验独立保留。外环下一步从可调并网点开始。
 [30 号验收报告](../../validation/cases/grid_connected_vsc_pll/acceptance_report.json)
 

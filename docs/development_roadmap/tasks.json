@@ -3,7 +3,7 @@
   "updated_date": "2026-11-22",
   "timezone": "Asia/Shanghai",
   "branch": "codex/emt-examples-longterm",
-  "checkpoint_head": "0bd7535d6065db964690c80842c81183cfb22e44",
+  "checkpoint_head": "0f0ee74de587a09e9290931f50a0c81fa115d6d4",
   "current_task": "C1",
   "formal_new_examples_completed": 12,
   "status_values": [
@@ -820,7 +820,13 @@
         "evidence_sha256": "d92469cdd234477829ca5a5fa75a67648f17235fffadf3d3cbdaa73672375427",
         "native_executed": false
       },
-      "current_stage": "pll_example30_accepted_power_and_vac_reference_next",
+      "current_stage": "pcc_feeder_internal_feasibility_pass_native_probe_frozen",
+      "pcc_feeder_probe": {
+        "protocol": "docs/development_roadmap/experiments/c1_pcc_feeder_native_probe_20261122.json",
+        "internal_feasibility_passed": true,
+        "native_short_probe": "pending",
+        "power_and_vac_candidate": "not_started"
+      },
       "open_loop_candidate_preparation": {
         "record": {
           "path": "docs/development_roadmap/experiments/c1_openloop_candidate_preparation_20261116.json",
@@ -2011,7 +2017,7 @@
       }
     }
   ],
-  "current_stage": "pll_example30_accepted_power_and_vac_reference_next",
+  "current_stage": "pcc_feeder_internal_feasibility_pass_native_probe_frozen",
   "resume_checkpoint_history": [
     {
       "resumed_utc": "2026-11-11T13:24:16.085490+00:00",

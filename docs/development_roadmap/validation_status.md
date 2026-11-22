@@ -1,5 +1,8 @@
 # 验证状态
 
+2026-11-22。PCC 有限网阻的 PyCy 预试验通过六项约定检查。正 q 轴基波电流增加 1.490 A 峰值，PCC 基波升高 3.210 V RMS，两工况 PCC 有功均约 500 W，新增支路离散电压残差峰值 2.51e-12 V。PSCAD 短窗预定判据已冻结，待原生执行。
+[数据身份与阈值](experiments/c1_pcc_feeder_native_probe_20261122.json)
+
 2026-11-22。30 号新同档比较 18 窗通过 414 项连续量、234 项逐点一致及 72 项 PLL 状态检查。最大相角差 2.665e-15 rad，周期跟踪误差最大 0.06665 A。两平台跨步长通过。最终参考入口切换后复跑 31 项专项及 Ruff 和 mypy，通过的 1,585 项 Windows 全量覆盖相同的教学及测试源码。
 [30 号验收报告](../../validation/cases/grid_connected_vsc_pll/acceptance_report.json)
 

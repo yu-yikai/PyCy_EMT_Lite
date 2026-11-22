@@ -1,5 +1,8 @@
 # 持久进度
 
+2026-11-22。C1 外环准备完成两次 PyCy 开关电路预试验，各 40,001 点。每相串入 0.8 Ω、8 mH 后，q 轴参考为零时 PCC 基波相电压为 118.93 V，投入原电流环正 q 轴参考后升到 122.14 V。已固定 PSCAD 新拓扑的 122 点短窗探针。正式新增仍为 12 个。
+[预试验结果与短窗协议](experiments/c1_pcc_feeder_native_probe_20261122.json)
+
 2026-11-22。30 号并网 PLL 电流闭环正式验收。公开入口两档独立重跑，通过新 PSCAD 双步长参考全部冻结判据。正式新增共 12 个。C1 转入 P 前馈和交流电压外环参考准备。
 [30 号验收报告](../../validation/cases/grid_connected_vsc_pll/acceptance_report.json)
 

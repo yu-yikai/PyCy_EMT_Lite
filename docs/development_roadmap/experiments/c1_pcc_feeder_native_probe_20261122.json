@@ -1,0 +1,66 @@
+{
+  "task": "C1",
+  "scope": "PSCAD 有限电网阻抗与 PCC 测量的原生短窗探针。控制器仍使用 30 号源端采样和原电流参考。",
+  "case30_commit": "0f0ee74de587a09e9290931f50a0c81fa115d6d4",
+  "basis": {
+    "reference_report": "validation/cases/grid_connected_vsc_pll/source_precision_reference_report.json",
+    "reference_report_sha256": "91ac883c30a0297154ac8b0592fdec540d7bfd0247af1da894403bbfdcae8492",
+    "reference_archive": "local_reference/native_static_reviews/c1_pscad_pll_source_precision_5us_v2_20261122/n/20261122T125549132970Z",
+    "native_reference_receipt_sha256": "816d5a99238487e791cf50587b453d9badf23ab61e3fd00ff21fbb6af945e9e5",
+    "controller_sha256": "da4bcc27d9f4ea9c18800a475d0a1a427fcf23798c6b6fcd3bbfb95106b4bb12",
+    "integer_tick_source_sha256": "ebef43492e9740b9109348cff3750ed97f9554d356462e28a443a0e042fc77b6"
+  },
+  "internal_feasibility": {
+    "report": "local_reference/native_static_reviews/c1_power_vac_feasibility_20261122/report.json",
+    "report_sha256": "a8505c77a94ec41a636d447dac74fe2b793dd8a536104cfccc0010d8c7f7c398",
+    "scope": "两次 PyCy 开关电路独立运行，各 40001 点。保持源端 PLL 和原电流环。首次报告序列化修复后直接复读两份保留波形。",
+    "window_s": [0.15, 0.2],
+    "held_pcc_fundamental_v_rms": 118.93097514866018,
+    "supported_pcc_fundamental_v_rms": 122.14047868627931,
+    "measured_source_frame_iq_change_a_peak": 1.4895548803406824,
+    "pcc_active_power_held_and_supported_w": [503.3885267662793, 501.63848201535586],
+    "pcc_fundamental_bias_from_raw_100us_samples_held_and_supported_v_rms": [0.90141345209324, -0.94083832687785],
+    "max_feeder_trapezoid_residual_v": 2.5082158572331537e-12
+  },
+  "topology": {
+    "each_phase": "原理想源正端 → Rg → Lg → PCC → 原滤波 R、L 和电流表 → 原开关桥",
+    "grid_phase_rms_v": 120.0,
+    "grid_hz": 60.0,
+    "grid_ramp_s": 0.02,
+    "feeder_r_ohm": 0.8,
+    "feeder_l_h": 0.008,
+    "initial_current_a": 0.0,
+    "stiff_dc_v": 400.0,
+    "phase_voltage_reference": "原交流中性点 n_ac。计算参考点仍是原 DC 负端。",
+    "line_current_positive": "理想源流向桥",
+    "compiled_subsystems": 1,
+    "compiled_nonzero_nodes": 20,
+    "compiled_branches": 25
+  },
+  "acquisition": {
+    "platform": "PSCAD/EMTDC 5.0.0, gf46/x86",
+    "step_s": 0.000005,
+    "stop_s": 0.000605,
+    "rows": 122,
+    "control_samples": [20, 40, 60, 80, 100, 120],
+    "next_gate_application_samples": [21, 41, 61, 81, 101, 121],
+    "trace_stem": "c1_pcc_feeder",
+    "old_channels": 45,
+    "pcc_channels_46_to_48_kv": ["V_a_pcc_kV", "V_b_pcc_kV", "V_c_pcc_kV"],
+    "out_widths_including_time": [11, 11, 11, 11, 9]
+  },
+  "gates": {
+    "compiled": "逐相绑定新增 Rg、Lg 及 PCC，收缩新增串联支路后保留原电路及极性。核对原 45 通道和追加 PCC 通道，新增三路须是 MainOut 中同一求解行的原生差分电压。",
+    "clock_and_controls": "每行的原生时间与采集行号一致。核对六次采样、六次下一拍更新及原门极和开关电阻。",
+    "feeder_trapezoid": "uL=e_source−v_pcc−Rg*i。逐相逐区间核 |uL[k]+uL[k−1]−2Lg*(i[k]−i[k−1])/h| 加原始字符末位误差上界。",
+    "feeder_trapezoid_max_v": 0.000005,
+    "voltage_token_quantum_max_v": 5e-10,
+    "current_token_quantum_max_a": 1e-10,
+    "min_each_phase_source_pcc_separation_v": 0.001,
+    "min_each_phase_pcc_peak_v": 0.001,
+    "min_each_phase_current_peak_a": 0.0001,
+    "initial_current_max_a": 1e-8,
+    "initial_source_pcc_separation_max_v": 1e-7
+  },
+  "after_probe": "保持原桥和电流环教学顺序。以固定电流时的电压跌落和正 q 轴支撑为基础，先确认待用的基波估计与闭环符号、测量面、限值，再冻结 P 前馈和 Vac 正式原生参考。"
+}
