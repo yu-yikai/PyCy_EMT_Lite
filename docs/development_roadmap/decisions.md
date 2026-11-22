@@ -1,5 +1,8 @@
 # 技术决策
 
+2026-11-23。31 号复用原有 PLL、电流环、PI 和低通。共用接线只增加可选三相馈线，电流环在采样前接收该算例的参考值。外环及其状态留在算例中。29、30 号的六组复验轨迹逐字节一致。候选对标沿用原生 50 ms 基波窗和原逐点、逐周期门限，留存原单周波电压诊断。
+[教学说明](../../validation/cases/grid_connected_vsc_power_vac/README.md) · [验收报告](../../validation/cases/grid_connected_vsc_power_vac/acceptance_report.json)
+
 2026-11-22。独立细档证实 50 ms 共周期窗的适用性，后续候选使用它对照 PCC 基波电压和无功。原逐点、逐周期有功和无功及限幅要求保留，原单周波电压结果随报告显示。基波正弦和余弦积分抽成同一验证函数复用，细档分别复算连续载波和 5 µs 门极拍。
 [证据和候选口径](../../validation/cases/grid_connected_vsc_power_vac/coherent_reference_report.json)
 

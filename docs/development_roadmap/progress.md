@@ -1,5 +1,8 @@
 # 持久进度
 
+2026-11-23。31 号算例完成验收，正式新增累计 13 个。固定 q 与 PCC 调压各独立运行 5 µs、2.5 µs 两档，四组与 PSCAD 的同档、跨档和成组检查均通过。5 µs 档在 600–650 ms 的 PCC 基波相电压由 118.80 V 提高到 120.02 V，两组有功均约 500 W。C1 推进到直流母线调压的原生参考准备。
+[31 号验收报告](../../validation/cases/grid_connected_vsc_power_vac/acceptance_report.json)
+
 2026-11-22。P 前馈与 PCC 电压外环的 PSCAD 双步长参考完成，四组共 780,010 点。两档固定 q 与调节组相干比较、逐点前缀和跨步长核对均通过。四份原单周波失配结果仍在。C1 转入公开候选，正式新增仍为 12 个。
 [双档原生参考](../../validation/cases/grid_connected_vsc_power_vac/coherent_reference_report.json)
 

@@ -1,5 +1,8 @@
 # 验证状态
 
+2026-11-23。31 号四组候选共 780,010 点。对 PSCAD 的 36 个同档窗内，468 项离散量完全一致，936 项连续量检查通过，PCC 瞬时相电压最大差 0.85 µV。每组有 650 次外环与 6,500 次内环及后一拍门极应用，细档各核过 130,001 个保持中点。Windows 全量 1,590 项含 slow、WSL2 默认入口和 4 项专测、锁定同步、Ruff 与 mypy 均通过。
+[验收、图和原始结果的哈希](../../validation/cases/grid_connected_vsc_power_vac/acceptance_report.json)
+
 2026-11-22。两档四组 8 个相干跨步长窗均通过，基波电压、有功和基波无功最大差为 0.03646 V、1.770 W 和 2.984 var。每个细档工况核过 130,001 个保持中点。Windows 全量 1,586 项含 slow，WSL2 专项 30 项，锁定同步、Ruff 和 mypy 均通过。
 [双档结果与软件检查](../../validation/cases/grid_connected_vsc_power_vac/coherent_reference_report.json)
 

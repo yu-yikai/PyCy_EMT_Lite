@@ -88,28 +88,32 @@ def solve(matrix, rhs):
     return [row[-1] for row in a]
 
 
-def advance(old_i, old_n, e, old_e, gu, gl, old_gu, old_gl, h):
+def advance(old_i, old_n, e, old_e, gu, gl, old_gu, old_gl, h, *, series_r=D(1), series_l=D('.01')):
     a = [[D(0)]*4 for _ in range(4)]
     rhs = []
-    coefficient = D('.02') / h
+    coefficient = 2*series_l / h
     for j in range(3):
         z, old_z = 1/(gu[j]+gl[j]), 1/(old_gu[j]+old_gl[j])
         emf, old_emf = 400*gu[j]*z, 400*old_gu[j]*old_z
-        a[j][j], a[j][3] = coefficient+1+z, D(1)
-        rhs.append((coefficient-1-old_z)*old_i[j]-old_n+e[j]+old_e[j]-emf-old_emf)
+        a[j][j], a[j][3] = coefficient+series_r+z, D(1)
+        rhs.append((coefficient-series_r-old_z)*old_i[j]-old_n+e[j]+old_e[j]-emf-old_emf)
     a[3], rhs = [D(1), D(1), D(1), D(0)], rhs+[D(0)]  # noqa: RUF005
     answer = solve(a, rhs)
     return answer[:3], answer[3]
 
 
-def evaluate(rows, radii, *, h, expected_rows, limits, precision_caps, upper_states=None):
+def evaluate(rows, radii, *, h, expected_rows, limits, precision_caps, upper_states=None,
+             series_r=D(1), series_l=D('.01')):
     """Check every supplied acquisition row/prefix against prospective budgets.
 
     No output file is opened, no reference qualification is granted here, and no
     original timestamp is changed. All input numbers and full-place radii are SI.
     A feedback case may supply its independently checked upper states by row.
+    Series R/L may combine consecutive branches with the same measured current.
     """
     require(h in {D('.000005'), D('.0000025')}, 'Unsupported electrical step')
+    require(series_r.is_finite() and series_l.is_finite() and series_r > 0 and series_l > 0,
+            'Series R/L must be positive finite Decimal values')
     require(len(rows) == len(radii) == expected_rows and expected_rows >= 2, 'Incomplete acquisition')
     if upper_states is not None:
         require(len(upper_states) == expected_rows, 'Incomplete upper gate schedule')
@@ -179,7 +183,8 @@ def evaluate(rows, radii, *, h, expected_rows, limits, precision_caps, upper_sta
         check('source_terminal_400V_with_tokens_V', row['V_dc_source_kV']-400, q['V_dc_source_kV']+D('1e-10'))
         check('bridge_400V_with_tokens_V', vp-n-400, qvp+qn+D('1e-10'))
         if k:
-            pred_i, pred_n = advance(pred_i, pred_n, e, old_e, gu, gl, old_gu, old_gl, h)
+            pred_i, pred_n = advance(pred_i, pred_n, e, old_e, gu, gl, old_gu, old_gl, h,
+                                    series_r=series_r, series_l=series_l)
         power = (vp-n)*jdc
         power_q = product_radius(vp-n, qvp+qn, jdc, qj)
         for j, p in enumerate(PHASES):
@@ -189,16 +194,17 @@ def evaluate(rows, radii, *, h, expected_rows, limits, precision_caps, upper_sta
             if k == 0:
                 check('initial_phase_current_with_tokens_A', i, qi)
                 check('initial_pole_with_tokens_V', v, qv)
-            check('resistor_with_tokens_V', vr-i, qr+qi)
+            check('resistor_with_tokens_V', vr-series_r*i, qr+series_r*qi)
             check('phase_KVL_with_tokens_V', e[j]-vr-vl-v, q[f'V_{p}_grid_kV']+qr+ql+qv)
             check('pole_KCL_with_tokens_A', i+gu[j]*(vp-v)-gl[j]*(v-n), qi+gu[j]*(qvp+qv)+gl[j]*(qv+qn))
             check('pole_Thevenin_with_tokens_V', v-n-emf-z*i, qv+qn+z*qi)
-            check('conditional_reduced_TR_current_A', i-pred_i[j], qi+D('1e-8')+time/D('.01')*D(4)/3*D('2.02e-7'))
+            check('conditional_reduced_TR_current_A', i-pred_i[j], qi+D('1e-8')+time/series_l*D(4)/3*D('2.02e-7'))
             if previous:
                 old, oq = previous
                 oi, oiq = old[f'I_{p}_ac_to_bridge_kA'], oq[f'I_{p}_ac_to_bridge_kA']
                 ovl, ovq = old[f'VL_{p}_kV'], oq[f'VL_{p}_kV']
-                check('full_TR_with_tokens_V', D('.02')/h*(i-oi)-vl-ovl, D('.02')/h*(qi+oiq)+ql+ovq)
+                coefficient = 2*series_l/h
+                check('full_TR_with_tokens_V', coefficient*(i-oi)-vl-ovl, coefficient*(qi+oiq)+ql+ovq)
                 work += h/4*(vl+ovl)*(i+oi)
                 work_q += h/4*product_radius(vl+ovl, ql+ovq, i+oi, qi+oiq)
             upper, lower = vp-v, v-n
@@ -212,14 +218,14 @@ def evaluate(rows, radii, *, h, expected_rows, limits, precision_caps, upper_sta
               qj+sum(g*(qvp+q[f'V_{p}_pole_kV']) for g, p in zip(gu, PHASES)))  # noqa: B905
         check('DC_rail_KCL_with_tokens_A', jdc+sum(g*(v-n) for g, v in zip(gl, pole)),  # noqa: B905
               qj+sum(g*(qn+q[f'V_{p}_pole_kV']) for g, p in zip(gl, PHASES)))  # noqa: B905
-        check('commonmode_with_tokens_V', n-sum(e[j]-400*gu[j]/(gu[j]+gl[j])-(1+1/(gu[j]+gl[j]))*current[j] for j in range(3))/3,
-              qn+sum(q[f'V_{p}_grid_kV']+(1+1/(gu[j]+gl[j]))*q[f'I_{p}_ac_to_bridge_kA'] for j, p in enumerate(PHASES))/3)
+        check('commonmode_with_tokens_V', n-sum(e[j]-400*gu[j]/(gu[j]+gl[j])-(series_r+1/(gu[j]+gl[j]))*current[j] for j in range(3))/3,
+              qn+sum(q[f'V_{p}_grid_kV']+(series_r+1/(gu[j]+gl[j]))*q[f'I_{p}_ac_to_bridge_kA'] for j, p in enumerate(PHASES))/3)
         check('conditional_reduced_TR_rail_V', n-pred_n, qn+D('2.2e-6'))
         if k == 0:
             check('initial_DC_leakage_with_tokens_A', jdc+1200/(D('1e9')+D('.001')), qj)
         check('instantaneous_power_with_tokens_W', power, power_q)
-        energy = D('.005')*sum(i*i for i in current)
-        energy_q = D('.005')*sum(2*abs(current[j])*q[f'I_{p}_ac_to_bridge_kA']+q[f'I_{p}_ac_to_bridge_kA']**2 for j, p in enumerate(PHASES))
+        energy = series_l/2*sum(i*i for i in current)
+        energy_q = series_l/2*sum(2*abs(current[j])*q[f'I_{p}_ac_to_bridge_kA']+q[f'I_{p}_ac_to_bridge_kA']**2 for j, p in enumerate(PHASES))
         if k == 0:
             initial_energy, initial_energy_q = energy, energy_q
         else:

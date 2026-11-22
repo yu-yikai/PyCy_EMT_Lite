@@ -260,7 +260,7 @@ def load_reference(protocol, qualification):
     return native, inputs
 
 
-def check_feedback(data, observed, protocol, scenario, grid, *, angle=None):
+def check_feedback(data, observed, protocol, scenario, grid, *, angle=None, sampled_commands=None):
     """Recompute the controller from solved voltages and currents."""
     settings = protocol["controller"]
     plant = protocol["plant"]
@@ -281,11 +281,16 @@ def check_feedback(data, observed, protocol, scenario, grid, *, angle=None):
         angle = 2*pi*frequency*data[TIME] - pi/2
     voltages = rotating_frame(data, VOLTAGES, frequency, angle=angle).T
     currents = rotating_frame(data, CURRENTS, frequency, angle=angle).T
-    command = np.zeros((len(updates) + 1, 2))
-    for column, axis in enumerate("dq"):
-        step = case["command_steps"][axis]
-        if step is not None:
-            command[1:, column] = np.where(updates >= round(step["time_s"] / h), step["current_A"], 0)
+    if sampled_commands is None:
+        command = np.zeros((len(updates) + 1, 2))
+        for column, axis in enumerate("dq"):
+            step = case["command_steps"][axis]
+            if step is not None:
+                command[1:, column] = np.where(updates >= round(step["time_s"] / h), step["current_A"], 0)
+    else:
+        command = np.asarray(sampled_commands)
+        metrics.require(command.shape == (len(updates) + 1, 2) and np.isfinite(command).all(),
+                        "Expected independent dq commands at t=0 and every feedback sample")
 
     # Zero is the initial state. Each following slot is one accepted sample.
     integrals = np.zeros_like(command)
@@ -321,7 +326,10 @@ def check_feedback(data, observed, protocol, scenario, grid, *, angle=None):
         "saturated": saturated[held_sample],
     }
     for name, expected in exact.items():
-        metrics.require(np.array_equal(observed[name], expected), f"Feedback clock/state differs: {name}")
+        if sampled_commands is not None and name in {"id_ref", "iq_ref"}:
+            metrics.require(np.max(np.abs(observed[name] - expected)) <= 2e-10, f"Feedback command differs: {name}")
+        else:
+            metrics.require(np.array_equal(observed[name], expected), f"Feedback clock/state differs: {name}")
     metrics.require(observed["z_d"][0] == observed["z_q"][0] == 0
                     and np.array_equal(reported_pending[0], [0, 0, 0]), "Initial feedback state differs")
     metrics.require(np.array_equal(reported_pending, reported_pending[np.r_[0, updates][held_sample]])

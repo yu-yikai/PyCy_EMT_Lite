@@ -1,4 +1,4 @@
-"""两个并网 VSC 闭环算例共用的电流控制与门极时序。"""
+"""并网 VSC 闭环算例共用的电流控制与门极时序。"""
 
 import math
 from collections.abc import Callable, Mapping
@@ -23,24 +23,30 @@ CURRENT_BANDWIDTH = 100.0  # Hz
 HALF_DC_VOLTAGE = _grid_vsc.DC_VOLTAGE / 2
 VOLTAGE_LIMIT = 0.95 * HALF_DC_VOLTAGE
 GRID_ANGULAR_FREQUENCY = 2 * math.pi * _grid_vsc.FREQUENCY
-CROSS_COUPLING = GRID_ANGULAR_FREQUENCY * _grid_vsc.INDUCTANCE
 PHASES = tuple(_grid_vsc.PHASE_SHIFTS)
+
+# 参数为求解结果行、整数电气拍和推进至该行的同步角。
+ReferenceCallback = Callable[[Mapping[str, float], int, float], tuple[tuple[float, float], Mapping[str, float]]]
 
 
 def create_current_loop(
     time_step: float, *, scenario: str = "main", pll: SRFPLL | None = None,
+    feeder: tuple[float, float] | None = None, reference: ReferenceCallback | None = None,
 ) -> tuple[tuple[Component, ...], StepCallback]:
-    """给已有桥接线装上电流控制。未提供 PLL 时使用电网的已知相角。"""
+    """给桥接线装上电流控制，并可接入求解后执行的外环参考。"""
     steps_per_gate = round(GATE_PERIOD / time_step)
     steps_per_sample = round(CONTROL_PERIOD / time_step)
     d_step = round(0.04 / time_step)
     q_step = round(0.08 / time_step)
 
     bandwidth = 2 * math.pi * CURRENT_BANDWIDTH
-    kp = _grid_vsc.INDUCTANCE * bandwidth
-    ki = _grid_vsc.RESISTANCE * bandwidth
-    d_pi = PIController(kp, ki)
-    q_pi = PIController(kp, ki)
+    resistance, inductance = _grid_vsc.RESISTANCE, _grid_vsc.INDUCTANCE
+    if feeder is not None:
+        resistance += feeder[0]
+        inductance += feeder[1]
+    cross_coupling = GRID_ANGULAR_FREQUENCY * inductance
+    d_pi = PIController(inductance * bandwidth, resistance * bandwidth)
+    q_pi = PIController(inductance * bandwidth, resistance * bandwidth)
     previous = pending = (0.0, 0.0, 0.0)
     last_sample_tick = 0
     id_ref = iq_ref = 0.0
@@ -93,16 +99,26 @@ def create_current_loop(
             theta = grid_angle if pll is None else pll.angle
             ed, eq = abc_to_dq(*grid_voltage, theta)
 
+        requested = None
+        reference_measurements: Mapping[str, float] = {}
+        if reference is not None:
+            row_angle = theta
+            if pll is not None:
+                row_angle += pll.frequency * (index % steps_per_sample) * time_step
+            requested, reference_measurements = reference(row, index, row_angle)
         id_, iq = abc_to_dq(row["i:La"], row["i:Lb"], row["i:Lc"], theta)
         if sample_update:
             previous, last_sample_tick = applied, gate_tick
-            id_ref = 2.0 if index >= d_step else 0.0
-            iq_ref = 1.5 if scenario == "main" and index >= q_step else 0.0
+            if requested is None:
+                id_ref = 2.0 if index >= d_step else 0.0
+                iq_ref = 1.5 if scenario == "main" and index >= q_step else 0.0
+            else:
+                id_ref, iq_ref = requested
             integrators = d_pi.integrator, q_pi.integrator
             ud = d_pi.step(id_ref - id_, CONTROL_PERIOD)
             uq = q_pi.step(iq_ref - iq, CONTROL_PERIOD)
-            vd = ed + CROSS_COUPLING * iq - ud
-            vq = eq - CROSS_COUPLING * id_ - uq
+            vd = ed + cross_coupling * iq - ud
+            vq = eq - cross_coupling * id_ - uq
             magnitude = math.hypot(vd, vq)
             saturated = magnitude > VOLTAGE_LIMIT
             if saturated:
@@ -127,6 +143,7 @@ def create_current_loop(
             "z_d": d_pi.integrator, "z_q": q_pi.integrator,
             **{f"applied_{phase}": value for phase, value in zip(PHASES, applied, strict=True)},
             **{f"pending_{phase}": value for phase, value in zip(PHASES, pending, strict=True)},
+            **reference_measurements,
         }
         if pll is not None:
             measurements.update({
@@ -139,4 +156,4 @@ def create_current_loop(
             })
         return measurements
 
-    return _grid_vsc.create_bridge(gate_pair), observe
+    return _grid_vsc.create_bridge(gate_pair, feeder=feeder), observe

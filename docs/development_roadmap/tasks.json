@@ -1,11 +1,11 @@
 {
   "schema_version": 1,
-  "updated_date": "2026-11-22",
+  "updated_date": "2026-11-23",
   "timezone": "Asia/Shanghai",
   "branch": "codex/emt-examples-longterm",
-  "checkpoint_head": "c69da12bee5b78fcea60fc2c240198c27dfd8944",
+  "checkpoint_head": "d5325dd513c78d9c91add92932665ed7a8f7e0f5",
   "current_task": "C1",
-  "formal_new_examples_completed": 12,
+  "formal_new_examples_completed": 13,
   "status_values": [
     "planned",
     "ready",
@@ -671,7 +671,7 @@
         "pscad-derived-force-dsout-bounded-probe-v5",
         "simscape-derived-grid-vsc-openloop-r2025a"
       ],
-      "validation": "28 号开环通过真实 Simscape 双步长对标，共用接线后复验波形及判据逐字节一致。29 号已知角度 dq 电流环在两工况双步长下通过真实 PSCAD 同档、跨档及成组比较，Windows 1581 项含 slow 回归及 Windows/WSL2 独立默认入口通过。 30 号使用电源精度双档 PSCAD 参考重新独立对标，18 窗、原电气及 PLL 状态门限全部通过，正式交付。",
+      "validation": "28 号开环通过真实 Simscape 双步长对标，共用接线后复验波形及判据逐字节一致。29 号已知角度 dq 电流环在两工况双步长下通过真实 PSCAD 同档、跨档及成组比较，Windows 1581 项含 slow 回归及 Windows/WSL2 独立默认入口通过。30 号使用电源精度双档 PSCAD 参考重新独立对标，18 窗、原电气及 PLL 状态门限全部通过。31 号 PCC 有功前馈和调压通过独立双工况、双步长 PSCAD 对标及 Windows 1590 项含 slow 回归，WSL2 默认入口与 4 项专测通过，29/30 号六组波形逐字节一致。",
       "acceptance": "局部、可独立运行验证的教学例逐项验收",
       "status": "in_progress",
       "files": [
@@ -762,7 +762,11 @@
         "validation/cases/grid_connected_vsc_pll/source_precision_trial_result.json",
         "validation/cases/grid_connected_vsc_pll/source_precision_fine_trial.json",
         "validation/cases/grid_connected_vsc_pll/source_precision_reference_report.json",
-        "validation/cases/grid_connected_vsc_pll/acceptance_report.json"
+        "validation/cases/grid_connected_vsc_pll/acceptance_report.json",
+        "examples/31_grid_connected_vsc_power_vac.py",
+        "tests/test_grid_connected_vsc_power_vac.py",
+        "validation/cases/grid_connected_vsc_power_vac/README.md",
+        "validation/cases/grid_connected_vsc_power_vac/acceptance_report.json"
       ],
       "commits": [
         "b835e31785fab3fda247c333d23edbe9ce576dfa",
@@ -820,7 +824,7 @@
         "evidence_sha256": "d92469cdd234477829ca5a5fa75a67648f17235fffadf3d3cbdaa73672375427",
         "native_executed": false
       },
-      "current_stage": "power_vac_native_coherent_reference_qualified_candidate_next",
+      "current_stage": "power_vac_example31_accepted_dynamic_dc_reference_next",
       "pcc_feeder_probe": {
         "protocol": "docs/development_roadmap/experiments/c1_pcc_feeder_native_probe_20261122.json",
         "internal_feasibility_passed": true,
@@ -833,7 +837,13 @@
         "power_and_vac_window_trial": "validation/cases/grid_connected_vsc_power_vac/fundamental_window_trial.json",
         "power_and_vac_window_coarse_pair": "validation/cases/grid_connected_vsc_power_vac/coherent_window_coarse_pair.json",
         "power_and_vac_coherent_reference": "validation/cases/grid_connected_vsc_power_vac/coherent_reference_report.json",
-        "power_and_vac_candidate": "not_started"
+        "power_and_vac_candidate": "accepted_example_31",
+        "power_and_vac_acceptance": {
+          "path": "validation/cases/grid_connected_vsc_power_vac/acceptance_report.json",
+          "sha256": "811f45be6c9f9350cb1b190c85da816e0b2a1e516cfd4dda33d480182d88bd18",
+          "bytes": 7431,
+          "acceptance_commit_subject": "feat: accept PCC power and voltage control example 31 [skip ci]"
+        }
       },
       "open_loop_candidate_preparation": {
         "record": {
@@ -2025,7 +2035,7 @@
       }
     }
   ],
-  "current_stage": "power_vac_native_coherent_reference_qualified_candidate_next",
+  "current_stage": "power_vac_example31_accepted_dynamic_dc_reference_next",
   "resume_checkpoint_history": [
     {
       "resumed_utc": "2026-11-11T13:24:16.085490+00:00",

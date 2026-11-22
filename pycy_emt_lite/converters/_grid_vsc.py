@@ -1,4 +1,4 @@
-"""并网 VSC 两个教学算例共用的物理接线和电气时钟。"""
+"""并网 VSC 教学算例共用的物理接线和电气时钟。"""
 
 import math
 from collections.abc import Callable, Mapping
@@ -68,15 +68,24 @@ def create_bridge(
     inductance: float = INDUCTANCE,
     closed_resistance: float = SWITCH_ON_RESISTANCE,
     open_conductance: float = SWITCH_OFF_CONDUCTANCE,
+    feeder: tuple[float, float] | None = None,
 ) -> tuple[Component, ...]:
-    """浮置直流源、三相源/R/L 与六开关，门极由算例提供。"""
+    """浮置直流源、三相源/R/L 与六开关，可在原滤波器前串接馈线。"""
     components: list[Component] = [VoltageSource("Vdc", "dc_p", "dc_n", dc_voltage)]
     for phase, shift in phase_shifts.items():
         grid, resistor_out, pole = f"grid_{phase}", f"r_{phase}", f"pole_{phase}"
         upper, lower = gate_pair(phase)
+        components.append(VoltageSource(f"V{phase}", grid, "0", make_phase_voltage(shift)))
+        pcc = grid
+        if feeder is not None:
+            pcc, feeder_midpoint = f"pcc_{phase}", f"rg_out_{phase}"
+            feeder_resistance, feeder_inductance = feeder
+            components.extend((
+                Resistor(f"Rg{phase}", grid, feeder_midpoint, feeder_resistance),
+                Inductor(f"Lg{phase}", feeder_midpoint, pcc, feeder_inductance, initial_current=0.0),
+            ))
         components.extend((
-            VoltageSource(f"V{phase}", grid, "0", make_phase_voltage(shift)),
-            Resistor(f"R{phase}", grid, resistor_out, resistance),
+            Resistor(f"R{phase}", pcc, resistor_out, resistance),
             Inductor(f"L{phase}", resistor_out, pole, inductance, initial_current=0.0),
             IdealSwitch(f"S{phase}_upper", "dc_p", pole, upper,
                         closed_resistance=closed_resistance, open_conductance=open_conductance),
