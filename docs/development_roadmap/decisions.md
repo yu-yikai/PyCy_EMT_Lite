@@ -1,5 +1,8 @@
 # 技术决策
 
+2026-11-22。原生 PLL 相角加入电流正反变换。两档实现验证采样、限幅及门极施加顺序，跨档继续按电网配置角检查电流均值和波形。教学只增加由电压估计相角的演示，外环仍按后续独立阶段验收。
+[PLL 双步长原生长窗](../../validation/cases/grid_connected_vsc_pll/full_reference_report.json)
+
 2026-11-22。细档长窗把来自已验证归档的建图文件复制到当前隔离包，使构建目录检查和当前运行文件一致。保留首次目录保护退出的回执。
 [PLL 长窗记录](../../validation/cases/grid_connected_vsc_pll/full_reference_report.json)
 

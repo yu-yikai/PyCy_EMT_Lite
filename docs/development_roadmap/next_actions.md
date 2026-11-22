@@ -1,5 +1,8 @@
 # 恢复与下一步
 
+2026-11-22。PLL 两档 PSCAD 长窗参考已合格。先核协议、两份原生回执和跨档报告，再以私有共用函数保留 29 号的电流 PI、限幅与门极时序，新教学入口通过既有 SRFPLL 从实测三相电压获得相角。使用两档新 PyCy 轨迹执行原时钟同档比较，检查六路门极、电阻、限幅、锁相及真实电网坐标系的三周期跟踪。复跑受影响的 29 号对标、专项和全量回归并完成图与教学后验收。
+[PLL 双步长原生长窗](../../validation/cases/grid_connected_vsc_pll/full_reference_report.json)
+
 2026-11-22。粗档长窗已通过。细档首次启动在建图目录保护处退出，随后用 `c1_pscad_pll_long_2p5us_v2_20261122` 隔离包重试。先核该包 `n/20261122T121136814535Z` 的实际状态和终态，再核验 80,003 点并与粗档比较。
 [PLL 长窗记录](../../validation/cases/grid_connected_vsc_pll/full_reference_report.json)
 

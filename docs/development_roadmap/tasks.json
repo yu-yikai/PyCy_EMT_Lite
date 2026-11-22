@@ -3,7 +3,7 @@
   "updated_date": "2026-11-22",
   "timezone": "Asia/Shanghai",
   "branch": "codex/emt-examples-longterm",
-  "checkpoint_head": "57ad0fdc709c6104ea85b3706de813ebc9def95b",
+  "checkpoint_head": "0c096aaef58148d9fd619b5398108cb8c8c5bd18",
   "current_task": "C1",
   "formal_new_examples_completed": 11,
   "status_values": [
@@ -792,7 +792,8 @@
         "302772282779c5bcd8e7612026deefbb4031ea57",
         "c635f684fbfe01cbb4ea94f0b10c0aa5a3ecd626",
         "31f1490fe75acf97afbed8f26fe97e3f912e30e5",
-        "57ad0fdc709c6104ea85b3706de813ebc9def95b"
+        "57ad0fdc709c6104ea85b3706de813ebc9def95b",
+        "0c096aaef58148d9fd619b5398108cb8c8c5bd18"
       ],
       "blockers": [],
       "reference_feasibility": {
@@ -803,7 +804,7 @@
         "evidence_sha256": "d92469cdd234477829ca5a5fa75a67648f17235fffadf3d3cbdaa73672375427",
         "native_executed": false
       },
-      "current_stage": "pll_coarse_long_qualified_fine_long_pending",
+      "current_stage": "pll_full_pscad_reference_qualified_candidate_pending",
       "open_loop_candidate_preparation": {
         "record": {
           "path": "docs/development_roadmap/experiments/c1_openloop_candidate_preparation_20261116.json",
@@ -1650,13 +1651,13 @@
         }
       },
       "pll_integrated_reference": {
-        "status": "coarse_full_native_qualified_fine_pending",
+        "status": "both_native_full_grids_and_cross_grid_qualified",
         "protocol": {
           "path": "validation/cases/grid_connected_vsc_pll/reference_protocol.json",
           "sha256": "78ba092cc8099390023d3fcaa449c8479d269dcd5fa7ec315b267d968e1da767",
           "bytes": 6164
         },
-        "next": "使用修正隔离目录的细档重新构建并运行 80,003 点，再做全点核验和跨档比较。",
+        "next": "实现可独立运行的 PLL 教学入口，复用 29 号的电路和电流控制。以两档新 PyCy 独立运行与已合格 PSCAD 参考逐项比较，再完成图、专项测试、全量回归和教学验收。",
         "short_reference_report": {
           "path": "validation/cases/grid_connected_vsc_pll/short_reference_report.json",
           "bytes": 4779,
@@ -1684,8 +1685,8 @@
         },
         "full_reference_report": {
           "path": "validation/cases/grid_connected_vsc_pll/full_reference_report.json",
-          "sha256": "2273c6722fab74b9904b93a7d41bf7f6ff5b2909e4f164a9ad61b6c9eee35756",
-          "bytes": 2954
+          "sha256": "255e251c54c3146bc13a26a528c200e8af80e78cf3e1a1a62707afef66a9789d",
+          "bytes": 4790
         }
       }
     },
@@ -1938,7 +1939,7 @@
       }
     }
   ],
-  "current_stage": "pll_coarse_long_qualified_fine_long_pending",
+  "current_stage": "pll_full_pscad_reference_qualified_candidate_pending",
   "resume_checkpoint_history": [
     {
       "resumed_utc": "2026-11-11T13:24:16.085490+00:00",

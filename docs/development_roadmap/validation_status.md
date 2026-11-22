@@ -1,5 +1,8 @@
 # 验证状态
 
+2026-11-22。PLL 两档原生长窗通过原 19 项电气判据，各 2,000 次采样和门极应用，细档保持 40,001 个中点。验收窗最大相角误差 0.6298°、频率误差 0.01949 Hz、周期平均跟踪误差 0.06665 A。原生跨步长最大周期均值差 0.04845 A、最大分窗 RMS 差 0.07194 A。
+[PLL 双步长原生长窗](../../validation/cases/grid_connected_vsc_pll/full_reference_report.json)
+
 2026-11-22。PLL 粗档 40,002 点通过原 19 项电气判据、2,000 次反馈和随后的门极施加。稳态验收窗相角误差峰值 0.630°、频率误差峰值 0.01949 Hz，最大周期平均电流误差 0.06497 A。三周期功率方向通过。
 [PLL 长窗记录](../../validation/cases/grid_connected_vsc_pll/full_reference_report.json)
 
