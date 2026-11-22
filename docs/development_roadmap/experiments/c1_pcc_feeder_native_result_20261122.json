@@ -1,0 +1,56 @@
+{
+  "task": "C1",
+  "status": "PASS_NATIVE_PCC_FEEDER_SHORT_PROBE",
+  "scope": "有限电网 R/L、PCC 差分测量和原电流环时序的 5 µs 启动短窗。",
+  "base_protocol": "docs/development_roadmap/experiments/c1_pcc_feeder_native_probe_20261122.json",
+  "compiled_layout": "docs/development_roadmap/experiments/c1_pcc_feeder_native_layout_20261122.json",
+  "native_run": "local_reference/native_static_reviews/c1_pcc_feeder_native_5us_v5_20261122/n/20261122T142356632365Z",
+  "sha256": {
+    "terminal.json": "e06a28ee1522c63b7208be1ad3b6c8ec3145293dd422b638bf14d48831afd39b",
+    "manifest.json": "c6ee95bdbcc9a4bb209a5b59819605944bd24b6165cbd20a85a4a075db246f24",
+    "feeder_canvas.json": "5ffe47858b4fda88cfb778bce1c0e822dbe6efefc55da087aba3be88dfeecfee",
+    "pre_run_admission.json": "e5e74b8133d13e324e7e7767282ac31b02fe0cd6666f1793140fd43b2fe8e791",
+    "native_execution_receipt.json": "01552074fbd1a6272a489e45eec99eb71ba39b439418c2f5d79dbb64b3a16be7",
+    "numeric_feeder_verdict.json": "e3880f266ec58cce76b9f2efce71b181ba01a5d35fcdf992cdb2c51d16858336"
+  },
+  "runtime": {
+    "platform": "PSCAD/EMTDC 5.0.0, gf46/x86",
+    "build_calls": 1,
+    "run_calls": 1,
+    "native_emtdc_process_observed": true,
+    "build_warnings": 0,
+    "build_errors": 0,
+    "simulation_exit_status": 0,
+    "owned_processes_remaining": 0
+  },
+  "observations": {
+    "step_s": 0.000005,
+    "last_row_s": 0.000605,
+    "rows": 122,
+    "measured_native_outputs": 48,
+    "control_samples": [20, 40, 60, 80, 100, 120],
+    "next_gate_application_samples": [21, 41, 61, 81, 101, 121],
+    "feeder_trapezoid_intervals_checked": 363,
+    "max_feeder_trapezoid_residual_including_print_quantum_v": 2.0000002567427293e-10,
+    "feeder_trapezoid_limit_v": 5e-6,
+    "max_native_feedback_clock_error_s": 9.9e-20
+  },
+  "independent_pycy_prefix_readback": {
+    "scope": "按原生 INF 名称读五份原始 OUT，与既有 PyCy 5 µs 固定 q 工况前 122 点作附加诊断。",
+    "pycy_archive": "local_reference/native_static_reviews/c1_power_vac_feasibility_20261122/held.npz",
+    "pycy_archive_sha256": "6e65c351fac9ffe3340a4fea9a0a4c446eb331f474fa85e31aedae2211477136",
+    "max_ideal_source_voltage_difference_v": 9.547918011776346e-14,
+    "max_pcc_voltage_difference_v": 9.066170703064813e-9,
+    "max_phase_current_difference_a": 1.4395602765393534e-12
+  },
+  "saved_copy_reload": {
+    "run": "local_reference/native_static_reviews/c1_pcc_feeder_native_5us_v4_20261122/n/20261122T142227137660Z",
+    "terminal_sha256": "1ab771726c1e514a2335c3015302e0b57cf618a5e091df4b3cc63532d8b1e5ad",
+    "build_messages_sha256": "d6ec7e7d1cb56bc7bf22b723b9eb55e381500cfdafec9b27c46c592127643a66",
+    "build_errors": 88,
+    "build_warnings": 3428,
+    "run_calls": 0,
+    "cause": "重新加载后编译出现原生控制信号源冲突。通过的运行在同一 PSCAD 实例实时重建、编译并运行。"
+  },
+  "next": "先固定 P 前馈及 Vac 外环的测量、更新、限幅、冻结对比窗口和双步长原生参考。"
+}

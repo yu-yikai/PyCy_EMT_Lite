@@ -1,5 +1,8 @@
 # 恢复与下一步
 
+2026-11-22。PCC 原生 5 µs 短窗已通过。下一步固定 PCC 有功和相电压有效值的测量、外环更新和限值，以及固定 q 与电压调节两组对照。源端 PLL 保留作坐标参考，P 与 Vac 均取 PCC。先核对两档原生控制轨迹，再开始候选。沿用通过的实时构建步骤，在独立目录密封新输入。
+[原生短窗结果](experiments/c1_pcc_feeder_native_result_20261122.json) · [测量回放](experiments/c1_pcc_measurement_replay_20261122.json)
+
 2026-11-22。按[已编译布局](experiments/c1_pcc_feeder_native_layout_20261122.json)重新编译并核准原生工程。保留每相 R/L、原 45 路意义和三路新 PCC 差分测量，以锁定的 48 路原生编号采集。通过后运行原定 122 点短窗。优先隔离加载已绑定的保存模型副本，加载异常时回到原 live builder。
 
 2026-11-22。先按[短窗协议](experiments/c1_pcc_feeder_native_probe_20261122.json)在独立目录构建 PSCAD 原生有限电网拓扑。编译确认每相新增 R/L 和 PCC 差分通道后，运行 5 µs、605 µs 短窗，核对逐步支路电压和六次门极时序。短窗之后再固定 PCC 基波测量和外环参考，公式及接口尽量复用现有电流环。
