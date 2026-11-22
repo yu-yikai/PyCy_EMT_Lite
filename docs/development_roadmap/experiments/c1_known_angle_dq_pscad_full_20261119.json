@@ -1,0 +1,168 @@
+{
+  "schema_version": 1,
+  "date": "2026-11-19",
+  "status": "paused_after_both_native_main_runs_failed_original_physics",
+  "protocol_commit": "587cb54",
+  "full_protocol": {
+    "path": "validation/cases/grid_connected_vsc_closed_loop/reference_protocol.json",
+    "bytes": 8581,
+    "sha256": "53c1eb1c237fc4bd78ff83feb614023fc7d06b4b1700e7df09e1cd4de8236f06"
+  },
+  "software_preflight": {
+    "scope": "Four archived internal trajectories and separate synthetic reader tests",
+    "native_reference_used": false,
+    "cross_step_max_dq_RMSE_A": 0.08141387965876772,
+    "cross_step_max_cycle_mean_difference_A": 0.04354539089559606,
+    "all_preflight_gates_passed": true,
+    "metrics": {
+      "path": "local_reference/native_static_reviews/c1_long_window_metrics_20261118T164417261316Z/report.json",
+      "bytes": 113793,
+      "sha256": "b8ef8fd8917a73b6385d1761e317d7e1c88a48b05145075f41c11f712ba734ae"
+    },
+    "stream_mutation_tests": {
+      "path": "local_reference/native_static_reviews/c1_long_stream_software_precheck_20261118T164223800295Z/software_precheck.json",
+      "bytes": 15570,
+      "sha256": "f59ec2a176ca8792bd64fa5f86473fbc61193d7d81b71803e0446412d7dfeef9"
+    },
+    "stream_capacity_at_80003_rows": {
+      "path": "local_reference/native_static_reviews/c1_long_stream_full_count_software_20261118T164527305427Z/report.json",
+      "bytes": 15250,
+      "sha256": "dffa563e7e0cb2520ff09e566ea1c2c650d1e81c925dbbc4a27ddbb6ad3d93ee"
+    }
+  },
+  "main_fine_saved_project_reload": {
+    "build_attempts": 1,
+    "run_attempts": 0,
+    "build_errors": 81,
+    "build_warnings": 3423,
+    "layout_before": {
+      "canvas_size_code": 0,
+      "User": {
+        "count": 318,
+        "max_xy": [
+          22932,
+          14580
+        ],
+        "count_at_4878_6318": 0
+      },
+      "Wire": {
+        "count": 251,
+        "max_xy": [
+          22860,
+          14580
+        ],
+        "count_at_4878_6318": 0
+      }
+    },
+    "layout_after": {
+      "canvas_size_code": 4,
+      "User": {
+        "count": 318,
+        "max_xy": [
+          5940,
+          6318
+        ],
+        "count_at_4878_6318": 137
+      },
+      "Wire": {
+        "count": 251,
+        "max_xy": [
+          5904,
+          6318
+        ],
+        "count_at_4878_6318": 110
+      }
+    },
+    "conclusion": "Overlapping native instances and wires observed in the saved project after the load, settings, save and build sequence. Use same-session live construction.",
+    "closure": {
+      "path": "local_reference/native_static_reviews/c1_pscad_feedback_long_main_2p5us_20261119/n/20261118T164044776787Z/failure_closure.json",
+      "bytes": 2642,
+      "sha256": "f42b6ed0666b0dc1564576a82d45d722c757a43a5a2353692d2b75b15d14ee86"
+    }
+  },
+  "live_runs": {
+    "main_2p5us": {
+      "rows": 80003,
+      "native_run_calls": 1,
+      "owned_native_processes_remaining": 0,
+      "original_physics_passed": false,
+      "dq_tracking_passed": true,
+      "max_cycle_tracking_error_A": 0.0626866417749512,
+      "common_mode_limit_V": 2e-06,
+      "common_mode_peak_with_original_precision_V": 2.246892399702e-05,
+      "common_mode_peak_index": 70371,
+      "conditional_prediction_passed_prerequisites": false,
+      "native_execution": {
+        "path": "local_reference/native_static_reviews/c1_pscad_feedback_long_main_2p5us_live_20261119/n/20261118T164428532385Z/native_execution_receipt.json",
+        "bytes": 1082,
+        "sha256": "90705c172358fd013c3d3b374db13dc5b7829e2a1ae5fda379fbf0573f9b0410"
+      },
+      "original_numeric_rejection": {
+        "path": "local_reference/native_static_reviews/c1_pscad_long_stream_review_20261118T165525596471Z/report.json",
+        "bytes": 364,
+        "sha256": "88086bf7a2cc99c1dbe66e555b5dec790735dacc1dec47e7d213bdd0ddfa93f7"
+      },
+      "whole_capture_diagnostic": {
+        "path": "local_reference/native_static_reviews/c1_pscad_long_debug_diagnostic_20261118T165823446162Z/report.json",
+        "bytes": 33420,
+        "sha256": "09eade008a7692af3f33f48f0706318f95297d8b2ea6a697d3659facb6da8de5"
+      },
+      "common_mode_original_token_audit": {
+        "path": "local_reference/native_static_reviews/c1_pscad_long_debug_diagnostic_20261118T165823446162Z/common_mode_audit.json",
+        "bytes": 859,
+        "sha256": "7e1e12bfc4d9e4e3f96d2eb9b9afda531756046af856f732086c2911c6f2a16f"
+      },
+      "configured_angle_high_precision_diagnosis": {
+        "path": "local_reference/native_static_reviews/c1_long_edq_generation_forensics_20261118T170115302405Z/report.json",
+        "bytes": 8971,
+        "sha256": "b2b2cc1a14e87c290d14f3b85411ab2a3d46c0326c58053fc2029bb23a9f18c6"
+      }
+    },
+    "main_5us": {
+      "rows": 40002,
+      "native_run_calls": 1,
+      "owned_native_processes_remaining": 0,
+      "original_physics_passed": false,
+      "dq_tracking_passed": true,
+      "max_cycle_tracking_error_A": 0.057379308129590356,
+      "common_mode_limit_V": 2e-06,
+      "common_mode_peak_with_original_precision_V": 1.1462861878666667e-05,
+      "common_mode_peak_index": 26658,
+      "conditional_prediction_passed_prerequisites": false,
+      "native_execution": {
+        "path": "local_reference/native_static_reviews/c1_pscad_feedback_long_main_5us_live_20261119/n/20261118T165557277225Z/native_execution_receipt.json",
+        "bytes": 1801,
+        "sha256": "3e65aac10f43a898fe6c7daf3f5153e14b939c56a55fc76c3b2933bd20a75eed"
+      },
+      "original_numeric_rejection": {
+        "path": "local_reference/native_static_reviews/c1_pscad_long_stream_review_20261118T170614423792Z/report.json",
+        "bytes": 374,
+        "sha256": "87bc9862715217fd7a29086805068ef346c8e87b5efe618452e0e3167ba4892d"
+      },
+      "whole_capture_diagnostic": {
+        "path": "local_reference/native_static_reviews/c1_pscad_long_debug_diagnostic_20261118T170747928624Z/report.json",
+        "bytes": 31320,
+        "sha256": "704b0a583d4324efdaf6cfcba6edc10779415812053bc9722e8b4b2858460c13"
+      }
+    }
+  },
+  "full_native_reference_qualified": false,
+  "formal_example_accepted": false,
+  "next_reference_study": {
+    "status": "offline_gauge_equivalence_checked_native_pending",
+    "subject": "Move the numerical origin to DC negative and measure the original eight ground-referenced outputs relative to the explicit AC neutral",
+    "offline_nodal_conditioning": {
+      "path": "local_reference/native_static_reviews/c1_phase_voltage_reference_gauge_20261118T170614501121Z/report.json",
+      "bytes": 1829,
+      "sha256": "f0b74d0ac564092788e4d916ffa32f36f990280169e5f3f0d293c137d2d2b573"
+    },
+    "native_build_or_run_attempted": false
+  },
+  "pause": {
+    "explicit_user_instruction": true,
+    "last_pushed_head": "587cb544e0c401a0112b13bd81f5fab162bfcbc3",
+    "known_owned_native_runs_remaining": 0,
+    "d_only_executed": false,
+    "future_native_runs_started": false
+  }
+}

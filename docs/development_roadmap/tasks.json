@@ -3,7 +3,7 @@
   "updated_date": "2026-11-19",
   "timezone": "Asia/Shanghai",
   "branch": "codex/emt-examples-longterm",
-  "checkpoint_head": "b245712af22d20205a6883b8ce3767e4d21cbb54",
+  "checkpoint_head": "587cb544e0c401a0112b13bd81f5fab162bfcbc3",
   "current_task": "C1",
   "formal_new_examples_completed": 10,
   "status_values": [
@@ -732,7 +732,9 @@
         "docs/development_roadmap/experiments/c1_known_angle_dq_native_startup_20261118.json",
         "docs/development_roadmap/experiments/c1_known_angle_dq_pscad_control_20261118.json",
         "docs/development_roadmap/experiments/c1_known_angle_dq_pscad_feedback_20261118.json",
-        "docs/development_roadmap/experiments/c1_known_angle_dq_pscad_feedback_fine_20261119.json"
+        "docs/development_roadmap/experiments/c1_known_angle_dq_pscad_feedback_fine_20261119.json",
+        "docs/development_roadmap/experiments/c1_known_angle_dq_pscad_full_20261119.json",
+        "validation/cases/grid_connected_vsc_closed_loop/reference_protocol.json"
       ],
       "commits": [
         "b835e31785fab3fda247c333d23edbe9ce576dfa",
@@ -781,7 +783,7 @@
         "evidence_sha256": "d92469cdd234477829ca5a5fa75a67648f17235fffadf3d3cbdaa73672375427",
         "native_executed": false
       },
-      "current_stage": "known_angle_dq_short_dual_step_pass_full_reference_next",
+      "current_stage": "known_angle_dq_long_native_main_physics_fail_paused",
       "open_loop_candidate_preparation": {
         "record": {
           "path": "docs/development_roadmap/experiments/c1_openloop_candidate_preparation_20261116.json",
@@ -1587,7 +1589,7 @@
         "acceptance_commit": "a777c00c283498ab2dd9a1542a4454b7cf8c5e4a"
       },
       "known_angle_current_loop": {
-        "status": "pscad_pycy_short_electrical_feedback_dual_step_pass",
+        "status": "pscad_short_pass_long_main_both_steps_physics_fail",
         "record": {
           "path": "docs/development_roadmap/experiments/c1_known_angle_dq_design_checks_20261118.json",
           "bytes": 1604,
@@ -1602,7 +1604,8 @@
         "native_control_record": "docs/development_roadmap/experiments/c1_known_angle_dq_pscad_control_20261118.json",
         "short_feedback_record": "docs/development_roadmap/experiments/c1_known_angle_dq_pscad_feedback_20261118.json",
         "fine_feedback_record": "docs/development_roadmap/experiments/c1_known_angle_dq_pscad_feedback_fine_20261119.json",
-        "next": "封存双档长窗协议并建立真实参考，先核原物理判据和跟踪窗，再验收教学候选。"
+        "full_feedback_record": "docs/development_roadmap/experiments/c1_known_angle_dq_pscad_full_20261119.json",
+        "next": "等待用户恢复。先核冻结协议与两档原生失败证据，再按原窗和原判据准备数值参考点对照。"
       }
     },
     {
@@ -1757,18 +1760,18 @@
       "blockers": []
     }
   ],
-  "execution_status": "active",
+  "execution_status": "paused",
   "pause_checkpoint": {
     "record": {
-      "path": "local_reference/c1_openloop_reference_research/pause_checkpoints/20261116T160442401648Z/pause.json",
-      "bytes": 1555,
-      "sha256": "cde5aa19d53f853d09f3e0f8a6b9b22e59d4b9719c2a14e5b37a636ef6b98631"
+      "path": "docs/development_roadmap/experiments/c1_known_angle_dq_pscad_full_20261119.json",
+      "bytes": 6880,
+      "sha256": "f8ad8f5dc8062e4be06fe724655b898045aeb6a53d9e4a6e81fa142466e8685c"
     },
-    "head": "7a10fc9e1b1d7184412f1edc55a6edb7740a422d",
-    "status": "paused_before_ledger_implementation",
+    "head": "587cb544e0c401a0112b13bd81f5fab162bfcbc3",
+    "status": "paused_after_both_native_main_runs_failed_original_physics",
     "explicit_user_request": true
   },
-  "goal_status": "active",
+  "goal_status": "paused",
   "resume_checkpoint": {
     "record": {
       "path": "local_reference/c1_openloop_reference_research/resume_checkpoints/20261118T071130521842Z/resume.json",
@@ -1843,7 +1846,7 @@
       }
     }
   ],
-  "current_stage": "known_angle_dq_short_dual_step_pass_full_reference_next",
+  "current_stage": "known_angle_dq_long_native_main_physics_fail_paused",
   "resume_checkpoint_history": [
     {
       "resumed_utc": "2026-11-11T13:24:16.085490+00:00",

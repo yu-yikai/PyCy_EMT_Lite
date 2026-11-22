@@ -1,5 +1,8 @@
 # 技术决策
 
+2026-11-19。保存的 PSCAD 工程经重载和设置后出现图元坐标堆叠，重载尝试停在构建。双步长长窗采集改用已验证的同会话建图路径。细档首个共模越限发生在 8.2375 ms，早于两个指令阶跃。优先保留原物理门限，恢复后另封数值参考点对照。角度整数约简的数值试验另行记录。
+[长窗记录](experiments/c1_known_angle_dq_pscad_full_20261119.json)
+
 2026-11-19。PSCAD 细档的单因素对照把稀疏求解门限从 200 改到 1。实际生成网表仍为 14 个非地节点、19 条支路，两次施加门极和电阻逐点一致。首次超限和对照通过均保留，完整长窗继续使用原 2 µV 上限。两档独立闭环的公共网格已观察到门极差异，同步长的精确门极要求继续适用。
 [细档和长窗记录](experiments/c1_known_angle_dq_pscad_feedback_fine_20261119.json) · [PSCAD 网络求解设置](https://www.pscad.com/webhelp-v5-ol/PSCAD/Application_Project_Options/Project_Settings/Network.htm#Solution_Options)
 

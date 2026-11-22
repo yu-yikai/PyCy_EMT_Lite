@@ -1,5 +1,8 @@
 # 恢复与下一步
 
+2026-11-19。已按用户指令暂停，所有本轮原生仿真均闭场。恢复后先核长窗冻结提交 587cb54、状态文件和两档失败收据。优先准备求解器数值参考点平移的独立 PSCAD 对照。保留以交流中性点为基准的原生差分观测、同一物理网络和全部原判据。原生准入前核对 19 条支路、45 个输出和 8 路差分电压。若 MathWorks 可正常签出许可，也可恢复原 Simscape 路线。
+[冻结协议](../../validation/cases/grid_connected_vsc_closed_loop/reference_protocol.json) · [长窗记录](experiments/c1_known_angle_dq_pscad_full_20261119.json)
+
 2026-11-19。5 µs 和 2.5 µs 短闭环已完成真实 PSCAD 与 Python 对标。细档合格运行的稀疏求解门限为 1。准备完整商业参考时先核两档实际生成参数和原电路，逐档取得通过原电气判据的长窗波形。短窗 23 项同档误差和 12 路实际门极、电阻比较可复用。
 [粗档对标](experiments/c1_known_angle_dq_pscad_feedback_20261118.json) · [细档和长窗记录](experiments/c1_known_angle_dq_pscad_feedback_fine_20261119.json)
 
