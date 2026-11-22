@@ -1,5 +1,8 @@
 # 恢复与下一步
 
+2026-11-22。29 号已验收，正式新增共 11 个。PLL 接入沿用 29 号的 19 条支路、三相差分电压、100 µs 求解后采样和下一 5 µs 门极生效。以 11 号的离散更新顺序为依据，先冻结初始角偏差、采样变量、角度与频率的锁定窗口及限值。再取得原生 PSCAD 短窗并扩至两档长窗，同时核对门极和电流跟踪。
+[29 号验收报告](../../validation/cases/grid_connected_vsc_closed_loop/validation_report.json) · [既有 PLL 参考](../../validation/cases/pll_dynamic_response/README.md)
+
 2026-11-22。四工况参考、PyCy 原型比较和成组验收均已通过。接下来实现 29 号已知角度 dq 电流环，复用 28 号的物理接线以及既有双 PI、dq 变换和载波。保留 28 号开环门极回调与现有验收行为。在正式入口中演示 100 µs 求解后采样、下一 5 µs 门极生效、细档半步保持、限幅和两轴积分回滚。用新入口重新跑四工况并对照已合格参考，覆盖两档时序、限幅恢复和独立实例状态，补齐中英文入口、图和报告后运行原回归。
 [完整参考报告](../../validation/cases/grid_connected_vsc_closed_loop/qualified_reference_report.json) · [控制设计](../specs/algorithms/known-angle-dq-current/known-angle-dq-current-system-architecture.md)
 

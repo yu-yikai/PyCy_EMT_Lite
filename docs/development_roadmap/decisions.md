@@ -1,5 +1,8 @@
 # 技术决策
 
+2026-11-22。28 和 29 共用三相桥接线及电气时钟，分别保留自己的门极回调。29 在求解后用现有 PI 和 dq 变换计算待施加参考。持续到下一门极拍的时序放在教学入口，商业对标放在验证目录。PLL 接入沿用 29 的同一电路和电流指令，先单独验证相角估计，再接入外环。
+[29 号验收报告](../../validation/cases/grid_connected_vsc_closed_loop/validation_report.json)
+
 2026-11-22。认定直流负端求解参考点与整数角度约简适用于已验收的四工况。交流中性点差分观测、物理支路和全部原门限沿用。正式 PyCy 教学入口保持电网接地点和浮置直流源的物理表示，沿用既有双 PI、转轴变换和求解后回调。
 [完整参考报告](../../validation/cases/grid_connected_vsc_closed_loop/qualified_reference_report.json)
 

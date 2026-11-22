@@ -102,14 +102,19 @@ def advance(old_i, old_n, e, old_e, gu, gl, old_gu, old_gl, h):
     return answer[:3], answer[3]
 
 
-def evaluate(rows, radii, *, h, expected_rows, limits, precision_caps):
+def evaluate(rows, radii, *, h, expected_rows, limits, precision_caps, upper_states=None):
     """Check every supplied acquisition row/prefix against prospective budgets.
 
     No output file is opened, no reference qualification is granted here, and no
     original timestamp is changed. All input numbers and full-place radii are SI.
+    A feedback case may supply its independently checked upper states by row.
     """
     require(h in {D('.000005'), D('.0000025')}, 'Unsupported electrical step')
     require(len(rows) == len(radii) == expected_rows and expected_rows >= 2, 'Incomplete acquisition')
+    if upper_states is not None:
+        require(len(upper_states) == expected_rows, 'Incomplete upper gate schedule')
+        require(all(len(row) == 3 and all(bit in (0, 1) for bit in row) for row in upper_states),
+                'Each row requires three binary upper gate states')
     expected = set(names())
     require(all(set(r) == expected and all(v.is_finite() for v in r.values()) for r in rows), '32 finite values required')
     require(all(set(q) == expected and all(v.is_finite() and v >= 0 for v in q.values()) for q in radii), '32 nonnegative finite radii required')
@@ -154,7 +159,7 @@ def evaluate(rows, radii, *, h, expected_rows, limits, precision_caps):
             elif unit(name) == 'kA':
                 require(q[name] <= D(str(precision_caps['phase_current_full_last_place_A'])), 'Current token cap')
                 require(abs(row[name])+q[name] <= 440, 'Universal current guard')
-        _, _, _, bits = canonical(k, h)
+        bits = canonical(k, h)[3] if upper_states is None else [int(bit) for bit in upper_states[k]]
         gu, gl = conductances(bits)
         for j, p in enumerate(PHASES):
             for s, b, g in [('u', bits[j], gu[j]), ('l', 1-bits[j], gl[j])]:

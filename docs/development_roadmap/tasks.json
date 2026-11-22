@@ -3,9 +3,9 @@
   "updated_date": "2026-11-22",
   "timezone": "Asia/Shanghai",
   "branch": "codex/emt-examples-longterm",
-  "checkpoint_head": "206d28acf9748fc2a9c66167191c8709069c5a0f",
+  "checkpoint_head": "ae4fd239ef1a91b75042b9d291f1548d5a5e132f",
   "current_task": "C1",
-  "formal_new_examples_completed": 10,
+  "formal_new_examples_completed": 11,
   "status_values": [
     "planned",
     "ready",
@@ -671,7 +671,7 @@
         "pscad-derived-force-dsout-bounded-probe-v5",
         "simscape-derived-grid-vsc-openloop-r2025a"
       ],
-      "validation": "28号开环两档40002/80003点与真实Simscape参考通过双路原19项物理门、两档各150及跨档132组比较，默认独立运行和1573项含slow回归通过。已知角度dq四工况真实PSCAD长窗参考合格，32窗PyCy原型同档、两个场景跨档和两档成组判据通过。正式入口待独立验收。",
+      "validation": "28 号开环通过真实 Simscape 双步长对标，共用接线后复验波形及判据逐字节一致。29 号已知角度 dq 电流环在两工况双步长下通过真实 PSCAD 同档、跨档及成组比较，Windows 1581 项含 slow 回归及 Windows/WSL2 独立默认入口通过。",
       "acceptance": "局部、可独立运行验证的教学例逐项验收",
       "status": "in_progress",
       "files": [
@@ -742,7 +742,13 @@
         "validation/cases/grid_connected_vsc_closed_loop/pscad_closed_loop_remaining_variants.json",
         "docs/development_roadmap/experiments/c1_pscad_main_both_steps_20261122.json",
         "validation/cases/grid_connected_vsc_closed_loop/pscad_closed_loop_d_only_variants.json",
-        "validation/cases/grid_connected_vsc_closed_loop/qualified_reference_report.json"
+        "validation/cases/grid_connected_vsc_closed_loop/qualified_reference_report.json",
+        "examples/29_grid_connected_vsc_closed_loop.py",
+        "pycy_emt_lite/converters/_grid_vsc.py",
+        "tests/test_grid_connected_vsc_closed_loop.py",
+        "validation/cases/grid_connected_vsc_closed_loop/README.md",
+        "validation/cases/grid_connected_vsc_closed_loop/compare.py",
+        "validation/cases/grid_connected_vsc_closed_loop/validation_report.json"
       ],
       "commits": [
         "b835e31785fab3fda247c333d23edbe9ce576dfa",
@@ -778,11 +784,10 @@
         "368b352d60bcd16a1bdc9a58e999831965e6275b",
         "6634277c68e856cd81311149b91dc8bf55f61ea2",
         "a777c00c283498ab2dd9a1542a4454b7cf8c5e4a",
-        "b245712af22d20205a6883b8ce3767e4d21cbb54"
+        "b245712af22d20205a6883b8ce3767e4d21cbb54",
+        "ae4fd239ef1a91b75042b9d291f1548d5a5e132f"
       ],
-      "blockers": [
-        "已知角度dq电流环待完整双档商业参考及教学候选验收。"
-      ],
+      "blockers": [],
       "reference_feasibility": {
         "status": "read_only_feasibility_only",
         "record": "local_reference/c1_pll_reference_research/20261111T013530229954Z/feasibility.md",
@@ -791,7 +796,7 @@
         "evidence_sha256": "d92469cdd234477829ca5a5fa75a67648f17235fffadf3d3cbdaa73672375427",
         "native_executed": false
       },
-      "current_stage": "known_angle_dq_full_pscad_reference_pass_example29_pending",
+      "current_stage": "known_angle_dq_example29_accepted_pll_integration_next",
       "open_loop_candidate_preparation": {
         "record": {
           "path": "docs/development_roadmap/experiments/c1_openloop_candidate_preparation_20261116.json",
@@ -1597,13 +1602,13 @@
         "acceptance_commit": "a777c00c283498ab2dd9a1542a4454b7cf8c5e4a"
       },
       "known_angle_current_loop": {
-        "status": "pscad_four_native_runs_full_reference_qualified_pycy_prototype_pass",
+        "status": "accepted_example29",
         "record": {
           "path": "docs/development_roadmap/experiments/c1_known_angle_dq_design_checks_20261118.json",
           "bytes": 1604,
           "sha256": "77cf66ed4033a0e7c2716d68ea47d1c142b61bfcd52bf18246ee506ee76d8fd9"
         },
-        "candidate_implemented": false,
+        "candidate_implemented": true,
         "native_reference_executed": true,
         "native_electrical_feedback_executed": true,
         "native_electrical_feedback_build_admitted": true,
@@ -1618,7 +1623,24 @@
         "fine_main_angle_record": "docs/development_roadmap/experiments/c1_pscad_angle_arithmetic_trial_20261122.json",
         "main_pair_record": "docs/development_roadmap/experiments/c1_pscad_main_both_steps_20261122.json",
         "qualified_reference_report": "validation/cases/grid_connected_vsc_closed_loop/qualified_reference_report.json",
-        "next": "实现29号正式教学入口，复用现有接线与控制元件，以新入口的四次独立运行对照已合格PSCAD参考，完成图、文档和全量回归。"
+        "next": "先定 PLL 接入协议，沿用 29 号电路、100 µs 采样及下一 5 µs 门极生效。用初始角偏差检查锁定，以独立原生 PSCAD 参考验收角度、频率、实际门极及电流跟踪。",
+        "formal_acceptance": {
+          "example": 29,
+          "report": {
+            "path": "validation/cases/grid_connected_vsc_closed_loop/validation_report.json",
+            "sha256": "34c46fec65a8fbdccecf82d89286c16244560dff878f199dcc7069f7e7de3957",
+            "bytes": 6819
+          },
+          "formal_new_examples_completed": 11,
+          "acceptance_commit_subject": "feat: accept the known-angle dq VSC current-loop example [skip ci]"
+        }
+      },
+      "pll_integration_preflight": {
+        "status": "design_review_only_protocol_pending",
+        "record": {
+          "path": "local_reference/native_static_reviews/example29_release_checks_20261122/pll_integration_preflight.json",
+          "sha256": "0f3ffbece37f0f7157e8b02b0cc424fe139632ffd187d1ae21946a7d3c5801db"
+        }
       }
     },
     {
@@ -1870,7 +1892,7 @@
       }
     }
   ],
-  "current_stage": "known_angle_dq_full_pscad_reference_pass_example29_pending",
+  "current_stage": "known_angle_dq_example29_accepted_pll_integration_next",
   "resume_checkpoint_history": [
     {
       "resumed_utc": "2026-11-11T13:24:16.085490+00:00",
@@ -1912,9 +1934,9 @@
     }
   ],
   "current_source_snapshot": {
-    "path": "local_reference/c1_openloop_reference_research/20261118T123641205507Z_candidate_refined_lu_pair_v4/source_snapshot.json",
-    "bytes": 21359,
-    "sha256": "cfa632091b425649e15d6edda42dbd682a7395e340923d45fe8b03c8280fb6f6"
+    "path": "local_reference/native_static_reviews/c1_example29_comparison_20261122T110553870690Z/inputs.json",
+    "sha256": "ac8d39b7b8a9795e3e8ca5fa8d3fa74af139cb8100c450d02f59d53f266970f7",
+    "bytes": 18371
   },
   "latest_maintenance": {
     "kind": "dense_lu_one_residual_refinement",

@@ -1,0 +1,187 @@
+{
+  "schema": "grid_connected_vsc_closed_loop_validation_v1",
+  "date": "2026-11-22",
+  "example": 29,
+  "status": "FORMAL_KNOWN_ANGLE_DQ_EXAMPLE_ACCEPTED",
+  "scope": "Single grid-connected six-switch bridge with a fixed ideal DC source and known-angle dq current control.",
+  "branch": "codex/emt-examples-longterm",
+  "parent_commit": "ae4fd239ef1a91b75042b9d291f1548d5a5e132f",
+  "candidate_entry": "examples/29_grid_connected_vsc_closed_loop.py",
+  "reference": {
+    "engine": "PSCAD 5.0 / GFortran 4.6 x86",
+    "protocol": {
+      "path": "validation/cases/grid_connected_vsc_closed_loop/reference_protocol.json",
+      "sha256": "53c1eb1c237fc4bd78ff83feb614023fc7d06b4b1700e7df09e1cd4de8236f06"
+    },
+    "qualification": {
+      "path": "validation/cases/grid_connected_vsc_closed_loop/qualified_reference_report.json",
+      "sha256": "ef609369fe275a96af667023c44a9b418a31d750b041d88109eb41851c0550cd"
+    },
+    "native_runs": 4,
+    "native_rows": 240010,
+    "native_calls_during_candidate_comparison": 0
+  },
+  "candidate_runs": {
+    "main_5us": {
+      "rows": 40002,
+      "common_mode_with_token_bound_V": 4.794201586333765e-07,
+      "tracking_max_cycle_mean_error_A": 0.057379308985657795,
+      "saturated_samples": 35,
+      "control_samples": 2000,
+      "next_gate_applications": 2000,
+      "fine_half_steps_held": 0
+    },
+    "main_2p5us": {
+      "rows": 80003,
+      "common_mode_with_token_bound_V": 1.15118523442668e-08,
+      "tracking_max_cycle_mean_error_A": 0.0626866441010705,
+      "saturated_samples": 35,
+      "control_samples": 2000,
+      "next_gate_applications": 2000,
+      "fine_half_steps_held": 40001
+    },
+    "d_only_5us": {
+      "rows": 40002,
+      "common_mode_with_token_bound_V": 1.692229888453588e-07,
+      "tracking_max_cycle_mean_error_A": 0.03606013763150897,
+      "saturated_samples": 0,
+      "control_samples": 2000,
+      "next_gate_applications": 2000,
+      "fine_half_steps_held": 0
+    },
+    "d_only_2p5us": {
+      "rows": 80003,
+      "common_mode_with_token_bound_V": 1.1448122757499866e-08,
+      "tracking_max_cycle_mean_error_A": 0.05855941056598168,
+      "saturated_samples": 0,
+      "control_samples": 2000,
+      "next_gate_applications": 2000,
+      "fine_half_steps_held": 40001
+    }
+  },
+  "same_step": {
+    "windows": 32,
+    "continuous_metrics": 736,
+    "exact_metrics": 416,
+    "passed": true
+  },
+  "cross_step": {
+    "PyCy": {
+      "max_cycle_mean_difference_A": 0.04354539089559606,
+      "max_window_rms_difference_A": 0.08141387965876772
+    },
+    "PSCAD": {
+      "max_cycle_mean_difference_A": 0.04354539102593691,
+      "max_window_rms_difference_A": 0.08141387971245442
+    }
+  },
+  "paired_scenarios": {
+    "PyCy": {
+      "max_abs_d_effect_A": 0.06732482059233913,
+      "q_effect_A_range": [
+        1.5299790565473936,
+        1.5672802318473058
+      ]
+    },
+    "PSCAD": {
+      "max_abs_d_effect_A": 0.06732482059233158,
+      "q_effect_A_range": [
+        1.5299790565473923,
+        1.5672802318473078
+      ]
+    }
+  },
+  "limits": {
+    "tracking_A": 0.4,
+    "common_mode_V": 2e-06,
+    "cross_step_cycle_mean_A": 0.1,
+    "cross_step_window_rms_A": 0.2
+  },
+  "independent_default_cli": {
+    "step_s": 5e-06,
+    "stop_s": 0.2,
+    "rows": 40001,
+    "log": {
+      "path": "local_reference/native_static_reviews/example29_release_checks_20261122/default.log",
+      "sha256": "b676bc2698815e73beb24cc12cc4d831aae335b6c862b402a0fb9237cd828ea4"
+    }
+  },
+  "windows_checks": {
+    "python": "3.14.5",
+    "locked_sync_packages": 27,
+    "ruff": {
+      "path": "local_reference/native_static_reviews/example29_release_checks_20261122/ruff.log",
+      "sha256": "a4443afdcfb6d7363adb285762515ccf7cf50473b1a05c20c1a50f6bed4d26b0"
+    },
+    "mypy": {
+      "path": "local_reference/native_static_reviews/example29_release_checks_20261122/mypy.log",
+      "sha256": "ee3a12df8b76d14e26acc8e630f53f2fa25ac3235e6bdd46c6ec61ea827f83ad"
+    },
+    "pytest": {
+      "tests": 1581,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "includes_slow": true,
+      "junit": {
+        "path": "local_reference/native_static_reviews/example29_release_checks_20261122/windows-pytest.xml",
+        "sha256": "39526538562688c04ebc739a654ca9320dbca783a276513cf11ecd5f66628610"
+      },
+      "log": {
+        "path": "local_reference/native_static_reviews/example29_release_checks_20261122/pytest.log",
+        "sha256": "cc2c50b2c1be21b9e95745352355bedd749405598d87c7c57711bff85aaa7ef1"
+      }
+    },
+    "locked_sync_log": {
+      "path": "local_reference/native_static_reviews/example29_release_checks_20261122/sync.log",
+      "sha256": "e189b30ad92a4dec5d6b75fd0e6de5428fd489e19ffdb8f8a8ce153cd7f74ae8"
+    }
+  },
+  "comparison_artifacts": {
+    "input_snapshot": {
+      "path": "local_reference/native_static_reviews/c1_example29_comparison_20261122T110553870690Z/inputs.json",
+      "sha256": "ac8d39b7b8a9795e3e8ca5fa8d3fa74af139cb8100c450d02f59d53f266970f7"
+    },
+    "report": {
+      "path": "local_reference/native_static_reviews/c1_example29_comparison_20261122T110553870690Z/report.json",
+      "sha256": "af250a082abaca6bc6b7da37af3cad09a130b1c0e41d92226d415ee74b2f8598"
+    },
+    "figure": {
+      "path": "local_reference/native_static_reviews/c1_example29_comparison_20261122T110553870690Z/dq_comparison.png",
+      "sha256": "c022c056f1e04180850478fdf8914dc9582547bf2bca1ab21eee3348ed2f4f23"
+    },
+    "source_inputs": 54,
+    "native_inputs": 52
+  },
+  "wsl_default_cli": {
+    "system": "WSL2 Ubuntu 24.04.4 LTS",
+    "python": "3.14.5",
+    "rows": 40001,
+    "log": {
+      "path": "local_reference/native_static_reviews/c1_example29_wsl_cli_20261122T110920603547001Z/run.log",
+      "sha256": "4e588326b26f87a97f11cd7d380040784f83f890edd5684f7e658990e0381e41"
+    },
+    "source_manifest": {
+      "path": "local_reference/native_static_reviews/c1_example29_wsl_cli_20261122T110920603547001Z/source_before.sha256",
+      "sha256": "296fae9367b161fc6134837f011f2fd8a0712e03b3d8bc849a00a231b9e24961"
+    }
+  },
+  "wsl_focused_pytest": {
+    "passed": 27,
+    "junit": {
+      "path": "local_reference/native_static_reviews/c1_example29_wsl_pytest_20261122T111309975841069Z/tests.xml",
+      "sha256": "06d6c2a6477eed0f4f5578bbbfb8ae6d1fde7160e6d2db82b97f9bbdf0442400"
+    },
+    "log": {
+      "path": "local_reference/native_static_reviews/c1_example29_wsl_pytest_20261122T111309975841069Z/run.log",
+      "sha256": "f79aa69684407d65f816e9483fbb85844d63c7ca66403c4d7ead10abff7bcdd7"
+    }
+  },
+  "open_loop_28_replay": {
+    "passed": true,
+    "report": {
+      "path": "local_reference/grid_connected_vsc_open_loop/comparison_results/20261122T110819766795Z/report.json",
+      "sha256": "bfd61c3ae33bb6dd199bcbc898caf101d4d7dd4666e5374b3ee98c447fa4624c"
+    }
+  }
+}

@@ -1,5 +1,8 @@
 # 验证状态
 
+2026-11-22。公开 29 号入口四次运行共 240,010 点，原电气及控制检查均通过。32 个同档窗口通过 736 项连续量和 416 项离散量核对，最大周期平均跟踪误差为 0.06269 A。两平台跨档及两工况成组比较通过。Windows 1581 项含 slow 回归通过，WSL2 Ubuntu 完成 29 号默认独立运行及 28、29 号的 27 项专项测试。共用接线后的 28 号两档原波形和比较结果与正式验收时逐字节一致。
+[29 号验收报告](../../validation/cases/grid_connected_vsc_closed_loop/validation_report.json)
+
 2026-11-22。四份 PSCAD 长窗全点电气、时钟、控制与跟踪判据均通过。PyCy 原型同档比较在 32 个窗口内通过 736 项连续量及 416 项离散量检查。跨档最大周期 dq 均值差 0.04355 A，最大分窗 dq RMS 差 0.08142 A。两档共同前段均通过，去除 q 阶跃后确认该阶跃的 q 轴均值贡献为 1.530–1.567 A。正式教学入口尚待独立运行及验收。
 [完整参考报告](../../validation/cases/grid_connected_vsc_closed_loop/qualified_reference_report.json)
 

@@ -12,67 +12,47 @@ validation/cases/grid_connected_vsc_open_loop。
 
 import math
 from collections.abc import Callable
-from numbers import Real
 
-from pycy_emt_lite import Inductor, Resistor, SimulationConfig, VoltageSource
+from pycy_emt_lite import SimulationConfig
 from pycy_emt_lite.analysis import peak_abs
 from pycy_emt_lite.cases import CaseDefinition, OutputOptions, PlotSpec, run_case
-from pycy_emt_lite.components import IdealSwitch
 from pycy_emt_lite.components.base import Component
 from pycy_emt_lite.controls import carrier_compare, triangular_carrier
+from pycy_emt_lite.converters import _grid_vsc
+from pycy_emt_lite.converters._grid_vsc import checked_time_step as _checked_time_step
+from pycy_emt_lite.converters._grid_vsc import electrical_index as _electrical_index
 from pycy_emt_lite.io.results import SimulationResult
 
 SAVE_RESULT_DATA = 0
 SAVE_RESULT_FIGURE = 0
 SHOW_FIGURE = True
 
-DC_VOLTAGE = 400.0                 # V，浮置理想直流源
-GRID_PHASE_RMS_VOLTAGE = 120.0      # V，相电压有效值
-FREQUENCY = 60.0                   # Hz
-RAMP_TIME = 0.02                   # s，交流源与调制参考均从零升幅
-RESISTANCE = 1.0                   # ohm，每相串联电阻
-INDUCTANCE = 0.01                  # H，每相电感，初始电流为零
-SWITCH_ON_RESISTANCE = 1e-3         # ohm
-SWITCH_OFF_CONDUCTANCE = 1e-9       # S，保留实际关断漏流
+DC_VOLTAGE = _grid_vsc.DC_VOLTAGE
+GRID_PHASE_RMS_VOLTAGE = _grid_vsc.GRID_PHASE_RMS_VOLTAGE
+FREQUENCY = _grid_vsc.FREQUENCY
+RAMP_TIME = _grid_vsc.RAMP_TIME
+RESISTANCE = _grid_vsc.RESISTANCE
+INDUCTANCE = _grid_vsc.INDUCTANCE
+SWITCH_ON_RESISTANCE = _grid_vsc.SWITCH_ON_RESISTANCE
+SWITCH_OFF_CONDUCTANCE = _grid_vsc.SWITCH_OFF_CONDUCTANCE
 MODULATION_INDEX = 0.85
 DELTA_DEGREES = -5.0               # 调制参考相对于同相电网的相角
 SWITCHING_FREQUENCY = 1000.0        # Hz
 CARRIER_TIME_SHIFT = -0.0005       # s，首拍载波为+1
 REFERENCE_HOLD_TIME = 100e-6        # s
 GATE_HOLD_TIME = 5e-6               # s
-TIME_STEP = 5e-6                   # s，默认电气步长
-FINE_TIME_STEP = 2.5e-6             # s，用于同一输入下的细化验证
+TIME_STEP = _grid_vsc.TIME_STEP
+FINE_TIME_STEP = _grid_vsc.FINE_TIME_STEP
 STOP_TIME = 0.2                    # s；验证采集尾点另传stop_time=0.200005
-GRID_TIME_TOLERANCE = 2e-12         # s，只容纳支持网格的浮点表示误差
-PHASE_SHIFTS = {"a": 0.0, "b": -2 * math.pi / 3, "c": 2 * math.pi / 3}
-
-
-def _checked_time_step(time_step: float) -> float:
-    if isinstance(time_step, bool) or not isinstance(time_step, Real) or time_step not in (TIME_STEP, FINE_TIME_STEP):
-        raise ValueError("本例电气步长仅支持5µs或2.5µs；其他步长需要另行验证。")
-    return float(time_step)
-
-
-def _electrical_index(time: float, time_step: float) -> int:
-    """先核实际时间，再使用整数拍号，避免浮点floor在边界错一拍。"""
-    if isinstance(time, bool) or not isinstance(time, Real) or not math.isfinite(time) or time < 0:
-        raise ValueError("门极时间必须为支持网格上的有限非负实数。")
-    ratio = time / time_step
-    if not math.isfinite(ratio):
-        raise ValueError("门极时间超出可表示的电气网格。")
-    index = round(ratio)
-    if abs(time - index * time_step) > GRID_TIME_TOLERANCE:
-        raise ValueError("门极时间偏离本例电气网格超过2ps。")
-    return index
+GRID_TIME_TOLERANCE = _grid_vsc.GRID_TIME_TOLERANCE
+PHASE_SHIFTS = _grid_vsc.PHASE_SHIFTS.copy()
 
 
 def phase_voltage(phase_shift: float) -> Callable[[float], float]:
     """交流源使用连续时间，不能用保持后的调制时刻替代。"""
-    def voltage(time: float) -> float:
-        ramp = min(max(time / RAMP_TIME, 0.0), 1.0)
-        return math.sqrt(2) * GRID_PHASE_RMS_VOLTAGE * ramp * math.sin(2 * math.pi * FREQUENCY * time + phase_shift)
-
-    return voltage
+    return _grid_vsc.phase_voltage(
+        phase_shift, rms_voltage=GRID_PHASE_RMS_VOLTAGE, frequency=FREQUENCY, ramp_time=RAMP_TIME,
+    )
 
 
 def held_reference(reference_time: float, phase_shift: float) -> float:
@@ -110,20 +90,16 @@ def lower_switch_closed(upper_gate: Callable[[float], bool]) -> Callable[[float]
 def create_components(time_step: float = TIME_STEP) -> tuple[Component, ...]:
     """16个元件：浮置DC源，三相源/R/L与上下桥臂；不添加测量支路。"""
     time_step = _checked_time_step(time_step)
-    components: list[Component] = [VoltageSource("Vdc", "dc_p", "dc_n", DC_VOLTAGE)]
-    for phase, shift in PHASE_SHIFTS.items():
-        grid, resistor_out, pole = f"grid_{phase}", f"r_{phase}", f"pole_{phase}"
-        upper_gate = upper_switch_closed(shift, time_step)
-        components.extend((
-            VoltageSource(f"V{phase}", grid, "0", phase_voltage(shift)),
-            Resistor(f"R{phase}", grid, resistor_out, RESISTANCE),
-            Inductor(f"L{phase}", resistor_out, pole, INDUCTANCE, initial_current=0.0),
-            IdealSwitch(f"S{phase}_upper", "dc_p", pole, upper_gate,
-                        closed_resistance=SWITCH_ON_RESISTANCE, open_conductance=SWITCH_OFF_CONDUCTANCE),
-            IdealSwitch(f"S{phase}_lower", pole, "dc_n", lower_switch_closed(upper_gate),
-                        closed_resistance=SWITCH_ON_RESISTANCE, open_conductance=SWITCH_OFF_CONDUCTANCE),
-        ))
-    return tuple(components)
+
+    def gate_pair(phase: str) -> tuple[Callable[[float], bool], Callable[[float], bool]]:
+        upper = upper_switch_closed(PHASE_SHIFTS[phase], time_step)
+        return upper, lower_switch_closed(upper)
+
+    return _grid_vsc.create_bridge(
+        gate_pair, make_phase_voltage=phase_voltage, phase_shifts=PHASE_SHIFTS,
+        dc_voltage=DC_VOLTAGE, resistance=RESISTANCE, inductance=INDUCTANCE,
+        closed_resistance=SWITCH_ON_RESISTANCE, open_conductance=SWITCH_OFF_CONDUCTANCE,
+    )
 
 
 def print_summary(result: SimulationResult) -> None:

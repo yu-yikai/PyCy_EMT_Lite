@@ -1,5 +1,8 @@
 # 持久进度
 
+2026-11-22。29 号已知角度 dq 电流环完成教学验收。四次独立 PyCy 运行与四份真实 PSCAD 波形通过同档、跨档和成组比较。两系统默认脚本均完成 40,001 点，Windows 1581 项含 slow 回归通过。正式新增算例共 11 个。C1 进入集成 PLL 的参考准备。
+[29 号验收报告](../../validation/cases/grid_connected_vsc_closed_loop/validation_report.json)
+
 2026-11-22。C1 已知角度 dq 电流环取得完整长窗参考资格。主工况和仅 d 阶跃各两档均真实运行，合计 240,010 点。同档 PyCy 原型比较、两场景跨档及两档成组比较全部通过。正式教学算例待实现和验收，正式新增算例共 10 个。
 [完整参考报告](../../validation/cases/grid_connected_vsc_closed_loop/qualified_reference_report.json)
 
