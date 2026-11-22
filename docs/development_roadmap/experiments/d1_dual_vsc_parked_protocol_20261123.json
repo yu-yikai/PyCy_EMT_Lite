@@ -1,0 +1,119 @@
+{
+  "schema": "d1_dual_vsc_parked_native_protocol_v1",
+  "date": "2026-11-23",
+  "source_parent": "dca32e7b34ec954844bf2015b89fd96cd4a640e6",
+  "scope": "Cold PSCAD physical preflight for two parked finite-resistance VSC bridges and a bipolar lumped T link. Prepare a later same-topology snapshot, independent terminal control and full-window teaching comparison.",
+  "references": {
+    "installed_model_screen": {
+      "path": "local_reference/native_static_reviews/d1_two_terminal_vsc_source_screen_20261123/report.json",
+      "sha256": "f53e0229a81754b1c5a93ce3e41088058913b61f753ac9a5304f231af4f61e8a"
+    },
+    "single_station_native": {
+      "path": "docs/development_roadmap/experiments/c1_dc_live_feedback_long_20261123.json",
+      "sha256": "43c3f53a6750cc1f55a04b3ee204b2f30aa4aa46b8778c71ad8999c59fc7ff68"
+    },
+    "three_terminal_t_topology": {
+      "path": "examples/18_three_terminal_vsc_hvdc.py",
+      "sha256": "83763aff5ab2a7f4f6ce1086a3c11438a6d0339c5a803dd59d77c77f86ff76a6"
+    }
+  },
+  "timing": {
+    "step_s": 0.000005,
+    "stop_s": 0.403,
+    "rows_including_zero": 80601,
+    "source_start_tick": 1,
+    "precharge_open_s": 0.4,
+    "precharge_open_tick": 80000,
+    "load_close_s": 0.401,
+    "load_close_tick": 80200,
+    "plateau_witness_ticks": [79998, 80002]
+  },
+  "circuit": {
+    "dc_pole_nodes": ["A_p", "A_n", "M_p", "M_n", "B_p", "B_n"],
+    "voltage_reference": "Grounded precharge supplies and ground ends of the six pole capacitors share the same ground.",
+    "endpoint_capacitance_per_pole_f": 0.01,
+    "midpoint_capacitance_per_pole_f": 0.0001,
+    "line_half_resistance_ohm": 0.25,
+    "line_half_inductance_h": 0.002,
+    "precharge": {
+      "terminal": "A",
+      "source_voltage_at_tick_zero_v": [0, 0],
+      "source_voltage_from_tick_one_v": [200, -200],
+      "resistance_on_ohm": 1,
+      "resistance_off_ohm": 1000000000
+    },
+    "marker_load": {
+      "terminal": "B",
+      "off_resistance_ohm": 1000000000,
+      "on_resistance_ohm": 400
+    },
+    "ac_side": {
+      "neutral": "Each bridge uses its own floating AC neutral. The two neutral nodes are distinct.",
+      "voltage_per_phase_v": 0,
+      "resistance_per_phase_ohm": 1,
+      "inductance_per_phase_h": 0.01,
+      "parked_upper_ohm": 1000000000,
+      "parked_lower_ohm": 0.001
+    },
+    "initial_conditions": {
+      "all_capacitor_voltage_v": 0,
+      "all_inductor_current_a": 0
+    }
+  },
+  "measurement_directions": {
+    "pole_and_star_voltage": "Named pole or local AC star to common ground.",
+    "differential_voltage": "Positive rail minus negative rail at the named terminal.",
+    "cap_current": "Named pole to ground.",
+    "link_current": "A to M and M to B on both poles, including the negative pole.",
+    "precharge_current": "Dedicated grounded-source terminal towards the matching A rail.",
+    "load_current": "B positive rail towards B negative rail.",
+    "ac_phase_current": "Local AC source towards bridge pole.",
+    "upper_current": "Positive rail towards bridge pole.",
+    "lower_current": "Bridge pole towards negative rail."
+  },
+  "native_execution": {
+    "target": "PSCAD 5.0 / EMTDC gf46 x86",
+    "record_every_electrical_step": true,
+    "channels": 52,
+    "cold_actual_t0": true,
+    "integration": "Trapezoidal, verified independently on emitted electrical rows.",
+    "interpolate_switching": false,
+    "detect_chatter": false,
+    "remove_chatter": false
+  },
+  "physical_limits": {
+    "clock_s": 2e-12,
+    "source_v": 1e-6,
+    "differential_readback_v": 2e-6,
+    "initial_voltage_v": 1e-6,
+    "initial_current_a": 1e-6,
+    "initial_energy_j": 1e-8,
+    "parked_ac_phase_current_a": 1e-7,
+    "kcl_a": 2e-6,
+    "resistor_voltage_v": 5e-5,
+    "tr_line_voltage_v": 5e-5,
+    "tr_ac_voltage_v": 5e-5,
+    "tr_cap_charge_c": 5e-10,
+    "tr_energy_j": 2e-7,
+    "abs_cumulative_energy_j": 0.001,
+    "independent_pole_voltage_peak_v": 0.0001,
+    "independent_link_current_peak_a": 0.00001,
+    "exact_resistance_schedule": true
+  },
+  "readiness_limits": {
+    "plateau_pole_to_nominal_v": 0.002,
+    "plateau_link_current_abs_a": 0.0001,
+    "load_current_on_edge_a": [0.999, 1.001],
+    "final_each_positive_half_link_current_a": [0.04, 0.06],
+    "final_each_negative_half_link_current_a": [-0.06, -0.04],
+    "b_differential_voltage_drop_after_load_v": [0.38, 0.41],
+    "storage_drop_after_load_j": [0.79, 0.81]
+  },
+  "comparison_notes": {
+    "pointwise": "Use measured original endpoints for KCL, branch laws, TR charge and midpoint energy. The independent state calculation starts from zero and uses the same right-endpoint source and resistance schedules.",
+    "energy": "Compare storage change with terminal source injection minus phase-resistor, switch, load and line dissipation on the same trapezoidal interval.",
+    "precharge": "The t=0 source command is zero on both rails to preserve the actual printed cold row. The two grounded split supplies attain their fixed voltages on the first positive electrical row. Precharge resistance changes at its declared right endpoint.",
+    "follow_on": "After this preflight, retain the endpoint and midpoint capacitor states and all line currents in a native warm snapshot. Exercise independent station P/Q and Vdc/Q roles with measured same-row feedback and next-gate timing on both bridges."
+  },
+  "candidate_accepted_at_freeze": false
+}
