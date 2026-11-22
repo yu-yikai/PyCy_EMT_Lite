@@ -1,5 +1,9 @@
 # 恢复与下一步
 
+2026-11-23。两档带桥预充和续算已完成。按[带桥短窗证据](experiments/c1_dc_parked_bridge_20261123.json)核对各自的种子、快照和恢复回执。带桥续算入口在忽略目录 `local_reference/native_static_reviews/c1_dc_bridge_snapshot_restore_v2_20261123/`。续算前生成的 Main.f、Main.dta 和快照必须与相应种子逐字节一致。保留逐点对地电压 2 µV 诊断的两份 FAIL。
+
+下一步用同一浮置电路和 `local_reference/native_static_reviews/c1_dc_pscad_feedback_design_20261123/` 中的两档 Fortran 草案，新建闭环种子与续算模型。先核对同一求解行的差分母线电压、1 ms 外环、100 µs 内环、下一 5 µs 门极拍和细档中点保持。短窗通过后再冻结负荷阶跃长窗和闭环比较门限。
+
 2026-11-23。无源 PSCAD 预充电和快照续算已验证。先依据[短窗证据](experiments/c1_dc_bus_startup_20261123.json)核对续算原始文件、生成电路和储存状态。恢复入口为忽略目录 `local_reference/native_static_reviews/c1_dc_pscad_snapshot_restart_v3_20261123/` 的 README 和已绑定脚本。原生续算首个输出在快照后一个步长，首个积分区间要从快照内的电压和支路电流起算。
 
 下一步保留 30 号交流桥和门极周期，在冷启动段固定三相互补门极和零交流源，先固定带桥预充方案、绝对时间与相对事件。核对快照的电容电压及相电感初流、两档实际母线反馈和下一门极拍。之后再固定负荷阶跃长窗、闭环限幅和比较阈值，先产出独立原生参考。MATLAB R2025a 与 R2026b 批处理在首个脚本命令前停滞，恢复后可从各自保留的启动脚本另起运行。

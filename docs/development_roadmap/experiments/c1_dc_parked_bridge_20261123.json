@@ -1,0 +1,296 @@
+{
+  "schema": "c1_dc_parked_bridge_snapshot_evidence_v1",
+  "date": "2026-11-23",
+  "source_commit": "a223722c50f53863571710864cb3df5d66f0966d",
+  "scope": "Native startup and continuation with balanced AC excitation on a parked bridge.",
+  "parked_native_physically_qualified": true,
+  "strict_absolute_voltage_pair_passed": false,
+  "closed_loop_native_qualified": false,
+  "dynamic_dc_example_accepted": false,
+  "formal_new_examples_completed": 13,
+  "frozen_protocol": {
+    "path": "local_reference/native_static_reviews/c1_dc_bridge_pycy_20261123/protocol.json",
+    "sha256": "d6fa1c4dd90fbf232dbd1fa1d556f56ea90578acfcd7a57a91a09b0c183c56f5",
+    "bytes": 2560
+  },
+  "independent_pycy": {
+    "path": "local_reference/native_static_reviews/c1_dc_bridge_pycy_20261123/pycy_parked_check.json",
+    "sha256": "0ca0882794ec488b791237e554cf83e108627fcd16aa5e3348c7a8c08c17ab74",
+    "bytes": 3781
+  },
+  "both_grids": {
+    "5us": {
+      "step_s": 5e-06,
+      "native": {
+        "status": "PASS_PARKED_BRIDGE_NUMERICS",
+        "rows": {
+          "cold": 32008,
+          "resume_strictly_positive": 401,
+          "seed_overlap": 5
+        },
+        "snapshot_initial": {
+          "voltage_v": 399.99999999968554,
+          "current_a": -1.250001598539163,
+          "energy_j": 399.9999999993711
+        },
+        "snapshot_reactors_a": [
+          -3.995040532372117e-11,
+          -3.995040532372117e-11,
+          -3.995040532372117e-11
+        ],
+        "load_edge": {
+          "tick": 200,
+          "absolute_s": 0.16101,
+          "current_a": 1.2492131374074
+        },
+        "final": {
+          "voltage_v": 399.24758377929,
+          "phase_current_a": [
+            0.77146118199546,
+            -1.5723679196083,
+            0.80090673762043
+          ]
+        },
+        "numerical_residuals": {
+          "clock_s": 2.7755575615628914e-17,
+          "initial_dc_v": 3.1445779313798994e-10,
+          "initial_reactor_a": 3.995040532372117e-11,
+          "source_v": 4.021671884402167e-10,
+          "differential_v": 9.663381206337363e-12,
+          "nodal_kcl_a": 2.0657248829282099e-10,
+          "phase_tr_a": 3.995040532372117e-11,
+          "dc_tr_charge_c": 4.8603307861131047e-14,
+          "dc_tr_energy_j": 1.9427506478542078e-11,
+          "continuous_rc_v": 0.0006246053877703162,
+          "bridge_power_w": 1.222980050563649e-16
+        },
+        "cold_resume_overlap": {
+          "voltage_v": 4.744800108369418e-07,
+          "current_a": 1.2850007516385098e-10,
+          "same_switches": true
+        }
+      },
+      "paired_diagnostic": {
+        "status": "FAIL_ABSOLUTE_VOLTAGE",
+        "strict_limit_v": 2e-06,
+        "peak_absolute_error_v": 1.4161270983352877e-05,
+        "adjacent_sign_reversals": 400,
+        "adjacent_pairs": 400,
+        "differential_bus_error_v": 3.3020342016243376e-10,
+        "current_max_error_a": 2.52386556098827e-10,
+        "present_before_precharge_opens": [
+          {
+            "time_s": 0.15999,
+            "pole_common_mode_v": 1.3353263615884998e-05
+          },
+          {
+            "time_s": 0.159995,
+            "pole_common_mode_v": -1.3353221550185001e-05
+          }
+        ]
+      },
+      "outputs": {
+        "seed_receipt": {
+          "path": "local_reference/native_static_reviews/c1_dc_bridge_snapshot_20261123/5us/seed/n/20261122T173024489827Z/snapshot_result.json",
+          "sha256": "e8f7900f88c3cbe305d4b8aa53f1c11c9f728223c43f7279aef61cd57c19bd7c",
+          "bytes": 4606
+        },
+        "restart_receipt": {
+          "path": "local_reference/native_static_reviews/c1_dc_bridge_snapshot_restore_v2_20261123/5us/restart/n/20261122T173910815059Z/snapshot_result.json",
+          "sha256": "e37a7e1d84a002cc1d71042e4bf0aa38c06c01c3f9d281fb902c219f8d6f8ffa",
+          "bytes": 4726
+        },
+        "native_oracle": {
+          "path": "local_reference/native_static_reviews/c1_dc_bridge_pycy_20261123/5us_verified/native_oracle.json",
+          "sha256": "a453adf6686d61d1ce838e07ebe8131db0df9f654a143ef10d29b7024ced88de",
+          "bytes": 4779
+        },
+        "strict_pair": {
+          "path": "local_reference/native_static_reviews/c1_dc_bridge_pycy_20261123/5us_verified/paired_report.json",
+          "sha256": "6f377df15b7a7cbc83e52c0b781aee0045540256d031b9b1f06fe4fdf307a918",
+          "bytes": 2995
+        },
+        "common_mode": {
+          "path": "local_reference/native_static_reviews/c1_dc_bridge_pycy_20261123/5us_verified/common_mode_diagnostic.json",
+          "sha256": "edb58453129b262a0fb17cb1265db5a2906311a623a89dfe44585e82d4815059",
+          "bytes": 976
+        },
+        "exact_native_bindings": {
+          "path": "local_reference/native_static_reviews/c1_dc_bridge_pycy_20261123/5us_verified/native_bindings.json",
+          "sha256": "5dd73b5be72d692d1ae56ddc760173ef095300dcd48bba0e6da34ee570100073",
+          "bytes": 1402
+        },
+        "pycy_trace": {
+          "path": "local_reference/native_static_reviews/c1_dc_bridge_pycy_20261123/pycy_5us.csv",
+          "sha256": "62b5ec27e09c4512295e7518397e362616a88e2380bec4bcde71aba4b9e6b601",
+          "bytes": 327945
+        }
+      },
+      "native_terminals": [
+        {
+          "path": "local_reference/native_static_reviews/c1_dc_bridge_snapshot_20261123/5us/seed/n/20261122T173024489827Z/terminal.json",
+          "sha256": "f00819fc1045bbbbb7dae0597bca8f3198e9d8b25b29b54bb4a5395b270810f0",
+          "bytes": 10133
+        },
+        {
+          "path": "local_reference/native_static_reviews/c1_dc_bridge_snapshot_restore_v2_20261123/5us/restart/n/20261122T173910815059Z/terminal.json",
+          "sha256": "c8c1dabfc753628bb3b29ab8137888deef29b9548283ba3b70d5d537433c9e93",
+          "bytes": 10244
+        }
+      ]
+    },
+    "2p5us": {
+      "step_s": 2.5e-06,
+      "native": {
+        "status": "PASS_PARKED_BRIDGE_NUMERICS",
+        "rows": {
+          "cold": 64015,
+          "resume_strictly_positive": 802,
+          "seed_overlap": 10
+        },
+        "snapshot_initial": {
+          "voltage_v": 399.9999999993971,
+          "current_a": -1.250001598663841,
+          "energy_j": 399.99999999879424
+        },
+        "snapshot_reactors_a": [
+          -3.236844416862835e-11,
+          -3.236844416862835e-11,
+          -3.236844416862835e-11
+        ],
+        "load_edge": {
+          "tick": 400,
+          "absolute_s": 0.16101,
+          "current_a": 1.2492141133479
+        },
+        "final": {
+          "voltage_v": 399.2478956892,
+          "phase_current_a": [
+            0.7714598726492,
+            -1.5723682451955,
+            0.80090837225628
+          ]
+        },
+        "numerical_residuals": {
+          "clock_s": 2.7755575615628914e-17,
+          "initial_dc_v": 6.028813004377298e-10,
+          "initial_reactor_a": 3.236844416862835e-11,
+          "source_v": 4.78166839457117e-10,
+          "differential_v": 9.606537787476555e-12,
+          "nodal_kcl_a": 4.830471086828539e-10,
+          "phase_tr_a": 1.266369231700537e-10,
+          "dc_tr_charge_c": 4.888313874778366e-14,
+          "dc_tr_energy_j": 1.9538916058020606e-11,
+          "continuous_rc_v": 0.00031230313948071853,
+          "bridge_power_w": 1.4137996329210978e-16
+        },
+        "cold_resume_overlap": {
+          "voltage_v": 4.849000090345612e-07,
+          "current_a": 5.461000575357478e-10,
+          "same_switches": true
+        }
+      },
+      "paired_diagnostic": {
+        "status": "FAIL_ABSOLUTE_VOLTAGE",
+        "strict_limit_v": 2e-06,
+        "peak_absolute_error_v": 5.3737196537895215e-05,
+        "adjacent_sign_reversals": 801,
+        "adjacent_pairs": 801,
+        "differential_bus_error_v": 6.062350621505175e-10,
+        "current_max_error_a": 7.039762106586522e-10,
+        "present_before_precharge_opens": [
+          {
+            "time_s": 0.159995,
+            "pole_common_mode_v": 3.9630379106423003e-05
+          },
+          {
+            "time_s": 0.1599975,
+            "pole_common_mode_v": -3.9630391423398e-05
+          }
+        ]
+      },
+      "outputs": {
+        "seed_receipt": {
+          "path": "local_reference/native_static_reviews/c1_dc_bridge_snapshot_fine_20261123/2p5us/seed/n/20261122T173537909688Z/snapshot_result.json",
+          "sha256": "7a7e4875e2f36a2fa4b75acfb54e60727c694734968f46078e81f79fc71a3900",
+          "bytes": 4607
+        },
+        "restart_receipt": {
+          "path": "local_reference/native_static_reviews/c1_dc_bridge_snapshot_restore_v2_20261123/2p5us/restart/n/20261122T173959248045Z/snapshot_result.json",
+          "sha256": "2edd08f70bb67d33d4c3a34663717b4ec0f19d06781fb5afd608f2ad98c045c5",
+          "bytes": 4727
+        },
+        "native_oracle": {
+          "path": "local_reference/native_static_reviews/c1_dc_bridge_pycy_20261123/2p5us_verified/native_oracle.json",
+          "sha256": "9039083babeced11ea4a93011859cac178f58a4acf609e90b2bc7cae61734118",
+          "bytes": 4777
+        },
+        "strict_pair": {
+          "path": "local_reference/native_static_reviews/c1_dc_bridge_pycy_20261123/2p5us_verified/paired_report.json",
+          "sha256": "b6dfe6484a69c6645068ba43b4e1a64632b660d1d1f0d17094a89f0785d8167f",
+          "bytes": 3005
+        },
+        "common_mode": {
+          "path": "local_reference/native_static_reviews/c1_dc_bridge_pycy_20261123/2p5us_verified/common_mode_diagnostic.json",
+          "sha256": "586c6612507423324658c8af6311e51ee1e426e7f56a314e50348e061a420732",
+          "bytes": 976
+        },
+        "exact_native_bindings": {
+          "path": "local_reference/native_static_reviews/c1_dc_bridge_pycy_20261123/2p5us_verified/native_bindings.json",
+          "sha256": "3b52737cde23a7df26758bd71bea8b876a2ad12624f73cc76779f148247c2677",
+          "bytes": 1402
+        },
+        "pycy_trace": {
+          "path": "local_reference/native_static_reviews/c1_dc_bridge_pycy_20261123/pycy_2p5us.csv",
+          "sha256": "91c18ef288d79d4798f75d159fef937c563de55d39e51c159bd4527a18d2b21e",
+          "bytes": 655858
+        }
+      },
+      "native_terminals": [
+        {
+          "path": "local_reference/native_static_reviews/c1_dc_bridge_snapshot_fine_20261123/2p5us/seed/n/20261122T173537909688Z/terminal.json",
+          "sha256": "b8b4ccbce44c671b98cc02de9f3196cbae8d636b2529b3de666832d2e44ad778",
+          "bytes": 6637
+        },
+        {
+          "path": "local_reference/native_static_reviews/c1_dc_bridge_snapshot_restore_v2_20261123/2p5us/restart/n/20261122T173959248045Z/terminal.json",
+          "sha256": "951fab972e80e124e0a3b99c4066edc8b6c841e9fccb86ac33935ecdd80de21e",
+          "bytes": 10428
+        }
+      ]
+    }
+  },
+  "original_reload_refusal": {
+    "path": "local_reference/native_static_reviews/c1_dc_bridge_snapshot_20261123/5us/restart/n/20261122T173356798268Z/worker.stderr.txt",
+    "sha256": "e1fd5166ad69a489419d722cd987aa204cae88cf5fdccc6072db07e18dad2f1b",
+    "bytes": 1582
+  },
+  "controller_draft": {
+    "scope": "Standalone Fortran synthetic check only.",
+    "plan": {
+      "path": "local_reference/native_static_reviews/c1_dc_pscad_feedback_design_20261123/README.md",
+      "sha256": "652d9db7ba1d5211a1290d68c643b59965421418ddfbe1e685c3ab27a0ebc78d",
+      "bytes": 4334
+    },
+    "ordinary_synthetic": {
+      "path": "local_reference/native_static_reviews/c1_dc_pscad_feedback_design_20261123/synthetic_check.json",
+      "sha256": "80aabd7c6eda1bb32d0f21941ad7f912df5c289a7f9f9ce12379ba8c6dc36f55",
+      "bytes": 1173
+    },
+    "radial_synthetic": {
+      "path": "local_reference/native_static_reviews/c1_dc_pscad_feedback_design_20261123/radial_synthetic_check.json",
+      "sha256": "63a2b625d52bcec6f957f9b40817bdde312fd59cc2da56c6e12c35b50528f004",
+      "bytes": 643
+    },
+    "five_us_source": {
+      "path": "local_reference/native_static_reviews/c1_dc_pscad_feedback_design_20261123/feedback_5us.f",
+      "sha256": "e44c9ed9906c332a07d6b018d03e81204582d77505e5e75f7f46886a836a33c1",
+      "bytes": 5824
+    },
+    "two_point_five_us_source": {
+      "path": "local_reference/native_static_reviews/c1_dc_pscad_feedback_design_20261123/feedback_2p5us.f",
+      "sha256": "a38f1432aa9a6ed5b9a7c9db0ea9858d9550eaefaf329811f89f10dd3abf29cd",
+      "bytes": 6072
+    }
+  }
+}

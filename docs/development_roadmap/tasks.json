@@ -3,7 +3,7 @@
   "updated_date": "2026-11-23",
   "timezone": "Asia/Shanghai",
   "branch": "codex/emt-examples-longterm",
-  "checkpoint_head": "a223722c50f53863571710864cb3df5d66f0966d",
+  "checkpoint_head": "c44f8ace66ae801ddba08285e0480777768b9d3a",
   "current_task": "C1",
   "formal_new_examples_completed": 13,
   "status_values": [
@@ -767,7 +767,8 @@
         "tests/test_grid_connected_vsc_power_vac.py",
         "validation/cases/grid_connected_vsc_power_vac/README.md",
         "validation/cases/grid_connected_vsc_power_vac/acceptance_report.json",
-        "docs/development_roadmap/experiments/c1_dc_bus_startup_20261123.json"
+        "docs/development_roadmap/experiments/c1_dc_bus_startup_20261123.json",
+        "docs/development_roadmap/experiments/c1_dc_parked_bridge_20261123.json"
       ],
       "commits": [
         "b835e31785fab3fda247c333d23edbe9ce576dfa",
@@ -825,7 +826,19 @@
         "evidence_sha256": "d92469cdd234477829ca5a5fa75a67648f17235fffadf3d3cbdaa73672375427",
         "native_executed": false
       },
-      "current_stage": "dc_bus_passive_snapshot_qualified_bridge_probe_next",
+      "current_stage": "dc_bus_parked_bridge_qualified_live_feedback_next",
+      "dynamic_dc_parked_bridge": {
+        "status": "pscad_native_physical_checks_pass_both_steps",
+        "report": {
+          "path": "docs/development_roadmap/experiments/c1_dc_parked_bridge_20261123.json",
+          "sha256": "e09296c7b89f9bcb216ac1af988fdd6c280b36560311bc0a21ab5ff5f12cd2f9",
+          "bytes": 12229
+        },
+        "positive_native_rows": [401, 802],
+        "strict_absolute_voltage_pair_passed": false,
+        "closed_loop_native_qualified": false,
+        "candidate_accepted": false
+      },
       "dynamic_dc_startup": {
         "status": "passive_pscad_snapshot_and_continuation_pass",
         "report": {
@@ -2055,7 +2068,7 @@
       }
     }
   ],
-  "current_stage": "dc_bus_passive_snapshot_qualified_bridge_probe_next",
+  "current_stage": "dc_bus_parked_bridge_qualified_live_feedback_next",
   "resume_checkpoint_history": [
     {
       "resumed_utc": "2026-11-11T13:24:16.085490+00:00",
