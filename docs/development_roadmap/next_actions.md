@@ -1,8 +1,8 @@
 # 恢复与下一步
 
-2026-11-23。两档原生长窗已验收。先按[长窗报告](experiments/c1_dc_live_feedback_long_20261123.json)核对各档种子、续算回执以及对应的原始文件。原生入口和单档复算命令见忽略目录 `local_reference/native_static_reviews/c1_dc_bridge_feedback_native_long_20261123/README.md`。成组复算用相邻目录 `c1_dc_long_protocol_20261123/audit_long_windows.py` 的 `pair` 命令，输入粗档、细档的 `windows.json` 和新的输出路径。
+2026-11-23。32 号已验收，C1 完成。在现有原生归档可用时，按[教学指南](../../validation/cases/grid_connected_vsc_dc_voltage/README.md)运行两档对标。检查已完成的对比，用[验收报告](../../validation/cases/grid_connected_vsc_dc_voltage/acceptance_report.json)中的输入、结果和图哈希。
 
-32 号从现有三相桥、PLL 和电流环搭建。用 5 mF 电容的 400 V 初压及三相电感零初流独立求解初值，从实测差分电压驱动 1 ms PI 外环。按整数电气步触发 0.400 s 的 320 Ω 负荷投入，使新阻值参与当行积分。优先在算例脚本中解释负荷扰动和电容储能，用现有入口运行两档新波形，按已固定的逐点及窗口门限与 PSCAD 对标，再完成图、教学说明和回归。
+D1 先读 `local_reference/native_static_reviews/d1_pglib_case5_kcl_20261123/report.json` 和同目录的 `check_kcl.py`。核对 230 kV、五母线六线路、4 号母线供电及 2 号母线投入名义 5 MW 平衡电阻负荷。固定电源接地与相序、零储能启动和升压斜坡、负荷开关阻值与边沿、完整周波比较窗及双步长判据。用五个母线电压和六条线路两端电流复核潮流方向与 KCL，图上优先显示 2 号母线电压和两条供电路径。保持稳态试算的证据边界，随后取得独立原生 EMT 数据。
 
 2026-11-23。两档闭环短窗通过。按[短窗证据](experiments/c1_dc_live_feedback_short_20261123.json)核对原生波形、37 列日志和各档种子、续算回执。运行入口在忽略目录 `local_reference/native_static_reviews/c1_dc_bridge_feedback_native_canonical_20261123/`。每档均从同一份保存工程走同一加载路径；生成的 Main.f、Main.dta 和快照须逐字节核对。
 

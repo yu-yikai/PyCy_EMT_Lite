@@ -21,7 +21,8 @@ SWITCHING_FREQUENCY = 1000.0
 CARRIER_TIME_SHIFT = -0.0005  # 首拍载波为 +1
 CURRENT_BANDWIDTH = 100.0  # Hz
 HALF_DC_VOLTAGE = _grid_vsc.DC_VOLTAGE / 2
-VOLTAGE_LIMIT = 0.95 * HALF_DC_VOLTAGE
+MAX_MODULATION = 0.95
+VOLTAGE_LIMIT = MAX_MODULATION * HALF_DC_VOLTAGE
 GRID_ANGULAR_FREQUENCY = 2 * math.pi * _grid_vsc.FREQUENCY
 PHASES = tuple(_grid_vsc.PHASE_SHIFTS)
 
@@ -32,6 +33,7 @@ ReferenceCallback = Callable[[Mapping[str, float], int, float], tuple[tuple[floa
 def create_current_loop(
     time_step: float, *, scenario: str = "main", pll: SRFPLL | None = None,
     feeder: tuple[float, float] | None = None, reference: ReferenceCallback | None = None,
+    dc_link: tuple[Component, ...] | None = None,
 ) -> tuple[tuple[Component, ...], StepCallback]:
     """给桥接线装上电流控制，并可接入求解后执行的外环参考。"""
     steps_per_gate = round(GATE_PERIOD / time_step)
@@ -119,16 +121,24 @@ def create_current_loop(
             uq = q_pi.step(iq_ref - iq, CONTROL_PERIOD)
             vd = ed + cross_coupling * iq - ud
             vq = eq - cross_coupling * id_ - uq
+
+            half_dc_voltage = HALF_DC_VOLTAGE
+            if dc_link is not None:
+                # 限幅和调制归一化都采用本次求解得到的半母线电压。
+                half_dc_voltage = (row["v:dc_p"] - row["v:dc_n"]) / 2.0
+                if not math.isfinite(half_dc_voltage) or half_dc_voltage <= 0.0:
+                    raise ValueError("电流内环需要有限且为正的直流母线电压。")
+            voltage_limit = MAX_MODULATION * half_dc_voltage
             magnitude = math.hypot(vd, vq)
-            saturated = magnitude > VOLTAGE_LIMIT
+            saturated = magnitude > voltage_limit
             if saturated:
                 # 限幅改变了电压矢量，保留两个电流积分器的上次状态。
-                scale = VOLTAGE_LIMIT / magnitude
+                scale = voltage_limit / magnitude
                 vd *= scale
                 vq *= scale
                 d_pi.integrator, q_pi.integrator = integrators
             va, vb, vc = dq_to_abc(vd, vq, theta)
-            pending = va / HALF_DC_VOLTAGE, vb / HALF_DC_VOLTAGE, vc / HALF_DC_VOLTAGE
+            pending = va / half_dc_voltage, vb / half_dc_voltage, vc / half_dc_voltage
 
         measurements = {
             "j": float(index),
@@ -156,4 +166,4 @@ def create_current_loop(
             })
         return measurements
 
-    return _grid_vsc.create_bridge(gate_pair, feeder=feeder), observe
+    return _grid_vsc.create_bridge(gate_pair, feeder=feeder, dc_link=dc_link), observe

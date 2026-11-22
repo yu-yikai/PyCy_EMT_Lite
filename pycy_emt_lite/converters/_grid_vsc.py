@@ -69,9 +69,11 @@ def create_bridge(
     closed_resistance: float = SWITCH_ON_RESISTANCE,
     open_conductance: float = SWITCH_OFF_CONDUCTANCE,
     feeder: tuple[float, float] | None = None,
+    dc_link: tuple[Component, ...] | None = None,
 ) -> tuple[Component, ...]:
-    """浮置直流源、三相源/R/L 与六开关，可在原滤波器前串接馈线。"""
-    components: list[Component] = [VoltageSource("Vdc", "dc_p", "dc_n", dc_voltage)]
+    """连接三相源、滤波器和六开关，可在 dc_p 与 dc_n 之间接入直流支路。"""
+    components: list[Component] = (list(dc_link) if dc_link is not None
+                                   else [VoltageSource("Vdc", "dc_p", "dc_n", dc_voltage)])
     for phase, shift in phase_shifts.items():
         grid, resistor_out, pole = f"grid_{phase}", f"r_{phase}", f"pole_{phase}"
         upper, lower = gate_pair(phase)

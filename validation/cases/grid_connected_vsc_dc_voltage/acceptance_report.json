@@ -1,0 +1,230 @@
+{
+  "schema": "grid_connected_vsc_dc_voltage_example_acceptance_v1",
+  "date": "2026-11-23",
+  "example": 32,
+  "passed": true,
+  "formal_example_accepted": true,
+  "formal_new_examples_completed": 14,
+  "source_parent": "530dd74ec1f39027e1b7f33500255e0fd84550c6",
+  "scope": "Single switched grid-connected bridge with a precharged capacitive DC link and a resistive load step.",
+  "native_reference": {
+    "path": "docs/development_roadmap/experiments/c1_dc_live_feedback_long_20261123.json",
+    "bytes": 20453,
+    "sha256": "43c3f53a6750cc1f55a04b3ee204b2f30aa4aa46b8778c71ad8999c59fc7ff68"
+  },
+  "comparison": {
+    "reference_platform": "PSCAD 5.0 / EMTDC v5 Build 20210219 / GFortran 4.6 x86",
+    "report": {
+      "path": "local_reference/c1_dc_candidate_20261123/comparison_first/report.json",
+      "bytes": 671,
+      "sha256": "76ab7156c7ebf7e9a0ef3457952b08029e926465221ef005ba769cdda19461ee"
+    },
+    "inputs": {
+      "path": "local_reference/c1_dc_candidate_20261123/comparison_first/inputs.json",
+      "bytes": 23901,
+      "sha256": "1a7e687663d4f9bcd752cc48efaaccb58d698e144bae56d8158aad9c2d8c176e"
+    },
+    "figure": {
+      "path": "local_reference/c1_dc_candidate_20261123/comparison_first/waveform_overlay.png",
+      "bytes": 240413,
+      "sha256": "48e88b59e18ad09c5f0d5e25e5832ec1a68a52f66e705de1c8b5992844a77ac7"
+    },
+    "candidate_cases": {
+      "5us": {
+        "rows_with_initial": 160002,
+        "maximum_clock_error_s": 1.1102230246251565e-16,
+        "six_gate_state_mismatches": 0,
+        "vdc_peak_difference_v": 1.9198864720237907e-09,
+        "bridge_line_voltage_peak_difference_v": 1.9233539205743e-09,
+        "phase_and_branch_current_peak_difference_a": 4.800529973536527e-10,
+        "max_abs_node_voltage_difference_v_diagnostic": 5.3963574856652485e-05,
+        "native_vdc_nadir_v": 395.21587540004,
+        "pycy_vdc_nadir_v": 395.2158754011159,
+        "pycy_final_window": {
+          "window_s": [
+            0.69,
+            0.74
+          ],
+          "means": {
+            "vdc_v": 400.04327893873176,
+            "id_a": 4.02082272190067,
+            "iq_a": -0.0072200718809600755,
+            "grid_power_w": 1023.5343645377698,
+            "load_power_w": 1000.2148607735543,
+            "grid_q1_var": 1.8379290643185133
+          },
+          "checks": {
+            "dc_voltage": true,
+            "d_axis": true,
+            "q_axis": true,
+            "load_power": true
+          },
+          "passed": true
+        },
+        "physics_maximum_residuals": {
+          "snapshot_vdc_v": 0.0,
+          "snapshot_reactor_a": 0.0,
+          "differential_measurement_v": 5.684341886080802e-14,
+          "kcl_a": 3.3918257091869464e-10,
+          "phase_companion_v": 5.3717030823463574e-12,
+          "dc_tr_charge_c": 2.8876708424614705e-16,
+          "dc_tr_energy_j": 1.1554584791373112e-13,
+          "precharge_leakage_a": 6.037260980286306e-09
+        },
+        "evidence": {
+          "report": {
+            "path": "local_reference/c1_dc_candidate_20261123/comparison_first/5us/report.json",
+            "bytes": 14994,
+            "sha256": "82b6aa550148cb4bfaf9fbc372cd94d33ecc5dd22d70a1513fed33f12b2608eb"
+          },
+          "candidate_waveforms.npz": {
+            "path": "local_reference/c1_dc_candidate_20261123/comparison_first/5us/candidate_waveforms.npz",
+            "bytes": 72975214,
+            "sha256": "4afac69fc2e4c81a7b487e76d940d7974fd7ba80eb4c7ae8f0dcca20ab787736"
+          },
+          "reference_waveforms.npz": {
+            "path": "local_reference/c1_dc_candidate_20261123/comparison_first/5us/reference_waveforms.npz",
+            "bytes": 61294390,
+            "sha256": "c29e3546067589ebe5cb5825adf39262579eea0324ead9bc73d42b6767f0738d"
+          }
+        }
+      },
+      "2p5us": {
+        "rows_with_initial": 320003,
+        "maximum_clock_error_s": 1.1102230246251565e-16,
+        "six_gate_state_mismatches": 0,
+        "vdc_peak_difference_v": 4.505238848651061e-09,
+        "bridge_line_voltage_peak_difference_v": 4.510638973442838e-09,
+        "phase_and_branch_current_peak_difference_a": 9.201764905597543e-10,
+        "max_abs_node_voltage_difference_v_diagnostic": 0.0002018985517793226,
+        "native_vdc_nadir_v": 395.22283243683995,
+        "pycy_vdc_nadir_v": 395.2228324327673,
+        "pycy_final_window": {
+          "window_s": [
+            0.69,
+            0.74
+          ],
+          "means": {
+            "vdc_v": 400.03725646626646,
+            "id_a": 4.025741753488211,
+            "iq_a": -0.005149735953269608,
+            "grid_power_w": 1024.7865455510414,
+            "load_power_w": 1000.1847420857423,
+            "grid_q1_var": 1.3109085568759744
+          },
+          "checks": {
+            "dc_voltage": true,
+            "d_axis": true,
+            "q_axis": true,
+            "load_power": true
+          },
+          "passed": true
+        },
+        "physics_maximum_residuals": {
+          "snapshot_vdc_v": 0.0,
+          "snapshot_reactor_a": 0.0,
+          "differential_measurement_v": 5.684341886080802e-14,
+          "kcl_a": 7.822449354932814e-10,
+          "phase_companion_v": 1.0608403044898296e-11,
+          "dc_tr_charge_c": 2.8876539018025255e-16,
+          "dc_tr_energy_j": 1.155656749601205e-13,
+          "precharge_leakage_a": 6.029990469710839e-09
+        },
+        "evidence": {
+          "report": {
+            "path": "local_reference/c1_dc_candidate_20261123/comparison_first/2p5us/report.json",
+            "bytes": 14991,
+            "sha256": "a83812480ab889f59cf0a32eacb128025757b72c501880562d68a0098a7c5647"
+          },
+          "candidate_waveforms.npz": {
+            "path": "local_reference/c1_dc_candidate_20261123/comparison_first/2p5us/candidate_waveforms.npz",
+            "bytes": 145935670,
+            "sha256": "991f5536bd3aff7a69e5750b48bed1e23f2236af64986f82f3e0454bb939c235"
+          },
+          "reference_waveforms.npz": {
+            "path": "local_reference/c1_dc_candidate_20261123/comparison_first/2p5us/reference_waveforms.npz",
+            "bytes": 122574773,
+            "sha256": "303d0082659e8a9d4a1790a1141e68f888160442a3c81abd523f0c43ad753583"
+          }
+        }
+      }
+    }
+  },
+  "sources": {
+    "examples/32_grid_connected_vsc_dc_voltage.py": {
+      "path": "examples/32_grid_connected_vsc_dc_voltage.py",
+      "bytes": 4522,
+      "sha256": "93338ccc9159d3292d6b409e77788f05ff522eee906c2ac49785cffe2334cefb"
+    },
+    "pycy_emt_lite/converters/_grid_vsc.py": {
+      "path": "pycy_emt_lite/converters/_grid_vsc.py",
+      "bytes": 4181,
+      "sha256": "783d22f49917d1a3c58aebf6cd44edf440536538e25b1e0b33e38a41a7c81c90"
+    },
+    "pycy_emt_lite/converters/_grid_vsc_current_loop.py": {
+      "path": "pycy_emt_lite/converters/_grid_vsc_current_loop.py",
+      "bytes": 7571,
+      "sha256": "7f2d8f6222f30c0e5edb4595027f753c8515d5e14e1f2690affe3427ef99b60d"
+    },
+    "validation/cases/grid_connected_vsc_dc_voltage/compare.py": {
+      "path": "validation/cases/grid_connected_vsc_dc_voltage/compare.py",
+      "bytes": 24959,
+      "sha256": "c0c4c958d64b4ab3c6999a428b927f5b8879ffd402b8b3558d61933aa107a759"
+    },
+    "validation/cases/grid_connected_vsc_dc_voltage/plots.py": {
+      "path": "validation/cases/grid_connected_vsc_dc_voltage/plots.py",
+      "bytes": 2719,
+      "sha256": "1453b34b7fae7508f42cc01d6e9540ce8742d0d6581bb24084bc32329dc22869"
+    }
+  },
+  "tests": {
+    "python": "3.14.5",
+    "locked_sync_ruff_mypy": "PASS",
+    "windows_pytest_including_slow": 1595,
+    "windows_pytest_log": {
+      "path": "local_reference/c1_dc_candidate_20261123/pytest_windows.log",
+      "bytes": 1897,
+      "sha256": "4087f407cc580f1b272d7230a5003c3b6267d80cae6288f02a2ab3b64cfec22d"
+    },
+    "windows_default_entry_log": {
+      "path": "local_reference/c1_dc_candidate_20261123/standalone_windows.log",
+      "bytes": 185,
+      "sha256": "b06c31fdc252653daf5dc40ef8437580ace7f23bd8470058b77d827a7e8a737c"
+    },
+    "ubuntu_default_entry_and_five_focused": {
+      "path": "local_reference/c1_dc_candidate_20261123/standalone_ubuntu_retry.log",
+      "bytes": 2740,
+      "sha256": "1e902fc416b2042f19224567f12f9db7ed3c6d6a7c6c7201f983858be65e4e72"
+    },
+    "ubuntu_expired_cache_attempt": {
+      "path": "local_reference/c1_dc_candidate_20261123/standalone_ubuntu.log",
+      "bytes": 624,
+      "sha256": "b075eea620a8f4589281b71ef6939259b8e502d9628b9b165e43bf39b44a38c6"
+    },
+    "ubuntu_retry_command": {
+      "path": "local_reference/c1_dc_candidate_20261123/run_wsl_retry.sh",
+      "bytes": 1861,
+      "sha256": "0cf25e7877312cb87c4d045c5ec5085a9ec5b8e140f591d57d0a77a8ec211d25"
+    },
+    "ubuntu_source_manifest": {
+      "path": "local_reference/c1_dc_candidate_20261123/wsl_retry_sources.sha256",
+      "bytes": 44878,
+      "sha256": "ef97abceaae3cd44e13354c3d925bfef06618513191df27fd6088a784af42f88"
+    },
+    "ubuntu_base_archive": {
+      "path": "local_reference/c1_dc_candidate_20261123/wsl_base.tar",
+      "bytes": 4782080,
+      "sha256": "cbe087010f8d9b6f6ec33cd0d124e5456e28f17ed40b2997ba35f1fb66c750c6"
+    },
+    "ubuntu_overlay": {
+      "path": "local_reference/c1_dc_candidate_20261123/wsl_overlay.tar",
+      "bytes": 30720,
+      "sha256": "4e9fcc1abce4efc8f71722016526e7eaf1c057bfa60ec5c89ad0c52d466c7703"
+    },
+    "legacy_prefixes": {
+      "path": "local_reference/c1_dc_candidate_20261123/legacy_prefix/report.json",
+      "bytes": 29497,
+      "sha256": "ade82cf004328abfc10c4d769af7b8c7361fd5c7981f16d395c415cdbad4b136"
+    }
+  }
+}

@@ -1,5 +1,8 @@
 # 持久进度
 
+2026-11-23。32 号直流母线调压完成验收，正式新增累计 14 个。两档 PyCy 独立运行与 PSCAD 逐行对标均通过。第二路负荷投入后，母线从约 400 V 降到 395.22 V，690–740 ms 平均回到约 400.04 V。C1 单站 VSC 教学链完成，D1 先验证 PJM5 网状线路的负荷扰动。
+[32 号验收报告](../../validation/cases/grid_connected_vsc_dc_voltage/acceptance_report.json)
+
 2026-11-23。C1 直流母线的 5 µs、2.5 µs PSCAD 闭环长窗均通过。第二路负荷在 0.400 s 投入，负荷功率约从 500 W 增至 1,000 W。两档母线最低约 395.22 V，690–740 ms 平均约 400.04 V。现在可开始 32 号 PyCy 教学候选，正式新增仍为 13 个。
 [双档原生长窗](experiments/c1_dc_live_feedback_long_20261123.json)
 

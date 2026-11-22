@@ -3,9 +3,9 @@
   "updated_date": "2026-11-23",
   "timezone": "Asia/Shanghai",
   "branch": "codex/emt-examples-longterm",
-  "checkpoint_head": "3e0afbf45ea34675fead6caede1fa64dd1d718e8",
-  "current_task": "C1",
-  "formal_new_examples_completed": 13,
+  "checkpoint_head": "530dd74ec1f39027e1b7f33500255e0fd84550c6",
+  "current_task": "D1",
+  "formal_new_examples_completed": 14,
   "status_values": [
     "planned",
     "ready",
@@ -671,9 +671,9 @@
         "pscad-derived-force-dsout-bounded-probe-v5",
         "simscape-derived-grid-vsc-openloop-r2025a"
       ],
-      "validation": "28 号开环通过真实 Simscape 双步长对标，共用接线后复验波形及判据逐字节一致。29 号已知角度 dq 电流环在两工况双步长下通过真实 PSCAD 同档、跨档及成组比较，Windows 1581 项含 slow 回归及 Windows/WSL2 独立默认入口通过。30 号使用电源精度双档 PSCAD 参考重新独立对标，18 窗、原电气及 PLL 状态门限全部通过。31 号 PCC 有功前馈和调压通过独立双工况、双步长 PSCAD 对标及 Windows 1590 项含 slow 回归，WSL2 默认入口与 4 项专测通过，29/30 号六组波形逐字节一致。",
+      "validation": "28 号开环通过真实 Simscape 双步长对标，共用接线后复验波形及判据逐字节一致。29 号已知角度 dq 电流环在两工况双步长下通过真实 PSCAD 同档、跨档及成组比较，Windows 1581 项含 slow 回归及 Windows/WSL2 独立默认入口通过。30 号使用电源精度双档 PSCAD 参考重新独立对标，18 窗、原电气及 PLL 状态门限全部通过。31 号 PCC 有功前馈和调压通过独立双工况、双步长 PSCAD 对标及 Windows 1590 项含 slow 回归，WSL2 默认入口与 4 项专测通过，29/30 号六组波形逐字节一致。32 号直流母线调压通过双步长 PSCAD 的 480005 行对标、Windows 1595 项含 slow 回归及 Ubuntu WSL2 默认入口与 5 项专测。",
       "acceptance": "局部、可独立运行验证的教学例逐项验收",
-      "status": "in_progress",
+      "status": "completed",
       "files": [
         "validation/cases/pll_dynamic_response/manifest.json",
         "validation/cases/pll_dynamic_response/reference_protocol.json",
@@ -770,7 +770,13 @@
         "docs/development_roadmap/experiments/c1_dc_bus_startup_20261123.json",
         "docs/development_roadmap/experiments/c1_dc_parked_bridge_20261123.json",
         "docs/development_roadmap/experiments/c1_dc_live_feedback_short_20261123.json",
-        "docs/development_roadmap/experiments/c1_dc_live_feedback_long_20261123.json"
+        "docs/development_roadmap/experiments/c1_dc_live_feedback_long_20261123.json",
+        "examples/32_grid_connected_vsc_dc_voltage.py",
+        "tests/test_grid_connected_vsc_dc_voltage.py",
+        "validation/cases/grid_connected_vsc_dc_voltage/compare.py",
+        "validation/cases/grid_connected_vsc_dc_voltage/plots.py",
+        "validation/cases/grid_connected_vsc_dc_voltage/README.md",
+        "validation/cases/grid_connected_vsc_dc_voltage/acceptance_report.json"
       ],
       "commits": [
         "b835e31785fab3fda247c333d23edbe9ce576dfa",
@@ -820,7 +826,8 @@
         "0bd7535d6065db964690c80842c81183cfb22e44",
         "a223722c50f53863571710864cb3df5d66f0966d",
         "f467c4c9957e028f8a46dfad52dbb73bfe382aa3",
-        "e0bbf254d9030caf3e51fc401693f59c451b7bb4"
+        "e0bbf254d9030caf3e51fc401693f59c451b7bb4",
+        "530dd74ec1f39027e1b7f33500255e0fd84550c6"
       ],
       "blockers": [],
       "reference_feasibility": {
@@ -831,7 +838,19 @@
         "evidence_sha256": "d92469cdd234477829ca5a5fa75a67648f17235fffadf3d3cbdaa73672375427",
         "native_executed": false
       },
-      "current_stage": "dc_bus_live_long_qualified_candidate_next",
+      "current_stage": "dc_voltage_example_32_accepted",
+      "dynamic_dc_example": {
+        "status": "completed",
+        "number": 32,
+        "acceptance_report": {
+          "path": "validation/cases/grid_connected_vsc_dc_voltage/acceptance_report.json",
+          "sha256": "0c653f4d87e8480006b309ecbd84dee20d44a93cf3c6e678aa4b7458c2768dd7",
+          "bytes": 9548
+        },
+        "paired_rows_with_initial": [160002, 320003],
+        "windows_pytest_including_slow": 1595,
+        "ubuntu_focused_tests": 5
+      },
       "dynamic_dc_live_long": {
         "status": "pscad_native_long_pass_both_steps_and_cross_step",
         "report": {
@@ -842,7 +861,7 @@
         "positive_native_rows": [160001, 320002],
         "relative_load_step_s": 0.4,
         "fine_midpoints_held": 160001,
-        "candidate_accepted": false
+        "candidate_accepted": true
       },
       "dynamic_dc_live_short": {
         "status": "pscad_native_feedback_and_physics_pass_both_steps",
@@ -1897,7 +1916,8 @@
       "references": [],
       "validation": "范围命名准确、真实参考和阶段复审",
       "acceptance": "不将直流等效称完整PV，不将拓扑称完整标准EMT",
-      "status": "planned",
+      "status": "ready",
+      "current_stage": "pjm5_emt_reference_protocol_next",
       "files": [],
       "commits": [],
       "blockers": [],
@@ -1905,7 +1925,7 @@
         "status": "static_topology_screened_native_reference_pending",
         "source": "https://github.com/power-grid-lib/pglib-opf/blob/dc6be4b2f85ca0e776952ec22cbd4c22396ea5a3/pglib_opf_case5_pjm.m",
         "scope": "IEEE PES PGLib-OPF v23.07。采用五母线、六条线路的平衡网状拓扑，复用三相π线路、给定电源和固定阻抗负荷。数据按 CC BY 4.0 署名并注明改动。",
-        "remaining": "C1 完成后另封 EMT 电源、负荷、初值和扰动，再建立并运行真实参考。",
+        "remaining": "固定 EMT 电源、负荷、冷启动、负荷投入边沿、测量和双步长判据，然后建立并运行真实参考。",
         "receipt": {
           "path": "local_reference/native_static_reviews/d1_pglib_case5_screen_20261122/report.json",
           "bytes": 4711,
@@ -2113,7 +2133,7 @@
       }
     }
   ],
-  "current_stage": "dc_bus_live_long_qualified_candidate_next",
+  "current_stage": "pjm5_emt_reference_protocol_next",
   "resume_checkpoint_history": [
     {
       "resumed_utc": "2026-11-11T13:24:16.085490+00:00",
