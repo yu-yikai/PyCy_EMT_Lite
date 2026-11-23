@@ -1,0 +1,351 @@
+{
+  "schema": "d1_pv_grid_protocol_v1",
+  "date": "2026-11-23",
+  "source_parent": "11d931b682480eb9571b150d61616cafe0973cd6",
+  "scope": "Native 650-cell PV power export with a regulated DC bus, an independent 50.005 ms activation restore, and the full irradiance-step comparison.",
+  "sources": {
+    "qualified_string": {
+      "path": "docs/development_roadmap/experiments/d1_pv_string_native_20261123.json",
+      "sha256": "14591ee912bd20fc8ce0fa4b400353e4c009d8c184581aa618a28a44dedf1af4",
+      "bytes": 13848
+    },
+    "qualified_station": {
+      "path": "validation/cases/grid_connected_storage/acceptance_report.json",
+      "sha256": "155983f54ba51bb1dc9dfa9d5d5e2f8c744d455ce202a1154c191a9db2edcd80",
+      "bytes": 9649
+    },
+    "qualified_station_native_protocol": {
+      "path": "docs/development_roadmap/experiments/d1_storage_grid_long_protocol_20261123.json",
+      "sha256": "3469abcea84653cc50e2b361e6f70bec8a2e8905f8351b84fbabbc7bd5c5426d",
+      "bytes": 12675
+    },
+    "provisional_pycy_sizing": {
+      "report": {
+        "path": "local_reference/d1_pv_grid_screen_20261123/5us_run_long/report.json",
+        "sha256": "cbc575851957fd9c48e69d45320527b1682f9c24d99fbe7116097fcaf4e078aa",
+        "bytes": 8375
+      },
+      "trajectory": {
+        "path": "local_reference/d1_pv_grid_screen_20261123/5us_run_long/trace.npz",
+        "sha256": "77e1e8f4e82463abd1483032abd8ef0c6471c3409f6e9e978c9f5373f91e685f",
+        "bytes": 156835500
+      },
+      "classification": "provisional PyCy physical design screen using only sealed static source information",
+      "original_windows_s": {
+        "first_export": [
+          0.04,
+          0.05
+        ],
+        "before_shading": [
+          0.44,
+          0.49
+        ],
+        "after_shading": [
+          0.94,
+          0.99
+        ]
+      },
+      "means": {
+        "first_export": {
+          "pcc_absorbed_w": -415.6279964252198,
+          "pcc_absorbed_var": -25.76651327143118,
+          "bus_v": 394.27226370736724,
+          "pv_delivered_w": 962.2429587446417,
+          "capacitor_current_a": 0.3619551835110178,
+          "pv_delivered_a": 2.440554551846138
+        },
+        "before_shading": {
+          "pcc_absorbed_w": -554.1570461009516,
+          "pcc_absorbed_var": -23.438215878105122,
+          "bus_v": 390.0946165427127,
+          "pv_delivered_w": 953.4368890026338,
+          "capacitor_current_a": 0.003070336047257297,
+          "pv_delivered_a": 2.4441170135978014
+        },
+        "after_shading": {
+          "pcc_absorbed_w": -465.8745089060092,
+          "pcc_absorbed_var": -20.124655181718857,
+          "bus_v": 389.98433097103265,
+          "pv_delivered_w": 861.8335362774137,
+          "capacitor_current_a": 0.00044624633234925567,
+          "pv_delivered_a": 2.2099183683789847
+        }
+      },
+      "measured_bus_range_v": [
+        389.2646108872394,
+        394.61106541345737
+      ],
+      "max_phase_current_a": 4.11702643527709,
+      "sealed_affine_domain_v": [
+        356.6304484211625,
+        403.721217224273
+      ]
+    },
+    "prepared_native_blueprints": {
+      "native_dc_wiring": {
+        "path": "local_reference/d1_pv_grid_native_20261123/pv_grid_dc_wiring.py",
+        "sha256": "cef6f00752a07467f135b877f0cd3cfeec13abdd4691676abd98ac12e8c5de7b",
+        "bytes": 7133
+      },
+      "native_station_control": {
+        "path": "local_reference/d1_pv_grid_native_20261123/pv_grid_control_blueprint.py",
+        "sha256": "bc0c1e50bffd2c6fd9a46412502cc234aa07a05d72679ee7bf680b1417bc7567",
+        "bytes": 5050
+      }
+    }
+  },
+  "dc_circuit": {
+    "cell_parameters": {
+      "series_modules": 10,
+      "parallel_modules": 1,
+      "series_cells_per_module": 65,
+      "parallel_cells_per_module": 1,
+      "reference_irradiance_w_m2": 1000,
+      "reference_temperature_deg_c": 25,
+      "effective_area_m2": 0.01,
+      "series_resistance_ohm": 0.02,
+      "shunt_resistance_ohm": 1000,
+      "diode_ideality": 1.5,
+      "band_gap_ev": 1.103,
+      "reference_saturation_current_a": 1e-09,
+      "reference_short_circuit_current_a": 2.5,
+      "temperature_coefficient_a_per_kelvin": 0.001
+    },
+    "series_cells": 650,
+    "parallel_strings": 1,
+    "temperature_deg_c": 25,
+    "load_ohm": 390,
+    "capacitance_f": 0.01,
+    "precharge_resistance_ohm": {
+      "closed": 1.0,
+      "open": 1000000000.0
+    },
+    "precharge_voltage_v": 390,
+    "reference_bus_v": 390,
+    "directions": "PV and auxiliary source branch currents are positive into the DC bus. Resistor and capacitor currents are positive out of the bus into their branches. The auxiliary clamp is bilateral while connected.",
+    "dc_negative": "The negative rail is grounded. The AC star remains floating as in the qualified single-station bridge."
+  },
+  "ac_circuit": {
+    "frequency_hz": 60,
+    "phase_rms_v": 120,
+    "feeder_ohm": 0.8,
+    "feeder_h": 0.008,
+    "filter_ohm": 1,
+    "filter_h": 0.01,
+    "bridge_closed_ohm": 0.001,
+    "bridge_open_ohm": 1000000000,
+    "current_direction": "PCC phase current flows from the grid toward the bridge. Positive measured P represents absorption from the grid.",
+    "pcc_measurement": "Measure each phase against the local floating star at the junction of the feeder and filter."
+  },
+  "timeline": {
+    "precharge_voltage_ramp_absolute_s": [
+      0.0,
+      0.5
+    ],
+    "illumination_enable_ramp_absolute_s": [
+      0.65,
+      0.66
+    ],
+    "precharge_open_absolute_s": 0.798,
+    "snapshot_absolute_s": 0.8,
+    "seed_stop_absolute_s": 0.850005,
+    "activation_restore_duration_s": 0.050005,
+    "full_restore_duration_s": 1.000005,
+    "source_ramp_relative_s": [
+      0.0,
+      0.02
+    ],
+    "shading_step_relative_s": 0.5,
+    "initial_active_irradiance_w_m2": 1000,
+    "subsequent_irradiance_w_m2": 900,
+    "short_window_relative_s": [
+      0.04,
+      0.05
+    ],
+    "full_windows_relative_s": {
+      "before": [
+        0.44,
+        0.49
+      ],
+      "after": [
+        0.94,
+        0.99
+      ]
+    },
+    "clamped_window_absolute_s": [
+      0.795,
+      0.797
+    ]
+  },
+  "grids": {
+    "5us": {
+      "step_s": 5e-06,
+      "snapshot_tick": 160000,
+      "precharge_open_tick": 159600,
+      "shading_tick_absolute": 260000,
+      "seed_rows_including_zero": 170002,
+      "short_positive_rows": 10001,
+      "full_positive_rows": 200001,
+      "short_plateau_rows": 2000,
+      "full_window_rows": 10000
+    },
+    "2p5us": {
+      "step_s": 2.5e-06,
+      "snapshot_tick": 320000,
+      "precharge_open_tick": 319200,
+      "shading_tick_absolute": 520000,
+      "seed_rows_including_zero": 340003,
+      "short_positive_rows": 20002,
+      "full_positive_rows": 400002,
+      "short_plateau_rows": 4000,
+      "full_window_rows": 20000
+    }
+  },
+  "controller": {
+    "role": "Use the qualified signed Case 34 station-B DC PI in the single A-labelled Case 35 geometry.",
+    "dc_reference_v": 390,
+    "voltage_pi_kp": 0.276,
+    "voltage_pi_ki": 4.96,
+    "current_request_abs_a": 4,
+    "pcc_enable_rms_v": 24,
+    "reactive_request_var": 0,
+    "out_sample_s": 0.001,
+    "inner_sample_s": 0.0001,
+    "gate_sample_s": 5e-06,
+    "switching_hz": 1000,
+    "rules": "Park states while at or before the saved origin. On active ticks use existing PLL, signed current projection, PWM and anti-windup. Publish solved-row inner samples at the following 5 us gate. The fine intermediate row holds the last six gate words. Record measured radius saturation."
+  },
+  "outputs": {
+    "station": "Retain the qualified Case 35 AC grid, PCC and pole voltages, feeder and filter currents, switch currents/resistances, reference channels and sole Absolute_TIME_s.",
+    "dc_solved": {
+      "V_a_dc_kV": "kV",
+      "V_pv_kV": "kV",
+      "V_pre_kV": "kV",
+      "I_pv_kA": "kA",
+      "I_pre_kA": "kA",
+      "I_Rdc_kA": "kA",
+      "I_Cdc_kA": "kA"
+    },
+    "control_commands": {
+      "G_W_m2": "W/m2",
+      "Tcell_C": "degC",
+      "Vpre_command_kV": "kV",
+      "Rpre_command_ohm": "ohm"
+    },
+    "control_log": "Keep the original Case 34B 43-column solved-row station log. Actual gate resistance remains native PGB evidence."
+  },
+  "native": {
+    "required": "Separate admitted PSCAD/GFortran seeds, 50.005 ms restores and full 1.000005 s restores on both electrical grids. Rebind snapshot byte identity, actual generated model, explicit stage ownership, raw INF/OUT and logs.",
+    "toolchain": {
+      "pscad_version": "5.0.0",
+      "emtdc_build": "20210219",
+      "compiler": "gf46",
+      "platform": "x86"
+    },
+    "cold_and_active_prefix": "Require the same native model per grid across the three stage roles. Compare the entire common positive prefix of seed/short restore/long restore without time shifting, and report the native .800 s snapshot state."
+  },
+  "gates": {
+    "physical_intervals": {
+      "clock_abs_s": 2e-12,
+      "kcl_abs_a": 2e-06,
+      "ohm_abs_v": 5e-06,
+      "cap_charge_abs_c": 5e-10,
+      "inductor_tr_abs_v": 5e-05,
+      "tr_energy_abs_j": 2e-07,
+      "cumulative_energy_abs_j": 0.001
+    },
+    "same_grid_prefix": {
+      "clock_abs_s": 2e-12,
+      "voltage_abs_v": 2e-06,
+      "current_abs_a": 2e-06,
+      "applied_reference_abs_pu": 2e-08,
+      "switch_mismatches": 0
+    },
+    "cold_window": {
+      "bus_v": [
+        390.8,
+        392.2
+      ],
+      "auxiliary_mean_current_a": [
+        -1.8,
+        -1.1
+      ]
+    },
+    "snapshot": {
+      "bus_v": [
+        391.0,
+        392.5
+      ],
+      "capacitor_current_a": [
+        1.2,
+        1.8
+      ],
+      "ac_inductor_abs_a": 1e-06
+    },
+    "active": {
+      "bus_v": [
+        380.0,
+        402.0
+      ],
+      "phase_current_abs_max_a": 4.8,
+      "precharge_leakage_abs_a": 1e-07,
+      "voltage_measurement_abs_v": 5e-06,
+      "control_clock_abs_s": 2e-12
+    },
+    "short_export_window": {
+      "export_mean_w": [
+        200.0,
+        650.0
+      ],
+      "reactive_mean_abs_var": 45.0,
+      "pv_mean_power_w": [
+        900.0,
+        1050.0
+      ],
+      "mean_bus_v": [
+        388.0,
+        400.0
+      ]
+    },
+    "full_export_windows": {
+      "before": {
+        "export_mean_w": [
+          510.0,
+          630.0
+        ],
+        "pv_mean_power_w": [
+          910.0,
+          1020.0
+        ]
+      },
+      "after": {
+        "export_mean_w": [
+          420.0,
+          550.0
+        ],
+        "pv_mean_power_w": [
+          815.0,
+          925.0
+        ]
+      },
+      "export_drop_w": [
+        60.0,
+        125.0
+      ],
+      "reactive_mean_abs_var": 35.0,
+      "mean_bus_v": [
+        388.0,
+        392.0
+      ],
+      "mean_capacitor_current_abs_a": 0.015
+    },
+    "cross_grid_full_window": {
+      "export_mean_abs_w": 12.0,
+      "reactive_mean_abs_var": 10.0,
+      "pv_power_mean_abs_w": 12.0,
+      "bus_mean_abs_v": 0.05
+    }
+  },
+  "energy_accounting": "Independently sum solved PCC phase voltage times each grid-to-bridge current. Export is the negative of the measured PCC absorption. Interval energy uses endpoint midpoint voltage and current products at the AC source, PV and auxiliary branches. Include the two series AC inductors per phase, feeder/filter losses, all six switch losses, 390-ohm load and capacitor stored energy.",
+  "formal_example_accepted": false
+}

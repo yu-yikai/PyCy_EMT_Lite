@@ -3,7 +3,7 @@
   "updated_date": "2026-11-23",
   "timezone": "Asia/Shanghai",
   "branch": "codex/emt-examples-longterm",
-  "checkpoint_head": "c0635715f9533960e5ddecfe57b2c2fda7824b4e",
+  "checkpoint_head": "11d931b682480eb9571b150d61616cafe0973cd6",
   "current_task": "D1",
   "formal_new_examples_completed": 17,
   "status_values": [
@@ -1917,7 +1917,7 @@
       "validation": "33 号平衡 PJM5 五母线负荷阶跃已验收。34 号双端 VSC-HVDC 按 5 µs、2.5 µs 与 PSCAD 同档逐点对标，共 330003 个原生正时间点，12 路开关状态全同。Windows 1609 项含 slow、Ubuntu WSL2 默认入口与 8 项专测、28–32 号两档 14 组启动轨迹逐位核对通过。D1 继续等效储能和新能源接口。 35 号一阶 RC 单站并网储能已完成充放电反向与双档 PSCAD 对标。",
       "acceptance": "不将直流等效称完整PV，不将拓扑称完整标准EMT",
       "status": "in_progress",
-      "current_stage": "pv_string_native_qualified",
+      "current_stage": "pv_grid_protocol_frozen",
       "files": [
         "validation/cases/grid_connected_storage/acceptance_report.json",
         "validation/cases/grid_connected_storage/candidate_protocol.json",
@@ -2160,6 +2160,15 @@
           220002
         ],
         "legacy_startup_traces_bitwise_equal": 14
+      },
+      "pv_grid_protocol": {
+        "status": "frozen",
+        "protocol": {
+          "path": "docs/development_roadmap/experiments/d1_pv_grid_protocol_20261123.json",
+          "sha256": "fcfd132b525c7fe343d31716b0889f0aad2c090a0db4405f79be616729cf6565",
+          "bytes": 11292
+        },
+        "formal_example_accepted": false
       },
       "pv_string_native": {
         "status": "qualified",
@@ -2533,7 +2542,7 @@
       }
     }
   ],
-  "current_stage": "pv_string_native_qualified",
+  "current_stage": "pv_grid_protocol_frozen",
   "resume_checkpoint_history": [
     {
       "resumed_utc": "2026-11-11T13:24:16.085490+00:00",
