@@ -28,6 +28,20 @@ def _archive_path(root: Path, relative: str) -> Path:
     return path
 
 
+def _relocate_pll_review(path: Path) -> None:
+    """Accept the archived review's original absolute path for the same receipt."""
+    check = b"target_path.resolve() != receipt"
+    relocated = (
+        br'(target_path.resolve() != receipt and not target["path"].replace("\\", "/")'
+        br'.endswith("/" + public["complete_receipt"]["path"]))'
+    )
+    source = path.read_bytes()
+    if source.count(check) != 1:
+        raise ValueError("Unexpected historic PLL receipt check")
+    # The next conditions in the frozen check still verify the receipt SHA-256 and size.
+    path.write_bytes(source.replace(check, relocated, 1))
+
+
 def replay(root: Path, number: str) -> None:
     """Check the original bytes, restore them in a detached checkout, then compare."""
     case, folder = CASES[number]
@@ -41,7 +55,8 @@ def replay(root: Path, number: str) -> None:
         raise ValueError(f"Unexpected accepted comparison report: {accepted['path']}")
 
     snapshot = report_path.parent / folder
-    bindings = report["native_input_sha256"] | report["code_and_protocol_sha256"]
+    code = dict(report["code_and_protocol_sha256"])
+    bindings = report["native_input_sha256"] | code
     for relative, digest in bindings.items():
         path = _archive_path(snapshot, relative)
         if not path.is_file() or sha256(path) != digest:
@@ -66,6 +81,13 @@ def replay(root: Path, number: str) -> None:
         if sha256(target) != digest:
             raise ValueError(f"Input changed while restoring: {relative}")
 
+    if number == "11":
+        verifier = "validation/cases/pll_dynamic_response/compare.py"
+        target = destination / verifier
+        _relocate_pll_review(target)
+        code[verifier] = sha256(target)
+        print("PLL replay records the receipt path compatibility edit in its verifier hash.", flush=True)
+
     print(f"Historical source: {revision}\nReplay checkout: {destination}", flush=True)
     env = os.environ.copy()
     for name in ("UV_PROJECT_ENVIRONMENT", "VIRTUAL_ENV", "PYTHONPATH", "PYTHONHOME"):
@@ -80,7 +102,8 @@ def replay(root: Path, number: str) -> None:
     replayed = json.loads(new_report.read_bytes())
     if (replayed["passed"] is not True or replayed["candidate_executed"] is not True
             or replayed["git_head_at_run"] != revision or replayed["case_id"] != case
-            or any(replayed[key] != report[key] for key in ("code_and_protocol_sha256", "native_input_sha256"))):
+            or replayed["code_and_protocol_sha256"] != code
+            or replayed["native_input_sha256"] != report["native_input_sha256"]):
         raise ValueError(f"Replay did not pass with the accepted inputs: {new_report}")
 
 

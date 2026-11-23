@@ -34,6 +34,7 @@ uv run --locked python -m validation.replay_existing 11
 
 先准备[结果报告](validation_report.json)中 `complete_report.path` 指向的完整本地报告，以及同目录下的 `input_snapshot/`。
 复跑工具校验归档哈希，在 `local_reference/replay-11-<运行编号>/` 检出原运行提交 `5314486` 并恢复封存的文件字节。
+原审查凭据使用绝对路径。复跑入口允许同一仓库相对路径下的凭据迁移，仍核对原凭据的哈希和字节数。新报告记录这项路径兼容改动后的入口哈希。
 候选、叠图与新报告写入该检出内的 `local_reference/pll_dynamic_response/comparison_results/`。
 当前版本运行教学例仍用 `uv run python examples/11_pll_dynamic_response.py`。
 如要对标当前版本，需另立验收记录并注明当前源码和参数。历史报告的输入哈希继续标识原验收。
