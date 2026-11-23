@@ -1,5 +1,8 @@
 # 恢复与下一步
 
+2026-11-23。按冻结协议隔离构建两档 PSCAD 一阶 RC 端口，先核生成代码中的电流源方向、边沿和实际支路，再运行并校验原始 INF/OUT。两档通过后再冻结与单站 VSC 相连的独立工况。
+[一阶 RC 储能端口短窗协议](experiments/d1_storage_rc_short_protocol_20261123.json)
+
 2026-11-23。34 号已验收。按[教学指南](../../validation/cases/two_terminal_vsc_hvdc/README.md)运行独立算例，需要复核时用同一指南的对标入口读取验收报告绑定的两档 PSCAD 归档。D1 接下来先验证等效储能的直流端口。用固定开路电压、串联内阻和一组并联 RC 表示端口，在接入单站 VSC 前用充电、静置、放电脉冲核对原生编译、端电压、极化电压、支路电流和逐区间能量。草案在忽略目录 `local_reference/d1_storage_source_screen_20261123/one_rc_port_short_draft.md`，已核 PSCAD 原始工程来源。
 [34 号验收报告](../../validation/cases/two_terminal_vsc_hvdc/acceptance_report.json)
 
