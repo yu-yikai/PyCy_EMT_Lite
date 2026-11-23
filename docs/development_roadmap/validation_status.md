@@ -1,5 +1,8 @@
 # 验证状态
 
+2026-11-23。试算与同档原始参考的 PCC 电压最大差低于 0.16 nV，有功最大差低于 6.4 nW。正式候选待验证，正式新增仍是 20 项。
+[39 号双构网源有功分担候选协议](../../validation/cases/dual_grid_forming_power_sharing/candidate_protocol.json)
+
 2026-11-23。两档原生共核对 360,002 个采样点，120,001 个共同时刻。两站逐拍控制递推、PCC 守恒、馈线能量以及窗口分担均通过。正式新增仍为 20 项。
 [双构网源分担 PSCAD 实测](experiments/e_dual_gfm_sharing_native_20261123.json)
 

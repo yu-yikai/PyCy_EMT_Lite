@@ -1,5 +1,8 @@
 # 恢复与下一步
 
+2026-11-23。按冻结协议实现第 39 号教学入口。分别保留两站功率、频率与相角，运行两档正式对标、独立入口和回归测试后验收。
+[39 号双构网源有功分担候选协议](../../validation/cases/dual_grid_forming_power_sharing/candidate_protocol.json)
+
 2026-11-23。以两档原始 PSCAD 波形核对 PyCy 标准入口的独立功率、频率和相角。先运行可行性试算，再冻结教学候选的逐点及窗口比较。
 [双构网源分担 PSCAD 实测](experiments/e_dual_gfm_sharing_native_20261123.json)
 

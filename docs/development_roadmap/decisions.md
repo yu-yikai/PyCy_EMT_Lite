@@ -1,5 +1,8 @@
 # 技术决策
 
+2026-11-23。两站分别保存滤波功率和相角，共用接地 PCC。教学图分别显示两条馈线送入 PCC 的功率、两站频率及 A−B 相角差。
+[39 号双构网源有功分担候选协议](../../validation/cases/dual_grid_forming_power_sharing/candidate_protocol.json)
+
 2026-11-23。采用各自流入共同 PCC 的功率计算下垂。逐拍保留投负荷首拍的功率下降，稳态分担由固定时间窗检验。
 [双构网源分担 PSCAD 实测](experiments/e_dual_gfm_sharing_native_20261123.json)
 

@@ -1,5 +1,8 @@
 # 持久进度
 
+2026-11-23。两档 PyCy 试算与原始 PSCAD 波形逐点对齐，已固定第 39 号的端口方向、比较窗、误差门限和首末采样处理。
+[39 号双构网源有功分担候选协议](../../validation/cases/dual_grid_forming_power_sharing/candidate_protocol.json)
+
 2026-11-23。两档原生双构网源有功分担通过。5 µs 档两源分别增加 239.37 W 和 119.67 W，频率均值由 60.00020 Hz 降到 59.76085 Hz。
 [双构网源分担 PSCAD 实测](experiments/e_dual_gfm_sharing_native_20261123.json)
 
