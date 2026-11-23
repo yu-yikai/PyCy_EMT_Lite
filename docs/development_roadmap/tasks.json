@@ -3,7 +3,7 @@
   "updated_date": "2026-11-23",
   "timezone": "Asia/Shanghai",
   "branch": "codex/emt-examples-longterm",
-  "checkpoint_head": "09dc2f73ba2fa20b922f6c48060bfaa5330eb16d",
+  "checkpoint_head": "302eae79b34ac268d8461a64ba009e97ad09f054",
   "current_task": "D1",
   "formal_new_examples_completed": 16,
   "status_values": [
@@ -1917,7 +1917,7 @@
       "validation": "33 号平衡 PJM5 五母线负荷阶跃已验收。34 号双端 VSC-HVDC 按 5 µs、2.5 µs 与 PSCAD 同档逐点对标，共 330003 个原生正时间点，12 路开关状态全同。Windows 1609 项含 slow、Ubuntu WSL2 默认入口与 8 项专测、28–32 号两档 14 组启动轨迹逐位核对通过。D1 继续等效储能和新能源接口。 一阶 RC 储能端口双档原生短窗与跨档通过，单站并网尚待验证。",
       "acceptance": "不将直流等效称完整PV，不将拓扑称完整标准EMT",
       "status": "in_progress",
-      "current_stage": "storage_rc_native_port_qualified",
+      "current_stage": "storage_rc_grid_native_short_protocol_frozen",
       "files": [
         "examples/34_two_terminal_vsc_hvdc.py",
         "tests/test_two_terminal_vsc_hvdc.py",
@@ -1961,7 +1961,8 @@
         "42503b9f36c7ff611f25b066c972f70d9651ff2f",
         "d081afc7d62c3b27156c1046e5dfea7b43229c7b",
         "aa0564fb9602445a620689cdd248eba3946fcc59",
-        "09dc2f73ba2fa20b922f6c48060bfaa5330eb16d"
+        "09dc2f73ba2fa20b922f6c48060bfaa5330eb16d",
+        "302eae79b34ac268d8461a64ba009e97ad09f054"
       ],
       "blockers": [],
       "pjm5_load_step_example": {
@@ -2141,6 +2142,31 @@
           220002
         ],
         "legacy_startup_traces_bitwise_equal": 14
+      },
+      "storage_grid_short_protocol": {
+        "status": "frozen_before_grid_native_build",
+        "protocol": {
+          "path": "docs/development_roadmap/experiments/d1_storage_grid_short_protocol_20261123.json",
+          "sha256": "61f456ea334a89961720d6eff37123c64aa74ad15a5fa73b80ef142aa3a86023",
+          "bytes": 13031
+        },
+        "switched_trials": {
+          "5us": 60002,
+          "2p5us": 120003
+        },
+        "switched_feasibility_reports": {
+          "5us": {
+            "path": "local_reference/d1_storage_rc_short_20261123/grid_port_screen/actual_5us_long/report.json",
+            "sha256": "5537c5a8ecb01a6e8e9a90a88ca82793fac06b79adf21a91d99c023c956d4e21",
+            "bytes": 4217
+          },
+          "2p5us": {
+            "path": "local_reference/d1_storage_rc_short_20261123/grid_port_screen/actual_2p5us_long/report.json",
+            "sha256": "63933bd1315ca6f5a0a4e7d4a25cfafbe0c57c63a5182d9b31d1dcbf05fe7057",
+            "bytes": 4230
+          }
+        },
+        "native_grid_reference_ready": false
       },
       "storage_port_short_native": {
         "status": "qualified_native_dc_port",
@@ -2347,7 +2373,7 @@
       }
     }
   ],
-  "current_stage": "storage_rc_native_port_qualified",
+  "current_stage": "storage_rc_grid_native_short_protocol_frozen",
   "resume_checkpoint_history": [
     {
       "resumed_utc": "2026-11-11T13:24:16.085490+00:00",
