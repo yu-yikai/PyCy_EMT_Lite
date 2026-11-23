@@ -1,5 +1,8 @@
 # 恢复与下一步
 
+2026-11-23。以两档原始 PSCAD 波形核对 PyCy 标准入口的独立功率、频率和相角。先运行可行性试算，再冻结教学候选的逐点及窗口比较。
+[双构网源分担 PSCAD 实测](experiments/e_dual_gfm_sharing_native_20261123.json)
+
 2026-11-23。按冻结协议分别编译并运行 5 µs 和 2.5 µs 的冷启动 PSCAD 工程，复核六条馈线、两套独立下垂及原始负荷边沿。两个窗口都检查频差和有功分担，再评估教学候选。
 [双构网源分担原生协议](experiments/e_dual_gfm_sharing_protocol_20261123.json)
 

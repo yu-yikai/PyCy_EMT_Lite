@@ -3,7 +3,7 @@
   "updated_date": "2026-11-23",
   "timezone": "Asia/Shanghai",
   "branch": "codex/emt-examples-longterm",
-  "checkpoint_head": "ec104089ffe0a34a3fc00a1cc5c1e86cc83e2a3a",
+  "checkpoint_head": "3224835c2c6b63dce49d0efcdab83d7840629057",
   "current_task": "D1",
   "formal_new_examples_completed": 20,
   "status_values": [
@@ -1917,8 +1917,9 @@
       "validation": "33 号平衡 PJM5 五母线负荷阶跃已验收。34 号双端 VSC-HVDC 按 5 µs、2.5 µs 与 PSCAD 同档逐点对标，共 330003 个原生正时间点，12 路开关状态全同。Windows 1609 项含 slow、Ubuntu WSL2 默认入口与 8 项专测、28–32 号两档 14 组启动轨迹逐位核对通过。D1 继续等效储能和新能源接口。 35 号一阶 RC 单站并网储能已完成充放电反向与双档 PSCAD 对标。 36 号 650 串局部等效光伏已完成照度阶跃、两档 PSCAD 对标和跨系统验证。 37 号单站孤网下垂完成两档 PSCAD 对标与跨系统验证。 38 号并联线路双端隔离与恢复完成两档 PSCAD 对标及跨系统验证。",
       "acceptance": "不将直流等效称完整PV，不将拓扑称完整标准EMT",
       "status": "in_progress",
-      "current_stage": "dual_gfm_sharing_native_protocol_frozen",
+      "current_stage": "dual_gfm_sharing_native_pair_qualified",
       "files": [
+        "docs/development_roadmap/experiments/e_dual_gfm_sharing_native_20261123.json",
         "docs/development_roadmap/experiments/e_dual_gfm_sharing_protocol_20261123.json",
         "examples/38_parallel_line_fault_isolation.py",
         "tests/test_parallel_line_fault_isolation.py",
@@ -2021,7 +2022,8 @@
         "3a25d42e80736d15c0c632dd35f538566d0cc979",
         "f4ac423d3751e26c1dbcbf56b560b33bd3512b45",
         "9ec48d51021704660ac4471e8877c7ff28c096d1",
-        "ec104089ffe0a34a3fc00a1cc5c1e86cc83e2a3a"
+        "ec104089ffe0a34a3fc00a1cc5c1e86cc83e2a3a",
+        "3224835c2c6b63dce49d0efcdab83d7840629057"
       ],
       "blockers": [],
       "pjm5_load_step_example": {
@@ -2202,6 +2204,15 @@
         ],
         "legacy_startup_traces_bitwise_equal": 14
       },
+      "dual_gfm_sharing_native_reference": {
+        "status": "qualified",
+        "report": {
+          "path": "docs/development_roadmap/experiments/e_dual_gfm_sharing_native_20261123.json",
+          "bytes": 12390,
+          "sha256": "7cd32410700ea548122daed9cda9297e14cb06ebbceb47badde92bdf4b5e6c68"
+        },
+        "formal_example_accepted": false
+      },
       "dual_gfm_sharing_native_protocol": {
         "status": "frozen",
         "protocol": {
@@ -2209,7 +2220,7 @@
           "sha256": "e5762510d79b51d50c52e08101ab17f74f3151f1817fbb0284dcdb812a266044",
           "bytes": 9117
         },
-        "native_reference_qualified": false,
+        "native_reference_qualified": true,
         "formal_example_accepted": false
       },
       "dual_gfm_sharing_precheck": {
@@ -2224,7 +2235,7 @@
           "sha256": "18023bd2b1b3630c20135638f5bb3f51d21ec3523cb4463fd41b1eb0d81dd91c",
           "bytes": 4730
         },
-        "native_reference_status": "pending"
+        "native_reference_status": "qualified"
       },
       "parallel_line_fault_isolation_example": {
         "number": 38,
@@ -2748,7 +2759,7 @@
       }
     }
   ],
-  "current_stage": "dual_gfm_sharing_native_protocol_frozen",
+  "current_stage": "dual_gfm_sharing_native_pair_qualified",
   "resume_checkpoint_history": [
     {
       "resumed_utc": "2026-11-11T13:24:16.085490+00:00",
