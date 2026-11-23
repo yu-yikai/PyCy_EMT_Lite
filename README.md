@@ -13,7 +13,7 @@ The scope is teaching and algorithm checks, not plant-scale EMT, protection sett
 
 ### First run on Windows
 
-1. On the [project page](https://github.com/yu-yikai/PyCy_EMT_Lite), choose **Code → Download ZIP**, extract it, and open the folder containing `pyproject.toml`, `README.md` and `examples`. This is the "project root"; if you already have a local copy, open that folder directly.
+1. On the [project page](https://github.com/yu-yikai/PyCy_EMT_Lite), select the branch that contains this guide, then choose **Code → Download ZIP**, extract it, and open the folder containing `pyproject.toml`, `README.md` and `examples`. This is the "project root". If you already have a local copy, open that folder directly.
 2. Type `powershell` in the File Explorer address bar and press Enter to open a terminal in that folder. Run the following commands there, waiting for each command to finish before starting the next.
 3. If [uv](https://docs.astral.sh/uv/getting-started/installation/) is not installed, run its official installation command in PowerShell:
 
@@ -298,6 +298,6 @@ Ruff checks errors, imports, modernization and selected defect rules without imp
 
 Coverage includes branches. Open `.tmp/htmlcov/index.html` to inspect missed lines and branches; there is no percentage threshold yet. Coverage and green tests describe tested behavior, while physical accuracy still requires the checks in [Models and validation](docs/models_and_validation.en.md).
 
-[CI configuration](.github/workflows/ci.yml) defines Linux and Windows jobs with a 40-minute job timeout, 25-minute test timeout and 10-minute example timeout. Both jobs run the locked checks above, all examples, build distributions, and verify the installed wheel outside the checkout, including its version and `py.typed`. JUnit, coverage XML and HTML reports are uploaded as `test-coverage-Linux` and `test-coverage-Windows` with 14-day retention. A local pass does not establish that a remote Actions run succeeded.
+[CI configuration](.github/workflows/ci.yml) defines Linux and Windows jobs with a 45-minute job timeout, 25-minute test timeout and 15-minute example timeout. Both jobs run the locked checks above, all examples, build distributions, and verify the installed wheel outside the checkout, including its version and `py.typed`. JUnit, coverage XML and HTML reports are uploaded as `test-coverage-Linux` and `test-coverage-Windows` with 14-day retention. A local pass does not establish that a remote Actions run succeeded.
 
 Package versions in `pyproject.toml`, `uv.lock` and `pycy_emt_lite.__version__` must agree. Record changes in [CHANGELOG](CHANGELOG.md); version changes do not publish a release automatically.

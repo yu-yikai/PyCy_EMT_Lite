@@ -3,8 +3,8 @@
   "updated_date": "2026-11-23",
   "timezone": "Asia/Shanghai",
   "branch": "codex/emt-examples-longterm",
-  "checkpoint_head": "299483e8db8759ee52b23ac7a29d2727d828a8e1",
-  "current_task": "D1",
+  "checkpoint_head": "dab065d5d039c4e412b3425f3d17898998a9934e",
+  "current_task": "F1",
   "formal_new_examples_completed": 21,
   "status_values": [
     "planned",
@@ -2626,6 +2626,19 @@
       "references": [],
       "validation": "a777c00的Ubuntu全量1568通过、5失败。2479b6d修复PLL合成归档源码哈希，287aa5e修正初始化QR行关系系数。修复后本机Windows和WSL2 Ubuntu 24.04.4各1573项含slow通过，锁定同步、Ruff、mypy通过。24号38项及28号双档原生对标回归通过。现有GitHub CI43856421332终态failure，两OS runner0、steps空，账户billing lock，待外部解除后补验托管运行。",
       "local_cli_and_package": "cbdc9b1的Windows和WSL2 Ubuntu各24个教学入口、sdist/wheel及库外wheel安装通过。Ubuntu临时CLI目录回收前未观察到末次源文件检查，运行日志和发行包已核对。",
+      "case_39_serial_ci_timing": {
+        "source_commit": "dab065d5d039c4e412b3425f3d17898998a9934e",
+        "status": "local_pass",
+        "report": {
+          "path": "docs/development_roadmap/experiments/f1_case39_ci_examples_timing_20261123.json",
+          "sha256": "0da40bf89857c92ea6abd6b4858e4f04fa6075fcc218d26ddfc45525d4f50277",
+          "bytes": 4369
+        },
+        "examples": 35,
+        "elapsed_s": 705.811,
+        "example_step_timeout_min": 15,
+        "job_timeout_min": 45
+      },
       "case_38_local_cross_platform": {
         "source_commit": "9ec48d51021704660ac4471e8877c7ff28c096d1",
         "report": {
@@ -2660,7 +2673,8 @@
         "docs/development_roadmap/experiments/f1_ubuntu_a777c00_20261118.json",
         "docs/development_roadmap/experiments/f1_cli_wheel_cbdc9b1_20261118.json",
         "docs/development_roadmap/experiments/f1_ubuntu_a223722_20261123.json",
-        "docs/development_roadmap/experiments/f1_case38_local_cross_platform_20261123.json"
+        "docs/development_roadmap/experiments/f1_case38_local_cross_platform_20261123.json",
+        "docs/development_roadmap/experiments/f1_case39_ci_examples_timing_20261123.json"
       ],
       "commits": [
         "90b2fcd",
@@ -2676,7 +2690,8 @@
         "57fbc81106a75e6f70e09413e4fd94cf45853b96",
         "2479b6d2422a3d7e13a321dece00899bd0669f83",
         "287aa5ee00b8b6bc6c9638a66cf4136dc0029a70",
-        "9ec48d51021704660ac4471e8877c7ff28c096d1"
+        "9ec48d51021704660ac4471e8877c7ff28c096d1",
+        "dab065d5d039c4e412b3425f3d17898998a9934e"
       ],
       "blockers": [
         "GitHub check-run两项注释：The job was not started because your account is locked due to a billing issue. 账户解除外部账单锁后才能补跑；不通过重复push或改代码绕过。"
@@ -2788,7 +2803,7 @@
       }
     }
   ],
-  "current_stage": "dual_grid_forming_power_sharing_example_39_accepted",
+  "current_stage": "phase_f_serial_example_budget_verified",
   "resume_checkpoint_history": [
     {
       "resumed_utc": "2026-11-11T13:24:16.085490+00:00",
@@ -2830,9 +2845,9 @@
     }
   ],
   "current_source_snapshot": {
-    "path": "local_reference/d1_dual_vsc_candidate_20261123/formal_comparison_v1/inputs.json",
-    "sha256": "0142afab19e21452878ee3fa912ac2425e708f925f03202a0b522734e34fabad",
-    "bytes": 63655
+    "path": "local_reference/f1_windows_qa/serial_ci_examples/20261123T091307360254Z/source_before.json",
+    "bytes": 59324,
+    "sha256": "b212eadfacd0744ffea28df8e19bf17b0b5db177c08b1fdbc1372301f78e464e"
   },
   "latest_maintenance": {
     "kind": "dense_lu_one_residual_refinement",

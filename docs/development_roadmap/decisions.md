@@ -1,5 +1,8 @@
 # 技术决策
 
+2026-11-23。用已验收提交的独立归档、CI 锁定的 uv 0.12.10 和相同的非交互命令测量。15 分钟比本机示例总耗时多约 194 秒，任务 45 分钟给测试与示例以外的步骤预留时间。
+[Windows 串行计时证据](experiments/f1_case39_ci_examples_timing_20261123.json)
+
 2026-11-23。第 39 号沿用 37 号的源、馈线和低通滤波，A、B 分别读同一 PCC 电压和各自馈线电流。读图先看 300 ms 功率暂降，再对照两站功率增量、频率和相角差。
 [39 号验收报告](../../validation/cases/dual_grid_forming_power_sharing/acceptance_report.json)
 

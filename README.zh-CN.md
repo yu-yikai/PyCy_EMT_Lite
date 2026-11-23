@@ -13,7 +13,7 @@ PyCy_EMT_Lite 是小规模电磁暂态（EMT）仿真的纯 Python 教学项目�
 
 ### 第一次运行（Windows）
 
-1. 从[项目主页](https://github.com/yu-yikai/PyCy_EMT_Lite)选择 **Code → Download ZIP**，解压后打开同时包含 `pyproject.toml`、`README.md` 和 `examples` 的文件夹。这就是“项目根目录”；已有本地代码时直接打开该目录。
+1. 在[项目主页](https://github.com/yu-yikai/PyCy_EMT_Lite)先切换到本指南所在的分支，再选择 **Code → Download ZIP**。解压后打开同时包含 `pyproject.toml`、`README.md` 和 `examples` 的文件夹。这就是“项目根目录”。已有本地代码时直接打开该目录。
 2. 在资源管理器地址栏输入 `powershell` 并按 Enter，打开位于该目录的终端。后面的命令都在这里运行，每条命令完成后再执行下一条。
 3. 如未安装 [uv](https://docs.astral.sh/uv/getting-started/installation/)，在 PowerShell 中执行官方安装命令：
 
@@ -298,6 +298,6 @@ Ruff 检查错误、导入顺序、现代化写法和选定缺陷规则，不强
 
 覆盖率包含分支。打开 `.tmp/htmlcov/index.html` 查看未执行的代码行和分支；当前不设覆盖率百分比阈值。覆盖率和测试通过只说明被验证的行为，物理精度仍需[模型与验证](docs/models_and_validation.md)中的检查。
 
-[CI 配置](.github/workflows/ci.yml)定义 Linux 和 Windows 两项任务：任务超时 40 分钟，测试步骤 25 分钟，示例步骤 10 分钟。两项任务均锁定环境，执行上述检查、全部示例、构建发行包，并在源码目录外验证安装 wheel 的版本及 `py.typed`。JUnit、覆盖率 XML 和 HTML 以 `test-coverage-Linux`、`test-coverage-Windows` 上传，保留 14 天。本地通过不代表远端 Actions 已运行成功。
+[CI 配置](.github/workflows/ci.yml)定义 Linux 和 Windows 两项任务。任务限时 45 分钟，测试步骤 25 分钟，示例步骤 15 分钟。两项任务均锁定环境，执行上述检查、全部示例、构建发行包，并在源码目录外验证安装 wheel 的版本及 `py.typed`。JUnit、覆盖率 XML 和 HTML 以 `test-coverage-Linux`、`test-coverage-Windows` 上传，保留 14 天。本地通过不代表远端 Actions 已运行成功。
 
 `pyproject.toml`、`uv.lock` 与 `pycy_emt_lite.__version__` 的版本必须一致。版本变更记入[CHANGELOG](CHANGELOG.md)；修改版本不会自动发布。

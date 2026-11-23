@@ -1,0 +1,92 @@
+{
+  "schema": "pycy_f1_serial_ci_examples_timing_v1",
+  "source_commit": "dab065d5d039c4e412b3425f3d17898998a9934e",
+  "scope": "Local Windows replay of the serial CI examples step from a clean Git archive.",
+  "platform": "Windows-11-10.0.26300-SP0",
+  "python": "3.14.5 (main, May 10 2026, 20:29:46) [MSC v.1944 64 bit (AMD64)]",
+  "uv": "uv 0.12.10 (3c979abda 2026-09-04 x86_64-pc-windows-msvc)",
+  "offline_cache_reused": true,
+  "successful_examples": 35,
+  "serial_wall_s": 705.811,
+  "original_example_step_budget_s": 600,
+  "over_original_example_step_budget": true,
+  "first_example_completed_at_or_after_600_s": "examples/36_grid_connected_pv.py",
+  "example_step_budget_s": 900,
+  "job_budget_min": 45,
+  "seconds_left_at_new_example_budget": 194.189,
+  "seconds_by_example": {
+    "examples/01_r_circuit.py": 0.966,
+    "examples/02_rc_transient.py": 1.041,
+    "examples/03_rl_transient.py": 1.026,
+    "examples/04_rlc_transient.py": 1.768,
+    "examples/05_three_phase_steady_state.py": 1.187,
+    "examples/06_three_phase_short_circuit.py": 4.339,
+    "examples/07_single_phase_ground_fault.py": 1.204,
+    "examples/08_pi_line_transient.py": 1.068,
+    "examples/09_single_phase_transformer.py": 1.054,
+    "examples/10_park_generator_avr_governor.py": 2.614,
+    "examples/11_pll_dynamic_response.py": 1.054,
+    "examples/12_two_level_pwm_generator.py": 10.555,
+    "examples/17_single_phase_ac_rlc.py": 1.975,
+    "examples/18_three_terminal_vsc_hvdc.py": 98.712,
+    "examples/19_cascaded_rc.py": 2.659,
+    "examples/20_multi_source_nodal_network.py": 0.976,
+    "examples/21_earthing_neutral.py": 1.182,
+    "examples/22_t_section_transmission_line.py": 27.498,
+    "examples/23_transformer_t_equivalent.py": 2.247,
+    "examples/24_three_phase_transformer_chain.py": 35.845,
+    "examples/25_source_line_transformer_network.py": 2.574,
+    "examples/26_synchronous_buck.py": 40.365,
+    "examples/27_finite_r_bergeron_line.py": 1.996,
+    "examples/28_grid_connected_vsc_open_loop.py": 11.513,
+    "examples/29_grid_connected_vsc_closed_loop.py": 12.857,
+    "examples/30_grid_connected_vsc_pll.py": 13.073,
+    "examples/31_grid_connected_vsc_power_vac.py": 49.699,
+    "examples/32_grid_connected_vsc_dc_voltage.py": 53.227,
+    "examples/33_pjm5_load_step.py": 65.027,
+    "examples/34_two_terminal_vsc_hvdc.py": 89.758,
+    "examples/35_grid_connected_storage.py": 25.405,
+    "examples/36_grid_connected_pv.py": 80.201,
+    "examples/37_islanded_frequency_droop.py": 21.048,
+    "examples/38_parallel_line_fault_isolation.py": 2.947,
+    "examples/39_dual_grid_forming_power_sharing.py": 37.131
+  },
+  "evidence": {
+    "receipt.json": {
+      "path": "local_reference/f1_windows_qa/serial_ci_examples/20261123T091307360254Z/receipt.json",
+      "bytes": 27344,
+      "sha256": "8ccdef006b5b40626f72dd8176623a047686ebd1d524e1f84e8d5290daf01444"
+    },
+    "ci.yml": {
+      "path": "local_reference/f1_windows_qa/serial_ci_examples/20261123T091307360254Z/ci.yml",
+      "bytes": 3744,
+      "sha256": "783b1445e4fed5a4945d9b797a6cf171cf543ae1ff2ddb42abbd895cda384afe"
+    },
+    "source.zip": {
+      "path": "local_reference/f1_windows_qa/serial_ci_examples/20261123T091307360254Z/source.zip",
+      "bytes": 2018757,
+      "sha256": "e9922f9818aad9899ffbe73ac43a54069c565a74d7a911c12ccd347ef06899cd"
+    },
+    "source_before.json": {
+      "path": "local_reference/f1_windows_qa/serial_ci_examples/20261123T091307360254Z/source_before.json",
+      "bytes": 59324,
+      "sha256": "b212eadfacd0744ffea28df8e19bf17b0b5db177c08b1fdbc1372301f78e464e"
+    },
+    "source_after.json": {
+      "path": "local_reference/f1_windows_qa/serial_ci_examples/20261123T091307360254Z/source_after.json",
+      "bytes": 59324,
+      "sha256": "b212eadfacd0744ffea28df8e19bf17b0b5db177c08b1fdbc1372301f78e464e"
+    },
+    "timing.jsonl": {
+      "path": "local_reference/f1_windows_qa/serial_ci_examples/20261123T091307360254Z/timing.jsonl",
+      "bytes": 13226,
+      "sha256": "96aa7cb3de9c443fcce9e6e22ae984c2c90f8a5b0cfa1da3187673f20d3b7875"
+    }
+  },
+  "uv_release_verification": {
+    "path": "local_reference/f1_windows_qa/verified_uv_0.12.10/receipt.json",
+    "bytes": 594,
+    "sha256": "6cb343cf76abc00c51bc880f728f19afa7b721f4090c858cd44eadba087671a9"
+  },
+  "hosted_ci_last_record": "docs/development_roadmap/experiments/ci_57fbc81.json"
+}

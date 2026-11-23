@@ -13,7 +13,7 @@ jobs:
   ci:
     name: ci (${{ matrix.os }})
     runs-on: ${{ matrix.os }}
-    timeout-minutes: 40
+    timeout-minutes: 45
     strategy:
       fail-fast: false
       matrix:
@@ -69,7 +69,7 @@ jobs:
         run: uv run --locked python examples/01_r_circuit.py
 
       - name: Run all examples
-        timeout-minutes: 10
+        timeout-minutes: 15
         shell: bash
         run: |
           set -euo pipefail

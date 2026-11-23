@@ -1,5 +1,8 @@
 # 验证状态
 
+2026-11-23。Windows 串行 35 个示例全通过，469 个归档文件前后哈希相同。旧限时在第 36 号运行期间耗尽。最近一次托管 CI 的两项 Job 仍无执行步骤。
+[Windows 串行计时证据](experiments/f1_case39_ci_examples_timing_20261123.json)
+
 2026-11-23。第 39 号两档正式对标覆盖 360,002 个原始 PSCAD 采样点，三相负荷在指定拍投入。Windows 和 Ubuntu WSL2 各通过 1,629 项，包含慢测。
 [39 号验收报告](../../validation/cases/dual_grid_forming_power_sharing/acceptance_report.json)
 
