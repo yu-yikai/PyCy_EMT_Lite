@@ -137,18 +137,19 @@ class _ShuntCapacitorState:
     previous_current: dict[PhaseName, float] = field(default_factory=lambda: dict.fromkeys(PHASES, 0.0))
     last_current: dict[PhaseName, float] = field(default_factory=lambda: dict.fromkeys(PHASES, 0.0))
 
-def _validate_series_rl(name: str, resistance: float, inductance: float) -> None:
-    """检查串联 RL 参数。"""
+def _validate_series_rl(name: str, resistance: float, inductance: float) -> tuple[float, float]:
+    """检查串联 RL 参数并统一为 Python 浮点数。"""
 
-    _finite_real(resistance, f"{name} 的 resistance")
-    _finite_real(inductance, f"{name} 的 inductance")
+    resistance = _finite_real(resistance, f"{name} 的 resistance")
+    inductance = _finite_real(inductance, f"{name} 的 inductance")
 
-    if not math.isfinite(resistance) or resistance < 0:
+    if resistance < 0:
         raise ValueError(f"{name} 的电阻必须为有限非负数。")
-    if not math.isfinite(inductance) or inductance < 0:
+    if inductance < 0:
         raise ValueError(f"{name} 的电感必须为有限非负数。")
     if resistance == 0 and inductance == 0:
         raise ValueError(f"{name} 的电阻和电感不能同时为 0。")
+    return resistance, inductance
 
 def _companion(method: str, time_step: float, inductance: float, previous_current: float, previous_inductor_voltage: float) -> tuple[float, float]:
     """返回串联电感 companion model 的等效电阻和历史电压。"""
@@ -201,7 +202,7 @@ class ThreePhaseLine(Component):
     state: _SeriesRlState = field(default_factory=_SeriesRlState, init=False)
 
     def __post_init__(self) -> None:
-        _validate_series_rl(f"三相线路 {self.name}", self.resistance, self.inductance)
+        self.resistance, self.inductance = _validate_series_rl(f"三相线路 {self.name}", self.resistance, self.inductance)
 
     def nodes(self) -> Iterable[str]:
         nodes: list[str] = []
@@ -468,7 +469,7 @@ class ThreePhaseLoad(Component):
     state: _SeriesRlState = field(default_factory=_SeriesRlState, init=False)
 
     def __post_init__(self) -> None:
-        _validate_series_rl(f"三相负荷 {self.name}", self.resistance, self.inductance)
+        self.resistance, self.inductance = _validate_series_rl(f"三相负荷 {self.name}", self.resistance, self.inductance)
 
     def nodes(self) -> Iterable[str]:
         return [phase_node(self.bus, phase) for phase in PHASES] + [self.neutral]

@@ -284,7 +284,7 @@ def test_bergeron_initial_sample_launches_wave_without_advancing_time() -> None:
     assert result.series("i:BL:receiving") == pytest.approx([0.0, 0.0, -1.0, -1.0])
 
 
-def test_aligned_bergeron_event_keeps_only_right_side_history_sample() -> None:
+def test_aligned_bergeron_event_exposes_only_right_side_history_sample() -> None:
     line = BergeronLine("BL", "send", "recv", 10.0, 0.2)
     result = Simulator(Circuit.from_components("line_event", [
         VoltageSource("V", "send", "0", 10.0), line, Resistor("R", "recv", "0", 10.0),
@@ -407,6 +407,79 @@ def test_three_phase_bergeron_propagates_independent_matched_port_waves() -> Non
     for phase, voltage in zip("abc", [5.0, -2.0, 1.0], strict=True):
         assert result.series(f"v:recv:{phase}") == pytest.approx([0.0, 0.0, voltage, voltage, voltage])
         assert result.series(f"i:BL:receiving:{phase}") == pytest.approx([0.0, 0.0, -voltage / 10, -voltage / 10, -voltage / 10])
+
+
+@pytest.mark.parametrize("method", ["backward_euler", "trapezoidal"])
+@pytest.mark.parametrize("three_phase", [False, True])
+def test_bergeron_startup_wave_changes_capacitor_current_without_changing_voltage(method, three_phase) -> None:
+    if three_phase:
+        line = ThreePhaseBergeronLine("BL", "send", "recv", 10.0, 0.002)
+        suffixes = (":a", ":b", ":c")
+    else:
+        line = BergeronLine("BL", "send", "recv", 10.0, 0.002)
+        suffixes = ("",)
+    circuit = Circuit.from_components("capacitive_arrival", [line, *(
+        component for suffix in suffixes for component in (
+            VoltageSource(f"V{suffix}", f"send{suffix}", "0", 1.0),
+            Capacitor(f"C{suffix}", f"recv{suffix}", "0", 100e-6),
+        )
+    )])
+    result = Simulator(circuit, SimulationConfig(0.001, 0.003, method=method)).run()
+    for suffix in suffixes:
+        # 2 V 开路电压、10 Ω Norton 并联支路。波前右侧电流跳到 0.2 A，电压连续。
+        np.testing.assert_allclose(result.series(f"v:recv{suffix}")[:3], 0.0, atol=1e-12)
+        assert result.rows[2][f"i:C{suffix}"] == pytest.approx(0.2)
+        assert result.rows[3][f"v:recv{suffix}"] == pytest.approx(1.0 if method == "backward_euler" else 4 / 3)
+    assert result.event_log == []
+
+
+@pytest.mark.parametrize("method", ["backward_euler", "trapezoidal"])
+def test_bergeron_propagates_explicit_fault_with_continuous_receiving_storage(method) -> None:
+    def run(with_fault):
+        parts = [VoltageSource("V", "source", "0", 1.0), Resistor("R", "source", "send", 10.0),
+                 BergeronLine("BL", "send", "recv", 10.0, 0.002), Capacitor("C", "recv", "0", 100e-6),
+                 Fault("F", "send", 10.0)]
+        events = [FaultApplyEvent(0.003, "F")] if with_fault else []
+        return Simulator(Circuit.from_components("fault_wave", parts), SimulationConfig(0.001, 0.006, method=method),
+                         events=events).run()
+
+    intact, faulted = run(False), run(True)
+    arrival = 5  # 3 ms 故障加上 2 ms 单程传播。
+    np.testing.assert_allclose(faulted.series("v:recv")[:arrival + 1], intact.series("v:recv")[:arrival + 1], atol=1e-12)
+    # 发送端从 1/2 V 变为 1/3 V，其出射波 v/Z+i 的差值是 -1/30 A。
+    assert faulted.rows[arrival]["i:C"] - intact.rows[arrival]["i:C"] == pytest.approx(-1 / 30)
+    assert [record["time"] for record in faulted.event_log] == [0.003]
+
+
+@pytest.mark.parametrize("method", ["backward_euler", "trapezoidal"])
+def test_bergeron_reflected_wavefront_uses_the_left_side_before_arrival(method) -> None:
+    def run(matched_source):
+        sending = (VoltageSource("V", "source", "0", 2.0), Resistor("R", "source", "send", 10.0)) if matched_source else (
+            VoltageSource("V", "send", "0", 1.0),
+        )
+        parts = [*sending, BergeronLine("BL", "send", "recv", 10.0, 0.002), Capacitor("C", "recv", "0", 100e-6)]
+        return Simulator(Circuit.from_components("reflected_wave", parts),
+                         SimulationConfig(0.001, 0.007, method=method, linear_solver_mode="reuse")).run()
+
+    matched, reflecting = run(True), run(False)
+    arrival = 6  # 首波 2 ms 到达，反射由源端折返后在 6 ms 再次到达。
+    np.testing.assert_allclose(reflecting.series("v:recv")[:arrival + 1], matched.series("v:recv")[:arrival + 1], atol=1e-12)
+    assert reflecting.rows[arrival]["i:C"] - matched.rows[arrival]["i:C"] == pytest.approx(0.2)
+
+
+@pytest.mark.parametrize("line_type", [PiLine, ThreePhasePiLine, SegmentedLine])
+def test_pi_line_accepts_equal_float16_and_python_parameters(line_type) -> None:
+    def run(inductance):
+        options = {"sections": 2} if line_type is SegmentedLine else {}
+        line = line_type("LINE", "send", "recv", 0.0, inductance, 0.0, **options)
+        suffixes = (":a", ":b", ":c") if line_type is ThreePhasePiLine else ("",)
+        parts = [line]
+        for suffix in suffixes:
+            parts.extend((VoltageSource(f"V{suffix}", f"send{suffix}", "0", 1.0),
+                          Resistor(f"R{suffix}", f"recv{suffix}", "0", 10.0)))
+        return Simulator(Circuit.from_components("scalar_precision", parts), SimulationConfig(1e-5, 2e-5)).run()
+
+    assert run(np.float16(1.0)).rows == run(1.0).rows
 
 
 def test_pi_line_ac_example_matches_phasors_and_conserves_energy() -> None:

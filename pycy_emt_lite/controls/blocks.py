@@ -45,10 +45,10 @@ def _finite_real(value: float, name: str, *, positive: bool = False) -> float:
     return float(value)
 
 
-def _validate_time_step(time_step: float) -> None:
+def _validate_time_step(time_step: float) -> float:
     """控制采样间隔以秒为单位，且必须为有限正数。"""
 
-    _finite_real(time_step, "time_step", positive=True)
+    return _finite_real(time_step, "time_step", positive=True)
 
 
 @dataclass(slots=True)
@@ -113,7 +113,7 @@ class PIController:
     def step(self, input_value: float, time_step: float) -> float:
         """根据误差输入推进 PI 控制器。"""
 
-        _validate_time_step(time_step)
+        time_step = _validate_time_step(time_step)
         error = _finite_real(input_value, "PIController.input_value")
         increment = self.integral_gain * error * time_step
         candidate_integrator = _finite_real(self.integrator + increment,
@@ -169,7 +169,7 @@ class FirstOrderLowPass:
     def step(self, input_value: float, time_step: float) -> float:
         """推进一阶低通滤波器。"""
 
-        _validate_time_step(time_step)
+        time_step = _validate_time_step(time_step)
         value = _finite_real(input_value, "FirstOrderLowPass.input_value")
         alpha = _finite_real(time_step / self.time_constant, "FirstOrderLowPass.time_step/time_constant")
         state = _finite_real((self.state + alpha * value) / (1.0 + alpha), "FirstOrderLowPass.state")

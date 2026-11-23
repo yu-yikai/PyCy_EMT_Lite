@@ -203,8 +203,8 @@ class Simulator:
         1. 准备电路变量：节点电压变量和必要的支路电流变量。
         2. 在 t=0 应用事件，固定储能初值求一致代数量并记录。
         3. 只在正时间区间组装积分 companion、求解并更新储能状态。
-        4. 事件先积分至左侧，再依声明顺序修改网络，固定状态求右侧代数量。
-        5. 写回历史并记录，每个时刻只输出一行；事件行使用右侧值。
+        4. 事件和 Bergeron 波前先积分至左侧，按声明顺序应用显式事件，再固定状态求右侧代数量。
+        5. 写回历史并记录，每个保留时刻只输出一行，使用右侧值。
         """
 
         if self._run_started:
@@ -226,7 +226,7 @@ class Simulator:
             raise ValueError("电路没有非参考节点或支路变量，无法求解。")
 
         times = self._time_points()
-        self._prepare_delay_lines(times)
+        delay_lines = self._prepare_delay_lines(times)
         for event in self.events:
             event.validate(self.circuit)
         if self.config.linear_solver_mode == "precompute":
@@ -252,7 +252,7 @@ class Simulator:
                 self._update_components(context, solution)
             for event in due_events:
                 self.event_log.append(event.apply(self.circuit, float(time)))
-            if index == 0 or due_events:
+            if index == 0 or due_events or (delay_lines and any(line._has_wavefront(index) for line in delay_lines)):
                 context = replace(context, time_step=0.0, _initial=_InitialConditions())
                 solution = self._solve_step(context)
                 self._update_components(context, solution)
@@ -287,7 +287,7 @@ class Simulator:
             event_log=self.event_log,
         )
 
-    def _prepare_delay_lines(self, times: np.ndarray) -> None:
+    def _prepare_delay_lines(self, times: np.ndarray) -> list[BergeronLine]:
         """Bergeron 只读取整步历史；在求解或应用事件前检查实际网格。"""
 
         lines = []
@@ -297,7 +297,7 @@ class Simulator:
             elif isinstance(component, ThreePhaseBergeronLine):
                 lines.extend(component.lines.values())
         if not lines:
-            return
+            return lines
         time_step = self.config.time_step
         for index, time in enumerate(times):
             if not _time_close(float(time), index * time_step):
@@ -315,6 +315,7 @@ class Simulator:
                 )
             line._time_step = time_step
             line._delay_steps = delay_steps
+        return lines
 
     def _prepare_linear_systems(self, times: np.ndarray) -> None:
         """对隔离数值副本预分解；不调用真实源/门极，不应用事件或推进状态。"""

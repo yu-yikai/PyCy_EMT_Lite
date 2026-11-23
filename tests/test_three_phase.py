@@ -26,6 +26,17 @@ from pycy_emt_lite.analysis import rms, three_phase_power, three_phase_rms
 from pycy_emt_lite.components.three_phase import ThreePhaseParallelRLCLoad
 
 
+def test_three_phase_series_rl_accepts_equivalent_float16_parameters() -> None:
+    def simulate(inductance):
+        return Simulator(Circuit.from_components("normalized_rl", [
+            ThreePhaseSource("V", "source", 100.0),
+            ThreePhaseLine("LINE", "source", "bus", resistance=2.0, inductance=inductance),
+            ThreePhaseLoad("LOAD", "bus", resistance=3.0, inductance=inductance),
+        ]), SimulationConfig(1e-5, 2e-5)).run()
+
+    assert simulate(np.float16(1.0)).rows == simulate(1.0).rows
+
+
 @pytest.mark.parametrize("kind", ["pi_line", "parallel_load"])
 @pytest.mark.parametrize("method", ["trapezoidal", "backward_euler"])
 def test_three_phase_existing_models_match_independent_ac_fault_reference(kind, method) -> None:

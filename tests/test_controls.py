@@ -27,6 +27,12 @@ from pycy_emt_lite.controls import (
 from pycy_emt_lite.controls.vsc import VSCControlConfig, VSCController
 
 
+@pytest.mark.parametrize("make_control", [lambda: PIController(0.0, 400_000.0), lambda: FirstOrderLowPass(1e-8)])
+def test_control_arithmetic_accepts_equivalent_float16_time_step(make_control) -> None:
+    time_step = np.float16(0.001)
+    assert make_control().step(1.0, time_step) == make_control().step(1.0, float(time_step))
+
+
 def test_delay_rejects_huge_allocation_before_buffer_creation() -> None:
     with pytest.raises(ValueError, match="SampleDelay.steps.*上限"):
         SampleDelay(1_000_001)

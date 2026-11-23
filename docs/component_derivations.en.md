@@ -448,7 +448,9 @@ Both ends still participate in one global solve. This does not mean the program 
 After solving, compute port current with `i=v/Z0+H`, then store both terminal voltages and currents at this time for retrieval τ later.
 The implementation requires τ=d·h, where d is an integer of at least 1; the read index is `round(t/h)−d`.
 Negative-time history is fixed at zero, so the remote history source is zero before wave arrival. There is no fractional-delay interpolation; events must also lie on the fixed grid.
-An explicit event update at the same time replaces the last history row with the right-side value instead of inserting an extra sample.
+An outgoing wave jump from initialization or an explicit event keeps both sides and reaches the opposite end after τ. At arrival, the integrator uses the left-side history source. The right-side source enters a consistency solve that holds storage states such as capacitor voltage and inductor current fixed. Reflected or transmitted jumps follow the same rule.
+`history` exposes one right-side row per time step. Retained result samples use the right side as well. A jump inside a custom source function follows ordinary sampling. Use an explicit event to mark a known discontinuity.
+`event_log` records user events. Use `record_every=1` to inspect wavefronts. For time-weighted metrics, end the preceding window at the last sample before arrival and start the following window at the wavefront sample.
 
 `attenuation=η` multiplies both H terms by η, with 0<η≤1; η=1 recovers the lossless relations above.
 η<1 approximates propagation-amplitude attenuation. It is neither fitted from specified frequency-dependent R′/L′/C′/G′ nor another representation of a Pi-line resistor.
@@ -529,14 +531,17 @@ Grounding a Y connection depends on the neutral node and external wiring; there 
 
 ### 9.5 What the saturation option actually does
 
-The source selects the current-step inductance from the preceding flux linkage:
+The magnetization curve is symmetric about the origin. Inside the knee, the magnetizing current is $f(\lambda)=\lambda/L_m$. Beyond the knee it continues from the knee current:
 
-$$L_{eff}=\begin{cases}L_m,&|\lambda_{m,0}|<\lambda_{knee},\\L_{sat},&|\lambda_{m,0}|\ge\lambda_{knee}.\end{cases}$$
+$$f(\lambda)=\operatorname{sgn}(\lambda)\left(\frac{\lambda_{knee}}{L_m}+\frac{|\lambda|-\lambda_{knee}}{L_{sat}}\right),\qquad |\lambda|>\lambda_{knee}.$$
 
-It then substitutes Leff into an ordinary inductor companion and updates flux linkage from up after solving.
-There is no current-step Newton iteration for nonlinear `i=f(λ)` and no full magnetization-curve reprojection of flux/current across the switch.
-Consequently, the linear energy formula above is not a strict saturation-energy identity across an inductance change.
-This is an explicitly lagged two-region inductance approximation. Independent saturation-energy, hysteresis and inrush validation remains incomplete.
+Each step evaluates the base current $f(\lambda_0)$ at the known flux linkage $\lambda_0$ and uses the inductance $L_{eff}$ of that segment in the companion model.
+MNA solves for the magnetizing current as $f(\lambda_0)+(\lambda-\lambda_0)/L_{eff}$, with the flux increment given by integrating the primary voltage.
+A step that stays in a single segment gives the exact curve current for the discrete flux. A step crossing a knee uses the starting slope throughout, so the current error is bounded by $|\Delta\lambda|\,|1/L_{sat}-1/L_m|$.
+The next step takes its base current from the curve again, so knee-crossing errors do not accumulate as a history bias. A zero-step event preserves the actual left-side current and flux linkage.
+
+With a periodic primary voltage source, compare the flux linkage and current at each cycle boundary. Reduce the time step to check the knee-crossing error.
+The model describes a piecewise curve without hysteresis. Strict energy accounting across a knee must account for the integrated curve and step approximation. Independent saturation-energy and inrush validation remains incomplete.
 
 ## 10. Synchronous machines: mechanical states affect the next electrical stamp
 

@@ -102,7 +102,7 @@ class SRFPLL:
         """
 
         self._check_configuration()
-        _validate_time_step(time_step)
+        time_step = _validate_time_step(time_step)
         try:
             voltages = tuple(voltages_abc)
         except TypeError as exc:
