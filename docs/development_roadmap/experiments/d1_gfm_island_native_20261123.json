@@ -1,0 +1,211 @@
+{
+  "schema": "d1_gfm_island_native_v1",
+  "date": "2026-11-23",
+  "status": "PASS_NATIVE_D1_GFM_ISLAND_PAIR",
+  "scope": "Autonomous averaged 120 Vrms PSCAD island with solved-power feedback and a balanced Y load change.",
+  "protocol": {
+    "path": "docs/development_roadmap/experiments/d1_gfm_island_protocol_20261123.json",
+    "sha256": "ac192b835fc76103e19c3060cf3a90e873819932d3b7c791a040a5c1ad460c13",
+    "bytes": 6420
+  },
+  "paired_audit": {
+    "path": "local_reference/d1_gfm_single_station_20261123/verification/native_pair.json",
+    "sha256": "bbfe9a4ef26edaecde7135071bfc263cbd35f1e732b24c89b4da99eaedd62ec0",
+    "bytes": 3069
+  },
+  "figure": {
+    "path": "local_reference/d1_gfm_single_station_20261123/verification/island_frequency_droop.png",
+    "sha256": "168934cd6f62964ee709db8dd456bdd75dd2b60340e14200cea27a4537ad201f",
+    "bytes": 102600
+  },
+  "pscad_toolchain": {
+    "pscad_version": "5.0.0",
+    "emtdc_build": "20210219",
+    "compiler": "gf46",
+    "platform": "x86"
+  },
+  "first_build_refusal": {
+    "reason": "PSCAD partitioned the balanced grounding into three electrical subsystems. Its scheduled extra angle copy also followed the source update.",
+    "worker": {
+      "path": "local_reference/d1_gfm_single_station_20261123/5us_native/n/20261123T055316344378Z/worker.json",
+      "sha256": "3ec9197dd8f1db9ef779aacbfa845264a04f8d8aed7620744853fdfab299593c",
+      "bytes": 7248
+    },
+    "terminal": {
+      "path": "local_reference/d1_gfm_single_station_20261123/5us_native/n/20261123T055316344378Z/terminal.json",
+      "sha256": "ffb3b186ecbb25fed2fdb3fd8b4eaee53452adc6de5811bcd7f5da7d18822073",
+      "bytes": 5825
+    },
+    "generated_main": {
+      "path": "local_reference/d1_gfm_single_station_20261123/5us_native/n/20261123T055316344378Z/project/vdiv.gf46/Main.f",
+      "sha256": "af75ed3370beb111755bc04f5a661efe509259985410890d0bc3562fdd978042",
+      "bytes": 28872
+    },
+    "recovery": "Rebuild with the already stored next-angle signal directly driving the source. Qualify each subcircuit and its measurement paths."
+  },
+  "grids": {
+    "5us": {
+      "audit": {
+        "path": "local_reference/d1_gfm_single_station_20261123/verification/5us_native_audit.json",
+        "sha256": "ecf443fdd47a480abb762756f48dc5ff9aab2bb2a8a6c86a2176519013ee5f15",
+        "bytes": 12256
+      },
+      "original_run": {
+        "path": "local_reference/d1_gfm_single_station_20261123/5us_direct/n/20261123T060244003244Z/result.json",
+        "sha256": "6386a9e5431572706754377b8c947443d3f5b4acf9861c82516b0c52db663d35",
+        "bytes": 6916
+      },
+      "launch": {
+        "path": "local_reference/d1_gfm_single_station_20261123/5us_direct/launch.json",
+        "sha256": "c8ce520bd99ca681ff53bd58cd2a6b687744aba3bebd86479f1ed349e3876123",
+        "bytes": 6827
+      },
+      "compile_admission": {
+        "path": "local_reference/d1_gfm_single_station_20261123/5us_direct/n/20261123T060244003244Z/pre_run_admission.json",
+        "sha256": "75c2dbc714bf4a3ec6e7d9c9638be6628df7b22578ec22d1558b440810d2fbda",
+        "bytes": 13352
+      },
+      "rows_including_zero": 80001,
+      "windows": {
+        "before": {
+          "window_s": [
+            0.14,
+            0.19
+          ],
+          "rows": 10000,
+          "power_w": 359.36892308578854,
+          "filtered_power_w": 359.26077885689216,
+          "frequency_hz": 60.000739221143114,
+          "pcc_rms_v": 119.89476718548194,
+          "source_phase_rms_v": 120.00000000000001,
+          "feeder_phase_rms_a": 0.9991231797737835
+        },
+        "after": {
+          "window_s": [
+            0.34,
+            0.39
+          ],
+          "rows": 10000,
+          "power_w": 717.3549696440189,
+          "filtered_power_w": 717.2344726668659,
+          "frequency_hz": 59.64276552733313,
+          "pcc_rms_v": 119.77937799504714,
+          "source_phase_rms_v": 120.00000000000001,
+          "feeder_phase_rms_a": 1.9963229665841182
+        }
+      },
+      "changes": {
+        "power_increase_w": 357.9860465582303,
+        "frequency_drop_hz": 0.35797369380998134
+      },
+      "load_edge_pcc_power_w": 197.20331186149,
+      "peak_angle_recurrence_error_rad": 9.997001273673312e-12,
+      "physical_peaks": {
+        "clock_abs_s": 5.551115123125783e-17,
+        "source_command_abs_v": 5.016431714466307e-12,
+        "source_wave_abs_v": 8.488929559291591e-10,
+        "kcl_abs_a": 1.0036416142611415e-13,
+        "load_ohm_abs_v": 1.0061285138363019e-11,
+        "feeder_tr_abs_v": 1.3079759497713894e-10,
+        "tr_energy_abs_j": 1.4070222764672317e-15,
+        "cumulative_energy_abs_j": 9.486342239063948e-14,
+        "open_current_abs_a": 1.6955680582422e-07
+      }
+    },
+    "2p5us": {
+      "audit": {
+        "path": "local_reference/d1_gfm_single_station_20261123/verification/2p5us_native_audit.json",
+        "sha256": "fd0e9eb730eebc39642e5aa6791ae7effcaec0f5669a2cf9d4803fa2ca38e249",
+        "bytes": 12304
+      },
+      "original_run": {
+        "path": "local_reference/d1_gfm_single_station_20261123/2p5us_direct/n/20261123T060713132384Z/result.json",
+        "sha256": "24f9132a0bc4a29ab4d5aef22fe62759d0b355330bc937aace74e093774c9f1c",
+        "bytes": 6923
+      },
+      "launch": {
+        "path": "local_reference/d1_gfm_single_station_20261123/2p5us_direct/launch.json",
+        "sha256": "569287dd5053c8377764ae0f9cd17d06a128f6501068742d8393153b2f5243e4",
+        "bytes": 6839
+      },
+      "compile_admission": {
+        "path": "local_reference/d1_gfm_single_station_20261123/2p5us_direct/n/20261123T060713132384Z/pre_run_admission.json",
+        "sha256": "49876255d3a408dc2fef7aab1fa465d4f910adb35b368af25c91b9be88be1f52",
+        "bytes": 13362
+      },
+      "rows_including_zero": 160001,
+      "windows": {
+        "before": {
+          "window_s": [
+            0.14,
+            0.19
+          ],
+          "rows": 20000,
+          "power_w": 359.36892309998603,
+          "filtered_power_w": 359.2608144803311,
+          "frequency_hz": 60.00073918551968,
+          "pcc_rms_v": 119.89476718785028,
+          "source_phase_rms_v": 120.00000000000001,
+          "feeder_phase_rms_a": 0.9991231797935194
+        },
+        "after": {
+          "window_s": [
+            0.34,
+            0.39
+          ],
+          "rows": 20000,
+          "power_w": 717.354969754633,
+          "filtered_power_w": 717.234523756581,
+          "frequency_hz": 59.64276547624343,
+          "pcc_rms_v": 119.77937800428194,
+          "source_phase_rms_v": 120.00000000000003,
+          "feeder_phase_rms_a": 1.9963229667380324
+        }
+      },
+      "changes": {
+        "power_increase_w": 357.98604665464694,
+        "frequency_drop_hz": 0.3579737092762443
+      },
+      "load_edge_pcc_power_w": 188.55610419021,
+      "peak_angle_recurrence_error_rad": 1.00014150607175e-11,
+      "physical_peaks": {
+        "clock_abs_s": 5.551115123125783e-17,
+        "source_command_abs_v": 5.016431714466307e-12,
+        "source_wave_abs_v": 8.489031699809857e-10,
+        "kcl_abs_a": 1.0036416142611415e-13,
+        "load_ohm_abs_v": 1.0061285138363019e-11,
+        "feeder_tr_abs_v": 2.481552741073756e-10,
+        "tr_energy_abs_j": 1.3987067060128304e-15,
+        "cumulative_energy_abs_j": 1.5336450956095983e-13,
+        "open_current_abs_a": 1.6955680582368e-07
+      }
+    }
+  },
+  "cross_grid": {
+    "common_rows_including_zero": 80001,
+    "clock_abs_s": 0.0,
+    "full_and_away_peaks": {
+      "source_abs_v": 0.0006561151115859892,
+      "phase_abs_rad": 3.866793008455716e-06,
+      "frequency_abs_hz": 4.3805392998308434e-05,
+      "filtered_power_abs_w": 0.04380539276002082,
+      "pcc_abs_v": 1.724081032098013,
+      "feeder_abs_a": 0.028734683868300026,
+      "pcc_away_abs_v": 0.0006556075784240056,
+      "feeder_away_abs_a": 1.0926792973799983e-05
+    },
+    "window_differences": {
+      "before": {
+        "window_power_abs_w": 1.4197496511769714e-08,
+        "window_frequency_abs_hz": 3.5623436644982576e-08,
+        "window_rms_abs_v": 2.3683384142714203e-09
+      },
+      "after": {
+        "window_power_abs_w": 1.1061410987167619e-07,
+        "window_frequency_abs_hz": 5.10896995820076e-08,
+        "window_rms_abs_v": 9.234796038981585e-09
+      }
+    }
+  },
+  "formal_new_examples_completed": 18
+}
