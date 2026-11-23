@@ -2,8 +2,6 @@
 
 import argparse
 import platform
-import shutil
-import subprocess
 from dataclasses import replace
 from datetime import UTC, datetime
 from pathlib import Path
@@ -17,6 +15,7 @@ from validation.cases.grid_connected_vsc_closed_loop.compare import frozen_json
 from validation.cases.grid_connected_vsc_open_loop.compare import save_json
 from validation.cases.grid_connected_vsc_open_loop.metrics import require
 from validation.common.runner import sha256
+from validation.common.snapshot import snapshot_sources, verify_inputs
 
 from . import checks
 from .reference import read_reference
@@ -91,22 +90,14 @@ def run_comparison(destination):
     destination = destination.resolve()
     require(destination.is_relative_to(CACHE.resolve()) and not destination.exists(),
             "Choose a fresh run directory under local_reference")
+    started = datetime.now(UTC).isoformat()
+    destination.mkdir(parents=True, exist_ok=False)
+    inputs = destination / "inputs"
+    sources, source_report = snapshot_sources(ROOT, inputs, EXAMPLE, PROTOCOL)
     protocol = frozen_json(PROTOCOL, PROTOCOL_SHA)
     example = protocol["example"]
     factory = run_path(str(EXAMPLE))["define_case"]
-    source_paths = (EXAMPLE, PROTOCOL, Path(__file__), HERE / "checks.py", HERE / "reference.py",
-                    ROOT / "uv.lock", ROOT / "pyproject.toml", *sorted((ROOT / "pycy_emt_lite").rglob("*.py")))
-    sources = {path: sha256(path) for path in source_paths}
-    git = ["git", "-c", f"safe.directory={ROOT.as_posix()}"]
-    head = subprocess.check_output([*git, "rev-parse", "HEAD"], cwd=ROOT, text=True).strip()
-    started = datetime.now(UTC).isoformat()
     evidence, grids, curves = {}, {}, {}
-    destination.mkdir(parents=True)
-    for path, digest in sources.items():
-        copy = destination / "inputs" / path.relative_to(ROOT)
-        copy.parent.mkdir(parents=True, exist_ok=True)
-        shutil.copyfile(path, copy)
-        require(sha256(copy) == digest, f"Comparison input changed: {path.name}")
 
     for name, grid in protocol["grids"].items():
         step, stop = grid["step_s"], example["stop_s"]
@@ -130,19 +121,18 @@ def run_comparison(destination):
         print(f'{name} {"PASS" if passed else "FAIL"}', flush=True)
 
     paired = checks.cross_grid(curves["5us"]["PyCy"], curves["2p5us"]["PyCy"], protocol)
-    require(all(sha256(path) == digest for path, digest in (sources | evidence).items()), "An input changed during comparison")
     plot_comparison(destination / "waveform_overlay.png", curves, protocol)
     report = {
-        "case": example["case"], "source_head": head,
+        "case": example["case"], **source_report,
         "started_utc": started, "finished_utc": datetime.now(UTC).isoformat(),
         "python": platform.python_version(), "numpy": np.__version__, "platform": platform.platform(),
         "reference_platform": "PSCAD 5.0.0 / EMTDC 20210219 (gf46)", "time_shift_s": 0,
         "passed": all(grid["passed"] for grid in grids.values()) and paired["passed"],
         "grids": grids, "cross_grid": paired,
-        "source_sha256": {path.relative_to(ROOT).as_posix(): digest for path, digest in sources.items()},
         "admitted_reference_sha256": {path.relative_to(ROOT).as_posix(): digest for path, digest in evidence.items()},
         "artifacts": {file.name: sha256(file) for file in sorted(destination.iterdir()) if file.is_file()},
     }
+    verify_inputs(ROOT, inputs, sources, evidence)
     save_json(destination / "report.json", report)
     return report
 

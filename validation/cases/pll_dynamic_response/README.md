@@ -26,17 +26,17 @@ PI根据归一化的q轴误差调整角频率，使d轴逐渐对齐电网电压�
 角度、角频率和q电压在三个固定窗口中比较，启动误差保留。
 具体阈值见[验收约定](acceptance_plan.md)和[manifest](manifest.json)。
 
-在项目根目录用PowerShell运行：
+在项目根目录复跑这份历史报告：
 
-```powershell
-$env:MPLBACKEND='Agg'
-uv run --locked python -m validation.cases.pll_dynamic_response.compare
+```text
+uv run --locked python -m validation.replay_existing 11
 ```
 
-入口需要已取得资格的本地商业参考归档；缺失或改变会报错。
-每次运行的输入快照、原始候选、比较图和报告保存在忽略的
-`local_reference/pll_dynamic_response/comparison_results/<运行编号>/`。
-普通教学运行仍使用`uv run python examples/11_pll_dynamic_response.py`。
+先准备[结果报告](validation_report.json)中 `complete_report.path` 指向的完整本地报告，以及同目录下的 `input_snapshot/`。
+复跑工具校验归档哈希，在 `local_reference/replay-11-<运行编号>/` 检出原运行提交 `5314486` 并恢复封存的文件字节。
+候选、叠图与新报告写入该检出内的 `local_reference/pll_dynamic_response/comparison_results/`。
+当前版本运行教学例仍用 `uv run python examples/11_pll_dynamic_response.py`。
+如要对标当前版本，需另立验收记录并注明当前源码和参数。历史报告的输入哈希继续标识原验收。
 
 ## 已完成的验证
 

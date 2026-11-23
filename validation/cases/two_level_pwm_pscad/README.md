@@ -57,14 +57,16 @@ NRMSE为误差RMS除以150 A，限2%；最大误差限10 A。
 
 ## 复现比较
 
-在具备完整本地合格参考记录的仓库中运行：
+在项目根目录复跑这份历史报告：
 
-```powershell
-$env:MPLBACKEND='Agg'
-uv run --locked python -m validation.cases.two_level_pwm_pscad.compare
+```text
+uv run --locked python -m validation.replay_existing 12
 ```
 
-程序先核资格、全部输入文件与时间轴，再运行原12；结果写入唯一的
-`local_reference/two_level_pwm_pscad/comparison_results/`子目录，保存数据、叠图和报告。
+先准备[比较报告](validation_report.json)中 `complete_report.path` 指向的完整本地报告，以及同目录下的 `inputs/`。
+复跑工具校验归档哈希，在 `local_reference/replay-12-<运行编号>/` 检出原运行提交 `3737e66`，
+按封存字节还原原例和参考；快照中既有 LF，也有 CRLF。候选、叠图与新报告写入该检出内的
+`local_reference/two_level_pwm_pscad/comparison_results/`。
 比较期间无需启动PSCAD。缺失或变化的参考会在候选运行前拒绝，不以内部计算替代商业输出。
 第三方工程、波形及完整本地证据保持在忽略目录中。
+对标当前版本时需用当前源码和参数另立验收记录，历史报告的输入哈希继续标识原验收。
