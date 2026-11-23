@@ -1,5 +1,8 @@
 # 持久进度
 
+2026-11-23。38 号并联线路故障隔离和恢复已完成两档原生 PSCAD 对标、独立运行、教学说明和自动测试。正式新增 19–38 共 20 项。
+[38 号验收报告](../../validation/cases/parallel_line_fault_isolation/acceptance_report.json)
+
 2026-11-23。两档试算已逐点对齐独立 PSCAD 原始波形。按同一零行、五个事件和六个状态窗固定了第 38 号的验收条件。
 [38 号三母线双端故障隔离候选协议](../../validation/cases/parallel_line_fault_isolation/candidate_protocol.json)
 

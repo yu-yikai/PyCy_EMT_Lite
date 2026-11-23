@@ -1,5 +1,8 @@
 # 技术决策
 
+2026-11-23。38 号复用三相源、线路、负荷和开关。中文教学说明按切换时刻读图，原生逐点比较与九路开关状态留在验证档案。
+[38 号验收报告](../../validation/cases/parallel_line_fault_isolation/acceptance_report.json)
+
 2026-11-23。受端支路电流以 R→F 为正。教学说明用带方向的有效值区分正常功率传输与反送故障点。
 [38 号三母线双端故障隔离候选协议](../../validation/cases/parallel_line_fault_isolation/candidate_protocol.json)
 

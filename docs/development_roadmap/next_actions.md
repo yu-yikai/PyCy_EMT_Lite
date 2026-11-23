@@ -1,5 +1,8 @@
 # 恢复与下一步
 
+2026-11-23。进入阶段 F 的本地工程复验。在同一 38 号正式验收提交上，从干净归档按 README 安装，运行 01 和 33–38，复查 Windows、Ubuntu 的构建和仓库外 wheel 数值冒烟。托管运行沿用 F1 已知账单锁记录。
+[38 号验收报告](../../validation/cases/parallel_line_fault_isolation/acceptance_report.json)
+
 2026-11-23。按 38 号冻结协议完成教学入口、对标、独立运行和测试。图上重点显示受端负荷功率和两端故障电流。
 [38 号三母线双端故障隔离候选协议](../../validation/cases/parallel_line_fault_isolation/candidate_protocol.json)
 

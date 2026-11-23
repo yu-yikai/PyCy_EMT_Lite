@@ -1,5 +1,8 @@
 # 验证状态
 
+2026-11-23。38 号两档核对 21,002 个 PSCAD 原始采样点，五个事件均在指定拍。Windows 1,625 项含慢测，Ubuntu WSL2 默认入口和四项专项均通过。
+[38 号验收报告](../../validation/cases/parallel_line_fault_isolation/acceptance_report.json)
+
 2026-11-23。候选协议绑定两档 PSCAD 原始证据和先行 PyCy 试算。正式课程实现待验收，正式新增仍为 19 项。
 [38 号三母线双端故障隔离候选协议](../../validation/cases/parallel_line_fault_isolation/candidate_protocol.json)
 
