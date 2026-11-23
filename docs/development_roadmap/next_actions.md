@@ -1,5 +1,8 @@
 # 恢复与下一步
 
+2026-11-23。按协议复用单站桥、浮置星点、PLL 与电流环，以现有 R、C 和直流源搭建储能端口。完成教程、两档对标、34 号回归、全套 Windows 检查和 Ubuntu 独立运行。
+[35 号候选协议](../../validation/cases/grid_connected_storage/candidate_protocol.json)
+
 2026-11-23。按报告绑定的相同步长原生快照和原始波形开展条件化 PyCy 诊断。先固定候选初值、同档逐点判据和既有例回归，再通过标准入口实现单站等效储能算例并完成两档对标、图、测试和教学。
 [单站储能双档原生长窗](experiments/d1_storage_grid_long_native_20261123.json)
 

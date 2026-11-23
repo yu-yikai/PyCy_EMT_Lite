@@ -1,5 +1,8 @@
 # 持久进度
 
+2026-11-23。完成两档条件化 PyCy 与原生 PSCAD 长窗的逐点诊断，已固定 35 号候选初值、阈值及 34 号回归要求。正式新增仍为 16 个。
+[35 号候选协议](../../validation/cases/grid_connected_storage/candidate_protocol.json)
+
 2026-11-23。两档 PSCAD 单站储能反转长窗及跨档门限均通过。储能分别从平均吸收 245.04 W、245.27 W 转为平均送出 250.01 W、249.03 W。正式新增仍为 16 个。
 [单站储能双档原生长窗](experiments/d1_storage_grid_long_native_20261123.json)
 
