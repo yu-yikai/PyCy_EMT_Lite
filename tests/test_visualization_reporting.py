@@ -75,6 +75,51 @@ def test_unusable_output_path_fails_before_callback(tmp_path, bad) -> None:
     assert calls == []
 
 
+@pytest.mark.parametrize(
+    ("names", "save_data"),
+    [
+        (("wave", "wave.png"), False),
+        (("wave.png", "wave.png/detail.png"), False),
+        (("wave.png/detail.png", "wave.png"), False),
+        (("result.csv/detail.png",), True),
+    ],
+)
+def test_output_collisions_fail_before_simulation(tmp_path, names, save_data) -> None:
+    from pycy_emt_lite import CaseDefinition, Resistor, SimulationConfig, VoltageSource
+    from pycy_emt_lite.cases import OutputOptions, PlotSpec
+
+    root = tmp_path / "outputs"
+    calls = []
+    case = CaseDefinition(
+        "valid", (VoltageSource("V", "in", "0", 1.0), Resistor("R", "in", "0", 1.0)),
+        SimulationConfig(0.1, 0.1),
+        plots=tuple(PlotSpec(("v:in",), name) for name in names),
+        output=OutputOptions(save_data, True, False, root),
+        on_step=lambda row: calls.append(row) or {},
+    )
+    with matplotlib.rc_context({"savefig.format": "png"}), pytest.raises(ValueError, match="输出路径冲突"):
+        run_case(case)
+
+    assert calls == []
+    assert not root.exists()
+
+
+def test_extensionless_figure_uses_preflight_default_format(tmp_path) -> None:
+    from pycy_emt_lite import CaseDefinition, Resistor, SimulationConfig, VoltageSource
+    from pycy_emt_lite.cases import OutputOptions, PlotSpec
+
+    case = CaseDefinition(
+        "valid", (VoltageSource("V", "in", "0", 1.0), Resistor("R", "in", "0", 1.0)),
+        SimulationConfig(0.1, 0.1), plots=(PlotSpec(("v:in",), "nested/wave"),),
+        output=OutputOptions(True, True, False, tmp_path),
+    )
+    with matplotlib.rc_context({"savefig.format": "svg"}):
+        run_case(case)
+
+    assert (tmp_path / "valid" / "nested" / "wave.svg").is_file()
+    assert (tmp_path / "valid" / "result.csv").is_file()
+
+
 @pytest.mark.parametrize("kind", ["series", "three_phase", "comparison", "zoom"])
 def test_failed_plot_does_not_leak_figures(kind) -> None:
     import matplotlib.pyplot as plt

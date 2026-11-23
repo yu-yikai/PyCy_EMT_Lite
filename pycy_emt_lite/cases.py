@@ -22,6 +22,7 @@ from pycy_emt_lite.io.results import SimulationResult
 from pycy_emt_lite.visualization import plot_series, plot_three_phase
 
 PlotKind = Literal["series", "three_phase"]
+_DATA_FILENAMES = ("result.csv", "result.json", "result.npz")
 
 
 @dataclass(frozen=True, slots=True)
@@ -67,7 +68,19 @@ def _check_directory(path: Path) -> None:
             raise ValueError(f"输出目录 {path} 无法创建：{candidate} 已是文件；请更换输出路径。")
 
 
-def _output_directory(case: CaseDefinition) -> Path:
+def _check_output_file(target: Path, directory: Path, files: set[Path]) -> None:
+    path = target.resolve()
+    if path == directory or not path.is_relative_to(directory):
+        raise ValueError(f"输出文件 {target} 必须位于案例输出目录内。")
+    if any(path == other or path in other.parents or other in path.parents for other in files):
+        raise ValueError(f"输出路径冲突：{target} 与另一个输出重名或占用了它的目录。")
+    _check_directory(path.parent)
+    if path.is_dir():
+        raise ValueError(f"输出路径 {target} 已是目录；请使用文件路径。")
+    files.add(path)
+
+
+def _output_paths(case: CaseDefinition) -> tuple[Path, list[Path | None]]:
     """在求解和写文件前检查可静态确认的绘图及路径配置。"""
     name = case.name
     if (not isinstance(name, str) or not name.strip() or name in {".", ".."}
@@ -81,6 +94,11 @@ def _output_directory(case: CaseDefinition) -> Path:
         raise ValueError("案例输出目录越过 output_root；请检查目录名和符号链接。")
     if case.output.save_data or case.output.save_figure:
         _check_directory(output_dir)
+    files: set[Path] = set()
+    if case.output.save_data:
+        for filename in _DATA_FILENAMES:
+            _check_output_file(output_dir / filename, output_dir, files)
+    figure_paths: list[Path | None] = []
     for plot in case.plots:
         if not isinstance(plot.kind, str) or plot.kind not in {"series", "three_phase"}:
             raise ValueError(f"PlotSpec.kind={plot.kind!r} 非法；请选择 series 或 three_phase。")
@@ -89,24 +107,30 @@ def _output_directory(case: CaseDefinition) -> Path:
             raise ValueError("PlotSpec.columns 必须为非空字段名称序列。")
         if plot.kind == "three_phase" and len(plot.columns) != 3:
             raise ValueError("三相曲线必须正好包含 3 个字段。")
-        if case.output.save_figure:
-            figure = plot.figure_name
-            if (not isinstance(figure, str) or not figure.strip() or Path(figure).is_absolute()
-                    or PureWindowsPath(figure).drive or figure.startswith("\\")):
-                raise ValueError("保存图像时 figure_name 必须为非空相对文件名。")
-            target = (output_dir / figure).resolve()
-            if not target.is_relative_to(output_dir) or target == output_dir:
-                raise ValueError(f"图名 {figure!r} 越过案例输出目录；请使用目录内的相对路径。")
-            _check_directory(target.parent)
-            if target.is_dir():
-                raise ValueError(f"图像输出路径 {target} 已是目录；请使用文件路径。")
-            from matplotlib.backend_bases import FigureCanvasBase
-            suffix = target.suffix.lower().lstrip(".")
-            if suffix and suffix not in FigureCanvasBase.get_supported_filetypes():
-                raise ValueError(f"图像格式 {suffix!r} 不受支持；请使用 png、svg 等支持的格式。")
+        if not case.output.save_figure:
+            figure_paths.append(None)
+            continue
+        figure = plot.figure_name
+        if (not isinstance(figure, str) or not figure.strip() or Path(figure).is_absolute()
+                or PureWindowsPath(figure).drive or figure.startswith("\\")):
+            raise ValueError("保存图像时 figure_name 必须为非空相对文件名。")
+        target = output_dir / figure
+        if target.resolve() == output_dir or target.is_dir():
+            raise ValueError(f"图像输出路径 {target} 已是目录；请使用文件路径。")
+        from matplotlib.backend_bases import FigureCanvasBase
+
+        suffix = target.suffix.lower().lstrip(".")
+        if not suffix:
+            # 先按 Matplotlib 的默认格式补后缀，预检和保存使用同一个文件名。
+            suffix = FigureCanvasBase.get_default_filetype()
+            target = target.with_name(f"{target.name.rstrip('.')}.{suffix}")
+        if suffix not in FigureCanvasBase.get_supported_filetypes():
+            raise ValueError(f"图像格式 {suffix!r} 不受支持；请使用 png、svg 等支持的格式。")
+        _check_output_file(target, output_dir, files)
+        figure_paths.append(target)
     if case.summary is not None and not callable(case.summary):
         raise ValueError("summary 必须为可调用对象或 None。")
-    return output_dir
+    return output_dir, figure_paths
 
 
 def run_case(case: CaseDefinition) -> SimulationResult:
@@ -116,7 +140,7 @@ def run_case(case: CaseDefinition) -> SimulationResult:
     整合为一步，供教学算例脚本使用。
     """
 
-    output_dir = _output_directory(case)
+    output_dir, figure_paths = _output_paths(case)
     circuit = Circuit.from_components(case.name, case.components)
     simulator = Simulator(circuit, case.config, events=case.events, on_step=case.on_step)
     result = simulator.run()
@@ -140,14 +164,11 @@ def run_case(case: CaseDefinition) -> SimulationResult:
         case.summary(result)
 
     if case.output.save_data:
-        result.to_csv(output_dir / "result.csv")
-        result.to_json(output_dir / "result.json")
-        result.to_npz(output_dir / "result.npz")
+        for filename, save in zip(_DATA_FILENAMES, (result.to_csv, result.to_json, result.to_npz), strict=True):
+            save(output_dir / filename)
         print(f"数据结果已保存到：{output_dir}")
 
-    # kind、列数和图名已在 _output_directory 仿真前校验，此处按校验后的两类直接绘图。
-    for plot in case.plots:
-        figure_path = output_dir / plot.figure_name if case.output.save_figure else None
+    for plot, figure_path in zip(case.plots, figure_paths, strict=True):
         if plot.kind == "series":
             plot_series(
                 result,

@@ -137,6 +137,9 @@ class _InitialConditions:
 def add_conductance(matrix: np.ndarray, positive: int | None, negative: int | None, conductance: float) -> None:
     """向 MNA 矩阵写入连接在两个节点之间的电导。"""
 
+    # 同节点支路的贡献为零，直接跳过以免浮点抵消抹掉已有系数。
+    if positive == negative:
+        return
     if positive is not None:
         matrix[positive, positive] += conductance
     if negative is not None:
@@ -149,6 +152,8 @@ def add_conductance(matrix: np.ndarray, positive: int | None, negative: int | No
 def add_current_source(rhs: np.ndarray, positive: int | None, negative: int | None, current: float) -> None:
     """向右端向量写入从 positive 流向 negative 的电流源。"""
 
+    if positive == negative:
+        return
     if positive is not None:
         rhs[positive] -= current
     if negative is not None:

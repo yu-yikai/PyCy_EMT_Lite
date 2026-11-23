@@ -316,8 +316,9 @@ finite, nonnegative and strictly increasing. Corrupt data identifies file and ro
 short arrays. NPZ business fields cannot use `__meta__`, `__columns__`, `file` or `allow_pickle`. NumPy appends `.npz` when absent;
 the method still does not return a path.
 
-Before simulation, `run_case()` validates plot kinds, column counts, saved filenames and output paths. Case names must be single relative
-directory names; figures may use relative subdirectories within the case. Checks cover resolved containment, existing file/directory conflicts
-and figure formats. Actual signal fields, including callback-generated fields, are still checked during plotting. Failed plots also close their Figure.
+Before simulation, `run_case()` validates plot kinds, column counts, figure formats and output paths. Use a single relative directory name
+for the case. Figures may go in its subdirectories. A figure name without a suffix uses Matplotlib's default format,
+so `wave` becomes `wave.png` by default. Every data file and figure in a run must have a distinct path, and a file cannot occupy
+another output's directory. Plotting checks actual signal fields, including callback fields, and closes the figure if plotting fails.
 Report `figure_paths` are interpreted from the caller's working directory, then linked relative to the report directory; display text such as
 titles and field names is escaped for Markdown.
