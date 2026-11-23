@@ -84,7 +84,7 @@ SHA-256 标识的是确切字节，不能单独证明数据来自某款软件。
 
 使用早期的 CSV 比较入口复现既有结果时，先按算例验收记录核对原始档案及导出信息。该入口在运行后记录本次读入文件的哈希。近期的原生比较入口还会在读入时核对冻结的原始档案、编译产物和运行凭据。
 
-复跑 [11 号 PLL](cases/pll_dynamic_response/README.md) 或 [12 号 PWM](cases/two_level_pwm_pscad/README.md) 的历史验收时，用 `uv run --locked python -m validation.replay_existing 11` 或 `12`。工具按验收报告校验并恢复本地快照，保留原文件的换行字节，在独立检出中运行原比较。历史结果随原输入保存；当前版本的比较另建运行记录。
+复跑 [11 号 PLL](cases/pll_dynamic_response/README.md) 或 [12 号 PWM](cases/two_level_pwm_pscad/README.md) 的历史验收时，用 `uv run --locked python -m validation.replay_existing 11` 或 `12`。需要原运行提交的 Git 对象和本地验收快照。工具按报告校验并恢复文件的原始字节，在独立检出中复跑。11 号的路径兼容改动随新报告记录。当前版本的比较另建运行记录。
 
 38、39 号的后续比较报告记录 `source_head` 和 `git_status_at_run`。每次保存算例、冻结协议、依赖锁文件、项目代码和共享验证 Python 源码，并在写报告前复核原件与源代码快照。
 

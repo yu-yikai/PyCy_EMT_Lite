@@ -1,5 +1,8 @@
 # 恢复与下一步
 
+2026-11-23。本轮复审修复、本机跨系统回归和归档对标复验已完成，源码检查点为 `77e997a`。11、12 号的历史复跑使用 `validation.replay_existing`。托管 CI 后续按 F1 的实际 runner 状态核对。
+[修复复验记录](experiments/post_audit_repairs_20261123.json) · [历史复跑约定](../../validation/README.md)
+
 2026-11-23。本期开发、商业平台对标和本机跨系统验收已完成。托管 GitHub Actions 仍保留账单锁记录。账户恢复后运行 `gh workflow run ci.yml --ref codex/emt-examples-longterm`，保存两套 runner 的实际执行步骤、测试报告和产物哈希。后续新模型按原路线图另行立项。
 [参考目录](02_reference_catalog.md) · [39 号验收](../../validation/cases/dual_grid_forming_power_sharing/acceptance_report.json)
 
@@ -273,7 +276,7 @@ uv run --locked --offline pytest
 pytest指定新仓库内`--basetemp=.tmp/longterm/pytest-<唯一ID>`，先核路径位于仓库且不存在，可加`-p no:cacheprovider`。
 保留slow；仅有新代码/失败/未解疑点才运行对应检查和必要完整回归，日志/XML不覆盖旧结果。
 默认教学执行不读商业归档；`finite_r_bergeron`比较只读已核本地PSCAD归档，不启动native。
-商业比较入口为`uv run --locked python -m validation.cases.<case>.compare`；26/27的特殊参考范围见各case README，
+当前候选的比较入口为 `uv run --locked python -m validation.cases.<case>.compare`。11、12 号历史复跑使用 `uv run --locked python -m validation.replay_existing 11` 或 `12`。26/27 的特殊参考范围见各算例 README，
 不套用其他case的MATLAB导出命令。第三方原件、波形和研究脚本保留忽略的`local_reference/`。
 
 Git ownership仅用单命令`-c safe.directory=D:/VibeCoding/PyCy_EMT_Lite`；子进程仅当前进程设置

@@ -1,5 +1,8 @@
 # 技术决策
 
+2026-11-23。Bergeron 沿用整步时延，按波前左侧历史源积分，到达时固定储能状态求右侧代数量。饱和励磁每步按分段磁化曲线重取电流基准，跨拐点的一步仍有线性近似误差。11、12 号按原始字节在独立检出中复跑，38、39 号的比较报告同时封存共享验证源码和工作区状态。
+[元件推导](../component_derivations.md) · [验证约定](../../validation/README.md)
+
 2026-11-23。保留已验收默认输入供复现。改参练习按具体元件或控制参数给出预期物理现象。集中目录保留原生资格报告及验收指针，商业工程原件和波形留在本地。
 [参考目录](02_reference_catalog.md) · [39 号验收](../../validation/cases/dual_grid_forming_power_sharing/acceptance_report.json)
 

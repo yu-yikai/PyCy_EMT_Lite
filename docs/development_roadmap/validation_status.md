@@ -1,5 +1,8 @@
 # 验证状态
 
+2026-11-23。复审修复在 Windows 和 Ubuntu WSL2 各通过 1,664 项全量测试，包含慢测。最终输出路径改动另在两套系统通过定向测试，Windows 专项用例在 Ubuntu 按预期跳过。11、12 号历史快照复跑通过，27、38、39 号使用已验收的原生归档复比通过。
+[测试报告及比较产物哈希](experiments/post_audit_repairs_20261123.json)
+
 2026-11-23。复核 21 项正式新增算例和既有 02、11、12 号对标证据。39 号验收提交在 Windows 与 Ubuntu WSL2 各通过 1,629 项测试。Windows 干净副本串行跑通全部 35 个公开算例。托管 CI 最近一次记录的两套 runner 均未启动。
 [参考目录](02_reference_catalog.md) · [39 号验收](../../validation/cases/dual_grid_forming_power_sharing/acceptance_report.json)
 

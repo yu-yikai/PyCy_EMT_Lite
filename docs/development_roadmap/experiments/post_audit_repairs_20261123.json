@@ -1,0 +1,83 @@
+{
+  "schema": "post_delivery_review_repairs_v1",
+  "date": "2026-11-23",
+  "scope": "Correctness and reproducibility repairs to existing models, outputs and comparisons.",
+  "code_through": "77e997abc702d515043730e15729d3660bc3328f",
+  "ubuntu_full_suite_commit": "f8db1e68f8dc833153543d993500162a2c9cbdf1",
+  "python": "3.14.5",
+  "full_suite_scope": "Windows worktree and hash-verified Ubuntu WSL2 archive, including slow tests. The final Windows output guard has separate tests on both systems.",
+  "locked_sync_ruff_mypy": "PASS on Windows and Ubuntu WSL2",
+  "automated_tests": {
+    "windows": {
+      "collected": 1664,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "elapsed_s": 796.577,
+      "junit": ".tmp/longterm/post-audit-fixes-20261123T2008/windows-pytest.xml",
+      "sha256": "58d28924ccc1320a74c1bcf9973558214a67b0eecb1a1679c73bcaf13df84d49"
+    },
+    "ubuntu": {
+      "collected": 1664,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "elapsed_s": 696.432,
+      "junit": ".tmp/longterm/post-audit-fixes-20261123T2008/ubuntu-pytest.xml",
+      "sha256": "0fc0d2690c490c6c647ddaad1182842c234be2efa68f84c590ec59e860f3b4ab"
+    },
+    "windows-output": {
+      "collected": 34,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "elapsed_s": 4.972,
+      "junit": ".tmp/longterm/post-audit-fixes-20261123T2008/windows-output-pytest.xml",
+      "sha256": "2e661fbb88917054a4c1bf207a22a98a3782f854b526ee54f5657a8ab76a66ce"
+    },
+    "ubuntu-output": {
+      "collected": 34,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 2,
+      "elapsed_s": 4.221,
+      "junit": ".tmp/longterm/post-audit-fixes-20261123T2008/ubuntu-output-pytest.xml",
+      "sha256": "64985b0d463d720e69d30d4b5280771907bd2213e5a955ce09c94130932b3578"
+    }
+  },
+  "targeted_examples_headless": [
+    1,
+    9,
+    24,
+    27
+  ],
+  "reference_scope": "11/12 replay historical source and inputs. 27/38/39 compare against accepted native archives. No native simulation engines were started for this maintenance run.",
+  "comparisons": {
+    "11": {
+      "path": "local_reference/replay-11-20261123T121014062373Z/local_reference/pll_dynamic_response/comparison_results/20261123T121024205994Z/report.json",
+      "passed": true,
+      "sha256": "e61b1b05bbe57e258eb9c064ca462e22f03181838ed3db32368cd076dca80422"
+    },
+    "12": {
+      "path": "local_reference/replay-12-20261123T121133428481Z/local_reference/two_level_pwm_pscad/comparison_results/20261123T121147817095Z/report.json",
+      "passed": true,
+      "sha256": "b6ff0402119adb27d1f8fcb5a1a5b5c7861eb13cac12de71878892eb322b2de1"
+    },
+    "27": {
+      "path": "local_reference/finite_r_bergeron/comparison_results/20261123T121445327558Z/report.json",
+      "passed": true,
+      "sha256": "e0dc8431cbe8ea3e4c12953bbe6f6dbf60553e4cb2a71d9d1704571de5d765c1"
+    },
+    "38": {
+      "path": "local_reference/review-38-20261123T1207446852793Z/report.json",
+      "passed": true,
+      "sha256": "8a32f02fdfb86fd1a3a26eecf6ee910f1e54c3b1bbff14e3c5f20fdf094ecc18"
+    },
+    "39": {
+      "path": "local_reference/review-39-20261123T1211001781289Z/report.json",
+      "passed": true,
+      "sha256": "2b12244b8d63f9e614448e5480e93ce89151624bda24c787b3a70b8b77bc008b"
+    }
+  },
+  "new_formal_examples": 0
+}

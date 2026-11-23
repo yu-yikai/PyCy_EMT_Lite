@@ -1,5 +1,8 @@
 # 持久进度
 
+2026-11-23。全项目复审后的修复已验收，代码记录到 `77e997a`。覆盖同节点盖章、Bergeron 波前、饱和励磁、低精度标量和输出预检，以及 11、12、38、39 号的历史复跑与输入封存。正式新增算例仍为 21 项。
+[修复复验记录](experiments/post_audit_repairs_20261123.json)
+
 2026-11-23。收尾复核完成。正式新增 19–39 共 21 项。集中参考目录已更新到 48 项，并为 15 份教学指南补充或明确改参练习。两版 README 已核对全部 35 个公开算例入口。
 [参考目录](02_reference_catalog.md) · [39 号验收](../../validation/cases/dual_grid_forming_power_sharing/acceptance_report.json)
 
