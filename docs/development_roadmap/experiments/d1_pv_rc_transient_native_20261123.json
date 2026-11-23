@@ -1,0 +1,358 @@
+{
+  "schema": "d1_pv_rc_transient_native_reference_v1",
+  "date": "2026-11-23",
+  "status": "PASS_NATIVE_D1_PV_RC_TRANSIENT_STARTUP_PAIR",
+  "original_protocol": {
+    "path": "docs/development_roadmap/experiments/d1_pv_rc_transient_protocol_20261123.json",
+    "sha256": "4a4e07c33380be4bd027d1c3bbd165400a26f2fba4f095f6a0e146fb899b4d68",
+    "bytes": 5827
+  },
+  "original_protocol_commit": "fec922613ae7b971370280b5598c286a53d4b1a4",
+  "supplement": {
+    "path": "docs/development_roadmap/experiments/d1_pv_rc_startup_protocol_20261123.json",
+    "sha256": "2b46ecb5ed88aa8993d6e5f650fccd5aee53565e3e24637562874487c88aad0c",
+    "bytes": 2613
+  },
+  "supplement_commit": "92167c97963a27e132bdd70568e8f05fd58b50ad",
+  "static_reference": {
+    "path": "docs/development_roadmap/experiments/d1_pv_static_native_20261123.json",
+    "sha256": "d049adc99538dcadbb1566fa9e2c70545d49d6098562ed60b2361ae88ecad7ec",
+    "bytes": 11769
+  },
+  "paired_audit": {
+    "path": "local_reference/d1_pv_rc_transient_20261123/verification/startup_pair.json",
+    "sha256": "8d129c84cb7f09c63d3c0128145532a3f7cab73c8a5fd682872363f3e52f29d1",
+    "bytes": 10889
+  },
+  "figure": {
+    "path": "local_reference/d1_pv_rc_transient_20261123/verification/pv_rc_startup_native.png",
+    "sha256": "5ba0b232b901c617bd3766e1875ecaa2b6157fdb18bff7ce8ee04ffb4d58bca1",
+    "bytes": 163476
+  },
+  "scopes": {
+    "startup": "Verified cold initialization and inferred zero companion history before the first solve.",
+    "raw_zero_row": "Both original raw voltage gates remain failed. All original rows were retained."
+  },
+  "grids": {
+    "5us": {
+      "native_receipt": {
+        "path": "local_reference/d1_pv_rc_transient_20261123/5us/n/20261123T025900957749Z/result.json",
+        "sha256": "36ade4cc68e382f08e1a1e05ef998bf7c01294263ed8433ae4f9f91433378cf8",
+        "bytes": 4031
+      },
+      "original_audit": {
+        "path": "local_reference/d1_pv_rc_transient_20261123/verification/5us_audit.json",
+        "sha256": "a7845dec37eb6804522708bb6030558f8dde3a97dedae195585e781102b3edc6",
+        "bytes": 17567
+      },
+      "rows_including_zero": 20002,
+      "compiled_admission": {
+        "path": "local_reference/d1_pv_rc_transient_20261123/5us/n/20261123T025900957749Z/pre_run_admission.json",
+        "sha256": "f762b6699a530bac3bb4ea7618d188fcb9bb599660191307818a2451d996bfe0",
+        "bytes": 3848
+      },
+      "original_raw_initial_voltage_gate_passed": false,
+      "startup": {
+        "checks": {
+          "history_source_abs_a": true,
+          "pre_solve_zero_abs_v": true,
+          "first_solved_voltage_abs_v": true,
+          "positive_first_solve": true
+        },
+        "residual_magnitudes": {
+          "history_source_abs_a": 3.952393967665557e-14,
+          "pre_solve_zero_abs_v": 4.933119884809045e-18,
+          "first_solved_voltage_abs_v": 1.3552527156068805e-18
+        },
+        "zero_labelled_solved_voltage_v": 0.00031233754231243,
+        "zero_labelled_capacitor_current_a": 2.4987003384994,
+        "zero_labelled_pv_current_a": 2.4999496886687003,
+        "tr_capacitor_conductance_s": 7999.999999999999,
+        "inferred_history_source_a": 3.952393967665557e-14,
+        "inferred_pre_solve_from_zero_history_v": 4.933119884809045e-18,
+        "independent_first_solve_voltage_v": 0.00031233754231243133,
+        "observed_voltage_per_capacitor_current_ohm": 0.00012500000000000198,
+        "expected_first_solve_voltage_per_capacitor_current_ohm": 0.000125
+      },
+      "interval_witnesses": {
+        "first_interval": {
+          "charge_residual_c": -1.0164395367051604e-19,
+          "energy_residual_j": -7.77549775799846e-23,
+          "stored_energy_change_j": 7.798528377822311e-09,
+          "pv_work_j": 7.806328856320767e-09,
+          "load_heat_j": 7.80047849837856e-12
+        },
+        "ending_at_irradiance_step": {
+          "charge_residual_c": 2.5522585008429764e-17,
+          "energy_residual_j": 1.613597764519442e-17,
+          "stored_energy_change_j": -3.848968484626569e-07,
+          "pv_work_j": 7.2259638113019216e-06,
+          "load_heat_j": 7.6108606597807145e-06
+        },
+        "after_irradiance_step": {
+          "charge_residual_c": 4.792724173801645e-17,
+          "energy_residual_j": 2.98893574888809e-17,
+          "stored_energy_change_j": -7.691484634364532e-07,
+          "pv_work_j": 6.840558136433282e-06,
+          "load_heat_j": 7.6097065998996245e-06
+        }
+      },
+      "physical_maximum_differences": {
+        "meter_voltage_abs_v": 0.0,
+        "load_ohm_abs_v": 1.509903313490213e-14,
+        "kcl_abs_a": 1.6198153929281034e-12,
+        "tr_charge_abs_c": 2.0105444441370316e-16,
+        "tr_energy_abs_j": 1.2416096923783795e-16,
+        "tr_cumulative_energy_abs_j": 2.338933247777855e-16
+      },
+      "plateau_means": {
+        "before": {
+          "pv_voltage_v": 0.6168770376214079,
+          "pv_current_a": 2.467633365084259,
+          "load_voltage_v": 0.6168770376214079,
+          "load_current_a": 2.467508150485631,
+          "pv_power_w": 1.5222263599874086
+        },
+        "after": {
+          "pv_voltage_v": 0.5607102609470787,
+          "pv_current_a": 2.2428168822953647,
+          "load_voltage_v": 0.5607102609470787,
+          "load_current_a": 2.242841043788315,
+          "pv_power_w": 1.2575704393267375
+        }
+      },
+      "response": {
+        "irradiance_voltage_drop_v": 0.05616677667432923,
+        "irradiance_current_drop_a": 0.22481648278889432,
+        "capacitor_current_mean_a": -0.11451030603312072,
+        "capacitor_energy_drop_j": 0.0006613208245998392,
+        "capacitor_energy_drop_ticks": [
+          10000,
+          19799
+        ]
+      },
+      "raw_files": {
+        "pv_rc.inf": {
+          "path": "local_reference/d1_pv_rc_transient_20261123/5us/n/20261123T025900957749Z/project/vdiv.gf46/pv_rc.inf",
+          "sha256": "7cf0c7bc1fea61bd6f1e44ae4159584baba3f2e0f5e884358e5c034028ae16ae",
+          "bytes": 885
+        },
+        "pv_rc_01.out": {
+          "path": "local_reference/d1_pv_rc_transient_20261123/5us/n/20261123T025900957749Z/project/vdiv.gf46/pv_rc_01.out",
+          "sha256": "849690661bd59c47da58865bbf9aca462e0c1cd8a1bddd2746e39dd3c3cfb3c3",
+          "bytes": 4340508
+        }
+      }
+    },
+    "2p5us": {
+      "native_receipt": {
+        "path": "local_reference/d1_pv_rc_transient_20261123/2p5us/n/20261123T030105709117Z/result.json",
+        "sha256": "312a1d8f7b20e89146677ae58dfcfd2eff6df3350384d5e38842c7fdbd92226f",
+        "bytes": 4038
+      },
+      "original_audit": {
+        "path": "local_reference/d1_pv_rc_transient_20261123/verification/2p5us_audit.json",
+        "sha256": "10ea7ea56fca762c252066465e2efd61e94fb2a63b0ae5edbd581d0e9f2a4b3b",
+        "bytes": 17603
+      },
+      "rows_including_zero": 40003,
+      "compiled_admission": {
+        "path": "local_reference/d1_pv_rc_transient_20261123/2p5us/n/20261123T030105709117Z/pre_run_admission.json",
+        "sha256": "a89e66286e61744aea979828b35de0d7c72766a2275454d6b93cf865270c2b42",
+        "bytes": 3854
+      },
+      "original_raw_initial_voltage_gate_passed": false,
+      "startup": {
+        "checks": {
+          "history_source_abs_a": true,
+          "pre_solve_zero_abs_v": true,
+          "first_solved_voltage_abs_v": true,
+          "positive_first_solve": true
+        },
+        "residual_magnitudes": {
+          "history_source_abs_a": 2.042810365310288e-14,
+          "pre_solve_zero_abs_v": 1.2739375526704677e-18,
+          "first_solved_voltage_abs_v": 3.5236570605778894e-19
+        },
+        "zero_labelled_solved_voltage_v": 0.00015620781334637002,
+        "zero_labelled_capacitor_current_a": 2.4993250135419,
+        "zero_labelled_pv_current_a": 2.4999498447953,
+        "tr_capacitor_conductance_s": 15999.999999999998,
+        "inferred_history_source_a": 2.042810365310288e-14,
+        "inferred_pre_solve_from_zero_history_v": 1.2739375526704677e-18,
+        "independent_first_solve_voltage_v": 0.00015620781334636967,
+        "observed_voltage_per_capacitor_current_ohm": 6.250000000000052e-05,
+        "expected_first_solve_voltage_per_capacitor_current_ohm": 6.25e-05
+      },
+      "interval_witnesses": {
+        "first_interval": {
+          "charge_residual_c": -8.470329472543003e-22,
+          "energy_residual_j": -4.1359030627651384e-25,
+          "stored_energy_change_j": 1.9513385098691104e-09,
+          "pv_work_j": 1.952314301113323e-09,
+          "load_heat_j": 9.757912442122424e-13
+        },
+        "ending_at_irradiance_step": {
+          "charge_residual_c": -3.2941640714311774e-17,
+          "energy_residual_j": -2.12692884731311e-17,
+          "stored_energy_change_j": -1.9249920858388503e-07,
+          "pv_work_j": 3.6130267233758213e-06,
+          "load_heat_j": 3.805525931938437e-06
+        },
+        "after_irradiance_step": {
+          "charge_residual_c": 4.3251513990054304e-17,
+          "energy_residual_j": 2.6547812511962688e-17,
+          "stored_energy_change_j": -3.8478837395994336e-07,
+          "pv_work_j": 3.4204489123373816e-06,
+          "load_heat_j": 3.8052372863238727e-06
+        }
+      },
+      "physical_maximum_differences": {
+        "meter_voltage_abs_v": 0.0,
+        "load_ohm_abs_v": 1.509903313490213e-14,
+        "kcl_abs_a": 3.100913839940156e-12,
+        "tr_charge_abs_c": 2.004819872465458e-16,
+        "tr_energy_abs_j": 1.23298283138262e-16,
+        "tr_cumulative_energy_abs_j": 4.288686483930821e-16
+      },
+      "plateau_means": {
+        "before": {
+          "pv_voltage_v": 0.616876855762757,
+          "pv_current_a": 2.467633381714887,
+          "load_voltage_v": 0.616876855762757,
+          "load_current_a": 2.467507423051028,
+          "pv_power_w": 1.5222259214848117
+        },
+        "after": {
+          "pv_voltage_v": 0.5607102756610776,
+          "pv_current_a": 2.2428168851196264,
+          "load_voltage_v": 0.5607102756610776,
+          "load_current_a": 2.2428411026443094,
+          "pv_power_w": 1.2575704739111364
+        }
+      },
+      "response": {
+        "irradiance_voltage_drop_v": 0.05616658010167941,
+        "irradiance_current_drop_a": 0.2248164965952606,
+        "capacitor_current_mean_a": -0.11451772558962484,
+        "capacitor_energy_drop_j": 0.0006615125674812788,
+        "capacitor_energy_drop_ticks": [
+          20000,
+          39599
+        ]
+      },
+      "raw_files": {
+        "pv_rc.inf": {
+          "path": "local_reference/d1_pv_rc_transient_20261123/2p5us/n/20261123T030105709117Z/project/vdiv.gf46/pv_rc.inf",
+          "sha256": "7cf0c7bc1fea61bd6f1e44ae4159584baba3f2e0f5e884358e5c034028ae16ae",
+          "bytes": 885
+        },
+        "pv_rc_01.out": {
+          "path": "local_reference/d1_pv_rc_transient_20261123/2p5us/n/20261123T030105709117Z/project/vdiv.gf46/pv_rc_01.out",
+          "sha256": "449e7975edb469b34c5d2de4fe81ca9317bd407eef9ad5e9d13f8e52872da402",
+          "bytes": 8680725
+        }
+      }
+    }
+  },
+  "cross_grid": {
+    "point_checks": {
+      "pv_voltage_v": true,
+      "pv_current_a": true,
+      "load_voltage_v": true,
+      "load_current_a": true,
+      "capacitor_current_a": true
+    },
+    "plateau_checks": {
+      "before": true,
+      "after": true
+    },
+    "point_peak_differences": {
+      "pv_voltage_v": {
+        "all_rows_abs": 0.00015612972896605996,
+        "all_rows_max_tick": 0,
+        "settled_rows_abs": 0.0001485151984060018,
+        "rms": 2.6026975906408776e-05
+      },
+      "pv_current_a": {
+        "all_rows_abs": 0.0009774213931001974,
+        "all_rows_max_tick": 10007,
+        "settled_rows_abs": 0.00020622038660000896,
+        "rms": 3.787022257418236e-05
+      },
+      "load_voltage_v": {
+        "all_rows_abs": 0.00015612972896605996,
+        "all_rows_max_tick": 0,
+        "settled_rows_abs": 0.0001485151984060018,
+        "rms": 2.6026975906408776e-05
+      },
+      "load_current_a": {
+        "all_rows_abs": 0.0006245189158642199,
+        "all_rows_max_tick": 0,
+        "settled_rows_abs": 0.0005940607936199965,
+        "rms": 0.00010410790362562621
+      },
+      "capacitor_current_a": {
+        "all_rows_abs": 0.0009107523698399789,
+        "all_rows_max_tick": 10007,
+        "settled_rows_abs": 0.0005942089343995427,
+        "rms": 0.00010155324387906357
+      }
+    },
+    "plateau_mean_differences": {
+      "before": {
+        "pv_voltage_v": 1.818586509161335e-07,
+        "pv_current_a": 1.6630627985847468e-08,
+        "load_voltage_v": 1.818586509161335e-07,
+        "load_current_a": 7.274346032204448e-07,
+        "pv_power_w": 4.385025969000367e-07
+      },
+      "after": {
+        "pv_voltage_v": 1.4713998908177928e-08,
+        "pv_current_a": 2.8242617133855674e-09,
+        "load_voltage_v": 1.4713998908177928e-08,
+        "load_current_a": 5.885599430044408e-08,
+        "pv_power_w": 3.4584398900250335e-08
+      }
+    },
+    "coincident_rows": 20002,
+    "current_outside_edge_rows": 19852
+  },
+  "formal_new_examples_completed": 17,
+  "pycy_affine_diagnostic": {
+    "report": {
+      "path": "local_reference/d1_pv_rc_transient_20261123/affine_diagnostic_actual_v2/pscad_same_clock.json",
+      "sha256": "8eea8e0eedb66fb9523464aa3d18f46238559c27761fdbc0729d0bf4954b861a",
+      "bytes": 29809
+    },
+    "classification": "Measured errors for an independent affine diagnostic. No threshold or candidate decision.",
+    "grids": {
+      "5us": {
+        "signed_voltage_change_v": {
+          "pycy": -0.05141333803914927,
+          "pscad": -0.05616677667432923
+        },
+        "shared_voltage_interval_v": [
+          0.54866222834025,
+          0.62110956496042
+        ],
+        "shared_interval_maximum_voltage_error_v": 0.007202302274384231,
+        "shared_interval_maximum_pv_current_error_a": 0.03285369851877151,
+        "entire_trace_maximum_voltage_error_v": 0.020248558797985594
+      },
+      "2p5us": {
+        "signed_voltage_change_v": {
+          "pycy": -0.05141334618476634,
+          "pscad": -0.05616658010167941
+        },
+        "shared_voltage_interval_v": [
+          0.54866222834025,
+          0.62110956496042
+        ],
+        "shared_interval_maximum_voltage_error_v": 0.007201882852237329,
+        "shared_interval_maximum_pv_current_error_a": 0.0327981175233627,
+        "entire_trace_maximum_voltage_error_v": 0.020321428289228893
+      }
+    }
+  }
+}
