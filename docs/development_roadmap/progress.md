@@ -1,5 +1,8 @@
 # 持久进度
 
+2026-11-23。双构网源有功分担的原生协议已固定。两台源各经过一条三相 R–L 馈线连接同一 PCC，300 ms 时投入第二组负荷。相量与连续时域预检用于选择两个比较窗。
+[双构网源分担原生协议](experiments/e_dual_gfm_sharing_protocol_20261123.json)
+
 2026-11-23。阶段 F 已从 38 号验收提交的独立源码归档复验两套系统。README 首跑、01 和 33–38 教学入口、构建与仓库外 wheel 数值检查通过。
 [本机跨平台证据](experiments/f1_case38_local_cross_platform_20261123.json)
 

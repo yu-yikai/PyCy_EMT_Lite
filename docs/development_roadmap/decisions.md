@@ -1,5 +1,8 @@
 # 技术决策
 
+2026-11-23。双构网源沿用 37 号的定幅电源、馈线和 P–f 下垂。两台源各用自己流入同一 PCC 的有功更新下一拍相角。不同斜率给出约 2:1 分担，共同频率随负荷增加而降低。
+[双构网源分担原生协议](experiments/e_dual_gfm_sharing_protocol_20261123.json)
+
 2026-11-23。中英文 README 统一说明保存开关的适用范围，并引用现有 OutputOptions 示例。使用第 38 号实际验证 CSV、JSON、NPZ 和两张图的保存。
 [本机跨平台证据](experiments/f1_case38_local_cross_platform_20261123.json)
 

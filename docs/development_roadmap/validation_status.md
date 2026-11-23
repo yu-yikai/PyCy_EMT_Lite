@@ -1,5 +1,8 @@
 # 验证状态
 
+2026-11-23。连续时域预检的两源功率增量约为 239.37 W 和 119.67 W。原生试验固定两档电气时钟、33 路输出、240–290 ms 和 540–590 ms 两窗。原生运行待取，正式新增为 20 项。
+[双构网源分担原生协议](experiments/e_dual_gfm_sharing_protocol_20261123.json)
+
 2026-11-23。Windows 和 Ubuntu WSL2 各通过 1,625 项全量测试，包含慢测。两套系统首跑均为 10 V、2 A 和 −2 A。最近一次托管 CI 因账户账单锁未启动。
 [本机跨平台证据](experiments/f1_case38_local_cross_platform_20261123.json)
 
