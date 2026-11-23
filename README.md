@@ -65,7 +65,7 @@ uv run --locked pytest -o addopts= -q -p no:cacheprovider --basetemp=.tmp/pytest
 Create `.tmp` explicitly so a fresh download has the parent directory required by `--basetemp`. Ensure no other test run uses the same `--basetemp`; pytest clears that directory. This distinguishes directory-permission failures from code failures. CI is configured for Linux and Windows; local checks are described in section 6.
 
 Examples display figures by default without saving data or images.
-For network cases, set `SAVE_RESULT_DATA` or `SAVE_RESULT_FIGURE` at the top of the script to `1` to save to `outputs/<case-name>/`.
+If the script defines `SAVE_RESULT_DATA` or `SAVE_RESULT_FIGURE`, set the relevant flag to `1` to save to `outputs/<case-name>/`. For other `CaseDefinition` scripts, use the [`OutputOptions` example](#3-write-a-case).
 With the corresponding saving option enabled, rerunning the same case name under the same output root replaces same-name data files (`result.csv`, `result.json`, `result.npz`) or figures. Copy the earlier results or change the case name before a comparison run.
 The standalone PLL example 11 only displays figures and has no saving flags. Its [validation guide](validation/cases/pll_dynamic_response/README.md) explains the angle and units, with a completed discrete Simulink comparison.
 Noninteractive backends such as `MPLBACKEND=Agg` skip window display while retaining computation and saving.
@@ -78,7 +78,7 @@ If something goes wrong, check these points first:
 | `pyproject.toml` or the example file is not found | Return to the folder containing both `pyproject.toml` and `examples`; do not run from inside the ZIP or the `examples` subfolder. |
 | `ModuleNotFoundError: pycy_emt_lite` | Run `uv sync --locked` from the project root, then use `uv run python ...`. |
 | The summary has printed but the terminal is still busy | Check for a figure window waiting to be closed; multiple figures appear in sequence. |
-| No figure window appears | `MPLBACKEND=Agg` intentionally skips display. In the same PowerShell terminal, run `Remove-Item Env:MPLBACKEND -ErrorAction SilentlyContinue`, then rerun the example to restore the default interactive backend. Set `SAVE_RESULT_FIGURE` to `1` in the relevant example if you need saved images. |
+| No figure window appears | `MPLBACKEND=Agg` intentionally skips display. In the same PowerShell terminal, run `Remove-Item Env:MPLBACKEND -ErrorAction SilentlyContinue`, then rerun the example to restore the default interactive backend. |
 
 ## 2. Learning order
 

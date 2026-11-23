@@ -3,8 +3,8 @@
   "updated_date": "2026-11-23",
   "timezone": "Asia/Shanghai",
   "branch": "codex/emt-examples-longterm",
-  "checkpoint_head": "f4ac423d3751e26c1dbcbf56b560b33bd3512b45",
-  "current_task": "D1",
+  "checkpoint_head": "9ec48d51021704660ac4471e8877c7ff28c096d1",
+  "current_task": "F1",
   "formal_new_examples_completed": 20,
   "status_values": [
     "planned",
@@ -2199,6 +2199,20 @@
         ],
         "legacy_startup_traces_bitwise_equal": 14
       },
+      "dual_gfm_sharing_precheck": {
+        "status": "analytical_screen_only",
+        "phasor": {
+          "path": "local_reference/e_dual_gfm_phasor_20261123/phasor_screen.json",
+          "sha256": "08408c723e7915eb8f3583c960ea68f8fab89413fb8b07fc9e76e06dd888a94b",
+          "bytes": 4019
+        },
+        "ode": {
+          "path": "local_reference/e_dual_gfm_phasor_20261123/ode_screen.json",
+          "sha256": "18023bd2b1b3630c20135638f5bb3f51d21ec3523cb4463fd41b1eb0d81dd91c",
+          "bytes": 4730
+        },
+        "native_reference_status": "pending"
+      },
       "parallel_line_fault_isolation_example": {
         "number": 38,
         "status": "completed",
@@ -2559,6 +2573,17 @@
       "references": [],
       "validation": "a777c00的Ubuntu全量1568通过、5失败。2479b6d修复PLL合成归档源码哈希，287aa5e修正初始化QR行关系系数。修复后本机Windows和WSL2 Ubuntu 24.04.4各1573项含slow通过，锁定同步、Ruff、mypy通过。24号38项及28号双档原生对标回归通过。现有GitHub CI43856421332终态failure，两OS runner0、steps空，账户billing lock，待外部解除后补验托管运行。",
       "local_cli_and_package": "cbdc9b1的Windows和WSL2 Ubuntu各24个教学入口、sdist/wheel及库外wheel安装通过。Ubuntu临时CLI目录回收前未观察到末次源文件检查，运行日志和发行包已核对。",
+      "case_38_local_cross_platform": {
+        "source_commit": "9ec48d51021704660ac4471e8877c7ff28c096d1",
+        "report": {
+          "path": "docs/development_roadmap/experiments/f1_case38_local_cross_platform_20261123.json",
+          "sha256": "4306dc3e47de04900e8f0d67645320212c60dc2fd020c243d06818f6b877412d",
+          "bytes": 9244
+        },
+        "status": "passed",
+        "windows_tests_including_slow": 1625,
+        "ubuntu_tests_including_slow": 1625
+      },
       "local_ubuntu_full_20261123": {
         "source_commit": "a223722c50f53863571710864cb3df5d66f0966d",
         "passed_including_slow": 1590,
@@ -2581,7 +2606,8 @@
         "docs/development_roadmap/experiments/ci_57fbc81.json",
         "docs/development_roadmap/experiments/f1_ubuntu_a777c00_20261118.json",
         "docs/development_roadmap/experiments/f1_cli_wheel_cbdc9b1_20261118.json",
-        "docs/development_roadmap/experiments/f1_ubuntu_a223722_20261123.json"
+        "docs/development_roadmap/experiments/f1_ubuntu_a223722_20261123.json",
+        "docs/development_roadmap/experiments/f1_case38_local_cross_platform_20261123.json"
       ],
       "commits": [
         "90b2fcd",
@@ -2596,7 +2622,8 @@
         "c3fdf7957d1c52ee5a3ba51c6bf2c55dbea2151a",
         "57fbc81106a75e6f70e09413e4fd94cf45853b96",
         "2479b6d2422a3d7e13a321dece00899bd0669f83",
-        "287aa5ee00b8b6bc6c9638a66cf4136dc0029a70"
+        "287aa5ee00b8b6bc6c9638a66cf4136dc0029a70",
+        "9ec48d51021704660ac4471e8877c7ff28c096d1"
       ],
       "blockers": [
         "GitHub check-run两项注释：The job was not started because your account is locked due to a billing issue. 账户解除外部账单锁后才能补跑；不通过重复push或改代码绕过。"
@@ -2708,7 +2735,7 @@
       }
     }
   ],
-  "current_stage": "parallel_line_fault_isolation_example_38_accepted",
+  "current_stage": "phase_f_local_cross_platform_milestone_verified",
   "resume_checkpoint_history": [
     {
       "resumed_utc": "2026-11-11T13:24:16.085490+00:00",

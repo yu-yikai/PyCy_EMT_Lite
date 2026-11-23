@@ -1,5 +1,8 @@
 # 持久进度
 
+2026-11-23。阶段 F 已从 38 号验收提交的独立源码归档复验两套系统。README 首跑、01 和 33–38 教学入口、构建与仓库外 wheel 数值检查通过。
+[本机跨平台证据](experiments/f1_case38_local_cross_platform_20261123.json)
+
 2026-11-23。38 号并联线路故障隔离和恢复已完成两档原生 PSCAD 对标、独立运行、教学说明和自动测试。正式新增 19–38 共 20 项。
 [38 号验收报告](../../validation/cases/parallel_line_fault_isolation/acceptance_report.json)
 

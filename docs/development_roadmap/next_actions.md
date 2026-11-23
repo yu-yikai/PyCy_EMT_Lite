@@ -1,5 +1,8 @@
 # 恢复与下一步
 
+2026-11-23。本机安装、教学入口与全量回归已完成。双构网源有功分担的相量与连续时域预检支持 300 ms 负荷阶跃和 240–290、540–590 ms 两个比较窗，结果指向约 2:1 分担。预检证据已登记在 D1。下一步固定原生可行性接线、PCC 功率方向、下垂初值及采样，再运行两档 PSCAD。托管 CI 按已有 F1 记录在账单锁解除后补验。
+[本机跨平台证据](experiments/f1_case38_local_cross_platform_20261123.json)
+
 2026-11-23。进入阶段 F 的本地工程复验。在同一 38 号正式验收提交上，从干净归档按 README 安装，运行 01 和 33–38，复查 Windows、Ubuntu 的构建和仓库外 wheel 数值冒烟。托管运行沿用 F1 已知账单锁记录。
 [38 号验收报告](../../validation/cases/parallel_line_fault_isolation/acceptance_report.json)
 

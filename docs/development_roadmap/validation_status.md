@@ -1,5 +1,8 @@
 # 验证状态
 
+2026-11-23。Windows 和 Ubuntu WSL2 各通过 1,625 项全量测试，包含慢测。两套系统首跑均为 10 V、2 A 和 −2 A。最近一次托管 CI 因账户账单锁未启动。
+[本机跨平台证据](experiments/f1_case38_local_cross_platform_20261123.json)
+
 2026-11-23。38 号两档核对 21,002 个 PSCAD 原始采样点，五个事件均在指定拍。Windows 1,625 项含慢测，Ubuntu WSL2 默认入口和四项专项均通过。
 [38 号验收报告](../../validation/cases/parallel_line_fault_isolation/acceptance_report.json)
 

@@ -64,7 +64,7 @@ uv run --locked pytest -o addopts= -q -p no:cacheprovider --basetemp=.tmp/pytest
 先显式创建 `.tmp`，避免干净下载的项目缺少 `--basetemp` 的父目录。运行前确认没有其他测试使用同一个 `--basetemp`；pytest 会清理该目录。本命令用于区分目录权限问题与代码失败。CI 已配置 Linux 和 Windows；本地检查见第 6 节。
 
 示例默认显示图形，不保存数据或图片。
-网络算例需要保存时，把脚本顶部 `SAVE_RESULT_DATA` 或 `SAVE_RESULT_FIGURE` 改为 `1`；输出位于 `outputs/<算例名>/`。
+脚本若提供 `SAVE_RESULT_DATA` 或 `SAVE_RESULT_FIGURE`，将相应开关改为 `1` 即可保存到 `outputs/<算例名>/`。其余使用 `CaseDefinition` 的脚本可参考[第 3 节的 `OutputOptions` 写法](#3-编写自己的算例)。
 开启相应保存选项后，相同输出根目录下再次运行同名算例，会替换前次同名的数据文件（`result.csv`、`result.json`、`result.npz`）或图片。需要对照时，先复制旧结果或更换算例名，再运行。
 独立 PLL 示例 11 只显示图形，没有保存开关。[PLL验证指南](validation/cases/pll_dynamic_response/README.md)说明角度、单位和已完成的真实Simulink离散对比。
 非交互后端（如 `MPLBACKEND=Agg`）跳过窗口显示，仍可计算与保存。
@@ -77,7 +77,7 @@ uv run --locked pytest -o addopts= -q -p no:cacheprovider --basetemp=.tmp/pytest
 | 找不到 `pyproject.toml` 或示例文件 | 回到同时包含 `pyproject.toml` 和 `examples` 的目录；不要在 ZIP 内或 `examples` 子目录运行。 |
 | `ModuleNotFoundError: pycy_emt_lite` | 在项目根目录执行 `uv sync --locked`，再使用 `uv run python ...`。 |
 | 已打印摘要但终端还不能输入 | 检查是否有图窗等待关闭；多幅图会依次显示。 |
-| 没有图窗 | 若设置了 `MPLBACKEND=Agg`，会按设计跳过显示。在同一 PowerShell 终端运行 `Remove-Item Env:MPLBACKEND -ErrorAction SilentlyContinue`，再运行示例，即可恢复默认交互后端。需要图片时将对应示例的 `SAVE_RESULT_FIGURE` 改为 `1`。 |
+| 没有图窗 | 若设置了 `MPLBACKEND=Agg`，会按设计跳过显示。在同一 PowerShell 终端运行 `Remove-Item Env:MPLBACKEND -ErrorAction SilentlyContinue`，再运行示例，即可恢复默认交互后端。 |
 
 ## 2. 学习顺序
 

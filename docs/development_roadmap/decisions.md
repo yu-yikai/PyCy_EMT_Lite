@@ -1,5 +1,8 @@
 # 技术决策
 
+2026-11-23。中英文 README 统一说明保存开关的适用范围，并引用现有 OutputOptions 示例。使用第 38 号实际验证 CSV、JSON、NPZ 和两张图的保存。
+[本机跨平台证据](experiments/f1_case38_local_cross_platform_20261123.json)
+
 2026-11-23。38 号复用三相源、线路、负荷和开关。中文教学说明按切换时刻读图，原生逐点比较与九路开关状态留在验证档案。
 [38 号验收报告](../../validation/cases/parallel_line_fault_isolation/acceptance_report.json)
 
