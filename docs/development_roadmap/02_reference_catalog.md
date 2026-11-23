@@ -1,18 +1,41 @@
 # 参考模型目录与筛选依据
 
-2026-11-16最新目录共36项；原35项JSON对象保持。新增`pscad-derived-force-dsout-bounded-probe-v5`为真实运行且短scope数值通过的400µs人工向量研究探针（32量81点），不等于完整SPWM/VSC候选参考。见[公开记录](experiments/c1_force_dsout_bounded_numeric_20261116.json)。完整开环双步长参考仍待单独冻结/获取/验证。
+截至 2026-11-23，[机器可读目录](reference_catalog.json) 共 48 项。其中 25 项已保存合格参考数据，6 项已实际运行，13 项已检查，4 项已找到来源。28–39 号均有两档真实参考和正式验收记录。
 
-以下保留历史记录。
+## 28–39 号合格参考
 
-初查日期：2026-11-04；最近核验：2026-11-12。机器可读记录见 [reference_catalog.json](reference_catalog.json)。本轮已下载的第三方原件仅保存在忽略 Git 的 `local_reference/`；下载不代表获得再分发许可。
+| 算例 | 平台与参考范围 | 参考资格 | 正式验收 |
+|---|---|---|---|
+| 28 开环 VSC | Simscape R2025a，固定调制、双档 | [资格报告](../../validation/cases/grid_connected_vsc_open_loop/qualified_reference_report.json) | [验收](../../validation/cases/grid_connected_vsc_open_loop/validation_report.json) |
+| 29 已知角 dq 电流控制 | PSCAD 5.0，主工况和仅 d 轴工况各两档 | [资格报告](../../validation/cases/grid_connected_vsc_closed_loop/qualified_reference_report.json) | [验收](../../validation/cases/grid_connected_vsc_closed_loop/validation_report.json) |
+| 30 并网 PLL 与电流环 | PSCAD 5.0，使用合格的电源精度试验两档 | [资格报告](../../validation/cases/grid_connected_vsc_pll/source_precision_reference_report.json) | [验收](../../validation/cases/grid_connected_vsc_pll/acceptance_report.json) |
+| 31 有功前馈与 PCC 调压 | PSCAD 5.0，固定 q 和调压两工况各两档 | [资格报告](../../validation/cases/grid_connected_vsc_power_vac/coherent_reference_report.json) | [验收](../../validation/cases/grid_connected_vsc_power_vac/acceptance_report.json) |
+| 32 直流母线调压 | PSCAD 5.0，预充母线带阻性负荷阶跃 | [资格报告](experiments/c1_dc_live_feedback_long_20261123.json) | [验收](../../validation/cases/grid_connected_vsc_dc_voltage/acceptance_report.json) |
+| 33 PJM5 负荷阶跃 | PSCAD 5.0，基于 PGLib 数据构建的平衡三相五母线模型 | [资格报告](experiments/d1_pjm5_pscad_reference_20261123.json) | [验收](../../validation/cases/pjm5_load_step/acceptance_report.json) |
+| 34 双端 VSC-HVDC | PSCAD 5.0，双极 T 形链路和两站不同控制任务 | [资格报告](experiments/d1_dual_vsc_long_native_20261123.json) | [验收](../../validation/cases/two_terminal_vsc_hvdc/acceptance_report.json) |
+| 35 储能充放电 | PSCAD 5.0，固定开路电压的一阶 RC 储能端口 | [资格报告](experiments/d1_storage_grid_long_native_20261123.json) | [验收](../../validation/cases/grid_connected_storage/acceptance_report.json) |
+| 36 光伏并网照度阶跃 | PSCAD 5.0，650 串电池、25 °C、1000→900 W/m² | [资格报告](experiments/d1_pv_grid_irradiance_native_20261123.json) | [验收](../../validation/cases/grid_connected_pv/acceptance_report.json) |
+| 37 单站孤网下垂 | PSCAD 5.0，平均三相电源、R–L 馈线与平衡负荷投入 | [资格报告](experiments/d1_gfm_island_native_20261123.json) | [验收](../../validation/cases/islanded_frequency_droop/acceptance_report.json) |
+| 38 并联线路故障隔离 | PSCAD 5.0，独立三母线电阻网络与固定故障、隔离、恢复时序 | [资格报告](experiments/e_parallel_fault_surrogate_native_20261123.json) | [验收](../../validation/cases/parallel_line_fault_isolation/acceptance_report.json) |
+| 39 双构网源有功分担 | PSCAD 5.0，两套独立下垂、共用平衡负荷 | [资格报告](experiments/e_dual_gfm_sharing_native_20261123.json) | [验收](../../validation/cases/dual_grid_forming_power_sharing/acceptance_report.json) |
+
+这些参考工程按冻结协议用已安装的商业软件搭建，原生工程与波形保存在 Git 忽略的 `local_reference/`。资格报告指向实际工程、运行回执和原始输出的路径及哈希。上表报告的目录哈希按 Git 的 LF 字节计算。`source_url` 为 `null` 表示本地构建的工程没有公开下载链接，或尚未确认直接来源。许可、依赖和数学相容性字段中的 `null` 表示尚未核实。较早的研究条目可通过 `research_record`、`design_record` 或资格报告查看细节。缺少明确许可时，厂商原件及原始结果只在本地保留。
+
+33 号引用的 PGLib 数据使用 CC BY 4.0。该许可适用于所引源数据，PSCAD 工程和输出仍留在本地。38 号参考使用单独搭建的三母线电阻网络，随 PSCAD 安装的 `Relay_Cases/case4_pi.pscx` 提供故障隔离的来源和时序观测。 [PGLib 归属与协议](experiments/d1_pjm5_emt_protocol_20261123.json) · [PSCAD 随附工程时序记录](experiments/e_case4_pi_original_timing_20261123.json)
+
+## 历史研究记录
+
+2026-11-16 的 PSCAD `force_dsout` 研究探针实际运行 400 µs，覆盖 32 路、81 点。28 号的完整双档开环参考随后由 Simscape 取得，资格和验收见上表。 [短探针记录](experiments/c1_force_dsout_bounded_numeric_20261116.json)
+
+早期调查从 2026-11-04 开始。下表保留截至 2026-11-12 的研究进度，后续资格和验收见各例报告。第 25 号的完整线路和变压器网络随后已通过真实 Simscape 对标。 [25 号验收报告](../../validation/cases/source_line_transformer/validation_report.json)
 
 ## 证据状态
 
 `discovered` 仅确认来源；`downloaded` 有本地原件；`inspected` 已检查文件内容、版本或参数；`runnable` 已在对应软件成功运行；`reference_ready` 有可追溯的真实数值输出。运行障碍独立写入 `blockers`，避免把已检查但无法运行的资源误记为未发现。`blocked` 用于尚不能推进的资源；不会把图像、解析公式或 Python 重算当作外部数值参考。
 
-## 已获得的工程与结果
+## 截至 2026-11-12 的工程与结果
 
-| ID | 资源与实际文件 | 本轮证据 | 当前使用决定 |
+| ID | 资源与实际文件 | 当时证据 | 当时使用决定 |
 |---|---|---|---|
 | MW-RC2 | MathWorks 两级 RC：`CascadedRCCircuitInSimulinkAndSimscape.slx` | **reference_ready**；MATLAB R2025a Update 1 + Simulink + Simscape 实际运行；10,052 个严格递增原生样本 | 第一项新增算例；保留两级负载耦合、初值、源时序和 ESR |
 | PSCAD-RLDC | 官方 Cookbook 第 3 章 `Circuit_Response_study_01.pscx` | **inspected**；XML v4.6.0，R=1 Ω、L=0.1 H，50 µs 步长，1 s 合闸 | 既有 RL 的未来参考，不重复新增教学例 |

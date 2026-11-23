@@ -3,7 +3,7 @@
   "updated_date": "2026-11-23",
   "timezone": "Asia/Shanghai",
   "branch": "codex/emt-examples-longterm",
-  "checkpoint_head": "dab065d5d039c4e412b3425f3d17898998a9934e",
+  "checkpoint_head": "46c76c74ae56b3f44c1a689512c8a4640264d89e",
   "current_task": "F1",
   "formal_new_examples_completed": 21,
   "status_values": [
@@ -51,7 +51,7 @@
         "pscad-cookbook-ch3-03",
         "pscad-cookbook-ch3-04"
       ],
-      "validation": "实际下载、XML/版本/许可核对与运行状态分离",
+      "validation": "实际下载、XML/版本/许可核对与运行状态分离 收尾复查后目录共 48 项，其中 25 项具有合格原生参考。28–39 号资格与验收指针已核对。",
       "acceptance": "02和JSON目录、合法本地模型、已知依赖与来源可追溯并提交",
       "status": "completed",
       "files": [
@@ -2624,7 +2624,7 @@
       ],
       "new_capabilities": [],
       "references": [],
-      "validation": "a777c00的Ubuntu全量1568通过、5失败。2479b6d修复PLL合成归档源码哈希，287aa5e修正初始化QR行关系系数。修复后本机Windows和WSL2 Ubuntu 24.04.4各1573项含slow通过，锁定同步、Ruff、mypy通过。24号38项及28号双档原生对标回归通过。现有GitHub CI43856421332终态failure，两OS runner0、steps空，账户billing lock，待外部解除后补验托管运行。",
+      "validation": "a777c00的Ubuntu全量1568通过、5失败。2479b6d修复PLL合成归档源码哈希，287aa5e修正初始化QR行关系系数。修复后本机Windows和WSL2 Ubuntu 24.04.4各1573项含slow通过，锁定同步、Ruff、mypy通过。24号38项及28号双档原生对标回归通过。现有GitHub CI43856421332终态failure，两OS runner0、steps空，账户billing lock，待外部解除后补验托管运行。 39 号 Windows 与 Ubuntu WSL2 各 1629 项含慢测通过。Windows 串行 35 个算例用时 705.811 秒，按实测调整限时。",
       "local_cli_and_package": "cbdc9b1的Windows和WSL2 Ubuntu各24个教学入口、sdist/wheel及库外wheel安装通过。Ubuntu临时CLI目录回收前未观察到末次源文件检查，运行日志和发行包已核对。",
       "case_39_serial_ci_timing": {
         "source_commit": "dab065d5d039c4e412b3425f3d17898998a9934e",
@@ -2691,7 +2691,9 @@
         "2479b6d2422a3d7e13a321dece00899bd0669f83",
         "287aa5ee00b8b6bc6c9638a66cf4136dc0029a70",
         "9ec48d51021704660ac4471e8877c7ff28c096d1",
-        "dab065d5d039c4e412b3425f3d17898998a9934e"
+        "dab065d5d039c4e412b3425f3d17898998a9934e",
+        "225249b4529b7ca919ce17a957bbb328091833da",
+        "46c76c74ae56b3f44c1a689512c8a4640264d89e"
       ],
       "blockers": [
         "GitHub check-run两项注释：The job was not started because your account is locked due to a billing issue. 账户解除外部账单锁后才能补跑；不通过重复push或改代码绕过。"
@@ -2803,7 +2805,7 @@
       }
     }
   ],
-  "current_stage": "phase_f_serial_example_budget_verified",
+  "current_stage": "delivery_audit_verified",
   "resume_checkpoint_history": [
     {
       "resumed_utc": "2026-11-11T13:24:16.085490+00:00",

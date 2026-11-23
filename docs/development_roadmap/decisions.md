@@ -1,5 +1,8 @@
 # 技术决策
 
+2026-11-23。保留已验收默认输入供复现。改参练习按具体元件或控制参数给出预期物理现象。集中目录保留原生资格报告及验收指针，商业工程原件和波形留在本地。
+[参考目录](02_reference_catalog.md) · [39 号验收](../../validation/cases/dual_grid_forming_power_sharing/acceptance_report.json)
+
 2026-11-23。用已验收提交的独立归档、CI 锁定的 uv 0.12.10 和相同的非交互命令测量。15 分钟比本机示例总耗时多约 194 秒，任务 45 分钟给测试与示例以外的步骤预留时间。
 [Windows 串行计时证据](experiments/f1_case39_ci_examples_timing_20261123.json)
 

@@ -1,5 +1,8 @@
 # 恢复与下一步
 
+2026-11-23。本期开发、商业平台对标和本机跨系统验收已完成。托管 GitHub Actions 仍保留账单锁记录。账户恢复后运行 `gh workflow run ci.yml --ref codex/emt-examples-longterm`，保存两套 runner 的实际执行步骤、测试报告和产物哈希。后续新模型按原路线图另行立项。
+[参考目录](02_reference_catalog.md) · [39 号验收](../../validation/cases/dual_grid_forming_power_sharing/acceptance_report.json)
+
 2026-11-23。本机计时已校准 CI 限时。账单锁解除后，在开发分支手动触发 CI，记录 Linux 和 Windows 两个实际 runner、Job 步骤及报告哈希。先完成集中参考目录与各例改参练习的复核。
 [Windows 串行计时证据](experiments/f1_case39_ci_examples_timing_20261123.json)
 

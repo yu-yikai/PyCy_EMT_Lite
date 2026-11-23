@@ -1,5 +1,8 @@
 # 持久进度
 
+2026-11-23。收尾复核完成。正式新增 19–39 共 21 项。集中参考目录已更新到 48 项，并为 15 份教学指南补充或明确改参练习。两版 README 已核对全部 35 个公开算例入口。
+[参考目录](02_reference_catalog.md) · [39 号验收](../../validation/cases/dual_grid_forming_power_sharing/acceptance_report.json)
+
 2026-11-23。在第 39 号验收提交的 Windows 干净副本上，按 CI 命令串行跑完全部 35 个公开算例，用时 705.811 秒。示例步骤限时调整为 15 分钟，整个任务限时调整为 45 分钟。
 [Windows 串行计时证据](experiments/f1_case39_ci_examples_timing_20261123.json)
 
