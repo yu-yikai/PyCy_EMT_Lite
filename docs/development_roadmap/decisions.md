@@ -1,5 +1,8 @@
 # 技术决策
 
+2026-11-23。原厂说明与控制时刻有出入。接触动作取原生采样行的实际触点状态，故障命令则取独立的 FLT 输出。
+[原厂并联线路故障时序实测](experiments/e_case4_pi_original_timing_20261123.json)
+
 2026-11-23。37 号沿用现有源、开关、R–L 和滤波器。在当拍求解后推进下一拍相角，保留接入负荷首拍的功率短暂跌落。
 [37 号验收报告](../../validation/cases/islanded_frequency_droop/acceptance_report.json)
 

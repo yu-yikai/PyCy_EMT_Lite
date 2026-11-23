@@ -1,0 +1,124 @@
+{
+  "schema": "e_case4_pi_original_timing_v1",
+  "status": "MEASURED_ORIGINAL_CASE4_PI_EVENT_SCREEN",
+  "date": "2026-11-23",
+  "scope": "Timing probe for the original installed PSCAD Relay_Cases/case4_pi parallel-line fault project.",
+  "source_sha256": "844b5c62fba5f494b4aa2857a27c5e298d6945ff310fcf0a613fc077b6e0a0eb",
+  "reporting_overrides": {
+    "plot_type": "OUT",
+    "sample_step_us": 25
+  },
+  "duration_s": 0.6,
+  "rows_including_zero": 24001,
+  "enabled_scalar_channels": 57,
+  "native_toolchain": {
+    "pscad": "5.0.0",
+    "emtdc_build": "20210219",
+    "compiler": "gf46",
+    "platform": "x86"
+  },
+  "launch": {
+    "path": "local_reference/e_parallel_fault_pscad_20261123/25us_original/launch.json",
+    "sha256": "80d6a3e2e7311f8db882faed16c2d4bda80f988838d0c15927f8b2009de3d1c7",
+    "bytes": 1975
+  },
+  "native_receipt": {
+    "path": "local_reference/e_parallel_fault_pscad_20261123/25us_original/n/20261123T064231971665Z/result.json",
+    "sha256": "985f668062481fc39d33a9117a707cd0b63e9c8297754049e86835c53c9769d8",
+    "bytes": 12369
+  },
+  "event_audit": {
+    "path": "local_reference/e_parallel_fault_pscad_20261123/event_screen.json",
+    "sha256": "724257c4f95af3ceb21ff3e9f67ce05792a292d8369657ad844a7b105116c56c",
+    "bytes": 3917
+  },
+  "fault_command": {
+    "channel": "_Untitled_",
+    "compiled_signal": "FLT",
+    "setting_start_s": 0.2,
+    "setting_duration_s": 0.26,
+    "location_selector": 5,
+    "type_selector": 7,
+    "edges": [
+      {
+        "row": 8000,
+        "previous_sample_s": 0.199975,
+        "first_sample_s": 0.2,
+        "from": 0,
+        "to": 1
+      },
+      {
+        "row": 18400,
+        "previous_sample_s": 0.459975,
+        "first_sample_s": 0.46,
+        "from": 1,
+        "to": 0
+      }
+    ]
+  },
+  "observed_contact_openings": {
+    "Br3a": {
+      "row": 14061,
+      "previous_sample_s": 0.3515,
+      "first_sample_s": 0.351525,
+      "from": 0,
+      "to": 2,
+      "open_setting_s": 0.35,
+      "first_sample_delay_s": 0.001525
+    },
+    "Br3b": {
+      "row": 14276,
+      "previous_sample_s": 0.356875,
+      "first_sample_s": 0.3569,
+      "from": 0,
+      "to": 2,
+      "open_setting_s": 0.35,
+      "first_sample_delay_s": 0.0069
+    },
+    "Br3c": {
+      "row": 14204,
+      "previous_sample_s": 0.355075,
+      "first_sample_s": 0.3551,
+      "from": 0,
+      "to": 2,
+      "open_setting_s": 0.35,
+      "first_sample_delay_s": 0.0051
+    },
+    "Br4a": {
+      "row": 18012,
+      "previous_sample_s": 0.450275,
+      "first_sample_s": 0.4503,
+      "from": 0,
+      "to": 2,
+      "open_setting_s": 0.45,
+      "first_sample_delay_s": 0.0003
+    },
+    "Br4b": {
+      "row": 18012,
+      "previous_sample_s": 0.450275,
+      "first_sample_s": 0.4503,
+      "from": 0,
+      "to": 2,
+      "open_setting_s": 0.45,
+      "first_sample_delay_s": 0.0003
+    },
+    "Br4c": {
+      "row": 18013,
+      "previous_sample_s": 0.4503,
+      "first_sample_s": 0.450325,
+      "from": 0,
+      "to": 2,
+      "open_setting_s": 0.45,
+      "first_sample_delay_s": 0.000325
+    }
+  },
+  "healthy_line_breakers_remained_closed": true,
+  "source_annotation_issue": "The saved controls and timed export identify a 260 ms fault command and separate 350 ms and 450 ms opening settings.",
+  "surrogate_planning": {
+    "path": "local_reference/e_parallel_fault_pscad_20261123/surrogate_planning.json",
+    "sha256": "a62c1b256d82fc2fd65603a9b5f7dda8dd73e31215446e05d2daa723ff1fbf6b",
+    "bytes": 6740
+  },
+  "scope_for_next_step": "Construct and validate an independent small parallel-network surrogate with documented switching and restoration.",
+  "formal_new_examples_completed": 19
+}

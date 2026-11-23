@@ -1,5 +1,8 @@
 # 恢复与下一步
 
+2026-11-23。以原厂双端开断时序为背景，按小型三母线规划固定接线、电压与事件判据。用该电路自己的两档原生参考验证受端反送、健康线路保供与重合恢复。
+[原厂并联线路故障时序实测](experiments/e_case4_pi_original_timing_20261123.json)
+
 2026-11-23。推进阶段 E 的小网选择性隔离。先取 PSCAD 随附并联线路中点故障工程的原始波形，核对开命令与实际开断时刻，再评估简化三母线的故障隔离与恢复。
 [37 号验收报告](../../validation/cases/islanded_frequency_droop/acceptance_report.json)
 

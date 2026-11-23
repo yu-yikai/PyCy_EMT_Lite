@@ -1,5 +1,8 @@
 # 持久进度
 
+2026-11-23。阶段 E 的原厂并联线路故障工程已实际运行。原始数据区分了故障命令、开断设定及三极触点动作。
+[原厂并联线路故障时序实测](experiments/e_case4_pi_original_timing_20261123.json)
+
 2026-11-23。37 号孤网下垂已完成两档原生 PSCAD 对标、独立运行、教学说明和自动测试。正式新增 19–37 共 19 项。
 [37 号验收报告](../../validation/cases/islanded_frequency_droop/acceptance_report.json)
 

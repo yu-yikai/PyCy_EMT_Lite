@@ -1,5 +1,8 @@
 # 验证状态
 
+2026-11-23。原厂 25 µs 探针记录 24,001 行、57 路原生输出。可复核故障命令和触点时序。简化三母线参考待建，正式新增为 19 项。
+[原厂并联线路故障时序实测](experiments/e_case4_pi_original_timing_20261123.json)
+
 2026-11-23。37 号两档共核对 240,002 个 PSCAD 原始点。Windows 1,621 项含慢测，Ubuntu WSL2 默认入口和五项专项均通过。
 [37 号验收报告](../../validation/cases/islanded_frequency_droop/acceptance_report.json)
 
