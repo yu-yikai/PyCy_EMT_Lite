@@ -1,5 +1,8 @@
 # 验证状态
 
+2026-11-23。光伏静态协议有 28 路信号，以原生光伏端口和独立电表核对方向与欧姆定律。原生编译与实测尚待完成。
+[单电池原生静态协议](experiments/d1_pv_static_protocol_20261123.json)
+
 2026-11-23。35 号与 PSCAD 两档对标覆盖 180,003 个原始正时间点，六路开关逐点一致。34 号两档全列逐位相同。Windows 1,612 项含慢测及 Ubuntu WSL2 独立入口和 11 项专项均通过。
 [35 号验收报告](../../validation/cases/grid_connected_storage/acceptance_report.json)
 

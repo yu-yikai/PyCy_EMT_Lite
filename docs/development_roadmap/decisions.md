@@ -1,5 +1,8 @@
 # 技术决策
 
+2026-11-23。用本机光伏库的单电池标尺取得端口数据。0.22 Ω 和 0.28 Ω 用于后续识别，0.25 Ω 保留为独立检验。
+[单电池原生静态协议](experiments/d1_pv_static_protocol_20261123.json)
+
 2026-11-23。35 号用固定开路源和一阶 RC 表示短时储能端口，和 34 号共享浮置交流接线与电流环。保留标准入口和原有公共 API。
 [35 号验收报告](../../validation/cases/grid_connected_storage/acceptance_report.json)
 

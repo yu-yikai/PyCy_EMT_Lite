@@ -1,5 +1,8 @@
 # 恢复与下一步
 
+2026-11-23。按协议在独立 PSCAD 工程搭六组单电池与纯电阻负荷，先核编译的控制输入和电气方向，再运行两档并复读全部原始输出。
+[单电池原生静态协议](experiments/d1_pv_static_protocol_20261123.json)
+
 2026-11-23。35 号已验收。D1 下一项核对本机 PSCAD 原生光伏端口的接线、参数单位和编译输出。先取得独立稳态测点，再固定并联 R–C 负荷下的照度变化和暂态判据，评估现有元件能覆盖的等效范围。
 [35 号验收报告](../../validation/cases/grid_connected_storage/acceptance_report.json)
 

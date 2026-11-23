@@ -1,5 +1,8 @@
 # 持久进度
 
+2026-11-23。已确认本机 PSCAD 单电池元件及 GNU EMTDC 入口。已固定两档照度、三个独立电阻工作点和双步长静态测量协议。
+[单电池原生静态协议](experiments/d1_pv_static_protocol_20261123.json)
+
 2026-11-23。35 号单站并网储能完成两档 PSCAD 逐点对标、独立运行和教学图。正式新增 19–35 共 17 项。
 [35 号验收报告](../../validation/cases/grid_connected_storage/acceptance_report.json)
 
