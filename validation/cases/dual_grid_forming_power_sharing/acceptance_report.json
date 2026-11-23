@@ -1,0 +1,331 @@
+{
+  "schema": "pycy_dual_grid_forming_power_sharing_acceptance_v1",
+  "status": "accepted",
+  "date": "2026-11-23",
+  "example": 39,
+  "scope": "Two independent averaged sources supply a common grounded Y load through separate R–L feeders.",
+  "candidate_protocol_commit": "299483e8db8759ee52b23ac7a29d2727d828a8e1",
+  "candidate_protocol": {
+    "path": "validation/cases/dual_grid_forming_power_sharing/candidate_protocol.json",
+    "sha256": "47c2789c151bb4209256dba5ccb8492d1c9bfcceb33110269292d8b3c3903150",
+    "bytes": 9057
+  },
+  "implementation": {
+    "path": "examples/39_dual_grid_forming_power_sharing.py",
+    "sha256": "c0ba478ee1f3b545e9c8bc18a1a45b3310c0efc3f68d83657b720200513cfcd1",
+    "bytes": 4853
+  },
+  "focused_test_source": {
+    "path": "tests/test_dual_grid_forming_power_sharing.py",
+    "sha256": "1cbd27eecfe2772ea56154fab3cd9be884bebdbf4aed40d6bda436c2d0a527bd",
+    "bytes": 4914
+  },
+  "reference_platform": "PSCAD 5.0.0 / EMTDC 20210219 (gf46)",
+  "native_reference": {
+    "path": "docs/development_roadmap/experiments/e_dual_gfm_sharing_native_20261123.json",
+    "sha256": "7cd32410700ea548122daed9cda9297e14cb06ebbceb47badde92bdf4b5e6c68",
+    "bytes": 12390
+  },
+  "official_comparison": {
+    "path": "local_reference/dual_grid_forming_power_sharing_validation/official-20261123T0842Z/report.json",
+    "sha256": "b0a15094fa21fe33b02b471bf8c416674b6c67bf4ff41c4992c5307a425ac17e",
+    "bytes": 52610
+  },
+  "waveform_overlay": {
+    "path": "local_reference/dual_grid_forming_power_sharing_validation/official-20261123T0842Z/waveform_overlay.png",
+    "sha256": "1ace4b9f3d1b367ab7cce2d44c63297d1a9d6d5ccb0ee92a0ab48ae272eb21db",
+    "bytes": 192739
+  },
+  "grids": {
+    "5us": {
+      "rows_including_zero": 120001,
+      "load_step_tick": 60000,
+      "archived_load_pole_states": 360003,
+      "window_means": {
+        "before": {
+          "window_s": [
+            0.24,
+            0.29
+          ],
+          "rows": 10000,
+          "power_a_w": 239.80799838025848,
+          "power_b_w": 119.88334937365433,
+          "frequency_a_hz": 60.000217666754104,
+          "frequency_b_hz": 60.00018342880563,
+          "frequency_mean_hz": 60.000200547779855,
+          "phase_difference_rad": 0.003166819795322405,
+          "pcc_rms_v": 119.94853973116243,
+          "frequency_split_abs_hz": 0.00032420220455264825,
+          "pointwise_sharing_abs_w": 0.7052761235722187,
+          "power_ripple_abs_w": 0.4691344817919685
+        },
+        "after": {
+          "window_s": [
+            0.54,
+            0.59
+          ],
+          "rows": 10000,
+          "power_a_w": 479.1807731926079,
+          "power_b_w": 239.55034430493475,
+          "frequency_a_hz": 59.76083748979572,
+          "frequency_b_hz": 59.76086440792028,
+          "frequency_mean_hz": 59.76085094885801,
+          "phase_difference_rad": 0.006308611843613366,
+          "pcc_rms_v": 119.89421316289979,
+          "frequency_split_abs_hz": 0.00023281971679978142,
+          "pointwise_sharing_abs_w": 0.846064440941916,
+          "power_ripple_abs_w": 0.4539907772200138
+        }
+      },
+      "window_changes": {
+        "power_increase_a_w": 239.3727748123494,
+        "power_increase_b_w": 119.66699493128043,
+        "frequency_drop_hz": 0.23934959892184793,
+        "increment_sharing_abs_w": 0.03878494978854974
+      },
+      "same_grid_maxima_si": {
+        "display_s": 1.1102230246251565e-16,
+        "time_s": 1.1102230246251565e-16,
+        "peak_v": 5.016431714466307e-12,
+        "load_r": 0.0,
+        "load_on": 0.0,
+        "phase_rad": 5.5706550483591855e-12,
+        "frequency_hz": 4.206412995699793e-12,
+        "meter_w": 6.38632968730235e-09,
+        "filtered_w": 1.8598029782879166e-09,
+        "source_v": 9.672618261902244e-11,
+        "feeder_a": 2.4861002145826205e-11,
+        "pcc_v": 7.983302907632606e-11,
+        "base_a": 6.656897255652439e-13,
+        "added_a": 6.656897255652439e-13,
+        "phase_difference_rad": 1.0118128557223827e-11
+      },
+      "same_grid_window_differences": {
+        "before": {
+          "power_a_w": 6.994582690822426e-11,
+          "power_b_w": 6.980371836107224e-11,
+          "frequency_a_hz": 9.237055564881302e-14,
+          "frequency_b_hz": 4.973799150320701e-14,
+          "phase_difference_rad": 4.9140379265733e-15,
+          "pcc_rms_v": 2.842170943040401e-14
+        },
+        "after": {
+          "power_a_w": 5.616129783447832e-11,
+          "power_b_w": 5.630340638163034e-11,
+          "frequency_a_hz": 1.4210854715202004e-14,
+          "frequency_b_hz": 4.547473508864641e-13,
+          "phase_difference_rad": 1.9573752341184303e-14,
+          "pcc_rms_v": 1.4210854715202004e-14
+        }
+      }
+    },
+    "2p5us": {
+      "rows_including_zero": 240001,
+      "load_step_tick": 120000,
+      "archived_load_pole_states": 720003,
+      "window_means": {
+        "before": {
+          "window_s": [
+            0.24,
+            0.29
+          ],
+          "rows": 20000,
+          "power_a_w": 239.80804279206632,
+          "power_b_w": 119.88330496467646,
+          "frequency_a_hz": 60.00021765504913,
+          "frequency_b_hz": 60.00018345127133,
+          "frequency_mean_hz": 60.000200553160234,
+          "phase_difference_rad": 0.003166821050383476,
+          "pcc_rms_v": 119.94853973163428,
+          "frequency_split_abs_hz": 0.0003241521504193656,
+          "pointwise_sharing_abs_w": 0.7041379196060404,
+          "power_ripple_abs_w": 0.4687107278456608
+        },
+        "after": {
+          "window_s": [
+            0.54,
+            0.59
+          ],
+          "rows": 20000,
+          "power_a_w": 479.1807378715218,
+          "power_b_w": 239.5503796606549,
+          "frequency_a_hz": 59.76083748343795,
+          "frequency_b_hz": 59.760864419377924,
+          "frequency_mean_hz": 59.76085095140793,
+          "phase_difference_rad": 0.0063086088507714735,
+          "pcc_rms_v": 119.89421316578851,
+          "frequency_split_abs_hz": 0.00023277965894408226,
+          "pointwise_sharing_abs_w": 0.8459352588837419,
+          "power_ripple_abs_w": 0.4539148177977097
+        }
+      },
+      "window_changes": {
+        "power_increase_a_w": 239.37269507945547,
+        "power_increase_b_w": 119.66707469597844,
+        "frequency_drop_hz": 0.23934960175230202,
+        "increment_sharing_abs_w": 0.03854568749858345
+      },
+      "same_grid_maxima_si": {
+        "display_s": 1.1102230246251565e-16,
+        "time_s": 1.1102230246251565e-16,
+        "peak_v": 5.016431714466307e-12,
+        "load_r": 0.0,
+        "load_on": 0.0,
+        "phase_rad": 5.9685589803848416e-12,
+        "frequency_hz": 2.8492763703980017e-12,
+        "meter_w": 5.545985004573595e-09,
+        "filtered_w": 1.4247802937461529e-09,
+        "source_v": 1.6398615798607352e-10,
+        "feeder_a": 2.2054913451086122e-11,
+        "pcc_v": 1.5138290621052874e-10,
+        "base_a": 1.2631284906916562e-12,
+        "added_a": 1.2631284906916562e-12,
+        "phase_difference_rad": 1.0089706847793423e-11
+      },
+      "same_grid_window_differences": {
+        "before": {
+          "power_a_w": 8.495248948747758e-11,
+          "power_b_w": 8.482459179504076e-11,
+          "frequency_a_hz": 7.815970093361102e-14,
+          "frequency_b_hz": 2.2737367544323206e-13,
+          "phase_difference_rad": 7.194765616613807e-16,
+          "pcc_rms_v": 2.842170943040401e-14
+        },
+        "after": {
+          "power_a_w": 3.6072833609068766e-10,
+          "power_b_w": 3.601314801926492e-10,
+          "frequency_a_hz": 1.0658141036401503e-13,
+          "frequency_b_hz": 5.684341886080801e-13,
+          "phase_difference_rad": 1.052977149917922e-15,
+          "pcc_rms_v": 4.263256414560601e-14
+        }
+      }
+    }
+  },
+  "cross_grid": {
+    "common_rows_including_zero": 120001,
+    "full_and_away_peaks": {
+      "phase_difference_abs_rad": 3.675319391049925e-07,
+      "source_abs_v": 0.000462997552804989,
+      "phase_abs_rad": 2.7331873013736185e-06,
+      "frequency_abs_hz": 4.4421861495891335e-05,
+      "filtered_power_abs_w": 0.02221093074867042,
+      "pcc_abs_v": 3.2046779992574557,
+      "feeder_abs_a": 0.026705676556025515,
+      "pcc_away_abs_v": 0.0004405769645068232,
+      "feeder_away_abs_a": 4.128848204776325e-05
+    },
+    "window_differences": {
+      "before": {
+        "window_power_abs_w": 4.441180783487653e-05,
+        "window_frequency_abs_hz": 2.2465705740160047e-08,
+        "window_rms_abs_v": 4.718572199635673e-10,
+        "window_phase_difference_abs_rad": 1.2550610706957288e-09
+      },
+      "after": {
+        "window_power_abs_w": 3.535572014357058e-05,
+        "window_frequency_abs_hz": 1.1457643722678768e-08,
+        "window_rms_abs_v": 2.8887257030874025e-09,
+        "window_phase_difference_abs_rad": 2.9928418927155365e-09
+      }
+    }
+  },
+  "windows": {
+    "tests_passed": 1629,
+    "includes_slow": true,
+    "focused_tests": 4,
+    "standalone": {
+      "terminal.json": {
+        "path": "local_reference/dual_grid_forming_power_sharing_validation/standalone-20261123T0842Z/terminal.json",
+        "sha256": "e1b25433242ed0abb6183606fc62fe0df23a2744c989efb9000de12ad63c66cf",
+        "bytes": 263
+      },
+      "console.log": {
+        "path": "local_reference/dual_grid_forming_power_sharing_validation/standalone-20261123T0842Z/console.log",
+        "sha256": "0113d956dc1db7c3282f3466eef9dcf31af767be2324d484fe737e36fce9ff14",
+        "bytes": 115
+      }
+    },
+    "regression": {
+      "terminal.json": {
+        "path": "local_reference/dual_grid_forming_power_sharing_validation/windows-regression-20261123T0847Z/terminal.json",
+        "sha256": "c9b375d35ab09da7f171e971eb6d91bd2ae76a5cd9aaeb6e1ceb2cd3d60663aa",
+        "bytes": 125
+      },
+      "pytest.xml": {
+        "path": "local_reference/dual_grid_forming_power_sharing_validation/windows-regression-20261123T0847Z/pytest.xml",
+        "sha256": "e40990876c2692f08ed61de1ad628e6c43ccc21ae8dc7560ba3194fbde77d8fd",
+        "bytes": 234829
+      },
+      "uv-sync.log": {
+        "path": "local_reference/dual_grid_forming_power_sharing_validation/windows-regression-20261123T0847Z/uv-sync.log",
+        "sha256": "6b56c09a0c576a35f09fad4bba83f0ee8e1183d3a00a648bde2f8cfd38d80188",
+        "bytes": 57
+      },
+      "ruff.log": {
+        "path": "local_reference/dual_grid_forming_power_sharing_validation/windows-regression-20261123T0847Z/ruff.log",
+        "sha256": "a4443afdcfb6d7363adb285762515ccf7cf50473b1a05c20c1a50f6bed4d26b0",
+        "bytes": 20
+      },
+      "mypy.log": {
+        "path": "local_reference/dual_grid_forming_power_sharing_validation/windows-regression-20261123T0847Z/mypy.log",
+        "sha256": "a2767b4f5fbc495fbc163c1c3983210351cf45f12ec5302828989d1065383f9b",
+        "bytes": 45
+      },
+      "focused.log": {
+        "path": "local_reference/dual_grid_forming_power_sharing_validation/windows-regression-20261123T0847Z/focused.log",
+        "sha256": "9d5a2646cfea101970d3c6e3eb8c2650770734a095b2562b4c25cf9f554c913c",
+        "bytes": 81
+      }
+    }
+  },
+  "ubuntu_wsl2": {
+    "tests_passed": 1629,
+    "includes_slow": true,
+    "focused_tests": 4,
+    "base_archive_line_endings": "LF",
+    "evidence": {
+      "environment.txt": {
+        "path": "local_reference/dual_grid_forming_power_sharing_validation/ubuntu-20261123T085007909407048Z/environment.txt",
+        "sha256": "d4c06c3993fe987201c04c179369f97223a54544c57ccf74b3ca52bba544dade",
+        "bytes": 155
+      },
+      "terminal.json": {
+        "path": "local_reference/dual_grid_forming_power_sharing_validation/ubuntu-20261123T085007909407048Z/terminal.json",
+        "sha256": "f9a9b2661741fba8dafaff6f2c11d84ca4459996b094cd84a6fc204f122c4423",
+        "bytes": 172
+      },
+      "steps.tsv": {
+        "path": "local_reference/dual_grid_forming_power_sharing_validation/ubuntu-20261123T085007909407048Z/steps.tsv",
+        "sha256": "6f69a7ac18fdcae7a869eaa99b6f9595d43d210735c61c0a27a255b1fe9203ae",
+        "bytes": 135
+      },
+      "standalone.log": {
+        "path": "local_reference/dual_grid_forming_power_sharing_validation/ubuntu-20261123T085007909407048Z/standalone.log",
+        "sha256": "ffe136ba86d12808f6a1486cbc4a25edbd2ce25f36c105f7bf98e329d88f5244",
+        "bytes": 260
+      },
+      "focused.xml": {
+        "path": "local_reference/dual_grid_forming_power_sharing_validation/ubuntu-20261123T085007909407048Z/focused.xml",
+        "sha256": "61c0108e84d06e6762a87de5592ae8e04d5e58fc81750c363fcb077be34bc712",
+        "bytes": 854
+      },
+      "full.xml": {
+        "path": "local_reference/dual_grid_forming_power_sharing_validation/ubuntu-20261123T085007909407048Z/full.xml",
+        "sha256": "19c949244fc6caad795adea53e0077b91033a1027c05a2c7451b6cb5cd50502b",
+        "bytes": 234827
+      },
+      "source_before.sha256": {
+        "path": "local_reference/dual_grid_forming_power_sharing_validation/ubuntu-20261123T085007909407048Z/source_before.sha256",
+        "sha256": "f845bdd4fcc31de50859e2f36127d9a75f598c82cabb13a89a5b76ad9d9340d4",
+        "bytes": 56709
+      },
+      "evidence.sha256": {
+        "path": "local_reference/dual_grid_forming_power_sharing_validation/ubuntu-20261123T085007909407048Z/evidence.sha256",
+        "sha256": "89ac042da47d4468cb08d6f8f53d3428eae578bfeafeaedb1709635bfcc6bb61",
+        "bytes": 1566
+      }
+    }
+  },
+  "formal_new_examples_completed": 21
+}

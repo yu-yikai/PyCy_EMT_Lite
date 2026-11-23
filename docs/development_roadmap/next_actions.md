@@ -1,5 +1,9 @@
 # 恢复与下一步
 
+2026-11-23。D1 的 33–39 号教学交付齐备。F1 下一步在 39 号验收提交的干净归档上，用工作流相同的 Agg、单线程和锁定命令串行运行全部公开算例，实测 10 分钟限时的余量。根据实测调整时限。托管 CI 账单锁解除后补验两套 runner。
+Windows 计时脚本在 `local_reference/f1_windows_qa/time_ci_examples.py`，使用验收提交的完整 SHA，并以 `--uv` 指定同目录下 `verified_uv_0.12.10/bin/uv.exe`。官方归档校验及离线同步预检已通过。
+[39 号验收报告](../../validation/cases/dual_grid_forming_power_sharing/acceptance_report.json)
+
 2026-11-23。按冻结协议实现第 39 号教学入口。分别保留两站功率、频率与相角，运行两档正式对标、独立入口和回归测试后验收。
 [39 号双构网源有功分担候选协议](../../validation/cases/dual_grid_forming_power_sharing/candidate_protocol.json)
 

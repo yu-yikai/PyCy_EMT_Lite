@@ -113,6 +113,7 @@ uv run --locked pytest -o addopts= -q -p no:cacheprovider --basetemp=.tmp/pytest
 | 并网储能 | [35](examples/35_grid_connected_storage.py) | 在 02 和 31 之后，改变有功给定方向，观察一阶 RC 储能如何由充电转为放电。附[运行和 PSCAD 对标说明](validation/cases/grid_connected_storage/README.md)。 |
 | 并网光伏 | [36](examples/36_grid_connected_pv.py) | 在 35 之后降低照度，观察并网有功下降及直流母线恢复。附[运行和 PSCAD 对标说明](validation/cases/grid_connected_pv/README.md)。 |
 | 孤网频率下垂 | [37](examples/37_islanded_frequency_droop.py) | 并联接入第二组负荷，观察有功增加后孤网频率怎样下降。附[运行和 PSCAD 对标说明](validation/cases/islanded_frequency_droop/README.md)。 |
+| 双构网源有功分担 | [39](examples/39_dual_grid_forming_power_sharing.py) | 在 37 之后接入第二台源，观察斜率不同的两台源怎样分担新增负荷并趋于同频。附[运行和 PSCAD 对标说明](validation/cases/dual_grid_forming_power_sharing/README.md)。 |
 | 并联线路故障隔离 | [38](examples/38_parallel_line_fault_isolation.py) | 依次断开故障线路的两端，观察受端反送及健康线路如何继续供电。附[运行和 PSCAD 对标说明](validation/cases/parallel_line_fault_isolation/README.md)。 |
 | VSC-HVDC 综合仿真 | [18](examples/18_three_terminal_vsc_hvdc.py) | 沿三个两电平桥、独立 PLL/dq 闭环和双极 DC 网络，跟踪交流故障后的电压、功率变化。 |
 

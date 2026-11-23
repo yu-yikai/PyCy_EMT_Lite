@@ -1,5 +1,8 @@
 # 技术决策
 
+2026-11-23。第 39 号沿用 37 号的源、馈线和低通滤波，A、B 分别读同一 PCC 电压和各自馈线电流。读图先看 300 ms 功率暂降，再对照两站功率增量、频率和相角差。
+[39 号验收报告](../../validation/cases/dual_grid_forming_power_sharing/acceptance_report.json)
+
 2026-11-23。两站分别保存滤波功率和相角，共用接地 PCC。教学图分别显示两条馈线送入 PCC 的功率、两站频率及 A−B 相角差。
 [39 号双构网源有功分担候选协议](../../validation/cases/dual_grid_forming_power_sharing/candidate_protocol.json)
 

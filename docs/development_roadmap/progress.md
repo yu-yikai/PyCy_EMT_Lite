@@ -1,5 +1,8 @@
 # 持久进度
 
+2026-11-23。第 39 号双构网源有功分担已完成两档原生对标、独立运行、自动测试和教学说明。正式新增 19–39 共 21 项。
+[39 号验收报告](../../validation/cases/dual_grid_forming_power_sharing/acceptance_report.json)
+
 2026-11-23。两档 PyCy 试算与原始 PSCAD 波形逐点对齐，已固定第 39 号的端口方向、比较窗、误差门限和首末采样处理。
 [39 号双构网源有功分担候选协议](../../validation/cases/dual_grid_forming_power_sharing/candidate_protocol.json)
 

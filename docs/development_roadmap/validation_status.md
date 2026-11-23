@@ -1,5 +1,8 @@
 # 验证状态
 
+2026-11-23。第 39 号两档正式对标覆盖 360,002 个原始 PSCAD 采样点，三相负荷在指定拍投入。Windows 和 Ubuntu WSL2 各通过 1,629 项，包含慢测。
+[39 号验收报告](../../validation/cases/dual_grid_forming_power_sharing/acceptance_report.json)
+
 2026-11-23。试算与同档原始参考的 PCC 电压最大差低于 0.16 nV，有功最大差低于 6.4 nW。正式候选待验证，正式新增仍是 20 项。
 [39 号双构网源有功分担候选协议](../../validation/cases/dual_grid_forming_power_sharing/candidate_protocol.json)
 
