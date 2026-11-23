@@ -1,5 +1,8 @@
 # 验证状态
 
+2026-11-23。候选协议绑定两档 PSCAD 原始证据和先行 PyCy 试算。正式课程实现待验收，正式新增仍为 19 项。
+[38 号三母线双端故障隔离候选协议](../../validation/cases/parallel_line_fault_isolation/candidate_protocol.json)
+
 2026-11-23。独立 PSCAD 两档共 21,002 个原始点、31 路输出。事件拍、六个状态窗、逐拍 KCL 和功率平衡通过。正式新增仍为 19 项。
 [三母线并联故障 PSCAD 实测](experiments/e_parallel_fault_surrogate_native_20261123.json)
 

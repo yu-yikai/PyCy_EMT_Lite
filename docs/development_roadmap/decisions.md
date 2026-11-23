@@ -1,5 +1,8 @@
 # 技术决策
 
+2026-11-23。受端支路电流以 R→F 为正。教学说明用带方向的有效值区分正常功率传输与反送故障点。
+[38 号三母线双端故障隔离候选协议](../../validation/cases/parallel_line_fault_isolation/candidate_protocol.json)
+
 2026-11-23。保持原厂工程的实际触点时序记录作为背景。简化电路用五个指定事件分别验证受端反送、双端开断、清除后保持隔离及重合。
 [三母线并联故障 PSCAD 实测](experiments/e_parallel_fault_surrogate_native_20261123.json)
 

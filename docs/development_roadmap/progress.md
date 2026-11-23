@@ -1,5 +1,8 @@
 # 持久进度
 
+2026-11-23。两档试算已逐点对齐独立 PSCAD 原始波形。按同一零行、五个事件和六个状态窗固定了第 38 号的验收条件。
+[38 号三母线双端故障隔离候选协议](../../validation/cases/parallel_line_fault_isolation/candidate_protocol.json)
+
 2026-11-23。三母线两档原生 PSCAD 通过。仅开送端后受端仍反送约 27.15 A；双端隔离后健康线路向受端负荷供给约 1.785 kW，重合后恢复约 1.898 kW。
 [三母线并联故障 PSCAD 实测](experiments/e_parallel_fault_surrogate_native_20261123.json)
 

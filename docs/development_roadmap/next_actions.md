@@ -1,5 +1,8 @@
 # 恢复与下一步
 
+2026-11-23。按 38 号冻结协议完成教学入口、对标、独立运行和测试。图上重点显示受端负荷功率和两端故障电流。
+[38 号三母线双端故障隔离候选协议](../../validation/cases/parallel_line_fault_isolation/candidate_protocol.json)
+
 2026-11-23。用正式存档的两档原生波形和已对齐的 PyCy 试算固定第 38 号逐点与窗口验收条件，再用现有元件实现教学算例。
 [三母线并联故障 PSCAD 实测](experiments/e_parallel_fault_surrogate_native_20261123.json)
 
