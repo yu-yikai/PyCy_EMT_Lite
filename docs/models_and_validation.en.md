@@ -8,6 +8,12 @@ See [Component derivations](component_derivations.en.md) for how physical relati
 
 ## 1. Validated scope
 
+At the November 23, 2026 acceptance of case 39, Windows and Ubuntu WSL2 each passed 1,629 tests, including slow tests. On Windows, all 35 public examples also ran in sequence from a clean Git archive. [Case 39 acceptance report](../validation/cases/dual_grid_forming_power_sharing/acceptance_report.json) · [Windows example run](development_roadmap/experiments/f1_case39_ci_examples_timing_20261123.json)
+
+Each of the 21 added examples (19–39) has a comparison against actual Simulink or PSCAD results. The reference catalog links to the reference qualification and acceptance reports for cases 28–39. The validation log records local regressions and hosted CI status. [Reference catalog](development_roadmap/02_reference_catalog.md) · [Validation status](development_roadmap/validation_status.md)
+
+**Historical validation records**
+
 Local validation record (2026-09-14, including the integrated three-terminal VSC-HVDC example): 681 tests passed and all 14 examples ran headlessly without default output files.
 Its producing commit, environment and complete commands have not been verified; it is preserved as historical information rather than a reproduction record for the current version.
 The local regression after R5 on 2026-10-05 contains 832 passing tests; all 14 default examples ran headlessly. R0–R4 versions, environment, commands and itemized fixes are recorded in [section 7.4 of the issue and improvement plan](audit_20261005/项目问题与改进计划.md#74-当前纠错实施与验收2026-10-05); the current risk findings and acceptance are in [section 7.5](audit_20261005/项目问题与改进计划.md#r5-follow-up). The unmet strict FAST control-accuracy limits remain.

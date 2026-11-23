@@ -8,6 +8,12 @@
 
 ## 1. 已验证范围
 
+2026-11-23 验收 39 号算例时，Windows 和 Ubuntu WSL2 各通过 1,629 项测试，包含慢测。Windows 从干净的 Git 归档串行跑完全部 35 个公开算例。 [39 号验收报告](../validation/cases/dual_grid_forming_power_sharing/acceptance_report.json) · [全算例运行记录](development_roadmap/experiments/f1_case39_ci_examples_timing_20261123.json)
+
+19–39 号共 21 个新增算例，均有真实 Simulink 或 PSCAD 数值对标。参考目录列出了 28–39 号逐例的参考资格和验收报告。验证状态页记录本机回归和托管 CI 状态。 [参考目录](development_roadmap/02_reference_catalog.md) · [验证状态](development_roadmap/validation_status.md)
+
+**历史验证记录**
+
 本地验证记录（2026-09-14，含三端 VSC-HVDC 综合示例）：681 项测试通过，14 个算例均在无界面模式运行，默认未生成输出文件。
 该历史记录未绑定可确认的生产提交、环境和完整命令，保留作历史说明，不作为当前版本复现记录。
 2026-10-05完成R5后的本地回归为832项；14个默认示例无界面运行成功。R0–R4的版本、环境、命令和逐项修复见[问题与改进计划第7.4节](audit_20261005/项目问题与改进计划.md#74-当前纠错实施与验收2026-10-05)，本轮风险核定与验收见[第7.5节](audit_20261005/项目问题与改进计划.md#r5-follow-up)。FAST严格控制精度未达标的限制仍然保留。

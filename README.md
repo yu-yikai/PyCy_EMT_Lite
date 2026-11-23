@@ -184,7 +184,7 @@ def define_case() -> CaseDefinition:
         VoltageSource("V1", "n1", "0", 10.0),
         Resistor("R1", "n1", "0", 5.0),
     )
-    config = SimulationConfig(time_step=1e-4, stop_time=1e-3, linear_solver_mode="rebuild")
+    config = SimulationConfig(time_step=1e-4, stop_time=1e-3)
     plots = (
         PlotSpec(("v:n1",), figure_name="voltage.png", title="Voltage / V"),
         PlotSpec(("i:R1",), figure_name="current.png", title="Current / A"),
@@ -198,55 +198,44 @@ if __name__ == "__main__":
     result = run_case(case)
 ```
 
-Longer cases can put a summary in `CaseDefinition.summary`, events in `events`, and three-phase figures in `PlotSpec(kind="three_phase")` with exactly three columns.
-Every plot needs `figure_name` when saving images. Extract functions only for logic that becomes long or needs reuse; examples do not import each other.
-Create intermediate `case`, `circuit` and `simulator` objects before the next operation to make execution and debugging easy to follow.
+The voltage plot should show 10 V and the current plot should show 2 A. In a terminal without a graphical display, set `SAVE_RESULT_FIGURE` to `1` and open the two figures in `outputs/my_r_circuit/`. Once your first case runs, go directly to [reading, plotting and saving results](#4-read-plot-and-save-results).
 
-For a first debugging pass, stop where `define_case()` constructs `CaseDefinition` and inspect components and the time step.
-In [Simulator](pycy_emt_lite/core/simulation.py), stop at the end of `_assemble` to inspect `matrix` (A) and `rhs` (b), then before `_solve_step` returns to inspect `solution` (x) against the circuit's node/branch mapping.
-In [Capacitor/Inductor.update_state](pycy_emt_lite/components/basic.py), compare `previous_voltage` and `previous_current` before and after the update: these histories enter the next step's companion equations.
-The `on_step(row)` callback reads the just-solved measurements after state updates; at an event it reads the right-side values. A VSC controller only initializes at t=0, then generates held modulation for the next step. Its `m*` fields describe the reference just used, while `m*_next` records the new command; see [VSCController.sample](pycy_emt_lite/controls/vsc.py).
+### Advanced reading
 
-Create fresh components, `Circuit` and `Simulator` for each run; calling `define_case()` again obtains new components.
-Components inside a `CaseDefinition` are also single-use. Only `start_time=0` is supported; `stop_time` must be a nonnegative integer number of base steps.
-A 100 μs step cannot stop at 250 μs: choose 200/300 μs or a 50 μs step.
-Initial conditions, source derivatives and event rules are in [Numerical conventions](docs/numerical_conventions.en.md).
+When extending a case, use `CaseDefinition.summary` for a summary, `events` for timed changes and `PlotSpec(kind="three_phase")` with three fields for a three-phase plot. Give each plot a `figure_name` when saving it. Call `define_case()` afresh for each run so energy-storage components and controllers start with fresh state. When adjusting the step size or stop time, check the [time grid and callback rules](docs/numerical_conventions.en.md#time-grid).
 
-Choose the network solve strategy before running through `linear_solver_mode`: the default `"rebuild"` performs a fresh LU factorization for every solve.
-Change the configuration above to `"reuse"` to refactor only when the actual coefficient matrix changes; other solves reuse the previous LU.
-Each step still assembles the matrix/right-hand side, updates states and performs numerical checks; changes in step size, parameters or machine states can also invalidate the LU.
-The third option, `"precompute"`, is only for networks with few switches, a small complete state family and acceptable resource use. It factors matrices for every state and actual step size before the time loop, then solves by table lookup.
-Networks with many switching devices do not use precomputation; choose `"rebuild"` or `"reuse"`.
-It currently supports fixed-parameter Resistor/Capacitor/Inductor, CurrentSource/VoltageSource, Fault/Breaker/IdealSwitch,
-plus ThreePhaseSource, ThreePhaseLine and ThreePhaseTransformer without saturation; other composite models and machines are not admitted yet.
-Binary states are enumerated automatically, up to 1024 states; `precompute_states` can instead declare the complete valid family.
-Undeclared states, coefficient-matrix changes, singular matrices or exceeded limits raise errors; see [precomputation rules and example](docs/numerical_conventions.en.md#network-precompute).
-The network strategy is independent of the BE/trapezoidal integration `method`. Precomputation adds startup cost and memory, and does not guarantee a speedup for every case.
-The HVDC example has 18 bridge switches and only allows rebuild/reuse. Selecting precompute raises before controllers or the network are constructed, for every MODE and for runs without faults; see [HVDC strategy scope](docs/three_terminal_vsc_hvdc.en.md#network-solver-scope).
-In N4's three interleaved measurements on this machine, reuse reduced FAST's LU count by about 31.45%, but neither the default nor the saving workflow established a stable overall speedup. Small-network precomputation must also include preparation costs.
-The default remains rebuild; see the [cost acceptance record](docs/audit_20261005/项目问题与改进计划.md#network-solver-n4) for timings, peak working sets and measurement scope.
+Follow the [source reading guide](docs/numerical_conventions.en.md#source-route) to trace matrix assembly and state updates. The resistor example uses the default `"rebuild"` strategy. See the [precomputation rules](docs/numerical_conventions.en.md#network-precompute) and [three-terminal HVDC solver limits](docs/three_terminal_vsc_hvdc.en.md#network-solver-scope) when choosing a strategy for a larger case.
 
 ## 4. Read, plot and save results
 
 `result.columns` lists fields; `result.series("v:n1")` returns a NumPy array. Node voltage is `v:<node>` and ordinary branch current is `i:<component>`; see model descriptions for three-phase/composite fields.
 Node voltages are relative to reference ground; current delivered by a voltage source is opposite to its branch-current direction.
 
-Append the following code to the end of the same `my_r_circuit.py` file, then rerun the script. It uses `result` from the preceding code, explicitly saves JSON and reads it back for comparison:
+Append the following code to the end of the same `my_r_circuit.py` file, then rerun the script. It saves `result` as JSON, loads it back, and generates a comparison plot and report.
 
 ```python
+from pathlib import Path
+
 from pycy_emt_lite import SimulationResult
 from pycy_emt_lite.analysis import rms
 from pycy_emt_lite.visualization import plot_result_comparison, plot_zoom_window, write_markdown_report
 
+output_dir = Path("outputs/my_r_circuit")
+result_path = output_dir / "result.json"
+comparison_path = output_dir / "comparison.png"
+zoom_path = output_dir / "zoom.png"
+
 voltage_rms = rms(result, "v:n1", start_time=0.0, end_time=1e-3)
-result.to_json("outputs/my_r_circuit/result.json")
-loaded = SimulationResult.from_json("outputs/my_r_circuit/result.json")
-plot_result_comparison([result, loaded], "v:n1", labels=["original", "loaded"], show=False)
-plot_zoom_window(result, ["v:n1"], 0.0, 5e-4,
-                 output_path="outputs/my_r_circuit/zoom.png", show=False)
-write_markdown_report(result, "outputs/my_r_circuit/report.md",
-                      summary={"Voltage RMS / V": voltage_rms}, figure_paths=["outputs/my_r_circuit/zoom.png"])
+result.to_json(result_path)
+loaded = SimulationResult.from_json(result_path)
+plot_result_comparison([result, loaded], "v:n1", labels=["original", "loaded"],
+                       output_path=comparison_path, show=False)
+plot_zoom_window(result, ["v:n1"], 0.0, 5e-4, output_path=zoom_path, show=False)
+write_markdown_report(result, output_dir / "report.md",
+                      summary={"Voltage RMS / V": voltage_rms}, figure_paths=[comparison_path, zoom_path])
 ```
+
+Open `comparison.png` in `outputs/my_r_circuit/`. The original and reloaded curves should overlap at 10 V. Both figures are also linked in `report.md`.
 
 `to_csv/from_csv` and `to_npz/from_npz` are also available. JSON/NPZ retain metadata and `event_log`; CSV contains only tabular data.
 Supply the case name/method when reading CSV; its inferred first interval need not equal the original base step. Reading a file does not restore resumable simulation state.
@@ -294,7 +283,7 @@ uv run --locked pytest -p pytest_cov --basetemp=.tmp/pytest-coverage --cov --cov
 
 The first pytest selection provides quick feedback; `slow` covers the expensive PWM step comparisons, HVDC control runs, and every test sharing the full FAST simulation. Plain pytest and CI run all tests. Markers are checked strictly so misspellings fail.
 
-Ruff checks errors, imports, modernization and selected defect rules without imposing formatting or line length. mypy checks the 39 package modules using their existing annotations; it does not require every function to be annotated or fully check unannotated bodies. NumPy supports the array protocols, and unavailable third-party stubs are tolerated. `py.typed` carries these annotations into installed packages.
+Ruff checks errors, imports, modernization and selected defect rules without imposing formatting or line length. mypy checks the `pycy_emt_lite` package using its existing annotations; it does not require every function to be annotated or fully check unannotated bodies. NumPy supports the array protocols, and unavailable third-party stubs are tolerated. `py.typed` carries these annotations into installed packages.
 
 Coverage includes branches. Open `.tmp/htmlcov/index.html` to inspect missed lines and branches; there is no percentage threshold yet. Coverage and green tests describe tested behavior, while physical accuracy still requires the checks in [Models and validation](docs/models_and_validation.en.md).
 

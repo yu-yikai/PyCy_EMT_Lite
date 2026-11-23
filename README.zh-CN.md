@@ -183,7 +183,7 @@ def define_case() -> CaseDefinition:
         VoltageSource("V1", "n1", "0", 10.0),
         Resistor("R1", "n1", "0", 5.0),
     )
-    config = SimulationConfig(time_step=1e-4, stop_time=1e-3, linear_solver_mode="rebuild")
+    config = SimulationConfig(time_step=1e-4, stop_time=1e-3)
     plots = (
         PlotSpec(("v:n1",), figure_name="voltage.png", title="Voltage / V"),
         PlotSpec(("i:R1",), figure_name="current.png", title="Current / A"),
@@ -197,55 +197,44 @@ if __name__ == "__main__":
     result = run_case(case)
 ```
 
-长算例可把摘要放入 `CaseDefinition.summary`，事件放入 `events`，三相图用 `PlotSpec(kind="three_phase")` 并提供三个字段。
-保存图像时，每个 `PlotSpec` 必须有 `figure_name`。只有真正变长或需要复用的逻辑才拆成函数；示例之间不互相导入。
-先形成 `case`、`circuit`、`simulator` 等中间对象，再运行下一步，方便阅读和调试。
+电压图应为 10 V，电流图应为 2 A。无图形界面时，可把 `SAVE_RESULT_FIGURE` 设为 `1`，在 `outputs/my_r_circuit/` 中查看两张图。跑通第一个自建算例后，可直接进入[读取、绘图与保存结果](#4-读取绘图与保存结果)。
 
-第一次调试可在 `define_case()` 创建 `CaseDefinition` 处停下，核对元件与步长。
-在 [Simulator](pycy_emt_lite/core/simulation.py) 的 `_assemble` 结束处观察 `matrix`（A）与 `rhs`（b），再在 `_solve_step` 返回前将 `solution`（x）与电路的节点/支路映射对应起来。
-在 [Capacitor/Inductor.update_state](pycy_emt_lite/components/basic.py) 写回前后比较 `previous_voltage` 与 `previous_current`，这些历史量会进入下一步的 companion 方程。
-`on_step(row)` 在状态更新后读取刚求解的测量，事件点读取右侧值。VSC 控制器在 t=0 只初始化，随后产生下一步使用的保持调制量；其 `m*` 字段表示刚用过的参考，`m*_next` 表示新命令，见 [VSCController.sample](pycy_emt_lite/controls/vsc.py)。
+### 进阶阅读
 
-每次运行重新创建元件、`Circuit` 和 `Simulator`；重新调用 `define_case()` 可得到新元件。
-同一 `CaseDefinition` 内的元件也不能重复运行。只支持 `start_time=0`；`stop_time` 必须是基础步长的非负整数倍。
-例如 100 μs 步长不能终止于 250 μs，可改为 200/300 μs 或使用 50 μs 步长。
-初值、源导数和事件规则见[数值约定](docs/numerical_conventions.md)。
+扩展算例时，可用 `CaseDefinition.summary` 添加摘要，用 `events` 添加事件，用带三个字段的 `PlotSpec(kind="three_phase")` 绘制三相图。保存图像时需指定 `figure_name`。每次运行都重新调用 `define_case()`，让储能元件和控制器从新状态开始。调整步长或仿真终点时，先核对[时间网格和回调规则](docs/numerical_conventions.md#time-grid)。
 
-仿真前用 `linear_solver_mode` 选择网络求解策略：默认 `"rebuild"` 每次重新 LU 分解；
-把上面配置改成 `"reuse"`，只在实际系数矩阵改变时重新分解，其余求解复用上一份 LU。
-每步仍装配矩阵/右端项、执行状态更新和数值保护；步长、参数或电机状态变化也可能使 LU 失效。
-第三种 `"precompute"` 仅用于开关少、完整状态集合小且满足预算的网络，在时间循环前预分解有限状态和全部实际步长的矩阵，循环中只查表求解。
-含大量开关器件的网络不采用预计算，选择 `"rebuild"` 或 `"reuse"`。
-目前支持固定参数的 Resistor/Capacitor/Inductor、CurrentSource/VoltageSource、Fault/Breaker/IdealSwitch，
-以及 ThreePhaseSource、ThreePhaseLine 和不含饱和的 ThreePhaseTransformer；其他组合模型和电机尚未接入。
-默认自动枚举二值状态，最多 1024 种；也可用 `precompute_states` 声明完整有效集合。
-未声明状态、系数矩阵改变、奇异或超限会报错，详见[预计算规则与示例](docs/numerical_conventions.md#network-precompute)。
-网络策略独立于 BE/梯形积分 `method`；预计算增加启动成本和内存，不保证所有算例都会加速。
-HVDC 示例含 18 个桥臂开关，仅允许 rebuild/reuse；选择 precompute 会在创建控制器和网络前报错，所有 MODE 及无故障运行均适用，见[HVDC策略范围](docs/three_terminal_vsc_hvdc.md#network-solver-scope)。
-N4 本机三次交错测量中，reuse 虽减少 FAST 的 LU 次数约31.45%，但默认及保存完整流程均未核定稳定加速；小网络预计算也需计入准备成本。
-默认仍为 rebuild；时间、峰值工作集及测量范围见[成本验收记录](docs/audit_20261005/项目问题与改进计划.md#network-solver-n4)。
+想跟踪矩阵装配和状态更新，可按[源码阅读路线](docs/numerical_conventions.md#source-route)阅读。这个电阻算例使用默认的 `"rebuild"`。需要为复杂算例选择求解策略时，见[预计算规则](docs/numerical_conventions.md#network-precompute)及[三端 HVDC 的求解策略限制](docs/three_terminal_vsc_hvdc.md#network-solver-scope)。
 
 ## 4. 读取、绘图与保存结果
 
 `result.columns` 列出字段；`result.series("v:n1")` 返回 NumPy 数组。节点电压为 `v:<节点>`，
 普通支路电流为 `i:<元件>`，三相与组合件字段见模型说明。节点电压相对参考地；电源供出电流与其支路电流方向相反。
 
-将下面代码追加到同一个 `my_r_circuit.py` 文件末尾，再运行脚本。它使用上面生成的 `result`，显式保存 JSON 并读回对照：
+将下面代码追加到同一个 `my_r_circuit.py` 文件末尾，再运行脚本。它把 `result` 保存为 JSON，读回后生成对比图和报告。
 
 ```python
+from pathlib import Path
+
 from pycy_emt_lite import SimulationResult
 from pycy_emt_lite.analysis import rms
 from pycy_emt_lite.visualization import plot_result_comparison, plot_zoom_window, write_markdown_report
 
+output_dir = Path("outputs/my_r_circuit")
+result_path = output_dir / "result.json"
+comparison_path = output_dir / "comparison.png"
+zoom_path = output_dir / "zoom.png"
+
 voltage_rms = rms(result, "v:n1", start_time=0.0, end_time=1e-3)
-result.to_json("outputs/my_r_circuit/result.json")
-loaded = SimulationResult.from_json("outputs/my_r_circuit/result.json")
-plot_result_comparison([result, loaded], "v:n1", labels=["original", "loaded"], show=False)
-plot_zoom_window(result, ["v:n1"], 0.0, 5e-4,
-                 output_path="outputs/my_r_circuit/zoom.png", show=False)
-write_markdown_report(result, "outputs/my_r_circuit/report.md",
-                      summary={"Voltage RMS / V": voltage_rms}, figure_paths=["outputs/my_r_circuit/zoom.png"])
+result.to_json(result_path)
+loaded = SimulationResult.from_json(result_path)
+plot_result_comparison([result, loaded], "v:n1", labels=["original", "loaded"],
+                       output_path=comparison_path, show=False)
+plot_zoom_window(result, ["v:n1"], 0.0, 5e-4, output_path=zoom_path, show=False)
+write_markdown_report(result, output_dir / "report.md",
+                      summary={"Voltage RMS / V": voltage_rms}, figure_paths=[comparison_path, zoom_path])
 ```
+
+在 `outputs/my_r_circuit/` 打开 `comparison.png`，原始曲线和读回曲线应在 10 V 处重合。两张图也可从 `report.md` 查看。
 
 同样支持 `to_csv/from_csv`、`to_npz/from_npz`。JSON/NPZ 保留元数据与 `event_log`；CSV 只保存表格，
 读回时需补充算例名/方法，推断的首区间长度不一定等于原基础步长。读取文件不会恢复可续算的仿真状态。
@@ -294,7 +283,7 @@ uv run --locked pytest -p pytest_cov --basetemp=.tmp/pytest-coverage --cov --cov
 
 第一条 pytest 命令用于快速反馈；`slow` 包含耗时的 PWM 步长比较、HVDC 控制仿真及所有共用完整 FAST 仿真的测试。普通 pytest 和 CI 仍执行全量测试。标记严格检查，拼写错误会报错。
 
-Ruff 检查错误、导入顺序、现代化写法和选定缺陷规则，不强制格式化或行宽。mypy 依据已有标注检查 39 个包源码模块，不要求所有函数都有标注，也不完整检查未标注函数体。数组协议使用 NumPy 类型，允许第三方缺失类型存根。`py.typed` 使安装后的包继续携带这些标注。
+Ruff 检查错误、导入顺序、现代化写法和选定缺陷规则，不强制格式化或行宽。mypy 依据已有标注检查 `pycy_emt_lite` 包源码，不要求所有函数都有标注，也不完整检查未标注函数体。数组协议使用 NumPy 类型，允许第三方缺失类型存根。`py.typed` 使安装后的包继续携带这些标注。
 
 覆盖率包含分支。打开 `.tmp/htmlcov/index.html` 查看未执行的代码行和分支；当前不设覆盖率百分比阈值。覆盖率和测试通过只说明被验证的行为，物理精度仍需[模型与验证](docs/models_and_validation.md)中的检查。
 
