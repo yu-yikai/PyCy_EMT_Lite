@@ -1,0 +1,178 @@
+{
+  "schema": "d1_pv_string_protocol_v1",
+  "date": "2026-11-23",
+  "source_parent": "7eba16ae149345797570b512b8f379d39767b768",
+  "scope": "Independent PSCAD reference of 650 series cells near the intended grid-interface DC bus voltage.",
+  "reference": {
+    "installed_master": {
+      "path": "C:/Program Files (x86)/PSCAD50/master.pslx",
+      "sha256": "2940ddce6fe1fae56cb6be70bbaf0210a7e36059bfcad1e78b0ddbfd4d2a7c77",
+      "bytes": 18421619
+    },
+    "installed_emtdc_library": {
+      "path": "C:/Program Files (x86)/PSCAD50/emtdc/gf46/windows/emtdc.lib",
+      "sha256": "ed8cd8d92701e4fef8bc405022fb7b4793b32c513f7ec93dbd124a90c521438d",
+      "bytes": 3980870
+    },
+    "definition": "master:photovoltaic_source",
+    "definition_and_sample_instance_lines": [
+      208990,
+      361116
+    ],
+    "emtdc_entry_points": [
+      "PHOTOVOLT1_CFG",
+      "PHOTOVOLT1_EXE"
+    ],
+    "basis": "Configure 10 series modules and 65 series cells per module using the same stock cell parameters."
+  },
+  "single_cell_reference": {
+    "path": "docs/development_roadmap/experiments/d1_pv_rc_transient_native_20261123.json",
+    "sha256": "884ef75f03e656d183e8b90b2f43ce416721ecd4f34b43f6703646c01b277943",
+    "bytes": 14341
+  },
+  "fixture": {
+    "load_ohm": 162.5,
+    "capacitance_f": 3.076923076923077e-05,
+    "initial_capacitor_voltage_v": 0.0,
+    "temperature_deg_c": 25.0,
+    "irradiance_before_w_m2": 1000,
+    "irradiance_after_w_m2": 900,
+    "cell_parameters": {
+      "series_modules": 10,
+      "parallel_modules": 1,
+      "series_cells_per_module": 65,
+      "parallel_cells_per_module": 1,
+      "reference_irradiance_w_m2": 1000,
+      "reference_temperature_deg_c": 25,
+      "effective_area_m2": 0.01,
+      "series_resistance_ohm": 0.02,
+      "shunt_resistance_ohm": 1000,
+      "diode_ideality": 1.5,
+      "band_gap_ev": 1.103,
+      "reference_saturation_current_a": 1e-09,
+      "reference_short_circuit_current_a": 2.5,
+      "temperature_coefficient_a_per_kelvin": 0.001
+    },
+    "connections": "The stock PSCAD string feeds a resistor and capacitor in parallel. The negative terminal is grounded. Independent meters observe the terminal voltage and both load currents.",
+    "directions": "Positive PV current flows from PV+ into the node. Positive resistor and capacitor currents flow from the load node to ground. PV voltage is Vpos minus Vneg. Convert native kV and kA to volts and amps by multiplying by 1000.",
+    "series_modules": 10,
+    "series_cells_per_module": 65,
+    "parallel_modules": 1,
+    "parallel_cells_per_module": 1,
+    "voltage_scale": 650,
+    "current_scale": 1
+  },
+  "timing": {
+    "duration_s": 0.100005,
+    "irradiance_step_s": 0.05,
+    "before_window_s": [
+      0.04,
+      0.049
+    ],
+    "after_window_s": [
+      0.09,
+      0.099
+    ],
+    "discharge_window_s": [
+      0.052,
+      0.055
+    ],
+    "cross_grid_current_transient_excluded_s": [
+      [
+        0,
+        0.00025
+      ],
+      [
+        0.04975,
+        0.05025
+      ]
+    ],
+    "rules": "Keep all original samples on both grids, including the independently solved 0-second row and the 50 ms step."
+  },
+  "grids": {
+    "5us": {
+      "step_s": 5e-06,
+      "irradiance_step_tick": 10000,
+      "rows_including_zero": 20002,
+      "plateau_window_rows": 1800
+    },
+    "2p5us": {
+      "step_s": 2.5e-06,
+      "irradiance_step_tick": 20000,
+      "rows_including_zero": 40003,
+      "plateau_window_rows": 3600
+    }
+  },
+  "channels": {
+    "Absolute_TIME_s": "s",
+    "G_W_m2": "W/m2",
+    "Tcell_C": "degC",
+    "V_pv_kV": "kV",
+    "I_pv_kA": "kA",
+    "V_load_kV": "kV",
+    "I_load_kA": "kA",
+    "I_C_kA": "kA"
+  },
+  "native": {
+    "pscad_version": "5.0.0",
+    "emtdc_build": "20210219",
+    "compiler": "gf46",
+    "platform": "x86",
+    "branch_threshold_ohm": 0.0005,
+    "include_initial_row": true,
+    "sample_every_electrical_step": true,
+    "archive": "Separate run directories retain their installed tool hashes, input snapshot, actual generated electrical model, original OUT/INF and native process receipt.",
+    "capacitance_render_tolerance_uf": 5e-10
+  },
+  "normalization": "Divide the string voltage and energy by 650. Current and charge are unchanged. This uses physical V/A/J from original native channels before normalization.",
+  "normalized_gates": {
+    "clock_abs_s": 2e-12,
+    "control_abs": 1e-09,
+    "voltage_range_v": [
+      -1e-06,
+      0.85
+    ],
+    "pv_current_range_a": [
+      -1e-06,
+      3.0
+    ],
+    "meter_voltage_abs_v": 5e-06,
+    "load_ohm_abs_v": 5e-06,
+    "kcl_abs_a": 2e-05,
+    "tr_charge_abs_c": 2e-09,
+    "tr_energy_abs_j": 2e-09,
+    "tr_cumulative_energy_abs_j": 2e-07,
+    "plateau_voltage_pp_v": 0.0005,
+    "plateau_current_pp_a": 0.002,
+    "steady_static_voltage_abs_v": 0.0005,
+    "steady_static_current_abs_a": 0.0025,
+    "irradiance_voltage_drop_min_v": 0.045,
+    "irradiance_current_drop_min_a": 0.17,
+    "discharge_cap_mean_max_a": -0.08,
+    "discharge_energy_drop_min_j": 0.0004,
+    "cross_grid_voltage_abs_v": 0.001,
+    "cross_grid_current_abs_a": 0.3,
+    "cross_grid_current_settled_abs_a": 0.005,
+    "cross_grid_plateau_voltage_abs_v": 5e-05,
+    "cross_grid_plateau_current_abs_a": 0.0002
+  },
+  "cold_startup_gates": {
+    "history_source_abs_a": 2e-08,
+    "pre_solve_zero_abs_v": 1e-09,
+    "first_solved_voltage_abs_v": 1e-09
+  },
+  "scaling_gates": {
+    "same_grid_voltage_abs_v": 0.0005,
+    "same_grid_current_abs_a": 0.002,
+    "same_grid_power_abs_w": 0.0035,
+    "discharge_energy_drop_abs_j": 2.5e-06
+  },
+  "checks": [
+    "Compare every string sample with the same-grid original PSCAD single-cell sample on the unchanged electrical clock.",
+    "Verify true series counts, R/C stamps, standard cold-start configuration and same-row solved measurement routes in the actual compiled project.",
+    "Verify original node current, independent meter voltage, Ohm law, all interval trapezoidal charge and energy, and the measured voltage and discharge sign after shading.",
+    "Use the previously justified cold companion-history check and retain the raw 0-second observations. Rebind the separate single-cell original audits and their startup supplement.",
+    "Apply the original normalized point and plateau cross-grid gates at coincident native times."
+  ],
+  "formal_example_accepted": false
+}
