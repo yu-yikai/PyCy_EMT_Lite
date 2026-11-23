@@ -1,5 +1,8 @@
 # 验证状态
 
+2026-11-23。两档初值、光伏仿射范围和原生参考已封存。试算点数和偏差已复核，正式算例待实现，新增完成数为 17。
+[36 号光伏并网候选协议](../../validation/cases/grid_connected_pv/candidate_protocol.json)
+
 2026-11-23。两档同档短窗公共前缀、照度阶跃前后物理及跨档窗都通过。正式新增仍为 17 个，PyCy 教学候选待验证。
 [光伏并网原生照度阶跃复核](experiments/d1_pv_grid_irradiance_native_20261123.json)
 

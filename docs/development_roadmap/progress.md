@@ -1,5 +1,8 @@
 # 持久进度
 
+2026-11-23。两档匹配初值的 PyCy 试算共 600,005 行。相对 PSCAD，全长母线最大差 0.135 V，照度阶跃前后均值显示约 88 W 的送出降幅。已据此固定 36 号验收协议。
+[36 号光伏并网候选协议](../../validation/cases/grid_connected_pv/candidate_protocol.json)
+
 2026-11-23。两档 1.000005 s PSCAD 长窗均通过。照度由 1000 降至 900 W/m² 后，平均送出为 570.8 → 474.0 W（5 µs）和 568.9 → 475.9 W（2.5 µs）。
 [光伏并网原生照度阶跃复核](experiments/d1_pv_grid_irradiance_native_20261123.json)
 

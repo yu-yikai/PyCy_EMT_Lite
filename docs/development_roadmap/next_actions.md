@@ -1,5 +1,8 @@
 # 恢复与下一步
 
+2026-11-23。按 36 号冻结协议复用现有桥、PI、滤波和 CaseDefinition 入口。完成教学脚本、两档原始波形比较、独立运行与必要回归后再验收。
+[36 号光伏并网候选协议](../../validation/cases/grid_connected_pv/candidate_protocol.json)
+
 2026-11-23。先固定 PyCy 候选的初值、控制时钟和比较阈值。复用 35 号的桥和控制器，用现有电流源和电阻表示光伏串，再从 CaseDefinition 入口核对阶跃前后的送出功率与母线。
 [光伏并网原生照度阶跃复核](experiments/d1_pv_grid_irradiance_native_20261123.json)
 
