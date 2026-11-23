@@ -1,0 +1,201 @@
+{
+  "schema": "d1_pv_grid_irradiance_native_v1",
+  "date": "2026-11-23",
+  "status": "PASS_NATIVE_D1_PV_GRID_LONG_PAIR",
+  "scope": "Original PSCAD export, DC-link voltage and power balance during a 1000 to 900 W/m² irradiance step.",
+  "protocol": {
+    "path": "docs/development_roadmap/experiments/d1_pv_grid_protocol_20261123.json",
+    "sha256": "fcfd132b525c7fe343d31716b0889f0aad2c090a0db4405f79be616729cf6565",
+    "bytes": 11292
+  },
+  "qualified_activation": {
+    "path": "docs/development_roadmap/experiments/d1_pv_grid_activation_native_20261123.json",
+    "sha256": "b5328f44f7046737d3857b1678ec36823787673474c1dfcc22ca12fbfa78ac38",
+    "bytes": 7245
+  },
+  "paired_audit": {
+    "path": "local_reference/d1_pv_grid_native_20261123/verification/long_pair.json",
+    "sha256": "a18a81da6fb04f7833406411358dcefda9ac3c7ad772d579796a5dce99fdc6fa",
+    "bytes": 7180
+  },
+  "figure": {
+    "path": "local_reference/d1_pv_grid_native_20261123/verification/pv_grid_long_native.png",
+    "sha256": "fe8aa268098c3b229b5f2bb32596b7c7cc2dc807f35759b1f840014543012c6c",
+    "bytes": 137551
+  },
+  "grids": {
+    "5us": {
+      "audit": {
+        "path": "local_reference/d1_pv_grid_native_20261123/verification/5us_long_audit_with_short_receipt.json",
+        "sha256": "c562dbfc06a2dc9bed14a8044c7a112c1d51beb6c2aef50568bafc073c27ef90",
+        "bytes": 32948
+      },
+      "original_long_run": {
+        "receipt": {
+          "path": "local_reference/d1_pv_grid_native_20261123/5us/long_reloaded_seed/n/20261123T043948707489Z/snapshot_result.json",
+          "sha256": "4e2a7141a4feb6d69546f28fd4f23c0420fccfa36516448220db33b7df67f73c",
+          "bytes": 14370
+        },
+        "snapshot_sha256": "ef26d525e4bb8b123746445a801e266bba8d9c42cffdcd6fd529b8987ab598d2",
+        "rows": 200001
+      },
+      "common_prefixes": {
+        "seed": {
+          "rows": 10001,
+          "peaks": {
+            "clock_abs_s": 1.1102230246251565e-16,
+            "voltage_abs_v": 8.004708007547379e-11,
+            "current_abs_a": 7.64299864716711e-10,
+            "applied_reference_abs_pu": 1.850075648235361e-12
+          }
+        },
+        "short": {
+          "rows": 10001,
+          "peaks": {
+            "clock_abs_s": 0.0,
+            "voltage_abs_v": 0.0,
+            "current_abs_a": 0.0,
+            "applied_reference_abs_pu": 0.0
+          }
+        }
+      },
+      "shading_windows": {
+        "before": {
+          "export_mean_w": 570.7710755467913,
+          "reactive_mean_var": -23.990977560067577,
+          "pv_mean_power_w": 966.9163617604148,
+          "mean_bus_v": 390.09162038739817,
+          "mean_capacitor_current_a": -0.005881992859607219,
+          "samples": 10000,
+          "relative_window_s": [
+            0.44,
+            0.49
+          ]
+        },
+        "after": {
+          "export_mean_w": 473.97253048502347,
+          "reactive_mean_var": -21.8281436784649,
+          "pv_mean_power_w": 870.1488306563602,
+          "mean_bus_v": 389.9803011623113,
+          "mean_capacitor_current_a": 0.0005957698555807778,
+          "samples": 10000,
+          "relative_window_s": [
+            0.94,
+            0.99
+          ]
+        },
+        "export_drop_w": 96.79854506176781
+      }
+    },
+    "2p5us": {
+      "audit": {
+        "path": "local_reference/d1_pv_grid_native_20261123/verification/2p5us_long_audit.json",
+        "sha256": "4fe5d68519d64545ab6cd973070016f0ade2362a615088553dee2e917c348705",
+        "bytes": 32876
+      },
+      "original_long_run": {
+        "receipt": {
+          "path": "local_reference/d1_pv_grid_native_20261123/2p5us/long_repaired/n/20261123T044253059099Z/snapshot_result.json",
+          "sha256": "38e9ba8cadd2e0b2c5e12aeeb0aeb35c4cfc96af87357f49162839705b475a0c",
+          "bytes": 14373
+        },
+        "snapshot_sha256": "2609cf8e1d2f130ffc84a82644fe526abbaece253d69f94ad2f6fe9dd84e4feb",
+        "rows": 400002
+      },
+      "common_prefixes": {
+        "seed": {
+          "rows": 20002,
+          "peaks": {
+            "clock_abs_s": 1.1102230246251565e-16,
+            "voltage_abs_v": 1.700029006457271e-10,
+            "current_abs_a": 1.1100018473819695e-10,
+            "applied_reference_abs_pu": 1.0103029524088925e-14
+          }
+        },
+        "short": {
+          "rows": 20002,
+          "peaks": {
+            "clock_abs_s": 0.0,
+            "voltage_abs_v": 0.0,
+            "current_abs_a": 0.0,
+            "applied_reference_abs_pu": 0.0
+          }
+        }
+      },
+      "shading_windows": {
+        "before": {
+          "export_mean_w": 568.8500477795646,
+          "reactive_mean_var": -23.492747028760785,
+          "pv_mean_power_w": 966.9288920171429,
+          "mean_bus_v": 390.097414356286,
+          "mean_capacitor_current_a": -0.001043768261373242,
+          "samples": 20000,
+          "relative_window_s": [
+            0.44,
+            0.49
+          ]
+        },
+        "after": {
+          "export_mean_w": 475.9366113512125,
+          "reactive_mean_var": -22.386611365937092,
+          "pv_mean_power_w": 870.1554207360465,
+          "mean_bus_v": 389.98367581086336,
+          "mean_capacitor_current_a": -0.004589258188985368,
+          "samples": 20000,
+          "relative_window_s": [
+            0.94,
+            0.99
+          ]
+        },
+        "export_drop_w": 92.91343642835216
+      }
+    }
+  },
+  "cross_grid_windows": {
+    "before": {
+      "export_mean_abs_w": {
+        "absolute_difference": 1.921027767226633,
+        "limit": 12.0,
+        "passed": true
+      },
+      "reactive_mean_abs_var": {
+        "absolute_difference": 0.49823053130679185,
+        "limit": 10.0,
+        "passed": true
+      },
+      "pv_power_mean_abs_w": {
+        "absolute_difference": 0.012530256728041422,
+        "limit": 12.0,
+        "passed": true
+      },
+      "bus_mean_abs_v": {
+        "absolute_difference": 0.005793968887815026,
+        "limit": 0.05,
+        "passed": true
+      }
+    },
+    "after": {
+      "export_mean_abs_w": {
+        "absolute_difference": 1.964080866189022,
+        "limit": 12.0,
+        "passed": true
+      },
+      "reactive_mean_abs_var": {
+        "absolute_difference": 0.5584676874721914,
+        "limit": 10.0,
+        "passed": true
+      },
+      "pv_power_mean_abs_w": {
+        "absolute_difference": 0.006590079686247918,
+        "limit": 12.0,
+        "passed": true
+      },
+      "bus_mean_abs_v": {
+        "absolute_difference": 0.0033746485520396163,
+        "limit": 0.05,
+        "passed": true
+      }
+    }
+  },
+  "formal_new_examples_completed": 17
+}
