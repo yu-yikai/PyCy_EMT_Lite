@@ -46,6 +46,8 @@ run_case(replace(case, output=OutputOptions(save_figure=True, show_figure=False)
   两极电流都按 A 到 B 为正。功率从 A 传向 B 时，负极电流读数为负，与负极对地电压相乘仍贡献正功率。
   `dc_series_loss_w` 是四段串联电阻的损耗，线路储能变化也会影响两端瞬时功率之差。
 
+**试改一个参数。** 在算例脚本中把 `VDC_REFERENCE` 从 `400.0` 改为 `398.0` V。对比 500–550 ms 内的 `b_vdc_v`，观察 B 站母线电压如何趋近较低的目标。
+
 ## PSCAD 复核
 
 两档原生参考已通过长窗复核。对标程序读取 `local_reference/` 中哈希匹配的原始归档，

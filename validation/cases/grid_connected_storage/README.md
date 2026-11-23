@@ -43,6 +43,8 @@ run_case(replace(case, output=OutputOptions(save_figure=True, show_figure=False)
 - **极化电压。** 在 `polarization_voltage.png` 观察 `v:C1` 的符号变化。反转期间，
   电流改变会立即改变串联内阻的压降，极化电压则需要一段时间过渡。母线电压等于开路电压、内阻压降和极化电压之和。
 
+练习时在 `_power_reference` 中把乘以 `reversal` 的功率从 500 W 改为 375 W。初始给定仍为 +250 W，反转后变为 −125 W。用 `active_power.png` 比较后段的放电功率，预期送出功率的幅值减小。正式对标使用默认给定。
+
 ## PSCAD 复核
 
 已验收的两档 PSCAD 原生参考中，储能端在 90–140 ms 平均吸收约 245 W，

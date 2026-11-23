@@ -49,7 +49,7 @@ uv run --locked python examples/26_synchronous_buck.py
 保存CSV后可比较`duty`、`filtered_error`、`integral_term`三列，检查限幅与积分的区别。
 
 练习时每次只改一项，并恢复默认值：将`TIME_STEP`减至25ns，比较启动和阶跃附近的曲线；
-或减小`INTEGRAL_GAIN`，观察恢复速度与过冲的变化。参数变化须重新检查有效域、收敛和商业对齐，默认报告不覆盖练习结果。
+或将 `INTEGRAL_GAIN` 从 200 减至 180。同样的电压误差下，每步对积分项的修正幅度更小。比较 `integral_term` 和 2.5 ms 负荷投入后的输出电压。参数变化须重新检查有效域、收敛和商业对齐，默认报告不覆盖练习结果。
 
 ## 当前验证证据
 

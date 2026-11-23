@@ -18,6 +18,8 @@ ia+ib+ic = 0
 
 接地组 `vn=0`，不平衡时三相电流之和可经接地回线返回，不应强制为零。浮动组的负荷相电压是相节点减浮动星点，不能拿相对地电压冒充。相电源输出功率之和等于电阻耗散；浮动组的中性点功率项为 `vn*(ia+ib+ic)=0`。
 
+练习时将 `PHASE_A_RESISTANCE_AFTER` 从 3 Ω 改为 1 Ω，查看 `neutral.png`。70 ms 以前三相阻值始终相同，浮动中性点电压应保持为零，直到 C 相电阻改变。正式对标使用默认阻值。
+
 ## 官方绘图标签错误与真实映射
 
 官方 `EarthingEffectsPlotResults.m` 把 `Sensing_vi` 赋给 `Ifloating`，把 `Sensing_vi2` 赋给 `Igrounding`。这两个**电流标签互换**。SLX 的顶层连接证明：`Sensing_vi`（SID150）连接接地组源（SID74），`Sensing_vi2`（SID189）连接浮动组源（SID217）。导出程序以连接和物理 KCL 定义字段，不照抄错误图例。

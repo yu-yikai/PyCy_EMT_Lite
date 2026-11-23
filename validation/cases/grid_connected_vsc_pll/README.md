@@ -30,6 +30,8 @@ run_case(define_case(time_step=2.5e-6))
 - 每 100 µs 先求解电路，再用上一拍的角频率推进相角。用同一行网压和推进后的角度更新频率，新频率用于下一个采样区间。新调制参考在下一 5 µs 门极拍生效，2.5 µs 步长的中点保持原参考和门极。
 - 40 ms 和 80 ms 的 d、q 电流指令分别升至 2 A 和 1.5 A。开关纹波会出现在瞬时电流中，跟踪用一个 60 Hz 周期的电流均值判断。双 PI 和 190 V 电压限幅沿用 29 号。
 
+**试改一个参数。** 在 `define_case()` 中把 PLL 的 `initial_angle` 从 `19 * math.pi / 12` 改为 `3 * math.pi / 2`。此时初始角与电网相角对齐，初始角差从 15° 变为 0°，估计频率在启动时的下探应减小。
+
 ## 复核 PSCAD 对标
 
 真实 PSCAD 5.0 参考已完成双档[短窗](short_reference_report.json)和[长窗](full_reference_report.json)核验。
