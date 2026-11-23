@@ -1,5 +1,8 @@
 # 持久进度
 
+2026-11-23。37 号孤网下垂已完成两档原生 PSCAD 对标、独立运行、教学说明和自动测试。正式新增 19–37 共 19 项。
+[37 号验收报告](../../validation/cases/islanded_frequency_droop/acceptance_report.json)
+
 2026-11-23。PyCy 两档可行性试算与实际同档 PSCAD 逐点对齐。全长 PCC 电压最大差约 0.135 nV，频率最大差低于 1 pHz。已冻结 37 号验收协议。
 [37 号孤网下垂候选协议](../../validation/cases/islanded_frequency_droop/candidate_protocol.json)
 

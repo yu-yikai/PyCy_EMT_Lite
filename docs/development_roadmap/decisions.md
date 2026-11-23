@@ -1,5 +1,8 @@
 # 技术决策
 
+2026-11-23。37 号沿用现有源、开关、R–L 和滤波器。在当拍求解后推进下一拍相角，保留接入负荷首拍的功率短暂跌落。
+[37 号验收报告](../../validation/cases/islanded_frequency_droop/acceptance_report.json)
+
 2026-11-23。教学脚本以求解后的 PCC 功率更新下一拍相位。电源回调只读取已确定的相角，观测量保留负荷接入前后及相角连续性。
 [37 号孤网下垂候选协议](../../validation/cases/islanded_frequency_droop/candidate_protocol.json)
 

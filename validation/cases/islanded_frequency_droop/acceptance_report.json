@@ -1,0 +1,248 @@
+{
+  "schema": "pycy_islanded_frequency_droop_acceptance_v1",
+  "status": "accepted",
+  "date": "2026-11-23",
+  "example": 37,
+  "scope": "One averaged autonomous three-phase source, grounded balanced R–L feeder and a parallel Y load step.",
+  "protocol": {
+    "path": "validation/cases/islanded_frequency_droop/candidate_protocol.json",
+    "sha256": "e98afbabbeb2e3dd3dfd3841d607563a1a8d31371bf49ea71b5f13b9b32ab1f4",
+    "bytes": 7303
+  },
+  "implementation": {
+    "path": "examples/37_islanded_frequency_droop.py",
+    "sha256": "5d4eff43036a0053bad2baa252e8f6507aa1818290ad30e07c3d0372b51c8fef",
+    "bytes": 4304
+  },
+  "reference_platform": "PSCAD 5.0.0 / EMTDC 20210219 (gf46)",
+  "native_reference": {
+    "path": "docs/development_roadmap/experiments/d1_gfm_island_native_20261123.json",
+    "sha256": "a00b768f51e07364492820659e8abde345828d3f1c2a7f8864e7cbcc4e275479",
+    "bytes": 8289
+  },
+  "official_comparison": {
+    "path": "local_reference/islanded_frequency_droop_validation/official-20261123T0622Z/report.json",
+    "sha256": "15934751594dee05940d8e08d6f1d79e0a178634194217a5aa27448a184127ee",
+    "bytes": 40422
+  },
+  "standalone_windows": {
+    "path": "local_reference/islanded_frequency_droop_validation/standalone-20261123T0621Z/terminal.json",
+    "sha256": "c018d88851fb4fc2329d3c0b607e54e5018a92f213eef148d38a85ddb4de4a4e",
+    "bytes": 318
+  },
+  "waveform_overlay": {
+    "path": "local_reference/islanded_frequency_droop_validation/official-20261123T0622Z/waveform_overlay.png",
+    "sha256": "00c84b5f2c694771c9d6be34b63fd0ce38bdf723d36e803f7e6d27dedc1c7b04",
+    "bytes": 108929
+  },
+  "grids": {
+    "5us": {
+      "original_rows_including_zero": 80001,
+      "same_grid_maxima_si": {
+        "display_s": 5.551115123125783e-17,
+        "time_s": 5.551115123125783e-17,
+        "peak_v": 5.016431714466307e-12,
+        "phase_rad": 5.343281372915953e-12,
+        "frequency_hz": 7.460698725481052e-13,
+        "meter_w": 7.048583938740194e-12,
+        "filtered_w": 2.4920154828578234e-10,
+        "source_v": 6.299138988197228e-11,
+        "pcc_v": 6.284039955062326e-11,
+        "feeder_a": 1.0451084442308911e-12,
+        "base_a": 5.230260669009112e-13,
+        "added_a": 5.230260669009112e-13
+      },
+      "windows": {
+        "before": {
+          "candidate": {
+            "window_s": [
+              0.14,
+              0.19
+            ],
+            "rows": 10000,
+            "power_w": 359.36892308578854,
+            "frequency_hz": 60.000739221143235,
+            "pcc_rms_v": 119.89476718548194
+          },
+          "native": {
+            "window_s": [
+              0.14,
+              0.19
+            ],
+            "rows": 10000,
+            "power_w": 359.36892308578854,
+            "frequency_hz": 60.000739221143114,
+            "pcc_rms_v": 119.89476718548194
+          },
+          "differences": {
+            "power_w": 0.0,
+            "frequency_hz": 1.2079226507921703e-13,
+            "pcc_rms_v": 0.0
+          }
+        },
+        "after": {
+          "candidate": {
+            "window_s": [
+              0.34,
+              0.39
+            ],
+            "rows": 10000,
+            "power_w": 717.3549696440183,
+            "frequency_hz": 59.64276552733337,
+            "pcc_rms_v": 119.77937799504706
+          },
+          "native": {
+            "window_s": [
+              0.34,
+              0.39
+            ],
+            "rows": 10000,
+            "power_w": 717.3549696440189,
+            "frequency_hz": 59.64276552733313,
+            "pcc_rms_v": 119.77937799504714
+          },
+          "differences": {
+            "power_w": -5.684341886080801e-13,
+            "frequency_hz": 2.3447910280083306e-13,
+            "pcc_rms_v": -8.526512829121202e-14
+          }
+        }
+      },
+      "causal_phase_abs_rad": 1.4210637874767507e-14
+    },
+    "2p5us": {
+      "original_rows_including_zero": 160001,
+      "same_grid_maxima_si": {
+        "display_s": 5.551115123125783e-17,
+        "time_s": 5.551115123125783e-17,
+        "peak_v": 5.016431714466307e-12,
+        "phase_rad": 5.7980287238024175e-12,
+        "frequency_hz": 9.023892744153272e-13,
+        "meter_w": 7.503331289626658e-12,
+        "filtered_w": 4.106368578504771e-10,
+        "source_v": 1.3523404618354107e-10,
+        "pcc_v": 1.3498713258286443e-10,
+        "feeder_a": 2.250213904098075e-12,
+        "base_a": 1.1253081799722509e-12,
+        "added_a": 1.1253081799722509e-12
+      },
+      "windows": {
+        "before": {
+          "candidate": {
+            "window_s": [
+              0.14,
+              0.19
+            ],
+            "rows": 20000,
+            "power_w": 359.3689230999857,
+            "frequency_hz": 60.00073918551947,
+            "pcc_rms_v": 119.89476718785023
+          },
+          "native": {
+            "window_s": [
+              0.14,
+              0.19
+            ],
+            "rows": 20000,
+            "power_w": 359.36892309998603,
+            "frequency_hz": 60.00073918551968,
+            "pcc_rms_v": 119.89476718785028
+          },
+          "differences": {
+            "power_w": -3.410605131648481e-13,
+            "frequency_hz": -2.0605739337042905e-13,
+            "pcc_rms_v": -4.263256414560601e-14
+          }
+        },
+        "after": {
+          "candidate": {
+            "window_s": [
+              0.34,
+              0.39
+            ],
+            "rows": 20000,
+            "power_w": 717.3549697546316,
+            "frequency_hz": 59.642765476243014,
+            "pcc_rms_v": 119.77937800428181
+          },
+          "native": {
+            "window_s": [
+              0.34,
+              0.39
+            ],
+            "rows": 20000,
+            "power_w": 717.354969754633,
+            "frequency_hz": 59.64276547624343,
+            "pcc_rms_v": 119.77937800428194
+          },
+          "differences": {
+            "power_w": -1.3642420526593924e-12,
+            "frequency_hz": -4.192202140984591e-13,
+            "pcc_rms_v": -1.2789769243681803e-13
+          }
+        }
+      },
+      "causal_phase_abs_rad": 1.4209011571508778e-14
+    }
+  },
+  "cross_grid": {
+    "maxima_si": {
+      "clock_abs_s": 0.0,
+      "source_abs_v": 0.000656115044059366,
+      "phase_abs_rad": 3.866792170015287e-06,
+      "frequency_abs_hz": 4.380539245119053e-05,
+      "filtered_power_abs_w": 0.043805392444994595,
+      "pcc_abs_v": 1.724081032111883,
+      "feeder_abs_a": 0.02873468386853162,
+      "pcc_away_abs_v": 0.0006556075110243503,
+      "feeder_away_abs_a": 1.0926791850405853e-05
+    },
+    "window_differences": {
+      "before": {
+        "window_power_abs_w": 1.4197155451256549e-08,
+        "window_frequency_abs_hz": 3.5623763494641025e-08,
+        "window_rms_abs_v": 2.3682957817072747e-09
+      },
+      "after": {
+        "window_power_abs_w": 1.1061331406381214e-07,
+        "window_frequency_abs_hz": 5.1090353281324496e-08,
+        "window_rms_abs_v": 9.23475340641744e-09
+      }
+    },
+    "common_rows_including_zero": 80001
+  },
+  "windows_regression": {
+    "passed": 1621,
+    "includes_slow": true,
+    "junit": {
+      "path": "local_reference/islanded_frequency_droop_validation/windows-regression-20261123T0625Z/pytest.xml",
+      "sha256": "f46f39450084b931b0c917d5f521692378e6469f79dbfca3b363ed671169da56",
+      "bytes": 233645
+    },
+    "static": {
+      "path": "local_reference/islanded_frequency_droop_validation/windows-regression-20261123T0625Z/static.log",
+      "sha256": "748cbc30f60ea014ae9c807c550fe520a346f8e349da6550bd2b4c5380b57097",
+      "bytes": 122
+    }
+  },
+  "ubuntu_wsl2": {
+    "focused_tests": 5,
+    "standalone": true,
+    "log": {
+      "path": "local_reference/islanded_frequency_droop_validation/ubuntu-20261123T0627Z/validation.log",
+      "sha256": "834e32a540283b34eff49f61e845cc88371dedd8e814ed13787c701376338717",
+      "bytes": 2530
+    },
+    "terminal": {
+      "path": "local_reference/islanded_frequency_droop_validation/ubuntu-20261123T0627Z/terminal.json",
+      "sha256": "c0df87b9243737b8a4ffcabb685632693716c57d21ab2ca4bf2aec56642836b9",
+      "bytes": 125
+    },
+    "sources": {
+      "path": "local_reference/islanded_frequency_droop_validation/ubuntu-20261123T0627Z/sources.sha256",
+      "sha256": "ee286550f73a1a2c7562349ce747a52e9a31a55d5533e80878a2752a3dc977c3",
+      "bytes": 53799
+    }
+  },
+  "formal_new_examples_completed": 19
+}

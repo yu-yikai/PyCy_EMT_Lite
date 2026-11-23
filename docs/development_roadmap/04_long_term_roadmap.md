@@ -6,7 +6,7 @@
 
 统一使用 [02参考目录](02_reference_catalog.md) 的0–5分、加权100分方法，详细向量仅保存在 `reference_catalog.json`，不维护第二套评分。维度覆盖教学/代表性/模型和数据可用性/适配/实现和验证难度/知识增量/复用/维护。**正式新增交付必须实际取得真实数据并通过对比**，总分不能替代门槛。
 
-当前正式新增 19–36 共 18 项已完成，既有02补参考另计。A4以23线性T等效、24平衡双T接线链收尾；24没有实际线路，D0的25另交付完整电源、两π线路、变压器与固定负荷原网。B2已交付26（9269350），A3已交付27（ae9fe362）。B1已完成完整PSCAD双向开关参考、同输入电气细化、原12固定比较和独审/独立运行，当时1267全量及教学通过，已以40bef297正式验收提交推送。原MathWorks IGBT参考的2%波形FAIL单列保留。C1 完成既有 11 号 PLL 对标和 28–32 号单站控制教学链。D1 已验收 33 号五母线负荷阶跃、34 号双端 VSC-HVDC、35 号并网储能充放电和 36 号光伏并网照度阶跃。其余 Bergeron 变体另行取得物理一致的参考。
+当前正式新增 19–37 共 19 项已完成，既有02补参考另计。A4以23线性T等效、24平衡双T接线链收尾；24没有实际线路，D0的25另交付完整电源、两π线路、变压器与固定负荷原网。B2已交付26（9269350），A3已交付27（ae9fe362）。B1已完成完整PSCAD双向开关参考、同输入电气细化、原12固定比较和独审/独立运行，当时1267全量及教学通过，已以40bef297正式验收提交推送。原MathWorks IGBT参考的2%波形FAIL单列保留。C1 完成既有 11 号 PLL 对标和 28–32 号单站控制教学链。D1 已验收 33 号五母线负荷阶跃、34 号双端 VSC-HVDC、35 号并网储能充放电、36 号光伏并网照度阶跃和 37 号单站孤网下垂。其余 Bergeron 变体另行取得物理一致的参考。
 
 ## 当前实施顺序与验收门槛
 
@@ -18,7 +18,7 @@
 6. **A3/A4/A6/A7 线路/三相**：不平衡中性点A6、有限50T梯级A7、单相T等效A4a和平衡双T链A4b已验收。A3有限R的两半线+三R方案已获1/0.5µs真实6ms参考和16项自细化PASS，协议44d1436先于候选；27四量两窗八项商业比较、独审和1244全量PASS，A3已完成ae9fe362，见[实际尝试](experiments/native_reference_attempts_20261109.md)；其他接线、零序与磁性非线性不由这些结果认证，不为数量复制接线或参数。
 7. **B 电力电子**：B1已补既有12的PSCAD双向开关对标，原MathWorks失败仍单列；B2完成仅指交付26同步Buck，其余半/全桥、Boost和滤波候选未验证，不由26认证。外部受控双向开关与自动二极管严格分开。
 8. **C 单站控制**覆盖既有 11 号 PLL 和 28–32 号教学链。由并网开环逐步加入 dq 电流环、PLL、有功前馈、PCC 调压和直流母线调压。32 号在两档 PSCAD 对标中核对了电容初值、负荷投入、支路储能和闭环恢复。 [32 号验收](../../validation/cases/grid_connected_vsc_dc_voltage/acceptance_report.json)
-9. **D/E 接口与小网**含 D0 的电源、线路、变压器与固定负荷组合，以及 D1 已验收的平衡 PJM5 五母线负荷扰动、双端 VSC-HVDC、一阶 RC 并网储能和局部等效光伏。下一项先从单站孤网 P–f 下垂取得真实参考，再决定构网及其他网络的实现范围。 [33 号验收](../../validation/cases/pjm5_load_step/acceptance_report.json) · [34 号验收](../../validation/cases/two_terminal_vsc_hvdc/acceptance_report.json) · [35 号验收](../../validation/cases/grid_connected_storage/acceptance_report.json) · [36 号验收](../../validation/cases/grid_connected_pv/acceptance_report.json)
+9. **D/E 接口与小网**含 D0 的电源、线路、变压器与固定负荷组合，以及 D1 已验收的平衡 PJM5 五母线负荷扰动、双端 VSC-HVDC、一阶 RC 并网储能和局部等效光伏。单站孤网 P–f 下垂已完成。阶段 E 先用原厂并联线路故障工程核对实际开断，再评估小网选择性隔离和恢复。 [33 号验收](../../validation/cases/pjm5_load_step/acceptance_report.json) · [34 号验收](../../validation/cases/two_terminal_vsc_hvdc/acceptance_report.json) · [35 号验收](../../validation/cases/grid_connected_storage/acceptance_report.json) · [36 号验收](../../validation/cases/grid_connected_pv/acceptance_report.json) · [37 号验收](../../validation/cases/islanded_frequency_droop/acceptance_report.json)
 10. **F 工程与教学**：在实际例中调整导航/参数/异常提示，保持既有API；每组结束复审测试、模型边界、参考及提交推送。
 
 ## G1 远期研究计划

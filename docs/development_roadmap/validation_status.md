@@ -1,5 +1,8 @@
 # 验证状态
 
+2026-11-23。37 号两档共核对 240,002 个 PSCAD 原始点。Windows 1,621 项含慢测，Ubuntu WSL2 默认入口和五项专项均通过。
+[37 号验收报告](../../validation/cases/islanded_frequency_droop/acceptance_report.json)
+
 2026-11-23。预先绑定了两档原生参考与试算档案，固定全时间网格对标门限。正式候选待实现，新增完成数为 18。
 [37 号孤网下垂候选协议](../../validation/cases/islanded_frequency_droop/candidate_protocol.json)
 

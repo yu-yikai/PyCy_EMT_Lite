@@ -3,9 +3,9 @@
   "updated_date": "2026-11-23",
   "timezone": "Asia/Shanghai",
   "branch": "codex/emt-examples-longterm",
-  "checkpoint_head": "680474de0fb5537132b489a5eb2cf82c679f64dd",
+  "checkpoint_head": "15525485e370b0cd08768b86835697b744ba7016",
   "current_task": "D1",
-  "formal_new_examples_completed": 18,
+  "formal_new_examples_completed": 19,
   "status_values": [
     "planned",
     "ready",
@@ -1914,11 +1914,19 @@
       ],
       "new_capabilities": [],
       "references": [],
-      "validation": "33 号平衡 PJM5 五母线负荷阶跃已验收。34 号双端 VSC-HVDC 按 5 µs、2.5 µs 与 PSCAD 同档逐点对标，共 330003 个原生正时间点，12 路开关状态全同。Windows 1609 项含 slow、Ubuntu WSL2 默认入口与 8 项专测、28–32 号两档 14 组启动轨迹逐位核对通过。D1 继续等效储能和新能源接口。 35 号一阶 RC 单站并网储能已完成充放电反向与双档 PSCAD 对标。 36 号 650 串局部等效光伏已完成照度阶跃、两档 PSCAD 对标和跨系统验证。",
+      "validation": "33 号平衡 PJM5 五母线负荷阶跃已验收。34 号双端 VSC-HVDC 按 5 µs、2.5 µs 与 PSCAD 同档逐点对标，共 330003 个原生正时间点，12 路开关状态全同。Windows 1609 项含 slow、Ubuntu WSL2 默认入口与 8 项专测、28–32 号两档 14 组启动轨迹逐位核对通过。D1 继续等效储能和新能源接口。 35 号一阶 RC 单站并网储能已完成充放电反向与双档 PSCAD 对标。 36 号 650 串局部等效光伏已完成照度阶跃、两档 PSCAD 对标和跨系统验证。 37 号单站孤网下垂完成两档 PSCAD 对标与跨系统验证。",
       "acceptance": "不将直流等效称完整PV，不将拓扑称完整标准EMT",
       "status": "in_progress",
-      "current_stage": "gfm_island_candidate_protocol_frozen",
+      "current_stage": "islanded_frequency_droop_example_37_accepted",
       "files": [
+        "examples/37_islanded_frequency_droop.py",
+        "tests/test_islanded_frequency_droop.py",
+        "validation/cases/islanded_frequency_droop/README.md",
+        "validation/cases/islanded_frequency_droop/candidate_protocol.json",
+        "validation/cases/islanded_frequency_droop/reference.py",
+        "validation/cases/islanded_frequency_droop/checks.py",
+        "validation/cases/islanded_frequency_droop/compare.py",
+        "validation/cases/islanded_frequency_droop/acceptance_report.json",
         "examples/36_grid_connected_pv.py",
         "tests/test_grid_connected_pv.py",
         "validation/cases/grid_connected_pv/README.md",
@@ -1996,7 +2004,8 @@
         "ad29cbe68a069d252c49970c4221a7dea57bb9d1",
         "dd8e445fc75450ad087e00f1d86b6109ed0fef7f",
         "f2409194212a8f58522327c689767e48f27df7df",
-        "680474de0fb5537132b489a5eb2cf82c679f64dd"
+        "680474de0fb5537132b489a5eb2cf82c679f64dd",
+        "15525485e370b0cd08768b86835697b744ba7016"
       ],
       "blockers": [],
       "pjm5_load_step_example": {
@@ -2177,6 +2186,15 @@
         ],
         "legacy_startup_traces_bitwise_equal": 14
       },
+      "islanded_frequency_droop_example": {
+        "status": "completed",
+        "report": {
+          "path": "validation/cases/islanded_frequency_droop/acceptance_report.json",
+          "sha256": "a3e30ddcebacc1ff8f9c92742729901cdeed05c3774232c9b0e08f8f0179d7ba",
+          "bytes": 8356
+        },
+        "formal_example_accepted": true
+      },
       "gfm_island_candidate_protocol": {
         "status": "frozen",
         "protocol": {
@@ -2184,7 +2202,7 @@
           "sha256": "e98afbabbeb2e3dd3dfd3841d607563a1a8d31371bf49ea71b5f13b9b32ab1f4",
           "bytes": 7303
         },
-        "formal_example_accepted": false
+        "formal_example_accepted": true
       },
       "gfm_island_native_reference": {
         "status": "qualified",
@@ -2626,7 +2644,7 @@
       }
     }
   ],
-  "current_stage": "gfm_island_candidate_protocol_frozen",
+  "current_stage": "islanded_frequency_droop_example_37_accepted",
   "resume_checkpoint_history": [
     {
       "resumed_utc": "2026-11-11T13:24:16.085490+00:00",

@@ -1,5 +1,8 @@
 # 恢复与下一步
 
+2026-11-23。推进阶段 E 的小网选择性隔离。先取 PSCAD 随附并联线路中点故障工程的原始波形，核对开命令与实际开断时刻，再评估简化三母线的故障隔离与恢复。
+[37 号验收报告](../../validation/cases/islanded_frequency_droop/acceptance_report.json)
+
 2026-11-23。按 37 号协议用现有元件和 CaseDefinition 实现正式算例，完成原始同档波形对标、独立运行、测试和读图说明。
 [37 号孤网下垂候选协议](../../validation/cases/islanded_frequency_droop/candidate_protocol.json)
 
