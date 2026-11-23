@@ -1,5 +1,8 @@
 # 恢复与下一步
 
+2026-11-23。按原生报告读取含零点的两份回执。用忽略目录 `local_reference/d1_storage_rc_short_20261123/audit_storage.py` 传入短窗协议、`--pair <5µs回执> <2.5µs回执>` 和新的报告路径复核。下一步先固定单站并网的 5 mF 母线、0.5 s 开路电压爬升和 0.8 s 保存条件，核对快照储能、启动与第一个充电窗后再开展反转长窗。先用同目录 `grid_port_screen/` 的两状态计算核查预充电流。
+[储能端口原生双档证据](experiments/d1_storage_rc_short_native_20261123.json)
+
 2026-11-23。按冻结协议隔离构建两档 PSCAD 一阶 RC 端口，先核生成代码中的电流源方向、边沿和实际支路，再运行并校验原始 INF/OUT。两档通过后再冻结与单站 VSC 相连的独立工况。
 [一阶 RC 储能端口短窗协议](experiments/d1_storage_rc_short_protocol_20261123.json)
 
