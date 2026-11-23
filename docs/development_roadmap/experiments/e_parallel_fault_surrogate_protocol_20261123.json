@@ -1,0 +1,347 @@
+{
+  "schema": "e_parallel_fault_surrogate_protocol_v1",
+  "date": "2026-11-23",
+  "source_parent": "11bcbc27c362ced90d3788152da43a6726d94b43",
+  "scope": "Obtain independent native PSCAD references for the grounded resistive three-bus surrogate. The permanent healthy path supplies passive load while a parallel path is faulted, isolated at both ends, cleared, and restored.",
+  "sources": {
+    "original_vendor_timing": {
+      "path": "docs/development_roadmap/experiments/e_case4_pi_original_timing_20261123.json",
+      "sha256": "662e4818505b58e477141736b9e7f82458bb27e75673c4ef5d8bd0d041f10a3d",
+      "bytes": 3671
+    },
+    "analytical_selection": {
+      "path": "local_reference/e_parallel_fault_pscad_20261123/surrogate_planning.json",
+      "sha256": "a62c1b256d82fc2fd65603a9b5f7dda8dd73e31215446e05d2daa723ff1fbf6b"
+    },
+    "pycy_feasibility": {
+      "path": "local_reference/e_parallel_fault_pscad_20261123/pycy_probe/20261123T065855687870Z/report.json",
+      "sha256": "c335b15b39f3d22721b8e785bcb6907850f9221e200eb4eeb16acc68ed788013"
+    }
+  },
+  "reference": {
+    "installed_master": {
+      "path": "C:/Program Files (x86)/PSCAD50/master.pslx",
+      "sha256": "2940ddce6fe1fae56cb6be70bbaf0210a7e36059bfcad1e78b0ddbfd4d2a7c77"
+    },
+    "installed_emtdc_library": {
+      "path": "C:/Program Files (x86)/PSCAD50/emtdc/gf46/windows/emtdc.lib",
+      "sha256": "ed8cd8d92701e4fef8bc405022fb7b4793b32c513f7ec93dbd124a90c521438d"
+    }
+  },
+  "fixture": {
+    "emf_phase_rms_v": 120,
+    "frequency_hz": 60,
+    "phase_shifts_rad": [
+      0,
+      -2.0943951023931953,
+      2.0943951023931953
+    ],
+    "healthy_ohm": 2,
+    "load_ohm": 20,
+    "reference_ohm": 10000,
+    "path_on_ohm": 2,
+    "fault_on_ohm": 0.2,
+    "open_ohm": 1000000000,
+    "connections": "Three independent identical phases share ground. Ideal sinusoidal sources are already defined on the zero row. The healthy path and the receiving load stay connected. A weak 10 kΩ reference remains at the fault point. Only the two faulted path halves and the fault shunt change resistance.",
+    "conventions": "The healthy branch current is positive from S to R. The half-line currents are positive from S to F and R to F. The load, fault and reference currents are positive toward ground. Phase voltages are measured relative to ground, power is positive into the receiving load."
+  },
+  "timing": {
+    "duration_s": 0.35,
+    "fault_on_s": 0.1,
+    "open_sf_s": 0.15,
+    "open_rf_s": 0.2,
+    "fault_off_s": 0.25,
+    "reclose_s": 0.3,
+    "windows_s": {
+      "pre": [
+        0.05,
+        0.1
+      ],
+      "fault": [
+        0.1,
+        0.15
+      ],
+      "source_end_open": [
+        0.15,
+        0.2
+      ],
+      "both_ends_open": [
+        0.2,
+        0.25
+      ],
+      "cleared": [
+        0.25,
+        0.3
+      ],
+      "restored": [
+        0.3,
+        0.35
+      ]
+    },
+    "row_semantics": "Stamp all three copies of each new resistance on its integer edge row. Observe all original rows including zero and the final row. The half-open windows each contain three 60 Hz cycles."
+  },
+  "grids": {
+    "50us": {
+      "step_s": 0.00005,
+      "rows_including_zero": 7001
+    },
+    "25us": {
+      "step_s": 0.000025,
+      "rows_including_zero": 14001
+    }
+  },
+  "channels": {
+    "Absolute_TIME_s": "s",
+    "R_sf_ohm": "ohm",
+    "R_rf_ohm": "ohm",
+    "R_fault_ohm": "ohm",
+    "V_src_a_kV": "kV",
+    "V_recv_a_kV": "kV",
+    "V_fault_a_kV": "kV",
+    "I_healthy_a_kA": "kA",
+    "I_sf_a_kA": "kA",
+    "I_rf_a_kA": "kA",
+    "I_fault_a_kA": "kA",
+    "I_load_a_kA": "kA",
+    "I_ref_a_kA": "kA",
+    "V_src_b_kV": "kV",
+    "V_recv_b_kV": "kV",
+    "V_fault_b_kV": "kV",
+    "I_healthy_b_kA": "kA",
+    "I_sf_b_kA": "kA",
+    "I_rf_b_kA": "kA",
+    "I_fault_b_kA": "kA",
+    "I_load_b_kA": "kA",
+    "I_ref_b_kA": "kA",
+    "V_src_c_kV": "kV",
+    "V_recv_c_kV": "kV",
+    "V_fault_c_kV": "kV",
+    "I_healthy_c_kA": "kA",
+    "I_sf_c_kA": "kA",
+    "I_rf_c_kA": "kA",
+    "I_fault_c_kA": "kA",
+    "I_load_c_kA": "kA",
+    "I_ref_c_kA": "kA"
+  },
+  "native": {
+    "branch_threshold_ohm": 0.0005,
+    "toolchain": {
+      "pscad_version": "5.0.0",
+      "emtdc_build": "20210219",
+      "compiler": "gf46",
+      "platform": "x86"
+    },
+    "runtime": "Cold start separately at each electrical step, record every electrical row, maintain raw INF/OUT, compile branch and measurement maps and toolchain. Disable switching interpolation and chatter handling."
+  },
+  "physical_limits": {
+    "clock_abs_s": 2e-12,
+    "source_abs_v": 0.000005,
+    "kcl_abs_a": 0.000002,
+    "ohm_abs_v": 0.000005,
+    "power_abs_w": 0.0002,
+    "analytic_voltage_abs_v": 0.000005,
+    "analytic_current_abs_a": 0.000002
+  },
+  "cross_grid_limits": {
+    "voltage_abs_v": 0.000005,
+    "current_abs_a": 0.000002,
+    "power_abs_w": 0.0002
+  },
+  "window_limits": {
+    "pre": {
+      "recv_rms_v": [
+        112,
+        113
+      ],
+      "fault_rms_v": [
+        115.5,
+        117
+      ],
+      "healthy_signed_rms_a": [
+        3.5,
+        4
+      ],
+      "sf_signed_rms_a": [
+        1.7,
+        2.1
+      ],
+      "rf_signed_rms_a": [
+        -2.1,
+        -1.7
+      ],
+      "fault_rms_a": [
+        0,
+        2e-7
+      ],
+      "load_mean_w": [
+        1880,
+        1915
+      ]
+    },
+    "fault": {
+      "recv_rms_v": [
+        64,
+        65
+      ],
+      "fault_rms_v": [
+        15,
+        16
+      ],
+      "healthy_signed_rms_a": [
+        27,
+        29
+      ],
+      "sf_signed_rms_a": [
+        52,
+        53
+      ],
+      "rf_signed_rms_a": [
+        24,
+        25
+      ],
+      "fault_rms_a": [
+        76,
+        78
+      ],
+      "load_mean_w": [
+        610,
+        640
+      ]
+    },
+    "source_end_open": {
+      "recv_rms_v": [
+        59,
+        61
+      ],
+      "fault_rms_v": [
+        5,
+        6
+      ],
+      "healthy_signed_rms_a": [
+        29,
+        31
+      ],
+      "sf_signed_rms_a": [
+        -2e-7,
+        2e-7
+      ],
+      "rf_signed_rms_a": [
+        26.5,
+        28
+      ],
+      "fault_rms_a": [
+        26.5,
+        28
+      ],
+      "load_mean_w": [
+        520,
+        550
+      ]
+    },
+    "both_ends_open": {
+      "recv_rms_v": [
+        108.5,
+        109.6
+      ],
+      "fault_rms_v": [
+        0,
+        0.000001
+      ],
+      "healthy_signed_rms_a": [
+        5.2,
+        5.7
+      ],
+      "sf_signed_rms_a": [
+        -2e-7,
+        2e-7
+      ],
+      "rf_signed_rms_a": [
+        -2e-7,
+        2e-7
+      ],
+      "fault_rms_a": [
+        0,
+        3e-7
+      ],
+      "load_mean_w": [
+        1740,
+        1820
+      ]
+    },
+    "cleared": {
+      "recv_rms_v": [
+        108.5,
+        109.6
+      ],
+      "fault_rms_v": [
+        0.002,
+        0.0026
+      ],
+      "healthy_signed_rms_a": [
+        5.2,
+        5.7
+      ],
+      "sf_signed_rms_a": [
+        -2e-7,
+        2e-7
+      ],
+      "rf_signed_rms_a": [
+        -2e-7,
+        2e-7
+      ],
+      "fault_rms_a": [
+        0,
+        1e-10
+      ],
+      "load_mean_w": [
+        1740,
+        1820
+      ]
+    },
+    "restored": {
+      "recv_rms_v": [
+        112,
+        113
+      ],
+      "fault_rms_v": [
+        115.5,
+        117
+      ],
+      "healthy_signed_rms_a": [
+        3.5,
+        4
+      ],
+      "sf_signed_rms_a": [
+        1.7,
+        2.1
+      ],
+      "rf_signed_rms_a": [
+        -2.1,
+        -1.7
+      ],
+      "fault_rms_a": [
+        0,
+        2e-7
+      ],
+      "load_mean_w": [
+        1880,
+        1915
+      ]
+    }
+  },
+  "restored_abs_limits": {
+    "recv_rms_v": 0.000005,
+    "fault_rms_v": 0.000005,
+    "healthy_signed_rms_a": 0.000002,
+    "sf_signed_rms_a": 0.000002,
+    "rf_signed_rms_a": 0.000002,
+    "fault_rms_a": 0.000002,
+    "load_mean_w": 0.0002
+  },
+  "audit_notes": [
+    "Independently solve the two non-source grounded node equations at each original row. Recompute KCL and terminal power from independently measured native branch currents and voltages.",
+    "Interpret signed RMS branch current using voltage at the source in each phase as the phase reference. Compare each six-window metric to the frozen ranges.",
+    "After the sending end opens, positive R-to-F current means the source still reaches the fault via the healthy path and receiving bus. After the second opening both path currents are leakage while receiving power continues.",
+    "The original vendor case motivates the two-ended isolation. This independently assembled circuit uses simultaneous three-phase commanded finite resistances and includes restoration. Its qualification uses its own native waveforms."
+  ]
+}

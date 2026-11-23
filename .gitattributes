@@ -1,3 +1,4 @@
-# The PV comparator verifies this frozen protocol by its exact byte hash.
+# Preserve the exact byte hashes of these frozen protocols.
 /validation/cases/grid_connected_pv/candidate_protocol.json text eol=lf
 /docs/development_roadmap/experiments/d1_gfm_island_protocol_20261123.json text eol=lf
+/docs/development_roadmap/experiments/e_parallel_fault_surrogate_protocol_20261123.json text eol=lf
