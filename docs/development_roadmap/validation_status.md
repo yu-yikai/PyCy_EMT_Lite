@@ -1,5 +1,7 @@
 # 验证状态
 
+2026-11-23。文档修订后，Windows / Python 3.14.5 的锁定同步、Ruff、mypy 和 1,666 项全量测试均通过，含慢测。两处 Python 文件仅修订文档字符串，去除文档字符串后的 AST 与修订前一致。中英文 README 的建例、工厂复用、读回报告和保存现有算例示例，以及六份双语指南的 12 个 Python 片段均已实跑。本机 JUnit 见 `.tmp/longterm/doc-revision-20261123T1325592121171Z/pytest.xml`。
+
 2026-11-23。复审修复在 Windows 和 Ubuntu WSL2 各通过 1,664 项全量测试，包含慢测。最终输出路径改动另在两套系统通过定向测试，Windows 专项用例在 Ubuntu 按预期跳过。11、12 号历史快照复跑通过，27、38、39 号使用已验收的原生归档复比通过。
 [测试报告及比较产物哈希](experiments/post_audit_repairs_20261123.json)
 

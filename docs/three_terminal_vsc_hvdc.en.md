@@ -339,6 +339,21 @@ R2022b original-model prefault mean Vdc values were approximately 399.987/413.50
 
 ## 13. Tests
 
+The [HVDC tests](../tests/test_three_terminal_vsc_hvdc.py) build from a single bridge to the full FAST network.
+
+- `test_single_bridge_open_loop_power_identity` checks one bridge's power accounting.
+- `test_single_station_pll_and_dq_tracking_with_step_refinement` adds one station's PLL and dq loops.
+- `test_two_station_intermediate_dc_exchange` connects two stations through DC.
+- `test_three_terminal_vsc_hvdc_fast_run` runs the complete FAST network.
+
+The last three tests are marked `slow`. From the project root, run the single-bridge test first.
+
+```powershell
+New-Item -ItemType Directory -Force -Path .tmp | Out-Null
+$env:MPLBACKEND = "Agg"
+uv run --locked pytest tests/test_three_terminal_vsc_hvdc.py::test_single_bridge_open_loop_power_identity --basetemp=.tmp/pytest-vsc-bridge
+```
+
 ```bash
 uv run pytest tests/test_step_callback.py tests/test_three_terminal_vsc_hvdc.py
 uv run pytest

@@ -69,8 +69,8 @@ Ls*di/dt + (Rs + 0.0676 + 169000)*i = 13000*sin(2π60t+φ), i(0)=0
 R2025a的 `ee_delta_transmission.slx`，SHA-256为
 `02be3b7168ed504a6a585c3aa29aba3369b294d6bed2a517d6408a1931abe4ca`。
 `export_reference.m` 用SimulationInput只调整运行求解/日志设置，保持原物理模型。
-原件、完整MAT/CSV和图保存在忽略的 `local_reference/three_phase_transformer_chain/`。
-最初449点默认探索证据仍独立保留在旧 `local_reference/three_phase_transformer/`；正式精化使用上述新目录。
+原件和最初 449 点探索证据保存在 `local_reference/three_phase_transformer/`。
+正式精化的模型副本、完整 MAT/CSV 和图保存在 `local_reference/three_phase_transformer_chain/`。两个目录均由 Git 忽略。
 
 [验收协议](acceptance_plan.md)、[manifest](manifest.json) 和原参数在候选前提交4edd4a1；
 c88c2bb随后在候选创建前只纠正原生字段名。冻结完整启动窗[0,40 µs]及后窗[40 µs,50 ms]，
@@ -86,22 +86,49 @@ c88c2bb随后在候选创建前只纠正原生字段名。冻结完整启动窗[
   原先只估计采样点误差，遗漏线性插值误差；独立闭式准确预测该峰值，随后才将默认步长细化为0.5 µs，
   不改变任何物理参数、信号、窗口或误差限。
 
+### 重生成原生参考
+
+导出使用 MATLAB R2025a、Simulink、Simscape 和 Simscape Electrical。导出前准备[早期核验归档](../../../docs/development_roadmap/experiments/three_phase_transformer_reference_candidates.md)中的六份文件。
+
+```text
+local_reference/three_phase_transformer/
+  simulink/ee_delta_transmission.slx
+  source_parameter_audit.md
+  source_parameter_audit_native.json
+  winding_reference_audit.md
+  winding_reference_audit.json
+  default_probe/provenance.json
+```
+
+在 MATLAB 中切换到仓库根目录并运行导出命令。脚本会封存这些输入，并根据原生探索记录核对模型参数。
+
 ```matlab
 clear export_reference
 addpath('validation/cases/three_phase_transformer_chain');
 export_reference(pwd);
 ```
 
+### 运行 PyCy 算例及复比
+
+以下两条命令从项目根目录运行教学算例和专项测试。
+
 ```powershell
 $env:MPLBACKEND='Agg'
 uv run --locked python examples/24_three_phase_transformer_chain.py
 uv run --locked pytest tests/test_three_phase_transformer_chain.py
+```
+
+在 Git 检出中复比已有参考时，保留 `local_reference/three_phase_transformer_chain/` 的完整归档。
+比较入口读取其中的 `normalized_results/reference.csv`、`provenance.json` 和 `simulink/ee_delta_transmission.slx`，并记录 `raw_results/` 中的输入哈希。
+
+```powershell
+$env:MPLBACKEND='Agg'
 uv run --locked python -m validation.cases.three_phase_transformer_chain.compare
 ```
 
-比较缺少真实数据时直接报错。每次比较保存独立UTC目录、输入快照、候选CSV/JSON/NPZ、
-叠图、逐量报告及版本/hash。协议文本的冻结hash按LF核对，快照及原生MAT/波形保留原字节hash；
-不为换行差异修改模型或全仓Git配置。两项补充的完整文本、提交和hash均嵌入参考provenance，随比较输入归档。
+导出时按 LF 核对冻结协议的哈希，保留快照及原生 MAT 和波形的字节哈希。
+两项补充的完整文本、提交和哈希均嵌入参考 `provenance.json`，随比较输入归档。
+每次比较保存独立 UTC 目录、输入快照、候选 CSV/JSON/NPZ、叠图、逐量报告及版本和哈希。
 
 ## 实测结果
 

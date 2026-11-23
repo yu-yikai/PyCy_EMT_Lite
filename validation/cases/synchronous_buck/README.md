@@ -74,7 +74,9 @@ uv run --locked pytest tests/test_synchronous_buck.py tests/test_synchronous_buc
 这证明参考具备当前比较所需的条件性数值证据，不称绝对精度证明。
 [候选周期积分约定](candidate_quadrature_addendum.md)在首次候选商业比较前另行提交，明确左保持和模式内源流积分；原50ns、窗口和限值保持。
 
-`audit_reference`只审计两组真实参考，不导入或运行候选。以下命令重放原100/50ns证据，预期保留FAIL；输出目录须为新目录：
+用 `audit_reference` 重放原 100/50 ns 的参考自细化审计，预期复现原 FAIL。两组归档的
+`extracted/extraction_metadata.json` 记录了源 `simulink_output.mat` 的绝对路径，审计时必须沿用这些原路径。
+将归档移到其他目录会先触发源文件身份检查。`--output` 须指向 `local_reference/b2_protocol_research/` 下尚不存在的目录，且其父目录已存在。
 
 ```powershell
 $runs = 'local_reference/b2_protocol_research/native_refinement/20261106T064932434Z/runs'
@@ -99,10 +101,12 @@ uv run --locked python -m validation.cases.synchronous_buck.audit_reference `
 | 派生源流 | 0.0463451A | 0.1A |
 
 独立审计从原始数据另算载波根、分段积分和连续窗指标，差异不超过5e-14。
-完整回归1236项通过（含slow，478.786s），锁定同步、Ruff和mypy通过；教学脚本独立Agg运行通过。
-跨操作系统CI仍待外部账户恢复，不能把本地回归称为CI通过。
+当时的本机全量回归通过 1,236 项（含慢测，478.786 s），锁定同步、Ruff 和 mypy 均通过，教学脚本可独立用 Agg 运行。
+后续的本机跨系统回归和托管 CI 分别记录在[验证状态](../../../docs/development_roadmap/validation_status.md)。
 
-取得本机忽略目录中的合格参考与provenance后，可用新运行目录重放比较：
+正式候选比较使用通过自细化的 25/12.5 ns 参考。准备 `local_reference/synchronous_buck/provenance.json`，
+以及其中引用的审计报告、原生归档和派生数据。比较程序按审计报告中的绝对路径和哈希核对原始输入，
+应按记录位置准备文件。以下命令从 Git 检出的项目根目录运行正式比较。
 
 ```powershell
 $env:MPLBACKEND='Agg'

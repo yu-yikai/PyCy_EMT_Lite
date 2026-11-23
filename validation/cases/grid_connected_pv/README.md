@@ -16,9 +16,11 @@ PSCAD 在预充支路断开后保存电容电压。PyCy 从该状态起算，两
 uv run --locked python examples/36_grid_connected_pv.py
 ```
 
-- `irradiance.png` 标出 **500 ms** 处的照度变化，由 1000 降至 900 W/m²。
-- `pv_and_grid_power.png` 比较光伏送入母线的功率与并网点向电网送出的功率，取正表示送出。光伏还要供给本地负荷和电路损耗。可比较 440–490 ms 与 940–990 ms 的功率均值。
-- `dc_bus_voltage.png` 显示母线在照度下降时短暂降低，随后被外环调回 390 V 附近。
+默认依次显示三张图。下列括号注明[启用保存](../../../README.zh-CN.md#save-existing-case)后的文件名。
+
+- **Irradiance (W/m²)**（`irradiance.png`）标出 **500 ms** 处的照度变化，由 1000 降至 900 W/m²。
+- **PV and grid power (W)**（`pv_and_grid_power.png`）比较光伏送入母线的功率与并网点向电网送出的功率，取正表示送出。光伏还要供给本地负荷和电路损耗。可比较 440–490 ms 与 940–990 ms 的功率均值。
+- **DC bus voltage (V)**（`dc_bus_voltage.png`）显示母线在照度下降时短暂降低，随后被外环调回 390 V 附近。
 
 练习时将 `IRRADIANCE_STEP_TIME` 从 0.500 s 改为 0.600 s，保持两档照度不变。照度阶跃推后 100 ms，光伏功率降低和母线电压暂降也随之推后。正式对标使用默认阶跃时刻。
 

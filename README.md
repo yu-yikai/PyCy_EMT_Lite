@@ -65,7 +65,7 @@ uv run --locked pytest -o addopts= -q -p no:cacheprovider --basetemp=.tmp/pytest
 Create `.tmp` explicitly so a fresh download has the parent directory required by `--basetemp`. Ensure no other test run uses the same `--basetemp`; pytest clears that directory. This distinguishes directory-permission failures from code failures. CI is configured for Linux and Windows; local checks are described in section 6.
 
 Examples display figures by default without saving data or images.
-If the script defines `SAVE_RESULT_DATA` or `SAVE_RESULT_FIGURE`, set the relevant flag to `1` to save to `outputs/<case-name>/`. For other `CaseDefinition` scripts, use the [`OutputOptions` example](#3-write-a-case).
+If the script defines `SAVE_RESULT_DATA` or `SAVE_RESULT_FIGURE`, set the relevant flag to `1` to save to `outputs/<case-name>/`. For other scripts with `define_case()`, see [saving figures from an existing case](#save-existing-case).
 With the corresponding saving option enabled, rerunning the same case name under the same output root replaces same-name data files (`result.csv`, `result.json`, `result.npz`) or figures. Copy the earlier results or change the case name before a comparison run.
 The standalone PLL example 11 only displays figures and has no saving flags. Its [validation guide](validation/cases/pll_dynamic_response/README.md) explains the angle and units, with a completed discrete Simulink comparison.
 Noninteractive backends such as `MPLBACKEND=Agg` skip window display while retaining computation and saving.
@@ -84,6 +84,34 @@ If something goes wrong, check these points first:
 
 Introductory scripts and an integrated example form the learning units below. Integrated average renewable/converter and HVDC/MMC candidates 13–16 were removed; retained commands keep their original numbers.
 Complete 01 first, then study storage in 02 and 03 before moving to 04 and 17. Once you can explain these waveforms, use sections 1–5 of [Component derivations](docs/component_derivations.en.md) to check a complete RLC matrix. Leave machines, control and HVDC for later as needed.
+
+### Try examples 01–04
+
+Change one item at a time, save and rerun, then restore the original value. Each script also starts with connections, expected behavior and source locations.
+
+| Example | Check with default parameters | Change and expected behavior |
+|---|---|---|
+| 01 resistor | 10 V and 5 Ω give 2 A | Change `RESISTANCE` from `5.0` to `10.0`: current becomes 1 A. |
+| 02 RC | `R*C = 1 ms`; capacitor voltage starts at 0 V, reaches about 0.6321 V at 1 ms and 0.9933 V at 5 ms | Change `CAPACITANCE` from `1e-6` to `2e-6`: the time constant becomes 2 ms and charging is slower; the long-time limit remains 1 V. |
+| 03 RL | `L/R = 1 ms`; inductor current starts at 0 A, reaches about 0.06321 A at 1 ms and 0.09933 A at 5 ms | Change `INDUCTANCE` from `10e-3` to `20e-3`: the time constant becomes 2 ms and current builds more slowly; the long-time limit remains 0.1 A. |
+| 04 RLC | Capacitor voltage first exceeds 1 V, then oscillations decay toward 1 V | Change `RESISTANCE` from `20.0` to `40.0`: the first voltage peak is lower. At `100.0`, plots still appear and the summary says it skips the underdamped analytical comparison. |
+
+The "long-time limit" is not necessarily reached when the script stops. After changing parameters, the existing simulation duration may cover only part of the transient.
+
+### Read the code
+
+| Notation | Meaning in this project |
+|---|---|
+| `import` / `from ... import ...` | Make a component or function available to the script. |
+| `Resistor("R1", "n1", "0", 5.0)` | Create a resistor object named R1, connected between n1 and 0, with resistance 5 Ω. Identical node names mean a wire connection; `"0"` is reference ground. |
+| `1e-6`, `10e-3` | Respectively 0.000001 and 0.01; component parameters use F, H and Ω, and time uses s. |
+| `def define_case()` / `define_case()` | The first defines a function; the second calls it to create a fresh case. |
+| `result: SimulationResult` / `-> None` | Type hints describe a parameter or return type; `-> None` means the function does not return a computed result. |
+| `CaseDefinition` / `run_case(case)` | The first holds components and settings; the second creates the circuit, runs it and handles output. On a first reading, focus on component parameters and simulation settings. |
+| `result.series("i:R1")[-1]` | Read all R1 current samples and select the last value; `result.series("time")` supplies the corresponding times. |
+| MNA / `stamp()` | MNA is modified nodal analysis; `stamp()` writes each component's equations into a shared matrix. See Component derivations for details. |
+
+### Browse all examples
 
 | Unit | Scripts | What you can check after studying it |
 |---|---|---|
@@ -121,42 +149,7 @@ Complete 01 first, then study storage in 02 and 03 before moving to 04 and 17. O
 [The cascaded-RC reference guide](validation/cases/cascaded_rc/README.md) records the real Simscape run, fixed acceptance criteria and reproduction commands. Teaching scripts plot their own waveforms; independent validation reads vendor reference data.
 [The existing RC charging example](validation/cases/rc_charging/README.md) also has a reproducible Simscape comparison.
 
-Before moving from 12 to 18, follow the existing tests in [the HVDC test module](tests/test_three_terminal_vsc_hvdc.py):
-`test_single_bridge_open_loop_power_identity` checks one bridge's power accounting;
-`test_single_station_pll_and_dq_tracking_with_step_refinement` adds one station's PLL/dq loops;
-`test_two_station_intermediate_dc_exchange` connects two stations through DC;
-then `test_three_terminal_vsc_hvdc_fast_run` introduces the complete FAST network. The last three are marked `slow`.
-Start with the small open-loop test below, using a dedicated temporary directory:
-
-```powershell
-New-Item -ItemType Directory -Force -Path .tmp | Out-Null
-$env:MPLBACKEND = "Agg"
-uv run --locked pytest tests/test_three_terminal_vsc_hvdc.py::test_single_bridge_open_loop_power_identity --basetemp=.tmp/pytest-vsc-bridge
-```
-
-Try these exercises in the first four examples. Change one item at a time, save and rerun, then restore the original value. Each script also starts with connections, expected behavior and source locations.
-
-| Example | Check with default parameters | Change and expected behavior |
-|---|---|---|
-| 01 resistor | 10 V and 5 Ω give 2 A | Change `RESISTANCE` from `5.0` to `10.0`: current becomes 1 A. |
-| 02 RC | `R*C = 1 ms`; capacitor voltage starts at 0 V, reaches about 0.6321 V at 1 ms and 0.9933 V at 5 ms | Change `CAPACITANCE` from `1e-6` to `2e-6`: the time constant becomes 2 ms and charging is slower; the long-time limit remains 1 V. |
-| 03 RL | `L/R = 1 ms`; inductor current starts at 0 A, reaches about 0.06321 A at 1 ms and 0.09933 A at 5 ms | Change `INDUCTANCE` from `10e-3` to `20e-3`: the time constant becomes 2 ms and current builds more slowly; the long-time limit remains 0.1 A. |
-| 04 RLC | Capacitor voltage first exceeds 1 V, then oscillations decay toward 1 V | Change `RESISTANCE` from `20.0` to `40.0`: the first voltage peak is lower. At `100.0`, plots still appear and the summary says it skips the underdamped analytical comparison. |
-
-The "long-time limit" is not necessarily reached when the script stops. After changing parameters, the existing simulation duration may cover only part of the transient.
-
-Start with these code conventions:
-
-| Notation | Meaning in this project |
-|---|---|
-| `import` / `from ... import ...` | Make a component or function available to the script. |
-| `Resistor("R1", "n1", "0", 5.0)` | Create a resistor object named R1, connected between n1 and 0, with resistance 5 Ω. Identical node names mean a wire connection; `"0"` is reference ground. |
-| `1e-6`, `10e-3` | Respectively 0.000001 and 0.01; component parameters use F, H and Ω, and time uses s. |
-| `def define_case()` / `define_case()` | The first defines a function; the second calls it to create a fresh case. |
-| `result: SimulationResult` / `-> None` | Type hints describe a parameter or return type; `-> None` means the function does not return a computed result. |
-| `CaseDefinition` / `run_case(case)` | The first holds components and settings; the second creates the circuit, runs it and handles output. On a first reading, focus on component parameters and simulation settings. |
-| `result.series("i:R1")[-1]` | Read all R1 current samples and select the last value; `result.series("time")` supplies the corresponding times. |
-| MNA / `stamp()` | MNA is modified nodal analysis; `stamp()` writes each component's equations into a shared matrix. See Component derivations for details. |
+To prepare for example 18, follow the [staged tests in the HVDC guide](docs/three_terminal_vsc_hvdc.en.md#13-tests).
 
 Run `uv run python examples/18_three_terminal_vsc_hvdc.py` for the default FAST case (20 μs, 0.8 s).
 Set `MODE` in that script to `FULL` (5 μs) or `BENCHMARK` (2 μs) for 2.5 s runs.
@@ -211,28 +204,28 @@ Follow the [source reading guide](docs/numerical_conventions.en.md#source-route)
 `result.columns` lists fields; `result.series("v:n1")` returns a NumPy array. Node voltage is `v:<node>` and ordinary branch current is `i:<component>`; see model descriptions for three-phase/composite fields.
 Node voltages are relative to reference ground; current delivered by a voltage source is opposite to its branch-current direction.
 
-Append the following code to the end of the same `my_r_circuit.py` file, then rerun the script. It saves `result` as JSON, loads it back, and generates a comparison plot and report.
+Append the following code below `result = run_case(case)` in `my_r_circuit.py`, keeping the four leading spaces so it stays inside the `if __name__ == "__main__":` block. Rerun the script to save and reload the result. Importing the file makes `define_case()` available without starting the simulation or writing the report.
 
 ```python
-from pathlib import Path
+    from pathlib import Path
 
-from pycy_emt_lite import SimulationResult
-from pycy_emt_lite.analysis import rms
-from pycy_emt_lite.visualization import plot_result_comparison, plot_zoom_window, write_markdown_report
+    from pycy_emt_lite import SimulationResult
+    from pycy_emt_lite.analysis import rms
+    from pycy_emt_lite.visualization import plot_result_comparison, plot_zoom_window, write_markdown_report
 
-output_dir = Path("outputs/my_r_circuit")
-result_path = output_dir / "result.json"
-comparison_path = output_dir / "comparison.png"
-zoom_path = output_dir / "zoom.png"
+    output_dir = Path("outputs/my_r_circuit")
+    result_path = output_dir / "result.json"
+    comparison_path = output_dir / "comparison.png"
+    zoom_path = output_dir / "zoom.png"
 
-voltage_rms = rms(result, "v:n1", start_time=0.0, end_time=1e-3)
-result.to_json(result_path)
-loaded = SimulationResult.from_json(result_path)
-plot_result_comparison([result, loaded], "v:n1", labels=["original", "loaded"],
-                       output_path=comparison_path, show=False)
-plot_zoom_window(result, ["v:n1"], 0.0, 5e-4, output_path=zoom_path, show=False)
-write_markdown_report(result, output_dir / "report.md",
-                      summary={"Voltage RMS / V": voltage_rms}, figure_paths=[comparison_path, zoom_path])
+    voltage_rms = rms(result, "v:n1", start_time=0.0, end_time=1e-3)
+    result.to_json(result_path)
+    loaded = SimulationResult.from_json(result_path)
+    plot_result_comparison([result, loaded], "v:n1", labels=["original", "loaded"],
+                           output_path=comparison_path, show=False)
+    plot_zoom_window(result, ["v:n1"], 0.0, 5e-4, output_path=zoom_path, show=False)
+    write_markdown_report(result, output_dir / "report.md",
+                          summary={"Voltage RMS / V": voltage_rms}, figure_paths=[comparison_path, zoom_path])
 ```
 
 Open `comparison.png` in `outputs/my_r_circuit/`. The original and reloaded curves should overlap at 10 V. Both figures are also linked in `report.md`.
@@ -242,6 +235,27 @@ Supply the case name/method when reading CSV; its inferred first interval need n
 Other plotting functions are `plot_series` and `plot_three_phase`; `output_path` supports extensions such as PNG/SVG/PDF.
 Reports organize existing results and user-provided summaries; they do not establish model correctness.
 Window and direction rules for RMS, mean, three-phase power, sampled peaks and sag statistics are in [Numerical conventions](docs/numerical_conventions.en.md).
+
+<a id="save-existing-case"></a>
+
+### Save figures from an existing case
+
+Save this code as `save_case_figures.py` in the project root and run `uv run --locked python save_case_figures.py`.
+It creates a fresh case from example 38 and saves the figures to `outputs/parallel_line_fault_isolation/`.
+Change the path in `run_path()` to reuse the same script with another example that defines `define_case()`.
+Set `save_data=True` in the output settings to save the data too.
+
+```python
+from dataclasses import replace
+from runpy import run_path
+
+from pycy_emt_lite.cases import run_case
+
+define_case = run_path("examples/38_parallel_line_fault_isolation.py")["define_case"]
+case = define_case()
+output = replace(case.output, save_figure=True, show_figure=False)
+run_case(replace(case, output=output))
+```
 
 ## 5. Documents and source
 
@@ -259,10 +273,11 @@ three-phase sources/lines/loads, Pi lines and single-phase transformers. See the
 Import machines from `pycy_emt_lite.machines`, L/LC/LCL from `pycy_emt_lite.converters`, and segmented/Bergeron/three-phase Pi lines and three-phase transformers from their `components` modules.
 Use the respective subpackages for control, analysis and plotting; importability does not imply complete physical validation.
 
-`pycy_emt_lite/` contains implementations, `examples/` cases, `tests/` regressions, and `docs/` full bilingual versions of the four topics above.
+`pycy_emt_lite/` contains implementations, `examples/` cases, `tests/` regressions, and `docs/` model guides and development records.
 New components need physical/discrete equations, units/directions, initialization/event behavior, and an analytical, conservation or independent-reference check.
 Update the learning table for new cases; avoid wrappers, dependencies or entrypoints added only for organization.
-Documentation links to repository files use relative paths; execution and output paths are relative to the project root. Identify external references by public source links and filenames, without personal absolute paths or temporary validation directories.
+Link to local repository files with relative paths. For historical source-line citations, use GitHub links pinned to the original commit.
+Run commands and read output paths relative to the project root. Identify external references by public source links and filenames, without personal absolute paths or temporary validation directories.
 
 PyCy_EMT_Lite derives from the object workflow in PyCy_EMT v0.6, retaining material suitable for small teaching models. [MIT license](LICENSE).
 

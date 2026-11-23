@@ -64,7 +64,7 @@ uv run --locked pytest -o addopts= -q -p no:cacheprovider --basetemp=.tmp/pytest
 先显式创建 `.tmp`，避免干净下载的项目缺少 `--basetemp` 的父目录。运行前确认没有其他测试使用同一个 `--basetemp`；pytest 会清理该目录。本命令用于区分目录权限问题与代码失败。CI 已配置 Linux 和 Windows；本地检查见第 6 节。
 
 示例默认显示图形，不保存数据或图片。
-脚本若提供 `SAVE_RESULT_DATA` 或 `SAVE_RESULT_FIGURE`，将相应开关改为 `1` 即可保存到 `outputs/<算例名>/`。其余使用 `CaseDefinition` 的脚本可参考[第 3 节的 `OutputOptions` 写法](#3-编写自己的算例)。
+脚本若提供 `SAVE_RESULT_DATA` 或 `SAVE_RESULT_FIGURE`，将相应开关改为 `1` 即可保存到 `outputs/<算例名>/`。其他定义了 `define_case()` 的脚本可参考[保存现有算例的图](#save-existing-case)。
 开启相应保存选项后，相同输出根目录下再次运行同名算例，会替换前次同名的数据文件（`result.csv`、`result.json`、`result.npz`）或图片。需要对照时，先复制旧结果或更换算例名，再运行。
 独立 PLL 示例 11 只显示图形，没有保存开关。[PLL验证指南](validation/cases/pll_dynamic_response/README.md)说明角度、单位和已完成的真实Simulink离散对比。
 非交互后端（如 `MPLBACKEND=Agg`）跳过窗口显示，仍可计算与保存。
@@ -83,6 +83,34 @@ uv run --locked pytest -o addopts= -q -p no:cacheprovider --basetemp=.tmp/pytest
 
 基础脚本和综合示例组成以下学习单元。编号 13–16 的平均新能源/变流器及 HVDC/MMC 综合候选已移除，现有命令沿用原编号。
 先完成 01，再学习 02、03 的储能过程，然后进入 04、17。能解释这些波形后，可阅读[元件推导](docs/component_derivations.md)第 1–5 节，核对一个完整 RLC 矩阵。电机、控制和 HVDC 可留到后面按需学习。
+
+### 先练习 01–04
+
+每次只改一项，保存并重新运行，观察后恢复原值。脚本开头也有电路连接、预期现象和源码位置。
+
+| 示例 | 默认结果的检查点 | 修改与预期 |
+|---|---|---|
+| 01 电阻 | 10 V、5 Ω，对应 2 A | `RESISTANCE` 从 `5.0` 改为 `10.0`：电流变为 1 A。 |
+| 02 RC | `R*C = 1 ms`；电容电压从 0 V 开始，在 1 ms 时约 0.6321 V，5 ms 时约 0.9933 V | `CAPACITANCE` 从 `1e-6` 改为 `2e-6`：时间常数变为 2 ms，充电更慢；长期极限仍是 1 V。 |
+| 03 RL | `L/R = 1 ms`；电感电流从 0 A 开始，在 1 ms 时约 0.06321 A，5 ms 时约 0.09933 A | `INDUCTANCE` 从 `10e-3` 改为 `20e-3`：时间常数变为 2 ms，电流建立更慢；长期极限仍是 0.1 A。 |
+| 04 RLC | 电容电压先超过 1 V，再振荡衰减并接近 1 V | `RESISTANCE` 从 `20.0` 改为 `40.0`：第一处电压峰值降低。改成 `100.0` 后仍可绘图，摘要提示跳过欠阻尼解析对比。 |
+
+这里的“长期极限”不等于脚本停止时已经达到的数值。改变参数后，原有仿真时长可能只覆盖部分暂态。
+
+### 读懂示例代码
+
+| 写法 | 在本项目中的含义 |
+|---|---|
+| `import` / `from ... import ...` | 引入要使用的元件或函数。 |
+| `Resistor("R1", "n1", "0", 5.0)` | 创建一个电阻对象：名称 R1、连接节点 n1 和 0、阻值 5 Ω。相同节点名表示导线相连，`"0"` 是参考地。 |
+| `1e-6`、`10e-3` | 分别是 0.000001、0.01；元件参数使用 F、H、Ω，时间使用 s。 |
+| `def define_case()` / `define_case()` | 前者定义函数，后者调用函数来创建一份新算例。 |
+| `result: SimulationResult` / `-> None` | 类型提示，说明参数或返回值的类型；`-> None` 表示函数不返回计算结果。 |
+| `CaseDefinition` / `run_case(case)` | 前者保存元件和设置；后者创建电路、运行仿真并处理输出。第一次阅读时可先关注元件参数与仿真设置。 |
+| `result.series("i:R1")[-1]` | 读取 R1 的全部电流采样，再取最后一个值；`result.series("time")` 给出对应时刻。 |
+| MNA / `stamp()` | MNA 是改进节点分析法；`stamp()` 把每个元件的方程写入共同的矩阵，详见元件推导。 |
+
+### 浏览全部算例
 
 | 单元 | 脚本 | 学完后可以检查的事情 |
 |---|---|---|
@@ -120,42 +148,7 @@ uv run --locked pytest -o addopts= -q -p no:cacheprovider --basetemp=.tmp/pytest
 [19级联RC真实Simscape对标](validation/cases/cascaded_rc/README.md)给出参数、固定验收、结果和复现命令。教学程序只绘制自身波形，独立验证程序读取真实参考。
 [既有02 RC充电算例](validation/cases/rc_charging/README.md)也已补充可复现的Simscape对比。
 
-从 12 进入 18 前，可沿[现有 HVDC 测试模块](tests/test_three_terminal_vsc_hvdc.py)逐步阅读：
-`test_single_bridge_open_loop_power_identity` 核对单桥开环功率账；
-`test_single_station_pll_and_dq_tracking_with_step_refinement` 加入单站 PLL/dq 闭环；
-`test_two_station_intermediate_dc_exchange` 连接双站 DC 网络；
-最后看 `test_three_terminal_vsc_hvdc_fast_run` 的完整 FAST 网络。后三项标记为 `slow`。
-先用专用临时目录运行较小的单桥开环测试：
-
-```powershell
-New-Item -ItemType Directory -Force -Path .tmp | Out-Null
-$env:MPLBACKEND = "Agg"
-uv run --locked pytest tests/test_three_terminal_vsc_hvdc.py::test_single_bridge_open_loop_power_identity --basetemp=.tmp/pytest-vsc-bridge
-```
-
-前四个示例可先做以下练习。每次只改一项、保存并重新运行，观察后恢复原值。脚本开头也有电路连接、预期现象和源码位置。
-
-| 示例 | 默认结果的检查点 | 修改与预期 |
-|---|---|---|
-| 01 电阻 | 10 V、5 Ω，对应 2 A | `RESISTANCE` 从 `5.0` 改为 `10.0`：电流变为 1 A。 |
-| 02 RC | `R*C = 1 ms`；电容电压从 0 V 开始，在 1 ms 时约 0.6321 V，5 ms 时约 0.9933 V | `CAPACITANCE` 从 `1e-6` 改为 `2e-6`：时间常数变为 2 ms，充电更慢；长期极限仍是 1 V。 |
-| 03 RL | `L/R = 1 ms`；电感电流从 0 A 开始，在 1 ms 时约 0.06321 A，5 ms 时约 0.09933 A | `INDUCTANCE` 从 `10e-3` 改为 `20e-3`：时间常数变为 2 ms，电流建立更慢；长期极限仍是 0.1 A。 |
-| 04 RLC | 电容电压先超过 1 V，再振荡衰减并接近 1 V | `RESISTANCE` 从 `20.0` 改为 `40.0`：第一处电压峰值降低。改成 `100.0` 后仍可绘图，摘要提示跳过欠阻尼解析对比。 |
-
-这里的“长期极限”不等于脚本停止时已经达到的数值。改变参数后，原有仿真时长可能只覆盖部分暂态。
-
-读代码时先认清这些写法：
-
-| 写法 | 在本项目中的含义 |
-|---|---|
-| `import` / `from ... import ...` | 引入要使用的元件或函数。 |
-| `Resistor("R1", "n1", "0", 5.0)` | 创建一个电阻对象：名称 R1、连接节点 n1 和 0、阻值 5 Ω。相同节点名表示导线相连，`"0"` 是参考地。 |
-| `1e-6`、`10e-3` | 分别是 0.000001、0.01；元件参数使用 F、H、Ω，时间使用 s。 |
-| `def define_case()` / `define_case()` | 前者定义函数，后者调用函数来创建一份新算例。 |
-| `result: SimulationResult` / `-> None` | 类型提示，说明参数或返回值的类型；`-> None` 表示函数不返回计算结果。 |
-| `CaseDefinition` / `run_case(case)` | 前者保存元件和设置；后者创建电路、运行仿真并处理输出。第一次阅读时可先关注元件参数与仿真设置。 |
-| `result.series("i:R1")[-1]` | 读取 R1 的全部电流采样，再取最后一个值；`result.series("time")` 给出对应时刻。 |
-| MNA / `stamp()` | MNA 是改进节点分析法；`stamp()` 把每个元件的方程写入共同的矩阵，详见元件推导。 |
+准备学习 18 号时，可按 [HVDC 专题的测试顺序](docs/three_terminal_vsc_hvdc.md#13-tests)从单个桥开始。
 
 运行 `uv run python examples/18_three_terminal_vsc_hvdc.py`，默认 FAST 为 20 μs、0.8 s。
 修改脚本顶部 `MODE` 可选择 `FULL`（5 μs）或 `BENCHMARK`（2 μs），两者均运行 2.5 s。
@@ -210,28 +203,28 @@ if __name__ == "__main__":
 `result.columns` 列出字段；`result.series("v:n1")` 返回 NumPy 数组。节点电压为 `v:<节点>`，
 普通支路电流为 `i:<元件>`，三相与组合件字段见模型说明。节点电压相对参考地；电源供出电流与其支路电流方向相反。
 
-将下面代码追加到同一个 `my_r_circuit.py` 文件末尾，再运行脚本。它把 `result` 保存为 JSON，读回后生成对比图和报告。
+把下面代码接在 `my_r_circuit.py` 的 `result = run_case(case)` 下一行。保留行首的四个空格，使新增代码仍在 `if __name__ == "__main__":` 块内。再次运行脚本即可保存和读回结果。导入文件时可直接使用 `define_case()`，仿真和报告只在运行脚本时执行。
 
 ```python
-from pathlib import Path
+    from pathlib import Path
 
-from pycy_emt_lite import SimulationResult
-from pycy_emt_lite.analysis import rms
-from pycy_emt_lite.visualization import plot_result_comparison, plot_zoom_window, write_markdown_report
+    from pycy_emt_lite import SimulationResult
+    from pycy_emt_lite.analysis import rms
+    from pycy_emt_lite.visualization import plot_result_comparison, plot_zoom_window, write_markdown_report
 
-output_dir = Path("outputs/my_r_circuit")
-result_path = output_dir / "result.json"
-comparison_path = output_dir / "comparison.png"
-zoom_path = output_dir / "zoom.png"
+    output_dir = Path("outputs/my_r_circuit")
+    result_path = output_dir / "result.json"
+    comparison_path = output_dir / "comparison.png"
+    zoom_path = output_dir / "zoom.png"
 
-voltage_rms = rms(result, "v:n1", start_time=0.0, end_time=1e-3)
-result.to_json(result_path)
-loaded = SimulationResult.from_json(result_path)
-plot_result_comparison([result, loaded], "v:n1", labels=["original", "loaded"],
-                       output_path=comparison_path, show=False)
-plot_zoom_window(result, ["v:n1"], 0.0, 5e-4, output_path=zoom_path, show=False)
-write_markdown_report(result, output_dir / "report.md",
-                      summary={"Voltage RMS / V": voltage_rms}, figure_paths=[comparison_path, zoom_path])
+    voltage_rms = rms(result, "v:n1", start_time=0.0, end_time=1e-3)
+    result.to_json(result_path)
+    loaded = SimulationResult.from_json(result_path)
+    plot_result_comparison([result, loaded], "v:n1", labels=["original", "loaded"],
+                           output_path=comparison_path, show=False)
+    plot_zoom_window(result, ["v:n1"], 0.0, 5e-4, output_path=zoom_path, show=False)
+    write_markdown_report(result, output_dir / "report.md",
+                          summary={"Voltage RMS / V": voltage_rms}, figure_paths=[comparison_path, zoom_path])
 ```
 
 在 `outputs/my_r_circuit/` 打开 `comparison.png`，原始曲线和读回曲线应在 10 V 处重合。两张图也可从 `report.md` 查看。
@@ -241,6 +234,26 @@ write_markdown_report(result, output_dir / "report.md",
 绘图还包括 `plot_series`、`plot_three_phase`；`output_path` 可使用 PNG/SVG/PDF 等后缀。
 报告只整理现有结果和用户提供的摘要，不自动证明模型正确。
 RMS、均值、三相功率、采样峰值和跌落统计的窗口/方向规则见[数值约定](docs/numerical_conventions.md)。
+
+<a id="save-existing-case"></a>
+
+### 保存现有算例的图
+
+把以下代码保存为项目根目录下的 `save_case_figures.py`，运行 `uv run --locked python save_case_figures.py`。
+脚本会从 38 号创建一份新算例，并把图保存到 `outputs/parallel_line_fault_isolation/`。
+要处理其他定义了 `define_case()` 的算例，只需替换 `run_path()` 中的脚本路径。若要同时保存数据，在输出设置中加上 `save_data=True`。
+
+```python
+from dataclasses import replace
+from runpy import run_path
+
+from pycy_emt_lite.cases import run_case
+
+define_case = run_path("examples/38_parallel_line_fault_isolation.py")["define_case"]
+case = define_case()
+output = replace(case.output, save_figure=True, show_figure=False)
+run_case(replace(case, output=output))
+```
 
 ## 5. 文档与源码
 
@@ -259,10 +272,11 @@ RMS、均值、三相功率、采样峰值和跌落统计的窗口/方向规则�
 分段/Bergeron/三相 π 线路及三相变压器从相应 `components` 模块导入。
 控制、分析、绘图使用各自子包；子包可导入不等于已完成全部物理验证。
 
-`pycy_emt_lite/` 放实现，`examples/` 放案例，`tests/` 放回归，`docs/` 放上述四项专题的完整双语版本。
+`pycy_emt_lite/` 放实现，`examples/` 放算例，`tests/` 放回归测试，`docs/` 放模型说明和开发记录。
 新增元件需说明物理方程、离散式、单位/方向、初值/事件行为，并增加解析、守恒或独立参考检查。
 新增案例更新学习表即可；避免仅为组织形式增加包装层、依赖或入口。
-文档中的仓库文件链接使用相对路径，运行与输出路径以项目根目录为基准；外部参考资料提供公开来源链接和文件名，不写个人绝对路径或临时验证目录。
+仓库内的文件使用相对链接。引用历史源码行时，使用固定到原提交的 GitHub 链接。
+运行命令与输出路径以项目根目录为基准。外部参考资料提供公开来源链接和文件名，不写个人绝对路径或临时验证目录。
 
 PyCy_EMT_Lite 源自 PyCy_EMT v0.6 的对象式工作流，保留适合小规模教学的内容。[MIT 许可证](LICENSE)。
 

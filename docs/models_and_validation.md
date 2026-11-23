@@ -8,6 +8,8 @@
 
 ## 1. 已验证范围
 
+2026-11-23 复审修复后，Windows 和 Ubuntu WSL2 各通过 1,664 项全量测试，含慢测。最终的 Windows 输出路径检查另做了双平台定向复验。11、12 号用历史快照复跑，27、38、39 号用已验收的原生归档复比，均通过。[复验记录与提交](development_roadmap/experiments/post_audit_repairs_20261123.json)
+
 2026-11-23 验收 39 号算例时，Windows 和 Ubuntu WSL2 各通过 1,629 项测试，包含慢测。Windows 从干净的 Git 归档串行跑完全部 35 个公开算例。 [39 号验收报告](../validation/cases/dual_grid_forming_power_sharing/acceptance_report.json) · [全算例运行记录](development_roadmap/experiments/f1_case39_ci_examples_timing_20261123.json)
 
 19–39 号共 21 个新增算例，均有真实 Simulink 或 PSCAD 数值对标。参考目录列出了 28–39 号逐例的参考资格和验收报告。验证状态页记录本机回归和托管 CI 状态。 [参考目录](development_roadmap/02_reference_catalog.md) · [验证状态](development_roadmap/validation_status.md)
@@ -20,7 +22,7 @@
 综合示例的模式、运行结果及模型差异见[专项说明](three_terminal_vsc_hvdc.md)。
 这些是本地证据，不是远端 CI 状态，也没有声称完成实验数据或商业 EMT 软件全模型对标。
 
-2026-11-04新增专项证据：[19级联RC](../validation/cases/cascaded_rc/README.md)、[20多源节点](../validation/cases/nodal_analysis/README.md)、[21中性点不平衡](../validation/cases/earthing/README.md)、[22有限T梯级传播](../validation/cases/transmission_line/README.md)及[既有02 RC](../validation/cases/rc_charging/README.md)均已与实际R2025a Simscape波形按预设判据比较通过。每例分别记录数学边界、参数/方向、差异、原始数据hash和可复现脚本。[既有12 PWM](../validation/cases/two_level_pwm/README.md)保留波形失败、基波/功率特征通过的真实结论。这些局部结果不扩大为全部元件商业认证。当前回归/远端CI及待验证项统一见[长期验证状态](development_roadmap/validation_status.md)。
+2026-11-04，[19 级联 RC](../validation/cases/cascaded_rc/README.md)、[20 多源节点](../validation/cases/nodal_analysis/README.md)、[21 中性点不平衡](../validation/cases/earthing/README.md)、[22 有限 T 梯级传播](../validation/cases/transmission_line/README.md)和[既有 02 RC](../validation/cases/rc_charging/README.md)均按预设判据通过实际 R2025a Simscape 波形对比。各例记录各自的模型边界、参数、方向、原始数据哈希和复跑脚本。12 号的两种参考配置及结果见 [PWM 教学示例](#pwm-reference-scope)。
 
 | 范围 | 已有证据 | 证据边界与测试入口 |
 |---|---|---|
@@ -28,17 +30,17 @@
 | 时间、初始化、显式事件 | 整步终点、三种事件策略、左右侧一致状态、同刻顺序及终点事件 | 不自动定位 callable 跳变；[时间](../tests/test_time_grid.py)、[事件](../tests/test_events.py) |
 | 三相 R–L 与故障（05–07） | 平衡相量、分段 RL 解析暂态、单相接地电阻分压、固定窗口 RMS/P/Q | 三相独立相网络；[三相测试](../tests/test_three_phase.py) |
 | 单相 π 线、分段线 | 相量/二端口参考、KCL、能量、时间或空间收敛 | 无宽频、相间耦合；[线路测试](../tests/test_line_models.py) |
-| 单相/三相 Bergeron | 整步时延、到达前无响应、匹配传输、开路/短路反射、事件右侧历史 | 固定网格、独立相；同一线路测试 |
+| 单相/三相 Bergeron | 整步时延、匹配传输和反射、波前到达时电容电压连续 | 固定网格、独立相。见[线路测试](../tests/test_line_models.py) |
 | 线性单相/三相变压器 | 相量、启动解析解、接线相移、端口功/储能、磁链一致性、时间收敛 | 四种声明接法；无共同铁芯耦合；[变压器测试](../tests/test_transformers.py) |
 | 23线性变压器T等效 | 独立两状态矩阵指数、KCL/能量、事件电流连续、TR细化及真实Simscape七量通过 | 外置三电感、漏感后的励磁支路；无饱和/磁滞；[专项证据](../validation/cases/transformer_t_equivalent/README.md)、[测试](../tests/test_transformer_t_equivalent.py) |
 | 24三相Y–Δ–Y链 | 独立精确启动/采样间插值、KCL、铜耗/能量、TR细化和RMS/相位9项测试；真实Simscape19量双窗通过 | 两浮动Y星点，Δ中心参考只固定规范点；无实际线路/磁支路，不覆盖其他接线和零序故障；[证据](../validation/cases/three_phase_transformer_chain/README.md)、[测试](../tests/test_three_phase_transformer_chain.py) |
 | 两种同步机及示例 10 | 端口方程、功率方向、平衡点、独立连续 ODE、机电状态一阶收敛 | 声明的简化方程；[经典模型](../tests/test_synchronous_machine.py)、[Park 模型](../tests/test_park_synchronous_generator.py) |
 | L/LC/LCL 滤波器 | 参数拒绝、接线、独立 ODE、KCL、离散能量及步长收敛 | 被动线性网络；[电力电子测试](../tests/test_power_electronics.py) |
-| PWM 示例 12 | 门极、浮置星点、基波 RL 参考、细网格对照 | 细网格不构成器件参考，边沿不自动定位；同一电力电子测试 |
+| PWM 示例 12 | 门极、浮置星点、基波 RL 参考、细网格对照及真实 PSCAD 双向开关对比 | [两种参考配置及结果](#pwm-reference-scope) |
 | 三端两电平 VSC-HVDC 示例 18 | 单站开环/闭环、双站、三站 FAST 故障恢复、PLL/dq/P/Vdc/Vac、桥端口功率及 DC 离散能量 | 参考模型的教学重实现，含 RC 缓冲及控制调整；[系统测试](../tests/test_three_terminal_vsc_hvdc.py)、[步后回调与抽样](../tests/test_step_callback.py) |
 | `ThreePhasePiLine`、`ThreePhaseParallelRLCLoad` | 初值/第一步、输出字段及额定换算；平衡 AC 启动、三相接地故障投入/清除的六状态分段 DOP853 对照、两种积分与步长细化；并联负荷 KCL、π 线离散能量 | 独立相简化网络，不外推任意不平衡故障；[`test_three_phase_existing_models_match_independent_ac_fault_reference`](../tests/test_three_phase.py) |
 | 控制块与 SRF-PLL | 基础功能、采样一致性、独立ODE与一阶收敛；既有11完整离散Simulink对比 | 功能及特定平衡工况检查；无闭环电网/弱网工程验证；[控制测试](../tests/test_controls.py) |
-| 饱和励磁近似 | 参数、线性磁链/电流关系，以及单向跨拐点的独立分段 λ–i 参考与步长细化 | **未完成独立非线性能量、回程/周期、磁滞或真实涌流认证**；[`test_saturation_matches_piecewise_flux_current_and_refines`](../tests/test_transformers.py) |
+| 饱和励磁近似 | 线性磁链/电流关系、单向跨拐点与步长细化、正负饱和区的周期往返 | 分段曲线，跨拐点有单步误差。独立饱和能量和真实涌流验证待完成。[变压器测试](../tests/test_transformers.py) |
 
 指标、结果读写、绘图和线性求解器另有 [指标](../tests/test_analysis.py)、[读写](../tests/test_results_io.py)、
 [绘图/报告](../tests/test_visualization_reporting.py)、[求解器](../tests/test_solvers.py) 回归；它们验证工具行为，
@@ -203,7 +205,11 @@ I_s_hist(t) = -v_r(t - τ) / Zc - i_r(t - τ)
 I_r_hist(t) = -v_s(t - τ) / Zc - i_s(t - τ)
 ```
 
-当前实现只支持固定时间网格，`travel_time` 必须是步长的正整数倍；停止及实际事件时间须对齐网格，采用与仿真器一致的成对 8 ULP 舍入容差。非法配置在首次求解前报错；非对齐事件可选择 `quantize_up` 延后执行。历史按整数步读取，负时间端口历史为零，缺失历史明确报错；同刻事件只保留右侧端口帧。匹配负载到达、到达前无响应及开路/短路反射已有测试。`surge_impedance` 必须为有限正数，`attenuation` 在 (0,1] 内，表示教学用传播衰减；不考虑非整步延时、历史插值、频率相关衰减、模量变换和相间耦合。
+模型使用固定时间网格。`travel_time` 必须是步长的正整数倍，停止及实际事件时间按成对 8 ULP 的舍入容差对齐。非对齐事件可选 `quantize_up` 延后执行。历史按整数步读取，负时间历史为零，缺失历史会报错。
+
+初始化、显式事件及后续反射可产生出射波跳变。波前到达时，程序先用左侧历史源积分，再固定储能状态，用右侧历史源求代数量。公开的端口历史和保留的结果行记录右侧值。[波前推导](component_derivations.md#bergeron-wavefront) · [含电容终端的线路测试](../tests/test_line_models.py)
+
+`surge_impedance` 必须为有限正数，`attenuation` 在 (0,1] 内，表示教学用传播衰减。适用范围为固定参数的独立相线路，不含分数步时延、频率相关衰减或相间耦合。
 
 ## 6. 单相线性变压器
 
@@ -248,28 +254,20 @@ Iinput = Ileak + Imag + Vpri/Rcore   # 未设置铁耗电阻时省略末项
 示例 09 在 0.02–0.06 s 比较带载电压、总电流与解析值，并检查输入有功减负载有功、铜损的残差。
 测试另覆盖可选铁耗支路、全启动过程能量平衡和两种方法的步长收敛。这些结果仅验证线性模型，不扩展到饱和或磁滞。
 
-## 7. 磁链与未验证的饱和近似
+## 7. 磁链与饱和近似
 
-饱和励磁采用显式滞后教学模型：本时间步使用上一时刻磁链决定励磁电感。
-
-```text
-|ψ| < ψ_knee      使用 magnetizing_inductance
-|ψ| >= ψ_knee     使用 saturated_magnetizing_inductance
-```
-
-磁链用一次侧电压积分，方法与励磁电感保持一致：
+磁链用一次侧电压积分，方法与励磁电感保持一致。
 
 ```text
 梯形法：    ψ_k = ψ_{k-1} + (v_p,k-1 + v_p,k) Δt/2
 后向欧拉：  ψ_k = ψ_{k-1} + v_p,k Δt
 ```
 
-线性 Lm 下应满足 `ψ(t)-ψ(0)=Lm·(im(t)-im(0))`；单相/三相、两种积分方法及非整步/终点事件已有回归。
-旧实现一律用后向欧拉积磁链，导致梯形法下磁链与电流不一致，现已修正。
-饱和电感仍按上一时刻磁链选择，不引入非线性迭代。[`test_saturation_matches_piecewise_flux_current_and_refines`](../tests/test_transformers.py)
-以恒定正电压下的单向磁链验证跨拐点的独立分段 λ–i 参考及步长细化，并与线性电流对照区分。
-这不构成独立非线性能量、回程/周期、磁滞或真实涌流认证，不能由该测试或线性回归推断涌流准确性。
-不包含完整铁芯磁滞、剩磁、回线和频率相关损耗。
+线性模型满足 `ψ(t)-ψ(0)=Lm·(im(t)-im(0))`。单相、三相、两种积分方法及非整步与终点事件已有回归。
+
+饱和近似每步用起点磁链从连续分段曲线取基准电流。`saturation_knee_flux` 给出拐点，`magnetizing_inductance` 与 `saturated_magnetizing_inductance` 分别给出拐点内外的励磁电感，恰在拐点时选线性电感。跨拐点的一步仍用起点斜率，下一步重新从曲线取值。[分段磁化曲线与误差](component_derivations.md#saturation-curve)
+
+测试覆盖单向跨拐点、步长细化、正负饱和区的周期往返及事件时电流连续。模型采用无磁滞曲线，独立饱和能量及真实涌流验证仍待完成。[变压器测试](../tests/test_transformers.py)
 
 ## 8. 三相变压器
 
@@ -501,6 +499,8 @@ LC 使用上面的参数并对照 Rs=0，步长 20/10 μs；LCL 使用 L1=10 mH�
 `(ΣL·Δi²+ΣC·Δv²)/2` 的数值耗散。无阻尼 LCL 在 2.5 μs 下的最大 vC 误差仍约 0.541 V，
 梯形法约 0.000387 V；后向欧拉的衰减不能解释为真实阻尼。这些检查针对线性被动滤波网络，不代表闭环并网变流器验证。
 
+<a id="pwm-reference-scope"></a>
+
 ### PWM 教学示例
 
 - `examples/12_two_level_pwm_generator.py`：两电平 PWM 逆变器驱动 RL 负载，使用 `IdealSwitch` 与三角载波比较生成门极信号。
@@ -513,6 +513,8 @@ LC 使用上面的参数并对照 Rs=0，步长 20/10 μs；LCL 使用 L1=10 mH�
 5/2.5/1.25 μs 在共同的 0.05–0.10 s 窗口比较：相对 1.25 μs，默认 5 μs 的最大基波相量差约 0.214%，
 2.5 μs 约 0.094%；电流波形 RMS 差分别小于 0.6 A、0.3 A。细网格是步长对照，不是器件物理参考。
 `event_time_policy` 仅约束显式事件，不会自动定位 callable 门极边沿，因此不承诺 PWM 的二阶波形收敛、死区或器件级行为。
+
+默认算例通过了真实 PSCAD 双向开关参考的波形和特征验收。早期 R2025a Simscape 参考采用各自的器件与时序设定，完整波形超出其预设限值，基波和功率特征通过。[PSCAD 比较与历史复跑](../validation/cases/two_level_pwm_pscad/README.md) · [Simscape 比较](../validation/cases/two_level_pwm/README.md)
 
 ## 11. 控制模块与 SRF-PLL
 

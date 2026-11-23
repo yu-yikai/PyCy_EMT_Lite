@@ -16,9 +16,11 @@
 uv run --locked python examples/37_islanded_frequency_droop.py
 ```
 
-- `pcc_power.png` 同时画出 PCC 有功和滤波功率。200 ms 投入负荷时，电感电流来不及突变，PCC 电压和功率先短暂跌落，之后平均功率由约 359 W 升到 717 W。
-- `frequency.png` 显示频率随滤波功率变化，负荷接入后由约 60.001 Hz 降到 59.643 Hz。
-- `pcc_voltage.png` 保留三相瞬时电压，可放大负荷接入附近读图。源相角按每拍的频率连续推进。
+默认依次显示三张图。下列括号注明[启用保存](../../../README.zh-CN.md#save-existing-case)后的文件名。
+
+- **PCC power (W)**（`pcc_power.png`）同时画出 PCC 有功和滤波功率。200 ms 投入负荷时，电感电流来不及突变，PCC 电压和功率先短暂跌落，之后平均功率由约 359 W 升到 717 W。
+- **Source frequency (Hz)**（`frequency.png`）显示频率随滤波功率变化，负荷接入后由约 60.001 Hz 降到 59.643 Hz。
+- **PCC voltage (V)**（`pcc_voltage.png`）保留三相瞬时电压，可放大负荷接入附近读图。源相角按每拍的频率连续推进。
 
 ## 试改一个参数
 

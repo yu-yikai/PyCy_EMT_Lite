@@ -16,9 +16,11 @@
 uv run --locked python examples/39_dual_grid_forming_power_sharing.py
 ```
 
-- **PCC 有功**。负荷投入首拍，馈线电流来不及增加，PCC 电压和功率先跌落。恢复后，A、B 分别多供约 239.37 W 和 119.67 W。
-- **源频率**。两台源各自响应，最后都接近 59.761 Hz，比投负荷前低约 0.239 Hz。
-- **A−B 相角差**。投负荷后从约 3.17 mrad 增至 6.31 mrad。两站接近同频时，相角差趋于稳定。
+默认依次显示三张图。下列括号注明[启用保存](../../../README.zh-CN.md#save-existing-case)后的文件名。
+
+- **PCC power by source (W)**（`pcc_power.png`）显示两台源向 PCC 输送的有功。负荷投入首拍，馈线电流来不及增加，PCC 电压和功率先跌落。恢复后，A、B 分别多供约 239.37 W 和 119.67 W。
+- **Source frequency (Hz)**（`frequency.png`）显示两台源各自的响应。最后都接近 59.761 Hz，比投负荷前低约 0.239 Hz。
+- **Phase A minus B (mrad)**（`phase_difference.png`）显示相角差。投负荷后从约 3.17 mrad 增至 6.31 mrad。两站接近同频时，相角差趋于稳定。
 
 ## 试改一个参数
 

@@ -82,6 +82,12 @@ PyCy 默认保存仍可使用 `outputs/<case_name>/`。开始一次正式比较�
 
 SHA-256 标识的是确切字节，不能单独证明数据来自某款软件。Windows 可用 `Get-FileHash -Algorithm SHA256 -LiteralPath <path>`，其他平台可使用 Python `hashlib`；同时保留来源与真实运行链路。不要把 hash 值当作独立的真实性证明。
 
+### 运行对标前的准备
+
+ZIP 解压后即可按[快速入门](../README.zh-CN.md)运行教学算例。对标需要安装 Git 并从 Git 检出运行，以记录候选代码的提交。先在项目根目录执行 `uv sync --locked`，再按各例 README 准备 `local_reference/` 中的参考归档。已有归档可用 Python 复比。重新导出原生数据时，按对应算例准备参考软件版本、许可和工具箱或编译器。
+
+使用 `--run-dir` 的比较入口时，为每次运行指定 `local_reference/` 下尚不存在的目录，由程序创建。再次执行示例命令时，换一个末级目录名。
+
 使用早期的 CSV 比较入口复现既有结果时，先按算例验收记录核对原始档案及导出信息。该入口在运行后记录本次读入文件的哈希。近期的原生比较入口还会在读入时核对冻结的原始档案、编译产物和运行凭据。
 
 复跑 [11 号 PLL](cases/pll_dynamic_response/README.md) 或 [12 号 PWM](cases/two_level_pwm_pscad/README.md) 的历史验收时，用 `uv run --locked python -m validation.replay_existing 11` 或 `12`。需要原运行提交的 Git 对象和本地验收快照。工具按报告校验并恢复文件的原始字节，在独立检出中复跑。11 号的路径兼容改动随新报告记录。当前版本的比较另建运行记录。

@@ -57,6 +57,7 @@ outputs use `v:node` and `i:component`. Composite elements may expose branch or 
 
 A conductance G contributes `A[p,p]+=G`, `A[n,n]+=G`, `A[p,n]-=G`, `A[n,p]-=G` to the node submatrix.
 An independent current I from p to n contributes `b[p]-=I`, `b[n]+=I`. Reference-node rows and columns are omitted.
+When both terminals are the same node, the net contribution is zero. Skipping the updates directly avoids floating-point cancellation.
 An ideal voltage source adds current unknown k, contributes `+ik/−ik` to node KCL and adds `Vp−Vn=Vsource` as another row.
 MNA therefore handles voltage constraints directly without replacing an ideal voltage source with a very large conductance.
 
@@ -105,7 +106,8 @@ a fixed grid and an integer-step propagation delay.
 
 `record_every` must be a positive integer and defaults to saving every solution point. N saves every Nth point by index,
 always retaining the initial point, explicit-event points and endpoint. Inserted events count toward the index, so output need not be uniform.
-It only reduces stored rows; network solves, state updates and control callbacks still run at every solution point.
+Bergeron wavefront arrivals follow regular decimation. Set `record_every=1` to inspect them. Decimation only reduces stored rows.
+Network solves, state updates and control callbacks still run at every solution point.
 `result.time_step` remains the base EMT step; plots and metrics use the actual `time` column.
 
 ### Optional post-step control callback
@@ -113,7 +115,8 @@ It only reduces stored rows; network solves, state updates and control callbacks
 Use `CaseDefinition(..., on_step=callback)` or `Simulator(..., on_step=callback)` to connect explicit control.
 The callback receives the current read-only measurement row and returns a mapping of additional fields (`{}` when none are needed).
 Keys must be nonempty strings without collisions; values must be finite real numbers, excluding booleans.
-The order is solve/update, consistent event right-side solve, one callback, then selective recording. Same-time events do not advance controllers twice.
+The order is integration solve and update, right-side consistency solve when needed, one callback, then selective recording.
+The callback runs once even if an explicit event and a Bergeron wavefront arrive at the same time.
 The callback also runs at t=0 for observation/initialization; do not pass a zero interval to PI/PLL blocks requiring positive intervals.
 Held controller commands reach the next network step through component callables; there is no same-step algebraic control loop.
 Use consecutive `row["time"]` values for the actual interval and create fresh controller state with each case.
@@ -191,6 +194,8 @@ correct wiring or initial conditions, or use physically justified finite impedan
 right-side row. Ordinary callable sources and PWM gate edges are not automatically converted to explicit events, so this mechanism
 does not guarantee automatic detection of those discontinuities.
 
+<a id="metrics"></a>
+
 ## 6. Metrics use actual times
 
 [analysis/metrics.py](../pycy_emt_lite/analysis/metrics.py) treats signals as linear between adjacent result points.
@@ -199,9 +204,11 @@ after event insertion. For interval h with endpoint values a/b, `∫x dt=h(a+b)/
 For a product, `∫vi dt=h(2v0i0+v0i1+v1i0+2v1i1)/6`. Thus RMS is `sqrt(∫x²dt/T)` and average active power is `∫vidt/T`;
 these are not trapezoidal integrals of sampled squares.
 
-Integral windows need positive duration, with finite, increasing times. Integral metrics reject windows involving an interval with
-an explicit-event jump: right-side-only records cannot reconstruct the left limit. Choose windows that do not cross switching.
-This check relies on `event_log`; for CSV and other data without a log, the caller must ensure the window does not cross an event.
+Integral windows need positive duration, with finite, increasing times. Integral metrics use `event_log` to reject sampled intervals
+containing a recorded event because the right-side sample alone cannot reconstruct the left limit.
+CSV keeps only tabular data, and `event_log` lists explicit events. When analyzing Bergeron results, identify propagating and reflected
+wavefronts in the sampled waveforms. Use `record_every=1` and end the preceding window at the last sample before arrival.
+Start the following window at the arrival sample. [Wavefront handling](component_derivations.en.md#bergeron-wavefront)
 `peak_abs` is a sampled peak and permits one point; it does not locate the true continuous-waveform extremum.
 `voltage_sag_summary` compares window RMS with nominal voltage and does not track sag duration.
 

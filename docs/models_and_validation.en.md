@@ -8,6 +8,8 @@ See [Component derivations](component_derivations.en.md) for how physical relati
 
 ## 1. Validated scope
 
+After the November 23, 2026 review fixes, Windows and Ubuntu WSL2 each passed 1,664 tests, including slow tests. The final Windows output-path check was verified separately on both systems. Historical snapshot replays for 11 and 12 and comparisons against accepted native archives for 27, 38 and 39 all passed. [Verification record and commits](development_roadmap/experiments/post_audit_repairs_20261123.json)
+
 At the November 23, 2026 acceptance of case 39, Windows and Ubuntu WSL2 each passed 1,629 tests, including slow tests. On Windows, all 35 public examples also ran in sequence from a clean Git archive. [Case 39 acceptance report](../validation/cases/dual_grid_forming_power_sharing/acceptance_report.json) · [Windows example run](development_roadmap/experiments/f1_case39_ci_examples_timing_20261123.json)
 
 Each of the 21 added examples (19–39) has a comparison against actual Simulink or PSCAD results. The reference catalog links to the reference qualification and acceptance reports for cases 28–39. The validation log records local regressions and hosted CI status. [Reference catalog](development_roadmap/02_reference_catalog.md) · [Validation status](development_roadmap/validation_status.md)
@@ -20,7 +22,7 @@ The local regression after R5 on 2026-10-05 contains 832 passing tests; all 14 d
 The integrated example's modes, results and deviations are in its [dedicated guide](three_terminal_vsc_hvdc.en.md).
 This is local evidence, not remote CI status. No full-model comparison with experimental data or commercial EMT software is claimed.
 
-New scoped evidence on 2026-11-04: [cascaded RC (19)](../validation/cases/cascaded_rc/README.md), [multi-source nodal analysis (20)](../validation/cases/nodal_analysis/README.md), [neutral imbalance (21)](../validation/cases/earthing/README.md), [finite T-ladder propagation (22)](../validation/cases/transmission_line/README.md), and [existing RC (02)](../validation/cases/rc_charging/README.md) passed predefined criteria against actual R2025a Simscape waveforms. Each guide records model boundaries, parameters, signs, differences, raw-data hashes and reproduction scripts. The [existing PWM comparison](../validation/cases/two_level_pwm/README.md) retains its waveform failure despite passing fundamental/power features. These results do not certify every component. See [current validation status](development_roadmap/validation_status.md) for regression, remote CI and remaining work.
+On November 4, 2026, [cascaded RC (19)](../validation/cases/cascaded_rc/README.md), [multi-source nodal analysis (20)](../validation/cases/nodal_analysis/README.md), [neutral imbalance (21)](../validation/cases/earthing/README.md), [finite T-ladder propagation (22)](../validation/cases/transmission_line/README.md), and [existing RC (02)](../validation/cases/rc_charging/README.md) passed predefined criteria against actual R2025a Simscape waveforms. Each guide records its model boundaries, parameters, signs, raw-data hashes and replay scripts. The [PWM example](#pwm-reference-scope) documents both reference configurations and results for case 12.
 
 | Scope | Existing evidence | Boundary and test entry point |
 |---|---|---|
@@ -28,17 +30,17 @@ New scoped evidence on 2026-11-04: [cascaded RC (19)](../validation/cases/cascad
 | Time, initialization, explicit events | Integer-step stop, three event policies, consistent left/right states, same-time order and endpoint events | Callable jumps are not automatically located; [time](../tests/test_time_grid.py), [events](../tests/test_events.py) |
 | Three-phase R–L and faults (05–07) | Balanced phasors, piecewise analytic RL transient, single-phase grounding resistor dividers, fixed-window RMS/P/Q | Independent phase networks; [three-phase tests](../tests/test_three_phase.py) |
 | Single-phase Pi and segmented lines | Phasor/two-port references, KCL, energy, time or spatial convergence | No broadband or phase coupling; [line tests](../tests/test_line_models.py) |
-| Single/three-phase Bergeron | Integer delay, no pre-arrival response, matched transmission, open/short reflection, event right-side history | Fixed grid, independent phases; same line tests |
+| Single/three-phase Bergeron | Integer delay, matched transmission and reflection, continuous capacitor voltage when a wavefront arrives | Fixed grid, independent phases. [Line tests](../tests/test_line_models.py) |
 | Linear single/three-phase transformers | Phasors, analytic startup, connection phase shifts, port work/storage, flux consistency, time convergence | Four stated connections, no shared-core coupling; [transformer tests](../tests/test_transformers.py) |
 | Linear transformer T equivalent (23) | Independent two-state matrix exponential, KCL/energy, event current continuity, TR refinement and seven real Simscape signals passed | Three external inductors; magnetization after primary leakage; no saturation/hysteresis. [Evidence](../validation/cases/transformer_t_equivalent/README.md), [tests](../tests/test_transformer_t_equivalent.py) |
 | Three-phase Y–delta–Y chain (24) | Nine independent startup/interpolation, KCL, copper/energy, TR-refinement and RMS/phase tests; 19 real Simscape signals in both full windows passed | Floating wye stars and a case-local delta-center reference; no line or magnetic branch. Other groups and zero-sequence faults remain outside this comparison. [Evidence](../validation/cases/three_phase_transformer_chain/README.md), [tests](../tests/test_three_phase_transformer_chain.py) |
 | Two machines and example 10 | Port equations, power direction, equilibrium, independent continuous ODEs, first-order mechanical convergence | Stated approximations; [classical](../tests/test_synchronous_machine.py), [Park](../tests/test_park_synchronous_generator.py) |
 | L/LC/LCL filters | Parameter rejection, wiring, independent ODEs, KCL, discrete energy and step convergence | Passive linear networks; [power-electronic tests](../tests/test_power_electronics.py) |
-| PWM example 12 | Gates, floating star point, fundamental RL reference, finer-grid comparison | Fine grids are not device references; no automatic edge location; same power-electronic tests |
+| PWM example 12 | Gates, floating star point, fundamental RL reference, finer grid, and actual PSCAD bidirectional switch comparison | [Both reference configurations and results](#pwm-reference-scope) |
 | Three-terminal two-level VSC-HVDC example 18 | Single-station open/closed loop, two stations, three-station FAST fault recovery, PLL/dq/P/Vdc/Vac, bridge port power and discrete DC energy | Teaching reimplementation with RC snubber and control adjustments; [system tests](../tests/test_three_terminal_vsc_hvdc.py), [post-step callback and recording](../tests/test_step_callback.py) |
 | `ThreePhasePiLine`, `ThreePhaseParallelRLCLoad` | Initialization/first step, output fields and nominal conversion; balanced AC startup and three-phase ground-fault application/clearing against a piecewise six-state DOP853 reference, both integration methods and step refinement; parallel-load KCL and Pi-line discrete energy | Independent-phase simplified networks, not arbitrary unbalanced faults; [`test_three_phase_existing_models_match_independent_ac_fault_reference`](../tests/test_three_phase.py) |
 | Control blocks and SRF-PLL | Basic functions, sample-time consistency, preserved initial lock, independent balanced-input ODE and first-order convergence | Functional and specific balanced-condition checks, no closed-loop grid/weak-grid engineering validation; [control tests](../tests/test_controls.py) |
-| Saturation approximation | Parameters, linear flux/current relations, and an independent one-way piecewise λ–i knee-crossing reference with step refinement | **No independent nonlinear-energy, return-path/periodic, hysteresis or real-inrush certification**; [`test_saturation_matches_piecewise_flux_current_and_refines`](../tests/test_transformers.py) |
+| Saturation approximation | Linear flux/current relations, one-way knee crossing and refinement, periodic reversals through both saturated regions | Piecewise curve with single-step error at a knee. Independent saturation-energy and actual inrush validation remain open. [Transformer tests](../tests/test_transformers.py) |
 
 Metrics, I/O, plotting and linear solves have separate [metric](../tests/test_analysis.py), [I/O](../tests/test_results_io.py),
 [plot/report](../tests/test_visualization_reporting.py) and [solver](../tests/test_solvers.py) regressions. These verify utility behavior,
@@ -184,13 +186,11 @@ I_s_hist(t) = -v_r(t - τ) / Zc - i_r(t - τ)
 I_r_hist(t) = -v_s(t - τ) / Zc - i_s(t - τ)
 ```
 
-Only a fixed time grid is supported. `travel_time` must be a positive integer multiple of the step; stop and actual event times
-must align with the grid using the simulator's pairwise 8 ULP rounding tolerance. Invalid settings fail before the first solve;
-`quantize_up` can postpone an off-grid requested event. History uses integer-step lookup, zero terminal history for negative times,
-and explicit errors for missing history. Same-time events retain only the right-side terminal frame. Tests cover matched-load
-arrival, no pre-arrival response and open/short reflections. `attenuation` represents teaching propagation attenuation; fractional
-step delays, history interpolation, frequency-dependent attenuation, modal transforms and phase coupling are excluded.
-`surge_impedance` must be finite and positive; `attenuation` must be in (0,1].
+The model uses a fixed time grid. `travel_time` must be a positive integer multiple of the step. Stop and actual event times must align using the pairwise 8 ULP rounding tolerance. `quantize_up` can postpone an off-grid requested event. The model looks up history by integer step, uses zero history for negative times and raises an error for missing history.
+
+Initialization, explicit events and reflections can launch discontinuous waves. At arrival, the simulator integrates using the left-side history source, then holds the storage states fixed and solves for algebraic values with the right-side history source. Public terminal history and retained result rows show the right-side values. [Wavefront derivation](component_derivations.en.md#bergeron-wavefront) · [Line tests with capacitive terminations](../tests/test_line_models.py)
+
+`surge_impedance` must be finite and positive. `attenuation` must be in (0,1] and represents propagation attenuation for teaching. The scope is fixed-parameter, independent-phase lines, with no fractional-step delay, frequency-dependent attenuation or phase coupling.
 
 ## 6. Single-phase linear transformers
 
@@ -230,27 +230,20 @@ Iinput = Ileak + Imag + Vpri/Rcore   # omit the last term when core loss is abse
 
 With zero initial current and `sqrt(2) Vrms sin(ωt)` primary voltage, ideal magnetizing current is `im(t) = sqrt(2) Vrms (1-cos(ωt))/(ωLm)`. Its DC component does not decay and must be included in total input RMS. Example 09 compares loaded voltage/total current to analytical values over 0.02–0.06 s and checks input power minus load power and copper loss. Tests also cover optional core loss, full-startup energy balance and step convergence for both methods. These checks establish the linear model only, not saturation or hysteresis.
 
-## 7. Flux and the unvalidated saturation approximation
+## 7. Flux and the saturation approximation
 
-Saturation uses the preceding time's flux to choose the present step's inductance:
-
-```text
-|ψ| < ψ_knee     use magnetizing_inductance
-|ψ| >= ψ_knee    use saturated_magnetizing_inductance
-```
-
-Flux integrates primary winding voltage with the same method as the magnetizing inductor:
+Flux integrates primary winding voltage with the same method as the magnetizing inductor.
 
 ```text
 Trapezoidal:     ψ_k = ψ_{k-1} + (v_p,k-1 + v_p,k) Δt/2
 Backward Euler:  ψ_k = ψ_{k-1} + v_p,k Δt
 ```
 
-For linear Lm, `ψ(t)-ψ(0)=Lm·(im(t)-im(0))`. Regressions cover single/three-phase models, both methods and off-grid/endpoint events. Previously flux always used backward Euler, making it inconsistent with trapezoidal current; this is corrected. Saturation still chooses inductance from the preceding flux: `magnetizing_inductance` below `saturation_knee_flux` in absolute flux, and `saturated_magnetizing_inductance` at or above it. No nonlinear iteration is introduced.
-[`test_saturation_matches_piecewise_flux_current_and_refines`](../tests/test_transformers.py) checks an independent piecewise λ–i
-reference and step refinement for one-way knee crossing under constant positive voltage, distinguishing it from linear current.
-This does not certify independent nonlinear energy, return paths/periodic operation, hysteresis or real inrush; neither this test
-nor linear regressions establish inrush accuracy. Full core hysteresis, remanence, loops and frequency-dependent losses are excluded.
+The linear model satisfies `ψ(t)-ψ(0)=Lm·(im(t)-im(0))`. Tests cover single-phase and three-phase models, both methods, and off-grid and endpoint events.
+
+For saturation, each step obtains its base current from the continuous piecewise curve at the starting flux. `saturation_knee_flux` specifies the knee, and `magnetizing_inductance` and `saturated_magnetizing_inductance` specify the inductances inside and outside it. At the knee the model uses the linear inductance. A crossing step keeps its starting slope, and the next step starts from the curve again. [Magnetization curve and error bound](component_derivations.en.md#saturation-curve)
+
+Tests cover one-way knee crossing, step refinement, periodic reversals through both saturation regions, and current continuity at an event. The model uses a curve without hysteresis. Independent saturation-energy and actual inrush validation remain open. [Transformer tests](../tests/test_transformers.py)
 
 ## 8. Three-phase transformers
 
@@ -431,6 +424,8 @@ Regressions cover zero initial states, source-current directions, KCL, the Rd dr
 
 Trapezoidal energy checks use endpoint-averaged voltages/currents to balance storage, port work and physical resistor losses. Backward Euler additionally dissipates `(ΣL·Δi²+ΣC·Δv²)/2` per step. At 2.5 μs, undamped LCL still has about 0.541 V maximum vC error with backward Euler, compared with 0.000387 V for trapezoidal; backward Euler decay must not be interpreted as physical damping. These checks cover linear passive filters, not closed-loop grid-connected converters.
 
+<a id="pwm-reference-scope"></a>
+
 ### PWM example validation
 
 `examples/12_two_level_pwm_generator.py` drives an RL load with a two-level PWM inverter using `IdealSwitch` and triangular-carrier comparison for gate signals.
@@ -438,6 +433,8 @@ Trapezoidal energy checks use endpoint-averaged voltages/currents to balance sto
 Example 12 reports phase-current total RMS, fundamental RMS and phase difference over 0.1–0.2 s (six 60 Hz cycles and 100 carrier cycles). Phase is relative to each phase's unheld sinusoidal reference. The fundamental average-model reference includes the zero-order hold `sinc(f Ts) exp(-jωTs/2)` and switch on-resistance. It applies only to linear modulation and excludes switching ripple; total RMS differs from fundamental RMS.
 
 Tests verify complementary gates, floating-star phase voltages, zero current sum and the fundamental RL impedance. Steps of 5/2.5/1.25 μs are compared over the common 0.05–0.10 s window. Relative to 1.25 μs, maximum fundamental-phasor differences are approximately 0.214% at the default 5 μs and 0.094% at 2.5 μs; waveform RMS differences are below 0.6 A and 0.3 A, respectively. The fine grid is a step-sensitivity comparison, not a device-physics reference. `event_time_policy` constrains explicit events only and does not locate callable gate edges automatically; no second-order PWM waveform convergence, dead-time or device-level behavior is claimed.
+
+The default case passed waveform and feature criteria against the actual PSCAD bidirectional switch reference. The earlier R2025a Simscape reference has its own device and timing assumptions. Its full waveform exceeded the preset limits, and its fundamental and power features passed. [PSCAD comparison and historical replay](../validation/cases/two_level_pwm_pscad/README.md) · [Simscape comparison](../validation/cases/two_level_pwm/README.md)
 
 ## 11. Control blocks and SRF-PLL
 
