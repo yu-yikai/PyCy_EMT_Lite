@@ -1,5 +1,8 @@
 # 持久进度
 
+2026-11-23。已固定单站孤网 P–f 下垂的两档原生协议。离线接线和独立解析预检通过，原生 PSCAD 时域测量待执行。
+[单站孤网下垂原生协议](experiments/d1_gfm_island_protocol_20261123.json)
+
 2026-11-23。36 号光伏并网已完成两档 PSCAD 对标、独立运行、教学图与说明，正式新增 19–36 共 18 项。
 [36 号验收报告](../../validation/cases/grid_connected_pv/acceptance_report.json)
 

@@ -1,0 +1,188 @@
+{
+  "schema": "d1_gfm_island_protocol_v1",
+  "date": "2026-11-23",
+  "source_parent": "dd8e445fc75450ad087e00f1d86b6109ed0fef7f",
+  "scope": "An averaged single-source island with active-power and frequency droop. Obtain original PSCAD time-domain traces on two electrical grids before implementing a teaching candidate.",
+  "reference": {
+    "selection": {
+      "path": "local_reference/d1_gfm_single_station_20261123/source_screen.json",
+      "sha256": "809186e4015ceb357661f1c35b4a1dbf27b1e0486e49cf737211db3f5fe6ff52",
+      "bytes": 3683
+    },
+    "installed_master": {
+      "path": "C:/Program Files (x86)/PSCAD50/master.pslx",
+      "sha256": "2940ddce6fe1fae56cb6be70bbaf0210a7e36059bfcad1e78b0ddbfd4d2a7c77",
+      "bytes": 18421619
+    },
+    "installed_emtdc_library": {
+      "path": "C:/Program Files (x86)/PSCAD50/emtdc/gf46/windows/emtdc.lib",
+      "sha256": "ed8cd8d92701e4fef8bc405022fb7b4793b32c513f7ec93dbd124a90c521438d",
+      "bytes": 3980870
+    },
+    "basis": "Construct a small fresh PSCAD circuit from the installed master library. Existing Kenyon and PNNL projects motivate the experiment; neither supplies the waveforms for this circuit."
+  },
+  "fixture": {
+    "emf_phase_rms_v": 120,
+    "phase_shifts_rad": [
+      0,
+      -2.0943951023931953,
+      2.0943951023931953
+    ],
+    "feeder_ohm": 0.1,
+    "feeder_h": 0.003,
+    "base_load_ohm": 120,
+    "added_load_ohm": 120,
+    "open_load_ohm": 1000000000,
+    "topology": "One autonomous three-phase voltage source. Ground the common source and Y-load neutral. Each phase passes through its own R–L feeder to the PCC. Connect a 120 ohm baseline resistor and a second switched resistor in parallel from each PCC phase to neutral.",
+    "conventions": "Source and PCC voltages are phase to neutral. Feeder current is positive toward the PCC. Both load currents are positive from the PCC to neutral. PCC power is the sum of three solved voltage-current products, in watts."
+  },
+  "timing": {
+    "duration_s": 0.4,
+    "ramp_s": 0.02,
+    "ramp_shape": "half_cosine",
+    "load_step_s": 0.2,
+    "windows_s": {
+      "before": [
+        0.14,
+        0.19
+      ],
+      "after": [
+        0.34,
+        0.39
+      ]
+    }
+  },
+  "controller": {
+    "filter_tau_s": 0.02,
+    "initial_power_w": 360,
+    "nominal_hz": 60,
+    "droop_hz_per_w": 0.001,
+    "initial_phase_rad": 0,
+    "initial_feeder_current_a": 0,
+    "rules": "At t=0 record the parked controller and zero source amplitude. Use the initial 60 Hz to advance the first interval. At positive row k the already scheduled phase and magnitude drive the source. Recalculate PCC power from the solved row, update the backward-Euler power filter, compute f_k = 60 - .001*(P_filtered_k - 360), then set phase_(k+1) = phase_k + 2*pi*h*f_k. The load resistance is 120 ohm from the exact 0.200 s row onward. Record source phase without wrapping."
+  },
+  "grids": {
+    "5us": {
+      "step_s": 0.000005,
+      "rows_including_zero": 80001,
+      "ramp_end_tick": 4000,
+      "load_step_tick": 40000
+    },
+    "2p5us": {
+      "step_s": 0.0000025,
+      "rows_including_zero": 160001,
+      "ramp_end_tick": 8000,
+      "load_step_tick": 80000
+    }
+  },
+  "channels": {
+    "Absolute_TIME_s": "s",
+    "Source_peak_kV": "kV",
+    "Source_phase_rad": "rad",
+    "Frequency_Hz": "Hz",
+    "P_pcc_W": "W",
+    "P_filtered_W": "W",
+    "Rstep_ohm": "ohm",
+    "Load_step_on": "state",
+    "V_src_a_kV": "kV",
+    "V_pcc_a_kV": "kV",
+    "I_feeder_a_kA": "kA",
+    "I_base_a_kA": "kA",
+    "I_step_a_kA": "kA",
+    "V_src_b_kV": "kV",
+    "V_pcc_b_kV": "kV",
+    "I_feeder_b_kA": "kA",
+    "I_base_b_kA": "kA",
+    "I_step_b_kA": "kA",
+    "V_src_c_kV": "kV",
+    "V_pcc_c_kV": "kV",
+    "I_feeder_c_kA": "kA",
+    "I_base_c_kA": "kA",
+    "I_step_c_kA": "kA"
+  },
+  "native": {
+    "branch_threshold_ohm": 0.0005,
+    "toolchain": {
+      "pscad_version": "5.0.0",
+      "emtdc_build": "20210219",
+      "compiler": "gf46",
+      "platform": "x86"
+    },
+    "runtime": "Independent native cold start for each grid. Record each electrical row, original INF/OUT, compile admission, saved canvas, and causal closure. Disable network switching interpolation and chatter handling."
+  },
+  "physical_limits": {
+    "clock_abs_s": 2e-12,
+    "source_command_abs_v": 0.000002,
+    "source_wave_abs_v": 0.000005,
+    "kcl_abs_a": 0.000002,
+    "load_ohm_abs_v": 0.000005,
+    "feeder_tr_abs_v": 0.00005,
+    "tr_energy_abs_j": 2e-7,
+    "cumulative_energy_abs_j": 0.00002,
+    "open_current_abs_a": 2e-7
+  },
+  "control_limits": {
+    "power_meter_abs_w": 0.00002,
+    "filter_recurrence_abs_w": 2e-7,
+    "droop_recurrence_abs_hz": 2e-8,
+    "angle_recurrence_abs_rad": 2e-10
+  },
+  "window_limits": {
+    "before": {
+      "power_w": [
+        358,
+        361
+      ],
+      "frequency_hz": [
+        59.998,
+        60.004
+      ],
+      "pcc_rms_v": [
+        119.5,
+        120.1
+      ]
+    },
+    "after": {
+      "power_w": [
+        715,
+        720
+      ],
+      "frequency_hz": [
+        59.638,
+        59.649
+      ],
+      "pcc_rms_v": [
+        119.5,
+        120.1
+      ]
+    },
+    "power_increase_w": [
+      350,
+      365
+    ],
+    "frequency_drop_hz": [
+      0.348,
+      0.37
+    ]
+  },
+  "cross_grid_limits": {
+    "source_abs_v": 0.02,
+    "phase_abs_rad": 0.0001,
+    "frequency_abs_hz": 0.001,
+    "filtered_power_abs_w": 1,
+    "pcc_abs_v": 8,
+    "feeder_abs_a": 0.12,
+    "away_from_edge_margin_s": 0.0005,
+    "pcc_away_abs_v": 0.03,
+    "feeder_away_abs_a": 0.0015,
+    "window_power_abs_w": 0.2,
+    "window_frequency_abs_hz": 0.001,
+    "window_rms_abs_v": 0.02
+  },
+  "audit_notes": [
+    "Check KCL, both load laws, each original trapezoidal R–L interval, and whole-circuit energy balance. Use endpoint midpoint voltage-current products across the load change.",
+    "Zero inductive current and rising source amplitude establish the physical cold start. PCC power can dip briefly when the second load connects, then rise as feeder current grows.",
+    "Compare only coincident 5 microsecond rows between original grids. The first 0.5 ms around the load edge retains whole-trace bounds; stricter voltage and current bounds apply away from that interval.",
+    "Validate controller arithmetic on each grid using its own solved PCC voltage and current. A numerical candidate will require a separate fixed comparison before implementation."
+  ]
+}

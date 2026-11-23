@@ -1,5 +1,8 @@
 # 恢复与下一步
 
+2026-11-23。用冻结协议在隔离 PSCAD 工程中独立运行 5 µs 和 2.5 µs 两档，先核实际编译接线，再复核 200 ms 负荷接入前后的 PCC 功率、下垂频率与相位连续性。
+[单站孤网下垂原生协议](experiments/d1_gfm_island_protocol_20261123.json)
+
 2026-11-23。继续 D1 的单站孤网 P–f 下垂。在 PSCAD 先试一台受控三相源经 R–L 支路给平衡负荷供电，再验证接入第二组负荷时的功率、频率和相位连续性。
 [36 号验收报告](../../validation/cases/grid_connected_pv/acceptance_report.json)
 本地来源检查和解析预期见 `local_reference/d1_gfm_single_station_20261123/source_screen.json`。原生独立时域数据待取得。
