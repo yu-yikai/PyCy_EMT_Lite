@@ -3,7 +3,7 @@
   "updated_date": "2026-11-23",
   "timezone": "Asia/Shanghai",
   "branch": "codex/emt-examples-longterm",
-  "checkpoint_head": "81a0d453eab3f3da3983ceb22b1d3052c3236d73",
+  "checkpoint_head": "c92c9bb32b149e3414ab9d27ca3d777865c7a0ea",
   "current_task": "D1",
   "formal_new_examples_completed": 16,
   "status_values": [
@@ -1917,7 +1917,7 @@
       "validation": "33 号平衡 PJM5 五母线负荷阶跃已验收。34 号双端 VSC-HVDC 按 5 µs、2.5 µs 与 PSCAD 同档逐点对标，共 330003 个原生正时间点，12 路开关状态全同。Windows 1609 项含 slow、Ubuntu WSL2 默认入口与 8 项专测、28–32 号两档 14 组启动轨迹逐位核对通过。D1 继续等效储能和新能源接口。 一阶 RC 储能端口双档原生短窗与跨档通过，单站并网尚待验证。",
       "acceptance": "不将直流等效称完整PV，不将拓扑称完整标准EMT",
       "status": "in_progress",
-      "current_stage": "storage_rc_grid_native_short_qualified",
+      "current_stage": "storage_rc_grid_native_long_protocol_frozen",
       "files": [
         "examples/34_two_terminal_vsc_hvdc.py",
         "tests/test_two_terminal_vsc_hvdc.py",
@@ -2143,6 +2143,15 @@
           220002
         ],
         "legacy_startup_traces_bitwise_equal": 14
+      },
+      "storage_grid_long_protocol": {
+        "status": "frozen_before_native_long_run",
+        "protocol": {
+          "path": "docs/development_roadmap/experiments/d1_storage_grid_long_protocol_20261123.json",
+          "sha256": "3469abcea84653cc50e2b361e6f70bec8a2e8905f8351b84fbabbc7bd5c5426d",
+          "bytes": 12675
+        },
+        "native_long_reference_ready": false
       },
       "storage_grid_short_native": {
         "status": "qualified",
@@ -2392,7 +2401,7 @@
       }
     }
   ],
-  "current_stage": "storage_rc_grid_native_short_qualified",
+  "current_stage": "storage_rc_grid_native_long_protocol_frozen",
   "resume_checkpoint_history": [
     {
       "resumed_utc": "2026-11-11T13:24:16.085490+00:00",

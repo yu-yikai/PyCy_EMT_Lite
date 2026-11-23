@@ -1,0 +1,329 @@
+{
+  "schema": "d1_storage_grid_long_protocol_v1",
+  "date": "2026-11-23",
+  "source_parent": "c92c9bb32b149e3414ab9d27ca3d777865c7a0ea",
+  "scope": "Genuine PSCAD/EMTDC 300.005 ms signed-power reversal for the qualified single-station grid-following storage circuit.",
+  "dc_circuit": {
+    "ocv_v": 400,
+    "series_ohm": 0.4,
+    "polarization_ohm": 0.6,
+    "polarization_cap_f": 0.05,
+    "bus_cap_f": 0.005,
+    "positive_nodes": [
+      "dc_pos",
+      "pol",
+      "ocv"
+    ],
+    "reference": "The negative DC rail is the reference. AC neutral stays floating. No additional DC load.",
+    "current_direction": "Positive storage current flows from the positive DC bus into R0, then the polarization and OCV circuit."
+  },
+  "ac_circuit": {
+    "frequency_hz": 60,
+    "phase_rms_v": 120,
+    "feeder_ohm": 0.8,
+    "feeder_h": 0.008,
+    "filter_ohm": 1,
+    "filter_h": 0.01,
+    "bridge_closed_ohm": 0.001,
+    "bridge_open_ohm": 1000000000,
+    "current_direction": "PCC phase current flows from the grid toward the bridge. Positive measured P represents absorption from the grid.",
+    "pcc_measurement": "Measure each phase against the local floating star at the junction of the feeder and filter."
+  },
+  "timeline": {
+    "cold_begin_s": 0,
+    "ocv_linear_ramp_s": [
+      0,
+      0.5
+    ],
+    "snapshot_s": 0.8,
+    "seed_stop_s": 0.850005,
+    "continuation_duration_s": 0.300005,
+    "grid_source_ramp_relative_s": [
+      0,
+      0.02
+    ],
+    "initial_p_request_ramp_relative_s": [
+      0.02,
+      0.03
+    ],
+    "initial_p_request_w": 250,
+    "q_request_var": 0,
+    "first_charge_window_relative_s": [
+      0.04,
+      0.05
+    ],
+    "first_timing_window_end_s": 0.002005,
+    "seed_tail_duration_s": 0.050005,
+    "reversal_relative_s": [
+      0.15,
+      0.17
+    ],
+    "final_p_request_w": -250,
+    "long_windows_relative_s": {
+      "charge": [
+        0.09,
+        0.14
+      ],
+      "discharge": [
+        0.25,
+        0.3
+      ]
+    }
+  },
+  "grids": {
+    "5us": {
+      "step_s": 5e-06,
+      "seed_rows_including_zero": 170002,
+      "snapshot_tick": 160000,
+      "positive_continuation_rows": 60001,
+      "inner_ticks": 20,
+      "gate_ticks": 1,
+      "outer_ticks": 200,
+      "first_gate_apply_tick": 21,
+      "seed_tail_rows": 10001,
+      "continuation_inner_updates": 3000,
+      "continuation_outer_due": 300,
+      "continuation_fine_midpoint_holds": 0
+    },
+    "2p5us": {
+      "step_s": 2.5e-06,
+      "seed_rows_including_zero": 340003,
+      "snapshot_tick": 320000,
+      "positive_continuation_rows": 120002,
+      "inner_ticks": 40,
+      "gate_ticks": 2,
+      "outer_ticks": 400,
+      "first_gate_apply_tick": 42,
+      "seed_tail_rows": 20002,
+      "continuation_inner_updates": 3000,
+      "continuation_outer_due": 300,
+      "continuation_fine_midpoint_holds": 60001
+    }
+  },
+  "controller": {
+    "parked_setup": "Zero initial inductive currents and capacitor voltages. During precharge, all three upper switches stay open and all three lower switches stay closed. The three AC source commands are zero. PLL and controller state do not advance before the snapshot.",
+    "active_setup": "Reuse case 34 A station SRF PLL, filtered PCC voltage projection and PI current loop with its finite-R bridge, triangle and measured half-bus scaling. Integrate signed P commands only through the declared P/Q current reference structure. Q request is identically zero.",
+    "gate_period_s": 5e-06,
+    "inner_period_s": 0.0001,
+    "outer_period_s": 0.001,
+    "max_reference_peak_a": 4,
+    "minimum_pcc_rms_v": 24,
+    "activation": "At 0.8 s preserve the parked states. For positive post-snapshot ticks use the case 34 startup and load the first inner command after its 100 µs sample at the following 105 µs gate. Give coarse and fine the same physical control period. Verify the actual fine in-between gate command and both switch words hold.",
+    "long_schedule": "Keep the 20–30 ms rise to +250 W. Ramp from +250 W to −250 W over 150–170 ms on the 1 ms outer clock and hold the final command. The sample at 160 ms requests zero P, and the first negative command occurs at 161 ms. Q remains exactly zero.",
+    "logger": "Reuse the 43-column storage_station.log and log only positive post-snapshot ticks. Flush at 50.005 ms to retain the short seed log, then close at the long final tick."
+  },
+  "native_evidence": {
+    "toolchain": "Use installed PSCAD 5.0.0, EMTDC build 20210219, gf46 x86, trapezoidal integration, every electrical row and no switch interpolation or chatter logic.",
+    "same_model": "For each grid, derive one long saved model from its qualified original template by replacing only the named StorageGridFeedback Dsout payload. Use that one template in independent seed and restart sessions. Save a new 0.800 s snapshot in the seed with its original 0.850005 s stop, then restart for 0.300005 s. Require byte-identical paired Main.f, Main.dta and Station artifacts with equivalent maps and unmodified snapshot bytes.",
+    "archive": "Keep original seed/restore .pscx, compile products, template input hashes, capture INF/OUT, controller state log and workflow receipts. Restore uses the actual decoded Vdc, u and all phase/feeder currents.",
+    "outputs": [
+      "Measured time and OCV command",
+      "Bus/terminal, polarization and OCV voltage",
+      "Bus capacitor, R0, R1, polarization capacitor and OCV branch currents",
+      "Six bridge branch resistances and independent currents",
+      "Grid and PCC phase-to-star voltages, pole voltages and AC feeder/filter currents",
+      "Control sample, next gate, outer sample, P/Q request, dq reference, applied modulation and relevant states"
+    ],
+    "prefix_overlap": "For each grid compare the original qualified short seed with the fresh long seed from zero through the seed stop. Compare both the long seed tail and qualified original short restart through 50.005 ms with the long restart. Keep all corresponding clock, geometry, physical, modulation, switching and controller gates."
+  },
+  "gates": {
+    "cold": {
+      "ocv_abs_v": 2e-06,
+      "parked_state_exact": true,
+      "grid_source_abs_v": 2e-06,
+      "ac_branch_current_abs_a": 2e-06,
+      "storage_peak_abs_a_max": 4.05,
+      "independent_parked_voltage_error_v": 5e-06,
+      "independent_parked_current_error_a": 2e-06,
+      "snapshot_bus_400_abs_v": 0.001,
+      "snapshot_polarization_abs_v": 0.001,
+      "snapshot_storage_current_abs_a": 0.0002
+    },
+    "all_intervals": {
+      "clock_abs_s": 2e-12,
+      "kcl_abs_a": 2e-06,
+      "ohm_abs_v": 5e-06,
+      "cap_charge_abs_c": 5e-10,
+      "inductor_tr_abs_v": 5e-05,
+      "tr_energy_abs_j": 2e-07,
+      "cumulative_energy_abs_j": 0.001
+    },
+    "seed_restore": {
+      "same_grid_clock_abs_s": 2e-12,
+      "physical_voltage_abs_v": 2e-06,
+      "physical_current_abs_a": 2e-06,
+      "control_modulation_abs_pu": 2e-07,
+      "discrete_states_match": true
+    },
+    "first_charge": {
+      "pcc_active_mean_w": [
+        220,
+        290
+      ],
+      "pcc_reactive_mean_abs_var_max": 35,
+      "storage_absorbed_mean_a": [
+        0.35,
+        0.75
+      ],
+      "storage_absorbed_mean_w": [
+        150,
+        305
+      ],
+      "bus_mean_v": [
+        400,
+        401.3
+      ],
+      "polarization_mean_v": [
+        0.05,
+        0.3
+      ]
+    },
+    "cross_grid_first_charge": {
+      "pcc_active_mean_abs_w": 12,
+      "pcc_reactive_mean_abs_var": 10,
+      "storage_power_mean_abs_w": 12,
+      "storage_current_mean_abs_a": 0.03,
+      "bus_mean_abs_v": 0.03,
+      "polarization_mean_abs_v": 0.03
+    },
+    "long_windows": {
+      "charge": {
+        "pcc_active_mean_w": [
+          225,
+          275
+        ],
+        "pcc_reactive_mean_abs_var_max": 30,
+        "storage_absorbed_mean_w": [
+          225,
+          275
+        ],
+        "storage_absorbed_mean_a": [
+          0.5,
+          0.75
+        ],
+        "bus_mean_v": [
+          400.2,
+          400.9
+        ],
+        "polarization_mean_v": [
+          0.2,
+          0.5
+        ]
+      },
+      "discharge": {
+        "pcc_active_mean_w": [
+          -275,
+          -225
+        ],
+        "pcc_reactive_mean_abs_var_max": 30,
+        "storage_absorbed_mean_w": [
+          -275,
+          -225
+        ],
+        "storage_absorbed_mean_a": [
+          -0.75,
+          -0.5
+        ],
+        "bus_mean_v": [
+          399.0,
+          399.8
+        ],
+        "polarization_mean_v": [
+          -0.5,
+          -0.2
+        ]
+      }
+    },
+    "cross_grid_long_window": {
+      "pcc_active_mean_abs_w": 12,
+      "pcc_reactive_mean_abs_var": 10,
+      "storage_power_mean_abs_w": 12,
+      "storage_current_mean_abs_a": 0.03,
+      "bus_mean_abs_v": 0.03,
+      "polarization_mean_abs_v": 0.03
+    },
+    "continuation": {
+      "phase_current_abs_a_max": 4.05,
+      "bus_voltage_v": [
+        398,
+        402
+      ],
+      "p_command_abs_w": 1e-09
+    }
+  },
+  "energy_accounting": "Use actual endpoint midpoint products. During precharge include leakage from the finite parked bridge, R0/R1 loss and both capacitor energies. During active use measured source/PCC/bridge directions, AC series losses, all inductive and capacitive storage, switch losses and OCV exchange.",
+  "references": {
+    "qualified_short": {
+      "path": "docs/development_roadmap/experiments/d1_storage_grid_short_native_20261123.json",
+      "sha256": "2d96883ba1001ecc887db9129c97d0cebdb30317547a5963c0ec59e9082134e6",
+      "bytes": 24127
+    },
+    "short_protocol": {
+      "path": "docs/development_roadmap/experiments/d1_storage_grid_short_protocol_20261123.json",
+      "sha256": "61f456ea334a89961720d6eff37123c64aa74ad15a5fa73b80ef142aa3a86023",
+      "bytes": 13031
+    },
+    "grid_inputs": {
+      "5us": {
+        "template": {
+          "path": "local_reference/d1_storage_grid_short_20261123/5us/seed_loaded/n/20261123T010255620043Z/input_snapshot/vdiv.pscx",
+          "sha256": "ae704d0fe1c0d643074682f88a3a90a8c72763de1d582fe1486a52e1e4b42a1b",
+          "bytes": 216614
+        },
+        "seed_receipt": {
+          "path": "local_reference/d1_storage_grid_short_20261123/5us/seed_loaded/n/20261123T010255620043Z/snapshot_result.json",
+          "sha256": "42c9313fa14a21c54222f1d9145292a302a64a440dece085ea5dccdcd6ad9f23",
+          "bytes": 15870
+        },
+        "restart_receipt": {
+          "path": "local_reference/d1_storage_grid_short_20261123/5us/restart_loaded/n/20261123T010740058662Z/snapshot_result.json",
+          "sha256": "07a1265678eec578391f848b2148da9d4ef58ea3930b7ebfe72a80f111c9ad6b",
+          "bytes": 14115
+        }
+      },
+      "2p5us": {
+        "template": {
+          "path": "local_reference/d1_storage_grid_short_20261123/2p5us/seed_loaded/n/20261123T010429337380Z/input_snapshot/vdiv.pscx",
+          "sha256": "8bf65b30d170f317aa488aa66c42dd95d57f527494fe9f594e84f9d0246ff8d8",
+          "bytes": 216630
+        },
+        "seed_receipt": {
+          "path": "local_reference/d1_storage_grid_short_20261123/2p5us/seed_loaded/n/20261123T010429337380Z/snapshot_result.json",
+          "sha256": "0ba067cd2893e5b8ae2dc71d3e152599c0f58218c4a9de345e064668e27335b9",
+          "bytes": 15878
+        },
+        "restart_receipt": {
+          "path": "local_reference/d1_storage_grid_short_20261123/2p5us/restart_loaded/n/20261123T011051488583Z/snapshot_result.json",
+          "sha256": "53bbdf6e60d6f801fc7c6e2114d4cd6ad06b41b0ce0dbd2c0b132450168658dc",
+          "bytes": 14123
+        }
+      }
+    },
+    "switched_pycy_screen": {
+      "5us": {
+        "report": {
+          "path": "local_reference/d1_storage_rc_short_20261123/grid_port_screen/actual_5us_long/report.json",
+          "sha256": "5537c5a8ecb01a6e8e9a90a88ca82793fac06b79adf21a91d99c023c956d4e21",
+          "bytes": 4217
+        },
+        "waveforms": {
+          "path": "local_reference/d1_storage_rc_short_20261123/grid_port_screen/actual_5us_long/trajectory.npz",
+          "sha256": "4864c0df258b357579ef1d47817dd280866ae0856fbc7fe533185687acc2bbc9",
+          "bytes": 24681953
+        }
+      },
+      "2p5us": {
+        "report": {
+          "path": "local_reference/d1_storage_rc_short_20261123/grid_port_screen/actual_2p5us_long/report.json",
+          "sha256": "63933bd1315ca6f5a0a4e7d4a25cfafbe0c57c63a5182d9b31d1dcbf05fe7057",
+          "bytes": 4230
+        },
+        "waveforms": {
+          "path": "local_reference/d1_storage_rc_short_20261123/grid_port_screen/actual_2p5us_long/trajectory.npz",
+          "sha256": "3dccf1c874572ab2f571a0a3297d7ece9d691819cda0db14b3e91c76519c7239",
+          "bytes": 48414818
+        }
+      }
+    }
+  }
+}
