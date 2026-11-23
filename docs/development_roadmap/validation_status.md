@@ -1,5 +1,8 @@
 # 验证状态
 
+2026-11-23。独立 PSCAD 两档共 21,002 个原始点、31 路输出。事件拍、六个状态窗、逐拍 KCL 和功率平衡通过。正式新增仍为 19 项。
+[三母线并联故障 PSCAD 实测](experiments/e_parallel_fault_surrogate_native_20261123.json)
+
 2026-11-23。PyCy 两档留存完整 7,001 和 14,001 行，节点解析与共时比较通过。该三母线的独立原生 PSCAD 波形待取得。正式新增 19 项。
 [简化三母线并联故障原生协议](experiments/e_parallel_fault_surrogate_protocol_20261123.json)
 

@@ -1,5 +1,8 @@
 # 持久进度
 
+2026-11-23。三母线两档原生 PSCAD 通过。仅开送端后受端仍反送约 27.15 A；双端隔离后健康线路向受端负荷供给约 1.785 kW，重合后恢复约 1.898 kW。
+[三母线并联故障 PSCAD 实测](experiments/e_parallel_fault_surrogate_native_20261123.json)
+
 2026-11-23。已冻结三母线并联故障、双端隔离和重合恢复的两档协议。PyCy 试算显示仅开送端时受端仍反送约 27.15 A，双端断开后健康线路仍向负荷供给约 1.785 kW。
 [简化三母线并联故障原生协议](experiments/e_parallel_fault_surrogate_protocol_20261123.json)
 

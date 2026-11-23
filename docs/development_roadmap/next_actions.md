@@ -1,5 +1,8 @@
 # 恢复与下一步
 
+2026-11-23。用正式存档的两档原生波形和已对齐的 PyCy 试算固定第 38 号逐点与窗口验收条件，再用现有元件实现教学算例。
+[三母线并联故障 PSCAD 实测](experiments/e_parallel_fault_surrogate_native_20261123.json)
+
 2026-11-23。独立运行 50 µs 和 25 µs 的三母线 PSCAD 参考。复核五个事件拍、每相电流方向和六个状态窗，再决定教学候选的逐点比较标准。
 [简化三母线并联故障原生协议](experiments/e_parallel_fault_surrogate_protocol_20261123.json)
 

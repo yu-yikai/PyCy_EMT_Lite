@@ -1,5 +1,8 @@
 # 技术决策
 
+2026-11-23。保持原厂工程的实际触点时序记录作为背景。简化电路用五个指定事件分别验证受端反送、双端开断、清除后保持隔离及重合。
+[三母线并联故障 PSCAD 实测](experiments/e_parallel_fault_surrogate_native_20261123.json)
+
 2026-11-23。三母线教学电路使用接地三相电阻网络。健康支路持续接通，故障支路两端采用有限关断电阻，故障点保留弱接地参考。
 [简化三母线并联故障原生协议](experiments/e_parallel_fault_surrogate_protocol_20261123.json)
 
