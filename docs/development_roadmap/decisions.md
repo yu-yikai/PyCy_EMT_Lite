@@ -1,5 +1,8 @@
 # 技术决策
 
+2026-11-23。教学脚本以求解后的 PCC 功率更新下一拍相位。电源回调只读取已确定的相角，观测量保留负荷接入前后及相角连续性。
+[37 号孤网下垂候选协议](../../validation/cases/islanded_frequency_droop/candidate_protocol.json)
+
 2026-11-23。保留负荷接入首拍的 PCC 功率短暂跌落。相位是否连续由逐拍积分核对，稳态方向和幅度用固定窗口核对。
 [单站孤网下垂 PSCAD 实测](experiments/d1_gfm_island_native_20261123.json)
 

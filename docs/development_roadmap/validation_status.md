@@ -1,5 +1,8 @@
 # 验证状态
 
+2026-11-23。预先绑定了两档原生参考与试算档案，固定全时间网格对标门限。正式候选待实现，新增完成数为 18。
+[37 号孤网下垂候选协议](../../validation/cases/islanded_frequency_droop/candidate_protocol.json)
+
 2026-11-23。独立 PSCAD 冷启动共 240,002 个采样点，80,001 个共同时间点。电路守恒、负荷切换、功率滤波、频率和相位递推均通过。正式新增仍为 18 项。
 [单站孤网下垂 PSCAD 实测](experiments/d1_gfm_island_native_20261123.json)
 

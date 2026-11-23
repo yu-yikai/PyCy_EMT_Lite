@@ -1,5 +1,8 @@
 # 恢复与下一步
 
+2026-11-23。按 37 号协议用现有元件和 CaseDefinition 实现正式算例，完成原始同档波形对标、独立运行、测试和读图说明。
+[37 号孤网下垂候选协议](../../validation/cases/islanded_frequency_droop/candidate_protocol.json)
+
 2026-11-23。以两档 PSCAD 原始波形为参考，先核对 PyCy 标准入口的当拍功率和下一拍相位处理，随后固定教学候选的同档、跨档误差限值。
 [单站孤网下垂 PSCAD 实测](experiments/d1_gfm_island_native_20261123.json)
 

@@ -1,5 +1,8 @@
 # 持久进度
 
+2026-11-23。PyCy 两档可行性试算与实际同档 PSCAD 逐点对齐。全长 PCC 电压最大差约 0.135 nV，频率最大差低于 1 pHz。已冻结 37 号验收协议。
+[37 号孤网下垂候选协议](../../validation/cases/islanded_frequency_droop/candidate_protocol.json)
+
 2026-11-23。单站孤网 P–f 下垂的两档 PSCAD 原生参考通过。5 µs 档的窗均值由 359.37 W、60.00074 Hz 变为 717.35 W、59.64277 Hz。
 [单站孤网下垂 PSCAD 实测](experiments/d1_gfm_island_native_20261123.json)
 
