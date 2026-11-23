@@ -319,6 +319,7 @@ the method still does not return a path.
 Before simulation, `run_case()` validates plot kinds, column counts, figure formats and output paths. Use a single relative directory name
 for the case. Figures may go in its subdirectories. A figure name without a suffix uses Matplotlib's default format,
 so `wave` becomes `wave.png` by default. Every data file and figure in a run must have a distinct path, and a file cannot occupy
-another output's directory. Plotting checks actual signal fields, including callback fields, and closes the figure if plotting fails.
+another output's directory. On Windows, the resolved output names must also avoid reserved names, trailing spaces and trailing
+periods. Plotting checks actual signal fields, including callback fields, and closes the figure if plotting fails.
 Report `figure_paths` are interpreted from the caller's working directory, then linked relative to the report directory; display text such as
 titles and field names is escaped for Markdown.

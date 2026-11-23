@@ -9,6 +9,8 @@
 
 from __future__ import annotations
 
+import ntpath
+import os
 from collections.abc import Callable
 from dataclasses import dataclass, field
 from pathlib import Path, PureWindowsPath
@@ -69,6 +71,8 @@ def _check_directory(path: Path) -> None:
 
 
 def _check_output_file(target: Path, directory: Path, files: set[Path]) -> None:
+    if os.name == "nt" and ntpath.isreserved(target.relative_to(directory)):
+        raise ValueError(f"Windows 输出路径 {target} 含保留名称或末尾的空格、句点。")
     path = target.resolve()
     if path == directory or not path.is_relative_to(directory):
         raise ValueError(f"输出文件 {target} 必须位于案例输出目录内。")

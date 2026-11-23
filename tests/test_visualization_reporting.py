@@ -5,6 +5,7 @@
 
 from __future__ import annotations
 
+import os
 import runpy
 from pathlib import Path
 
@@ -118,6 +119,26 @@ def test_extensionless_figure_uses_preflight_default_format(tmp_path) -> None:
 
     assert (tmp_path / "valid" / "nested" / "wave.svg").is_file()
     assert (tmp_path / "valid" / "result.csv").is_file()
+
+
+@pytest.mark.skipif(os.name != "nt", reason="Win32 normalizes trailing periods and spaces")
+@pytest.mark.parametrize("figure_name", ["result.csv /detail.png", "result.csv./detail.png"])
+def test_windows_output_alias_fails_before_simulation(tmp_path, figure_name) -> None:
+    from pycy_emt_lite import CaseDefinition, Resistor, SimulationConfig, VoltageSource
+    from pycy_emt_lite.cases import OutputOptions, PlotSpec
+
+    root = tmp_path / "outputs"
+    calls = []
+    case = CaseDefinition(
+        "valid", (VoltageSource("V", "in", "0", 1.0), Resistor("R", "in", "0", 1.0)),
+        SimulationConfig(0.1, 0.1), plots=(PlotSpec(("v:in",), figure_name),),
+        output=OutputOptions(True, True, False, root), on_step=lambda row: calls.append(row) or {},
+    )
+    with pytest.raises(ValueError, match="Windows 输出路径"):
+        run_case(case)
+
+    assert calls == []
+    assert not root.exists()
 
 
 @pytest.mark.parametrize("kind", ["series", "three_phase", "comparison", "zoom"])
