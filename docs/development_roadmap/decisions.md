@@ -1,5 +1,8 @@
 # 技术决策
 
+2026-11-23。36 号教学入口仅接局部光伏端口、母线和既有三相站。跨平台对标按各自的门极轨迹核对控制，并在相同时间窗比较向电网送出的功率。
+[36 号验收报告](../../validation/cases/grid_connected_pv/acceptance_report.json)
+
 2026-11-23。用一只电流源和并联电阻表示 650 串光伏。教学从各档预充电压开始。保留 500 ms 照度变化，用各自的电气轨迹验证门极拍，并按同一参考窗比较功率。
 [36 号光伏并网候选协议](../../validation/cases/grid_connected_pv/candidate_protocol.json)
 

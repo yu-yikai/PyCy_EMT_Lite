@@ -1,5 +1,9 @@
 # 恢复与下一步
 
+2026-11-23。继续 D1 的单站孤网 P–f 下垂。在 PSCAD 先试一台受控三相源经 R–L 支路给平衡负荷供电，再验证接入第二组负荷时的功率、频率和相位连续性。
+[36 号验收报告](../../validation/cases/grid_connected_pv/acceptance_report.json)
+本地来源检查和解析预期见 `local_reference/d1_gfm_single_station_20261123/source_screen.json`。原生独立时域数据待取得。
+
 2026-11-23。按 36 号冻结协议复用现有桥、PI、滤波和 CaseDefinition 入口。完成教学脚本、两档原始波形比较、独立运行与必要回归后再验收。
 [36 号光伏并网候选协议](../../validation/cases/grid_connected_pv/candidate_protocol.json)
 

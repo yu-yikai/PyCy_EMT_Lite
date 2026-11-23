@@ -1,5 +1,8 @@
 # 验证状态
 
+2026-11-23。36 号对标覆盖 600,003 个原生正时间点。Windows 1,616 项含慢测，WSL2 默认入口和四项专项均通过。正式新增 18 项。
+[36 号验收报告](../../validation/cases/grid_connected_pv/acceptance_report.json)
+
 2026-11-23。两档初值、光伏仿射范围和原生参考已封存。试算点数和偏差已复核，正式算例待实现，新增完成数为 17。
 [36 号光伏并网候选协议](../../validation/cases/grid_connected_pv/candidate_protocol.json)
 

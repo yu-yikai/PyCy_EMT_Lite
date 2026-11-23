@@ -1,0 +1,2 @@
+# The PV comparator verifies this frozen protocol by its exact byte hash.
+/validation/cases/grid_connected_pv/candidate_protocol.json text eol=lf

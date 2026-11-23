@@ -1,5 +1,8 @@
 # 持久进度
 
+2026-11-23。36 号光伏并网已完成两档 PSCAD 对标、独立运行、教学图与说明，正式新增 19–36 共 18 项。
+[36 号验收报告](../../validation/cases/grid_connected_pv/acceptance_report.json)
+
 2026-11-23。两档匹配初值的 PyCy 试算共 600,005 行。相对 PSCAD，全长母线最大差 0.135 V，照度阶跃前后均值显示约 88 W 的送出降幅。已据此固定 36 号验收协议。
 [36 号光伏并网候选协议](../../validation/cases/grid_connected_pv/candidate_protocol.json)
 
