@@ -1,5 +1,8 @@
 # 技术决策
 
+2026-11-23。35 号用固定开路源和一阶 RC 表示短时储能端口，和 34 号共享浮置交流接线与电流环。保留标准入口和原有公共 API。
+[35 号验收报告](../../validation/cases/grid_connected_storage/acceptance_report.json)
+
 2026-11-23。35 号采用一阶 RC 端口和固定开路电压，沿用现有元件与标准入口。初值按两档原生快照设定两只电容。快照的六路交流电感电流小于 1.5×10⁻²⁶ A，取零初始化。
 [35 号候选协议](../../validation/cases/grid_connected_storage/candidate_protocol.json)
 

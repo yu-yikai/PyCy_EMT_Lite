@@ -1,5 +1,8 @@
 # 恢复与下一步
 
+2026-11-23。35 号已验收。D1 下一项核对本机 PSCAD 原生光伏端口的接线、参数单位和编译输出。先取得独立稳态测点，再固定并联 R–C 负荷下的照度变化和暂态判据，评估现有元件能覆盖的等效范围。
+[35 号验收报告](../../validation/cases/grid_connected_storage/acceptance_report.json)
+
 2026-11-23。按协议复用单站桥、浮置星点、PLL 与电流环，以现有 R、C 和直流源搭建储能端口。完成教程、两档对标、34 号回归、全套 Windows 检查和 Ubuntu 独立运行。
 [35 号候选协议](../../validation/cases/grid_connected_storage/candidate_protocol.json)
 

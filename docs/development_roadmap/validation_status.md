@@ -1,5 +1,8 @@
 # 验证状态
 
+2026-11-23。35 号与 PSCAD 两档对标覆盖 180,003 个原始正时间点，六路开关逐点一致。34 号两档全列逐位相同。Windows 1,612 项含慢测及 Ubuntu WSL2 独立入口和 11 项专项均通过。
+[35 号验收报告](../../validation/cases/grid_connected_storage/acceptance_report.json)
+
 2026-11-23。35 号实现前的诊断覆盖 180,003 个原生正时间点。六路开关与离散控制字逐点一致，最大电压差约 0.664 nV，最大电流差约 3.87 nA。独立公开入口尚待验证。
 [35 号候选协议](../../validation/cases/grid_connected_storage/candidate_protocol.json)
 

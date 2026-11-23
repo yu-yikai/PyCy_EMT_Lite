@@ -3,9 +3,9 @@
   "updated_date": "2026-11-23",
   "timezone": "Asia/Shanghai",
   "branch": "codex/emt-examples-longterm",
-  "checkpoint_head": "3a1e1673ae49fd7059fa9a9e709a874d4c310cee",
+  "checkpoint_head": "e4532dda43cb1ab817f8e10a453e303db350a9bc",
   "current_task": "D1",
-  "formal_new_examples_completed": 16,
+  "formal_new_examples_completed": 17,
   "status_values": [
     "planned",
     "ready",
@@ -1914,11 +1914,18 @@
       ],
       "new_capabilities": [],
       "references": [],
-      "validation": "33 号平衡 PJM5 五母线负荷阶跃已验收。34 号双端 VSC-HVDC 按 5 µs、2.5 µs 与 PSCAD 同档逐点对标，共 330003 个原生正时间点，12 路开关状态全同。Windows 1609 项含 slow、Ubuntu WSL2 默认入口与 8 项专测、28–32 号两档 14 组启动轨迹逐位核对通过。D1 继续等效储能和新能源接口。 一阶 RC 储能端口双档原生短窗与跨档通过，单站并网尚待验证。",
+      "validation": "33 号平衡 PJM5 五母线负荷阶跃已验收。34 号双端 VSC-HVDC 按 5 µs、2.5 µs 与 PSCAD 同档逐点对标，共 330003 个原生正时间点，12 路开关状态全同。Windows 1609 项含 slow、Ubuntu WSL2 默认入口与 8 项专测、28–32 号两档 14 组启动轨迹逐位核对通过。D1 继续等效储能和新能源接口。 35 号一阶 RC 单站并网储能已完成充放电反向与双档 PSCAD 对标。",
       "acceptance": "不将直流等效称完整PV，不将拓扑称完整标准EMT",
       "status": "in_progress",
-      "current_stage": "storage_rc_grid_candidate_protocol_frozen",
+      "current_stage": "storage_rc_grid_example_accepted",
       "files": [
+        "validation/cases/grid_connected_storage/acceptance_report.json",
+        "validation/cases/grid_connected_storage/candidate_protocol.json",
+        "validation/cases/grid_connected_storage/README.md",
+        "validation/cases/grid_connected_storage/compare.py",
+        "validation/cases/grid_connected_storage/checks.py",
+        "examples/35_grid_connected_storage.py",
+        "tests/test_grid_connected_storage.py",
         "examples/34_two_terminal_vsc_hvdc.py",
         "tests/test_two_terminal_vsc_hvdc.py",
         "validation/cases/two_terminal_vsc_hvdc/README.md",
@@ -1965,7 +1972,8 @@
         "302eae79b34ac268d8461a64ba009e97ad09f054",
         "81a0d453eab3f3da3983ceb22b1d3052c3236d73",
         "95cab5f464e61725218e0898bc3c43d2a10f4391",
-        "3a1e1673ae49fd7059fa9a9e709a874d4c310cee"
+        "3a1e1673ae49fd7059fa9a9e709a874d4c310cee",
+        "e4532dda43cb1ab817f8e10a453e303db350a9bc"
       ],
       "blockers": [],
       "pjm5_load_step_example": {
@@ -2145,6 +2153,21 @@
           220002
         ],
         "legacy_startup_traces_bitwise_equal": 14
+      },
+      "grid_connected_storage_example": {
+        "status": "completed",
+        "number": 35,
+        "acceptance_report": {
+          "path": "validation/cases/grid_connected_storage/acceptance_report.json",
+          "sha256": "155983f54ba51bb1dc9dfa9d5d5e2f8c744d455ce202a1154c191a9db2edcd80",
+          "bytes": 9649
+        },
+        "paired_rows_with_initial": [
+          60002,
+          120003
+        ],
+        "native_positive_rows": 180003,
+        "windows_pytest_including_slow": 1612
       },
       "storage_grid_candidate_protocol": {
         "status": "frozen",
@@ -2426,7 +2449,7 @@
       }
     }
   ],
-  "current_stage": "storage_rc_grid_candidate_protocol_frozen",
+  "current_stage": "storage_rc_grid_example_accepted",
   "resume_checkpoint_history": [
     {
       "resumed_utc": "2026-11-11T13:24:16.085490+00:00",

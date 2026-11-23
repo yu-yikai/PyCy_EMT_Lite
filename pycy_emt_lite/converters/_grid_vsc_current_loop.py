@@ -2,7 +2,9 @@
 
 import math
 from collections.abc import Callable, Mapping
+from dataclasses import replace
 
+from pycy_emt_lite.components import IdealSwitch, Inductor, Resistor, VoltageSource
 from pycy_emt_lite.components.base import Component
 from pycy_emt_lite.controls import (
     SRFPLL,
@@ -170,3 +172,46 @@ def create_current_loop(
         return measurements
 
     return _grid_vsc.create_bridge(gate_pair, feeder=feeder, dc_link=dc_link), observe
+
+
+def _gate_carrier(gate_tick: int) -> float:
+    """每个 1 kHz 周期有 200 个门极拍，四分之一周期处的载波精确为零。"""
+    position = gate_tick % 200
+    return (50 - position if position <= 100 else position - 150) / 50.0
+
+
+def create_floating_station(
+    station: str, time_step: float, reference: ReferenceCallback,
+) -> tuple[tuple[Component, ...], StepCallback]:
+    """为交流星点浮置的并网站接线，直流极由调用方连接。"""
+    pll = SRFPLL(100.0, 1000.0, GRID_ANGULAR_FREQUENCY, 1.5 * math.pi)
+    components, observe = create_current_loop(
+        time_step, pll=pll, feeder=(0.8, 0.008), dc_link=(),
+        reference=reference, carrier_for_gate=_gate_carrier,
+    )
+    prefix = f"{station}_"
+
+    def node(local_name: str) -> str:
+        if local_name == "0":
+            return f"{station}_star"
+        return prefix + local_name.removeprefix("dc_")
+
+    named: list[Component] = []
+    for part in components:
+        assert isinstance(part, (VoltageSource, Resistor, Inductor, IdealSwitch))
+        named.append(replace(part, name=prefix + part.name, positive=node(part.positive), negative=node(part.negative)))
+
+    def observe_station(row: Mapping[str, float]) -> Mapping[str, float]:
+        # PLL 和外环都读取本站星点相对量。内环使用实测直流极间电压。
+        star = row[f"v:{station}_star"]
+        local = {"time": row["time"], "v:dc_p": row[f"v:{station}_p"], "v:dc_n": row[f"v:{station}_n"]}
+        for phase in PHASES:
+            local[f"v:grid_{phase}"] = row[f"v:{prefix}grid_{phase}"] - star
+            local[f"v:pcc_{phase}"] = row[f"v:{prefix}pcc_{phase}"] - star
+            local[f"i:L{phase}"] = row[f"i:{prefix}L{phase}"]
+        return {
+            **{prefix + key: value for key, value in observe(local).items()},
+            **{f"{prefix}pcc_{phase}_v": local[f"v:pcc_{phase}"] for phase in PHASES},
+        }
+
+    return tuple(named), observe_station

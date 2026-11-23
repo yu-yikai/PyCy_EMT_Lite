@@ -1,5 +1,8 @@
 # 持久进度
 
+2026-11-23。35 号单站并网储能完成两档 PSCAD 逐点对标、独立运行和教学图。正式新增 19–35 共 17 项。
+[35 号验收报告](../../validation/cases/grid_connected_storage/acceptance_report.json)
+
 2026-11-23。完成两档条件化 PyCy 与原生 PSCAD 长窗的逐点诊断，已固定 35 号候选初值、阈值及 34 号回归要求。正式新增仍为 16 个。
 [35 号候选协议](../../validation/cases/grid_connected_storage/candidate_protocol.json)
 

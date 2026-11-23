@@ -6,11 +6,9 @@
 
 import math
 from collections.abc import Mapping
-from dataclasses import replace
 
 from pycy_emt_lite import (
     Capacitor,
-    IdealSwitch,
     Inductor,
     Resistor,
     SimulationConfig,
@@ -18,20 +16,17 @@ from pycy_emt_lite import (
 )
 from pycy_emt_lite.cases import CaseDefinition, OutputOptions, PlotSpec, run_case
 from pycy_emt_lite.components.base import Component
-from pycy_emt_lite.controls import SRFPLL, FirstOrderLowPass, PIController, abc_to_dq
+from pycy_emt_lite.controls import FirstOrderLowPass, PIController, abc_to_dq
 from pycy_emt_lite.converters import _grid_vsc
 from pycy_emt_lite.converters._grid_vsc_current_loop import (
-    GRID_ANGULAR_FREQUENCY,
     ReferenceCallback,
-    create_current_loop,
+    create_floating_station,
 )
 from pycy_emt_lite.core.simulation import StepCallback
 from pycy_emt_lite.io.results import SimulationResult
 
 TIME_STEP = _grid_vsc.TIME_STEP
 STOP_TIME = 0.550005
-PHASES = "abc"
-FEEDER = (0.8, 0.008)  # Ω、H，每相
 LINE_RESISTANCE = 0.25  # Ω，每个半段
 LINE_INDUCTANCE = 0.002  # H，每个半段
 OUTER_PERIOD = 0.001
@@ -90,12 +85,6 @@ def _ramp(tick: int, start: int, end: int) -> float:
     return min(max((tick - start) / (end - start), 0.0), 1.0)
 
 
-def _gate_carrier(gate_tick: int) -> float:
-    """每个 1 kHz 周期有 200 个门极拍，四分之一周期处的载波精确为零。"""
-    position = gate_tick % 200
-    return (50 - position if position <= 100 else position - 150) / 50.0
-
-
 def _station_reference(station: str, time_step: float) -> ReferenceCallback:
     vd_filter, vq_filter = FirstOrderLowPass(0.01), FirstOrderLowPass(0.01)
     # 只有 B 站调直流电压，允许它从交流系统吸收有功，也允许向交流系统送出有功。
@@ -148,37 +137,7 @@ def _station_reference(station: str, time_step: float) -> ReferenceCallback:
 
 
 def _station(station: str, time_step: float) -> tuple[tuple[Component, ...], StepCallback]:
-    pll = SRFPLL(100.0, 1000.0, GRID_ANGULAR_FREQUENCY, 1.5 * math.pi)
-    components, observe = create_current_loop(
-        time_step, pll=pll, feeder=FEEDER, dc_link=(),
-        reference=_station_reference(station, time_step), carrier_for_gate=_gate_carrier,
-    )
-    prefix = f"{station}_"
-
-    def node(local_name: str) -> str:
-        if local_name == "0":
-            return f"{station}_star"
-        return prefix + local_name.removeprefix("dc_")
-
-    named: list[Component] = []
-    for part in components:
-        assert isinstance(part, (VoltageSource, Resistor, Inductor, IdealSwitch))
-        named.append(replace(part, name=prefix + part.name, positive=node(part.positive), negative=node(part.negative)))
-
-    def observe_station(row: Mapping[str, float]) -> Mapping[str, float]:
-        # PLL 和外环都读取本站星点相对量。内环用实测直流极间电压归一化。
-        star = row[f"v:{station}_star"]
-        local = {"time": row["time"], "v:dc_p": row[f"v:{station}_p"], "v:dc_n": row[f"v:{station}_n"]}
-        for phase in PHASES:
-            local[f"v:grid_{phase}"] = row[f"v:{prefix}grid_{phase}"] - star
-            local[f"v:pcc_{phase}"] = row[f"v:{prefix}pcc_{phase}"] - star
-            local[f"i:L{phase}"] = row[f"i:{prefix}L{phase}"]
-        return {
-            **{prefix + key: value for key, value in observe(local).items()},
-            **{f"{prefix}pcc_{phase}_v": local[f"v:pcc_{phase}"] for phase in PHASES},
-        }
-
-    return tuple(named), observe_station
+    return create_floating_station(station, time_step, _station_reference(station, time_step))
 
 
 def print_summary(result: SimulationResult) -> None:
