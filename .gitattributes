@@ -4,3 +4,26 @@
 /docs/development_roadmap/experiments/e_parallel_fault_surrogate_protocol_20261123.json text eol=lf
 /docs/development_roadmap/experiments/e_dual_gfm_sharing_protocol_20261123.json text eol=lf
 /validation/cases/dual_grid_forming_power_sharing/candidate_protocol.json text eol=lf
+
+# The synchronous Buck audit binds the exact bytes of these tracked inputs.
+/validation/cases/synchronous_buck/acceptance_plan.md text eol=lf
+/validation/cases/synchronous_buck/audit_reference.py text eol=lf
+/validation/cases/synchronous_buck/export_reference.m text eol=lf
+/validation/cases/synchronous_buck/manifest.json text eol=lf
+/validation/cases/synchronous_buck/native_logging_api_addendum.md text eol=lf
+/validation/cases/synchronous_buck/normalization.py text eol=lf
+/validation/cases/synchronous_buck/parameters.json text eol=lf
+/validation/cases/synchronous_buck/reference_solver_addendum.json text eol=lf
+/validation/cases/synchronous_buck/reference_solver_addendum.md text eol=lf
+/validation/common/comparison.py text eol=lf
+
+# The open-loop VSC comparison binds its tracked inputs before reading the archive.
+/validation/cases/grid_connected_vsc_open_loop/parameters.json text eol=lf
+/validation/cases/grid_connected_vsc_open_loop/qualified_reference_report.json text eol=lf
+/validation/cases/grid_connected_vsc_open_loop/reference_protocol.json text eol=lf
+
+# PJM5 and two-terminal HVDC verify both the hash and byte count of these records.
+/docs/development_roadmap/experiments/d1_dual_vsc_long_native_20261123.json text eol=lf
+/docs/development_roadmap/experiments/d1_dual_vsc_long_protocol_20261123.json text eol=lf
+/docs/development_roadmap/experiments/d1_pjm5_emt_protocol_20261123.json text eol=lf
+/docs/development_roadmap/experiments/d1_pjm5_pscad_reference_20261123.json text eol=lf

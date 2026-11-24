@@ -51,5 +51,5 @@ uv run --locked python -m validation.replay_existing 11
 
 两边采用同一组离散方程和更新顺序；结论覆盖这里固定的参数与窗口。243项输入快照与九项指标经独立复算，默认原例也独立运行通过，全部结果与正式候选逐值一致。33项合成检查和1300项完整回归（含slow）通过。完整证据见[结果报告](validation_report.json)。
 
-既有11的本次补验证已完成。GitHub CI因账户账单锁未启动测试，跨操作系统结果仍待补验。
+11 号原验收提交的托管 CI 当时因账户账单锁未启动。后续 F1 在提交 `42374ee` 上完成 Windows 和 Ubuntu 的全量测试及全部公开算例检查，包含 11 号教学入口。[F1 托管验收](../../../docs/development_roadmap/validation_status.md)
 本步骤不增加教学编号；并网VSC、电流环和直流电压环须分别验证。

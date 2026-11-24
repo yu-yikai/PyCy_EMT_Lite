@@ -70,9 +70,13 @@ def _check_directory(path: Path) -> None:
             raise ValueError(f"输出目录 {path} 无法创建：{candidate} 已是文件；请更换输出路径。")
 
 
-def _check_output_file(target: Path, directory: Path, files: set[Path]) -> None:
-    if os.name == "nt" and ntpath.isreserved(target.relative_to(directory)):
-        raise ValueError(f"Windows 输出路径 {target} 含保留名称或末尾的空格、句点。")
+def _check_windows_output_path(path: Path) -> None:
+    if os.name == "nt" and ntpath.isreserved(path):
+        raise ValueError(f"Windows 输出路径 {path} 含保留名称或末尾的空格、句点。")
+
+
+def _check_output_file(target: Path, directory: Path, files: set[Path]) -> Path:
+    _check_windows_output_path(target.relative_to(directory))
     path = target.resolve()
     if path == directory or not path.is_relative_to(directory):
         raise ValueError(f"输出文件 {target} 必须位于案例输出目录内。")
@@ -82,9 +86,10 @@ def _check_output_file(target: Path, directory: Path, files: set[Path]) -> None:
     if path.is_dir():
         raise ValueError(f"输出路径 {target} 已是目录；请使用文件路径。")
     files.add(path)
+    return path
 
 
-def _output_paths(case: CaseDefinition) -> tuple[Path, list[Path | None]]:
+def _output_paths(case: CaseDefinition) -> tuple[Path, list[tuple[Path, str] | None]]:
     """在求解和写文件前检查可静态确认的绘图及路径配置。"""
     name = case.name
     if (not isinstance(name, str) or not name.strip() or name in {".", ".."}
@@ -92,17 +97,20 @@ def _output_paths(case: CaseDefinition) -> tuple[Path, list[Path | None]]:
         raise ValueError(f"案例名 {name!r} 必须为单个相对目录名；请去掉绝对路径和路径分隔符。")
     if not isinstance(case.output.output_root, (str, Path)):
         raise ValueError("output_root 必须为字符串或 Path；请设置结果根目录。")
+    saving = case.output.save_data or case.output.save_figure
+    if saving:
+        _check_windows_output_path(Path(name))
     root = Path(case.output.output_root).resolve()
     output_dir = (root / name).resolve()
     if not output_dir.is_relative_to(root):
         raise ValueError("案例输出目录越过 output_root；请检查目录名和符号链接。")
-    if case.output.save_data or case.output.save_figure:
+    if saving:
         _check_directory(output_dir)
     files: set[Path] = set()
     if case.output.save_data:
         for filename in _DATA_FILENAMES:
             _check_output_file(output_dir / filename, output_dir, files)
-    figure_paths: list[Path | None] = []
+    figure_outputs: list[tuple[Path, str] | None] = []
     for plot in case.plots:
         if not isinstance(plot.kind, str) or plot.kind not in {"series", "three_phase"}:
             raise ValueError(f"PlotSpec.kind={plot.kind!r} 非法；请选择 series 或 three_phase。")
@@ -112,7 +120,7 @@ def _output_paths(case: CaseDefinition) -> tuple[Path, list[Path | None]]:
         if plot.kind == "three_phase" and len(plot.columns) != 3:
             raise ValueError("三相曲线必须正好包含 3 个字段。")
         if not case.output.save_figure:
-            figure_paths.append(None)
+            figure_outputs.append(None)
             continue
         figure = plot.figure_name
         if (not isinstance(figure, str) or not figure.strip() or Path(figure).is_absolute()
@@ -123,18 +131,17 @@ def _output_paths(case: CaseDefinition) -> tuple[Path, list[Path | None]]:
             raise ValueError(f"图像输出路径 {target} 已是目录；请使用文件路径。")
         from matplotlib.backend_bases import FigureCanvasBase
 
-        suffix = target.suffix.lower().lstrip(".")
+        suffix = os.path.splitext(target.name)[1][1:].lower()
         if not suffix:
-            # 先按 Matplotlib 的默认格式补后缀，预检和保存使用同一个文件名。
+            # 按 Matplotlib 的默认命名补后缀，并保留格式供保存时显式使用。
             suffix = FigureCanvasBase.get_default_filetype()
             target = target.with_name(f"{target.name.rstrip('.')}.{suffix}")
         if suffix not in FigureCanvasBase.get_supported_filetypes():
             raise ValueError(f"图像格式 {suffix!r} 不受支持；请使用 png、svg 等支持的格式。")
-        _check_output_file(target, output_dir, files)
-        figure_paths.append(target)
+        figure_outputs.append((_check_output_file(target, output_dir, files), suffix))
     if case.summary is not None and not callable(case.summary):
         raise ValueError("summary 必须为可调用对象或 None。")
-    return output_dir, figure_paths
+    return output_dir, figure_outputs
 
 
 def run_case(case: CaseDefinition) -> SimulationResult:
@@ -144,7 +151,7 @@ def run_case(case: CaseDefinition) -> SimulationResult:
     整合为一步，供教学算例脚本使用。
     """
 
-    output_dir, figure_paths = _output_paths(case)
+    output_dir, figure_outputs = _output_paths(case)
     circuit = Circuit.from_components(case.name, case.components)
     simulator = Simulator(circuit, case.config, events=case.events, on_step=case.on_step)
     result = simulator.run()
@@ -172,7 +179,8 @@ def run_case(case: CaseDefinition) -> SimulationResult:
             save(output_dir / filename)
         print(f"数据结果已保存到：{output_dir}")
 
-    for plot, figure_path in zip(case.plots, figure_paths, strict=True):
+    for plot, figure_output in zip(case.plots, figure_outputs, strict=True):
+        figure_path, file_format = figure_output if figure_output is not None else (None, None)
         if plot.kind == "series":
             plot_series(
                 result,
@@ -180,6 +188,7 @@ def run_case(case: CaseDefinition) -> SimulationResult:
                 figure_path,
                 show=case.output.show_figure,
                 title=plot.title,
+                file_format=file_format,
             )
         else:
             plot_three_phase(
@@ -188,6 +197,7 @@ def run_case(case: CaseDefinition) -> SimulationResult:
                 figure_path,
                 show=case.output.show_figure,
                 title=plot.title,
+                file_format=file_format,
             )
 
     if case.output.save_figure:

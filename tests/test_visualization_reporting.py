@@ -121,6 +121,45 @@ def test_extensionless_figure_uses_preflight_default_format(tmp_path) -> None:
     assert (tmp_path / "valid" / "result.csv").is_file()
 
 
+@pytest.mark.skipif(os.name == "nt", reason="Win32 treats all-dot names as directory aliases")
+def test_dot_only_and_hidden_figure_names_save_distinct_images(tmp_path) -> None:
+    from pycy_emt_lite import CaseDefinition, Resistor, SimulationConfig, VoltageSource
+    from pycy_emt_lite.cases import OutputOptions, PlotSpec
+
+    case = CaseDefinition(
+        "valid", (VoltageSource("V", "in", "0", 1.0), Resistor("R", "in", "0", 1.0)),
+        SimulationConfig(0.1, 0.1), plots=(PlotSpec(("v:in",), "..."), PlotSpec(("i:R",), ".png")),
+        output=OutputOptions(False, True, False, tmp_path),
+    )
+    with matplotlib.rc_context({"savefig.format": "png"}):
+        run_case(case)
+
+    images = {path.name: path.read_bytes() for path in (tmp_path / "valid").iterdir()}
+    assert set(images) == {".png", ".png.png"}
+    assert all(content.startswith(b"\x89PNG\r\n\x1a\n") for content in images.values())
+    assert images[".png"] != images[".png.png"]
+
+
+@pytest.mark.skipif(os.name == "nt", reason="Uses POSIX symbolic links and path traversal")
+def test_figure_saves_to_checked_path_with_requested_format(tmp_path) -> None:
+    from pycy_emt_lite import CaseDefinition, Resistor, SimulationConfig, VoltageSource
+    from pycy_emt_lite.cases import OutputOptions, PlotSpec
+
+    directory = tmp_path / "valid"
+    directory.mkdir()
+    (directory / "blocked").write_text("existing file", encoding="utf-8")
+    (directory / "linked.png").symlink_to("actual.svg")
+    case = CaseDefinition(
+        "valid", (VoltageSource("V", "in", "0", 1.0), Resistor("R", "in", "0", 1.0)),
+        SimulationConfig(0.1, 0.1), plots=(PlotSpec(("v:in",), "blocked/../linked.png"),),
+        output=OutputOptions(False, True, False, tmp_path),
+    )
+    run_case(case)
+
+    assert (directory / "linked.png").is_symlink()
+    assert (directory / "actual.svg").read_bytes().startswith(b"\x89PNG\r\n\x1a\n")
+
+
 @pytest.mark.skipif(os.name != "nt", reason="Win32 normalizes trailing periods and spaces")
 @pytest.mark.parametrize("figure_name", ["result.csv /detail.png", "result.csv./detail.png"])
 def test_windows_output_alias_fails_before_simulation(tmp_path, figure_name) -> None:
@@ -139,6 +178,29 @@ def test_windows_output_alias_fails_before_simulation(tmp_path, figure_name) -> 
 
     assert calls == []
     assert not root.exists()
+
+
+@pytest.mark.skipif(os.name != "nt", reason="Win32 normalizes trailing periods and spaces and reserves device names")
+@pytest.mark.parametrize("name", ["valid.", "valid ", "NUL"])
+def test_windows_case_directory_alias_fails_before_simulation(tmp_path, name) -> None:
+    from pycy_emt_lite import CaseDefinition, Resistor, SimulationConfig, VoltageSource
+    from pycy_emt_lite.cases import OutputOptions
+
+    existing = tmp_path / "valid" / "result.csv"
+    existing.parent.mkdir()
+    existing.write_text("existing result", encoding="utf-8")
+    calls = []
+    case = CaseDefinition(
+        name, (VoltageSource("V", "in", "0", 1.0), Resistor("R", "in", "0", 1.0)),
+        SimulationConfig(0.1, 0.1), output=OutputOptions(True, False, False, tmp_path),
+        on_step=lambda row: calls.append(row) or {},
+    )
+    with pytest.raises(ValueError, match="Windows 输出路径"):
+        run_case(case)
+
+    assert calls == []
+    assert existing.read_text(encoding="utf-8") == "existing result"
+    assert list(tmp_path.iterdir()) == [existing.parent]
 
 
 @pytest.mark.parametrize("kind", ["series", "three_phase", "comparison", "zoom"])
