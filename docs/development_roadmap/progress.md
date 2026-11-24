@@ -1,5 +1,8 @@
 # 持久进度
 
+2026-11-24。合并前复审发现的输出覆盖、Windows 对标检出及 11 号验证说明问题已修复，源码检查点为 `5313339`。26、28、33、34 号归档复比和双平台托管 CI 均通过，正式新增算例仍为 21 项。
+[本轮验证记录](experiments/merge_review_repairs_20261124.json)
+
 2026-11-24。F1 已完成。提交 `42374ee` 的 Windows 和 Ubuntu 托管作业均通过全量测试、35 个算例、发行包构建和库外 wheel 安装。两份原始测试与覆盖率 ZIP 已按 GitHub 摘要核对并归档。本期 20 项任务均已验收，正式新增算例仍为 21 项。
 [托管运行](https://github.com/yu-yikai/PyCy_EMT_Lite/actions/runs/45312698477) · [F1 证据](experiments/ci_42374ee.json)
 

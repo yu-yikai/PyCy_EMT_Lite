@@ -1,5 +1,8 @@
 # 恢复与下一步
 
+2026-11-24。合并前修复及复验完成，源码检查点为 `5313339`。合并保留原提交历史，供 11、12 号的原字节归档复跑使用。合并状态以 GitHub 的提交图为准。后续开发按路线图另立项。
+[本轮验证记录](experiments/merge_review_repairs_20261124.json) · [长期路线图](04_long_term_roadmap.md)
+
 2026-11-24。本期任务及 F1 托管验收均已完成。验收检查点为 `42374ee`，共交付 21 个正式新增算例。后续工作按路线图另立项。
 [托管运行](https://github.com/yu-yikai/PyCy_EMT_Lite/actions/runs/45312698477) · [F1 证据](experiments/ci_42374ee.json) · [长期路线图](04_long_term_roadmap.md)
 

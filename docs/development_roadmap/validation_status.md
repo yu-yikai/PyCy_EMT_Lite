@@ -1,5 +1,8 @@
 # 验证状态
 
+2026-11-24。修复提交 `5313339` 的 Windows 干净检出保留了 17 份冻结输入的原验收 SHA-256。四个受影响算例使用原生归档和原门限复比通过。本机 Windows 全量测试含慢测，1,670 项通过，2 项 POSIX 专用测试按预期跳过。Ubuntu WSL2 通过两项 POSIX 输出回归。Windows 和 Ubuntu 托管作业均通过全量测试、35 个公开算例、发行包构建及库外 wheel 安装。
+[本轮验证记录](experiments/merge_review_repairs_20261124.json) · [托管运行](https://github.com/yu-yikai/PyCy_EMT_Lite/actions/runs/45341968249)
+
 2026-11-24。提交 `42374ee` 的托管 CI 双平台全部通过。Windows 通过 1,666 项测试，测试步骤用时 22 分 10 秒，35 个算例用时 18 分 12 秒。Ubuntu 通过 1,664 项，按预期跳过 2 项 Windows 专用用例，测试用时 9 分 38 秒，35 个算例用时 8 分 28 秒。两套作业均完成发行包构建、库外 wheel 安装和清洁检查。证据记录包括两份已保存的 ZIP、JUnit 及覆盖率 XML 摘要。
 [托管运行](https://github.com/yu-yikai/PyCy_EMT_Lite/actions/runs/45312698477) · [受测提交及产物哈希](experiments/ci_42374ee.json)
 

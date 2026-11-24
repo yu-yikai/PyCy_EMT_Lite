@@ -3,7 +3,7 @@
   "updated_date": "2026-11-24",
   "timezone": "Asia/Shanghai",
   "branch": "codex/emt-examples-longterm",
-  "checkpoint_head": "42374ee79e8758e281cc1d63280deee4f34d6ccd",
+  "checkpoint_head": "53133391291647b4c8294e89b7c76b8d4bcd6ffc",
   "current_task": null,
   "formal_new_examples_completed": 21,
   "status_values": [
@@ -2858,19 +2858,18 @@
     "sha256": "b212eadfacd0744ffea28df8e19bf17b0b5db177c08b1fdbc1372301f78e464e"
   },
   "latest_maintenance": {
-    "kind": "dense_lu_one_residual_refinement",
+    "kind": "merge_review_repairs",
     "status": "verified",
-    "full_pytest_passed": 1573,
+    "windows_full_pytest_passed": 1670,
+    "hosted_ci_run_id": 45341968249,
     "record": {
-      "path": "validation/cases/grid_connected_vsc_open_loop/validation_report.json",
-      "bytes": 6374,
-      "sha256": "230218ff96d7ab45e59bfb8519f725bceb7777514355ea0cb298cf8e50e01829"
+      "path": "docs/development_roadmap/experiments/merge_review_repairs_20261124.json"
     },
     "changed_sources": [
-      "pycy_emt_lite/core/solvers.py",
-      "tests/test_solvers.py"
+      "pycy_emt_lite/cases.py",
+      "pycy_emt_lite/visualization/plotting.py"
     ],
-    "commit": "6634277c68e856cd81311149b91dc8bf55f61ea2"
+    "commit": "53133391291647b4c8294e89b7c76b8d4bcd6ffc"
   },
   "offline_analysis_preparation": {
     "status": "ACTUAL_FULL_NATIVE_PAIR_NUMERIC_PASS_REFERENCE_QUALIFIED",
@@ -2955,6 +2954,21 @@
       "remote_head_reverified": true,
       "remote_last_pushed_head": "8386c4e564314cd507c6c190d33f9c287f4ad762",
       "remote_verification_method": "Successful ordinary push of HEAD to refs/heads/codex/emt-examples-longterm; contains the fixed-h commit."
+    },
+    {
+      "kind": "dense_lu_one_residual_refinement",
+      "status": "verified",
+      "full_pytest_passed": 1573,
+      "record": {
+        "path": "validation/cases/grid_connected_vsc_open_loop/validation_report.json",
+        "bytes": 6374,
+        "sha256": "230218ff96d7ab45e59bfb8519f725bceb7777514355ea0cb298cf8e50e01829"
+      },
+      "changed_sources": [
+        "pycy_emt_lite/core/solvers.py",
+        "tests/test_solvers.py"
+      ],
+      "commit": "6634277c68e856cd81311149b91dc8bf55f61ea2"
     },
     {
       "kind": "post_delivery_review_repairs",
