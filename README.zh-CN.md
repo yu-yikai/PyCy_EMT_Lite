@@ -301,6 +301,6 @@ Ruff 检查错误、导入顺序、现代化写法和选定缺陷规则，不强
 
 覆盖率包含分支。打开 `.tmp/htmlcov/index.html` 查看未执行的代码行和分支；当前不设覆盖率百分比阈值。覆盖率和测试通过只说明被验证的行为，物理精度仍需[模型与验证](docs/models_and_validation.md)中的检查。
 
-[CI 配置](.github/workflows/ci.yml)定义 Linux 和 Windows 两项任务。任务限时 45 分钟，测试步骤 25 分钟，示例步骤 15 分钟。两项任务均锁定环境，执行上述检查、全部示例、构建发行包，并在源码目录外验证安装 wheel 的版本及 `py.typed`。JUnit、覆盖率 XML 和 HTML 以 `test-coverage-Linux`、`test-coverage-Windows` 上传，保留 14 天。本地通过不代表远端 Actions 已运行成功。
+[CI 配置](.github/workflows/ci.yml)为 Linux 作业设置 45 分钟限时，其中测试 25 分钟、示例 15 分钟。Windows 作业限时 65 分钟，其中测试 30 分钟、示例 25 分钟。两项作业均锁定环境，执行上述检查和全部示例，构建发行包，并在源码目录外验证安装的 wheel 版本及 `py.typed`。JUnit、覆盖率 XML 和 HTML 以 `test-coverage-Linux`、`test-coverage-Windows` 上传，保留 14 天。托管结果以 GitHub Actions 的实际运行为准。
 
 `pyproject.toml`、`uv.lock` 与 `pycy_emt_lite.__version__` 的版本必须一致。版本变更记入[CHANGELOG](CHANGELOG.md)；修改版本不会自动发布。
