@@ -1,10 +1,10 @@
 {
   "schema_version": 1,
-  "updated_date": "2026-11-23",
+  "updated_date": "2026-11-24",
   "timezone": "Asia/Shanghai",
   "branch": "codex/emt-examples-longterm",
-  "checkpoint_head": "77e997abc702d515043730e15729d3660bc3328f",
-  "current_task": "F1",
+  "checkpoint_head": "42374ee79e8758e281cc1d63280deee4f34d6ccd",
+  "current_task": null,
   "formal_new_examples_completed": 21,
   "status_values": [
     "planned",
@@ -2624,7 +2624,12 @@
       ],
       "new_capabilities": [],
       "references": [],
-      "validation": "a777c00的Ubuntu全量1568通过、5失败。2479b6d修复PLL合成归档源码哈希，287aa5e修正初始化QR行关系系数。修复后本机Windows和WSL2 Ubuntu 24.04.4各1573项含slow通过，锁定同步、Ruff、mypy通过。24号38项及28号双档原生对标回归通过。现有GitHub CI43856421332终态failure，两OS runner0、steps空，账户billing lock，待外部解除后补验托管运行。 39 号 Windows 与 Ubuntu WSL2 各 1629 项含慢测通过。Windows 串行 35 个算例用时 705.811 秒，按实测调整限时。",
+      "validation": "早期本机跨系统回归和账单锁记录保留在下列证据中。托管运行 45186695613 的 Windows 在原算例限时处超时。运行 45307903340 的 Windows 全部通过，Ubuntu 随后触及同一算例限时。2026-11-24，托管运行 45312698477 在同一提交完成两套作业。Windows 通过 1666 项，Ubuntu 通过 1664 项并按预期跳过 2 项 Windows 专用用例。两套作业均跑通 35 个公开算例、构建发行包、完成库外 wheel 安装和清洁检查。",
+      "hosted_ci": {
+        "source_commit": "42374ee79e8758e281cc1d63280deee4f34d6ccd",
+        "run_id": 45312698477,
+        "record": "docs/development_roadmap/experiments/ci_42374ee.json"
+      },
       "local_cli_and_package": "cbdc9b1的Windows和WSL2 Ubuntu各24个教学入口、sdist/wheel及库外wheel安装通过。Ubuntu临时CLI目录回收前未观察到末次源文件检查，运行日志和发行包已核对。",
       "case_39_serial_ci_timing": {
         "source_commit": "dab065d5d039c4e412b3425f3d17898998a9934e",
@@ -2656,7 +2661,7 @@
         "record": "docs/development_roadmap/experiments/f1_ubuntu_a223722_20261123.json"
       },
       "acceptance": "本批测试与真实CI记录、教学导航、里程碑推送和恢复指令",
-      "status": "blocked",
+      "status": "completed",
       "files": [
         ".github/workflows/ci.yml",
         "docs/development_roadmap/experiments/ci_90b2fcd.json",
@@ -2674,7 +2679,8 @@
         "docs/development_roadmap/experiments/f1_cli_wheel_cbdc9b1_20261118.json",
         "docs/development_roadmap/experiments/f1_ubuntu_a223722_20261123.json",
         "docs/development_roadmap/experiments/f1_case38_local_cross_platform_20261123.json",
-        "docs/development_roadmap/experiments/f1_case39_ci_examples_timing_20261123.json"
+        "docs/development_roadmap/experiments/f1_case39_ci_examples_timing_20261123.json",
+        "docs/development_roadmap/experiments/ci_42374ee.json"
       ],
       "commits": [
         "90b2fcd",
@@ -2693,11 +2699,11 @@
         "9ec48d51021704660ac4471e8877c7ff28c096d1",
         "dab065d5d039c4e412b3425f3d17898998a9934e",
         "225249b4529b7ca919ce17a957bbb328091833da",
-        "46c76c74ae56b3f44c1a689512c8a4640264d89e"
+        "46c76c74ae56b3f44c1a689512c8a4640264d89e",
+        "a9aa6795a4992be8d72137fd62fbbd24c3ff8140",
+        "42374ee79e8758e281cc1d63280deee4f34d6ccd"
       ],
-      "blockers": [
-        "GitHub check-run两项注释：The job was not started because your account is locked due to a billing issue. 账户解除外部账单锁后才能补跑；不通过重复push或改代码绕过。"
-      ]
+      "blockers": []
     },
     {
       "id": "G1",
@@ -2719,7 +2725,7 @@
       "blockers": []
     }
   ],
-  "execution_status": "active",
+  "execution_status": "completed",
   "pause_checkpoint": {
     "record": {
       "path": "docs/development_roadmap/experiments/c1_known_angle_dq_pscad_full_20261119.json",
@@ -2730,7 +2736,7 @@
     "status": "paused_after_both_native_main_runs_failed_original_physics",
     "explicit_user_request": true
   },
-  "goal_status": "active",
+  "goal_status": "completed",
   "resume_checkpoint": {
     "record": {
       "path": "local_reference/native_static_reviews/c1_resume_evidence_20261122T090927225592Z/report.json",
@@ -2805,7 +2811,7 @@
       }
     }
   ],
-  "current_stage": "delivery_audit_verified",
+  "current_stage": "delivery_completed",
   "resume_checkpoint_history": [
     {
       "resumed_utc": "2026-11-11T13:24:16.085490+00:00",

@@ -1,0 +1,174 @@
+{
+  "schema": "hosted_ci_f1_closeout_v1",
+  "date": "2026-11-24",
+  "source_commit": "42374ee79e8758e281cc1d63280deee4f34d6ccd",
+  "run_id": 45312698477,
+  "run_url": "https://github.com/yu-yikai/PyCy_EMT_Lite/actions/runs/45312698477",
+  "conclusion": "success",
+  "jobs": {
+    "windows-latest": {
+      "job_id": 138172072410,
+      "url": "https://github.com/yu-yikai/PyCy_EMT_Lite/actions/runs/45312698477/job/138172072410",
+      "runner": "GitHub Actions 1000000158",
+      "test_summary": {
+        "passed": 1666,
+        "skipped": 0,
+        "coverage_percent": 93
+      },
+      "public_examples": 35,
+      "budgets_minutes": {
+        "job": 65,
+        "tests": 30,
+        "examples": 25
+      },
+      "elapsed_seconds": 2458.0,
+      "steps": {
+        "Sync locked environment": {
+          "conclusion": "success",
+          "elapsed_seconds": 3.0
+        },
+        "Check lint and package types": {
+          "conclusion": "success",
+          "elapsed_seconds": 6.0
+        },
+        "Run all tests with coverage (including slow)": {
+          "conclusion": "success",
+          "elapsed_seconds": 1330.0
+        },
+        "Upload test and coverage reports": {
+          "conclusion": "success",
+          "elapsed_seconds": 1.0
+        },
+        "Run README Quick Start": {
+          "conclusion": "success",
+          "elapsed_seconds": 1.0
+        },
+        "Run all examples": {
+          "conclusion": "success",
+          "elapsed_seconds": 1092.0
+        },
+        "Build distributions": {
+          "conclusion": "success",
+          "elapsed_seconds": 2.0
+        },
+        "Smoke-test installed wheel outside checkout": {
+          "conclusion": "success",
+          "elapsed_seconds": 2.0
+        },
+        "Check for generated files": {
+          "conclusion": "success",
+          "elapsed_seconds": 0.0
+        }
+      },
+      "artifact": {
+        "id": 14883839304,
+        "name": "test-coverage-Windows",
+        "size_bytes": 364986,
+        "archive_sha256": "dd6951650ef583d60e20c17c4c78d333270ca289d75beb193db817895b274a18",
+        "expires_at": "2026-12-08T02:51:40Z",
+        "local_archive": ".tmp/longterm/f1-hosted-20261124-42374ee/test-coverage-Windows.zip",
+        "counts": {
+          "tests": 1666,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "junit_sha256": "5ded5f6283fe36b7cdc0a9b40c6cd315831314b4cbfed545db3ee0862f81b628",
+        "coverage_xml_sha256": "8deb254f5503a08ff3a63dd2bfb238e3611a82ff6a99a6a4acd5554ad294e05d",
+        "line_coverage_percent": 95.38,
+        "branch_coverage_percent": 85.67
+      }
+    },
+    "ubuntu-latest": {
+      "job_id": 138172072742,
+      "url": "https://github.com/yu-yikai/PyCy_EMT_Lite/actions/runs/45312698477/job/138172072742",
+      "runner": "GitHub Actions 1000000159",
+      "test_summary": {
+        "passed": 1664,
+        "skipped": 2,
+        "coverage_percent": 93
+      },
+      "public_examples": 35,
+      "budgets_minutes": {
+        "job": 60,
+        "tests": 25,
+        "examples": 25
+      },
+      "elapsed_seconds": 1101.0,
+      "steps": {
+        "Sync locked environment": {
+          "conclusion": "success",
+          "elapsed_seconds": 0.0
+        },
+        "Check lint and package types": {
+          "conclusion": "success",
+          "elapsed_seconds": 3.0
+        },
+        "Run all tests with coverage (including slow)": {
+          "conclusion": "success",
+          "elapsed_seconds": 578.0
+        },
+        "Upload test and coverage reports": {
+          "conclusion": "success",
+          "elapsed_seconds": 1.0
+        },
+        "Run README Quick Start": {
+          "conclusion": "success",
+          "elapsed_seconds": 0.0
+        },
+        "Run all examples": {
+          "conclusion": "success",
+          "elapsed_seconds": 508.0
+        },
+        "Build distributions": {
+          "conclusion": "success",
+          "elapsed_seconds": 1.0
+        },
+        "Smoke-test installed wheel outside checkout": {
+          "conclusion": "success",
+          "elapsed_seconds": 0.0
+        },
+        "Check for generated files": {
+          "conclusion": "success",
+          "elapsed_seconds": 0.0
+        }
+      },
+      "artifact": {
+        "id": 14883744785,
+        "name": "test-coverage-Linux",
+        "size_bytes": 364712,
+        "archive_sha256": "bfa6ff82a0914c589b20ac12f3e40ab746ef21840f7dc806023b21dc121f2424",
+        "expires_at": "2026-12-08T02:38:52Z",
+        "local_archive": ".tmp/longterm/f1-hosted-20261124-42374ee/test-coverage-Linux.zip",
+        "counts": {
+          "tests": 1666,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 2
+        },
+        "junit_sha256": "96e1988c5624131e832744f8e731da6091fd958de7e34d1885eb265b86115bd4",
+        "coverage_xml_sha256": "043b0fb7f74aca75382f70b65ad8466d030c8a591717ed65fe4e85b67d10c2c0",
+        "line_coverage_percent": 95.35,
+        "branch_coverage_percent": 85.59
+      }
+    }
+  },
+  "previous_timeout": {
+    "run_id": 45186695613,
+    "source_commit": "60708dec18993c5dc8d4f09779f6e760c26817be",
+    "windows_test_step_seconds": 1445,
+    "windows_examples_timeout_minutes": 15,
+    "last_started_example": 34
+  },
+  "windows_budget_qualification": {
+    "run_id": 45307903340,
+    "source_commit": "a9aa6795a4992be8d72137fd62fbbd24c3ff8140",
+    "windows_job_id": 138156130834,
+    "windows_conclusion": "success",
+    "windows_examples_seconds": 944,
+    "ubuntu_job_id": 138156130417,
+    "ubuntu_examples_elapsed_seconds": 912.0,
+    "ubuntu_examples_timeout_minutes": 15,
+    "ubuntu_last_started_example": 36
+  }
+}

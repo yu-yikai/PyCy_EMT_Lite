@@ -1,5 +1,10 @@
 # 恢复与下一步
 
+2026-11-24。本期任务及 F1 托管验收均已完成。验收检查点为 `42374ee`，共交付 21 个正式新增算例。后续工作按路线图另立项。
+[托管运行](https://github.com/yu-yikai/PyCy_EMT_Lite/actions/runs/45312698477) · [F1 证据](experiments/ci_42374ee.json) · [长期路线图](04_long_term_roadmap.md)
+
+## 历史恢复记录
+
 2026-11-23。本轮复审修复、本机跨系统回归和归档对标复验已完成，源码检查点为 `77e997a`。11、12 号的历史复跑使用 `validation.replay_existing`。托管 CI 后续按 F1 的实际 runner 状态核对。
 [修复复验记录](experiments/post_audit_repairs_20261123.json) · [历史复跑约定](../../validation/README.md)
 

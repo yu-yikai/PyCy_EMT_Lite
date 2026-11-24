@@ -1,14 +1,17 @@
 # 验证状态
 
+2026-11-24。提交 `42374ee` 的托管 CI 双平台全部通过。Windows 通过 1,666 项测试，测试步骤用时 22 分 10 秒，35 个算例用时 18 分 12 秒。Ubuntu 通过 1,664 项，按预期跳过 2 项 Windows 专用用例，测试用时 9 分 38 秒，35 个算例用时 8 分 28 秒。两套作业均完成发行包构建、库外 wheel 安装和清洁检查。证据记录包括两份已保存的 ZIP、JUnit 及覆盖率 XML 摘要。
+[托管运行](https://github.com/yu-yikai/PyCy_EMT_Lite/actions/runs/45312698477) · [受测提交及产物哈希](experiments/ci_42374ee.json)
+
 2026-11-23。文档修订后，Windows / Python 3.14.5 的锁定同步、Ruff、mypy 和 1,666 项全量测试均通过，含慢测。两处 Python 文件仅修订文档字符串，去除文档字符串后的 AST 与修订前一致。中英文 README 的建例、工厂复用、读回报告和保存现有算例示例，以及六份双语指南的 12 个 Python 片段均已实跑。本机 JUnit 见 `.tmp/longterm/doc-revision-20261123T1325592121171Z/pytest.xml`。
 
 2026-11-23。复审修复在 Windows 和 Ubuntu WSL2 各通过 1,664 项全量测试，包含慢测。最终输出路径改动另在两套系统通过定向测试，Windows 专项用例在 Ubuntu 按预期跳过。11、12 号历史快照复跑通过，27、38、39 号使用已验收的原生归档复比通过。
 [测试报告及比较产物哈希](experiments/post_audit_repairs_20261123.json)
 
-2026-11-23。复核 21 项正式新增算例和既有 02、11、12 号对标证据。39 号验收提交在 Windows 与 Ubuntu WSL2 各通过 1,629 项测试。Windows 干净副本串行跑通全部 35 个公开算例。托管 CI 最近一次记录的两套 runner 均未启动。
+2026-11-23。复核 21 项正式新增算例和既有 02、11、12 号对标证据。39 号验收提交在 Windows 与 Ubuntu WSL2 各通过 1,629 项测试。Windows 干净副本串行跑通全部 35 个公开算例。当时留存的托管 CI 账单锁记录显示两套 runner 均未启动。
 [参考目录](02_reference_catalog.md) · [39 号验收](../../validation/cases/dual_grid_forming_power_sharing/acceptance_report.json)
 
-2026-11-23。Windows 串行 35 个示例全通过，469 个归档文件前后哈希相同。旧限时在第 36 号运行期间耗尽。最近一次托管 CI 的两项 Job 仍无执行步骤。
+2026-11-23。Windows 串行 35 个示例全通过，469 个归档文件前后哈希相同。旧限时在第 36 号运行期间耗尽。当时留存的托管 CI 两项作业无执行步骤。
 [Windows 串行计时证据](experiments/f1_case39_ci_examples_timing_20261123.json)
 
 2026-11-23。第 39 号两档正式对标覆盖 360,002 个原始 PSCAD 采样点，三相负荷在指定拍投入。Windows 和 Ubuntu WSL2 各通过 1,629 项，包含慢测。
@@ -23,7 +26,7 @@
 2026-11-23。连续时域预检的两源功率增量约为 239.37 W 和 119.67 W。原生试验固定两档电气时钟、33 路输出、240–290 ms 和 540–590 ms 两窗。原生运行待取，正式新增为 20 项。
 [双构网源分担原生协议](experiments/e_dual_gfm_sharing_protocol_20261123.json)
 
-2026-11-23。Windows 和 Ubuntu WSL2 各通过 1,625 项全量测试，包含慢测。两套系统首跑均为 10 V、2 A 和 −2 A。最近一次托管 CI 因账户账单锁未启动。
+2026-11-23。Windows 和 Ubuntu WSL2 各通过 1,625 项全量测试，包含慢测。两套系统首跑均为 10 V、2 A 和 −2 A。当时留存的托管 CI 因账户账单锁未启动。
 [本机跨平台证据](experiments/f1_case38_local_cross_platform_20261123.json)
 
 2026-11-23。38 号两档核对 21,002 个 PSCAD 原始采样点，五个事件均在指定拍。Windows 1,625 项含慢测，Ubuntu WSL2 默认入口和四项专项均通过。

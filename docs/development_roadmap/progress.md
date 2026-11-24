@@ -1,5 +1,8 @@
 # 持久进度
 
+2026-11-24。F1 已完成。提交 `42374ee` 的 Windows 和 Ubuntu 托管作业均通过全量测试、35 个算例、发行包构建和库外 wheel 安装。两份原始测试与覆盖率 ZIP 已按 GitHub 摘要核对并归档。本期 20 项任务均已验收，正式新增算例仍为 21 项。
+[托管运行](https://github.com/yu-yikai/PyCy_EMT_Lite/actions/runs/45312698477) · [F1 证据](experiments/ci_42374ee.json)
+
 2026-11-23。已修订中英文入门、元件推导和数值约定，补齐 24、26 号对标前置条件。两版 README 的建例、报告、工厂复用和保存示例均已实跑。历史审计的九处源码链接已固定到原提交。
 [入门指南](../../README.zh-CN.md) · [数值约定](../numerical_conventions.md) · [对标准备](../../validation/README.md#运行对标前的准备)
 

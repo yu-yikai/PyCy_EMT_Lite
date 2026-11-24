@@ -19,7 +19,7 @@
 7. **B 电力电子**：B1已补既有12的PSCAD双向开关对标，原MathWorks失败仍单列；B2完成仅指交付26同步Buck，其余半/全桥、Boost和滤波候选未验证，不由26认证。外部受控双向开关与自动二极管严格分开。
 8. **C 单站控制**覆盖既有 11 号 PLL 和 28–32 号教学链。由并网开环逐步加入 dq 电流环、PLL、有功前馈、PCC 调压和直流母线调压。32 号在两档 PSCAD 对标中核对了电容初值、负荷投入、支路储能和闭环恢复。 [32 号验收](../../validation/cases/grid_connected_vsc_dc_voltage/acceptance_report.json)
 9. **D/E 接口与小网**含 D0 的电源、线路、变压器与固定负荷组合，以及 D1 已验收的平衡 PJM5 五母线负荷扰动、双端 VSC-HVDC、一阶 RC 并网储能和局部等效光伏。单站孤网 P–f 下垂已完成。阶段 E 核对了原厂并联线路故障的实际开断时序。38 号三母线算例已验证受端反送、双端隔离和重合恢复。39 号验证两台构网源的逆斜率分担与共同频率变化。 [33 号验收](../../validation/cases/pjm5_load_step/acceptance_report.json) · [34 号验收](../../validation/cases/two_terminal_vsc_hvdc/acceptance_report.json) · [35 号验收](../../validation/cases/grid_connected_storage/acceptance_report.json) · [36 号验收](../../validation/cases/grid_connected_pv/acceptance_report.json) · [37 号验收](../../validation/cases/islanded_frequency_droop/acceptance_report.json) · [38 号验收报告](../../validation/cases/parallel_line_fault_isolation/acceptance_report.json) · [39 号验收报告](../../validation/cases/dual_grid_forming_power_sharing/acceptance_report.json)
-10. **F 工程与教学**：在实际例中调整导航/参数/异常提示，保持既有API；每组结束复审测试、模型边界、参考及提交推送。
+10. **F 工程与教学**已完成。已复核学习导航、模型边界、验证证据及提交。Windows 和 Ubuntu 在同一提交上通过全量测试、全部公开算例和发行包检查。[F1 验收](experiments/ci_42374ee.json)
 
 ## G1 远期研究计划
 
