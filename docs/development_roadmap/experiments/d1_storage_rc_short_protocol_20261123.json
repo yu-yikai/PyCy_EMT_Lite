@@ -1,0 +1,131 @@
+{
+  "schema": "d1_storage_rc_short_protocol_v1",
+  "date": "2026-11-23",
+  "source_parent": "e18c10a1e98b8727b822ddc16461d9b1194ab3f0",
+  "scope": "A standalone DC stimulus and a first-order storage equivalent. Charge, rest, discharge and rest at both electrical steps. Qualify the electrical port for a later independent single-station grid interface test.",
+  "reference": {
+    "publisher": "PSCAD Knowledge Base 248",
+    "url": "https://www.pscad.com/knowledge-base/article/248",
+    "archive": {
+      "path": "local_reference/d1_storage_source_screen_20261123/Battery-Charger.zip",
+      "sha256": "bab03f014be4bea09b718378c3d93d95498f2f717d7826fd6a9f21cffb14ff64",
+      "bytes": 58414
+    },
+    "port_schematic": {
+      "member": "BatteryCharger.pscx",
+      "version": "4.6.3",
+      "canvas": "Battery",
+      "sha256": "3d1010ade06e230c1e77f5a5d2281bec617cb58f534671491fd540c3c0d764f4"
+    },
+    "engineering_draft": {
+      "path": "local_reference/d1_storage_source_screen_20261123/one_rc_port_short_draft.md",
+      "sha256": "20c8c22868918990b8df3e25e4d87d6bcf310692627d4786289c26cf80de2d83",
+      "bytes": 6841
+    },
+    "use": "The vendor subcircuit supplies the topology and measurement locations. This probe selects new open-circuit voltage, resistance, capacitance and applied currents independently."
+  },
+  "plant": {
+    "r0_ohm": 0.4,
+    "r1_ohm": 0.6,
+    "c1_f": 0.05,
+    "ocv_v": 400,
+    "initial_polarization_v": 0
+  },
+  "topology": {
+    "stimulus": "ground to port, signed ideal controlled current source",
+    "r0": "port to pol",
+    "r1": "pol to ocv",
+    "c1": "pol to ocv",
+    "ocv_source": "ocv to ground, ideal controlled voltage source",
+    "current_convention": "Positive current enters the storage port and charges the equivalent. The reported stimulus current is positive toward port. R0, R1, C1 and OCV-current directions follow the branch ordering above."
+  },
+  "timing": {
+    "duration_s": 0.002005,
+    "ocv_on_first_positive_tick": true,
+    "current_edges_s": [
+      0.00025,
+      0.00075,
+      0.00125,
+      0.00175
+    ],
+    "current_levels_a": [
+      0,
+      1,
+      0,
+      -1,
+      0
+    ],
+    "pulse_at_edge": "new value applies on the same electrical row",
+    "rest_checks": "Use all measured rows from a zero-current edge until the next injection edge, including the final row in the last rest."
+  },
+  "grids": {
+    "5us": {
+      "step_s": 0.000005,
+      "rows_including_zero": 402,
+      "event_ticks": [
+        50,
+        150,
+        250,
+        350
+      ]
+    },
+    "2p5us": {
+      "step_s": 0.0000025,
+      "rows_including_zero": 803,
+      "event_ticks": [
+        100,
+        300,
+        500,
+        700
+      ]
+    }
+  },
+  "channels": {
+    "Absolute_TIME_s": "s",
+    "I_set_kA": "kA",
+    "V_port_kV": "kV",
+    "V_pol_kV": "kV",
+    "V_ocv_kV": "kV",
+    "I_in_kA": "kA",
+    "I_port_kA": "kA",
+    "I_R1_kA": "kA",
+    "I_C1_kA": "kA",
+    "I_ocv_kA": "kA"
+  },
+  "native": {
+    "platform": "PSCAD 5.0.0",
+    "emtdc_build": "20210219",
+    "compiler": "gf46",
+    "emtdc_platform": "x86",
+    "integration": "trapezoidal",
+    "include_initial_row": true,
+    "every_electrical_step": true,
+    "branch_threshold_ohm": 0.0005,
+    "switch_interpolation": false,
+    "chatter_detection": false,
+    "chatter_removal": false
+  },
+  "verification": {
+    "numerics": "Convert original signed kV and kA to SI. Compare with independent trapezoidal recurrence using the specified command, then check KCL, KVL, capacitor charge and energy using each separately captured physical branch.",
+    "difference": "Verify both rest periods using absolute polarization magnitude. Pair fine even ticks with same physical times in the coarse trace.",
+    "energy": "Use the product of the two original endpoint means. Apply capacitor energy change, OCV power exchange, and R0/R1 losses at every interval including command edges.",
+    "first_charge_polarization_reference_v": {
+      "5us": 0.00004999583368052662,
+      "2p5us": 0.000024998958376734303
+    }
+  },
+  "limits": {
+    "clock_abs_s": 2e-12,
+    "ocv_abs_v": 0.000002,
+    "current_abs_a": 0.000002,
+    "kcl_abs_a": 0.000001,
+    "ohm_abs_v": 0.000002,
+    "prediction_abs_v": 0.000005,
+    "initial_polarization_abs_v": 0.000001,
+    "rest_monotonic_abs_v": 5e-10,
+    "cross_polarization_abs_v": 0.00005,
+    "interval_charge_abs_c": 5e-10,
+    "interval_energy_abs_j": 2e-8,
+    "cumulative_energy_abs_j": 0.000002
+  }
+}

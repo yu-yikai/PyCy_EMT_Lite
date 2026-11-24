@@ -1,0 +1,222 @@
+{
+  "schema": "d1_pjm5_emt_native_reference_protocol_v1",
+  "date": "2026-11-23",
+  "scope": "Prospective PSCAD qualification for the balanced PJM5 fixed-admittance load-step teaching network.",
+  "source_commit": "b81e7dfc9a4867d29c9c5bfeb7caf785c63a0193",
+  "model": {
+    "path": "local_reference/native_static_reviews/d1_pjm5_emt_20261123/model.json",
+    "sha256": "387cd7b33ac3fc95a51019459ad9989381caec582eed96480ee31587c1f19edd",
+    "bytes": 5077
+  },
+  "pglib_attribution": {
+    "url": "https://github.com/power-grid-lib/pglib-opf/blob/dc6be4b2f85ca0e776952ec22cbd4c22396ea5a3/pglib_opf_case5_pjm.m",
+    "release": "v23.07",
+    "attribution": "IEEE 2010; source data F. Li and R. Bo, Small Test Systems for Power System Economic Studies",
+    "license": "CC BY 4.0",
+    "license_url": "https://github.com/power-grid-lib/pglib-opf/blob/dc6be4b2f85ca0e776952ec22cbd4c22396ea5a3/LICENSE"
+  },
+  "model_scope": {
+    "buses": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "lines": [
+      [
+        1,
+        2
+      ],
+      [
+        1,
+        4
+      ],
+      [
+        1,
+        5
+      ],
+      [
+        2,
+        3
+      ],
+      [
+        3,
+        4
+      ],
+      [
+        4,
+        5
+      ]
+    ],
+    "source_bus": 4,
+    "source_line_line_rms_v": 230000.0,
+    "frequency_hz": 60.0,
+    "source_ramp_s": 0.05,
+    "fixed_load_fraction": 0.1,
+    "added_load": {
+      "bus": 2,
+      "nominal_three_phase_power_w": 5000000.0,
+      "pre_resistance_ohm": 1000000000.0,
+      "post_resistance_ohm": 10580.0,
+      "time_s": 0.3,
+      "edge": "Post resistance participates at the integer event row (trapezoidal right endpoint)."
+    }
+  },
+  "timing": {
+    "short_stop_s": 0.002,
+    "full_stop_s": 0.6,
+    "windows_s": {
+      "pre": [
+        [
+          0.18,
+          0.23
+        ],
+        [
+          0.24,
+          0.29
+        ]
+      ],
+      "post": [
+        [
+          0.45,
+          0.5
+        ],
+        [
+          0.55,
+          0.6
+        ]
+      ]
+    },
+    "variants": {
+      "5us": {
+        "step_s": 5e-06,
+        "ramp_tick": 10000,
+        "load_tick": 60000,
+        "short_rows_including_zero": 401,
+        "full_rows_including_zero": 120001
+      },
+      "2p5us": {
+        "step_s": 2.5e-06,
+        "ramp_tick": 20000,
+        "load_tick": 120000,
+        "short_rows_including_zero": 801,
+        "full_rows_including_zero": 240001
+      }
+    }
+  },
+  "independent_evidence": {
+    "discrete_tr_screen": {
+      "path": "local_reference/native_static_reviews/d1_pjm5_emt_20261123/expected_tr_verified.json",
+      "sha256": "a13baf78c0d8f96b8f5f3a1195fddbf4a2af56b7120fa66835a93766db0c97e7",
+      "bytes": 5646
+    },
+    "tr_source": {
+      "path": "local_reference/native_static_reviews/d1_pjm5_emt_20261123/check_emt.py",
+      "sha256": "09d86b9d51eb9538e9f97ace5434c5562d7cae9f3f4be6e3d83fd1da5081c034",
+      "bytes": 15146
+    },
+    "isolated_pycy_source_shunts": {
+      "path": "local_reference/native_static_reviews/d1_pjm5_emt_20261123/source_shunt_initialization.json",
+      "sha256": "54fbe0d9f69b86caf1362eb0fd44f86d11bd8414aeb6180a99d9db12a25f4c55",
+      "bytes": 2265
+    },
+    "predicted_phasor": {
+      "pre": {
+        "bus2_v_rms": 132259.14672536863,
+        "path_import_w": {
+          "12": 24557132.461101837,
+          "23": 5203286.18509682
+        },
+        "added_load_w": 52.477445677567765
+      },
+      "post": {
+        "bus2_v_rms": 132243.76498198224,
+        "path_import_w": {
+          "12": 26912963.545525454,
+          "23": 7799388.147178208
+        },
+        "added_load_w": 4958907.384671953
+      }
+    },
+    "predicted_cross_grid": {
+      "voltage_v": {
+        "max_difference": 283.96205358725274,
+        "time_s": 0.30000000000000004,
+        "away_from_load_max": 0.35010221126140095
+      },
+      "series_a": {
+        "max_difference": 0.3795900507084973,
+        "time_s": 0.30208,
+        "away_from_load_max": 0.000999737991655536
+      }
+    }
+  },
+  "native_execution": {
+    "target": "PSCAD 5.0 / EMTDC gf46 x86",
+    "profiles": [
+      "short_5us",
+      "5us",
+      "2p5us"
+    ],
+    "solver_rules": "Use trapezoidal integration on the original electrical step, emit each step including time zero, turn off switching interpolation and chatter detection/removal.",
+    "short_scope": "Admit compiled component and measurement roles, then check the original short ramp and all same-step physical equations.",
+    "long_scope": "Admit both full trajectories independently; then check their matched original rows and settled windows.",
+    "channel_count": 95,
+    "line_terminal_current": "Native series branch meter plus its native local shunt meter, with the correct port orientation; retain both ports and series state for each phase.",
+    "event_exactness": "All three extra branch resistances are the same tick-held value; the emitted R_step must equal the frozen Ohms at every row.",
+    "zero_time_witness": "Require original time zero, zero capacitor voltages and zero inductor currents. The directly driven source shunts retain their actual native initial capacitor-current witness for later trapezoidal comparisons."
+  },
+  "native_physical_limits": {
+    "clock_max_error_s": 2e-12,
+    "source_peak_error_v": 0.01,
+    "max_kcl_a": 0.001,
+    "max_resistive_ohm_v": 0.002,
+    "max_capacitor_tr_a": 0.0002,
+    "max_inductor_tr_v": 0.02,
+    "max_interval_energy_j": 0.01,
+    "abs_cumulative_energy_j": 0.5,
+    "stored_energy_at_zero_j": 1e-08,
+    "abs_source_current_at_zero_a": 0.2,
+    "r_step_exact": true
+  },
+  "native_same_grid_limits": {
+    "voltage_v": 0.05,
+    "series_a": 0.0002,
+    "from_a": 0.0005,
+    "to_a": 0.0005,
+    "source_a": 0.0005,
+    "load_resistor_a": 0.0002,
+    "load_inductor_a": 0.0002,
+    "step_a": 0.0002
+  },
+  "native_window_limits": {
+    "bus2_v_rms": 0.2,
+    "path_import_w": 2000.0,
+    "added_load_w": 50.0
+  },
+  "native_cross_grid_limits": {
+    "clock_max_error_s": 2e-12,
+    "load_neighborhood_s": 0.02,
+    "voltage_v": {
+      "max_difference": 350.0,
+      "away_from_load_max": 0.5
+    },
+    "series_a": {
+      "max_difference": 0.5,
+      "away_from_load_max": 0.002
+    },
+    "windows": {
+      "bus2_v_rms": 0.05,
+      "path_import_w": 250.0,
+      "added_load_w": 50.0
+    }
+  },
+  "metric_notes": {
+    "physical": "Check all measured port currents, branch equations and every TR interval. Use absolute cumulative energy and absolute zero-time source-current maxima. Apply the independent same-grid solution on the emitted clock; only the directly driven source shunts use their actual measured zero-time cap-current witness.",
+    "settled": "Trapezoidal integration of the three-phase native output over the specified 50 ms windows. Use phase-to-ground RMS at bus 2 and three-phase active power from each line into bus 2; test each window against the phasor with the matching load resistance.",
+    "cross_grid": "Compare common ticks without shifting or interpolation. The two independent TR predictions differ near the right-endpoint load step. Preserve pointwise raw terminal and source differences and qualify them with same-grid physics; apply cross-grid pointwise gates to bus voltages and series currents."
+  },
+  "native_reference_qualified_at_freeze": false,
+  "candidate_accepted_at_freeze": false
+}

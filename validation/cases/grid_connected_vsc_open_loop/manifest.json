@@ -1,0 +1,25 @@
+{
+  "case_id": "grid_connected_vsc_open_loop",
+  "example": "examples/28_grid_connected_vsc_open_loop.py",
+  "parameters_file": "parameters.json",
+  "prospective_protocol_file": "reference_protocol.json",
+  "qualified_reference_report": "qualified_reference_report.json",
+  "candidate_steps_s": [
+    5e-06,
+    2.5e-06
+  ],
+  "default_teaching_stop_s": 0.2,
+  "comparison_acquisition_stop_s": 0.200005,
+  "reference_platform": "Actual local MATLAB R2025a Simscape Foundation model built from the frozen equations; not an official MathWorks example.",
+  "comparison_pairs": [
+    "candidate5us/native5us",
+    "candidate2.5us/native2.5us",
+    "candidate5us/native2.5us"
+  ],
+  "time_shift_seconds": 0,
+  "event_guard_seconds": 0,
+  "status": "accepted_open_loop_case",
+  "acceptance_report": "validation_report.json",
+  "scope": "Fixed-modulation open-loop circuit only; closed-loop controls and cross-OS qualification remain separate.",
+  "candidate_accepted": true
+}

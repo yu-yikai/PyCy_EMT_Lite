@@ -13,7 +13,7 @@ from __future__ import annotations
 import math
 from collections.abc import Callable, Iterable, Mapping
 from dataclasses import dataclass, replace
-from itertools import product
+from itertools import pairwise, product
 from numbers import Integral, Real
 from types import MappingProxyType
 from typing import Literal, cast
@@ -43,7 +43,7 @@ from pycy_emt_lite.core.solvers import (
 )
 from pycy_emt_lite.core.stamping import _InitialConditions
 from pycy_emt_lite.events import EventQueue, SimulationEvent
-from pycy_emt_lite.events.base import _time_close, _time_tolerance
+from pycy_emt_lite.events.base import _time_close
 from pycy_emt_lite.io.results import SimulationResult
 
 EventTimePolicy = Literal["insert", "quantize_up", "require_aligned"]
@@ -203,8 +203,9 @@ class Simulator:
         1. 准备电路变量：节点电压变量和必要的支路电流变量。
         2. 在 t=0 应用事件，固定储能初值求一致代数量并记录。
         3. 只在正时间区间组装积分 companion、求解并更新储能状态。
-        4. 事件先积分至左侧，再依声明顺序修改网络，固定状态求右侧代数量。
-        5. 写回历史并记录，每个时刻只输出一行；事件行使用右侧值。
+        4. 事件和 Bergeron 波前先积分至左侧。显式事件按要求时刻执行，同一要求时刻保持加入顺序。
+           再固定储能状态求右侧代数量。
+        5. 写回历史并记录，每个保留时刻只输出一行，使用右侧值。
         """
 
         if self._run_started:
@@ -226,7 +227,7 @@ class Simulator:
             raise ValueError("电路没有非参考节点或支路变量，无法求解。")
 
         times = self._time_points()
-        self._prepare_delay_lines(times)
+        delay_lines = self._prepare_delay_lines(times)
         for event in self.events:
             event.validate(self.circuit)
         if self.config.linear_solver_mode == "precompute":
@@ -238,7 +239,7 @@ class Simulator:
             if index == 0:
                 actual_time_step = 0.0
             else:
-                actual_time_step = self._effective_time_step(float(time - times[index - 1]))
+                actual_time_step = self._effective_time_step(float(times[index - 1]), float(time))
             due_events = self.event_queue.pop_due(float(time))
             context = StampContext(
                 node_manager=self.circuit.node_manager,
@@ -252,7 +253,7 @@ class Simulator:
                 self._update_components(context, solution)
             for event in due_events:
                 self.event_log.append(event.apply(self.circuit, float(time)))
-            if index == 0 or due_events:
+            if index == 0 or due_events or (delay_lines and any(line._has_wavefront(index) for line in delay_lines)):
                 context = replace(context, time_step=0.0, _initial=_InitialConditions())
                 solution = self._solve_step(context)
                 self._update_components(context, solution)
@@ -287,7 +288,7 @@ class Simulator:
             event_log=self.event_log,
         )
 
-    def _prepare_delay_lines(self, times: np.ndarray) -> None:
+    def _prepare_delay_lines(self, times: np.ndarray) -> list[BergeronLine]:
         """Bergeron 只读取整步历史；在求解或应用事件前检查实际网格。"""
 
         lines = []
@@ -297,7 +298,7 @@ class Simulator:
             elif isinstance(component, ThreePhaseBergeronLine):
                 lines.extend(component.lines.values())
         if not lines:
-            return
+            return lines
         time_step = self.config.time_step
         for index, time in enumerate(times):
             if not _time_close(float(time), index * time_step):
@@ -315,6 +316,7 @@ class Simulator:
                 )
             line._time_step = time_step
             line._delay_steps = delay_steps
+        return lines
 
     def _prepare_linear_systems(self, times: np.ndarray) -> None:
         """对隔离数值副本预分解；不调用真实源/门极，不应用事件或推进状态。"""
@@ -333,8 +335,9 @@ class Simulator:
                 f"precompute 状态数 {count} 超过上限 {self.config.precompute_max_states}；"
                 "请声明较小的完整状态集合或使用 reuse。"
             )
-        # 使用与主循环相同的差分和归一化，保留事件插点的全部实际正 h。
-        steps = sorted({self._effective_time_step(float(h)) for h in np.diff(times)})
+        # 与主循环使用相同端点，保留事件插点的全部实际正 h。
+        steps = sorted({self._effective_time_step(float(left), float(right))
+                        for left, right in pairwise(times)})
         size = self.circuit.size
         initial_size = size + sum(type(c) is Capacitor for c in self.circuit.components)
         # 每份按原 A、LU、准备期字节键三份 float64 矩阵，再计主元和查表键。
@@ -615,13 +618,18 @@ class Simulator:
             return False
         return _time_close(time, nearest_step * self.config.time_step)
 
-    def _effective_time_step(self, raw_time_step: float) -> float:
-        """把浮点误差造成的步长微小偏差归一到配置步长。"""
+    def _effective_time_step(self, left: float, right: float) -> float:
+        """相邻基础网格点使用设定步长；事件插点使用实际区间长度。"""
 
-        tolerance = _time_tolerance(raw_time_step, self.config.time_step)
-        if abs(raw_time_step - self.config.time_step) <= tolerance:
-            return self.config.time_step
-        return raw_time_step
+        step = self.config.time_step
+        index = round(left / step)
+        next_index = index + 1
+        # 与 _time_points 的生成方式一致，末点保留声明的 stop_time。
+        base_right = (self.config.stop_time if next_index == round(self.config.stop_time / step)
+                      else next_index * step)
+        if left == index * step and right == base_right:
+            return step
+        return right - left
 
     @staticmethod
     def _sorted_unique_times(points: Iterable[float]) -> list[float]:

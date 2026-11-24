@@ -1,0 +1,37 @@
+{
+  "task": "C1",
+  "scope": "PCC 电压测量的 PyCy 开关仿真及因果回放。原生短窗、P 前馈和 Vac 闭环独立验收。",
+  "case30_commit": "0f0ee74de587a09e9290931f50a0c81fa115d6d4",
+  "window_s": [0.15, 0.2],
+  "carrier_period_s": 0.001,
+  "lowpass_time_constant_s": 0.01,
+  "controlled_pair_check": "两档各 78 路在 80 ms 的 q 轴参考首次变化前逐点一致，三相理想源电压在整个运行中逐点一致。",
+  "fundamental_cross_check": "把实测基波电流代入 Vpcc = E − (Rg + jωLg) I，四条轨迹预测幅值与独立波形提取的差均小于 0.003 V RMS。",
+  "grids": [
+    {
+      "h_s": 0.000005,
+      "internal_report": "local_reference/native_static_reviews/c1_power_vac_feasibility_20261122/report.json",
+      "internal_report_sha256": "a8505c77a94ec41a636d447dac74fe2b793dd8a536104cfccc0010d8c7f7c398",
+      "replay": "local_reference/native_static_reviews/c1_power_vac_feasibility_20261122/voltage_estimator_report.json",
+      "replay_sha256": "90da262a22b2c24c2034bc2ca99927abeea0607b5ca160039551f9b9f8683834",
+      "points_each_condition": 40001,
+      "pcc_fundamental_held_and_supported_v_rms": [118.93097514866018, 122.14047868627931],
+      "max_error_raw_100us_average_then_filter_v_rms": 1.5607730342059654,
+      "max_error_full_carrier_average_then_filter_v_rms": 0.14999700141082428,
+      "max_error_filter_at_each_electrical_row_then_sample_every_1ms_v_rms": 0.18162917230345954
+    },
+    {
+      "h_s": 0.0000025,
+      "internal_report": "local_reference/native_static_reviews/c1_power_vac_feasibility_fine_20261122/report.json",
+      "internal_report_sha256": "eee074e6b4200d75584a01e428db9df41a4f41c4f7bf0998c2b0f67f9469c4d8",
+      "replay": "local_reference/native_static_reviews/c1_power_vac_feasibility_fine_20261122/voltage_estimator_report.json",
+      "replay_sha256": "1f9920d20ca79befb6534497722d2af47669e280f6bac8b79d8aec812b920dfe",
+      "points_each_condition": 80001,
+      "pcc_fundamental_held_and_supported_v_rms": [118.92122557808582, 122.1507930776405],
+      "max_error_raw_100us_average_then_filter_v_rms": 1.5704683056606825,
+      "max_error_full_carrier_average_then_filter_v_rms": 0.13960598313620665,
+      "max_error_filter_at_each_electrical_row_then_sample_every_1ms_v_rms": 0.16188083813001697
+    }
+  ],
+  "next_reference_choice": "优先试用两个既有一阶低通。每条电气求解行用推进到该行的源端 PLL 角度变换 PCC 电压，分别滤波 d/q，外环在每个 1 ms 载波末点读取。两档回放中最坏误差不超过 0.182 V RMS，闭环阈值和原生稳定性待单独确定。"
+}

@@ -31,6 +31,24 @@ def test_basic_parameter_rejects_convertible_non_numbers(factory, value) -> None
         factory("X", "in", "0", value)
 
 
+@pytest.mark.parametrize("loop_first", [False, True])
+@pytest.mark.parametrize("loop_kind", ["resistor", "source"])
+def test_same_node_branch_does_not_change_solution(loop_first, loop_kind) -> None:
+    # 在原路径很弱时，自环的大系数若先加再减，可能把已有矩阵元素或右端项抹掉。
+    if loop_kind == "resistor":
+        current, resistance = 1e-6, 1e6
+        loop = Resistor("loop", "n", "n", 1e-9)
+    else:
+        current, resistance = 1e-15, 1e15
+        loop = CurrentSource("loop", "n", "n", 100.0)
+    network = [CurrentSource("I", "0", "n", current), Resistor("R", "n", "0", resistance)]
+    network.insert(0 if loop_first else len(network), loop)
+    result = Simulator(Circuit.from_components("same_node", network), SimulationConfig(0.1, 0.1)).run()
+
+    assert result.series("v:n") == pytest.approx([1.0, 1.0])
+    np.testing.assert_allclose(result.series("i:R"), [current, current], rtol=1e-12, atol=0.0)
+
+
 @pytest.mark.parametrize("change", ["append", "endpoint", "name"])
 @pytest.mark.parametrize("linear_solver_mode", ["rebuild", "reuse"])
 def test_prepared_circuit_rejects_direct_topology_changes(change, linear_solver_mode) -> None:

@@ -1,0 +1,203 @@
+{
+  "schema": "c1_simscape_library_discovery_v1",
+  "date": "2026-11-16",
+  "execution_head": "c3fdf7957d1c52ee5a3ba51c6bf2c55dbea2151a",
+  "status": "ACTUAL_R2025A_LIBRARY_API_VERIFIED_NO_MODEL_OR_SIMULATION",
+  "previous_goal_turn_classification": "progress",
+  "current_goal_turn_classification": "progress",
+  "summary": "R2025a只读进程已成功核对11个所需库模块的实际参数与端口计数；尚未建立或仿真新电路。",
+  "execution": {
+    "preflight_attempts": 2,
+    "first_attempt": "Windows进程查询超时，MATLAB启动数0；原包与失败记录保持。",
+    "recovery": "独立实际用户CIM查询恢复正常后，新封同代码、同查询超时与资源阈值的独立包；未复用旧包。",
+    "total_MATLAB_launches": 1,
+    "tool_session": 76308,
+    "terminal_tool_chunk": "858770",
+    "exit_code": 0,
+    "elapsed_native_s": 63.9182225,
+    "remaining_observed_owned": [],
+    "cleanup_actions": [],
+    "cleanup_errors": [],
+    "matlab_version": "25.1.0.2973910 (R2025a) Update 1"
+  },
+  "scope": {
+    "all11_interfaces_unique": true,
+    "diagrams_before": 0,
+    "new_diagrams": [
+      {
+        "name": "nesl_utility",
+        "type": "library",
+        "dirty": "off"
+      },
+      {
+        "name": "fl_lib",
+        "type": "library",
+        "dirty": "off"
+      }
+    ],
+    "model_created": false,
+    "model_compiled": false,
+    "simulation_called": false,
+    "numeric_output_created": false,
+    "OUT_accessed": false,
+    "new_reference_qualified": false
+  },
+  "actual_interface_findings": {
+    "inductor": {
+      "parameter_names": [
+        "l",
+        "r",
+        "g",
+        "i_L",
+        "i_L_specify",
+        "i_L_priority"
+      ],
+      "default_g_S": 1e-09,
+      "default_i_L_A": 0,
+      "default_i_L_priority": "High",
+      "default_i_L_specify": "off",
+      "future_same_physics_requirement": "明确l=.01H、r=0Ω、g=0S、i_L=0A且i_L_specify=on/i_L_priority=High，并在新模型中核验真实初值。"
+    },
+    "variable_resistor": {
+      "Rmin_ohm": 0,
+      "thermalEnable": "false",
+      "source_equation": "v=i*R；正电阻双向，无二极管。",
+      "future_R_ohm": [
+        0.001,
+        1000000000.0
+      ]
+    },
+    "solver": {
+      "UseLocalSolver_default": "off",
+      "LocalSolverChoice_default": "NE_BACKWARD_EULER_ADVANCER",
+      "LocalSolverSampleTime_default_s": 0.001,
+      "TR_option_observed": "NE_TRAPEZOIDAL_ADVANCER",
+      "ConsistencyTolSource_options": [
+        "LOCAL",
+        "GLOBAL"
+      ],
+      "ResolveIndetEquations_default": "on",
+      "AutomaticFiltering_default": "on",
+      "qualification": "只确认真实参数与选项；尚未验证启动或换相的逐步方程。"
+    },
+    "converters": {
+      "Simulink_PS_default": "Unit=1、FilteringAndDerivatives=provide、UdotUserProvided=0",
+      "PS_Simulink_default": "Unit=inherit",
+      "future_requirements": "电压用V，电阻用Ohm；连续交流源不可套用保持电阻的zero导数方式，也不可暗加滤波。"
+    }
+  },
+  "license_scope": {
+    "test": {
+      "MATLAB": 1,
+      "Simulink": 1,
+      "Simscape": 1
+    },
+    "inuse_features_after": [
+      "matlab",
+      "simulink"
+    ],
+    "Simscape_model_checkout_proved": false,
+    "note": "三个可用性测试均为1；库读取未证明Simscape新模型编译/仿真许可签出。"
+  },
+  "physics_and_solver_limits": [
+    "电感默认并联漏导会改变原电路，必须显式归零。",
+    "Floating Reference源码含额外对地电容，不用于保持原浮置DC拓扑。",
+    "R2025a官方文档说明局部求解器在启动及部分内部离散变化后用BE；不能仅凭TR选项认定每段均满足原TR方程，也不预断它影响哪一实际采样段。",
+    "模型实例端口接线、Simscape模型许可、初始一致性、实际同拍R/源/100µs与5µs时序、DC源直接电流日志均待新模型验证。"
+  ],
+  "evidence": {
+    "package_manifest": {
+      "path": "local_reference/c1_openloop_reference_research/20261116T074953182205Z_simscape_library_discovery_v2/manifest.json",
+      "bytes": 674,
+      "sha256": "66bea7adeb9872757e7e2b530604b2c90784060385111c372d06a364b670cec9"
+    },
+    "ROOT_seal": {
+      "path": "local_reference/c1_openloop_reference_research/20261116T074953182205Z_simscape_library_discovery_v2/ROOT_seal.json",
+      "bytes": 8772,
+      "sha256": "08acbdd817bb3c37954a28d25792c69c4ecad96fccb70de00728aab613a9e212"
+    },
+    "ROOT_closed": {
+      "path": "local_reference/native_static_reviews/c1_library_ROOT_closed_20261116T075407039510Z/receipt.json",
+      "bytes": 5154,
+      "sha256": "a915c45f4e3cb5c595e2a947e3bbe3d4c0e0ba25e2cf61a746a764ff9b01b4a1"
+    },
+    "independent_closed": {
+      "path": "local_reference/native_static_reviews/c1_simscape_library_actual_independent_20261116T075420602872Z/receipt.json",
+      "bytes": 13440,
+      "sha256": "cd70e54aa98f4daf5d65a75155ed2d452d47e8c4166c732cdf711d12a6a49938"
+    },
+    "actual_discovery": {
+      "path": "local_reference/c1_openloop_reference_research/20261116T074953182205Z_simscape_library_discovery_v2/n/20261116T0750167761096Z/discovery/discovery.json",
+      "bytes": 162335,
+      "sha256": "b49ebafe386eeabb28f45b6193332e5702a3a893050e7a396c01039e0eed08eb"
+    },
+    "terminal": {
+      "path": "local_reference/c1_openloop_reference_research/20261116T074953182205Z_simscape_library_discovery_v2/n/20261116T0750167761096Z/terminal.json",
+      "bytes": 14641,
+      "sha256": "9e83c30f6e8a3caad3059267e3bf459c240013de3ebc397552a44a4a759c0f1e"
+    },
+    "source_equations": {
+      "path": "local_reference/native_static_reviews/c1_simscape_source_research_20261116T073458017308Z/receipt.json",
+      "bytes": 16594,
+      "sha256": "86fadd76d16e6f84d3a3ebbede90afd3a52e31c307197f211cf9f7504d9b8528"
+    },
+    "solver_timing_static": {
+      "path": "local_reference/native_static_reviews/c1_simscape_solver_timing_static_20261116T073844702927Z/receipt.json",
+      "bytes": 24926,
+      "sha256": "aad17bef8fc0883e6c7d4d022b837c8586741cc58e5eb35bccb98f3e89ba6a54"
+    },
+    "discovery_lookup_correction": {
+      "path": "local_reference/native_static_reviews/c1_simscape_library_discovery_v2_static_20261116T074037887825Z/receipt.json",
+      "bytes": 3161,
+      "sha256": "e62e9e36e03431c2cb603b4845e8d149e9827b874819c42f1807b55b2b3debb2"
+    },
+    "monitor_two_pure_fixes": {
+      "path": "local_reference/native_static_reviews/c1_matlab_discovery_monitor_draft_20261116T073810Z/monitor_v2_pure_receipt.json",
+      "bytes": 1238,
+      "sha256": "5276cd59085f134997da619cb97254c8f69f12290bfa835eb1dea8bffda74c11"
+    },
+    "next_probe_parameter_recommendation": {
+      "path": "local_reference/native_static_reviews/c1_simscape_short_probe_solver_recommendation_20261116T075544494233Z/receipt.json",
+      "bytes": 7277,
+      "sha256": "95a477093d9f5e47e12df39192807c10031af5de8d8254a4a595697a2d203fb8"
+    }
+  },
+  "official_sources": [
+    "https://www.mathworks.com/help/releases/R2025a/simscape/ref/inductor.html",
+    "https://www.mathworks.com/help/releases/R2025a/simscape/ref/solverconfiguration.html",
+    "https://www.mathworks.com/help/releases/R2025a/simscape/ref/simulinkpsconverter.html"
+  ],
+  "next": {
+    "status": "SHORT_PROBE_NOT_FROZEN_OR_BUILT",
+    "scope": "先固定并建立从0开始的400µs同物理SPWM探针，核实际端口/单位/零初值和首步、换相时序；保留原16元件/19原生支路、100µs/5µs保持、5µV逐段TR与2µV共模门，全部首末点不删。",
+    "before_execution": "另封当前HEAD、完整参数/初值/方向、真实库实例与编译/输出绑定、输入与资源守卫；诊断短探针不能代替原完整双步长参考。",
+    "candidate_gate": "原完整参考全门和双步长资格满足前，仍不实施教学候选。"
+  },
+  "maintenance": {
+    "commit": "c3fdf7957d1c52ee5a3ba51c6bf2c55dbea2151a",
+    "description": "两处小型可读性改进已独立验收并推送。",
+    "source_files": 113,
+    "unchanged_since_this_execution_head": true,
+    "changed_from_old_baseline": "仅27号摘要格式化，其余112个不变；依赖不变。",
+    "full_regression_rerun": false,
+    "prior_full_regression_tests": 1300
+  },
+  "current_CI": {
+    "record": {
+      "path": "docs/development_roadmap/experiments/ci_c3fdf79.json",
+      "bytes": 7755,
+      "sha256": "1b7d9848433e2c8c2ed396a0b934a06748708f17172e1f2ff34f8b4d29cde2d6"
+    },
+    "run": 43825501731,
+    "status": "terminal_failure_before_runner_due_to_account_billing_lock",
+    "Windows_Ubuntu_tests_executed": false
+  },
+  "formal_new_examples_completed": 9,
+  "C1_status": "in_progress",
+  "goal_status": "active",
+  "original_2uV_full_reference_FAIL_preserved": true,
+  "full_reference_qualified": false,
+  "candidate_implemented": false,
+  "active_native_sessions": 0,
+  "teaching_scope": "研究脚本、模型源、原始接口数据均留忽略目录；不增加公共元件或控制框架。"
+}

@@ -1,0 +1,51 @@
+{
+  "schema": "grid_connected_vsc_pll_source_precision_trial_v1",
+  "date": "2026-11-22",
+  "scope": "One 5 us PSCAD long-window diagnostic for numerical generation of the declared ideal grid waveform.",
+  "reference_protocol": {
+    "path": "validation/cases/grid_connected_vsc_pll/reference_protocol.json",
+    "sha256": "78ba092cc8099390023d3fcaa449c8479d269dcd5fa7ec315b267d968e1da767"
+  },
+  "original_native_reference": {
+    "path": "validation/cases/grid_connected_vsc_pll/full_reference_report.json",
+    "sha256": "255e251c54c3146bc13a26a528c200e8af80e78cf3e1a1a62707afef66a9789d"
+  },
+  "failed_candidate_comparison": {
+    "path": "local_reference/native_static_reviews/c1_example30_comparison_20261122T122946122172Z/report.json",
+    "sha256": "bf338459dbdfca0db7cdcf0f7d8446bf7fbc5e19c77f20e53d1b73049ad342ce"
+  },
+  "measured_voltage_replay": {
+    "path": "local_reference/native_static_reviews/c1_example30_comparison_20261122T122946122172Z/pll_measured_voltage_replay.json",
+    "sha256": "7de0c56b77ce124b108ae8849fb94639eb170143ec3b8eacef57a0127a21a935"
+  },
+  "fixed_coarse_candidate": {
+    "path": "local_reference/native_static_reviews/c1_example30_comparison_20261122T122946122172Z/5us/waveforms.npz",
+    "sha256": "f5a4e3eb069fd5e26ea359eeac0a5d181479e4af8acd1fed3f5054ff1938466d"
+  },
+  "source_support": {
+    "pscad_model_2_documentation": "https://www.pscad.com/webhelp-v501-ol/Master_Library_Models/Sources/Voltage_Source_Model_2/simp_1p_source.htm",
+    "pscad_dynamic_order_documentation": "https://www.pscad.com/webhelp-v5-ol/EMTDC/Program_Structure/dsdyn_and_dsout_subroutines.htm",
+    "installed_master_sha256": "2940ddce6fe1fae56cb6be70bbaf0210a7e36059bfcad1e78b0ddbfd4d2a7c77",
+    "installed_example": "master:harmdiffmag demonstrates the signed instantaneous signal input of an ideal source_1 in external DC signal mode"
+  },
+  "numerical_factor": {
+    "method": "In native DSDYN generate each ideal AC source input in signed instantaneous kV. Set j = NINT(TIME/DELT), t = j*DELT, and evaluate 0.12*sqrt(2)*min(t/0.02,1)*sin(2*pi*60*t + phase). Use phase 0, -2*pi/3 and +2*pi/3 for a, b and c.",
+    "source_configuration": "Keep the three original ideal source_1 branches, using Type=6, Spec=0, explicit star terminal and external signed instantaneous voltage input (Cntrl=1, AC=0, TC=0). The native instantaneous signal mode drives the original AC waveform.",
+    "placement": "Generated DSDYN must compute the three signals before their corresponding EMTDC_1PVSRC calls. MainOut must use the original solved AC-neutral differential measurement for PLL and feedback.",
+    "invariants": "Retain all prior electrical branches and node roles, numerical DC-negative reference, sparse threshold 1, physical settings, native solver and outputs, PLL sample and gate sequence, initial values, signs, setpoints and 190 V limiting."
+  },
+  "execution": {
+    "grid": "5us",
+    "stop_s": 0.200005,
+    "rows": 40002,
+    "control_samples_and_next_gate_applications": 2000,
+    "source": "Independent native run in a new locally ignored directory, with input hashes, generated admission, vendor runtime receipt, original INF/five OUT/CSV and terminal closure.",
+    "receipt_status": "NATIVE_PLL_SOURCE_TRIAL_CLOSED_FOR_NUMERIC_REVIEW",
+    "bind": "Retain original protocol_sha256 and add this file's trial_sha256."
+  },
+  "acceptance": {
+    "physical_and_control": "All original 19 pointwise physical gates, original timing, current, switching, controller, saturation, lock, true-grid current tracking and power criteria remain in force.",
+    "comparison": "Compare the new native output to the previously sealed PyCy coarse outputs on original rows, with all nine windows and the original 23 continuous and 13 exact gates and original PLL state limits. The candidate stays fixed during this diagnostic.",
+    "next": "On a coarse pass, prospectively bind a separate fine run, original native and PyCy cross-grid comparison, and new independent dual-grid public comparison before formal acceptance."
+  }
+}

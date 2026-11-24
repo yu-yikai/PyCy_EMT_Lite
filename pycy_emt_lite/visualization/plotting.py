@@ -26,11 +26,13 @@ def plot_series(
     *,
     show: bool = True,
     title: str | None = None,
+    file_format: str | None = None,
 ) -> None:
     """绘制一个或多个结果字段随时间变化的曲线。
 
     示例算例默认显示图形窗口，便于学习者直接观察波形。`output_path` 仅作为可选
     参数保留给报告生成、批量仿真等需要保存图片的场景。
+    提供 `file_format` 时按指定格式写入 `output_path`。
     """
 
     import matplotlib.pyplot as plt
@@ -49,7 +51,7 @@ def plot_series(
         if output_path is not None:
             target = Path(output_path)
             target.parent.mkdir(parents=True, exist_ok=True)
-            figure.savefig(target, dpi=150, bbox_inches="tight")
+            figure.savefig(target, format=file_format, dpi=150, bbox_inches="tight")
         _show_if_interactive(show)
     finally:
         plt.close(figure)
@@ -130,12 +132,14 @@ def plot_three_phase(
     *,
     show: bool = True,
     title: str | None = None,
+    file_format: str | None = None,
 ) -> None:
     """绘制三相波形。
 
     三相字段按 a、b、c 的顺序传入，例如：
     `("v:load:a", "v:load:b", "v:load:c")`。函数本身不假设字段前缀，
     因而可用于电压、电流或其他三相分析量。
+    提供 `file_format` 时按指定格式写入 `output_path`。
     """
 
     import matplotlib.pyplot as plt
@@ -152,12 +156,12 @@ def plot_three_phase(
             axes.set_title(title)
         axes.grid(True)
         axes.legend()
-        _save_show_close(figure, output_path, show)
+        _save_show_close(figure, output_path, show, file_format=file_format)
     finally:
         plt.close(figure)
 
 
-def _save_show_close(figure, output_path: str | Path | None, show: bool) -> None:
+def _save_show_close(figure, output_path: str | Path | None, show: bool, *, file_format: str | None = None) -> None:
     """保存、显示并关闭 Matplotlib 图形。"""
 
     import matplotlib.pyplot as plt
@@ -165,7 +169,7 @@ def _save_show_close(figure, output_path: str | Path | None, show: bool) -> None
     if output_path is not None:
         target = Path(output_path)
         target.parent.mkdir(parents=True, exist_ok=True)
-        figure.savefig(target, dpi=150, bbox_inches="tight")
+        figure.savefig(target, format=file_format, dpi=150, bbox_inches="tight")
     _show_if_interactive(show)
     plt.close(figure)
 

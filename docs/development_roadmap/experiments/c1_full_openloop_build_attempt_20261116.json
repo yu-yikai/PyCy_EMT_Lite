@@ -1,0 +1,186 @@
+{
+  "schema": "c1_full_openloop_build_attempt_v1",
+  "date": "2026-11-16",
+  "status": "COMPILED_WITH_ZERO_ERRORS_POSTBUILD_ADMISSION_FAILED",
+  "branch": "codex/emt-examples-longterm",
+  "protocol_freeze_commit": "1afde3a916c24edf21dce1c71ae6f825d04d9291",
+  "goal_status": "active",
+  "C1_status": "in_progress",
+  "formal_new_examples_completed": 9,
+  "execution": {
+    "session_id": 69502,
+    "process_exit_code": 1,
+    "elapsed_s": 485.9454664000077,
+    "native_build_errors": 0,
+    "native_build_warnings": 0,
+    "native_run_calls": 0,
+    "worker_final_stage": "finished_after_exception",
+    "quit_returned": true,
+    "remaining_owned": [],
+    "OUT_files": 0,
+    "INF_files": 0,
+    "source_profile_dependencies_parent_environment_unchanged": true
+  },
+  "prepared_package": {
+    "path": "local_reference/c1_openloop_reference_research/20261116T035748286771Z_full_coarse_build_only_v1/manifest.json",
+    "bytes": 7389,
+    "sha256": "c59020b1e17af46b63be3f18ae189a9ced39b36033c26abf21b658a65ed3cc1d"
+  },
+  "root_byte_seal": {
+    "path": "local_reference/native_static_reviews/c1_full_build_only_root_byte_seal_20261116T040106293069Z/receipt.json",
+    "bytes": 2873,
+    "sha256": "d0b152444619db70ef72be89a36651d1500248b487b4fe505218095b8ea3f4f2"
+  },
+  "actual_user_preflight": {
+    "path": "local_reference/native_static_reviews/c1_full_build_only_root_preflight_20261116T040125872127Z/receipt.json",
+    "bytes": 1935,
+    "sha256": "b2b526dc60ea2291008d126d55977f9b217f498ac1baff5b46cd5c2520948eab"
+  },
+  "actual_evidence": {
+    "non_OUT_manifest": {
+      "path": "local_reference/c1_openloop_reference_research/20261116T035748286771Z_full_coarse_build_only_v1/n/20261116T040146976758Z/manifest.json",
+      "bytes": 26276,
+      "sha256": "35582140cdd75b05943a5051e44994c60559e97ed842705802267907ddb859ac"
+    },
+    "non_OUT_files": 79,
+    "terminal": {
+      "path": "local_reference/c1_openloop_reference_research/20261116T035748286771Z_full_coarse_build_only_v1/n/20261116T040146976758Z/terminal.json",
+      "bytes": 9959,
+      "sha256": "6ddeaf1b2457fb3ecec6ca677b0dd3bf52df9f43c616db97c789ee169dbbc28c"
+    },
+    "build_messages": {
+      "path": "local_reference/c1_openloop_reference_research/20261116T035748286771Z_full_coarse_build_only_v1/n/20261116T040146976758Z/build_messages.json",
+      "bytes": 4687,
+      "sha256": "ec0495820de645b0c70c8534e1018b99118e167e7014e68794214c0ea816efed"
+    },
+    "original_failed_admission": {
+      "path": "local_reference/c1_openloop_reference_research/20261116T035748286771Z_full_coarse_build_only_v1/n/20261116T040146976758Z/generated_build_admission.json",
+      "bytes": 283,
+      "sha256": "3ba6e2cd3842af1986cf3121c5588f7bfa465845a7f5872512aa957337283e7f"
+    }
+  },
+  "observed_failure": {
+    "message": "Exact actual/saved45 PGB inventory",
+    "cause": "The name-prefix collector includes13 master:datalabel inputs as well as45 master:pgb recorders; both actual and saved prefix inventories contain58.",
+    "components": 311,
+    "wires": 245,
+    "actual_PGB_recorders": 45,
+    "extra_datalabels": 13,
+    "original_outcome_preserved": true,
+    "overall_build_only_accepted": false
+  },
+  "independent_metadata_review": {
+    "path": "local_reference/native_static_reviews/c1_full_build_only_failure_independent_20261116T041352670878Z/receipt.json",
+    "bytes": 29011,
+    "sha256": "fa4a91a52e738574fa03b26a3219ded4cb4aa0c6de411a69482b875a7cced060"
+  },
+  "independent_metadata_facts": {
+    "scope": "Read-only structural facts from the failed closed run; they do not turn the original automatic admission into PASS.",
+    "actual45_Map_DATAStruct_XML_IID_and_parameters_verified": true,
+    "physical19_branches_and_source_configuration_verified": true,
+    "fresh15_voltages_and4_currents_verified": true,
+    "source_current": "negative own BA CBR -> standard force identity -> own PGB in MainOut",
+    "deleted_DC_ammeter_drop_and_voltage_rank2": "NOT_APPLICABLE"
+  },
+  "proposed_PGB_fix": {
+    "source": {
+      "path": ".tmp/longterm/seal_c1_full_build_only_v2_20261116.py",
+      "bytes": 14800,
+      "sha256": "4f4a8fbcdd9507591111306fca412a086c07436b6fd9f3fbac7945050c11e08e"
+    },
+    "pure_replay": {
+      "path": "local_reference/native_static_reviews/c1_build_only_pgb_fix_v2_20261116T041532196980Z/receipt.json",
+      "bytes": 10507,
+      "sha256": "17095ecd4d5ed3a516b12dbfb8c84bf1bc3a7d9e97af7d2942584493d5d5af2e"
+    },
+    "usage": {
+      "path": "local_reference/native_static_reviews/c1_pgb_fix_v2_usage_20261116T041912673492Z/usage.json",
+      "bytes": 2463,
+      "sha256": "d7913acec53514b92dafc221d5b3eca25be2e205f4e8194beb991aa0fa047591"
+    },
+    "change": "Only two PGB classification predicates use exact master:pgb definition instead of name prefix.",
+    "replay_scope": "The45 saved records are a synthetic replay of the corrected collector over the observed58 records. Model XML/Fortran/DTA/Map/make bytes remain exact.",
+    "old_failure_preserved": true,
+    "new_execution_package_created": false,
+    "native_executed": false,
+    "independent_reviews": [
+      {
+        "path": "local_reference/native_static_reviews/c1_build_only_v2_sealer_independent_20261116T041939362811Z/receipt.json",
+        "bytes": 2357,
+        "sha256": "dfab55c0ce7fd1d18666b6e20c800d5c667e8035c4efd5aeac5462b6e019c15b"
+      },
+      {
+        "path": "local_reference/native_static_reviews/c1_pgb_fix_independent_readonly_20261116T042008633129Z/receipt.json",
+        "bytes": 7719,
+        "sha256": "3beb4e7d7d56262347369803e10c48e3dd497d9f5f91d7f74f4b920d5f55985b"
+      }
+    ]
+  },
+  "control_storage_research": {
+    "old_guard_failed": true,
+    "old_guard_unchanged": true,
+    "old_guard_failure": {
+      "path": "local_reference/native_static_reviews/c1_full_build_failure_independent_20261116T041100Z/receipt.json",
+      "bytes": 6552,
+      "sha256": "3c4b67ab39ac85c8f2f0159ce1b44145bbd69942513f009b1c370fc4ec91008d"
+    },
+    "independent_roles": {
+      "path": "local_reference/native_static_reviews/c1_full_actual_const_roles_20261116T041400Z/receipt.json",
+      "bytes": 43901,
+      "sha256": "6c80a7f256ee8326036d8f224222dbf333e9947da5c2f67c91ee2ad8c50d30c8"
+    },
+    "second_review": {
+      "path": "local_reference/native_static_reviews/c1_full_build_only_failure_control_limit_20261116T041538690784Z/receipt.json",
+      "bytes": 5105,
+      "sha256": "07b2f31447d4605cd4b4896029c4acc0093c12d6793340a2a9e72d4c0f644b84"
+    },
+    "cause": "Seven fixed const blocks emit the same literal in Dyn/Out/two Begin routines; the old syntax guard prohibited these valid pinned assignments.",
+    "observed_dimensions": 37,
+    "unique_control_aliases": 72,
+    "private_cache_transfers": 238,
+    "dynamic_control_writes_outside_MainDyn": 0,
+    "emitted_reference_literal_bound": "4.11816500003822450e-11",
+    "frozen_literal_budget": "5e-11",
+    "new_guard_status": "SCOPED_SYNTAX_REVIEWED_NOT_FROZEN_FOR_RUN",
+    "full_generated_admission_frozen": false,
+    "new_guard": {
+      "path": ".tmp/longterm/admit_c1_full_openloop_mapping_v3_20261116.py",
+      "bytes": 34082,
+      "sha256": "7513bfee136ac93969dc1c82556e093d790e4a634b663f0393623a3cd518dda0"
+    },
+    "new_guard_pure_checks": {
+      "path": "local_reference/native_static_reviews/c1_full_openloop_mapping_v3_pure_20261116T042509272096Z/receipt.json",
+      "bytes": 9225,
+      "sha256": "0b64fa4d5722bf4a5084d90953481185ee5cc6292bcbedd3c7ccce04604d7c55"
+    },
+    "new_guard_scope": "27 synthetic checks and separate read-only inspection of the closed actual generated source passed, including9 independent memory mutations. Exactly7 const roles/4 identical literals/own private cache,37 dimensions/238 transfers and all45 writer stages were checked. No file-adapter admission, new native execution or numerical qualification is granted.",
+    "new_guard_independent_review": {
+      "path": "local_reference/native_static_reviews/c1_full_build_v3_independent_20261116T042900Z/scope.json",
+      "bytes": 2986,
+      "sha256": "1572be1479798f19578c7dd992eddbbf2795fbd88696e933031fc04df09339ba"
+    }
+  },
+  "unchanged_project": {
+    "source_python_files": 113,
+    "dependencies_unchanged": true,
+    "latest_recorded_full_regression_tests": 1300,
+    "includes_slow": true,
+    "full_regression_rerun_this_stage": false,
+    "new_public_Python_or_dependencies": 0,
+    "teaching": "Reuse16 existing electrical components, pure time functions and CaseDefinition -> Circuit -> Simulator -> SimulationResult; native research observations stay local."
+  },
+  "qualification": {
+    "full_reference_numerical_status": "NOT_OBSERVED",
+    "full_double_step_reference_qualified": false,
+    "candidate_implemented_or_run": false,
+    "complete_C1_accepted": false,
+    "F1": "Latest recorded CI billing lock before runner; no new CI observation."
+  },
+  "next_actions": [
+    "Use the independently reviewed const/cache draft only when separately sealing complete physical/lifecycle/INF admission for new numerical packages; old failures remain immutable.",
+    "Reuse the two PGB predicates in new full5/2.5us packages, with new HEAD/helper/contracts and closed-data adapters fixed before output.",
+    "Each future package must fresh-Build and pass complete physical/control/storage admission before its single Run. Do not restart69502 or infer Run authority from this record.",
+    "Qualify both real references and self-refinement before the minimal teaching candidate, plots, tests and acceptance commit."
+  ],
+  "repeat_build_decision": "No second identical build-only launch for the metadata-only fix: original compile and read-only facts are retained, corrected replay is explicit, and the next numerical package must perform its own fresh Build and all admission gates."
+}

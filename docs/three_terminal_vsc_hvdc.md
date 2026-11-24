@@ -338,6 +338,21 @@ R2022b 原模型故障前 Vdc 均值约为 399.987/413.507/385.358 kV，用于�
 
 ## 13. Tests
 
+[HVDC 测试](../tests/test_three_terminal_vsc_hvdc.py)从单桥逐步扩展到完整 FAST 网络。
+
+- `test_single_bridge_open_loop_power_identity` 核对单桥开环的功率平衡。
+- `test_single_station_pll_and_dq_tracking_with_step_refinement` 加入单站 PLL 和 dq 闭环。
+- `test_two_station_intermediate_dc_exchange` 连接双站 DC 网络。
+- `test_three_terminal_vsc_hvdc_fast_run` 运行完整的 FAST 网络。
+
+后三项标记为 `slow`。先在项目根目录运行单桥开环测试。
+
+```powershell
+New-Item -ItemType Directory -Force -Path .tmp | Out-Null
+$env:MPLBACKEND = "Agg"
+uv run --locked pytest tests/test_three_terminal_vsc_hvdc.py::test_single_bridge_open_loop_power_identity --basetemp=.tmp/pytest-vsc-bridge
+```
+
 ```bash
 uv run pytest tests/test_step_callback.py tests/test_three_terminal_vsc_hvdc.py
 uv run pytest

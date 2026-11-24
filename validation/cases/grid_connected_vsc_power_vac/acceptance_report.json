@@ -1,0 +1,217 @@
+{
+  "schema": "grid_connected_vsc_power_vac_example_acceptance_v1",
+  "date": "2026-11-23",
+  "example": 31,
+  "passed": true,
+  "formal_example_accepted": true,
+  "formal_new_examples_completed": 13,
+  "scope": "PCC active-power feedforward and AC-voltage regulation of a switched bridge with a fixed ideal DC source.",
+  "native_reference": {
+    "path": "validation/cases/grid_connected_vsc_power_vac/coherent_reference_report.json",
+    "sha256": "2506069f9d50b693881cecedc31f872f7998f9270acb254811a213c0b91dd748",
+    "bytes": 5384
+  },
+  "original_single_cycle_diagnostic": {
+    "path": "validation/cases/grid_connected_vsc_power_vac/fundamental_window_trial.json",
+    "sha256": "c478914ee2c5af94155aaa162dda38dced696947901cf9355aeb20ad8aa0650f",
+    "bytes": 3575
+  },
+  "candidate_cases": {
+    "5us_held": {
+      "rows": 130002,
+      "outer_updates": 650,
+      "inner_updates": 6500,
+      "next_gate_applications": 6500,
+      "fine_midpoints_held": 0,
+      "physical_residuals_pass": true,
+      "report": {
+        "path": "local_reference/native_static_reviews/c1_example31_official_20261123/5us_held/report.json",
+        "sha256": "b6172ea63691855c5dfad5c7e271054b07a1a2c17202c223bcb7062c0eb874e3",
+        "bytes": 17090
+      },
+      "original_waveforms": {
+        "path": "local_reference/native_static_reviews/c1_example31_official_20261123/5us_held/waveforms.npz",
+        "sha256": "8cca5653b4e0c60c177602d200c0e90c3c2af23e238fb74744d4c9f5d07df68b",
+        "bytes": 71778432
+      }
+    },
+    "5us_regulated": {
+      "rows": 130002,
+      "outer_updates": 650,
+      "inner_updates": 6500,
+      "next_gate_applications": 6500,
+      "fine_midpoints_held": 0,
+      "physical_residuals_pass": true,
+      "report": {
+        "path": "local_reference/native_static_reviews/c1_example31_official_20261123/5us_regulated/report.json",
+        "sha256": "c920e7b6e40f57f06bfe9146f2b649866df0af00e9aa337bcf2b5e9f187d164e",
+        "bytes": 17156
+      },
+      "original_waveforms": {
+        "path": "local_reference/native_static_reviews/c1_example31_official_20261123/5us_regulated/waveforms.npz",
+        "sha256": "8d3b27a588630abb187eed06389b806e0913485bee09ec6104ffc5640405a796",
+        "bytes": 71778432
+      }
+    },
+    "2p5us_held": {
+      "rows": 260003,
+      "outer_updates": 650,
+      "inner_updates": 6500,
+      "next_gate_applications": 6500,
+      "fine_midpoints_held": 130001,
+      "physical_residuals_pass": true,
+      "report": {
+        "path": "local_reference/native_static_reviews/c1_example31_official_20261123/2p5us_held/report.json",
+        "sha256": "ddd8206f0c3add8f74fa89c4edfdda7a3bb47cc709b86bd3e14cbc1c69051763",
+        "bytes": 18815
+      },
+      "original_waveforms": {
+        "path": "local_reference/native_static_reviews/c1_example31_official_20261123/2p5us_held/waveforms.npz",
+        "sha256": "2f05193ffde52e5c9981829fcf751e6c890f37dbd69661f2b0885404417aeccc",
+        "bytes": 143538984
+      }
+    },
+    "2p5us_regulated": {
+      "rows": 260003,
+      "outer_updates": 650,
+      "inner_updates": 6500,
+      "next_gate_applications": 6500,
+      "fine_midpoints_held": 130001,
+      "physical_residuals_pass": true,
+      "report": {
+        "path": "local_reference/native_static_reviews/c1_example31_official_20261123/2p5us_regulated/report.json",
+        "sha256": "c3a5283f4814d629597056e1f0c4d9d94b5b9f95515442261c8b6e138b2fc381",
+        "bytes": 18856
+      },
+      "original_waveforms": {
+        "path": "local_reference/native_static_reviews/c1_example31_official_20261123/2p5us_regulated/waveforms.npz",
+        "sha256": "cc2a6adeaf4a3c4fe275401bd5140dc55b08e1a4d98d73ea1110185a47fdadcb",
+        "bytes": 143538984
+      }
+    }
+  },
+  "total_fresh_candidate_rows": 780010,
+  "same_step": {
+    "windows": 36,
+    "exact_discrete_checks": 468,
+    "continuous_checks": 936,
+    "pcc_phase_voltage_max_error_v": 8.463618144105567e-07,
+    "pll_and_outer_controls_passed": true
+  },
+  "candidate_cross_grid": {
+    "windows": 8,
+    "max_absolute_differences": {
+      "pcc_v1_v_rms": 0.03645727279152311,
+      "pcc_power_w": 1.7704522138477614,
+      "pcc_q1_var": 2.9839389396317983
+    }
+  },
+  "candidate_pairs": {
+    "5us": {
+      "prefix": {
+        "physical_rows": 48001,
+        "control_rows": 48000,
+        "physical_exact": true,
+        "control_exact": true
+      },
+      "windows": [
+        {
+          "window_s": [
+            0.55,
+            0.6
+          ],
+          "voltage_improvement_v_rms": 1.2059801180665488,
+          "reactive_reduction_var": 143.31985916327304,
+          "passed": true
+        },
+        {
+          "window_s": [
+            0.6,
+            0.65
+          ],
+          "voltage_improvement_v_rms": 1.2212061666860023,
+          "reactive_reduction_var": 145.55096274592918,
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    "2p5us": {
+      "prefix": {
+        "physical_rows": 96002,
+        "control_rows": 96000,
+        "physical_exact": true,
+        "control_exact": true
+      },
+      "windows": [
+        {
+          "window_s": [
+            0.55,
+            0.6
+          ],
+          "voltage_improvement_v_rms": 1.1904645236636355,
+          "reactive_reduction_var": 140.7415075984236,
+          "passed": true
+        },
+        {
+          "window_s": [
+            0.6,
+            0.65
+          ],
+          "voltage_improvement_v_rms": 1.1866323461497785,
+          "reactive_reduction_var": 142.71632794088293,
+          "passed": true
+        }
+      ],
+      "passed": true
+    }
+  },
+  "comparison_artifacts": {
+    "bindings": {
+      "path": "local_reference/native_static_reviews/c1_example31_official_20261123/inputs.json",
+      "sha256": "ede365a1fd0b5b4365c29805ea425f85f606091014b0a7da03b5cc0e698a0279",
+      "bytes": 26981
+    },
+    "full_report": {
+      "path": "local_reference/native_static_reviews/c1_example31_official_20261123/report.json",
+      "sha256": "0d442d67fe93b3806787efe1392aab0e78c1d2169ffc877502b0cfae33ce7b83",
+      "bytes": 735685
+    },
+    "comparison_figure": {
+      "path": "local_reference/native_static_reviews/c1_example31_official_20261123/pcc_voltage_comparison.png",
+      "sha256": "4f3598a04c297fab6bbe0e81ea2640fcb64642462400aaa1acee68004fc58517",
+      "bytes": 138966
+    }
+  },
+  "legacy_waveform_compatibility": {
+    "runs": 6,
+    "rows": 360015,
+    "bitwise_equal": true,
+    "report": {
+      "path": ".tmp/longterm/case29_30_bitwise_20261123_1795363398097/comparison.json",
+      "sha256": "a9e7dc8bf5f63f92434f1fd47874d1fdc39cc37c03ee65d66cbac334016e33a7",
+      "bytes": 2424
+    }
+  },
+  "entry_points_and_tests": {
+    "windows_default": {
+      "path": ".tmp/longterm/case31-windows-default-20261123.log",
+      "sha256": "b2a3e391cbdc55fcba4b3ca61075e2602b872a9c789966505af8e324cc542603",
+      "bytes": 219
+    },
+    "wsl2_default_and_4_focused": {
+      "path": ".tmp/longterm/case31-wsl-default-20261123.log",
+      "sha256": "6649cada343fa55f06a59736cd5f020d30c483e2247fb788248a3bb054b15375",
+      "bytes": 3123
+    },
+    "windows_pytest_including_slow": 1590,
+    "windows_pytest_log": {
+      "path": ".tmp/longterm/pytest-case31-acceptance-20261123.log",
+      "sha256": "633782d9cda99f7fd657744faf9e763a7a7cb3a908887d81b03c1f8d1a1ba172",
+      "bytes": 1897
+    },
+    "uv_sync_locked_offline": "pass",
+    "ruff": "pass",
+    "mypy": "pass"
+  }
+}

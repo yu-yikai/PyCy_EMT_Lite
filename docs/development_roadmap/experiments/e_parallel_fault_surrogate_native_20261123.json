@@ -1,0 +1,290 @@
+{
+  "schema": "e_parallel_fault_surrogate_native_v1",
+  "status": "PASS_NATIVE_E_PARALLEL_SURROGATE_PAIR",
+  "date": "2026-11-23",
+  "scope": "Independent PSCAD three-bus resistive surrogate; one source, a healthy route, and a two-ended faulted route.",
+  "protocol": {
+    "path": "docs/development_roadmap/experiments/e_parallel_fault_surrogate_protocol_20261123.json",
+    "sha256": "7f2d511e8242ce3b47db4c0f413563779ff550bdb3876d58c99a9034f2c0986f",
+    "bytes": 8632
+  },
+  "paired_audit": {
+    "path": "local_reference/e_parallel_fault_pscad_20261123/verification/native_pair.json",
+    "sha256": "739c1b1651e15056bb908fe4ef0647a150fe7df63165822d19f32cf3d055a704",
+    "bytes": 1998
+  },
+  "plot": {
+    "path": "local_reference/e_parallel_fault_pscad_20261123/verification/parallel_fault_native.png",
+    "sha256": "074aa4110e0e9c2b3a1246e5f62c5a5befb33c9037fabf9d6a2081786ce69b64",
+    "bytes": 107592
+  },
+  "pycy_diagnostic_alignment": {
+    "path": "local_reference/e_parallel_fault_pscad_20261123/verification/pycy_alignment.json",
+    "sha256": "dd5fe682b6e9884966fce3bd1b1bbaa775f496e89f0c1198eb206beaf7f0897e",
+    "bytes": 4215
+  },
+  "grids": {
+    "50us": {
+      "original_run": {
+        "path": "local_reference/e_parallel_fault_pscad_20261123/50us_surrogate/n/20261123T070728705133Z/result.json",
+        "sha256": "a45326e721325a8f8ac4555d8d91c1d1a2ec68aa71f5a40f9aeaa9922cdc8175",
+        "bytes": 8580
+      },
+      "launch": {
+        "path": "local_reference/e_parallel_fault_pscad_20261123/50us_surrogate/launch.json",
+        "sha256": "1392f96f2f9586b1273282cfa414829e4a6bec78c950ef7dcdb0370636f037d8",
+        "bytes": 7344
+      },
+      "audit": {
+        "path": "local_reference/e_parallel_fault_pscad_20261123/verification/50us_native_audit.json",
+        "sha256": "41f4e620c3628af54b70c20ffadd97ce0ca823820cec5750198f530b954763e0",
+        "bytes": 12316
+      },
+      "rows_including_zero": 7001,
+      "windows": {
+        "pre": {
+          "window_s": [
+            0.05,
+            0.1
+          ],
+          "rows": 1000,
+          "recv_rms_v": 112.49273525585085,
+          "fault_rms_v": 116.23474403728699,
+          "healthy_signed_rms_a": 3.7536323720745273,
+          "sf_signed_rms_a": 1.8826279813565012,
+          "rf_signed_rms_a": -1.8710043907180245,
+          "fault_rms_a": 1.1623474403728699e-07,
+          "load_mean_w": 1898.1923228014443
+        },
+        "fault": {
+          "window_s": [
+            0.1,
+            0.15
+          ],
+          "rows": 1000,
+          "recv_rms_v": 64.46268287905747,
+          "fault_rms_v": 15.371634046020691,
+          "healthy_signed_rms_a": 27.768658560471277,
+          "sf_signed_rms_a": 52.31418297698965,
+          "rf_signed_rms_a": 24.545524416518397,
+          "fault_rms_a": 76.85817023010344,
+          "load_mean_w": 623.3156225948896
+        },
+        "source_end_open": {
+          "window_s": [
+            0.15,
+            0.2
+          ],
+          "rows": 1000,
+          "recv_rms_v": 59.728457659589296,
+          "fault_rms_v": 5.429761085137522,
+          "healthy_signed_rms_a": 30.135771170205345,
+          "sf_signed_rms_a": 1.1457023891486241e-07,
+          "rf_signed_rms_a": 27.14934828722588,
+          "fault_rms_a": 27.148805425687605,
+          "load_mean_w": 535.1232981590028
+        },
+        "both_ends_open": {
+          "window_s": [
+            0.2,
+            0.25
+          ],
+          "rows": 1000,
+          "recv_rms_v": 109.09090889256207,
+          "fault_rms_v": 4.581726541487719e-08,
+          "healthy_signed_rms_a": 5.454545553719012,
+          "sf_signed_rms_a": 1.1999999995418279e-07,
+          "rf_signed_rms_a": 1.0909090884674479e-07,
+          "fault_rms_a": 2.2908632707438608e-07,
+          "load_mean_w": 1785.1239604507903
+        },
+        "cleared": {
+          "window_s": [
+            0.25,
+            0.3
+          ],
+          "rows": 1000,
+          "recv_rms_v": 109.09090889256616,
+          "fault_rms_v": 0.0022908403637147503,
+          "healthy_signed_rms_a": 5.4545455537169305,
+          "sf_signed_rms_a": 1.1999770915963637e-07,
+          "rf_signed_rms_a": 1.0908861805220252e-07,
+          "fault_rms_a": 2.2908403637147504e-12,
+          "load_mean_w": 1785.1239604509256
+        },
+        "restored": {
+          "window_s": [
+            0.3,
+            0.35
+          ],
+          "rows": 1000,
+          "recv_rms_v": 112.49273525585087,
+          "fault_rms_v": 116.23474403728706,
+          "healthy_signed_rms_a": 3.753632372074527,
+          "sf_signed_rms_a": 1.8826279813565014,
+          "rf_signed_rms_a": -1.871004390718025,
+          "fault_rms_a": 1.1623474403728704e-07,
+          "load_mean_w": 1898.192322801444
+        }
+      },
+      "largest_physical_residuals_si": {
+        "clock_abs_s": 5.551115123125783e-17,
+        "source_abs_v": 8.398615136684384e-12,
+        "kcl_abs_a": 5.735558729347279e-12,
+        "ohm_abs_v": 1.0032863428932615e-11,
+        "power_abs_w": 1.0601297617540695e-09,
+        "analytic_voltage_abs_v": 9.549694368615746e-12,
+        "analytic_current_abs_a": 7.787548383930698e-12
+      },
+      "matched_pycy_pointwise_peaks_si": {
+        "display_s": 5.551115123125783e-17,
+        "time_s": 5.551115123125783e-17,
+        "v_src": 8.398615136684384e-12,
+        "v_recv": 8.498091119690798e-12,
+        "v_fault": 7.830180948076304e-12,
+        "i_healthy": 1.0551559626037488e-12,
+        "i_sf": 9.85878045867139e-13,
+        "i_rf": 9.698908343125368e-13,
+        "i_fault": 5.030642569181509e-12,
+        "i_load": 2.569056078982612e-13,
+        "i_ref": 7.806255641895632e-16
+      }
+    },
+    "25us": {
+      "original_run": {
+        "path": "local_reference/e_parallel_fault_pscad_20261123/25us_surrogate/n/20261123T071308179156Z/result.json",
+        "sha256": "6fe1796b7df1574df49fda48abc6ef5d4c681bde6dbd7f2b6da9beed018e47b1",
+        "bytes": 8583
+      },
+      "launch": {
+        "path": "local_reference/e_parallel_fault_pscad_20261123/25us_surrogate/launch.json",
+        "sha256": "6b56c158e35469d4e5de6a34da1275bb9fcdf465e31537db7f719f9a55bd7d52",
+        "bytes": 7344
+      },
+      "audit": {
+        "path": "local_reference/e_parallel_fault_pscad_20261123/verification/25us_native_audit.json",
+        "sha256": "42c4ecd1f2777176cd75cd051c57889045a21b89310b134502313ef4f112cb2c",
+        "bytes": 12330
+      },
+      "rows_including_zero": 14001,
+      "windows": {
+        "pre": {
+          "window_s": [
+            0.05,
+            0.1
+          ],
+          "rows": 2000,
+          "recv_rms_v": 112.4927352558509,
+          "fault_rms_v": 116.234744037287,
+          "healthy_signed_rms_a": 3.7536323720745277,
+          "sf_signed_rms_a": 1.882627981356502,
+          "rf_signed_rms_a": -1.8710043907180252,
+          "fault_rms_a": 1.16234744037287e-07,
+          "load_mean_w": 1898.192322801445
+        },
+        "fault": {
+          "window_s": [
+            0.1,
+            0.15
+          ],
+          "rows": 2000,
+          "recv_rms_v": 64.46268287905747,
+          "fault_rms_v": 15.371634046020686,
+          "healthy_signed_rms_a": 27.768658560471273,
+          "sf_signed_rms_a": 52.31418297698966,
+          "rf_signed_rms_a": 24.545524416518404,
+          "fault_rms_a": 76.85817023010344,
+          "load_mean_w": 623.3156225948895
+        },
+        "source_end_open": {
+          "window_s": [
+            0.15,
+            0.2
+          ],
+          "rows": 2000,
+          "recv_rms_v": 59.728457659589296,
+          "fault_rms_v": 5.429761085137522,
+          "healthy_signed_rms_a": 30.135771170205352,
+          "sf_signed_rms_a": 1.1457023891486246e-07,
+          "rf_signed_rms_a": 27.149348287225887,
+          "fault_rms_a": 27.14880542568762,
+          "load_mean_w": 535.1232981590028
+        },
+        "both_ends_open": {
+          "window_s": [
+            0.2,
+            0.25
+          ],
+          "rows": 2000,
+          "recv_rms_v": 109.09090889256206,
+          "fault_rms_v": 4.5817265414877195e-08,
+          "healthy_signed_rms_a": 5.454545553719012,
+          "sf_signed_rms_a": 1.1999999995418273e-07,
+          "rf_signed_rms_a": 1.0909090884674475e-07,
+          "fault_rms_a": 2.2908632707438592e-07,
+          "load_mean_w": 1785.1239604507898
+        },
+        "cleared": {
+          "window_s": [
+            0.25,
+            0.3
+          ],
+          "rows": 2000,
+          "recv_rms_v": 109.09090889256616,
+          "fault_rms_v": 0.0022908403637147503,
+          "healthy_signed_rms_a": 5.4545455537169305,
+          "sf_signed_rms_a": 1.199977091596364e-07,
+          "rf_signed_rms_a": 1.0908861805220244e-07,
+          "fault_rms_a": 2.2908403637147504e-12,
+          "load_mean_w": 1785.1239604509253
+        },
+        "restored": {
+          "window_s": [
+            0.3,
+            0.35
+          ],
+          "rows": 2000,
+          "recv_rms_v": 112.49273525585092,
+          "fault_rms_v": 116.23474403728702,
+          "healthy_signed_rms_a": 3.753632372074527,
+          "sf_signed_rms_a": 1.8826279813565014,
+          "rf_signed_rms_a": -1.8710043907180256,
+          "fault_rms_a": 1.1623474403728703e-07,
+          "load_mean_w": 1898.1923228014452
+        }
+      },
+      "largest_physical_residuals_si": {
+        "clock_abs_s": 5.551115123125783e-17,
+        "source_abs_v": 8.682832230988424e-12,
+        "kcl_abs_a": 5.735558729347279e-12,
+        "ohm_abs_v": 1.0032863428932615e-11,
+        "power_abs_w": 1.135504135163501e-09,
+        "analytic_voltage_abs_v": 9.86233317235019e-12,
+        "analytic_current_abs_a": 7.901235221652314e-12
+      },
+      "matched_pycy_pointwise_peaks_si": {
+        "display_s": 5.551115123125783e-17,
+        "time_s": 5.551115123125783e-17,
+        "v_src": 8.682832230988424e-12,
+        "v_recv": 8.498091119690798e-12,
+        "v_fault": 7.87281351222191e-12,
+        "i_healthy": 1.0658141036401503e-12,
+        "i_sf": 9.965361869035405e-13,
+        "i_rf": 9.841016890277388e-13,
+        "i_fault": 5.172751116333529e-12,
+        "i_load": 2.637889906509372e-13,
+        "i_ref": 7.875644580934704e-16
+      }
+    }
+  },
+  "cross_grid": {
+    "common_rows_including_zero": 7001,
+    "clock_abs_s": 0.0,
+    "common_row_maxima_si": {
+      "voltage_abs_v": 0.0,
+      "current_abs_a": 0.0,
+      "power_abs_w": 0.0
+    }
+  },
+  "formal_new_examples_completed": 19
+}

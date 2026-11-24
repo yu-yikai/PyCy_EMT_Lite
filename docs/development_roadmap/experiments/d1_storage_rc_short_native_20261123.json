@@ -1,0 +1,321 @@
+{
+  "schema": "d1_storage_rc_short_native_reference_v1",
+  "status": "PASS_BOTH_NATIVE_DC_PORT_SHORT_GRIDS",
+  "date": "2026-11-23",
+  "frozen_protocol_commit": "09dc2f73ba2fa20b922f6c48060bfaa5330eb16d",
+  "protocol": {
+    "path": "docs/development_roadmap/experiments/d1_storage_rc_short_protocol_20261123.json",
+    "sha256": "9a6ad5218400ee0fd0c060585b8a22c294ad34afb8e52666a3f13cef1d46f29c",
+    "bytes": 4482
+  },
+  "formal_new_examples_completed": 16,
+  "scope": "First-order standalone DC storage port. Independently stimulated in both directions with original PSCAD outputs.",
+  "original_compile_admission_refusal": {
+    "reason": "The compiler kept two series ideal ammeter branches in addition to the five physical source, resistance and capacitance branches.",
+    "terminal": {
+      "path": "local_reference/d1_storage_rc_short_20261123/5us/n/20261123T000740044473Z/terminal.json",
+      "sha256": "3234a50bf7f3e994bdba4941d6a8abdd26cd6d8e3c0bc51d8d4e061680a868e3",
+      "bytes": 5805
+    },
+    "worker": {
+      "path": "local_reference/d1_storage_rc_short_20261123/5us/n/20261123T000740044473Z/worker.json",
+      "sha256": "f8007f184b2bc282016b32cbb49f5de0ebc3fbd15a8eaf8277c2e3ec1d876814",
+      "bytes": 3510
+    },
+    "error_log": {
+      "path": "local_reference/d1_storage_rc_short_20261123/5us/n/20261123T000740044473Z/worker.stderr.txt",
+      "sha256": "c687b66232f21fe46148e256d44897a389e8fa0e811174d9d9c9953940966861",
+      "bytes": 1494
+    },
+    "first_generated_netlist": {
+      "path": "local_reference/d1_storage_rc_short_20261123/5us/n/20261123T000740044473Z/project/vdiv.gf46/Main.dta",
+      "sha256": "455a312a26b1fb4c258af43e6f5ffa7f297fdc6b986207d4780edf7aaaf943a5",
+      "bytes": 1170
+    },
+    "first_generated_source": {
+      "path": "local_reference/d1_storage_rc_short_20261123/5us/n/20261123T000740044473Z/project/vdiv.gf46/Main.f",
+      "sha256": "a2eb4a5af79ab105fa0eff966c14f20ac6ff0903a0809eea5efbddc4223bf737",
+      "bytes": 16723
+    },
+    "emtdc_started": false
+  },
+  "grids": {
+    "5us": {
+      "rows_including_zero": 402,
+      "receipt": {
+        "path": "local_reference/d1_storage_rc_short_20261123/5us_recovery/n/20261123T001253070218Z/native_execution_receipt.json",
+        "sha256": "6cf9236c0d09d126294f01f44e0a2b2f518843eb40b1fdf3e49cb5d16bfd75da",
+        "bytes": 4409
+      },
+      "runtime": {
+        "pscad_version": "5.0.0",
+        "emtdc_build": "20210219",
+        "compiler": "gf46",
+        "platform": "x86",
+        "integration": "unreported_in_native_stdout",
+        "integration_evidence": "independent_all_row_tr_review_pending",
+        "batch_path": "project/vdiv.gf46/vdiv_30000.bat",
+        "batch_sha256": "c6a6231896e1570bca14269d02b37ef84ad08d10abd0fd2f2add8cdda5ddadcb",
+        "emtdc_pid_observed": true,
+        "emtdc_process_identity": {
+          "pid": 12120,
+          "parent": 32712,
+          "path": "D:\\VibeCoding\\PyCy_EMT_Lite\\local_reference\\d1_storage_rc_short_20261123\\5us_recovery\\n\\20261123T001253070218Z\\project\\vdiv.gf46\\vdiv.exe",
+          "created": "20261123081418.404597+480",
+          "name": "vdiv.exe",
+          "command": "vdiv.exe  -v5 -config vdiv_1.config"
+        }
+      },
+      "original_raw": {
+        "storage_rc.inf": {
+          "path": "local_reference/d1_storage_rc_short_20261123/5us_recovery/n/20261123T001253070218Z/project/vdiv.gf46/storage_rc.inf",
+          "sha256": "bb927511fb384de194e668b0812fbec3c53fe8bacf2f8f520bc6f5ac483465d0",
+          "bytes": 1105
+        },
+        "storage_rc_01.out": {
+          "path": "local_reference/d1_storage_rc_short_20261123/5us_recovery/n/20261123T001253070218Z/project/vdiv.gf46/storage_rc_01.out",
+          "sha256": "cece7e710872d0f22ff7317ff381a90a115f8c7fa3bc1cdad23aec8c46578e43",
+          "bytes": 106604
+        }
+      },
+      "admission": {
+        "path": "local_reference/d1_storage_rc_short_20261123/5us_recovery/n/20261123T001253070218Z/pre_run_admission.json",
+        "sha256": "747d7ae66f667b0950c03ea0a4f01a0714183d3aaf6989d2dece40b057fc35c3",
+        "bytes": 4964
+      },
+      "values": {
+        "clock_abs_s": 4.336808689942018e-19,
+        "ocv_abs_v": 0.0,
+        "current_abs_a": 0.0,
+        "kcl_abs_a": 5.529998681197412e-10,
+        "ohm_abs_v": 5.024980431755921e-12,
+        "prediction_abs_v": 5.496043724295685e-12,
+        "initial_polarization_abs_v": 0.0,
+        "rest_monotonic_abs_v": 0.0,
+        "interval_charge_abs_c": 4.770939545189448e-18,
+        "interval_energy_abs_j": 1.0289538660456063e-12,
+        "cumulative_energy_abs_j": 1.194125353357715e-11
+      },
+      "edge_witnesses": {
+        "0": {
+          "time_s": 0.0,
+          "command_a": 0,
+          "injected_a": 0.0,
+          "polarization_v": 0.0,
+          "expected_v": 0.0
+        },
+        "1": {
+          "time_s": 5e-06,
+          "command_a": 0,
+          "injected_a": 0.0,
+          "polarization_v": 0.0,
+          "expected_v": 0.0
+        },
+        "50": {
+          "time_s": 0.00025,
+          "command_a": 1,
+          "injected_a": 1.0,
+          "polarization_v": 4.9995833695249e-05,
+          "expected_v": 4.999583368052662e-05
+        },
+        "150": {
+          "time_s": 0.00075,
+          "command_a": 0,
+          "injected_a": 0.0,
+          "polarization_v": 0.009916301371371,
+          "expected_v": 0.009916301371347387
+        },
+        "250": {
+          "time_s": 0.00125,
+          "command_a": -1,
+          "injected_a": -1.0,
+          "polarization_v": 0.0097024034922955,
+          "expected_v": 0.00970240349215545
+        },
+        "350": {
+          "time_s": 0.00175,
+          "command_a": 0,
+          "injected_a": 0.0,
+          "polarization_v": -0.00032509502817524,
+          "expected_v": -0.00032509502848863606
+        },
+        "401": {
+          "time_s": 0.002005,
+          "command_a": 0,
+          "injected_a": 0.0,
+          "polarization_v": -0.00032234343128045997,
+          "expected_v": -0.0003223434315938012
+        }
+      }
+    },
+    "2p5us": {
+      "rows_including_zero": 803,
+      "receipt": {
+        "path": "local_reference/d1_storage_rc_short_20261123/2p5us_recovery/n/20261123T001504569677Z/native_execution_receipt.json",
+        "sha256": "035a77c24581fd99c6866a814956bbea66ba64da5ad7980c4643bbb1a772925c",
+        "bytes": 4415
+      },
+      "runtime": {
+        "pscad_version": "5.0.0",
+        "emtdc_build": "20210219",
+        "compiler": "gf46",
+        "platform": "x86",
+        "integration": "unreported_in_native_stdout",
+        "integration_evidence": "independent_all_row_tr_review_pending",
+        "batch_path": "project/vdiv.gf46/vdiv_30001.bat",
+        "batch_sha256": "30c11c92a9314201db914ecb9dfdf133343593d1b7b3b3728b65bb663649ce75",
+        "emtdc_pid_observed": true,
+        "emtdc_process_identity": {
+          "pid": 42044,
+          "parent": 42812,
+          "path": "D:\\VibeCoding\\PyCy_EMT_Lite\\local_reference\\d1_storage_rc_short_20261123\\2p5us_recovery\\n\\20261123T001504569677Z\\project\\vdiv.gf46\\vdiv.exe",
+          "created": "20261123081607.298005+480",
+          "name": "vdiv.exe",
+          "command": "vdiv.exe  -v5 -config vdiv_1.config"
+        }
+      },
+      "original_raw": {
+        "storage_rc.inf": {
+          "path": "local_reference/d1_storage_rc_short_20261123/2p5us_recovery/n/20261123T001504569677Z/project/vdiv.gf46/storage_rc.inf",
+          "sha256": "bb927511fb384de194e668b0812fbec3c53fe8bacf2f8f520bc6f5ac483465d0",
+          "bytes": 1105
+        },
+        "storage_rc_01.out": {
+          "path": "local_reference/d1_storage_rc_short_20261123/2p5us_recovery/n/20261123T001504569677Z/project/vdiv.gf46/storage_rc_01.out",
+          "sha256": "9565186548f2662dd84001cd8334e05827e47bdb0198aa6e60bf9e6909983a5e",
+          "bytes": 212869
+        }
+      },
+      "admission": {
+        "path": "local_reference/d1_storage_rc_short_20261123/2p5us_recovery/n/20261123T001504569677Z/pre_run_admission.json",
+        "sha256": "f21138e9facfdc1350b3135627e9b83ad2cb4ff10f80132f6675f5443bde39c5",
+        "bytes": 4965
+      },
+      "values": {
+        "clock_abs_s": 4.336808689942018e-19,
+        "ocv_abs_v": 0.0,
+        "current_abs_a": 0.0,
+        "kcl_abs_a": 1.10624499838341e-09,
+        "ohm_abs_v": 5.059064278611913e-12,
+        "prediction_abs_v": 5.227736646351566e-12,
+        "initial_polarization_abs_v": 0.0,
+        "rest_monotonic_abs_v": 0.0,
+        "interval_charge_abs_c": 4.7708336660710416e-18,
+        "interval_energy_abs_j": 1.0955948252172518e-12,
+        "cumulative_energy_abs_j": 8.345428352743666e-12
+      },
+      "edge_witnesses": {
+        "0": {
+          "time_s": 0.0,
+          "command_a": 0,
+          "injected_a": 0.0,
+          "polarization_v": 0.0,
+          "expected_v": 0.0
+        },
+        "1": {
+          "time_s": 2.5e-06,
+          "command_a": 0,
+          "injected_a": 0.0,
+          "polarization_v": 0.0,
+          "expected_v": 0.0
+        },
+        "100": {
+          "time_s": 0.00025,
+          "command_a": 1,
+          "injected_a": 1.0,
+          "polarization_v": 2.4998958403355e-05,
+          "expected_v": 2.4998958376734303e-05
+        },
+        "300": {
+          "time_s": 0.00075,
+          "command_a": 0,
+          "injected_a": 0.0,
+          "polarization_v": 0.0099167145162782,
+          "expected_v": 0.009916714516282588
+        },
+        "500": {
+          "time_s": 0.00125,
+          "command_a": -1,
+          "injected_a": -1.0,
+          "polarization_v": 0.0097278066842899,
+          "expected_v": 0.009727806683991392
+        },
+        "700": {
+          "time_s": 0.00175,
+          "command_a": 0,
+          "injected_a": 0.0,
+          "polarization_v": -0.00032510857217449,
+          "expected_v": -0.0003251085724358372
+        },
+        "802": {
+          "time_s": 0.002005,
+          "command_a": 0,
+          "injected_a": 0.0,
+          "polarization_v": -0.00032235686081572,
+          "expected_v": -0.0003223568609100977
+        }
+      }
+    }
+  },
+  "cross_grid": {
+    "common_rows_including_zero": 402,
+    "clock_abs_s": 0.0,
+    "polarization_difference_v": 2.5403191994399776e-05,
+    "passed": true
+  },
+  "auditor": {
+    "path": "local_reference/d1_storage_rc_short_20261123/audit_storage.py",
+    "sha256": "5c2bb0c671087cec5b4a597d656dfe2df6d0b912f3f24550db34a23cbb8214e2",
+    "bytes": 14058
+  },
+  "paired_audit": {
+    "path": "local_reference/d1_storage_rc_short_20261123/paired_audit.json",
+    "sha256": "45d8da8d7475eba5fb60b5693b44c5b518a4310d55826029baed74fe0b7bad4b",
+    "bytes": 23355
+  },
+  "reproduction": [
+    {
+      "path": "local_reference/d1_storage_rc_short_20261123/storage_native_recovery.py",
+      "sha256": "d55aaa7291f3b2fd99ab425c09081882cfac4943a46b314971ebec08f27fb843",
+      "bytes": 13263
+    },
+    {
+      "path": "local_reference/d1_storage_rc_short_20261123/storage_wiring.py",
+      "sha256": "bc9b3807dd8dd3e17886017437d7209c59684efe2313999fb671d895a51c6a13",
+      "bytes": 13862
+    },
+    {
+      "path": "local_reference/d1_storage_rc_short_20261123/storage_wiring_recovery.py",
+      "sha256": "3a27a64dbb79f82607a30cef0fd0dcfe9d22a20e0a1fccb30b1abb1f06039219",
+      "bytes": 7293
+    },
+    {
+      "path": "local_reference/d1_storage_rc_short_20261123/plot_qualification.py",
+      "sha256": "299f61efb413f9424f4909df1e01d0d602306a46075378e1b3246b6737a23ec8",
+      "bytes": 2379
+    }
+  ],
+  "figure": {
+    "path": "local_reference/d1_storage_rc_short_20261123/native_short_port.png",
+    "sha256": "81df2dee9a63f1f8872e3fbc20563e70db349679a4bb6a4706c20ae310941cc7",
+    "bytes": 84348
+  },
+  "grid_interface_next": {
+    "analytical_only": true,
+    "readme": {
+      "path": "local_reference/d1_storage_rc_short_20261123/grid_port_screen/README.md",
+      "sha256": "5132cab38f9e41904f525519cea79204eb27b7f1293dd15ca639bdd533f02d76",
+      "bytes": 4604
+    },
+    "model": {
+      "path": "local_reference/d1_storage_rc_short_20261123/grid_port_screen/screen.py",
+      "sha256": "e7b6afd4a426d61a76330a9f9d88215bdc55d6c8a064ebedc26f5f8fb5dbcc7a",
+      "bytes": 7190
+    },
+    "analytical_result": {
+      "path": "local_reference/d1_storage_rc_short_20261123/grid_port_screen/screen_result.json",
+      "sha256": "d04e3c79de5ca4e238e2f6ef39073e84bec0e0500b8362e5095a568c42096afb",
+      "bytes": 7735
+    }
+  }
+}

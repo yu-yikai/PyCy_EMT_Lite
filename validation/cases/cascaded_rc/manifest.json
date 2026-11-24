@@ -1,0 +1,65 @@
+{
+  "case_id": "cascaded_rc",
+  "reference_id": "mw-cascaded-rc-r2025a",
+  "acceptance_defined": "2026-11-04 before candidate example implementation",
+  "reference_source": "https://www.mathworks.com/help/simscape/ug/cascaded-rc-circuit-in-simulink-and-simscape.html",
+  "reference_model": "CascadedRCCircuitInSimulinkAndSimscape.slx",
+  "reference_platform": "MATLAB R2025a / Simulink / Simscape",
+  "reference_state": "reference_ready",
+  "windows_seconds": [
+    [
+      0.00102,
+      0.00598
+    ],
+    [
+      0.00602,
+      0.01098
+    ],
+    [
+      0.01102,
+      0.01598
+    ],
+    [
+      0.01602,
+      0.02
+    ]
+  ],
+  "edge_guard_seconds": 2e-05,
+  "time_shift_seconds": 0,
+  "criteria": "All four signals must meet both fixed limits in every window; no amplitude or time fitting. Charging/discharging directions, KCL and step refinement are also checked independently.",
+  "known_difference": "Official capacitors include 1 microohm ESR each. PyCy uses ideal capacitors. This is far below the 0.02 V / 0.002 A limits for this 10 ohm network. Windows exclude 20 microseconds around source edges; full waveforms and actual event times remain in artifacts.",
+  "signals": [
+    {
+      "candidate": "v:n1",
+      "reference": "v_n1",
+      "unit": "V",
+      "scale": 5.0,
+      "max_nrmse": 0.003,
+      "max_abs_error": 0.02
+    },
+    {
+      "candidate": "v:n2",
+      "reference": "v_n2",
+      "unit": "V",
+      "scale": 5.0,
+      "max_nrmse": 0.003,
+      "max_abs_error": 0.02
+    },
+    {
+      "candidate": "i:R1",
+      "reference": "i_r1",
+      "unit": "A",
+      "scale": 0.5,
+      "max_nrmse": 0.003,
+      "max_abs_error": 0.002
+    },
+    {
+      "candidate": "i:R2",
+      "reference": "i_r2",
+      "unit": "A",
+      "scale": 0.5,
+      "max_nrmse": 0.003,
+      "max_abs_error": 0.002
+    }
+  ]
+}

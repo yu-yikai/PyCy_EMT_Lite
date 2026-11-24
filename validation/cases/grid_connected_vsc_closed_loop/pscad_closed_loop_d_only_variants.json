@@ -1,0 +1,58 @@
+{
+  "schema": "c1_pscad_closed_loop_d_only_variants_v1",
+  "date": "2026-11-22",
+  "status": "frozen_before_d_only_builds",
+  "reference_protocol": {
+    "path": "validation/cases/grid_connected_vsc_closed_loop/reference_protocol.json",
+    "sha256": "53c1eb1c237fc4bd78ff83feb614023fc7d06b4b1700e7df09e1cd4de8236f06"
+  },
+  "reference_point_trial": {
+    "path": "validation/cases/grid_connected_vsc_closed_loop/pscad_reference_point_trial.json",
+    "sha256": "225822f011176b016695b755bb30ddeefab86ba7721b8fdf4f02cc84cd260b99"
+  },
+  "qualified_main_pair": {
+    "path": "docs/development_roadmap/experiments/c1_pscad_main_both_steps_20261122.json",
+    "sha256": "49006d80a5783bc62c171bf6b915ae5a939b7681e1a1812950fa6e71086e8139"
+  },
+  "qualified_main": {
+    "2p5us": {
+      "run": "local_reference/native_static_reviews/c1_pscad_reference_point_reduced_angle_2p5us_20261122/n/20261122T095821385399Z",
+      "execution_receipt_sha256": "7d9ac5b638b40b7f0986f6d1f63731327892235fc2e5fb4867845849af4866a5",
+      "numerical_report": {
+        "path": "local_reference/native_static_reviews/c1_pscad_long_stream_review_precise_angle_20261122T100626540021Z/report.json",
+        "sha256": "6bb04e791f630f347dac296de89d7a4c785de16466a8bdf344e3ffea0889e710"
+      }
+    },
+    "5us": {
+      "run": "local_reference/native_static_reviews/c1_pscad_reference_point_reduced_angle_5us_main_20261122/n/20261122T101529924426Z",
+      "execution_receipt_sha256": "46673ca1f022430b42e2728545b99c9f3e5bb54fd688d0598bbaf967d6226107",
+      "numerical_report": {
+        "path": "local_reference/native_static_reviews/c1_pscad_long_stream_review_precise_coarse_20261122T102203102625Z/report.json",
+        "sha256": "de6fcef251cb2213d038bdba25c3a2fa451ed3720cfc5ca360187b25d68e4de5"
+      }
+    }
+  },
+  "variants": {
+    "d_only_2p5us": {
+      "scenario": "d_only",
+      "grid": "2p5us",
+      "rows": 80003,
+      "step_s": 2.5e-06,
+      "main_controller_source_sha256": "8979005b7aa22d5f6bf0507d257afec2dae2a83f1e65d5193ab58443a5904dac",
+      "controller_source_sha256": "7e01f57fa820405854e02ffaccd3f17c856749d9ce362ba76018499250d97054",
+      "deleted_q_assignment": "IF (C1_J.GE.32000) C1_REQUEST(2) = 1.5D0"
+    },
+    "d_only_5us": {
+      "scenario": "d_only",
+      "grid": "5us",
+      "rows": 40002,
+      "step_s": 5e-06,
+      "main_controller_source_sha256": "339cdcea8b02af61f53270c091cfd32c8989be192e3bd85bdc2f080c2429a139",
+      "controller_source_sha256": "9354d5ab00aca6c660bd0c323fc7e94735eed545a0787ff707f118ef2ad4ece9",
+      "deleted_q_assignment": "IF (C1_J.GE.16000) C1_REQUEST(2) = 1.5D0"
+    }
+  },
+  "control_change": "Delete only the original q assignment at the 80 ms sample. Preserve the zero initialization of the q request on each controller update, the q loop itself, exact unwrapped angle log, reduced trig, switching, feedback, clock and next-5-us application.",
+  "execution": "Use one isolated Build and a conditional native Run per grid in separate same-session packages, serially. Bind the qualified same-grid main, exact gauge measurements, source hash, generated 19-branch network, 45 outputs and native terminal evidence.",
+  "validation": "Keep all original electric, control, tracking and clock gates. Check d-only q request is zero at every update, including 80 ms. Complete and compare both d-only grids, then all same-grid and cross-grid checks and both main/d-only pairs under the original protocol."
+}

@@ -1,0 +1,251 @@
+{
+  "schema": "pycy_grid_connected_storage_candidate_protocol_v1",
+  "date": "2026-11-23",
+  "source_parent": "3a1e1673ae49fd7059fa9a9e709a874d4c310cee",
+  "example": {
+    "number": 35,
+    "path": "examples/35_grid_connected_storage.py",
+    "case": "grid_connected_storage",
+    "default_step_s": 5e-06,
+    "stop_s": 0.300005,
+    "native_snapshot_s": 0.8
+  },
+  "sources": {
+    "qualified_native": {
+      "path": "docs/development_roadmap/experiments/d1_storage_grid_long_native_20261123.json",
+      "sha256": "ebdf670e893b1e35c19acf6ef8a4f8a860447c780320dc782a2268408fcb19fc",
+      "bytes": 20025
+    },
+    "native_protocol": {
+      "path": "docs/development_roadmap/experiments/d1_storage_grid_long_protocol_20261123.json",
+      "sha256": "3469abcea84653cc50e2b361e6f70bec8a2e8905f8351b84fbabbc7bd5c5426d",
+      "bytes": 12675
+    },
+    "prior_conditioned_pycy": {
+      "path": "local_reference/d1_storage_grid_long_20261123/conditioned_screen/summary.json",
+      "sha256": "de6a30afe5f0a34ce9a0f27a72d622999011ddbb10bfef86c0408d4f913d0063",
+      "bytes": 6763
+    },
+    "independent_diagnostic_alignment": {
+      "5us": {
+        "path": "local_reference/d1_storage_grid_long_20261123/conditioned_alignment/5us.json",
+        "sha256": "417c16701628c4ea6decb8d1db55dc325fa02abfacc7cdf2093f0c681075bed1",
+        "bytes": 18374
+      },
+      "2p5us": {
+        "path": "local_reference/d1_storage_grid_long_20261123/conditioned_alignment/2p5us.json",
+        "sha256": "843511b2a4d8466f92fc42c9a594b499b3b07c91178543a318cd24106cdc9eae",
+        "bytes": 18506
+      }
+    },
+    "example_34_regression_baseline": {
+      "path": "local_reference/d1_case34_parity_20261123/baseline/summary.json",
+      "sha256": "813f3b48370177c174de0751f07bd3079ee35eda332d436c8018a05828281545",
+      "bytes": 6694
+    },
+    "example_34_previously_accepted_run": {
+      "path": "validation/cases/two_terminal_vsc_hvdc/acceptance_report.json",
+      "sha256": "09b7eec0777ab15dd648247131109bc97dc9a39c98722701bf20c351933efc7d",
+      "bytes": 14471
+    }
+  },
+  "dc_circuit": {
+    "ocv_v": 400,
+    "series_ohm": 0.4,
+    "polarization_ohm": 0.6,
+    "polarization_cap_f": 0.05,
+    "bus_cap_f": 0.005,
+    "positive_nodes": [
+      "dc_pos",
+      "pol",
+      "ocv"
+    ],
+    "reference": "The negative DC rail is the reference. AC neutral stays floating. No additional DC load.",
+    "current_direction": "Positive storage current flows from the positive DC bus into R0, then the polarization and OCV circuit."
+  },
+  "ac_circuit": {
+    "frequency_hz": 60,
+    "phase_rms_v": 120,
+    "feeder_ohm": 0.8,
+    "feeder_h": 0.008,
+    "filter_ohm": 1,
+    "filter_h": 0.01,
+    "bridge_closed_ohm": 0.001,
+    "bridge_open_ohm": 1000000000,
+    "current_direction": "PCC phase current flows from the grid toward the bridge. Positive measured P represents absorption from the grid.",
+    "pcc_measurement": "Measure each phase against the local floating star at the junction of the feeder and filter."
+  },
+  "grids": {
+    "5us": {
+      "step_s": 5e-06,
+      "candidate_rows_including_initial": 60002,
+      "native_positive_rows": 60001,
+      "initial_bus_v": 399.9996779744659,
+      "initial_polarization_v": -0.0003022141969455383,
+      "reference_initial_storage_current_a": -4.952834309346343e-05
+    },
+    "2p5us": {
+      "step_s": 2.5e-06,
+      "candidate_rows_including_initial": 120003,
+      "native_positive_rows": 120002,
+      "initial_bus_v": 399.99967797399387,
+      "initial_polarization_v": -0.00030221467733904106,
+      "reference_initial_storage_current_a": -4.952832199922597e-05
+    }
+  },
+  "initial_state": {
+    "ac_inductor_current_a": 0.0,
+    "ac_inductor_snapshot_max_abs_a_for_zero_approximation": 1.5e-26,
+    "ac_source_v": 0.0,
+    "pll_angle_rad": 4.71238898038469,
+    "pll_omega_rad_per_s": 376.99111843077515,
+    "pll_integrator_current_pi_and_voltage_filters": 0.0,
+    "modulation": 0.0,
+    "upper_switch": "open",
+    "lower_switch": "closed",
+    "rule": "Set the two capacitor voltages directly. Verify the initial row against the decoded same-grid snapshot. The measured six inductor currents are represented by zero at the bound above."
+  },
+  "schedule": {
+    "source_ramp_s": [
+      0.0,
+      0.02
+    ],
+    "charge_ramp_s": [
+      0.02,
+      0.03
+    ],
+    "charge_p_ref_w": 250.0,
+    "reversal_ramp_s": [
+      0.15,
+      0.17
+    ],
+    "discharge_p_ref_w": -250.0,
+    "zero_crossing_tick_s": 0.16,
+    "first_negative_tick_s": 0.161,
+    "q_ref_var": 0.0,
+    "inner_period_s": 0.0001,
+    "outer_period_s": 0.001,
+    "gate_period_s": 5e-06,
+    "first_sample_s": 0.0001,
+    "first_gate_effect_s": 0.000105,
+    "inner_updates": 3000,
+    "outer_updates": 300,
+    "fine_midpoint_holds": 60001,
+    "pcc_min_filtered_rms_v": 24.0,
+    "pcc_dq_filter_tau_s": 0.01,
+    "max_current_request_peak_a": 4.0
+  },
+  "windows_s": {
+    "charge": [
+      0.09,
+      0.14
+    ],
+    "discharge": [
+      0.25,
+      0.3
+    ]
+  },
+  "time_alignment": "Match all positive integer ticks after adding 0.800 s to the PyCy clock. Check the PyCy initial row separately. Windows are half-open on each native grid.",
+  "same_grid_scope": {
+    "voltage": "DC bus, polarization branch, OCV, grid phase and PCC phase voltages",
+    "current": "R0, R1, polarization capacitor, bus capacitor, OCV and all six AC RL branches",
+    "control": "P and Q requests, filtered PCC RMS, current references, PLL angle and frequency, applied and pending modulation",
+    "discrete": "Six actual switches, electrical and gate indices, inner and outer ticks, outer enable and saturation",
+    "power": "Instantaneous PCC P and Q, DC voltage × R0 current, and charge/discharge window means"
+  },
+  "same_grid_limits": {
+    "clock_abs_s": 2e-12,
+    "initial_voltage_abs_v": 1e-06,
+    "initial_current_abs_a": 1e-07,
+    "voltage_abs_v": 5e-06,
+    "current_abs_a": 2e-06,
+    "modulation_abs_pu": 2e-07,
+    "controller_abs_in_reported_units": 2e-06,
+    "power_command_abs_w_or_var": 1e-09,
+    "point_power_abs_w_or_var": 0.002,
+    "window_mean_power_abs_w_or_var": 0.0002,
+    "discrete_mismatches": 0
+  },
+  "same_grid_limit_basis": "Both pre-implementation diagnostics matched the six switch states and all sampled flags exactly. Peak analog limits preserve SI scaling checks with margin for the two execution environments.",
+  "physics_limits": {
+    "clock_abs_s": 2e-12,
+    "kcl_abs_a": 2e-06,
+    "ohm_abs_v": 5e-06,
+    "cap_charge_abs_c": 5e-10,
+    "inductor_tr_abs_v": 5e-05,
+    "tr_energy_abs_j": 2e-07,
+    "cumulative_energy_abs_j": 0.001
+  },
+  "continuation_limits": {
+    "phase_current_abs_a_max": 4.05,
+    "bus_voltage_v": [
+      398,
+      402
+    ],
+    "p_command_abs_w": 1e-09
+  },
+  "signed_window_limits": {
+    "charge": {
+      "pcc_active_mean_w": [
+        225,
+        275
+      ],
+      "pcc_reactive_mean_abs_var_max": 30,
+      "storage_absorbed_mean_w": [
+        225,
+        275
+      ],
+      "storage_absorbed_mean_a": [
+        0.5,
+        0.75
+      ],
+      "bus_mean_v": [
+        400.2,
+        400.9
+      ],
+      "polarization_mean_v": [
+        0.2,
+        0.5
+      ]
+    },
+    "discharge": {
+      "pcc_active_mean_w": [
+        -275,
+        -225
+      ],
+      "pcc_reactive_mean_abs_var_max": 30,
+      "storage_absorbed_mean_w": [
+        -275,
+        -225
+      ],
+      "storage_absorbed_mean_a": [
+        -0.75,
+        -0.5
+      ],
+      "bus_mean_v": [
+        399.0,
+        399.8
+      ],
+      "polarization_mean_v": [
+        -0.5,
+        -0.2
+      ]
+    }
+  },
+  "cross_grid_window_limits": {
+    "pcc_active_mean_abs_w": 12,
+    "pcc_reactive_mean_abs_var": 10,
+    "storage_power_mean_abs_w": 12,
+    "storage_current_mean_abs_a": 0.03,
+    "bus_mean_abs_v": 0.03,
+    "polarization_mean_abs_v": 0.03
+  },
+  "acceptance": [
+    "Use existing components and the standard CaseDefinition entry. Reuse the floating AC station and current loop with the same 5 µs carrier. Keep the signed P/Q=0 outer law and storage branch readable in the example.",
+    "Run the standalone default example and both same-grid comparisons with the recorded genuine PSCAD files. Check full physical waveforms, all six switch states, current and outer update rows, pending-to-applied timing, fine-grid holds, electrical residuals and both signed power windows.",
+    "After sharing station logic, reproduce the frozen Example 34 baseline in both grids with identical ordered float64 simulation rows.",
+    "Publish concise teaching and reproduction notes, plot the comparison, run focused tests and the full locked Windows suite including slow tests, and independently run the standalone case and focused tests under Ubuntu WSL2.",
+    "Bind inputs and results, update the roadmap and both example indexes, then commit and push the accepted case on the development branch."
+  ],
+  "formal_candidate_accepted": false
+}

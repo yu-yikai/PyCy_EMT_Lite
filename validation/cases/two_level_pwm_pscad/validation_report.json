@@ -1,0 +1,305 @@
+{
+  "case_id": "two_level_pwm_pscad",
+  "reference_id": "pscad-derived-bilateral-spwm-v5",
+  "passed": true,
+  "candidate_executed": true,
+  "candidate_samples": 40001,
+  "reference_samples": 80003,
+  "candidate_method": "trapezoidal",
+  "candidate_step_s": 5e-06,
+  "windows": [
+    {
+      "window_seconds": [
+        0.1,
+        0.2
+      ],
+      "alignment": "absolute_time_linear_interpolation",
+      "passed": true,
+      "signals": {
+        "i:La": {
+          "reference": "i_a",
+          "unit": "A",
+          "scale": 150.0,
+          "rmse": 0.13764486754251976,
+          "nrmse": 0.0009176324502834651,
+          "max_abs_error": 0.3219980003405567,
+          "candidate_mean": 1.8207657603852567e-13,
+          "reference_mean": 2.042810365310288e-14,
+          "candidate_rms": 105.99588039125169,
+          "reference_rms": 105.99612481135061,
+          "limits": {
+            "max_nrmse": 0.02,
+            "max_abs_error": 10.0
+          },
+          "passed": true
+        },
+        "i:Lb": {
+          "reference": "i_b",
+          "unit": "A",
+          "scale": 150.0,
+          "rmse": 0.13754876382705186,
+          "nrmse": 0.0009169917588470124,
+          "max_abs_error": 0.31817675865325157,
+          "candidate_mean": -0.07992007992034456,
+          "reference_mean": -0.07992007991992889,
+          "candidate_rms": 105.92506968504863,
+          "reference_rms": 105.92531392278936,
+          "limits": {
+            "max_nrmse": 0.02,
+            "max_abs_error": 10.0
+          },
+          "passed": true
+        },
+        "i:Lc": {
+          "reference": "i_c",
+          "unit": "A",
+          "scale": 150.0,
+          "rmse": 0.13764628488003064,
+          "nrmse": 0.0009176418992002043,
+          "max_abs_error": 0.3195713485704914,
+          "candidate_mean": 0.0799200799201536,
+          "reference_mean": 0.07992007991993688,
+          "candidate_rms": 105.99053360553663,
+          "reference_rms": 105.99077802279153,
+          "limits": {
+            "max_nrmse": 0.02,
+            "max_abs_error": 10.0
+          },
+          "passed": true
+        }
+      }
+    }
+  ],
+  "features": {
+    "window_seconds": [
+      0.1,
+      0.2
+    ],
+    "fundamental_hz": 60.0,
+    "fundamental_cycles": 6.0,
+    "projection": "exact piecewise-linear integral against fixed-frequency sin/cos at absolute time",
+    "phase_convention": "i(t) = sqrt(2)*I_rms*sin(2*pi*f*t + phase); wrapped phase difference",
+    "time_shift_seconds": 0,
+    "amplitude_fitting": false,
+    "phases": {
+      "i:La": {
+        "reference": "i_a",
+        "candidate_features": {
+          "total_rms_ampere": 105.99588039125169,
+          "mean_ampere": 1.8472357387035693e-13,
+          "fundamental_rms_ampere": 105.6091827712206,
+          "fundamental_phase_degrees": 68.32689851060393
+        },
+        "reference_features": {
+          "total_rms_ampere": 105.99612481135061,
+          "mean_ampere": 1.6269118232387496e-14,
+          "fundamental_rms_ampere": 105.60919741055359,
+          "fundamental_phase_degrees": 68.29990270720347
+        },
+        "relative_rms_error": 2.3059342910691782e-06,
+        "relative_fundamental_rms_error": 1.3861797409919774e-07,
+        "fundamental_phase_error_degrees": 0.026995803400438945,
+        "limits": {
+          "relative_rms_error": 0.05,
+          "relative_fundamental_rms_error": 0.05,
+          "fundamental_phase_error_degrees": 3.0
+        },
+        "passed": true
+      },
+      "i:Lb": {
+        "reference": "i_b",
+        "candidate_features": {
+          "total_rms_ampere": 105.92506968504863,
+          "mean_ampere": -0.07992007992034443,
+          "fundamental_rms_ampere": 105.53868011510691,
+          "fundamental_phase_degrees": -51.65345547644204
+        },
+        "reference_features": {
+          "total_rms_ampere": 105.92531392278936,
+          "mean_ampere": -0.07992007991993035,
+          "fundamental_rms_ampere": 105.53869474466678,
+          "fundamental_phase_degrees": -51.68045127984279
+        },
+        "relative_rms_error": 2.305754230880197e-06,
+        "relative_fundamental_rms_error": 1.386179723228409e-07,
+        "fundamental_phase_error_degrees": 0.026995803400751583,
+        "limits": {
+          "relative_rms_error": 0.05,
+          "relative_fundamental_rms_error": 0.05,
+          "fundamental_phase_error_degrees": 3.0
+        },
+        "passed": true
+      },
+      "i:Lc": {
+        "reference": "i_c",
+        "candidate_features": {
+          "total_rms_ampere": 105.99053360553663,
+          "mean_ampere": 0.07992007992015632,
+          "fundamental_rms_ampere": 105.60529765209823,
+          "fundamental_phase_degrees": -171.63015545231428
+        },
+        "reference_features": {
+          "total_rms_ampere": 105.99077802279153,
+          "mean_ampere": 0.07992007991993365,
+          "fundamental_rms_ampere": 105.6053122908921,
+          "fundamental_phase_degrees": -171.6571512557148
+        },
+        "relative_rms_error": 2.306023783038569e-06,
+        "relative_fundamental_rms_error": 1.3861796865910492e-07,
+        "fundamental_phase_error_degrees": 0.02699580340052421,
+        "limits": {
+          "relative_rms_error": 0.05,
+          "relative_fundamental_rms_error": 0.05,
+          "fundamental_phase_error_degrees": 3.0
+        },
+        "passed": true
+      }
+    },
+    "load_mean_power": {
+      "candidate_watt": 33689.24026168533,
+      "reference_watt": 33689.395630541556,
+      "resistance_per_phase_ohm": 1.0,
+      "definition": "R * sum(time-weighted phase-current RMS squared); resistor absorption only",
+      "relative_error": 4.611803011589366e-06,
+      "max_relative_error": 0.05,
+      "positive_absorption": true,
+      "passed": true
+    },
+    "passed": true
+  },
+  "python_version": "3.14.5",
+  "numpy_version": "2.5.2",
+  "git_head_at_run": "3737e663c89646cf76e6cd9f4880d0e579d95731",
+  "status": "numerical_comparison_passed",
+  "protocol_commit": "e25ebed2511312c496a52303222344e4d754d4cd",
+  "comparison_entry_commit": "3737e663c89646cf76e6cd9f4880d0e579d95731",
+  "time_shift_seconds": 0,
+  "excluded_time_seconds": 0,
+  "scope": "Unchanged default12 versus an independently connected PSCAD bilateral-switch SPWM reference with held5us gates, 400V DC, floating1ohm/1mH phases. Scope is this declared model, not IGBT/diode/deadtime physics or the original MathWorks benchmark. Native TIME and generated clock/libm boundary observations retain the frozen conditional contract; no fitted time, amplitude, frequency, initial state or parameters.",
+  "original_mathworks_comparison": "Original fixed2% waveform FAIL retained separately in validation/cases/two_level_pwm/validation_report.json.",
+  "complete_report": {
+    "path": "local_reference/two_level_pwm_pscad/comparison_results/20261111T032613323109Z/report.json",
+    "bytes": 84448,
+    "sha256": "f52762d559beff7b16608928d12f831fd642b49b31466595010563770d2faa38"
+  },
+  "plot": {
+    "path": "local_reference/two_level_pwm_pscad/comparison_results/20261111T032613323109Z/comparison.png",
+    "bytes": 373068,
+    "sha256": "13ebc97f7a1f15b4eab955760ccd6a3e07b80b879fb01caa1e621f0e046988f4"
+  },
+  "candidate_data": {
+    "pycy.csv": {
+      "path": "local_reference/two_level_pwm_pscad/comparison_results/20261111T032613323109Z/pycy.csv",
+      "bytes": 20140812,
+      "sha256": "5cd8abe64d9084ca465fb4a961eca03f180137323153d8d9acedf820ebcbfe9f"
+    },
+    "pycy.json": {
+      "path": "local_reference/two_level_pwm_pscad/comparison_results/20261111T032613323109Z/pycy.json",
+      "bytes": 45941884,
+      "sha256": "a6ebb79727d37df5007065d51d7f53ad7b342aefdb5f77b358203c50fe0dcc7b"
+    },
+    "pycy.npz": {
+      "path": "local_reference/two_level_pwm_pscad/comparison_results/20261111T032613323109Z/pycy.npz",
+      "bytes": 9930712,
+      "sha256": "d2200f7fa1d81eed6e346e8a19c66b134a94c4aaf1049e5f61bdbc72537870dd"
+    }
+  },
+  "input_snapshot_count": 340,
+  "native_qualification_inputs": 303,
+  "code_and_protocol_inputs": 48,
+  "all_input_hashes_unchanged": true,
+  "npz_time_and_compared_currents_exact_json": true,
+  "reference_qualification": {
+    "case_id": "two_level_pwm_pscad",
+    "reference_id": "pscad-derived-bilateral-spwm-v5",
+    "status": "QUALIFIED_FULL_CONDITIONAL_NATIVE_REFERENCE",
+    "reference_qualified": true,
+    "complete_receipt": {
+      "path": "local_reference/two_level_pwm_pscad/qualification/20261111T031524306929Z/qualification.json",
+      "bytes": 91200,
+      "sha256": "b8511f04434dc091e44afe385cbf022b461f537067f814e053d437a3ab8c5c83"
+    },
+    "provenance": {
+      "path": "local_reference/two_level_pwm_pscad/qualification/20261111T031524306929Z/provenance.json",
+      "bytes": 1322,
+      "sha256": "52ea3ed43b42e7a7404a3c32705a754af80f6e6d02714c02d15c407dde85692c"
+    },
+    "normalized_reference": {
+      "path": "local_reference/two_level_pwm_pscad/qualification/20261111T031524306929Z/normalized_results/reference.csv",
+      "bytes": 4929793,
+      "sha256": "9b3ad5841f4aeb666a14facc3ca5154413d675d21b466febb5690e16b008025c",
+      "rows": 80003,
+      "columns": [
+        "time",
+        "i_a",
+        "i_b",
+        "i_c"
+      ],
+      "units": {
+        "time": "s",
+        "i_a": "A",
+        "i_b": "A",
+        "i_c": "A"
+      },
+      "source_run": "fine",
+      "time_from": "TIME_native_s"
+    }
+  },
+  "independent_candidate_review": {
+    "path": "local_reference/native_static_reviews/b1_candidate_audit_20261111/actual_20261111T032613323109Z/receipt.json",
+    "bytes": 4555,
+    "sha256": "cd20f9934a2aef3ad8b0655282f806e25587e7b76a9912255c7f39088bb7681d"
+  },
+  "local_verification": {
+    "tests": 1267,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "junit_time_s": 494.618,
+    "terminal_time_s": 494.62,
+    "python_files_unchanged": 111,
+    "files": {
+      ".tmp/longterm/b1-final-20261111T0317.xml": "10775c002801b1490d6a8456d0b61c93822ef5aafe15c56f36187e5622374c5e",
+      ".tmp/longterm/b1-final-20261111T0317-pytest.log": "2b1a9d553d129be3d0c2c68c755827fd612ede36652851b3ba37791797691518",
+      ".tmp/longterm/b1-final-20261111T0316-source-hashes.json": "ca85944bc86dcfde471b79c12350577b21188ed4bb37d6824c5bf21da4538c66"
+    },
+    "includes_slow": true,
+    "locked_environment_packages": 27,
+    "ruff": "passed",
+    "mypy_source_files": 39,
+    "focused_loader_tests": 23,
+    "cross_os_ci": "Not certified; billing lock recorded separately as F1.",
+    "standalone": {
+      "passed": true,
+      "samples": 40001,
+      "exit_code": 0,
+      "scope": "One unchanged original12 __main__ execution through transparent output observation; default parameters and output flags unchanged. No second commercial comparison.",
+      "receipt": {
+        "path": "local_reference/native_static_reviews/b1_original12_standalone_20261111T032943447679Z/receipt.json",
+        "bytes": 30380,
+        "sha256": "7e9278a797aa7890256861dc3849589bc9fca2aa7f4096322a5a9ec9d4666a0e"
+      },
+      "verification": {
+        "path": "local_reference/native_static_reviews/b1_original12_standalone_20261111T032943447679Z/verification.json",
+        "bytes": 3041,
+        "sha256": "2a6163fc76c0a9b9c7b51d3114a1b72f0182907fdc726e03a12bdbac7498afac"
+      },
+      "stdout": {
+        "path": "local_reference/native_static_reviews/b1_original12_standalone_20261111T032943447679Z/stdout_stderr.log",
+        "bytes": 549,
+        "sha256": "a22e0385785f6ce2a2a8cc727acb0eed78ce3271798941f1edf69f358ca81d24"
+      },
+      "figure": {
+        "path": "local_reference/native_static_reviews/b1_original12_standalone_20261111T032943447679Z/original_figure_1.png",
+        "bytes": 165262,
+        "sha256": "0bcc60e81b887349e727579c72c521455ff8fa2904cab1511d4b05bbdfbb42ee"
+      },
+      "complete_result": {
+        "path": "local_reference/native_static_reviews/b1_original12_standalone_20261111T032943447679Z/complete_result.npz",
+        "bytes": 9930712,
+        "sha256": "d2200f7fa1d81eed6e346e8a19c66b134a94c4aaf1049e5f61bdbc72537870dd"
+      },
+      "full_npz_bytes_equal_formal_comparison_candidate": true
+    }
+  }
+}

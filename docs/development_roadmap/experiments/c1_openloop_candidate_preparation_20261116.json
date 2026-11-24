@@ -1,0 +1,48 @@
+{
+  "schema": "c1_openloop_candidate_preparation_v1",
+  "observed_utc": "2026-11-16T14:43:36.545451+00:00",
+  "execution_head": "3c3c3ca1dcc025b7bee130f3c90f20f58b37b1d1",
+  "branch": "codex/emt-examples-longterm",
+  "status": "CANDIDATE_DRAFT_NOT_EXECUTED_OR_ACCEPTED",
+  "formal_new_examples_completed": 9,
+  "C1_complete": false,
+  "qualified_reference_report": "validation/cases/grid_connected_vsc_open_loop/qualified_reference_report.json",
+  "draft_snapshot_not_execution_seal": [
+    {
+      "path": "examples/28_grid_connected_vsc_open_loop.py",
+      "bytes": 8100,
+      "sha256": "6c2d2487b9666955e0b1b03a6ccd704e267f22df442d6ddf58c44d926682655d"
+    },
+    {
+      "path": "tests/test_grid_connected_vsc_open_loop.py",
+      "bytes": 12390,
+      "sha256": "ba90c0588888f179546cbc204b81a282690102d60cc0a1788731dea507828833"
+    },
+    {
+      "path": "validation/cases/grid_connected_vsc_open_loop/physics.py",
+      "bytes": 13416,
+      "sha256": "e8cd56ba66575d815becc3bdfe5951bfbf33b68346ae5b13ef3a5bfa42a82006"
+    },
+    {
+      "path": "validation/cases/grid_connected_vsc_open_loop/metrics.py",
+      "bytes": 19317,
+      "sha256": "016d0b80ba41876d7a8632d864eed6ab23440660d435b698602811b786d74f30"
+    }
+  ],
+  "binding_module": "validation/cases/grid_connected_vsc_open_loop/binding.py remains a draft; freeze and review before execution.",
+  "candidate_simulation_executed": false,
+  "candidate_actual_output_observed": false,
+  "new_candidate_pytest_executed": false,
+  "prior_full_regression": {
+    "passed": 1518,
+    "includes_slow": true,
+    "covers_current_drafts": false
+  },
+  "remote_observation": {
+    "last_known_pushed_head": "3c3c3ca1dcc025b7bee130f3c90f20f58b37b1d1",
+    "this_observation_succeeded": false,
+    "reason": "ls-remote could not connect to the configured local proxy 127.0.0.1:7897; current remote HEAD not reverified."
+  },
+  "beginner_readability": "Keep one direct teaching file, reuse existing components and CaseDefinition flow, and keep detailed validation in validation/. No generic control or serialization framework.",
+  "next_gate": "Complete and independently review the case-specific binding/comparison entry, then freeze source identities, unchanged parameters/protocol and qualified raw data before input probes and the first candidate output. Run same-step/cross-step comparison, independent validation/run, plots, report, teaching notes and full checks before acceptance and a separate commit."
+}

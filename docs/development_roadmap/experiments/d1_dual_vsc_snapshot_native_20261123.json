@@ -1,0 +1,213 @@
+{
+  "schema": "d1_dual_vsc_native_snapshot_result_v1",
+  "date": "2026-11-23",
+  "status": "PASS_TWO_GRIDS_NATIVE_PARKED_SNAPSHOT",
+  "freeze_commit": "02512f5faa5ec93708648856aa23bd2f9dc278b4",
+  "protocol": {
+    "path": "docs/development_roadmap/experiments/d1_dual_vsc_snapshot_protocol_20261123.json",
+    "sha256": "658a1a946315b4b338a65022419f78ec7b213610d25775ac33f68b47870ed9c1",
+    "bytes": 5351
+  },
+  "scope": "Two parked bridges, finite AC feeders and loaded bipolar T link. Original uninterrupted and restarted PSCAD rows paired at the same electrical step.",
+  "native_runtime": {
+    "pscad_version": "5.0.0",
+    "emtdc_build": "20210219",
+    "compiler": "gf46",
+    "platform": "x86",
+    "channels": 64,
+    "physical_branches": 45,
+    "snapshot_absolute_s": 0.402,
+    "cold_starts": 2,
+    "independent_restarts": 2
+  },
+  "grids": {
+    "5us": {
+      "step_s": 5e-06,
+      "seed_rows": 80601,
+      "resume_rows": 200,
+      "first_resume_absolute_s": 0.402005,
+      "canonical_pscx_sha256": "b73e1cc4d79de8cf10b1f9a19062e63e69936a74960acaea7c1bb3fd564f45f9",
+      "seed_receipt": {
+        "path": "local_reference/native_static_reviews/d1_dual_vsc_snapshot_v3_20261123/5us/seed/n/20261122T215717086913Z/snapshot_result.json",
+        "sha256": "bdc6aa4dc0e4067ec71079044660cdf3e9bacf8e0dcc666bf58ed4b4a51941aa",
+        "bytes": 21980
+      },
+      "restart_receipt": {
+        "path": "local_reference/native_static_reviews/d1_dual_vsc_snapshot_v3_20261123/5us/restart/n/20261122T215951633518Z/snapshot_result.json",
+        "sha256": "7369690503922cbe267758322c7f89ed3bad3ce61770e946bf9e2858fcca29b0",
+        "bytes": 17472
+      },
+      "native_audit": {
+        "path": "local_reference/native_static_reviews/d1_dual_vsc_snapshot_v3_20261123/verification/5us_warm_audit_v2.json",
+        "sha256": "03b934d7afacfa66e576154b70b9006383148c05054d14308cf0de3c27613ea4",
+        "bytes": 8163
+      },
+      "snapshot_sha256": "1a69524afec8961c4e8cf9b6e80b628f1bfb44ba5be08de01a0ad7315c251c82",
+      "generated_identity_sha256": {
+        "Main.f": "d34e21b7f660fccd31e42b6c51b297850681d1639b40d878e9eec3de38e3580a",
+        "Main.dta": "c17fe6fc37fd69b4ad7820040cdb5be35302e29e3d74ee348cc4c2661b2e27df",
+        "Station.dta": "a75941fb5e50354ee8a1e5cd378f24f2100cfb6c88af2fd9986e51b5a5fbb0c0",
+        "Station.f": "32d389bd2212262ebc860c29bf0eaeb5a623ac1c6546d1524d255d596e565d2b"
+      },
+      "snapshot_state": {
+        "a_to_m_positive_a": 0.0071814386743539,
+        "m_to_b_positive_a": 0.016827239313263548,
+        "a_to_m_negative_a": -0.007181438489965014,
+        "m_to_b_negative_a": -0.01682723912981772,
+        "b_differential_v": 399.8008422498784,
+        "stored_energy_j": 803.5991541042215
+      },
+      "snapshot_companion_residual_a": 1.184607967275042e-10,
+      "first_resume_interval": {
+        "capacitor_charge_c": 3.8712645590544773e-14,
+        "capacitor_energy_j": 7.73866464647742e-12,
+        "whole_energy_j": 7.529294028529865e-13,
+        "storage_change_j": -0.0019980096483322995
+      },
+      "maximum_residuals": {
+        "kcl_a": 4.5338471029083425e-10,
+        "tr_line_voltage_v": 8.06752442628067e-10,
+        "tr_ac_voltage_v": 1.0089040713981948e-11,
+        "tr_cap_charge_c": 9.998391004014094e-14,
+        "tr_energy_j": 6.437654664494869e-11,
+        "abs_cumulative_energy_j": 1.1947738583120688e-08,
+        "parked_ac_current_a": 1.0315739919248e-14,
+        "clock_s": 5.551115123125783e-17,
+        "snapshot_to_seed_voltage_v": 3.9968028886505635e-12,
+        "snapshot_to_seed_current_a": 1.184607967275042e-10,
+        "overlap_voltage_v": 6.000755448098971e-11,
+        "overlap_current_a": 3.7248000094459305e-10,
+        "exact_switch_resistance": true,
+        "independent_pole_voltage_peak_v": 3.45977468896308e-10,
+        "independent_link_current_peak_a": 1.7453316027669918e-10
+      },
+      "passed_numerical_checks": 23
+    },
+    "2p5us": {
+      "step_s": 2.5e-06,
+      "seed_rows": 161201,
+      "resume_rows": 400,
+      "first_resume_absolute_s": 0.4020025,
+      "canonical_pscx_sha256": "e182469a05d77843e4432fd81378d2628c035d755c2fac858999b31947565d18",
+      "seed_receipt": {
+        "path": "local_reference/native_static_reviews/d1_dual_vsc_snapshot_fine_20261123/2p5us/seed/n/20261122T220503837074Z/snapshot_result.json",
+        "sha256": "d7ef9409e7c0b5dec4e4a65fe090327e19251e4e435111e7116aac8b03ca8189",
+        "bytes": 21998
+      },
+      "restart_receipt": {
+        "path": "local_reference/native_static_reviews/d1_dual_vsc_snapshot_fine_20261123/2p5us/restart/n/20261122T220822182654Z/snapshot_result.json",
+        "sha256": "a1652b6b8431ddbe8fea3011898323c4ee71517665e236a0d335c1dc5bffac13",
+        "bytes": 17482
+      },
+      "native_audit": {
+        "path": "local_reference/native_static_reviews/d1_dual_vsc_snapshot_fine_20261123/2p5us/restart/n/20261122T220822182654Z/warm_physics.json",
+        "sha256": "eb57343c2d161a85d5de38d63e9903605dd7d8d6486907ba103d5c09e0abc5ce",
+        "bytes": 8168
+      },
+      "snapshot_sha256": "abd241c9f6c91205633bfd1cae045a8a705e4a9efb748fdb6d81180e570f5853",
+      "generated_identity_sha256": {
+        "Main.f": "181004d2aab6701dd8fb218cb55f4aa6d406ee2d94db97c296775a51a1a30a8a",
+        "Main.dta": "c17fe6fc37fd69b4ad7820040cdb5be35302e29e3d74ee348cc4c2661b2e27df",
+        "Station.dta": "a75941fb5e50354ee8a1e5cd378f24f2100cfb6c88af2fd9986e51b5a5fbb0c0",
+        "Station.f": "32d389bd2212262ebc860c29bf0eaeb5a623ac1c6546d1524d255d596e565d2b"
+      },
+      "snapshot_state": {
+        "a_to_m_positive_a": 0.0071518572612620365,
+        "m_to_b_positive_a": 0.01679838381377688,
+        "a_to_m_negative_a": -0.007151856922041299,
+        "m_to_b_negative_a": -0.01679838347677718,
+        "b_differential_v": 399.8010879124074,
+        "stored_energy_j": 803.5996536088641
+      },
+      "snapshot_companion_residual_a": 5.002664948960955e-10,
+      "first_resume_interval": {
+        "capacitor_charge_c": 4.904466369566032e-14,
+        "capacitor_energy_j": 9.80404892651139e-12,
+        "whole_energy_j": 1.0749339786342293e-12,
+        "storage_change_j": -0.000999007275254371
+      },
+      "maximum_residuals": {
+        "kcl_a": 5.48390555188405e-10,
+        "tr_line_voltage_v": 1.5991972190931847e-09,
+        "tr_ac_voltage_v": 1.0145217999032489e-11,
+        "tr_cap_charge_c": 1.0012574621541754e-13,
+        "tr_energy_j": 6.648226745186427e-11,
+        "abs_cumulative_energy_j": 2.7240358617032015e-09,
+        "parked_ac_current_a": 2.500224520997e-14,
+        "clock_s": 5.551115123125783e-17,
+        "snapshot_to_seed_voltage_v": 4.107825191113079e-12,
+        "snapshot_to_seed_current_a": 5.002664948960955e-10,
+        "overlap_voltage_v": 1.0047518372857667e-11,
+        "overlap_current_a": 2.1671600027495155e-10,
+        "exact_switch_resistance": true,
+        "independent_pole_voltage_peak_v": 5.667288860422559e-10,
+        "independent_link_current_peak_a": 2.572904111985963e-10
+      },
+      "passed_numerical_checks": 23
+    }
+  },
+  "checker": {
+    "path": "local_reference/native_static_reviews/d1_dual_vsc_snapshot_20261123/audit_warm_v2.py",
+    "sha256": "0107024be1456bacc5aea0f8c2585637f9b72c8e2d2f3c100650779163422636",
+    "bytes": 23903
+  },
+  "independent_prediction": {
+    "path": "local_reference/native_static_reviews/d1_dual_vsc_snapshot_20261123/snapshot_prediction_v2.json",
+    "sha256": "8d5a1a4938d35b02235e2011390d8fef3e33fe0b20651fe8eb0da420506ffda8",
+    "bytes": 8146
+  },
+  "pycy_feasibility": {
+    "path": "local_reference/native_static_reviews/d1_dual_vsc_snapshot_20261123/pycy_snapshot.json",
+    "sha256": "c9c2b31a32a40d916785db073c7de6b2f5db4ec9e9fb75d2d8ea106d3633dd87",
+    "bytes": 1929
+  },
+  "unchanged_original_refusals": [
+    {
+      "reason": "Native save displaced three electrical wires. Refused before build.",
+      "worker_error": {
+        "path": "local_reference/native_static_reviews/d1_dual_vsc_snapshot_20261123/5us/seed/n/20261122T214113893773Z/worker.stderr.txt",
+        "sha256": "6546af69dc808aaa51daf611571499d4e42b33b6503a14a57245266f7d75eb66",
+        "bytes": 1214
+      },
+      "terminal": {
+        "path": "local_reference/native_static_reviews/d1_dual_vsc_snapshot_20261123/5us/seed/n/20261122T214113893773Z/terminal.json",
+        "sha256": "bd8ce089e6dfcda3af0078de301306638cf7b7fce1cbffe2cdc90a010100764d",
+        "bytes": 1856
+      }
+    },
+    {
+      "reason": "Wires restored and build succeeded. Source-block check included the recorder storage epilogue. Refused before run.",
+      "worker_error": {
+        "path": "local_reference/native_static_reviews/d1_dual_vsc_snapshot_recovery_20261123/5us/seed/n/20261122T214949434954Z/worker.stderr.txt",
+        "sha256": "29a0d61dd67fb777a3d4f20e814e16434456b3af026773dbf6ba7c4754740f86",
+        "bytes": 1250
+      },
+      "terminal": {
+        "path": "local_reference/native_static_reviews/d1_dual_vsc_snapshot_recovery_20261123/5us/seed/n/20261122T214949434954Z/terminal.json",
+        "sha256": "d1aff99c53e1219acd57485543fa7512bb373be4f08d313a2c943b88f6f34865",
+        "bytes": 5936
+      }
+    },
+    {
+      "reason": "Fine clock definition CRC refreshed on save. The actual clock script matched. Refused before build.",
+      "worker_error": {
+        "path": "local_reference/native_static_reviews/d1_dual_vsc_snapshot_v3_20261123/2p5us/seed/n/20261122T215901643700Z/worker.stderr.txt",
+        "sha256": "27da3ee048db015e7373d8c200d9a2d2df41752a97e346795a18221c4e3361ab",
+        "bytes": 1619
+      },
+      "terminal": {
+        "path": "local_reference/native_static_reviews/d1_dual_vsc_snapshot_v3_20261123/2p5us/seed/n/20261122T215901643700Z/terminal.json",
+        "sha256": "461ac9d150b0265319b95da71e88f5802372d6570a72bfc977c139bef63d7584",
+        "bytes": 1871
+      }
+    }
+  ],
+  "first_audit_refusal": {
+    "path": "local_reference/native_static_reviews/d1_dual_vsc_snapshot_v3_20261123/verification/5us_warm_audit_original_refusal.log",
+    "sha256": "7239dfb275817d160f1c06dfbef418f6658eb2643711a3309c370d899144c4e0",
+    "bytes": 1035
+  },
+  "next_stage": "two_independent_active_station_controls_native_short_window",
+  "closed_loop_reference_qualified": false,
+  "candidate_accepted": false
+}

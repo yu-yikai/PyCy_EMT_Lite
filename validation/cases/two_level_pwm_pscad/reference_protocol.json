@@ -1,0 +1,197 @@
+{
+  "counts": {
+    "components": 384,
+    "wires": 204,
+    "ports": 506,
+    "nets": 117,
+    "saved_objects": 588
+  },
+  "flags_false": [
+    "detect_chatter",
+    "remove_chatter",
+    "interpolate_switching",
+    "use_ideal_branch"
+  ],
+  "budgets": {
+    "time_grid_abs_s": 2e-12,
+    "source_abs_V": 1e-09,
+    "raw_reference_carrier_abs": 1e-10,
+    "three_phase_KCL_abs_A": 1e-08,
+    "phase_RL_TR_abs_V": 1e-06,
+    "branch_voltage_KVL_abs_V": 1e-07,
+    "pole_R_algebra_abs_V": 1e-07,
+    "pole_KCL_abs_A": 1e-06,
+    "reduced_TR_current_abs_A": 1e-07,
+    "reduced_TR_pole_neutral_abs_V": 1e-06,
+    "initial_current_abs_A": 1e-12,
+    "t0_pole_and_neutral_abs_V": 1e-20,
+    "t0_pole_and_neutral_relative": 1e-09,
+    "branch_current_forward_constitutive_diagnostic_abs_V": 1e-06
+  },
+  "equations": {
+    "Ephase": "Vs*Gu/(Gu+Gl)",
+    "rth": "1/(Gu+Gl)",
+    "P": "I-ones(3,3)/3",
+    "D": "diag(1ohm+rth)",
+    "independent_reduced_TR": "(I+h/(2L)*P*D_k)i_k=(I-h/(2L)*P*D_prev)i_prev+h/(2L)*P*(E_k+E_prev), L=.001H, i0=0",
+    "pole": "Vp=E-rth*i",
+    "neutral": "Vn=mean(E-(1+rth)*i)",
+    "RL_TR": "L*(i_k-i_prev)/h=.5*((Vp_k-Vn_k)-R*i_k+(Vp_prev-Vn_prev)-R*i_prev)",
+    "branchmeterKVL": "Vupper=Vs-Vp;Vlower=Vp",
+    "poleKCL": "(Vs-Vp)/Ru - Vp/Rl - Iload=0"
+  },
+  "initial_state": "Retainallfirstrows; sixheldgates/complements/Rmembership andsmallpole/neutralvoltage measured, notinferredfromzeroI",
+  "logging": "NativebranchI andsourceI may bepreviousMainOut values. Preserveallrawsame-row tables; forward-row pairingonlygenerated-orderdiagnostic,nottimeshift.",
+  "source_sha256": "00c3abc97b16b6618f49bdbb0619c1c821b2922d52d2eb8e99e12d4f0474c14d",
+  "master_sha256": "2940ddce6fe1fae56cb6be70bbaf0210a7e36059bfcad1e78b0ddbfd4d2a7c77",
+  "schema_version": 1,
+  "defined_utc": "2026-11-11T02:07:28.867958+00:00",
+  "scope": "Full0.2s joint native clock/literal/control-boundary and electrical TR refinement; original12 unchanged; qualification requires actual hard gates and all metrics",
+  "duration_s": 0.200005,
+  "formal_stop_s": 0.2,
+  "coarse_h_s": 5e-06,
+  "fine_h_s": 2.5e-06,
+  "coarse_rows": 40002,
+  "fine_rows": 80003,
+  "control_hold_s": 5e-06,
+  "channels": 60,
+  "shared_rows": 40002,
+  "fine_midpoints": 40001,
+  "acquisition_tail_s": 5e-06,
+  "canonical_time_column": "TIME_native_s",
+  "raw_times_never_modified": true,
+  "requires_actual_last_TIME_greater_than_s": 0.2,
+  "reference_self_refinement": {
+    "full_window_seconds": [
+      0,
+      0.2
+    ],
+    "max_abs_A": 3,
+    "windows": [
+      {
+        "seconds": [
+          0,
+          0.1
+        ],
+        "max_nrmse": 0.02
+      },
+      {
+        "seconds": [
+          0.1,
+          0.2
+        ],
+        "max_nrmse": 0.01
+      }
+    ],
+    "scale_A": 150,
+    "features": {
+      "window_seconds": [
+        0.1,
+        0.2
+      ],
+      "fundamental_hz": 60,
+      "max_relative_rms_error": 0.025,
+      "max_relative_fundamental_rms_error": 0.025,
+      "max_fundamental_phase_error_degrees": 1,
+      "max_relative_load_mean_power_error": 0.025,
+      "positive_load_absorption_required": true
+    }
+  },
+  "candidate_criteria_unchanged": {
+    "manifest_sha256": "8c29826fdd5e82468cc4940f7fa3f007cdcaf509cfb311c9281dba161795f232",
+    "parameters_sha256": "b51abbc578d0ef496a5a83224cd63e66bbc67f51dad292faf7e5ad048ccc2208",
+    "example": "examples/12_two_level_pwm_generator.py",
+    "example_sha256": "f90e6aa87b73b448c5b00e146f7d85070e01b724302cb2861fcd993a783a47e7",
+    "old_MathWorks_report_preserved": true
+  },
+  "physical_budgets_equal_837a_except_new_time_observation": true,
+  "timing_and_ascii_admission": {
+    "t0_exact_zero": true,
+    "time_token_radius_last_decimal_units": 1,
+    "positive_time_token_quantum_max_s": 1e-14,
+    "entire_TIME_token_interval_within_nominal_abs_s": 2e-12,
+    "record_TIME_intervals_must_intersect": true,
+    "six_raw_blocks_record_time_equal": true,
+    "strictly_increasing_native_TIME": true,
+    "binary64_operation_allowance": "64*2^-53*max(1,abs(relevant intermediate))",
+    "non_driving_observers": "Validate TIME_over_h=TIME/5us, observer_biased=TIME_over_h+0.5, index_observer=INT(observer_biased), and t_grid_observer_s=index_observer*5us using token/operation intervals. Positive INT is the actual generated operation, not a NINT library call. Retain unresolved half-tie branches; never drive gates or replace nativeTIME with these observers.",
+    "native_source": "At actual TIME token interval T, compute hold_fraction=(T+eps)/Ts with declared operation allowance; intersect with its raw decimal-token interval. Actual hold_index must be a nonnegative integer m=INT(hold_fraction) from that SAME finite TIME/quotient branch, common to abc. Then sample=m*Ts, alpha=omega_native*sample, ref=.8*sin(alpha+phase_native), cycles=(T-.0005)*1000, p=cycles-floor(cycles), triangle=4p-1 ifp<.5 else3-4p. Finite floor/mod/triangle branch intervals only; raw observations and comparator operands must intersect the same admitted branch.",
+    "sine_reference_abs_pad": 1e-12,
+    "raw_comparator": "For each actual abc common integer hold_index, intersect EACH raw ref/carrier decimal-token interval with its local native-math interval AND applicable global interval, requiring nonempty operand intersections for the same admitted branch. Derive bit only from these intersections: upper0 iff negative difference is possible, upper1 iff nonnegative difference is possible. Both only if difference crosses0. Actual vector must belong to the global common-m vector set. Record all ambiguities and direct canonical single-point mismatches.",
+    "hard_exact": [
+      "all7Pulse parity",
+      "raw andheld binary/complement",
+      "Pulsehigh held=raw",
+      "Pulselow held=previous held",
+      "Rmembership.001/1e9 andheldmapping",
+      "t0/end/tail kept"
+    ],
+    "no_gate_or_time_replay": true
+  },
+  "generated_literals": {
+    "source": "local_reference/two_level_pwm/matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/n/20261111T012359520751Z/project/vdiv.gf46/Main.f",
+    "source_sha256": "b3f72545765e04f6250307c9d07f4c514a6d36ee1a3a037d92edc19503901033",
+    "Ts_s": "0.0001",
+    "eps_s": "1.0e-15",
+    "minus_delay_s": "-0.0005",
+    "carrier_frequency": "1000.0",
+    "omega": "376.991118431",
+    "phases": [
+      "1.57079632679",
+      "-0.523598775598",
+      "3.66519142919"
+    ],
+    "M": "0.8",
+    "must_match_new_generated_code": true
+  },
+  "shared_boundary_admission": {
+    "method": "Use the frozen old prospective interval gate-vector construction: nominal5us time±2ps, canonical/native literal endpoint ranges, common hold index across three phases, sine pad1e-12 and64u operation bounds. Actual vectors from both runs must belong; mismatches only at listed ambiguous rows, retaining row/phase/TIMEtokens/holdindex/raw comparator/Pulse/R evidence.",
+    "source": "local_reference/two_level_pwm/matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/boundary_numerical_estimate/20261110T033642694617Z/estimate.py",
+    "source_sha256": "911f185b3c9a7bbcd1065c979044373318a88f7d3571456476f6b6591551eb42",
+    "within_0_to_0p2": {
+      "possible_ambiguous_shared_rows": 68,
+      "per_phase": [
+        20,
+        16,
+        32
+      ],
+      "maximum_simultaneously_ambiguous_phases": 1,
+      "possible_hold_index_neighbour_rows": 2000
+    },
+    "extra_tail": {
+      "nominal_times_s": [
+        0.2000025,
+        0.200005
+      ],
+      "hold_index": 2000,
+      "upper_vector": "000",
+      "new_ambiguity_allowed": false
+    },
+    "all_differences_reported": true,
+    "pure_electrical_claim_requires_exact_shared_inputs": true,
+    "clock_or_libm_source_proof_claimed": false
+  },
+  "prerequisites": {
+    "short_1ms_qualification": "local_reference/two_level_pwm/matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/held_bridge_qualification/20261111T014703278697Z/qualification.json",
+    "short_1ms_qualification_sha256": "8be490f84a5d75acada52c46e84b0d5f4d6e5bdcd4345360340309f696201475",
+    "old_source_manifest_sha256": "ff8a2dd30be7af0d7b5e58dba77820cae5ce73a1ae47a23d63985062f4a6a985",
+    "independent_nodal_oracle_sha256": "6554e43a4450d45ab85b0843d7918f47d0021ef4aad62faf8b021966c8033c8f",
+    "at_definition_time": {
+      "candidate_executed": false,
+      "full_native_executed": false
+    }
+  },
+  "protocol_files_sha256": {
+    "manifest.json": "8c29826fdd5e82468cc4940f7fa3f007cdcaf509cfb311c9281dba161795f232",
+    "parameters.json": "b51abbc578d0ef496a5a83224cd63e66bbc67f51dad292faf7e5ad048ccc2208",
+    "acceptance_plan.md": "56615a8d9f34f98017a58e752c054c923c3835ed5ac47a707ca612b238cc0c67"
+  },
+  "budget_rationale": {
+    "advice": "local_reference/two_level_pwm/matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/joint_refinement_protocol_advice/20261111T020459431875Z/advice.md",
+    "advice_sha256": "9e17e1bffeab152538215ece47a459e99fddb4cc9001df154dba7cbc3eadd1c0",
+    "scope": "Conditional engineering budget choice, not EMTDC/libm/continuous-true-solution proof and not a guarantee of passing; no one-tenth reference-accuracy claim",
+    "conditional_pair_peak_A": 2.6096,
+    "conditional_pair_steady_RMSE_A": 1.170671,
+    "same_input_mathematical_PWL_A": 0.665002498
+  }
+}

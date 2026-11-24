@@ -39,8 +39,9 @@ def _time_close(left: float, right: float) -> bool:
 class SimulationEvent(ABC):
     """仿真事件基类。
 
-    正时刻先按原网络积分至事件左侧，再按声明顺序应用同刻事件，最后求右侧
-    一致代数量。默认插入事件时间；量化或要求对齐由 event_time_policy 指定。
+    正时刻先按原网络积分至事件左侧，再按要求时刻执行到期事件。同一要求时刻
+    保持加入顺序。最后求右侧一致代数量。默认插入事件时间，量化或要求对齐由
+    event_time_policy 指定。
     """
 
     time: float

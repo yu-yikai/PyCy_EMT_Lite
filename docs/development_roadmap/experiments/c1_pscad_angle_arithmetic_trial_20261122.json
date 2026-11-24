@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "date": "2026-11-22",
+  "status": "actual_fine_main_native_and_same_step_pass",
+  "trial": {
+    "path": "validation/cases/grid_connected_vsc_closed_loop/pscad_angle_arithmetic_trial.json",
+    "bytes": 3819,
+    "sha256": "8678b72172f4a8fd86c4f434a738d2ebf976ee67d690158aa54e6e1d5b626d24"
+  },
+  "prospective_commit": "fb724a46488647aa7ca907f4893def333cc56ab7",
+  "offline_native_admission": {
+    "path": "local_reference/native_static_reviews/c1_gauge_reduced_angle_audit_20261122/offline_admission_receipt.json",
+    "bytes": 6167,
+    "sha256": "950af6ec83270b0a005d456d93949143c4ad12bfffa42ad7dcaab7ffafe92ccf"
+  },
+  "independent_numeric_preflight": {
+    "path": "local_reference/native_static_reviews/c1_long_precise_angle_preflight_20261122T095724590919Z/report.json",
+    "bytes": 1728,
+    "sha256": "73b6b074a4534953aaa275a76f7d97a2c1eef5aa11f9c39ec214850aace7e94e"
+  },
+  "admitted_native": {
+    "builds": 1,
+    "runs": 1,
+    "rows": 80003,
+    "elapsed_s": 444.03353469999274,
+    "control_log_updates": 2000,
+    "gate_applications": 2000,
+    "fine_half_steps_held": 40001,
+    "remaining_owned_processes": 0,
+    "execution": {
+      "path": "local_reference/native_static_reviews/c1_pscad_reference_point_reduced_angle_2p5us_20261122/n/20261122T095821385399Z/native_execution_receipt.json",
+      "bytes": 6175,
+      "sha256": "7d9ac5b638b40b7f0986f6d1f63731327892235fc2e5fb4867845849af4866a5"
+    },
+    "terminal": {
+      "path": "local_reference/native_static_reviews/c1_pscad_reference_point_reduced_angle_2p5us_20261122/n/20261122T095821385399Z/terminal.json",
+      "bytes": 7065,
+      "sha256": "168401d95931c9fa39af745b7c499a85e7689ea22bd53b637a41d22314b2c681"
+    },
+    "generated_admission": {
+      "path": "local_reference/native_static_reviews/c1_pscad_reference_point_reduced_angle_2p5us_20261122/n/20261122T095821385399Z/pre_run_admission.json",
+      "bytes": 4092,
+      "sha256": "8aef1a01c043f0b90f3e51280ae9a9fd917e7fd4ccafba3e80b46208a8769b67"
+    }
+  },
+  "original_electrical_limits_passed": true,
+  "original_control_limits_passed": true,
+  "common_mode_upper_bound_V": 2.75153333333332e-08,
+  "e_q_max_error_V": 5.953574683007231e-14,
+  "e_q_limit_V": 1e-12,
+  "configured_angle_expected_decimal_precision": 110,
+  "maximum_cycle_tracking_error_A": 0.06268664177495342,
+  "whole_capture_verification": {
+    "path": "local_reference/native_static_reviews/c1_pscad_long_stream_review_precise_angle_20261122T100626540021Z/report.json",
+    "bytes": 21522,
+    "sha256": "6bb04e791f630f347dac296de89d7a4c785de16466a8bdf344e3ffea0889e710"
+  },
+  "same_step_against_independent_python": {
+    "windows": 9,
+    "numeric_checks": 207,
+    "exact_gate_resistance_and_saturation_checks": 117,
+    "result": {
+      "path": "local_reference/native_static_reviews/c1_long_window_metrics_20261122T100740880901Z/report.json",
+      "bytes": 135958,
+      "sha256": "cba4885b0c9b2b0ff793daa11b1fb1d53f7d618098b061c9d784b052905e713b"
+    },
+    "comparison_inputs_recheck": {
+      "path": "local_reference/native_static_reviews/c1_comparison_source_recheck_20261122T100207708102Z/report.json",
+      "bytes": 456,
+      "sha256": "f3ece41b171b9144a83862b9742567e86bff70517cef99f8fe6e31e07be47606"
+    },
+    "dq_trace_figure": {
+      "path": "local_reference/native_static_reviews/c1_long_window_metrics_20261122T100740880901Z/fine_main_dq.png",
+      "bytes": 714273,
+      "sha256": "afa3946c14199b82eca526ea13318f216cf70fc23069e4c174a5bef46b8f8cff"
+    }
+  },
+  "whole_reference_qualified": false,
+  "formal_example_accepted": false
+}

@@ -1,0 +1,58 @@
+{
+  "case_id": "two_level_pwm_pscad",
+  "reference_id": "pscad-derived-bilateral-spwm-v5",
+  "example": "examples/12_two_level_pwm_generator.py",
+  "acceptance_defined": "2026-11-11 before full PSCAD reference/candidate output; unchanged existing example12",
+  "reference_source": "Independent derived bilateral-switch circuit using pinned installed PSCAD5 master primitives and tutorial donor; not an unchanged official benchmark",
+  "reference_model": "vdiv.pscx",
+  "reference_platform": "PSCAD5.0.0/master5.0.0.2/GFortran4.6 x86",
+  "reference_state": "requires_qualified_local_reference",
+  "windows_seconds": [
+    [
+      0.1,
+      0.2
+    ]
+  ],
+  "time_shift_seconds": 0,
+  "known_difference": "Same six complementary bilateral Ron/Goff branches, floating-star RL and original69 control equations. PSCAD generated12-significant-digit constants, native TIME, comparator boundaries and electrical TR step are explicitly audited in a joint clock/electrical reference-refinement scope. No automatic diode/device equivalence; original MathWorks FAIL stays separate.",
+  "signals": [
+    {
+      "candidate": "i:La",
+      "reference": "i_a",
+      "unit": "A",
+      "scale": 150.0,
+      "max_nrmse": 0.02,
+      "max_abs_error": 10.0
+    },
+    {
+      "candidate": "i:Lb",
+      "reference": "i_b",
+      "unit": "A",
+      "scale": 150.0,
+      "max_nrmse": 0.02,
+      "max_abs_error": 10.0
+    },
+    {
+      "candidate": "i:Lc",
+      "reference": "i_c",
+      "unit": "A",
+      "scale": 150.0,
+      "max_nrmse": 0.02,
+      "max_abs_error": 10.0
+    }
+  ],
+  "feature_criteria": {
+    "window_seconds": [
+      0.1,
+      0.2
+    ],
+    "fundamental_hz": 60.0,
+    "max_relative_rms_error": 0.05,
+    "max_relative_fundamental_rms_error": 0.05,
+    "max_fundamental_phase_error_degrees": 3.0,
+    "max_relative_load_mean_power_error": 0.05,
+    "required_power_direction": "positive absorption by RL load; current direction verified by fundamental phase",
+    "additional_requirement": "All waveform and feature limits apply to all phases, no time/amplitude fitting. Gate/topology differences must be physically explained before a pass is accepted."
+  },
+  "event_guard_seconds": 0
+}

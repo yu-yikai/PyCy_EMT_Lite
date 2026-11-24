@@ -1,0 +1,193 @@
+{
+  "schema": "c1_offline_full_n_and_nojvm_guard_v1",
+  "date": "2026-11-16",
+  "branch": "codex/emt-examples-longterm",
+  "base_head": "8c68b175164a2f2ad6061078f3607027a5fd5dbd",
+  "summary": "Full-size internal analysis and a separate MATLAB no-JVM guard-only probe completed; full commercial reference remains unqualified.",
+  "source_snapshot": {
+    "path": "local_reference/native_static_reviews/vsc_input_fix_ROOT_20261116T111042668097Z/source113.json",
+    "bytes": 12980,
+    "sha256": "f533bcd69b6b1bdcf4282932864a7a9e6573ad88b72f37ba358f38b7429cc492"
+  },
+  "source_count": 113,
+  "production_and_test_sources_unchanged": true,
+  "dependency_files_unchanged": true,
+  "latest_full_pytest": {
+    "passed": 1518,
+    "includes_slow": true,
+    "rerun_this_stage": false,
+    "record": "vsc_input_validation_20261116.json"
+  },
+  "offline_monitor": {
+    "method": "Direct base interpreter; retained actual worker handle; PID/parent/executable/creation/nonce marker before import and GO.",
+    "monitor": {
+      "path": ".tmp/longterm/monitor_c1_simscape_full_pair_math_v3_20261116.py",
+      "bytes": 18067,
+      "sha256": "2911a3beaaf6070691ea7cebcb32ac9b655d0fa7739f0fa66d2efd0f3e37da28"
+    },
+    "bootstrap": {
+      "path": ".tmp/longterm/c1_full_math_worker_bootstrap_v2_20261116.py",
+      "bytes": 2177,
+      "sha256": "a0ff7f5ad9e6fa0cd771117c7e4441d0257fc0b6030fb004bff55d3ee9e024cf"
+    },
+    "author_finite_receipt": {
+      "path": "local_reference/native_static_reviews/c1_math_monitor_v3_finite_20261116T112957760849Z/receipt.json",
+      "bytes": 8357,
+      "sha256": "1301700cbc7e5c8353a626e013da27f767b46b01b3034cc483dcf7c166e2a1a7"
+    },
+    "independent_receipt": {
+      "path": "local_reference/native_static_reviews/c1_math_monitor_v3_independent_20261116T113438976698Z/receipt.json",
+      "bytes": 14889,
+      "sha256": "f8ab0e8b9c6ff90dfb1196d3ec5f984068a08a3e0f1c234e04b66f30bb067ff0"
+    },
+    "finite_scope": "Seven finite cases: normal 32MiB, context refusal, early launcher/late child cleanup, missing marker timeout, worker failure and injected private/wall limits. Injection is not actual 6GiB/1801s use.",
+    "limit": "Missing-marker plus already-exited launcher is fail-closed with closure unproven; that branch was statically reviewed, not executed. No universal child-cleanup guarantee.",
+    "policy": {
+      "wall_s": 1800,
+      "private_bytes": 6442450944,
+      "pre_available_physical_bytes": 3221225472,
+      "minimum_available_physical_bytes": 2147483648,
+      "startup_handshake_s": 10,
+      "cleanup_wait_s": 10,
+      "automatic_retry": false
+    }
+  },
+  "internal_synthetic_full_n": {
+    "status": "SYNTHETIC_BENCHMARK_COMPLETED_NO_COMMERCIAL_QUALIFICATION",
+    "data_origin": "INTERNAL_SYNTHETIC",
+    "session": 47342,
+    "exit_code": 0,
+    "manifest": {
+      "path": "local_reference/c1_openloop_reference_research/20261116T113503152109Z_synthetic_math_fullN_v2/manifest.json",
+      "bytes": 6419,
+      "sha256": "f443a3c2f00d80a07ecf1aa4014d442da62fdf91cac96315f4484604ad71d72e"
+    },
+    "terminal": {
+      "path": "local_reference/c1_openloop_reference_research/20261116T113503152109Z_synthetic_math_fullN_v2/run/terminal.json",
+      "bytes": 1913,
+      "sha256": "7d3cffb9d04ad6348b60b53d7728d570c40363b9e8f52b4e0d49592c509760ad"
+    },
+    "result": {
+      "path": "local_reference/c1_openloop_reference_research/20261116T113503152109Z_synthetic_math_fullN_v2/run/analysis/result.json",
+      "bytes": 1260,
+      "sha256": "b04301d02303189650309cf2cae9b3b06220e368bdc22149f598a3357b27e59a"
+    },
+    "independent_receipt": {
+      "path": "local_reference/native_static_reviews/c1_synthetic_fullN_independent_20261116T114839971116Z/receipt.json",
+      "bytes": 19163,
+      "sha256": "8a28d68550e5d4f977ccc0b5e73adb687a96938e19f4c6a58267c2f48941aee2"
+    },
+    "independent_summary": {
+      "path": "local_reference/native_static_reviews/c1_synthetic_fullN_independent_20261116T114839971116Z/summary.json",
+      "bytes": 960,
+      "sha256": "528f3ac1ea707f70c27488d6cf4ed9e9e77cce951956663524aa8fbb49f320bc"
+    },
+    "case_rows": {
+      "coarse": 40002,
+      "fine": 80003
+    },
+    "monitor_elapsed_s": 250.1209229999222,
+    "worker_elapsed_s": 247.46643459994812,
+    "peak_sampled_actual_worker_private_bytes": 115986432,
+    "minimum_sampled_available_physical_bytes": 9568288768,
+    "numeric_gates": "Original 19 gates plus auxiliaries, four full windows, six cycles per phase and 132 cross-step results pass on generated fixtures; original math and thresholds unchanged.",
+    "generated_timeproof_is_native_observation": false,
+    "actual_commercial_waveform_reads": 0,
+    "native_calls": 0,
+    "real_closed_archive_admission": false,
+    "full_reference_qualified": false
+  },
+  "matlab_nojvm_guard": {
+    "status": "FINITE_GUARD_CAPABILITY_PASS_ONLY",
+    "release": "R2025a Update 1",
+    "session": 51054,
+    "exit_code": 0,
+    "native_launches": 1,
+    "model_calls": 0,
+    "simulation_calls": 0,
+    "jvm": false,
+    "batch": true,
+    "net_supported": true,
+    "finite_checks_passed": 9,
+    "seal": {
+      "path": "local_reference/c1_openloop_reference_research/20261116T115024636086Z_nojvm_guard_capability_v1/ROOT_seal.json",
+      "bytes": 3525,
+      "sha256": "235b19c1e957309a69a55a260e552fd8c52f9c3848e5408d915f68ed1703ede1"
+    },
+    "admission": {
+      "path": "local_reference/c1_openloop_reference_research/20261116T115024636086Z_nojvm_guard_capability_v1/ROOT_admission.json",
+      "bytes": 930,
+      "sha256": "6aba70ce0637c4ea30ba7c628b8ece17654040e714f442146d14c39d0765b875"
+    },
+    "ROOT_closed_review": {
+      "path": "local_reference/c1_openloop_reference_research/20261116T115024636086Z_nojvm_guard_capability_v1/ROOT_closed_review.json",
+      "bytes": 2835,
+      "sha256": "03d46e7a44517dfc292290b0e3fab73a29b7a24096f5e07226ebf083a99d509d"
+    },
+    "independent_receipt": {
+      "path": "local_reference/native_static_reviews/c1_nojvm_actual_closure_independent_20261116T115920555599Z/receipt.json",
+      "bytes": 7558,
+      "sha256": "2f272f08d962ce35a08130db007481d907f1281bf939b15077dba3e26273c380"
+    },
+    "report": {
+      "path": "local_reference/c1_openloop_reference_research/20261116T115024636086Z_nojvm_guard_capability_v1/n/20261116T1155424675990Z/run/probe_report.json",
+      "bytes": 5672,
+      "sha256": "fac47a53c2cac7187892333fe4827f771b776647395ab6062d0ed941686ed58d"
+    },
+    "terminal": {
+      "path": "local_reference/c1_openloop_reference_research/20261116T115024636086Z_nojvm_guard_capability_v1/n/20261116T1155424675990Z/terminal.json",
+      "bytes": 15941,
+      "sha256": "cdbcd784444a3921bed850b5e6959a78c3027b47f70729076a44ae10fa003ce0"
+    },
+    "resource": {
+      "path": "local_reference/c1_openloop_reference_research/20261116T115024636086Z_nojvm_guard_capability_v1/n/20261116T1155424675990Z/resource.json",
+      "bytes": 2164,
+      "sha256": "696ace17f8d89cc9f8226e7e55f33ff7c4261e7017bb3b39690c98eca30dfe84"
+    },
+    "elapsed_s": 15.625495,
+    "sampled_peak_owned_private_bytes": 1046556672,
+    "minimum_sampled_available_commit_bytes": 4563935232,
+    "remaining_owned": [],
+    "cleanup_actions": [],
+    "cleanup_errors": [],
+    "existing_process_intervention": false,
+    "policy": {
+      "wall_s": 300,
+      "owned_private_bytes": 6442450944,
+      "pre_available_commit_bytes": 3221225472,
+      "minimum_available_commit_bytes": 2147483648,
+      "CIM_operation_timeout_s": 5,
+      "cleanup_wait_s": 10,
+      "automatic_retry": false
+    },
+    "limits": [
+      "Only fixed long Windows paths plus parent identity and ancestor reparse rejection are proven; GetFullPath alone is not universal canonicalization.",
+      "No Simulink, Simscape, simlog, MAT save/reload, model run or full commercial qualification is inferred.",
+      "Sampled guard-only memory cannot establish full model savings.",
+      "Previous launch0 CIM preflight timeout remains preserved; exact failing CIM query was not recorded."
+    ]
+  },
+  "preserved_failures": {
+    "synthetic_redirector_attempt": {
+      "path": "local_reference/c1_openloop_reference_research/20261116T110656455639Z_synthetic_math_fullN_v1/ROOT_redirector_failure.json",
+      "bytes": 1285,
+      "sha256": "fb66bd9a202900ef13425e89f25dfa4853011713c1371244a9863c10c386454a"
+    },
+    "nojvm_preflight_timeout": {
+      "path": "local_reference/c1_openloop_reference_research/20261116T114435227520Z_nojvm_guard_capability_v1/ROOT_preflight_failure_review.json",
+      "bytes": 1103,
+      "sha256": "3ee2b4b4292c3816cd2fc84641843ba801947dda95d23efd7fdcac350c244028"
+    },
+    "preflight_native_launches": 0,
+    "preflight_exact_failed_CIM_query": "NOT_RECORDED",
+    "full_simscape_resource_stop": "c1_simscape_full_resource_stop_20261116.json",
+    "original_PSCAD_commonmode_FAIL": "10.838/37.498 microvolt > unchanged 2 microvolt gate"
+  },
+  "next_step": "Freeze a separate 400us no-JVM Simscape compatibility package using unchanged short physics/5us/81 rows/57 outputs and original gates. Prove actual MAT save and reload/export before any new full pair.",
+  "formal_new_examples_completed": 9,
+  "C1_status": "in_progress",
+  "full_commercial_reference_qualified": false,
+  "candidate_created": false,
+  "CI": "Exact maintenance CI43856421332 remains billing-blocked with no runner/tests; no new CI observation this stage.",
+  "git_identity": "checkpoint_head is the verified pre-record commit; actual new commit and remote are recorded in the ignored closeout."
+}

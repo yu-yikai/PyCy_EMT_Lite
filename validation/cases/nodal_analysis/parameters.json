@@ -1,0 +1,16 @@
+{
+  "voltage_source_volt": 3.0,
+  "current_source_ampere_c_to_d": -0.2,
+  "resistors_ohm": {
+    "R1": 200,
+    "R2": 140,
+    "R3": 330,
+    "R4": 2000,
+    "R5": 330,
+    "R6": 50,
+    "R7": 50
+  },
+  "stop_second": 0.01,
+  "pycy_step_second": 0.0001,
+  "storage_initial_conditions": "none; algebraic resistive network"
+}

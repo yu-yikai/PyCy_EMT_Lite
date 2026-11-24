@@ -1,0 +1,131 @@
+{
+  "schema": "pjm5_load_step_candidate_protocol_v1",
+  "date": "2026-11-23",
+  "source_parent": "81eb9e7cba2cd76362dd04da37a61eb4df819d34",
+  "example": 33,
+  "scope": "Balanced three-phase EMT teaching network derived from PGLib PJM5. Five buses, six independent per-phase pi lines, and one fixed-impedance load step.",
+  "native_reference": {
+    "path": "docs/development_roadmap/experiments/d1_pjm5_pscad_reference_20261123.json",
+    "sha256": "88c7505d43b40f649a9b41ba1396be63dc73b5c007d75115f9d4e4bd5629a7c2",
+    "bytes": 18518
+  },
+  "native_protocol": {
+    "path": "docs/development_roadmap/experiments/d1_pjm5_emt_protocol_20261123.json",
+    "bytes": 7352,
+    "sha256": "f2d51e205f7b1a1a0b14118f7dc20b9a6e94bca0c4522292f001cc67a9ccd5c2"
+  },
+  "model": {
+    "path": "local_reference/native_static_reviews/d1_pjm5_emt_20261123/model.json",
+    "bytes": 5077,
+    "sha256": "387cd7b33ac3fc95a51019459ad9989381caec582eed96480ee31587c1f19edd"
+  },
+  "source_data": {
+    "url": "https://github.com/power-grid-lib/pglib-opf/blob/dc6be4b2f85ca0e776952ec22cbd4c22396ea5a3/pglib_opf_case5_pjm.m",
+    "release": "v23.07",
+    "attribution": "IEEE 2010; source data F. Li and R. Bo, Small Test Systems for Power System Economic Studies",
+    "license": "CC BY 4.0",
+    "license_url": "https://github.com/power-grid-lib/pglib-opf/blob/dc6be4b2f85ca0e776952ec22cbd4c22396ea5a3/LICENSE"
+  },
+  "grids": {
+    "5us": {
+      "step_s": 5e-06,
+      "rows_including_zero": 120001,
+      "load_step_index": 60000
+    },
+    "2p5us": {
+      "step_s": 2.5e-06,
+      "rows_including_zero": 240001,
+      "load_step_index": 120000
+    }
+  },
+  "stop_s": 0.6,
+  "windows_s": {
+    "pre": [
+      [
+        0.18,
+        0.23
+      ],
+      [
+        0.24,
+        0.29
+      ]
+    ],
+    "post": [
+      [
+        0.45,
+        0.5
+      ],
+      [
+        0.55,
+        0.6
+      ]
+    ]
+  },
+  "electrical_clock_tolerance_s": 2e-12,
+  "candidate_physical_limits": {
+    "clock_max_error_s": 2e-12,
+    "source_peak_error_v": 0.01,
+    "max_kcl_a": 0.001,
+    "max_resistive_ohm_v": 0.002,
+    "max_capacitor_tr_a": 0.0002,
+    "max_inductor_tr_v": 0.02,
+    "max_interval_energy_j": 0.01,
+    "abs_cumulative_energy_j": 0.5,
+    "stored_energy_at_zero_j": 1e-08,
+    "abs_source_current_at_zero_a": 0.2,
+    "r_step_exact": true
+  },
+  "candidate_same_grid_limits": {
+    "voltage_v": 0.05,
+    "series_a": 0.0002,
+    "from_a": 0.0005,
+    "to_a": 0.0005,
+    "source_a": 0.0005,
+    "load_resistor_a": 0.0002,
+    "load_inductor_a": 0.0002,
+    "step_a": 0.0002
+  },
+  "candidate_window_limits": {
+    "bus2_v_rms": 0.2,
+    "path_import_w": 2000.0,
+    "added_load_w": 50.0
+  },
+  "candidate_cross_grid_limits": {
+    "clock_max_error_s": 2e-12,
+    "load_neighborhood_s": 0.02,
+    "voltage_v": {
+      "max_difference": 350.0,
+      "away_from_load_max": 0.5
+    },
+    "series_a": {
+      "max_difference": 0.5,
+      "away_from_load_max": 0.002
+    },
+    "windows": {
+      "bus2_v_rms": 0.05,
+      "path_import_w": 250.0,
+      "added_load_w": 50.0
+    }
+  },
+  "source_capacitor_initialization": {
+    "candidate": "Initialize the capacitor voltage and line/load inductor current to zero; give each ideal source its analytic right derivative at zero.",
+    "native": "Both actual native archived runs start with zero source and directly driven shunt capacitor currents.",
+    "candidate_initial_current_abs_tol_a": 2e-07,
+    "interval_average_current_abs_tol_a": 0.0005,
+    "expected_pattern": {
+      "definition": "For each phase d0=C_endpoint*dvsource/dt(0+) at the line end on bus 4, and the sum over those ends for sourced delivery. At electrical row k the expected candidate minus PSCAD difference is (-1)^k*d0. Ordinary currents expect zero difference.",
+      "signals": [
+        "source_a",
+        "from_a",
+        "to_a"
+      ],
+      "line_ports": "Only the end at bus 4 of lines 14, 34 and 45 has nonzero d0. Keep all measured raw differences. Gate the discrepancy from the analytic pattern and adjacent-row mean current difference at every interval."
+    }
+  },
+  "comparison": {
+    "clock": "Use matching original absolute electrical rows including zero, with no interpolation or shift. The load changes resistance at the right endpoint at 0.300 s.",
+    "pointwise": "Compare all five-bus phase voltages, all line series and both signed port currents, all baseline resistor/inductor branch currents, source delivery and added branch currents. Exact resistance schedule. Limits are maximum absolute errors in SI units.",
+    "windows": "On the frozen windows compare bus-2 phase RMS, three-phase signed real import from buses 1 and 3, and the added load consumption. Verify the PyCy cross-grid windows and raw bus voltage and series-current limits. Use both full native executions and preserve hashed original inputs and unshifted metrics."
+  },
+  "candidate_implemented_at_freeze": false
+}

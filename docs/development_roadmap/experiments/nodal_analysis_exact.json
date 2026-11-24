@@ -1,0 +1,265 @@
+{
+  "schema_version": 1,
+  "case": "nodal_analysis",
+  "evidence_type": "independent exact rational KCL solution; not Simulink/PSCAD reference data",
+  "source_model": "MathWorks-Teaching-Resources/DC-Circuit-Analysis v2.2.2 Models/NodalAnalysisExample.slx",
+  "model_sha256": "9dd139df62546dab31ecd73d591fbdf432ce43eb2f508f8f4a6ee6b053bc28d0",
+  "method": "Fractions and Gauss-Jordan elimination over four independently assembled physical KCL equations; no production solver or stamp imports.",
+  "unknown_order": [
+    "a",
+    "b",
+    "c",
+    "d"
+  ],
+  "conductance_matrix_siemens": [
+    [
+      "4931/462000",
+      "-1/330",
+      "-1/2000",
+      "0"
+    ],
+    [
+      "-1/330",
+      "41/1320",
+      "0",
+      "-1/330"
+    ],
+    [
+      "-1/2000",
+      "0",
+      "1/2000",
+      "0"
+    ],
+    [
+      "0",
+      "-1/330",
+      "0",
+      "19/825"
+    ]
+  ],
+  "rhs_injection_ampere": [
+    "3/140",
+    "3/200",
+    "1/5",
+    "-1/5"
+  ],
+  "node_voltage_v": {
+    "s": {
+      "exact": "3",
+      "decimal": 3.0
+    },
+    "g": {
+      "exact": "0",
+      "decimal": 0.0
+    },
+    "a": {
+      "exact": "118593/5315",
+      "decimal": 22.312888052681092
+    },
+    "b": {
+      "exact": "9759/5315",
+      "decimal": 1.8361241768579493
+    },
+    "c": {
+      "exact": "2244593/5315",
+      "decimal": 422.3128880526811
+    },
+    "d": {
+      "exact": "-17949/2126",
+      "decimal": -8.442615239887113
+    }
+  },
+  "resistors": [
+    {
+      "name": "R1",
+      "positive_terminal": "s",
+      "negative_terminal": "b",
+      "resistance_ohm": 200,
+      "current_a": {
+        "exact": "3093/531500",
+        "decimal": 0.005819379115710254
+      },
+      "voltage_v": {
+        "exact": "6186/5315",
+        "decimal": 1.1638758231420507
+      },
+      "absorbed_power_w": {
+        "exact": "9566649/1412461250",
+        "decimal": 0.006773034658472931
+      }
+    },
+    {
+      "name": "R2",
+      "positive_terminal": "s",
+      "negative_terminal": "a",
+      "resistance_ohm": 140,
+      "current_a": {
+        "exact": "-3666/26575",
+        "decimal": -0.13794920037629352
+      },
+      "voltage_v": {
+        "exact": "-102648/5315",
+        "decimal": -19.312888052681092
+      },
+      "absorbed_power_w": {
+        "exact": "376307568/141246125",
+        "decimal": 2.664197463824229
+      }
+    },
+    {
+      "name": "R3",
+      "positive_terminal": "a",
+      "negative_terminal": "b",
+      "resistance_ohm": 330,
+      "current_a": {
+        "exact": "1649/26575",
+        "decimal": 0.06205079962370649
+      },
+      "voltage_v": {
+        "exact": "108834/5315",
+        "decimal": 20.476763875823142
+      },
+      "absorbed_power_w": {
+        "exact": "179467266/141246125",
+        "decimal": 1.2705995722006533
+      }
+    },
+    {
+      "name": "R4",
+      "positive_terminal": "a",
+      "negative_terminal": "c",
+      "resistance_ohm": 2000,
+      "current_a": {
+        "exact": "-1/5",
+        "decimal": -0.2
+      },
+      "voltage_v": {
+        "exact": "-400",
+        "decimal": -400.0
+      },
+      "absorbed_power_w": {
+        "exact": "80",
+        "decimal": 80.0
+      }
+    },
+    {
+      "name": "R5",
+      "positive_terminal": "b",
+      "negative_terminal": "d",
+      "resistance_ohm": 330,
+      "current_a": {
+        "exact": "3311/106300",
+        "decimal": 0.031147695202257762
+      },
+      "voltage_v": {
+        "exact": "109263/10630",
+        "decimal": 10.278739416745061
+      },
+      "absorbed_power_w": {
+        "exact": "361769793/1129969000",
+        "decimal": 0.32015904241620785
+      }
+    },
+    {
+      "name": "R6",
+      "positive_terminal": "b",
+      "negative_terminal": "g",
+      "resistance_ohm": 50,
+      "current_a": {
+        "exact": "9759/265750",
+        "decimal": 0.036722483537158984
+      },
+      "voltage_v": {
+        "exact": "9759/5315",
+        "decimal": 1.8361241768579493
+      },
+      "absorbed_power_w": {
+        "exact": "95238081/1412461250",
+        "decimal": 0.06742703985684563
+      }
+    },
+    {
+      "name": "R7",
+      "positive_terminal": "d",
+      "negative_terminal": "g",
+      "resistance_ohm": 50,
+      "current_a": {
+        "exact": "-17949/106300",
+        "decimal": -0.16885230479774224
+      },
+      "voltage_v": {
+        "exact": "-17949/2126",
+        "decimal": -8.442615239887113
+      },
+      "absorbed_power_w": {
+        "exact": "322166601/225993800",
+        "decimal": 1.4255550417754823
+      }
+    }
+  ],
+  "voltage_source": {
+    "name": "Vs",
+    "positive_terminal": "s",
+    "negative_terminal": "g",
+    "voltage_v": {
+      "exact": "3",
+      "decimal": 3.0
+    },
+    "current_positive_s_to_g_a": {
+      "exact": "70227/531500",
+      "decimal": 0.13212982126058326
+    },
+    "absorbed_power_w": {
+      "exact": "210681/531500",
+      "decimal": 0.3963894637817498
+    }
+  },
+  "current_source": {
+    "name": "Is",
+    "official_positive_terminal": "c",
+    "official_negative_terminal": "d",
+    "official_setpoint_a": {
+      "exact": "1/5",
+      "decimal": 0.2
+    },
+    "actual_positive_flow": "d -> c",
+    "current_positive_c_to_d_a": {
+      "exact": "-1/5",
+      "decimal": -0.2
+    },
+    "voltage_c_minus_d_v": {
+      "exact": "4578931/10630",
+      "decimal": 430.7555032925682
+    },
+    "absorbed_power_w": {
+      "exact": "-4578931/53150",
+      "decimal": -86.15110065851364
+    }
+  },
+  "power_balance": {
+    "resistor_loss_w": {
+      "exact": "45578629/531500",
+      "decimal": 85.7547111947319
+    },
+    "total_source_absorbed_power_w": {
+      "exact": "-45578629/531500",
+      "decimal": -85.7547111947319
+    },
+    "total_supplied_power_w": {
+      "exact": "45578629/531500",
+      "decimal": 85.7547111947319
+    },
+    "all_devices_absorbed_power_sum_w": {
+      "exact": "0",
+      "decimal": 0.0
+    }
+  },
+  "kcl_residual_ampere": {
+    "s": "0",
+    "g": "0",
+    "a": "0",
+    "b": "0",
+    "c": "0",
+    "d": "0"
+  }
+}

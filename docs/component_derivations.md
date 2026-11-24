@@ -437,6 +437,8 @@ $$i_r(t)=v_r(t)/Z_0+H_r(t),\quad H_r=-v_s(t-\tau)/Z_0-i_s(t-\tau).$$
 
 这就是 `BergeronLine.stamp()` 中两个负号的来源。背景参见 [PSCAD Bergeron 说明](https://www.pscad.com/webhelp-v5-ol/EMTDC/Transmission_Lines/The_Bergeron_Model.htm)；本项目仅实现此处声明的教学近似。
 
+<a id="bergeron-wavefront"></a>
+
 ### 8.2 当步盖章与延时更新
 
 对每一端口分别写入 `Y+=aaᵀ/Z0`、`bv−=aH`，不注册支路电流未知量。
@@ -446,7 +448,10 @@ $$i_r(t)=v_r(t)/Z_0+H_r(t),\quad H_r=-v_s(t-\tau)/Z_0-i_s(t-\tau).$$
 求解后用 `i=v/Z0+H` 计算端口电流，再保存本时刻两端电压与电流，供 τ 之后读取。
 实现要求 τ=d·h，d 为至少 1 的整数；读取索引为 `round(t/h)−d`。
 负时间历史固定为零，波到达前对端历史源为零。没有小数延时插值；事件也须在固定网格上。
-显式事件在同一时刻再次更新时替换历史末行，保存右侧值，不在序列中额外插一拍。
+初始化和显式事件产生的出射波跳变会保存左右侧，并在 τ 后传播到另一端。波前到达时，先用左侧历史源积分，
+再保持电容电压、电感电流等储能状态，使用右侧历史源求一致代数量。反射或通过其他线路传出的跳变也按同样的规则传播。
+`history` 每拍只公开右侧一行，保留的输出采样点也使用右侧值。自定义源函数内的跳变按普通采样处理，可用显式事件表达已知的跳变时刻。
+传播和反射波前的抽样与统计窗口见[指标约定](numerical_conventions.md#metrics)。
 
 `attenuation=η` 将两个 H 同时乘 η，0<η≤1；η=1 对应上述无损关系。
 η<1 是传播幅值衰减近似，不是由给定频变 R′/L′/C′/G′ 拟合得到，也不是 π 型电阻的另一种写法。
@@ -525,16 +530,21 @@ $$p_{in}=u_p(i_p+i_m+u_p/R_{fe})+u_si_s
 二次 Δ 且零漏阻抗会使绕组环流无法唯一确定，构造时明确拒绝；不能用伪逆静默选择一个环流。
 Y 是否接地由 neutral 节点及其外部接线决定；模型没有三柱共同铁芯的磁耦合方程。
 
+<a id="saturation-curve"></a>
+
 ### 9.5 饱和选项实际做了什么
 
-源码依据上一时刻磁链选择本步电感：
+磁化曲线关于原点对称。在拐点以内，励磁电流为 $f(\lambda)=\lambda/L_m$。越过拐点后，从拐点电流连续延伸：
 
-$$L_{eff}=\begin{cases}L_m,&|\lambda_{m,0}|<\lambda_{knee},\\L_{sat},&|\lambda_{m,0}|\ge\lambda_{knee}.\end{cases}$$
+$$f(\lambda)=\operatorname{sgn}(\lambda)\left(\frac{\lambda_{knee}}{L_m}+\frac{|\lambda|-\lambda_{knee}}{L_{sat}}\right),\qquad |\lambda|>\lambda_{knee}.$$
 
-然后把 Leff 代入普通电感 companion，求解后按 up 更新磁链。
-它没有求解非线性 `i=f(λ)` 的当前步 Newton 迭代，也没有对切换前后的磁链/电流作完整磁化曲线重投影。
-因此不能把上面的线性能量公式跨电感切换直接当作严格饱和能量守恒式。
-该选项是显式滞后的两段电感近似，独立饱和能量、磁滞和涌流验证仍未完成。
+每步从已知磁链 $\lambda_0$ 计算基准电流 $f(\lambda_0)$，再取该段的电感 $L_{eff}$ 建立伴随模型。起点恰好在拐点时用线性励磁电感。
+MNA 中的励磁电流是 $f(\lambda_0)+(\lambda-\lambda_0)/L_{eff}$，磁链增量由一次端电压积分得到。
+一步内停留在同一段时，电流恰好落在离散磁链对应的磁化曲线上。跨越拐点时，本步仍用起点斜率，电流误差不超过 $|\Delta\lambda|\,|1/L_{sat}-1/L_m|$。
+下步重新从曲线求基准，跨拐点的电流误差不会作为历史偏差累加。零步长事件保留左侧实际电流和磁链。
+
+例如原边接周期电压源时，可逐周期对照磁链和励磁电流是否回到初值，并缩短步长检查跨拐点的误差。
+该模型描述无磁滞的分段曲线。跨拐点时，严格能量核算需考虑曲线积分和步进近似。饱和能量和涌流的独立验证仍待完成。
 
 ## 10. 同步机：机械状态怎样影响下一次电气盖章
 
@@ -890,8 +900,8 @@ flowchart TD
     D --> E[选下一个时间点，计算实际 h]
     E --> F[按区间内拓扑组装 companion 并求解]
     F --> G[更新电气状态，得到当前时刻左侧值]
-    G --> H{当前有显式事件?}
-    H -- 有 --> I[按声明顺序应用所有同刻事件]
+    G --> H{当前有到期显式事件或 Bergeron 波前?}
+    H -- 有 --> I[如有显式事件，按要求时刻执行]
     I --> J[固定左侧储能状态，求右侧一致代数量]
     J --> K[用 h=0 保存右侧历史]
     H -- 无 --> L[生成一行结果，执行一次 on_step]
@@ -902,10 +912,11 @@ flowchart TD
     N -- 是 --> O[返回 SimulationResult]
 ```
 
-普通步的 L/C 历史来自前一个已接受时刻；事件步先按事件发生前的开关状态积分至 t⁻。
-所有同刻事件依声明顺序应用后，再保持 `vC(t⁺)=vC(t⁻)`、`iL(t⁺)=iL(t⁻)` 求右侧。
+普通步的 L/C 历史来自前一个已接受时刻。遇到显式事件或 Bergeron 波前时，先用事件前的开关状态和波前左侧历史源积分至 t⁻。
+多个事件可量化到同一网格点。到期事件按要求时刻执行，要求时刻相同时保持加入顺序。
+随后保持 `vC(t⁺)=vC(t⁻)`、`iL(t⁺)=iL(t⁻)`，用事件后的拓扑和波前右侧历史源求右侧代数量。
 iC 和 uL 可以跳变，新的右侧值必须进入下一步的 TR 历史源。
-事件本身不消耗一个积分步；每个时刻只记录一行，事件行是 t⁺。
+右侧一致求解使用零步长。每个保留时刻只记录一行，切换与到达点记录 t⁺。
 如果新拓扑强迫储能瞬间改变，一致求解报错，而不是把电容突然放空或把电感电流强行置零。
 
 `insert` 把显式事件时刻加入网格，companion 使用相邻点的实际 h；
@@ -972,9 +983,8 @@ $$h u_1i_1=E_{L,1}-E_{L,0}+\tfrac12 L(i_1-i_0)^2.$$
 
 ### 15.3 事件和输出抽样影响怎样核算能量
 
-上述逐步等式使用同一积分区间的左端与右端，期间拓扑不变。
-事件输出只保存 t⁺，会遗漏前一区间终点 t⁻ 的电容电流或电感电压；跨事件直接套端点公式可能得到假的能量误差。
-应分段检查，或在验证计算中取得所需的左右侧量。
+上述逐步等式使用积分区间起点的右侧值和终点的左侧值。显式事件和 Bergeron 波前到达点的结果只保留 t⁺。
+若电容电流或电感电压发生跳变，直接把 t⁺ 代入前一区间的端点公式会产生能量误差。应分段检查，或在验证计算中取得所需的左右侧量。
 
 抽样后的两行之间可能包含许多内部积分步，不能将输出间隔与两行差值直接代入 BE 的单步耗散项。
 逐步能量验证应使用 `record_every=1`，或者在每步回调中累计所需量；涉及事件左侧时还须保留相应验证数据。
@@ -988,7 +998,7 @@ $$h u_1i_1=E_{L,1}-E_{L,0}+\tfrac12 L(i_1-i_0)^2.$$
 |---|---|---|---|
 | 第 1–5 节：编号、RLC 与基础源 | [01 R](../examples/01_r_circuit.py)、[02 RC](../examples/02_rc_transient.py)、[03 RL](../examples/03_rl_transient.py)、[04 RLC](../examples/04_rlc_transient.py)、[17 AC](../examples/17_single_phase_ac_rlc.py) | [basic.py](../pycy_emt_lite/components/basic.py)、[stamping.py](../pycy_emt_lite/core/stamping.py) | [test_basic_components.py](../tests/test_basic_components.py) |
 | 第 6 节：三相源和负荷 | [05 平衡三相](../examples/05_three_phase_steady_state.py) | [three_phase.py](../pycy_emt_lite/components/three_phase.py) | [test_three_phase.py](../tests/test_three_phase.py) |
-| 第 7–8 节：π、分段与行波线路 | [08 π 线](../examples/08_pi_line_transient.py)；分段与行波模型继续读测试 | [lines.py](../pycy_emt_lite/components/lines.py) | [test_line_models.py](../tests/test_line_models.py) |
+| 第 7–8 节：π、分段与行波线路 | [08 π 线](../examples/08_pi_line_transient.py)、[22 有限 T 梯级](../examples/22_t_section_transmission_line.py)、[27 Bergeron 线](../examples/27_finite_r_bergeron_line.py) | [lines.py](../pycy_emt_lite/components/lines.py) | [test_line_models.py](../tests/test_line_models.py) |
 | 第 9 节：变压器 | [09 单相变压器](../examples/09_single_phase_transformer.py) | [transformers.py](../pycy_emt_lite/components/transformers.py) | [test_transformers.py](../tests/test_transformers.py) |
 | 第 10 节：两种电机 | [10 Park 发电机](../examples/10_park_generator_avr_governor.py)；经典机见测试 | [synchronous.py](../pycy_emt_lite/machines/synchronous.py)、[park_generator.py](../pycy_emt_lite/machines/park_generator.py) | [经典机测试](../tests/test_synchronous_machine.py)、[Park 机测试](../tests/test_park_synchronous_generator.py) |
 | 第 11–12 节：滤波、控制和开关 | [11 PLL](../examples/11_pll_dynamic_response.py)、[12 PWM](../examples/12_two_level_pwm_generator.py)；LC/LCL 见测试 | [filters.py](../pycy_emt_lite/converters/filters.py)、[controls](../pycy_emt_lite/controls)、[power_electronics.py](../pycy_emt_lite/components/power_electronics.py) | [控制测试](../tests/test_controls.py)、[电力电子测试](../tests/test_power_electronics.py) |

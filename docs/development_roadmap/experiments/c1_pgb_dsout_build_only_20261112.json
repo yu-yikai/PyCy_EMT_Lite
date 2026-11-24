@@ -1,0 +1,193 @@
+{
+  "recorded_utc": "2026-11-11T22:25:01.248958+00:00",
+  "checked_head": "e0d7e63b7756a37b53b628e1dbcdc1aa043c3845",
+  "status": "BUILD_ONLY_PGB_REGISTRATION_COMPILE_FAILURE",
+  "goal_status": "active",
+  "C1_status": "in_progress",
+  "D1_status": "planned",
+  "F1_status": "blocked_external_CI_restoration_pending",
+  "formal_new_examples_completed": 9,
+  "new_formal_example_created": false,
+  "candidate_executed": false,
+  "full_VSC_reference_ready": false,
+  "previous_result_preserved": {
+    "path": "docs/development_roadmap/experiments/c1_source_current_build_only_20261112.json",
+    "bytes": 12785,
+    "sha256": "5ff439846d78a56b937314b133c5be06047b666592d90762ea742707a8ee26d5",
+    "hash_scope": "Unchanged workspace and Git LF bytes.",
+    "git_lf_bytes": 12785,
+    "git_lf_sha256": "5ff439846d78a56b937314b133c5be06047b666592d90762ea742707a8ee26d5"
+  },
+  "scope": {
+    "execution": "build_only",
+    "native_run_permitted": false,
+    "numeric_status": "NOT_OBSERVED",
+    "configured_channels": 32,
+    "configured_components_wires_ports_nets": [
+      163,
+      129,
+      228,
+      71
+    ],
+    "physical_branches": 19,
+    "only_observer_delta": "One existing DC PGB complete clone: original Fortran segment renamed Dsout; remaining31 master PGB unchanged.",
+    "all_plant_source_gate_clock_flag_and17_plus_Vs_token_budgets_unchanged": true,
+    "source_current_identity": "Negative own source BA (absorption NA-to-NB); sourceCUR not used.",
+    "voltage_identity_rank": 1,
+    "deleted_A_drop_and_rank2_gates": "NOT_APPLICABLE_DELETED_NOT_PASS"
+  },
+  "frozen_before_native": {
+    "contract": {
+      "path": "local_reference/native_static_reviews/c1_pgb_dsout_build_contract_20261111T215125964813Z/receipt.json",
+      "bytes": 13441,
+      "sha256": "f9c336f39d857f8cbe673451b1398117e3cb6467605f74df8a0a98872da9db7e"
+    },
+    "package": {
+      "path": "local_reference/c1_openloop_reference_research/20261111T215452961752Z_pgb_dsout_build_only_v1/manifest.json",
+      "bytes": 6905,
+      "sha256": "fa230fe023b552d4a78ed4fbfb3e8821bd9167a514ba84aa6991a3dd8d7ae76c"
+    },
+    "package_files": 23,
+    "flat_input_pins": 14,
+    "preparation": {
+      "path": "local_reference/c1_openloop_reference_research/20261111T215452961752Z_pgb_dsout_build_only_v1/preparation_receipt.json",
+      "bytes": 6952,
+      "sha256": "8327bdf9df910c1d4f50670384305d8daef75ffd3b918547a80becff953d86e6"
+    },
+    "static_review": {
+      "path": "local_reference/native_static_reviews/c1_pgb_dsout_final_20261111T221600Z/receipt.json",
+      "bytes": 4265,
+      "sha256": "5e4a90acf2b90d321c1e3e3a5952e7ab6424b71c8e3ef701871426d6922e2d18"
+    },
+    "independent_prelaunch": {
+      "path": "local_reference/native_static_reviews/c1_pgb_dsout_independent_final_prelaunch_20261111T221354917100Z/receipt.json",
+      "bytes": 18037,
+      "sha256": "fd78a0a9007091c0679402ac47268e71ed4961705c61fd5f8c9e2965b9ff7a9a"
+    },
+    "independent_helper": {
+      "path": ".tmp/longterm/independent_c1_pgb_dsout_build_only_20261112.py",
+      "bytes": 52948,
+      "sha256": "a059054c7ba57c94ae6df99f47d9265007101f383a89986dc5bf5dc41a3122d8"
+    },
+    "root_preflight": {
+      "path": "local_reference/native_static_reviews/c1_pgb_dsout_root_preflight_20261112/receipt.json",
+      "bytes": 1311,
+      "sha256": "74b0887618da842dc703e5093763fb5e98f450a7a39a501e96b1b9d1c848813b"
+    }
+  },
+  "native": {
+    "run": "local_reference/c1_openloop_reference_research/20261111T215452961752Z_pgb_dsout_build_only_v1/n/20261111T221728850140Z",
+    "session_id": 96817,
+    "exec_closed": true,
+    "exit_code": 1,
+    "elapsed_s": 144.4802852999419,
+    "build_error_messages": 6,
+    "Fortran_syntax_diagnostics": 3,
+    "derived_make_or_executable_errors": 3,
+    "worker_returncode": 0,
+    "worker_final_stage": "finished",
+    "worker_completion": "normal_quit",
+    "quit_returned_stage_observed": true,
+    "guarded_driver_completed": true,
+    "native_build_only_completed": false,
+    "generated_admission_passed": false,
+    "generated_admission_file_exists": false,
+    "generated_admission_status": "NOT_EVALUATED_BUILD_ERRORS",
+    "native_run_requested": false,
+    "native_run_returned": false,
+    "native_completion_observed": false,
+    "remaining_owned": [],
+    "forced_termination": false,
+    "profile_source_dependency_parent_environment_unchanged": true,
+    "terminal": {
+      "path": "local_reference/c1_openloop_reference_research/20261111T215452961752Z_pgb_dsout_build_only_v1/n/20261111T221728850140Z/terminal.json",
+      "bytes": 13344,
+      "sha256": "a87fd228dd67565d7b8312826053515b09631a4c4f42cab25f8791ae802f846a"
+    },
+    "archive": {
+      "path": "local_reference/c1_openloop_reference_research/20261111T215452961752Z_pgb_dsout_build_only_v1/n/20261111T221728850140Z/manifest.json",
+      "bytes": 23197,
+      "sha256": "90d4c50b6f2493e1fe1098aaaac3172a73bab9186934b898c69356dd5560f6f9"
+    },
+    "archive_files": 71,
+    "build_messages": {
+      "path": "local_reference/c1_openloop_reference_research/20261111T215452961752Z_pgb_dsout_build_only_v1/n/20261111T221728850140Z/build_messages.json",
+      "bytes": 7791,
+      "sha256": "2bccd926b7cad10aa30e527eb1c950c1b39795721fcabadc9f7c67eb99821449"
+    }
+  },
+  "failed_build_diagnostics": {
+    "scope": "Read-only generated text/Map diagnosis from a failed compile; not executable or freshness admission.",
+    "source": {
+      "path": "local_reference/c1_openloop_reference_research/20261111T215452961752Z_pgb_dsout_build_only_v1/n/20261111T221728850140Z/project/vdiv.gf46/Main.f",
+      "bytes": 33763,
+      "sha256": "fddc5a6a7919c6c2d611b0a6edff403e9b554311812339bfac68f6fbb9027e4b"
+    },
+    "map": {
+      "path": "local_reference/c1_openloop_reference_research/20261111T215452961752Z_pgb_dsout_build_only_v1/n/20261111T221728850140Z/project/vdiv.gf46/vdiv.map",
+      "bytes": 10862,
+      "sha256": "37a0a58a111993903c08155c7883314a7d9c7420e9d2963a8a69793841abd7dc"
+    },
+    "fresh_DC_negative_BA_MainOut_line": 744,
+    "unresolved_MainOut_lines": [
+      {
+        "line_one_based": 851,
+        "text": "DO IVD1_1 = 1, <empty>"
+      },
+      {
+        "line_one_based": 852,
+        "text": "PGB(IPGB+<empty>+IVD1_1-1) = I_dc_absorb_kA(IVD1_1)"
+      }
+    ],
+    "Map_PGBS": 31,
+    "DATAStruct_records": 33,
+    "missing_registered_channel": "I_dc_absorb_kA",
+    "STORF_ModelStorage": 44,
+    "STOF_InternalStorage": 45,
+    "only_Map_dimension_delta": {
+      "PGBS": -1
+    },
+    "interpretation": "This complete segment move left the DC dim/index unexpanded and absent from the recorder Map. Do not generalize to other PSCAD versions or infer internal compiler phase rules."
+  },
+  "actual_reviews": {
+    "root_full23_package71_run_hashes_and6_XML_semantics": {
+      "path": "local_reference/native_static_reviews/c1_pgb_dsout_root_actual_20261112/receipt.json",
+      "bytes": 10690,
+      "sha256": "e771260bd27af587b7ba10b1953763e156fca64bb262f93508df0edae002d357"
+    },
+    "independent_once": {
+      "path": "local_reference/native_static_reviews/c1_pgb_dsout_build_independent_actual_20261111T221728850140Z_20261111T222049065311Z/receipt.json",
+      "bytes": 43860,
+      "sha256": "9e2cdb4b20e35ef1db351781dcd884048c52646b4354e42d58a57d6e8576d0ff"
+    },
+    "independent_scope": "83 checks, only actual_build0 failed;33 bound-file rechecks passed. Stopped before Map/Main/full-run-archive deep admission.",
+    "independent_scope_supplement": {
+      "path": "local_reference/native_static_reviews/c1_pgb_dsout_build_independent_actual_20261111T221728850140Z_20261111T222049065311Z/scope_supplement.json",
+      "bytes": 2974,
+      "sha256": "92af6bae131888d8da47988e630bdd22d42773d35e41ce73ddcfd8445a08d22b"
+    },
+    "compile_diagnosis": {
+      "path": "local_reference/native_static_reviews/c1_pgb_dsout_compile_failure_20261111T222200936521Z/receipt.json",
+      "bytes": 12167,
+      "sha256": "068af5830ab85366fbe710a95551eaaca823fd6ffa59cccf19d6171792021864"
+    }
+  },
+  "numerical": {
+    "status": "NOT_OBSERVED",
+    "observed_waveform_rows": 0,
+    "freshness_and_complete32_metadata_admission": "NOT_OBSERVED_BUILD0_PRECONDITION_FAILED",
+    "numeric_acceptance": false,
+    "overall_reference_accepted": false
+  },
+  "source113_and_dependencies_unchanged": true,
+  "source_baseline": {
+    "path": ".tmp/longterm/c1-pll-entry-final-source-hashes-20261112.json",
+    "bytes": 12850,
+    "sha256": "7c666c145ee97c8cbe8fdd50932ca35d7ff25ca9424d07fd5be4b4324703ef71"
+  },
+  "test_reuse": "Previous1300passed including slow/locked27/Ruff/mypy39 is the unchanged-code baseline; no new regression run in this research-only milestone.",
+  "next_gate": "Freeze a separate one-DC PGB registration/write split: keep the original #PGB $dim registration in Fortran and move only the unchanged remaining standard text to Dsout. Keep the other31 master observers, full source physics, topology, clocks, flags and all17 plus Vs/token budgets. Cross-segment dim/index visibility is unproved. Independently review and perform a new build-only attempt requiring build0, complete Map32/DATAStruct34/full11params/ports/hierarchy and four currents+15Vm fresh-to-own-PGB in MainOut/no overwrite. Derive indices; never patch old runs, hard-code an index, relax thresholds, call Run or infer numerical qualification from generated text.",
+  "simplicity": "One observer experiment only; no public framework, dependency, core or teaching-code edits. Native definitions, raw files and helpers remain ignored.",
+  "old_failures_preserved": true,
+  "remote_scope": "Real remote verified e0d7e63 at turn entry; postcommit remote/clean state is recorded separately in the ignored closeout."
+}

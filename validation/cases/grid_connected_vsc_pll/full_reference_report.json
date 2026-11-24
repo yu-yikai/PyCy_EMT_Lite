@@ -1,0 +1,118 @@
+{
+  "schema": "grid_connected_vsc_pll_full_reference_v1",
+  "date": "2026-11-22",
+  "status": "both_native_full_grids_and_cross_grid_qualified",
+  "protocol": {
+    "path": "validation/cases/grid_connected_vsc_pll/reference_protocol.json",
+    "sha256": "78ba092cc8099390023d3fcaa449c8479d269dcd5fa7ec315b267d968e1da767",
+    "bytes": 6164
+  },
+  "startup_qualification": {
+    "path": "validation/cases/grid_connected_vsc_pll/short_reference_report.json",
+    "sha256": "27f1708981769b37ec66fb5f5f5f914e594c3661db57fda660993c3dcacfa5c3",
+    "bytes": 4779
+  },
+  "engine": "PSCAD 5.0 / GFortran 4.6 x86",
+  "grids": {
+    "5us": {
+      "rows": 40002,
+      "pll_updates": 2000,
+      "next_gate_applications": 2000,
+      "angle_wraps": 12,
+      "pll_lock": {
+        "samples": 501,
+        "angle_wraps": 12,
+        "window_s": [
+          0.11,
+          0.16
+        ],
+        "minimum_ed_V": 169.69537618989315,
+        "maximum_phase_error_deg": 0.6297686813890178,
+        "maximum_frequency_error_Hz": 0.019485416301627367,
+        "maximum_measured_phase_disagreement_rad": 9.421796676178928e-11,
+        "measured_phase_consistency_limit_rad": 2.357022603955158e-09
+      },
+      "period_average_tracking_max_error_A": 0.06497079609009804,
+      "power_signs_passed": true,
+      "physical_budgets_passed": 19,
+      "common_mode_upper_bound_V": 1.3564433433333467e-08,
+      "saturated_samples": 35,
+      "execution_receipt": {
+        "path": "local_reference/native_static_reviews/c1_pscad_pll_long_5us_20261122/n/20261122T120103064032Z/native_execution_receipt.json",
+        "sha256": "bdbdb17f74361a3dad2880446f9cd1fb8349ab0e0dc1538888f1d391a4e96941",
+        "bytes": 46272
+      },
+      "numerical_report": {
+        "path": "local_reference/native_static_reviews/c1_pll_full_numerical_5us_20261122T120103064032Z/report.json",
+        "sha256": "d69b13665185ea792bd66a81ced4c3122a4cd5301df3e215862f91837a91786e",
+        "bytes": 19750
+      },
+      "figure": {
+        "path": "local_reference/native_static_reviews/c1_pll_full_numerical_5us_20261122T120103064032Z/pll_lock_and_current_steps.png",
+        "sha256": "acb46f9407ac8a13200f18077b1ec831ffb2862ae69738e3e7c5351efb93e3fd",
+        "bytes": 274429
+      }
+    },
+    "2p5us": {
+      "rows": 80003,
+      "pll_updates": 2000,
+      "next_gate_applications": 2000,
+      "fine_half_steps_held": 40001,
+      "angle_wraps": 12,
+      "pll_lock": {
+        "samples": 501,
+        "angle_wraps": 12,
+        "window_s": [
+          0.11,
+          0.16
+        ],
+        "minimum_ed_V": 169.69537618988764,
+        "maximum_phase_error_deg": 0.6297686839297976,
+        "maximum_frequency_error_Hz": 0.019485416304362957,
+        "maximum_measured_phase_disagreement_rad": 9.893597052723635e-11,
+        "measured_phase_consistency_limit_rad": 2.357022603955158e-09
+      },
+      "period_average_tracking_max_error_A": 0.06664577310737796,
+      "power_signs_passed": true,
+      "physical_budgets_passed": 19,
+      "common_mode_upper_bound_V": 1.4531933433333467e-08,
+      "saturated_samples": 35,
+      "execution_receipt": {
+        "path": "local_reference/native_static_reviews/c1_pscad_pll_long_2p5us_v2_20261122/n/20261122T121136814535Z/native_execution_receipt.json",
+        "sha256": "a4dae8ba33cc1b5c24e08d8e9ccfbd9e8bf1240cf62d38a58049b53e3af3f564",
+        "bytes": 46764
+      },
+      "numerical_report": {
+        "path": "local_reference/native_static_reviews/c1_pll_full_numerical_2p5us_20261122T121136814535Z/report.json",
+        "sha256": "cb0ea08e3753e5e62c800e3e1d814b0c5326f3179c3965e6a73b16a546274952",
+        "bytes": 19762
+      }
+    }
+  },
+  "fine_initial_attempt": {
+    "status": "exited_after_launch_before_build_on_builder_directory_guard",
+    "terminal": {
+      "path": "local_reference/native_static_reviews/c1_pscad_pll_long_2p5us_20261122/n/20261122T120746660027Z/terminal.json",
+      "sha256": "b6f95398956c847def65e369198009ab756a54ee972c98a7baf86a2aa26c0ebe",
+      "bytes": 1883
+    },
+    "stderr": {
+      "path": "local_reference/native_static_reviews/c1_pscad_pll_long_2p5us_20261122/n/20261122T120746660027Z/worker.stderr.txt",
+      "sha256": "c12a26e8653a9eb69b6440b87d16dc9c06eeae5612fa552c727c801fffbb457a",
+      "bytes": 1547
+    }
+  },
+  "whole_native_reference_qualified": true,
+  "formal_example_accepted": false,
+  "cross_grid": {
+    "report": {
+      "path": "local_reference/native_static_reviews/c1_pll_full_cross_grid_20261122T121136814535Z/report.json",
+      "sha256": "ec4375c430fe2ea2ab84e08a6769140844facf44c50a00b21464e4636f757d81",
+      "bytes": 45116
+    },
+    "cycle_windows": 15,
+    "waveform_windows": 8,
+    "max_cycle_mean_difference_A": 0.04845026508409189,
+    "max_window_rms_difference_A": 0.07194473569157825
+  }
+}

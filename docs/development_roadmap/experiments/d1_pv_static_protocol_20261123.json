@@ -1,0 +1,165 @@
+{
+  "schema": "d1_pv_static_protocol_v1",
+  "date": "2026-11-23",
+  "source_parent": "47c408b51a0c8206dc1d1f127b20a0eb593c0a4f",
+  "scope": "Genuine native steady terminal measurements for one photovoltaic cell, ahead of the D1 equivalent PV grid interface.",
+  "reference": {
+    "installed_master": {
+      "path": "C:/Program Files (x86)/PSCAD50/master.pslx",
+      "sha256": "2940ddce6fe1fae56cb6be70bbaf0210a7e36059bfcad1e78b0ddbfd4d2a7c77",
+      "bytes": 18421619
+    },
+    "installed_emtdc_library": {
+      "path": "C:/Program Files (x86)/PSCAD50/emtdc/gf46/windows/emtdc.lib",
+      "sha256": "ed8cd8d92701e4fef8bc405022fb7b4793b32c513f7ec93dbd124a90c521438d",
+      "bytes": 3980870
+    },
+    "definition": "master:photovoltaic_source",
+    "definition_and_sample_instance_lines": [
+      208990,
+      361116
+    ],
+    "emtdc_entry_points": [
+      "PHOTOVOLT1_CFG",
+      "PHOTOVOLT1_EXE"
+    ],
+    "basis": "Use the installed library's one-cell instance for parameters and the stock EMTDC block for all reported PV measurements."
+  },
+  "fixture": {
+    "cells": {
+      "g1000_r220": {
+        "irradiance_w_m2": 1000,
+        "load_ohm": 0.22
+      },
+      "g1000_r250": {
+        "irradiance_w_m2": 1000,
+        "load_ohm": 0.25
+      },
+      "g1000_r280": {
+        "irradiance_w_m2": 1000,
+        "load_ohm": 0.28
+      },
+      "g900_r220": {
+        "irradiance_w_m2": 900,
+        "load_ohm": 0.22
+      },
+      "g900_r250": {
+        "irradiance_w_m2": 900,
+        "load_ohm": 0.25
+      },
+      "g900_r280": {
+        "irradiance_w_m2": 900,
+        "load_ohm": 0.28
+      }
+    },
+    "temperature_deg_c": 25.0,
+    "cell_parameters": {
+      "series_modules": 1,
+      "parallel_modules": 1,
+      "series_cells_per_module": 1,
+      "parallel_cells_per_module": 1,
+      "reference_irradiance_w_m2": 1000,
+      "reference_temperature_deg_c": 25,
+      "effective_area_m2": 0.01,
+      "series_resistance_ohm": 0.02,
+      "shunt_resistance_ohm": 1000,
+      "diode_ideality": 1.5,
+      "band_gap_ev": 1.103,
+      "reference_saturation_current_a": 1e-09,
+      "reference_short_circuit_current_a": 2.5,
+      "temperature_coefficient_a_per_kelvin": 0.001
+    },
+    "connections": "Each Vpos connects through its own load-current meter and resistor to ground. Each Vneg is grounded. The three cases per irradiance share its control signal. All six use the constant cell temperature.",
+    "conventions": "PV voltage is positive at Vpos relative to Vneg. Positive PV current is -CBR of the stock branch and flows from PV+ into its independent external resistor meter. Native kV/kA convert to V/A by multiplying by 1000."
+  },
+  "timing": {
+    "duration_s": 0.010005,
+    "steady_window_s": [
+      0.008,
+      0.01
+    ],
+    "windows": "Use original integer ticks. Include the first time in each window and exclude its right endpoint. Check prescribed G/T on positive rows and retain the original zero row."
+  },
+  "grids": {
+    "5us": {
+      "step_s": 5e-06,
+      "rows_including_zero": 2002,
+      "window_rows": 400
+    },
+    "2p5us": {
+      "step_s": 2.5e-06,
+      "rows_including_zero": 4003,
+      "window_rows": 800
+    }
+  },
+  "channels": {
+    "Absolute_TIME_s": "s",
+    "G1000_W_m2": "W/m2",
+    "G900_W_m2": "W/m2",
+    "Tcell_C": "degC",
+    "V_pv_g1000_r220_kV": "kV",
+    "I_pv_g1000_r220_kA": "kA",
+    "V_load_g1000_r220_kV": "kV",
+    "I_load_g1000_r220_kA": "kA",
+    "V_pv_g1000_r250_kV": "kV",
+    "I_pv_g1000_r250_kA": "kA",
+    "V_load_g1000_r250_kV": "kV",
+    "I_load_g1000_r250_kA": "kA",
+    "V_pv_g1000_r280_kV": "kV",
+    "I_pv_g1000_r280_kA": "kA",
+    "V_load_g1000_r280_kV": "kV",
+    "I_load_g1000_r280_kA": "kA",
+    "V_pv_g900_r220_kV": "kV",
+    "I_pv_g900_r220_kA": "kA",
+    "V_load_g900_r220_kV": "kV",
+    "I_load_g900_r220_kA": "kA",
+    "V_pv_g900_r250_kV": "kV",
+    "I_pv_g900_r250_kA": "kA",
+    "V_load_g900_r250_kV": "kV",
+    "I_load_g900_r250_kA": "kA",
+    "V_pv_g900_r280_kV": "kV",
+    "I_pv_g900_r280_kA": "kA",
+    "V_load_g900_r280_kV": "kV",
+    "I_load_g900_r280_kA": "kA"
+  },
+  "native": {
+    "pscad_version": "5.0.0",
+    "emtdc_build": "20210219",
+    "compiler": "gf46",
+    "platform": "x86",
+    "branch_threshold_ohm": 0.0005,
+    "include_initial_row": true,
+    "sample_every_electrical_step": true,
+    "archive": "Retain each build, native output files, project, toolchain and source identity in its own local run directory."
+  },
+  "gates": {
+    "clock_abs_s": 2e-12,
+    "control_abs": 1e-09,
+    "voltage_range_v": [
+      0.25,
+      0.85
+    ],
+    "current_range_a": [
+      1.8,
+      2.8
+    ],
+    "power_range_w": [
+      0.4,
+      2.5
+    ],
+    "plateau_voltage_pp_v": 2e-06,
+    "plateau_current_pp_a": 2e-05,
+    "meter_voltage_abs_v": 5e-06,
+    "meter_current_abs_a": 2e-05,
+    "load_ohm_abs_v": 5e-06,
+    "power_abs_w": 2e-05,
+    "r_monotone_min_v": 0.001,
+    "r_monotone_min_a": 1e-05,
+    "g_monotone_min_v": 0.001,
+    "g_monotone_min_a": 0.001,
+    "cross_grid_voltage_abs_v": 5e-06,
+    "cross_grid_current_abs_a": 2e-05
+  },
+  "follow_on": "Use separate 0.22 and 0.28 ohm load points to characterize local response. Keep 0.25 ohm as the independent load check. Freeze a later fitted range, error gates and R\u2013C experiment before choosing a public candidate.",
+  "formal_example_accepted": false
+}

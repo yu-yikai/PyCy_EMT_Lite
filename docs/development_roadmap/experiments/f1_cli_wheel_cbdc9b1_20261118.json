@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "date": "2026-11-18",
+  "commit": "cbdc9b1a10dca344e611fa012c8ad044af28f068",
+  "scope": "Local direct execution of teaching examples and packaging. Full pytest and hosted CI have their own records.",
+  "windows": {
+    "uv": "0.11.17",
+    "python": "3.14.5",
+    "passed_example_entries": 24,
+    "failed_or_timed_out_example_entries": 0,
+    "distribution_and_installed_wheel": "PASS",
+    "wheel_smoke_current_A": 2.0,
+    "receipt": {
+      "path": "local_reference/native_static_reviews/f1_windows_cli_dist_20261118T142721162737Z/receipt.json",
+      "bytes": 22477,
+      "sha256": "670a28a6c9685d08aebf2ac77c4a846178850d3c40025fa93784ef133921e4f2"
+    }
+  },
+  "ubuntu_first_attempt": {
+    "status": "locked_sync_timed_out",
+    "example_entries_started": 0,
+    "receipt": {
+      "path": "local_reference/native_static_reviews/f1_ubuntu_cli_wheel_cbdc9b1_20261118T142700542840Z/receipt.json",
+      "bytes": 6554,
+      "sha256": "40d0fd36b20f9a5925903efe3caec2e57a70f6d35c85a6257d39e8b549bcf078"
+    }
+  },
+  "ubuntu": {
+    "platform": "Ubuntu 24.04.4 LTS, WSL2",
+    "uv": "0.12.10",
+    "python": "3.14.5",
+    "passed_example_entries": 24,
+    "failed_or_timed_out_example_entries": 0,
+    "distribution_and_installed_wheel": "PASS",
+    "wheel_smoke_current_A": 2.0,
+    "original_cli_source_after_check_observed": false,
+    "receipt": {
+      "path": "local_reference/native_static_reviews/f1_ubuntu_cli_runtime_cbdc9b1_20261118T143639697684Z/closeout.json",
+      "bytes": 2796,
+      "sha256": "c3ed5a24d4cb02f4d9cb5e5ec2fe9f92755086dcac769580697b937800f9eb4a"
+    }
+  },
+  "limit": "The Windows example 18 FAST run reported control_accuracy_met=0. Hosted CI still needs an actual runner on both platforms."
+}

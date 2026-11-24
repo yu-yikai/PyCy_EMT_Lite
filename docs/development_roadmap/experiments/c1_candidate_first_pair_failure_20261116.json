@@ -1,0 +1,157 @@
+{
+  "schema": "c1_candidate_first_pair_failure_v1",
+  "observed_utc": "2026-11-16T15:29:36.250639+00:00",
+  "execution_head": "3c3c3ca1dcc025b7bee130f3c90f20f58b37b1d1",
+  "branch": "codex/emt-examples-longterm",
+  "status": "CANDIDATE_NUMERIC_FAIL_NOT_ACCEPTED",
+  "summary": "首次完整候选运行在5µs档共模硬门失败：最大含打印精度上界约2.53359546768µV，超过原2µV阈值。2.5µs档物理检查、两档同档比较及跨档比较通过；这些通过项不能抵消粗档物理失败。参考数据资格保持，候选尚未验收。",
+  "candidate_accepted": false,
+  "formal_new_examples_completed": 9,
+  "C1_status": "in_progress",
+  "reference_qualification_preserved": true,
+  "first_candidate_pair": {
+    "rows": {
+      "coarse": 40002,
+      "fine": 80003
+    },
+    "h_s": {
+      "coarse": "0.000005",
+      "fine": "0.0000025"
+    },
+    "both_physical_methods_agree": true,
+    "coarse_physical": {
+      "passed": false,
+      "only_failed_gate": "commonmode_with_tokens_V",
+      "maximum_full_q_upper_V": "0.0000025335954676828334666551504998666781828334666551504998666781829",
+      "unchanged_limit_V": "0.000002",
+      "failed_points": 2487,
+      "first_failed_row_zero_based": 33446,
+      "worst_row_zero_based": 33721,
+      "maxima_definition": "逐点abs(residual)+完整打印间隔半径后取全采集窗最大值；worst_row对应此上界最大点。",
+      "conditional_prediction": "前提未通过，仅作诊断，不计为验收通过。"
+    },
+    "fine_physical": {
+      "primary_pass": true,
+      "independent_pass": true
+    },
+    "comparisons": {
+      "coarse_same_h": {
+        "gate_groups": 150,
+        "primary_pass": true,
+        "independent_pass": true
+      },
+      "fine_same_h": {
+        "gate_groups": 150,
+        "primary_pass": true,
+        "independent_pass": true
+      },
+      "candidate_coarse_vs_reference_fine": {
+        "gate_groups": 132,
+        "primary_pass": true,
+        "independent_pass": true
+      }
+    },
+    "closure": {
+      "session_id": 68078,
+      "exit_code": 1,
+      "reason": "worker_nonzero_exit",
+      "reason_description": "数值检查失败，未触发资源中止。",
+      "elapsed_s": 307.139038000023,
+      "peak_private_bytes": 694333440,
+      "minimum_available_physical_bytes": 12128817152,
+      "remaining_owned": [],
+      "cleanup_errors": []
+    },
+    "native_calls": 0,
+    "failed_pair_retried": false
+  },
+  "project_checks": {
+    "pytest": {
+      "passed": 1554,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "includes_slow": true,
+      "seconds": "526.673",
+      "exit_code": 0
+    },
+    "source_scope": "仅覆盖candidate_execution_manifest及tested_source_snapshot中的旧版120个Python文件和2个依赖文件；不覆盖随后正在修改的源码。",
+    "covers_subsequent_source_changes": false
+  },
+  "selected_matrix_followup": {
+    "status": "SELECTED_RECONSTRUCTED_MATRIX_DIAGNOSTICS_COMPLETE_NOT_A_CORRECTION",
+    "selected_rows_zero_based": [
+      33446,
+      33721,
+      40001
+    ],
+    "matrix_size": 18,
+    "all_54_uint64_entries_reproduced": true,
+    "Decimal_precision": 80,
+    "scope": "仅重构三个选步的原二进制64位A、b和继承的上一步i/vL历史，再局部高精度复解同一A、b；矩阵是重构件，不是运行时捕获件。",
+    "original_time_geometry": {
+      "saved_rows": 40002,
+      "intervals": 40001,
+      "nominal_h_s": "0.000005",
+      "nominal_effective_h_hits": 23,
+      "non_nominal_effective_h_hits": 39978
+    },
+    "time_note": "按原步长归一分支统计实际保存的相邻时间差，不强制换成名义5µs；此统计本身不证明共模误差原因。",
+    "monitor_exit_code": 0,
+    "elapsed_s": 4.233185000019148,
+    "native_calls": 0,
+    "trajectory_runs": 0,
+    "candidate_correction_applied": false,
+    "original_commonmode_FAIL_preserved": true,
+    "qualification_claim": false,
+    "interpretation_limit": "三个局部点不能确立全轨迹因果、证明修复或授予资格；后续修复须另立冻结输入和验证证据。"
+  },
+  "references": {
+    "candidate_ROOT_numeric_closure": {
+      "path": "local_reference/c1_openloop_reference_research/20261116T145910939628Z_candidate_first_pair_v1/ROOT_numeric_closure.json",
+      "bytes": 7991,
+      "sha256": "e6623667229a6373944e0048364492ad60a904e33f73636a564704589fbde0a8"
+    },
+    "candidate_execution_manifest": {
+      "path": "local_reference/c1_openloop_reference_research/20261116T145910939628Z_candidate_first_pair_v1/manifest.json",
+      "bytes": 90598,
+      "sha256": "9c1d99a899231a01509684c7f4a59d9d05965aef1db2fd123e7079c9e1b7711d"
+    },
+    "tested_source_snapshot": {
+      "path": "local_reference/c1_openloop_reference_research/20261116T145910939628Z_candidate_first_pair_v1/source_snapshot.json",
+      "bytes": 21954,
+      "sha256": "2883290ea25285652b6fe28107042d8483f053d13748584cd2dd344f2b8e31a3"
+    },
+    "candidate_closed_independent": {
+      "path": "local_reference/native_static_reviews/c1_candidate_first_pair_closed_independent_20261116T151355131499Z/receipt.json",
+      "bytes": 8618,
+      "sha256": "e9ed45293dd1c0868505128ae66c194597e96ed8a99fe1d51792a03771c10a32"
+    },
+    "full_pytest_xml": {
+      "path": ".tmp/longterm/c1-final-20261116-v1.xml",
+      "bytes": 224304,
+      "sha256": "a77adfbdcd0201a5d554e63097720ae639e8cca13abf5d3482a145e87def1027"
+    },
+    "selected_matrix_manifest": {
+      "path": "local_reference/native_static_reviews/c1_selected_matrix_ROOT_20261116T151847373326Z/manifest.json",
+      "bytes": 66390,
+      "sha256": "b0fdbaf1781c7587e645eaa0438600934ff4e81db278b424d139342d3b9b96df"
+    },
+    "selected_matrix_terminal": {
+      "path": "local_reference/native_static_reviews/c1_selected_matrix_ROOT_20261116T151847373326Z/monitor_output/terminal.json",
+      "bytes": 1904,
+      "sha256": "154912d1ee4233f691b48260a80ad279fa2951f3173765460a4e9edaef25d903"
+    },
+    "selected_matrix_receipt": {
+      "path": "local_reference/native_static_reviews/c1_selected_matrix_ROOT_20261116T151847373326Z/monitor_output/analysis/receipt.json",
+      "bytes": 52168,
+      "sha256": "290f8b2df59b4921e0ed657493be9ede709cdfddb333fe7e9c30b37e51397421"
+    },
+    "reference_qualification": {
+      "path": "local_reference/c1_openloop_reference_research/20261116T135440675083Z_full_nojvm_actual_pair_math_v1/ROOT_reference_qualification.json",
+      "bytes": 5371,
+      "sha256": "53ff22f4c8f88f5cbf11fbefee36686ecfd1069ea9fc6818c23cc883c5a1beae"
+    }
+  },
+  "archive_policy": "原始波形、输入副本及详细报告保留在忽略目录local_reference/；公开文件仅保存小型结论和路径/字节数/SHA256索引。"
+}

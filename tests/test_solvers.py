@@ -5,6 +5,8 @@
 
 from __future__ import annotations
 
+from itertools import pairwise
+
 import numpy as np
 import pytest
 
@@ -175,16 +177,15 @@ def test_network_solver_reuse_keeps_runtime_residual_threshold_validation(mode) 
 @pytest.mark.parametrize("mode", ["reuse", "precompute"])
 def test_network_solver_reuse_initial_correction_preserves_ownership(monkeypatch, storage, mode) -> None:
     from pycy_emt_lite import Capacitor
-    from pycy_emt_lite.core import solvers
-    original = solvers.lu_solve
+    original = DenseLinearSolver._solve
     returned, snapshots, lu_snapshots = [], [], []
     buffer = None
-    def solve(factors, rhs, **kwargs):
+    def solve(self, factorization, rhs, **kwargs):
         nonlocal buffer
-        lu_snapshots.append(factors[0].copy())
-        values = original(factors, rhs, **kwargs)
+        lu_snapshots.append(factorization.lu.copy())
+        values = original(self, factorization, rhs, **kwargs)
         if not returned:
-            values[1] += 1e-5  # 原全局残差允许，但电容初值约束要求一次修正。
+            values[1] += 1e-5  # 在完整求解后注错，验证仿真器的逐行初值修正。
         if storage == "readonly":
             values.setflags(write=False)
         else:
@@ -195,7 +196,7 @@ def test_network_solver_reuse_initial_correction_preserves_ownership(monkeypatch
         returned.append(values)
         snapshots.append(values.copy())
         return values
-    monkeypatch.setattr(solvers, "lu_solve", solve)
+    monkeypatch.setattr(DenseLinearSolver, "_solve", solve)
     simulator = Simulator(Circuit.from_components("reuse_correction", [
         VoltageSource("V", "s", "0", 1e6), Resistor("R", "s", "c", 1.0),
         Capacitor("C", "c", "0", 1.0, initial_voltage=.25),
@@ -294,8 +295,10 @@ def test_precompute_switched_rlc_matches_all_rows_events_and_call_counts(method,
         result = simulator.run()
         if mode == "precompute":
             assert len(set(counts)) == 1 and counts[0] > 8
+            times = result.series("time")
             assert len(simulator._precomputed) == 8 * (1 + len({
-                simulator._effective_time_step(float(h)) for h in np.diff(result.series("time"))
+                simulator._effective_time_step(float(left), float(right))
+                for left, right in pairwise(times)
             }))
             assert solver.last_diagnostics.reused_factorization
         assert solver.solve_count == len(result.rows) + 2  # 两个同刻多事件各只求一次右侧。
@@ -436,7 +439,7 @@ def test_precompute_rejects_undeclared_step_without_factorizing(monkeypatch) -> 
     ]), SimulationConfig(.1, .1, linear_solver_mode="precompute"))
     original = simulator._effective_time_step
     # 模拟运行时出现一个未在准备网格中的 h；即使纯电阻的 A 相同也必须拒绝。
-    monkeypatch.setattr(simulator, "_effective_time_step", lambda h: .05 if calls else original(h))
+    monkeypatch.setattr(simulator, "_effective_time_step", lambda left, right: .05 if calls else original(left, right))
     with pytest.raises(RuntimeError, match="仿真时间 0.1.*precompute.*未声明.*h=0.05"):
         simulator.run()
     assert simulator.solver.factorization_count == 1 and simulator.solver.solve_count == 1
@@ -572,6 +575,56 @@ def test_factorized_entry_preserves_multiple_rhs_and_diagnostics() -> None:
         factorization.solve(np.ones(3))
 
 
+@pytest.mark.parametrize("reuse", [False, True])
+@pytest.mark.parametrize("storage", ["readonly", "shared"])
+def test_dense_residual_correction_preserves_backend_array_ownership(monkeypatch, storage, reuse) -> None:
+    from pycy_emt_lite.core import solvers
+
+    original = solvers.lu_solve
+    returned, snapshots, lu_snapshots = [], [], []
+    buffer = None
+
+    def solve(factors, rhs, **kwargs):
+        nonlocal buffer
+        lu_snapshots.append(factors[0].copy())
+        values = original(factors, rhs, **kwargs)
+        if not returned:
+            values[1] += 1e-5  # 小分量误差可通过整体后向误差门，仍需残差修正。
+        if storage == "readonly":
+            values.setflags(write=False)
+        else:
+            if buffer is None:
+                buffer = np.empty_like(values)
+            buffer[:] = values
+            values = buffer
+        returned.append(values)
+        snapshots.append(values.copy())
+        return values
+
+    monkeypatch.setattr(solvers, "lu_solve", solve)
+    matrix, rhs = np.diag([1e6, 1.]), np.array([1e6, .25])
+    solver = DenseLinearSolver()
+    result = solver.factorize(matrix).solve(rhs) if reuse else solver.solve(matrix, rhs)
+
+    np.testing.assert_array_equal(result, [1., .25])
+    assert len(returned) == 2  # 原解和一次修正复用同一份LU。
+    assert solver.factorization_count == solver.solve_count == 1
+    np.testing.assert_array_equal(lu_snapshots[0], lu_snapshots[1])
+    np.testing.assert_array_equal(matrix, np.diag([1e6, 1.]))
+    np.testing.assert_array_equal(rhs, [1e6, .25])
+    np.testing.assert_array_equal(returned[0] if storage == "readonly" else buffer,
+                                  snapshots[0] if storage == "readonly" else snapshots[-1])
+
+
+@pytest.mark.parametrize("exponent", [-500, 500])
+def test_dense_solver_preserves_valid_extreme_diagonal_solution(exponent) -> None:
+    scale = np.ldexp(1., exponent)
+    solver = DenseLinearSolver()
+    result = solver.solve(np.diag([3*scale, 3*scale]), np.full(2, np.ldexp(1., 2*exponent)))
+    np.testing.assert_array_equal(result, np.full(2, scale/3))
+    assert solver.factorization_count == solver.solve_count == 1
+
+
 @pytest.mark.parametrize("stage", ["update_state", "outputs", "on_step"])
 def test_other_simulation_failures_preserve_stage_time_and_cause(stage) -> None:
     error = LookupError("original failure")
@@ -646,6 +699,13 @@ class _BrokenResistor(Resistor):
     def stamp(self, *args: object) -> None:
         del args
         raise ValueError("custom stamp failure")
+
+
+def test_dense_solver_recovers_small_term_lost_in_cancellation() -> None:
+    # 最后两行给出 x1=x2=1，代入第一行可知 x0=-1。
+    matrix = np.array([[1.0, 1e16, 1.0], [0.0, 1.0, 0.0], [0.0, 0.0, 1.0]])
+    rhs = np.array([1e16, 1.0, 1.0])
+    np.testing.assert_array_equal(DenseLinearSolver().solve(matrix, rhs), [-1.0, 1.0, 1.0])
 
 
 def test_dense_solver_reports_residual_diagnostics() -> None:

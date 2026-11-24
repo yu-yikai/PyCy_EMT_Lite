@@ -1,0 +1,288 @@
+{
+  "schema": "pycy_dual_grid_forming_power_sharing_candidate_protocol_v1",
+  "date": "2026-11-23",
+  "source_parent": "dbbfa925d5eca6551ba6a07a6c635eb873b0a631",
+  "example": {
+    "number": 39,
+    "path": "examples/39_dual_grid_forming_power_sharing.py",
+    "case": "dual_grid_forming_power_sharing",
+    "default_step_s": 5e-06,
+    "stop_s": 0.6
+  },
+  "sources": {
+    "native_protocol": {
+      "path": "docs/development_roadmap/experiments/e_dual_gfm_sharing_protocol_20261123.json",
+      "sha256": "e5762510d79b51d50c52e08101ab17f74f3151f1817fbb0284dcdb812a266044",
+      "bytes": 9117
+    },
+    "qualified_native": {
+      "path": "docs/development_roadmap/experiments/e_dual_gfm_sharing_native_20261123.json",
+      "sha256": "7cd32410700ea548122daed9cda9297e14cb06ebbceb47badde92bdf4b5e6c68",
+      "bytes": 12390
+    },
+    "pycy_feasibility": {
+      "path": "local_reference/e_dual_gfm_sharing_pscad_20261123/pycy_probe/20261123T082748583859Z/report.json",
+      "sha256": "b06255a2da7c94a0fdd8053883f1ad31c92d7b47a09b49888f8510a80926d568",
+      "bytes": 5278
+    },
+    "same_grid_probe": {
+      "5us": {
+        "path": "local_reference/e_dual_gfm_sharing_pscad_20261123/pycy_probe/20261123T082748583859Z/5us_native_comparison.json",
+        "sha256": "ec1fb52fd1a2bc03703353d6098d75623ce39d417530c0a68cebf1020da54150",
+        "bytes": 7741
+      },
+      "2p5us": {
+        "path": "local_reference/e_dual_gfm_sharing_pscad_20261123/pycy_probe/20261123T082748583859Z/2p5us_native_comparison.json",
+        "sha256": "e2557d39c58ab82a8be6f1750b19b5fefe4e5b94b53f4596515b0aa423d4dad0",
+        "bytes": 8880
+      }
+    }
+  },
+  "fixture": {
+    "emf_phase_rms_v": 120,
+    "phase_shifts_rad": [
+      0,
+      -2.0943951023931953,
+      2.0943951023931953
+    ],
+    "feeder_ohm": 0.1,
+    "feeder_h": 0.003,
+    "base_load_ohm": 120,
+    "added_load_ohm": 120,
+    "open_load_ohm": 1000000000,
+    "topology": "Each phase has two ideal controlled phase-to-ground sources, each over its own series R–L branch to one grounded-Y PCC/load. Three identical phases share the ground. One additional Y resistor per phase connects on the programmed load row.",
+    "conventions": "Source and PCC voltages are phase-to-neutral. Feeder currents are positive toward the PCC. Load currents are positive toward ground. Each station uses three solved PCC voltage-current products for total watts."
+  },
+  "timing": {
+    "duration_s": 0.6,
+    "ramp_s": 0.02,
+    "ramp_shape": "half_cosine",
+    "load_step_s": 0.3,
+    "windows_s": {
+      "before": [
+        0.24,
+        0.29
+      ],
+      "after": [
+        0.54,
+        0.59
+      ]
+    },
+    "row_semantics": "Record every electrical row, including exactly zero and 0.6 s. Use right-endpoint switching at 0.300 s. Compute settled statistics over the half-open windows."
+  },
+  "controller": {
+    "filter_tau_s": 0.02,
+    "nominal_hz": 60,
+    "initial_phase_rad": 0,
+    "initial_feeder_current_a": 0,
+    "stations": {
+      "a": {
+        "initial_power_w": 240,
+        "reference_power_w": 240,
+        "droop_hz_per_w": 0.001
+      },
+      "b": {
+        "initial_power_w": 120,
+        "reference_power_w": 120,
+        "droop_hz_per_w": 0.002
+      }
+    },
+    "rules": "Start with zero applied amplitude and angle, zero feeder currents and each filter at its reference. At positive row k use the stored phase of each source. After solving the row, update each discrete power filter by backward Euler from its own PCC watts, apply f=60-m(P_filtered-P_ref), and advance its own unwrapped angle by 2*pi*h*f for the next row."
+  },
+  "grids": {
+    "5us": {
+      "step_s": 5e-06,
+      "rows_including_zero": 120001,
+      "ramp_end_tick": 4000,
+      "load_step_tick": 60000
+    },
+    "2p5us": {
+      "step_s": 2.5e-06,
+      "rows_including_zero": 240001,
+      "ramp_end_tick": 8000,
+      "load_step_tick": 120000
+    }
+  },
+  "channels": {
+    "Absolute_TIME_s": "s",
+    "Source_peak_kV": "kV",
+    "Rstep_ohm": "ohm",
+    "Load_step_on": "state",
+    "Source_a_phase_rad": "rad",
+    "Frequency_a_Hz": "Hz",
+    "P_pcc_a_W": "W",
+    "P_filtered_a_W": "W",
+    "Source_b_phase_rad": "rad",
+    "Frequency_b_Hz": "Hz",
+    "P_pcc_b_W": "W",
+    "P_filtered_b_W": "W",
+    "V_src_a_a_kV": "kV",
+    "V_src_b_a_kV": "kV",
+    "V_pcc_a_kV": "kV",
+    "I_feeder_a_a_kA": "kA",
+    "I_feeder_b_a_kA": "kA",
+    "I_base_a_kA": "kA",
+    "I_step_a_kA": "kA",
+    "V_src_a_b_kV": "kV",
+    "V_src_b_b_kV": "kV",
+    "V_pcc_b_kV": "kV",
+    "I_feeder_a_b_kA": "kA",
+    "I_feeder_b_b_kA": "kA",
+    "I_base_b_kA": "kA",
+    "I_step_b_kA": "kA",
+    "V_src_a_c_kV": "kV",
+    "V_src_b_c_kV": "kV",
+    "V_pcc_c_kV": "kV",
+    "I_feeder_a_c_kA": "kA",
+    "I_feeder_b_c_kA": "kA",
+    "I_base_c_kA": "kA",
+    "I_step_c_kA": "kA"
+  },
+  "native": {
+    "branch_threshold_ohm": 0.0005,
+    "output_group": "GFMSharing",
+    "toolchain": {
+      "pscad_version": "5.0.0",
+      "emtdc_build": "20210219",
+      "compiler": "gf46",
+      "platform": "x86"
+    },
+    "runtime": "Independent cold starts. Retain native INF/OUT and compiled circuit, pre-run admission and owned completion for each grid. Disable network switching interpolation and chatter handling."
+  },
+  "physical_limits": {
+    "clock_abs_s": 2e-12,
+    "source_command_abs_v": 2e-06,
+    "source_wave_abs_v": 5e-06,
+    "kcl_abs_a": 2e-06,
+    "load_ohm_abs_v": 5e-06,
+    "feeder_tr_abs_v": 5e-05,
+    "tr_energy_abs_j": 2e-07,
+    "cumulative_energy_abs_j": 2e-05,
+    "open_current_abs_a": 2e-07,
+    "pcc_power_abs_w": 0.0002
+  },
+  "control_limits": {
+    "power_meter_abs_w": 2e-05,
+    "filter_recurrence_abs_w": 2e-07,
+    "droop_recurrence_abs_hz": 2e-08,
+    "angle_recurrence_abs_rad": 2e-10
+  },
+  "window_limits": {
+    "before": {
+      "power_a_w": [
+        238,
+        242
+      ],
+      "power_b_w": [
+        118,
+        122
+      ],
+      "frequency_mean_hz": [
+        59.997,
+        60.004
+      ],
+      "phase_difference_rad": [
+        0.0029,
+        0.0035
+      ],
+      "pcc_rms_v": [
+        119.7,
+        120.1
+      ]
+    },
+    "after": {
+      "power_a_w": [
+        477,
+        482
+      ],
+      "power_b_w": [
+        237,
+        242
+      ],
+      "frequency_mean_hz": [
+        59.757,
+        59.765
+      ],
+      "phase_difference_rad": [
+        0.006,
+        0.0067
+      ],
+      "pcc_rms_v": [
+        119.7,
+        120.1
+      ]
+    },
+    "frequency_split_abs_hz": 0.001,
+    "pointwise_sharing_abs_w": 2,
+    "power_ripple_abs_w": 1.5,
+    "power_increase_a_w": [
+      237,
+      242
+    ],
+    "power_increase_b_w": [
+      117,
+      122
+    ],
+    "increment_sharing_abs_w": 0.5,
+    "frequency_drop_hz": [
+      0.235,
+      0.245
+    ]
+  },
+  "cross_grid_limits": {
+    "source_abs_v": 0.02,
+    "phase_abs_rad": 0.0001,
+    "frequency_abs_hz": 0.001,
+    "filtered_power_abs_w": 1,
+    "pcc_abs_v": 8,
+    "feeder_abs_a": 0.12,
+    "away_from_edge_margin_s": 0.0005,
+    "pcc_away_abs_v": 0.03,
+    "feeder_away_abs_a": 0.0015,
+    "window_power_abs_w": 0.2,
+    "window_frequency_abs_hz": 0.001,
+    "window_rms_abs_v": 0.02,
+    "phase_difference_abs_rad": 0.0001,
+    "window_phase_difference_abs_rad": 3e-05
+  },
+  "same_grid": {
+    "pointwise_max_abs": {
+      "display_s": 2e-12,
+      "time_s": 2e-12,
+      "peak_v": 5e-06,
+      "load_r": 0,
+      "load_on": 0,
+      "phase_rad": 2e-08,
+      "frequency_hz": 2e-07,
+      "meter_w": 0.0002,
+      "filtered_w": 0.0002,
+      "source_v": 2.5e-05,
+      "feeder_a": 2e-06,
+      "pcc_v": 2.5e-05,
+      "base_a": 2e-06,
+      "added_a": 2e-06,
+      "phase_difference_rad": 2e-08
+    },
+    "window_max_abs": {
+      "power_a_w": 0.0002,
+      "power_b_w": 0.0002,
+      "frequency_a_hz": 2e-07,
+      "frequency_b_hz": 2e-07,
+      "phase_difference_rad": 2e-08,
+      "pcc_rms_v": 2.5e-05
+    },
+    "window_change_max_abs": {
+      "power_increase_a_w": 0.0004,
+      "power_increase_b_w": 0.0004,
+      "frequency_drop_hz": 4e-07,
+      "increment_sharing_abs_w": 0.0012
+    },
+    "rules": "Compare directly on the original row arrays with zero time shift, including initial and final rows and the switched load row. Read all three candidate pole states and require them to agree before mapping either resistance word. Apply continuous-signal bounds separately to each station and phase before taking maxima."
+  },
+  "implementation": {
+    "entry": "Reuse CaseDefinition, VoltageSource, Resistor, Inductor, IdealSwitch, and FirstOrderLowPass. Use the standard case execution path and trapezoidal electrical steps.",
+    "control": "Keep separate filter state and unwrapped angle for each station. Observe both stations on the same solved row before advancing either source to the next row.",
+    "plots": "Show each station’s PCC power and frequency, and the unwrapped electrical phase A minus B in milliradians.",
+    "scope": "Use fixed-amplitude sources and a grounded resistive load to show the initial power dip, inverse-slope sharing and the settled frequency change."
+  }
+}

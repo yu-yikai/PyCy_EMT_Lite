@@ -1,0 +1,37 @@
+{
+  "schema": "d1_pv_rc_startup_protocol_v1",
+  "date": "2026-11-23",
+  "source_parent": "fec922613ae7b971370280b5598c286a53d4b1a4",
+  "original_protocol": {
+    "path": "docs/development_roadmap/experiments/d1_pv_rc_transient_protocol_20261123.json",
+    "sha256": "4a4e07c33380be4bd027d1c3bbd165400a26f2fba4f095f6a0e146fb899b4d68",
+    "bytes": 5827
+  },
+  "known_coarse_original_failure": {
+    "path": "local_reference/d1_pv_rc_transient_20261123/verification/5us_audit.json",
+    "sha256": "a7845dec37eb6804522708bb6030558f8dde3a97dedae195585e781102b3edc6",
+    "bytes": 17567
+  },
+  "observed_original_first_sample_v": {
+    "5us": 0.00031233754231243,
+    "2p5us": 0.00015620781334637
+  },
+  "diagnosis": "The original test of the raw 0-second voltage fails. The PSCAD output is an already solved first row with nonzero irradiance. The equivalent capacitor history must be checked separately from the exported solved voltage.",
+  "references": {
+    "initialization": "https://www.pscad.com/webhelp/EMTDC/Program_Structure/initialization_and_initial_conditions.htm",
+    "capacitor_companion": "https://www.pscad.com/webhelp-v502-ol/EMTDC/Electric_Network_Solution/representation_of_lumped_rlc_elements.htm"
+  },
+  "startup_conditions": "Bind each original saved project and compiled network. Require standard cold start from time 0, no snapshot or external precharge, the stock capacitor at 0.02 F, and independent same-solved-row voltage and three branch current measurements.",
+  "checks": {
+    "history_source_abs_a": "Use H=2 C Vload(0)/h - Ic(0) from the original solved row. Check |H| against the declared amperes limit. This is the identifiable combination of pre-solve capacitor voltage and current.",
+    "pre_solve_zero_abs_v": "With the standard cold-start zero current history, check |Vload(0)-h Ic(0)/(2 C)|. The attributed pre-solve zero is conditional on that verified initialization.",
+    "first_solved_voltage_abs_v": "Independently predict the solved node as Ipv(0)/(1/R+2 C/h) and compare both voltage measurements. Retain the original 0-second row and original initial-voltage gate outcome."
+  },
+  "gates": {
+    "history_source_abs_a": 2e-08,
+    "pre_solve_zero_abs_v": 1e-09,
+    "first_solved_voltage_abs_v": 1e-09
+  },
+  "application": "Rebind both unchanged native run receipts and original per-grid audits. The only permitted original failure is the raw initial-voltage comparison. Apply all remaining original point, clock, control, charge, energy, steady-window and cross-grid gates. Do not replace, time-shift or remove any raw row.",
+  "formal_example_accepted": false
+}

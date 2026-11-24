@@ -1,0 +1,73 @@
+{
+  "schema_version": 1,
+  "date": "2026-11-22",
+  "status": "native_main_qualified_both_steps_and_main_cross_step_pass",
+  "fine_record": {
+    "path": "docs/development_roadmap/experiments/c1_pscad_angle_arithmetic_trial_20261122.json",
+    "sha256": "f3ab13d436ff4fb00a52b092dc0be636ac28656c54e6fb44804dac9e47fa2b8c",
+    "bytes": 3604
+  },
+  "coarse_prospective": {
+    "path": "validation/cases/grid_connected_vsc_closed_loop/pscad_closed_loop_remaining_variants.json",
+    "sha256": "f307274cde2179368f2c004c4c8145bd05e3638f9cdac91797a9aea29b92fc7b",
+    "bytes": 4126
+  },
+  "coarse_offline_admission": {
+    "path": "local_reference/native_static_reviews/c1_gauge_reduced_angle_coarse_audit_20261122/offline_admission_receipt.json",
+    "sha256": "46a726ca6f4f129591fa10ec0817ca017a6ab3b7ec5bb4eead3b51b51c1c3c2e",
+    "bytes": 7017
+  },
+  "coarse_numeric_preflight": {
+    "path": "local_reference/native_static_reviews/c1_coarse_precise_angle_preflight_20261122T101404991454Z/report.json",
+    "sha256": "fa76a186776fd5291ab070b56f27f273a9a99999f0a12e42157d9a321284c243",
+    "bytes": 1401
+  },
+  "coarse_native": {
+    "builds": 1,
+    "runs": 1,
+    "rows": 40002,
+    "updates": 2000,
+    "next_5us_gate_applications": 2000,
+    "execution": {
+      "path": "local_reference/native_static_reviews/c1_pscad_reference_point_reduced_angle_5us_main_20261122/n/20261122T101529924426Z/native_execution_receipt.json",
+      "sha256": "46673ca1f022430b42e2728545b99c9f3e5bb54fd688d0598bbaf967d6226107",
+      "bytes": 7004
+    },
+    "terminal": {
+      "path": "local_reference/native_static_reviews/c1_pscad_reference_point_reduced_angle_5us_main_20261122/n/20261122T101529924426Z/terminal.json",
+      "sha256": "46d96125569953cbef7e0db2635b766163f75745bc9462b46d06c95e178c6e6e",
+      "bytes": 7595
+    },
+    "generated_admission": {
+      "path": "local_reference/native_static_reviews/c1_pscad_reference_point_reduced_angle_5us_main_20261122/n/20261122T101529924426Z/pre_run_admission.json",
+      "sha256": "f4348e07c5d3f4153e6e25994c6d71876b9383e25ad1c4060f57c3a495611af8",
+      "bytes": 4931
+    },
+    "original_electrical_control_and_tracking_passed": true,
+    "common_mode_upper_bound_V": 1.0352989990000133e-08,
+    "eq_max_error_V": 6.129365327724425e-14,
+    "cycle_tracking_max_error_A": 0.057379308129587914,
+    "independent_numeric": {
+      "path": "local_reference/native_static_reviews/c1_pscad_long_stream_review_precise_coarse_20261122T102203102625Z/report.json",
+      "sha256": "de6fcef251cb2213d038bdba25c3a2fa451ed3720cfc5ca360187b25d68e4de5",
+      "bytes": 19457
+    }
+  },
+  "main_same_step_and_native_cross_step": {
+    "report": {
+      "path": "local_reference/native_static_reviews/c1_long_window_metrics_20261122T102338954808Z/report.json",
+      "sha256": "c54097d50e36e34f2e44acf24665bc7c9102efccd7d058954f6d16036a0a98b1",
+      "bytes": 314890
+    },
+    "same_step_windows_per_grid": 9,
+    "same_step_numeric_per_window": 23,
+    "exact_per_window": 13,
+    "cross_step_cycle_windows": 15,
+    "cross_step_rms_windows": 8,
+    "maximum_cycle_mean_dq_difference_A": 0.04354539102593691,
+    "maximum_window_dq_rmse_A": 0.08141387971245442,
+    "shared_gate_difference_rows": 88
+  },
+  "whole_native_reference_qualified": false,
+  "formal_example_accepted": false
+}

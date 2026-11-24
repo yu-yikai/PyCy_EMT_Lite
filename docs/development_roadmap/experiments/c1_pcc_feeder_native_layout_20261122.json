@@ -1,0 +1,50 @@
+{
+  "task": "C1",
+  "scope": "依据 PSCAD 已编译但尚未运行的网表，固定原生合并支路和输出编号。",
+  "base_protocol": "docs/development_roadmap/experiments/c1_pcc_feeder_native_probe_20261122.json",
+  "compiled_run": "local_reference/native_static_reviews/c1_pcc_feeder_native_5us_v3_20261122/n/20261122T140835516795Z",
+  "sha256": {
+    "terminal.json": "6c62ad9e91ebe18694d5c72295703104921d1d78ea883dad2a136bc7234e2635",
+    "feeder_canvas.json": "de25738fdca5e389936f62fdc01f57e5150a3cccbe9f68c334d0de11ef02a855",
+    "build_messages.json": "3ac243b16d8946d064f8d1d945516976884a7d772203e0bf6774a64f9d60877e",
+    "project/vdiv.pscx": "aafb71ff97a767db7665aed88adeca69d71b1229045fc79654b44495fd5d8a4c",
+    "project/vdiv.gf46/Main.dta": "3827ad08e57a14d7fa0fb6b85754611f55b2f26e924e991cec51ee1134209635",
+    "project/vdiv.gf46/Main.f": "af7ee7b80d555f29425fbca5b1e783a4aa2c607f40117b6e50a148c0806e44bd",
+    "project/vdiv.gf46/vdiv.map": "b4cd7729c5c4592ba5aa20e227cf5d819902a8532cf1b6e02b26e887f869e585"
+  },
+  "first_build": {
+    "build_calls": 1,
+    "errors": 0,
+    "warnings": 0,
+    "run_calls": 0,
+    "admission": "旧准入预计 PSCAD 保留独立 R、L 分支和原 45 个编号。实际原生编译合并支路并重排采集，因此在调用 Run 前拒绝。"
+  },
+  "earlier_starts": [
+    {
+      "archive": "local_reference/native_static_reviews/c1_pcc_feeder_native_5us_20261122/n/20261122T134820526284Z",
+      "terminal_sha256": "016c0fc63964f5b2a6fad54cbc33f9b30c13f199ba2c3bb52f9395173a55771f",
+      "build_calls": 0,
+      "run_calls": 0,
+      "cause": "比较原生控制定义前遗漏写入 PLL 脚本。"
+    },
+    {
+      "archive": "local_reference/native_static_reviews/c1_pcc_feeder_native_5us_v2_20261122/n/20261122T135823058633Z",
+      "terminal_sha256": "256f2a5883ed4168a3b066e79d3b186fbad409c471362163e94a2517942d9c2f",
+      "build_calls": 0,
+      "run_calls": 0,
+      "cause": "电阻带单位的原生回读不能直接转成 Decimal。切换到与 30 号相同的数值写入并读回其数值。"
+    }
+  ],
+  "generated_layout": {
+    "subsystems": 1,
+    "nonzero_physical_nodes": 17,
+    "node_lookup_dimension": 21,
+    "physical_branches": 22,
+    "feeder_model_in_netlist": "每相一条 RL，R 精确 0.8 Ω、L 精确 0.008 H，正向从源端到 PCC。画布的独立 R/L 及原拓扑保留。",
+    "original_network_check": "收缩三条 RL 后，原 19 条有向支路和元件参数一一对应。",
+    "output_binding": "逐点使用本次固定 PGBList 的全部 48 个编号、标签、组、单位和范围，核对原 45 路意义及原生生产者一一保留。新 PCC 差分测量为 15 至 17，TIME_native_s 为 48。",
+    "PCC_slots": {"a": 15, "b": 16, "c": 17},
+    "time_slot": 48
+  },
+  "next_isolated_run": "可以先加载编译归档中已绑定哈希的保存模型副本，重新编译并核对实际网表、差分电压及原始通道。加载未通过时从既有 live builder 重建。所有初值、控制递推、采样、下一拍应用、波形容差和采集宽度沿用基础协议。"
+}

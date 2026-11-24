@@ -1,0 +1,542 @@
+{
+  "schema": "d1_storage_grid_short_native_reference_v1",
+  "date": "2026-11-23",
+  "status": "PASS_BOTH_NATIVE_STORAGE_GRID_SHORT_GRIDS",
+  "frozen_protocol_commit": "81a0d453eab3f3da3983ceb22b1d3052c3236d73",
+  "formal_new_examples_completed": 16,
+  "protocol": {
+    "path": "docs/development_roadmap/experiments/d1_storage_grid_short_protocol_20261123.json",
+    "sha256": "61f456ea334a89961720d6eff37123c64aa74ad15a5fa73b80ef142aa3a86023",
+    "bytes": 13031
+  },
+  "paired_audit": {
+    "path": "local_reference/d1_storage_grid_short_20261123/verification/grid_short_pair.json",
+    "sha256": "bc5be5ba2b21404be9ce75a157126f72f86080d6bfb9ea7982494f862da3b590",
+    "bytes": 2159
+  },
+  "figure": {
+    "path": "local_reference/d1_storage_grid_short_20261123/verification/native_grid_storage_short.png",
+    "sha256": "cedbb631c60dd82edb3a6d9ae2838c373b2417c63f49c8ee7ae190e987a45c93",
+    "bytes": 197670
+  },
+  "cross_grid_first_charge": {
+    "seed_first_charge": {
+      "pcc_active_mean_abs_w": 6.153330039769742,
+      "pcc_reactive_mean_abs_var": 4.039831132741952,
+      "storage_power_mean_abs_w": 2.5955151875702995,
+      "storage_current_mean_abs_a": 0.006480362221785163,
+      "bus_mean_abs_v": 0.0008469748797779175,
+      "polarization_mean_abs_v": 0.0017451700090619082
+    },
+    "restored_first_charge": {
+      "pcc_active_mean_abs_w": 6.153330039402135,
+      "pcc_reactive_mean_abs_var": 4.039831131878758,
+      "storage_power_mean_abs_w": 2.5955152036376035,
+      "storage_current_mean_abs_a": 0.006480362261858885,
+      "bus_mean_abs_v": 0.0008469749141681859,
+      "polarization_mean_abs_v": 0.0017451699905636775
+    }
+  },
+  "grids": {
+    "5us": {
+      "audit": {
+        "path": "local_reference/d1_storage_grid_short_20261123/verification/5us_grid_short_pair_review.json",
+        "sha256": "246ea21b518f8993a01a39e654386ef2bfd42a2feafd84805208143d0affb12c",
+        "bytes": 21446
+      },
+      "runs": {
+        "seed": {
+          "receipt": {
+            "path": "local_reference/d1_storage_grid_short_20261123/5us/seed_loaded/n/20261123T010255620043Z/snapshot_result.json",
+            "sha256": "42c9313fa14a21c54222f1d9145292a302a64a440dece085ea5dccdcd6ad9f23",
+            "bytes": 15870
+          },
+          "rows": 170002,
+          "runtime": {
+            "pscad_version": "5.0.0",
+            "emtdc_build": "20210219",
+            "compiler": "gf46",
+            "platform": "x86",
+            "integration": "unreported_in_native_stdout",
+            "integration_evidence": "independent_all_row_tr_review_pending"
+          },
+          "loaded_template_sha256": "ae704d0fe1c0d643074682f88a3a90a8c72763de1d582fe1486a52e1e4b42a1b",
+          "reload_geometry": {
+            "path": "local_reference/d1_storage_grid_short_20261123/5us/seed_loaded/n/20261123T010255620043Z/canvas_inventory.json",
+            "sha256": "2661b2f5c2ab978cd442c91f58e7bfc31d98494894b3403bf03cdcb3f58b5967",
+            "bytes": 607
+          },
+          "essential_artifacts": {
+            "pre_run_admission.json": {
+              "path": "local_reference/d1_storage_grid_short_20261123/5us/seed_loaded/n/20261123T010255620043Z/pre_run_admission.json",
+              "sha256": "0a3ec62b8e775c1eb69b048d785a49c337934f9c3359a086b8ff16e159afe460",
+              "bytes": 17549
+            },
+            "project/vdiv.gf46/storage_grid.snp": {
+              "path": "local_reference/d1_storage_grid_short_20261123/5us/seed_loaded/n/20261123T010255620043Z/project/vdiv.gf46/storage_grid.snp",
+              "sha256": "f669175b552e43f5d07426743e607a6c7183dee4fa97ebb44589ea0edb54aa2e",
+              "bytes": 34996
+            }
+          }
+        },
+        "restart": {
+          "receipt": {
+            "path": "local_reference/d1_storage_grid_short_20261123/5us/restart_loaded/n/20261123T010740058662Z/snapshot_result.json",
+            "sha256": "07a1265678eec578391f848b2148da9d4ef58ea3930b7ebfe72a80f111c9ad6b",
+            "bytes": 14115
+          },
+          "rows": 10001,
+          "runtime": {
+            "pscad_version": "5.0.0",
+            "emtdc_build": "20210219",
+            "compiler": "gf46",
+            "platform": "x86",
+            "integration": "trapezoidal",
+            "integration_evidence": "native_stdout"
+          },
+          "loaded_template_sha256": "ae704d0fe1c0d643074682f88a3a90a8c72763de1d582fe1486a52e1e4b42a1b",
+          "reload_geometry": {
+            "path": "local_reference/d1_storage_grid_short_20261123/5us/restart_loaded/n/20261123T010740058662Z/canvas_inventory.json",
+            "sha256": "3a38f5180873e392130616742f3e913701c3ed5b7cd2f8f948470ad02cbbccb4",
+            "bytes": 696
+          },
+          "essential_artifacts": {
+            "pre_run_admission.json": {
+              "path": "local_reference/d1_storage_grid_short_20261123/5us/restart_loaded/n/20261123T010740058662Z/pre_run_admission.json",
+              "sha256": "4412f95d29e4f808f2585cfedbfd991f673f01d4f695ce37ee3167035d475ff8",
+              "bytes": 18115
+            },
+            "project/vdiv.gf46/storage_grid.snp": {
+              "path": "local_reference/d1_storage_grid_short_20261123/5us/restart_loaded/n/20261123T010740058662Z/project/vdiv.gf46/storage_grid.snp",
+              "sha256": "f669175b552e43f5d07426743e607a6c7183dee4fa97ebb44589ea0edb54aa2e",
+              "bytes": 34996
+            }
+          }
+        }
+      },
+      "snapshot": {
+        "voltage_error_v": 4.107825191113079e-12,
+        "current_error_a": 4.658681209898652e-18,
+        "cap_voltage_error_v": 5.5511098291698624e-14,
+        "cap_companion_residual_a": 9.447997939560082e-11,
+        "cap_companion_history": {
+          "I_Cdc_kA": {
+            "branch_1based": 4,
+            "voltage_v": 399.9996779744659,
+            "signed_companion_history_a": -799999.3559006033,
+            "companion_error_a": 9.447997939560082e-11
+          },
+          "I_C1_kA": {
+            "branch_1based": 3,
+            "voltage_v": -0.0003022141969455383,
+            "signed_companion_history_a": 6.044738100118963,
+            "companion_error_a": 8.673617379884035e-16
+          }
+        },
+        "stored_control_error": 5.684341886080802e-14,
+        "closed_log_handle_zero": true,
+        "nodes": 14,
+        "branches": 21,
+        "anchor_si": {
+          "vdc_v": 399.9996779744659,
+          "polarization_v": -0.0003022141969455383,
+          "storage_current_a": -4.952834309346343e-05
+        }
+      },
+      "overlap": {
+        "clock": 1.1102230246251565e-16,
+        "voltage_v": 8.004708007547379e-11,
+        "current_a": 1.157740027978027e-09,
+        "modulation_pu": 7.500111642855245e-13,
+        "shared_positive_rows": 10001
+      },
+      "seed_plant": {
+        "clock_abs_s": 1.1102230246251565e-16,
+        "kcl_abs_a": 1.1957945244030476e-09,
+        "ohm_abs_v": 1.0118128557223827e-11,
+        "cap_charge_abs_c": 5.015182742256845e-14,
+        "inductor_tr_abs_v": 3.992113306594547e-10,
+        "tr_energy_abs_j": 2.1547545838324303e-11,
+        "cumulative_energy_abs_j": 1.0472206742014892e-07,
+        "ocv_abs_v": 5.684341886080802e-14,
+        "grid_source_abs_v": 0.0,
+        "ac_branch_current_abs_a": 1.6867424188563e-27,
+        "storage_peak_abs_a_max": 4.0000010592917,
+        "independent_parked_voltage_error_v": 3.1849509921771935e-10,
+        "independent_parked_current_error_a": 9.06274499890003e-11,
+        "snapshot_bus_400_abs_v": 0.00032202553001070555,
+        "snapshot_polarization_abs_v": 0.00030221419689003,
+        "snapshot_storage_current_abs_a": 4.9528343093463e-05,
+        "source_command_abs_v": 5.286437954055145e-12
+      },
+      "restored_plant": {
+        "clock_abs_s": 1.1102230246251565e-16,
+        "kcl_abs_a": 1.2696866162620335e-09,
+        "ohm_abs_v": 1.0061285138363019e-11,
+        "cap_charge_abs_c": 4.988009822076787e-14,
+        "inductor_tr_abs_v": 3.9452174860343803e-10,
+        "tr_energy_abs_j": 2.0463322713843574e-11,
+        "cumulative_energy_abs_j": 6.361218082575338e-09,
+        "ocv_abs_v": 0.0,
+        "source_command_abs_v": 5.286437954055145e-12
+      },
+      "restored_controller": {
+        "inner_updates": 500,
+        "outer_due": 50,
+        "outer_enabled": 40,
+        "maximum_commanded_current_a": 1.171838785244203,
+        "exact_gate_resistance": true,
+        "gate_comparison_mismatches": 0,
+        "first_sample_tick": 20,
+        "first_applied_tick": 21,
+        "fine_gate_midpoints": 0,
+        "exact_fine_midpoint_hold": true,
+        "same_row_voltage_v": 4.9960036108132044e-12,
+        "same_row_current_a": 5.0090140368830305e-14
+      },
+      "restored_first_charge": {
+        "pcc_active_mean_w": 257.1901973793623,
+        "pcc_reactive_mean_var": -15.961533255460925,
+        "storage_absorbed_mean_a": 0.6145909352779536,
+        "storage_absorbed_mean_w": 246.09429028182993,
+        "bus_mean_v": 400.4191825088648,
+        "polarization_mean_v": 0.17334613475366126,
+        "samples": 2000,
+        "relative_window_s": [
+          0.04,
+          0.05
+        ]
+      }
+    },
+    "2p5us": {
+      "audit": {
+        "path": "local_reference/d1_storage_grid_short_20261123/verification/2p5us_grid_short_pair_review.json",
+        "sha256": "a9a58f6c5ccc965af67a2cab5554360ecb5c863f0fa33f9d0c9a386f50b24561",
+        "bytes": 21501
+      },
+      "runs": {
+        "seed": {
+          "receipt": {
+            "path": "local_reference/d1_storage_grid_short_20261123/2p5us/seed_loaded/n/20261123T010429337380Z/snapshot_result.json",
+            "sha256": "0ba067cd2893e5b8ae2dc71d3e152599c0f58218c4a9de345e064668e27335b9",
+            "bytes": 15878
+          },
+          "rows": 340003,
+          "runtime": {
+            "pscad_version": "5.0.0",
+            "emtdc_build": "20210219",
+            "compiler": "gf46",
+            "platform": "x86",
+            "integration": "unreported_in_native_stdout",
+            "integration_evidence": "independent_all_row_tr_review_pending"
+          },
+          "loaded_template_sha256": "8bf65b30d170f317aa488aa66c42dd95d57f527494fe9f594e84f9d0246ff8d8",
+          "reload_geometry": {
+            "path": "local_reference/d1_storage_grid_short_20261123/2p5us/seed_loaded/n/20261123T010429337380Z/canvas_inventory.json",
+            "sha256": "6d92988535a9f464d222a5d4e37e08fb992415f6de3efee081528481220c8ff3",
+            "bytes": 607
+          },
+          "essential_artifacts": {
+            "pre_run_admission.json": {
+              "path": "local_reference/d1_storage_grid_short_20261123/2p5us/seed_loaded/n/20261123T010429337380Z/pre_run_admission.json",
+              "sha256": "d3b16334a2b6d4d58fe78f2fab16582c534f8fe3d71e070c971c015fea3b69e5",
+              "bytes": 17551
+            },
+            "project/vdiv.gf46/storage_grid.snp": {
+              "path": "local_reference/d1_storage_grid_short_20261123/2p5us/seed_loaded/n/20261123T010429337380Z/project/vdiv.gf46/storage_grid.snp",
+              "sha256": "dcec7db32fc3680eaccde7c0cfaf0ee97313bef94f7f3bddc419cd245faf1b8c",
+              "bytes": 34996
+            }
+          }
+        },
+        "restart": {
+          "receipt": {
+            "path": "local_reference/d1_storage_grid_short_20261123/2p5us/restart_loaded/n/20261123T011051488583Z/snapshot_result.json",
+            "sha256": "53bbdf6e60d6f801fc7c6e2114d4cd6ad06b41b0ce0dbd2c0b132450168658dc",
+            "bytes": 14123
+          },
+          "rows": 20002,
+          "runtime": {
+            "pscad_version": "5.0.0",
+            "emtdc_build": "20210219",
+            "compiler": "gf46",
+            "platform": "x86",
+            "integration": "trapezoidal",
+            "integration_evidence": "native_stdout"
+          },
+          "loaded_template_sha256": "8bf65b30d170f317aa488aa66c42dd95d57f527494fe9f594e84f9d0246ff8d8",
+          "reload_geometry": {
+            "path": "local_reference/d1_storage_grid_short_20261123/2p5us/restart_loaded/n/20261123T011051488583Z/canvas_inventory.json",
+            "sha256": "9af1916897e7a77ed87304d616e991833aa6dcd8e51b69fdc339154b0ee94bd9",
+            "bytes": 696
+          },
+          "essential_artifacts": {
+            "pre_run_admission.json": {
+              "path": "local_reference/d1_storage_grid_short_20261123/2p5us/restart_loaded/n/20261123T011051488583Z/pre_run_admission.json",
+              "sha256": "e4a50442bc9b05a646128e3858c128d54498505b20148cd58b716e377a64d80a",
+              "bytes": 18117
+            },
+            "project/vdiv.gf46/storage_grid.snp": {
+              "path": "local_reference/d1_storage_grid_short_20261123/2p5us/restart_loaded/n/20261123T011051488583Z/project/vdiv.gf46/storage_grid.snp",
+              "sha256": "dcec7db32fc3680eaccde7c0cfaf0ee97313bef94f7f3bddc419cd245faf1b8c",
+              "bytes": 34996
+            }
+          }
+        }
+      },
+      "snapshot": {
+        "voltage_error_v": 3.885780586188048e-12,
+        "current_error_a": 4.182225177068108e-18,
+        "cap_voltage_error_v": 5.551115123125783e-14,
+        "cap_companion_residual_a": 3.559375016948252e-10,
+        "cap_companion_history": {
+          "I_Cdc_kA": {
+            "branch_1based": 4,
+            "voltage_v": 399.99967797399387,
+            "signed_companion_history_a": -1599998.7118476469,
+            "companion_error_a": 3.559375016948252e-10
+          },
+          "I_C1_kA": {
+            "branch_1based": 3,
+            "voltage_v": -0.00030221467733904106,
+            "signed_companion_history_a": 12.08904125450516,
+            "companion_error_a": 1.7346705364176037e-15
+          }
+        },
+        "stored_control_error": 5.684341886080802e-14,
+        "closed_log_handle_zero": true,
+        "nodes": 14,
+        "branches": 21,
+        "anchor_si": {
+          "vdc_v": 399.99967797399387,
+          "polarization_v": -0.00030221467733904106,
+          "storage_current_a": -4.952832199922597e-05
+        }
+      },
+      "overlap": {
+        "clock": 1.1102230246251565e-16,
+        "voltage_v": 3.0003777240494856e-10,
+        "current_a": 2.2968300438658273e-09,
+        "modulation_pu": 1.3199996651280799e-12,
+        "shared_positive_rows": 20002
+      },
+      "seed_plant": {
+        "clock_abs_s": 1.1102230246251565e-16,
+        "kcl_abs_a": 3.735612486011064e-09,
+        "ohm_abs_v": 1.0061285138363019e-11,
+        "cap_charge_abs_c": 5.017442522927979e-14,
+        "inductor_tr_abs_v": 7.913740773801692e-10,
+        "tr_energy_abs_j": 2.2096510087160973e-11,
+        "cumulative_energy_abs_j": 6.50623306447816e-08,
+        "ocv_abs_v": 5.684341886080802e-14,
+        "grid_source_abs_v": 0.0,
+        "ac_branch_current_abs_a": 1.3944551946432e-26,
+        "storage_peak_abs_a_max": 4.000001059272201,
+        "independent_parked_voltage_error_v": 1.3005774235352874e-10,
+        "independent_parked_current_error_a": 1.830846585448853e-11,
+        "snapshot_bus_400_abs_v": 0.0003220260099965344,
+        "snapshot_polarization_abs_v": 0.00030221467728353,
+        "snapshot_storage_current_abs_a": 4.9528321999226e-05,
+        "source_command_abs_v": 5.3859139370615594e-12
+      },
+      "restored_plant": {
+        "clock_abs_s": 1.1102230246251565e-16,
+        "kcl_abs_a": 3.531527070776974e-09,
+        "ohm_abs_v": 1.0118128557223827e-11,
+        "cap_charge_abs_c": 4.970024178584673e-14,
+        "inductor_tr_abs_v": 8.009806151676457e-10,
+        "tr_energy_abs_j": 2.2048121060000772e-11,
+        "cumulative_energy_abs_j": 1.4676034374426702e-08,
+        "ocv_abs_v": 0.0,
+        "source_command_abs_v": 5.3859139370615594e-12
+      },
+      "restored_controller": {
+        "inner_updates": 500,
+        "outer_due": 50,
+        "outer_enabled": 40,
+        "maximum_commanded_current_a": 1.1714602593125294,
+        "exact_gate_resistance": true,
+        "gate_comparison_mismatches": 0,
+        "first_sample_tick": 40,
+        "first_applied_tick": 42,
+        "fine_gate_midpoints": 10001,
+        "exact_fine_midpoint_hold": true,
+        "same_row_voltage_v": 4.9960036108132044e-12,
+        "same_row_current_a": 5.0090140368830305e-14
+      },
+      "restored_first_charge": {
+        "pcc_active_mean_w": 263.34352741876444,
+        "pcc_reactive_mean_var": -11.921702123582167,
+        "storage_absorbed_mean_a": 0.6210712975398125,
+        "storage_absorbed_mean_w": 248.68980548546753,
+        "bus_mean_v": 400.420029483779,
+        "polarization_mean_v": 0.17160096476309758,
+        "samples": 4000,
+        "relative_window_s": [
+          0.04,
+          0.05
+        ]
+      }
+    }
+  },
+  "native_stdout_integration_review": {
+    "earlier_intake_refusals": [
+      {
+        "path": "local_reference/d1_storage_grid_short_20261123/5us_seed_metadata_refusal.log",
+        "sha256": "21eeffc6f7188926bac165d09209afc05ea2e2798eb8b1c69df4496c430a4c89",
+        "bytes": 1482
+      },
+      {
+        "path": "local_reference/d1_storage_grid_short_20261123/verification/2p5us_loaded_seed_review.json",
+        "sha256": "f6cfe2abd4105672bc6713679d755be60a13206bf89e9b0399990c72ae5c7d38",
+        "bytes": 328
+      },
+      {
+        "path": "local_reference/d1_storage_grid_short_20261123/verification/5us_grid_short_review.json",
+        "sha256": "4f97379278ae944a1b5c962d664a8ceb7a0e764226c426e31f42e837a4b3160d",
+        "bytes": 353
+      }
+    ],
+    "reviewer": {
+      "path": "local_reference/d1_storage_grid_short_20261123/audit_grid_storage_review_pair.py",
+      "sha256": "3f1b69b5e0054fd0a01b0166a1be117e8d22f790936de48c19b058a8339e8750",
+      "bytes": 10122
+    },
+    "scope": "Cold native stdout omits the solution method line. PSCAD selected two native batch sequence numbers. All batch and solver provenance and the original all-interval trapezoidal charge, voltage and energy gates remain required."
+  },
+  "original_refusals": [
+    {
+      "terminal": {
+        "path": "local_reference/d1_storage_grid_short_20261123/5us/restart/n/20261123T005511912018Z/terminal.json",
+        "sha256": "58e36941f82cc7398a08f43a056033734210799f52e62b3f0a4d6d938664986d",
+        "bytes": 1810
+      },
+      "worker": {
+        "path": "local_reference/d1_storage_grid_short_20261123/5us/restart/n/20261123T005511912018Z/worker.json",
+        "sha256": "e49aeaa06cc699990110fad28e23b128eaaff8ed9521d27f1802c2cc94eb7a54",
+        "bytes": 3270
+      },
+      "logs": [
+        {
+          "path": "local_reference/d1_storage_grid_short_20261123/5us/restart/n/20261123T005511912018Z/worker.stderr.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        {
+          "path": "local_reference/d1_storage_grid_short_20261123/5us/restart/n/20261123T005511912018Z/build_messages.json",
+          "sha256": "46c5f5ae09e30537006ea008f7d9dca0b231b0a73ac19c53d90589030ef98dd6",
+          "bytes": 1157
+        },
+        {
+          "path": "local_reference/d1_storage_grid_short_20261123/5us/restart/n/20261123T005511912018Z/canvas_inventory.json",
+          "sha256": "e623fb1999f94de40c1618437eb5518dbb0b09af5ed2a30c919540a5b2de8def",
+          "bytes": 271
+        },
+        {
+          "path": "local_reference/d1_storage_grid_short_20261123/5us/restart/n/20261123T005511912018Z/project/vdiv.pscx",
+          "sha256": "4e97c1ac167edc217f0e2d326915b9e3228e06ebdc2bf7bedbb56dc6262bc012",
+          "bytes": 216629
+        }
+      ],
+      "run_calls": 0
+    },
+    {
+      "terminal": {
+        "path": "local_reference/d1_storage_grid_short_20261123/5us/restart_relocated/n/20261123T005951994029Z/terminal.json",
+        "sha256": "b6b27cfa579dbf9b0f3a0a33b29070437a4fc22df4703351459615796399dd25",
+        "bytes": 5869
+      },
+      "worker": {
+        "path": "local_reference/d1_storage_grid_short_20261123/5us/restart_relocated/n/20261123T005951994029Z/worker.json",
+        "sha256": "6f06be5fe4828faa0de007b21f2380c3eeee755a5405f21f81c4b07f71683b8c",
+        "bytes": 3617
+      },
+      "logs": [
+        {
+          "path": "local_reference/d1_storage_grid_short_20261123/5us/restart_relocated/n/20261123T005951994029Z/worker.stderr.txt",
+          "sha256": "3d8b0882f0196a6c9ae766c3677b371ecec17746c5fa11a6c6bfd6af0884520a",
+          "bytes": 1263
+        },
+        {
+          "path": "local_reference/d1_storage_grid_short_20261123/5us/restart_relocated/n/20261123T005951994029Z/build_messages.json",
+          "sha256": "a2e83a2d1de6873b2d363bf63ef0b045fa5ccb0eb49f2d1376108e2b637ab374",
+          "bytes": 4528
+        },
+        {
+          "path": "local_reference/d1_storage_grid_short_20261123/5us/restart_relocated/n/20261123T005951994029Z/canvas_inventory.json",
+          "sha256": "89c2f7ba040ed266311b010ff954f5185cedc1de1c7895bfb156d3b022fb0603",
+          "bytes": 694
+        },
+        {
+          "path": "local_reference/d1_storage_grid_short_20261123/5us/restart_relocated/n/20261123T005951994029Z/project/vdiv.pscx",
+          "sha256": "30a874b059bc5471650ce54ab11075c35d182ce0fce6cff707d18c2f03b7c8a3",
+          "bytes": 216631
+        }
+      ],
+      "run_calls": 0
+    }
+  ],
+  "reproduction": {
+    "storage_grid_native.py": {
+      "path": "local_reference/d1_storage_grid_short_20261123/storage_grid_native.py",
+      "sha256": "00e8323eaca8df07148d30aaf7b8fc2ecaf0416dbec1f09b87b1b4fa21eb709e",
+      "bytes": 20855
+    },
+    "storage_grid_native_recovery.py": {
+      "path": "local_reference/d1_storage_grid_short_20261123/storage_grid_native_recovery.py",
+      "sha256": "50ad38ac01ffa3bb02613af16ce634e8c6996b3b962c9e3954fa6d391f69f6dc",
+      "bytes": 21804
+    },
+    "storage_grid_native_canonical.py": {
+      "path": "local_reference/d1_storage_grid_short_20261123/storage_grid_native_canonical.py",
+      "sha256": "29c4750fcc37ecede40aa1d12d94e02ad872004408bac753aec35655c8c2bf8a",
+      "bytes": 22865
+    },
+    "storage_grid_restore.py": {
+      "path": "local_reference/d1_storage_grid_short_20261123/storage_grid_restore.py",
+      "sha256": "de62234f2766d06088ab61f7964088b24ee1a85baad96d36ef5067f7ce915dea",
+      "bytes": 4764
+    },
+    "storage_grid_wiring.py": {
+      "path": "local_reference/d1_storage_grid_short_20261123/storage_grid_wiring.py",
+      "sha256": "503a5d7ef2a021d9e546bac554ea69f1396bc1606dc132dfd1d8938d1f4a4e04",
+      "bytes": 17609
+    },
+    "storage_grid_control.py": {
+      "path": "local_reference/d1_storage_grid_short_20261123/storage_grid_control.py",
+      "sha256": "4e28e4e901209812c0179dc2f545ccab5478136df9805b2db7b6947d9ed16a31",
+      "bytes": 10052
+    },
+    "verify_seed.py": {
+      "path": "local_reference/d1_storage_grid_short_20261123/verify_seed.py",
+      "sha256": "cd9ea23a6f91891977a4194e458238e9291ed054b29252090c56e291c109f103",
+      "bytes": 2441
+    },
+    "audit_grid_storage.py": {
+      "path": "local_reference/d1_storage_grid_short_20261123/audit_grid_storage.py",
+      "sha256": "ab0d17cf3e7ab8e1da3495067629b0d29081751777903a2b7320bfcbb86ce95f",
+      "bytes": 41741
+    },
+    "audit_grid_storage_review.py": {
+      "path": "local_reference/d1_storage_grid_short_20261123/audit_grid_storage_review.py",
+      "sha256": "754350a86d1a935c4016a11543dbbf631a94d82fce9c2f85278001253489df47",
+      "bytes": 9946
+    },
+    "audit_grid_storage_review_loaded.py": {
+      "path": "local_reference/d1_storage_grid_short_20261123/audit_grid_storage_review_loaded.py",
+      "sha256": "0ee98d5520dbe06502feff14dddc2636c02c6b56e86d3a07ccd0ef2cb011cc3d",
+      "bytes": 10011
+    },
+    "audit_grid_storage_review_pair.py": {
+      "path": "local_reference/d1_storage_grid_short_20261123/audit_grid_storage_review_pair.py",
+      "sha256": "3f1b69b5e0054fd0a01b0166a1be117e8d22f790936de48c19b058a8339e8750",
+      "bytes": 10122
+    },
+    "plot_grid_storage_review.py": {
+      "path": "local_reference/d1_storage_grid_short_20261123/plot_grid_storage_review.py",
+      "sha256": "f8e9eb403ae9f9a12a77f4d7906e15a4f1027a2df7c7bc35a2dffe6b210fd9e4",
+      "bytes": 7309
+    }
+  },
+  "artifact_index": "The closed phase receipts bind original INF and OUT files, compiled model, process evidence, inputs and controller log. Each grid audit holds the full per-signal metrics."
+}

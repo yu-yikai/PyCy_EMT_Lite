@@ -1,0 +1,114 @@
+{
+  "schema": "merge_review_repairs_v1",
+  "date": "2026-11-24",
+  "source_commit": "53133391291647b4c8294e89b7c76b8d4bcd6ffc",
+  "windows_clean_checkout": {
+    "path": ".tmp/longterm/fix-crlf-20261124T064136040Z",
+    "core_autocrlf": true,
+    "reference_hashes_matching_by_case": {
+      "26": 10,
+      "28": 3,
+      "33": 2,
+      "34": 2
+    },
+    "focused_tests": {
+      "report": {
+        "path": ".tmp/longterm/fix-crlf-20261124T064136040Z/.tmp/specialized.xml",
+        "bytes": 6858,
+        "sha256": "cfae9c37a6aef1aa1f8c480c63bbe1314a58808514f1c45cf949f5addf5aeac2"
+      },
+      "counts": {
+        "tests": 43,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 2
+      },
+      "passed": 41
+    }
+  },
+  "windows_full_suite": {
+    "report": {
+      "path": ".tmp/longterm/merge-repair-20261124T063829585Z/tests.xml",
+      "bytes": 241429,
+      "sha256": "f4bf384639315f5ecdf0834c2f6cfea82c2e82eabe1331488aa110af978165e8"
+    },
+    "counts": {
+      "tests": 1672,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 2
+    },
+    "passed": 1670
+  },
+  "ubuntu_wsl_visualization_tests": {
+    "report": {
+      "path": ".tmp/longterm/merge-5313339-posix-output-pytest.xml",
+      "bytes": 7028,
+      "sha256": "2449124704fe93c0cd799acb24016280646f46dfe032af7ddbfcfc02823b0c00"
+    },
+    "counts": {
+      "tests": 39,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 5
+    },
+    "passed": 34
+  },
+  "comparison_scope": "Original acceptance thresholds and archived Simulink or PSCAD waveforms",
+  "archived_comparisons": {
+    "26": {
+      "path": "local_reference/fix26-20261124T063829585Z/report.json",
+      "bytes": 45874,
+      "sha256": "26f7b81eb32de3cd203e39ccb2579171df7783537847f14cdccbab124524e833",
+      "passed": true
+    },
+    "28": {
+      "path": "local_reference/grid_connected_vsc_open_loop/comparison_results/20261124T063935886097Z/report.json",
+      "bytes": 2595,
+      "sha256": "34935170b3143d591f24584cd64e43447ece568eb168b1fee6dac80253b3a10c",
+      "passed": true
+    },
+    "33": {
+      "path": "local_reference/fix33-20261124T063829585Z/report.json",
+      "bytes": 3663,
+      "sha256": "ca6142f3cefc652fbc8bd6fc627df73d27375f0593ae2c6f07321fb71a260fcd",
+      "passed": true
+    },
+    "34": {
+      "path": "local_reference/fix34-20261124T063829585Z/report.json",
+      "bytes": 2211,
+      "sha256": "bbff6c11a5dff69d18f7cf1d13d828e61d97d302c048387c67059cc8614e79bd",
+      "passed": true
+    }
+  },
+  "hosted_ci": {
+    "run_id": 45341968249,
+    "url": "https://github.com/yu-yikai/PyCy_EMT_Lite/actions/runs/45341968249",
+    "source_commit": "53133391291647b4c8294e89b7c76b8d4bcd6ffc",
+    "conclusion": "success",
+    "jobs": {
+      "ubuntu-latest": {
+        "job_id": 138267506937,
+        "conclusion": "success",
+        "public_examples": 35,
+        "test_and_coverage_artifact": {
+          "id": 14896818716,
+          "name": "test-coverage-Linux",
+          "digest": "sha256:7178436022eda1a1bd19c1726d87d2707878fc5499b85eaa4dc4355f9ce10685",
+          "bytes": 365653
+        }
+      },
+      "windows-latest": {
+        "job_id": 138267507370,
+        "conclusion": "success",
+        "public_examples": 35,
+        "test_and_coverage_artifact": {
+          "id": 14897012927,
+          "name": "test-coverage-Windows",
+          "digest": "sha256:5a393f2e98b5d9dc931c88e67aa22cf50a1b022ebf711ead9c02f1b9a213fcc4",
+          "bytes": 365635
+        }
+      }
+    }
+  }
+}

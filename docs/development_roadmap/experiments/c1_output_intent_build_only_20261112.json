@@ -1,0 +1,188 @@
+{
+  "schema": "c1_output_intent_build_only_v1",
+  "recorded_utc": "2026-11-11T23:37:41.396798+00:00",
+  "checked_head": "fb9aaa8612a2725d9a93ec248b604d39f2be57fb",
+  "status": "BUILD_ONLY_COMPILED_DC_STAGE_REJECTION_AND_REVIEWER_PARSE_BOUNDARY",
+  "scope": {
+    "purpose": "Build-only admission of a fresh DC source-current observation; not a full VSC reference or candidate.",
+    "observer_delta": "One source-clone Real/Variable/Output/dim1 field FreshAbs=I_dc_absorb_kA; append $FreshAbs = -CBR($BA, $SS) to original Dsout; restore all32 unchanged master:pgb.",
+    "preserved": "Original source equations/CUR/ports, plant19 branches, other31 channels, manual gates, clocks, ideal flags,17 hard budgets and source-terminal/token budgets.",
+    "configured_only": "400us stop,5us step,81 points,32 channels; zero waveform samples observed.",
+    "versions": "Installed PSCAD5.0 / GFortran4.6; research artifacts remain ignored."
+  },
+  "frozen_before_native": {
+    "contract": {
+      "path": "local_reference/native_static_reviews/c1_source_output_intent_build_contract_20261111T230528454328Z/receipt.json",
+      "bytes": 14439,
+      "sha256": "56865e2bfab6fdc37005558d6858b09a3ff1175e168b5f9f1803acd536475adc"
+    },
+    "package_manifest": {
+      "path": "local_reference/c1_openloop_reference_research/20261111T230607005288Z_output_intent_build_only_v1/manifest.json",
+      "bytes": 6702,
+      "sha256": "0b74a2862aaf916a74b9b8042a6cb00803f81da6258d624f4b67bf09202a7412"
+    },
+    "package_files": 22,
+    "flat_input_pins": 13,
+    "static_review": {
+      "path": "local_reference/native_static_reviews/c1_output_intent_final_20261111T231800Z/receipt.json",
+      "bytes": 4634,
+      "sha256": "b0a7e0841b254072bc1635166a693c0329d8c8619b44c9bc6953d5185762a7e4"
+    },
+    "independent_prelaunch": {
+      "path": "local_reference/native_static_reviews/c1_source_output_intent_independent_final_prelaunch_20261111T231500Z/receipt.json",
+      "bytes": 15236,
+      "sha256": "eaffe1c18c19f05f365a2f7ea189286489135550ed744dc59348d0b2a8767b16"
+    },
+    "independent_helper": {
+      "path": ".tmp/longterm/independent_c1_source_output_intent_build_only_20261112.py",
+      "bytes": 53992,
+      "sha256": "2e47494f04aea3923ba7864d5a0ab4387d374d2eb9494d1a4fea942b9e4ad350"
+    },
+    "root_preflight": {
+      "path": "local_reference/native_static_reviews/c1_output_intent_root_preflight_20261112/receipt.json",
+      "bytes": 1298,
+      "sha256": "aefbd7125b3f5ae94401ff19d22d6b034a765ec2e4abd75a009baff6159003b0"
+    }
+  },
+  "native": {
+    "run": "local_reference/c1_openloop_reference_research/20261111T230607005288Z_output_intent_build_only_v1/n/20261111T231950255510Z",
+    "session_id": 4225,
+    "authoritative_exec_closed": true,
+    "exec_exit_code": 1,
+    "elapsed_s": 264.4656402999535,
+    "native_build_errors": 0,
+    "worker_returncode": 1,
+    "worker_final_stage": "finished_after_exception",
+    "quit_returned": true,
+    "exit_classification": "CONTROLLED_FAILURE_QUIT_NOT_NORMAL_WORKER_COMPLETION",
+    "guarded_driver_completed": false,
+    "native_build_only_completed": false,
+    "generated_admission_passed": false,
+    "native_run_requested": false,
+    "native_run_returned": false,
+    "native_completion_observed": false,
+    "remaining_owned": [],
+    "forced_termination": false,
+    "no_OUT": true,
+    "environment_guards_unchanged": {
+      "profile_hash_unchanged": true,
+      "source_hash_unchanged": true,
+      "dependency_hashes_unchanged": true,
+      "parent_environment_unchanged": true
+    },
+    "terminal": {
+      "path": "local_reference/c1_openloop_reference_research/20261111T230607005288Z_output_intent_build_only_v1/n/20261111T231950255510Z/terminal.json",
+      "bytes": 9982,
+      "sha256": "9c3e7e22d9ee6f5f425ca0863317ee207c3bf9654c2d65565eda91ea8f8b73af"
+    },
+    "archive": {
+      "path": "local_reference/c1_openloop_reference_research/20261111T230607005288Z_output_intent_build_only_v1/n/20261111T231950255510Z/manifest.json",
+      "bytes": 22141,
+      "sha256": "1b2239176c85d701a9d6ff008dc899130b4d22051126aa0ea76ddf6f207e3a8d"
+    }
+  },
+  "separate_failure_layers": {
+    "runtime_first_rejection": {
+      "classification": "EXACT_NEGATIVE_CBR_REGEX_WHITESPACE_LIMITATION",
+      "message": "Direct negative own source BA CBR in MainOut",
+      "fact": "Frozen regexp omitted allowed whitespace after CBR(. Actual bare negative own-CBR assignment exists. Runtime stopped before its later freshness assertion.",
+      "receipt": {
+        "path": "local_reference/c1_openloop_reference_research/20261111T230607005288Z_output_intent_build_only_v1/n/20261111T231950255510Z/generated_build_admission.json",
+        "bytes": 272,
+        "sha256": "d30afa82b63d739572a12a92c4ca8e7a198072b7cf5d71a6990dd86d82708f1d"
+      }
+    },
+    "actual_generated_DC_stage_rejection": {
+      "established_by": "Separate bounded ROOT and maker inspection of actual generated source, not the interrupted independent helper.",
+      "source": {
+        "path": "local_reference/c1_openloop_reference_research/20261111T230607005288Z_output_intent_build_only_v1/n/20261111T231950255510Z/project/vdiv.gf46/Main.f",
+        "bytes": 33701,
+        "sha256": "21e7faaf9d155d619930c56895e8bbc7c3437895cd0989c3cc97fe3b3becad01"
+      },
+      "fresh_read": {
+        "routine": "MainOut",
+        "line": 854,
+        "text": "I_dc_absorb_kA = -CBR( (IBRCH(1)+2), SS(1))"
+      },
+      "own_PGB": {
+        "routine": "MainDyn",
+        "line": 451,
+        "index": 27,
+        "text": "PGB(IPGB+27) = I_dc_absorb_kA"
+      },
+      "same_MainOut_requirement": "FAIL; whitespace correction alone cannot qualify the DC recording chain."
+    },
+    "independent_helper_boundary": {
+      "status": "BUILD_REVIEW_EXCEPTION_FAIL",
+      "invocations": 1,
+      "completed_checks_pass": 193,
+      "error": "ValueError: Unknown PGBList record: !=======================================================================",
+      "not_reached": "Complete metadata,4-current/15-Vm timing,37-dimension/STOF/source-generated-physics deep admission and final in-helper rechecks.",
+      "separate_rehash": "101 existing descriptors /98 unique paths rehashed PASS after the exception; does not retroactively complete structural admission.",
+      "frozen_helper_or_receipt_edited_or_rerun": false
+    }
+  },
+  "bounded_raw_facts": {
+    "Map_channels": 32,
+    "DATAStruct_records": 34,
+    "all37_raw_dimension_deltas": 0,
+    "STORF": 44,
+    "STOF": 45,
+    "source_full_child_semantic_matches": 3,
+    "qualification_limit": "These raw counts and source matches are not a completed independent metadata/storage/current admission."
+  },
+  "actual_reviews": {
+    "root22_package67_run_hashes_and3_source_semantics": {
+      "path": "local_reference/native_static_reviews/c1_output_intent_root_actual_20261112/receipt.json",
+      "bytes": 9318,
+      "sha256": "cea7c62f2028a5a0e6ada49da8aca5e4bef7ac1895262cf48282c503ba32978e"
+    },
+    "independent_once": {
+      "path": "local_reference/native_static_reviews/c1_source_output_intent_build_independent_actual_20261111T231950255510Z_20261111T232557008368Z/receipt.json",
+      "bytes": 74571,
+      "sha256": "6d578f91ac31e5b92a558585b74ce2441b3b5775605a838252cfb7f437affc75"
+    },
+    "independent_scope_supplement": {
+      "path": "local_reference/native_static_reviews/c1_source_output_intent_build_independent_actual_20261111T231950255510Z_20261111T232557008368Z/scope_supplement.json",
+      "bytes": 25840,
+      "sha256": "15d8523d11b5f24d81f9d89ad4e291e2c80cf4d239136eb5d82c85f74585bff4"
+    },
+    "maker_closed_diagnostic": {
+      "path": "local_reference/native_static_reviews/c1_output_intent_closed_review_20261111T232931220080Z/receipt.json",
+      "bytes": 9953,
+      "sha256": "6706c6a140c79433fa096592083865f517b1691a049cc76a401ddfb8fb8bf7a6"
+    },
+    "maker_scope_addendum": {
+      "path": "local_reference/native_static_reviews/c1_output_intent_closed_review_20261111T232931220080Z/scope_and_next_addendum.json",
+      "bytes": 3223,
+      "sha256": "ba3ca9ad1e8ada880a5f6415701d8ac5a25da0a95d2fb69797d4c1dc79c05365"
+    }
+  },
+  "prospective_unimplemented_method": {
+    "status": "PROSPECTIVE_NO_NEW_PACKAGE_OR_NATIVE_EXECUTION",
+    "primary_source": "https://www.pscad.com/webhelp-v502-ol/Master_Library_Models/Miscellaneous/Force_to_DSOUT.htm",
+    "installed_definition": {
+      "path": "local_reference/native_static_reviews/c1_output_intent_closed_review_20261111T232931220080Z/installed_force_dsout.xml",
+      "bytes": 13512,
+      "sha256": "a8de1a9c3bf8bdf59c2dc45fe6b06b0ca057c9e741deb88ab0ee4e6a8d8007a4"
+    },
+    "mechanism": "Standard typed signal identity out=in in Dsout, Real/Dim1; no electrical Branch/MANA/storage script. Not a current sensor.",
+    "scope_limit": "Official page v5.02; installed compiler/master5.0. Future stage, ordering and observational storage are unproved and require a new frozen contract/build-only audit."
+  },
+  "previous_result_preserved": {
+    "path": "docs/development_roadmap/experiments/c1_pgb_split_build_only_20261112.json",
+    "bytes": 12318,
+    "sha256": "c98a2addd01e92e90ff72eeae4bd3f7a5b9319ddc16ddeceb45838b354570bdb"
+  },
+  "historical_scope": "Old native numeric/timing/compile failures retained. Removed ammeter-drop/rank2 gates are NA for this topology, not PASS. No numerical budgets were evaluated or loosened this turn.",
+  "test_reuse": "All113 Python source files and dependencies unchanged. Reuse prior1300 passed including slow, locked27/Ruff/mypy39; no full regression rerun this research-only turn.",
+  "numeric_status": "NOT_OBSERVED",
+  "numerical_acceptance": false,
+  "overall_reference_accepted": false,
+  "full_VSC_reference_ready": false,
+  "candidate_executed": false,
+  "active_native_runs": 0,
+  "long_term_scope": "Formal new examples19-27 remain9; C1in_progress, full open-loop and later control chain unaccepted; D1planned; F1 external CI restoration pending; goal active.",
+  "remote_scope": "Real remote verified equal to checked_head at entry; postcommit identity/clean state recorded in ignored closeout.",
+  "next_gate": "Freeze one standard master:force_dsout Real/Dim1 signal transfer between distinct source-fresh and recorded aliases, with exact observer components/ports/wires/nets and storage expectations. Preserve19 physical branches, source equations/CUR,32 channels, clocks and17 plus Vs/token budgets. Official v5.02 and installed5.0 support this primitive, not its future compiled ordering. Use a new package/helper only: accept whitespace in the exact bare negative own-CBR expression and the exact known PGBList separator, reject other records. Require build0, complete Map32/DATAStruct34 and all11 parameters/ports/instance identities, four currents and15 Vm fresh to own PGB in MainOut, and all37 dimensions/storage/writer guards. For DC prove negative ownBA then standard identity copy then own PGB, in order, without overwrite or own Dyn writer/history CUR. No Run even after a build-only pass; freeze a separate numeric execution contract first. Do not patch frozen failures, generated files or indices, reconstruct DC current or relax budgets."
+}

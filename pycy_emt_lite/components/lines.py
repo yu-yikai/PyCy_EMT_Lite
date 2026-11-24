@@ -48,20 +48,23 @@ class _SeriesState:
     last_current: float = 0.0
     last_voltage: float = 0.0
 
-def _validate_pi_parameters(name: str, resistance: float, inductance: float, capacitance: float) -> None:
-    """检查 π 型线路参数。"""
+def _checked_pi_parameters(
+    name: str, resistance: float, inductance: float, capacitance: float,
+) -> tuple[float, float, float]:
+    """检查 π 型线路参数，并用 Python 浮点数进行后续计算。"""
 
-    for parameter, value in (("resistance", resistance), ("inductance", inductance), ("capacitance", capacitance)):
-        _finite_real(value, f"{name} 的 {parameter}")
-
-    if not math.isfinite(resistance) or resistance < 0:
+    resistance = _finite_real(resistance, f"{name} 的 resistance")
+    inductance = _finite_real(inductance, f"{name} 的 inductance")
+    capacitance = _finite_real(capacitance, f"{name} 的 capacitance")
+    if resistance < 0:
         raise ValueError(f"{name} 的串联电阻必须为有限非负数。")
-    if not math.isfinite(inductance) or inductance < 0:
+    if inductance < 0:
         raise ValueError(f"{name} 的串联电感必须为有限非负数。")
-    if not math.isfinite(capacitance) or capacitance < 0:
+    if capacitance < 0:
         raise ValueError(f"{name} 的并联电容必须为有限非负数。")
     if resistance == 0 and inductance == 0:
         raise ValueError(f"{name} 的串联电阻和串联电感不能同时为 0。")
+    return resistance, inductance, capacitance
 
 def _series_companion(
     method: str,
@@ -228,7 +231,9 @@ class PiLine(Component):
     receiving_cap_state: _CapacitorState = field(default_factory=_CapacitorState, init=False)
 
     def __post_init__(self) -> None:
-        _validate_pi_parameters(f"π 型线路 {self.name}", self.resistance, self.inductance, self.capacitance)
+        self.resistance, self.inductance, self.capacitance = _checked_pi_parameters(
+            f"π 型线路 {self.name}", self.resistance, self.inductance, self.capacitance,
+        )
 
     def nodes(self) -> Iterable[str]:
         return (self.sending, self.receiving, self.ground)
@@ -319,7 +324,9 @@ class ThreePhasePiLine(Component):
     to_cap_states: dict[PhaseName, _CapacitorState] = field(default_factory=lambda: {phase: _CapacitorState() for phase in PHASES}, init=False)
 
     def __post_init__(self) -> None:
-        _validate_pi_parameters(f"三相 π 型线路 {self.name}", self.resistance, self.inductance, self.capacitance)
+        self.resistance, self.inductance, self.capacitance = _checked_pi_parameters(
+            f"三相 π 型线路 {self.name}", self.resistance, self.inductance, self.capacitance,
+        )
 
     def nodes(self) -> Iterable[str]:
         nodes = [self.ground]
@@ -414,7 +421,9 @@ class SegmentedLine(Component):
             raise ValueError(f"分段线路 {self.name} 的段数必须为正整数。")
         if self.sections > 1000:
             raise ValueError(f"分段线路 {self.name} 的 sections 超过当前上限 1000；请减小段数，避免过大矩阵和状态分配。")
-        _validate_pi_parameters(f"分段线路 {self.name}", self.resistance, self.inductance, self.capacitance)
+        self.resistance, self.inductance, self.capacitance = _checked_pi_parameters(
+            f"分段线路 {self.name}", self.resistance, self.inductance, self.capacitance,
+        )
         _check_internal_nodes(self.name, (self._internal_node(i) for i in range(1, self.sections)),
                               [self.sending, self.receiving, self.ground])
         self.series_states = [_SeriesState() for _ in range(self.sections)]
@@ -529,6 +538,7 @@ class BergeronLine(Component):
     ground: str = "0"
     attenuation: float = 1.0
     history: list[_BergeronHistorySample] = field(default_factory=list, init=False)
+    _wavefront_left: dict[int, _BergeronHistorySample] = field(default_factory=dict, init=False, repr=False)
     _time_step: float | None = field(default=None, init=False)
     _delay_steps: int = field(default=0, init=False)
     last_sending_current: float = 0.0
@@ -554,9 +564,7 @@ class BergeronLine(Component):
         sending = context.node_index(self.sending)
         receiving = context.node_index(self.receiving)
         ground = context.node_index(self.ground)
-        delayed = self._delayed_sample(context.time)
-        sending_history = self.attenuation * (-delayed.receiving_voltage / self.surge_impedance - delayed.receiving_current)
-        receiving_history = self.attenuation * (-delayed.sending_voltage / self.surge_impedance - delayed.sending_current)
+        sending_history, receiving_history = self._history_sources(context)
 
         add_conductance(matrix, sending, ground, conductance)
         add_conductance(matrix, receiving, ground, conductance)
@@ -568,9 +576,7 @@ class BergeronLine(Component):
 
         sending_voltage = add_voltage_probe(solution, context.node_index(self.sending), context.node_index(self.ground))
         receiving_voltage = add_voltage_probe(solution, context.node_index(self.receiving), context.node_index(self.ground))
-        delayed = self._delayed_sample(context.time)
-        sending_history = self.attenuation * (-delayed.receiving_voltage / self.surge_impedance - delayed.receiving_current)
-        receiving_history = self.attenuation * (-delayed.sending_voltage / self.surge_impedance - delayed.sending_current)
+        sending_history, receiving_history = self._history_sources(context)
         self.last_sending_current = sending_voltage / self.surge_impedance + sending_history
         self.last_receiving_current = receiving_voltage / self.surge_impedance + receiving_history
         sample = _BergeronHistorySample(
@@ -580,10 +586,12 @@ class BergeronLine(Component):
             receiving_voltage=receiving_voltage,
             receiving_current=self.last_receiving_current,
         )
-        if self.history and self.history[-1].time == context.time:
-            self.history[-1] = sample  # 显式事件只保存右侧端口值。
-        else:
-            self.history.append(sample)
+        if context._initial is not None:
+            # t=0 的左侧是零历史；其余一致求解前已经记录了同一时刻的积分终点。
+            left = self.history.pop() if self.history else _BergeronHistorySample(0.0, 0.0, 0.0, 0.0, 0.0)
+            if self._outgoing_wave_changed(left, sample):
+                self._wavefront_left[len(self.history)] = left
+        self.history.append(sample)
 
     def outputs(self, context: StampContext, solution: np.ndarray) -> dict[str, float]:
         """记录线路两端电流。"""
@@ -593,17 +601,40 @@ class BergeronLine(Component):
             f"i:{self.name}:receiving": self.last_receiving_current,
         }
 
-    def _delayed_sample(self, time: float) -> _BergeronHistorySample:
-        """按整数步读取延时历史，避免浮点时间相减把波前推迟一拍。"""
+    def _outgoing_wave_changed(self, left: _BergeronHistorySample, right: _BergeronHistorySample) -> bool:
+        """仅传播出射波的跳变，舍入误差也不应反复触发一致求解。"""
+
+        for vl, il, vr, ir in (
+            (left.sending_voltage, left.sending_current, right.sending_voltage, right.sending_current),
+            (left.receiving_voltage, left.receiving_current, right.receiving_voltage, right.receiving_current),
+        ):
+            lv_over_z = vl / self.surge_impedance
+            rv_over_z = vr / self.surge_impedance
+            scale = max(abs(lv_over_z), abs(rv_over_z), abs(il), abs(ir))
+            if abs((lv_over_z + il) - (rv_over_z + ir)) > 8 * math.ulp(scale):
+                return True
+        return False
+
+    def _has_wavefront(self, step: int) -> bool:
+        return step - self._delay_steps in self._wavefront_left
+
+    def _history_sources(self, context: StampContext) -> tuple[float, float]:
+        """积分终点读取波前左侧，一致求解使用到达后的右侧。"""
 
         if self._time_step is None:
             raise RuntimeError(f"Bergeron 线路 {self.name!r} 尚未检查固定时间网格。")
-        index = round(time / self._time_step) - self._delay_steps
+        index = round(context.time / self._time_step) - self._delay_steps
         if index < 0:
-            return _BergeronHistorySample(index * self._time_step, 0.0, 0.0, 0.0, 0.0)
+            return 0.0, 0.0
         if index >= len(self.history):
             raise RuntimeError(f"Bergeron 线路 {self.name!r} 所需的第 {index} 步历史尚未求解。")
-        return self.history[index]
+        delayed = self.history[index]
+        if context._initial is None:
+            delayed = self._wavefront_left.get(index, delayed)
+        return (
+            self.attenuation * (-delayed.receiving_voltage / self.surge_impedance - delayed.receiving_current),
+            self.attenuation * (-delayed.sending_voltage / self.surge_impedance - delayed.sending_current),
+        )
 
 @dataclass(slots=True)
 class ThreePhaseBergeronLine(Component):

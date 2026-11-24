@@ -1,0 +1,356 @@
+{
+  "schema": "pycy_parallel_line_fault_isolation_candidate_protocol_v1",
+  "date": "2026-11-23",
+  "source_parent": "3a25d42e80736d15c0c632dd35f538566d0cc979",
+  "example": {
+    "number": 38,
+    "path": "examples/38_parallel_line_fault_isolation.py",
+    "case": "parallel_line_fault_isolation",
+    "default_step_s": 5e-05,
+    "stop_s": 0.35
+  },
+  "sources": {
+    "native_protocol": {
+      "path": "docs/development_roadmap/experiments/e_parallel_fault_surrogate_protocol_20261123.json",
+      "sha256": "7f2d511e8242ce3b47db4c0f413563779ff550bdb3876d58c99a9034f2c0986f",
+      "bytes": 8632
+    },
+    "qualified_native": {
+      "path": "docs/development_roadmap/experiments/e_parallel_fault_surrogate_native_20261123.json",
+      "sha256": "146a9a1942cab3a60bc320d0a2d6247f19f24bacbc7b842381afded820a9bfab",
+      "bytes": 10385
+    },
+    "original_vendor_motivation": {
+      "path": "docs/development_roadmap/experiments/e_case4_pi_original_timing_20261123.json",
+      "sha256": "662e4818505b58e477141736b9e7f82458bb27e75673c4ef5d8bd0d041f10a3d",
+      "bytes": 3671
+    },
+    "matched_pycy_probe": {
+      "path": "local_reference/e_parallel_fault_pscad_20261123/pycy_probe/20261123T065855687870Z/report.json",
+      "sha256": "c335b15b39f3d22721b8e785bcb6907850f9221e200eb4eeb16acc68ed788013",
+      "bytes": 68534
+    },
+    "same_grid_feasibility": {
+      "path": "local_reference/e_parallel_fault_pscad_20261123/verification/pycy_alignment.json",
+      "sha256": "dd5fe682b6e9884966fce3bd1b1bbaa775f496e89f0c1198eb206beaf7f0897e",
+      "bytes": 4215
+    }
+  },
+  "fixture": {
+    "emf_phase_rms_v": 120,
+    "frequency_hz": 60,
+    "phase_shifts_rad": [
+      0,
+      -2.0943951023931953,
+      2.0943951023931953
+    ],
+    "healthy_ohm": 2,
+    "load_ohm": 20,
+    "reference_ohm": 10000,
+    "path_on_ohm": 2,
+    "fault_on_ohm": 0.2,
+    "open_ohm": 1000000000,
+    "connections": "Three independent identical phases share ground. Ideal sinusoidal sources are already defined on the zero row. The healthy path and the receiving load stay connected. A weak 10 kΩ reference remains at the fault point. Only the two faulted path halves and the fault shunt change resistance.",
+    "conventions": "The healthy branch current is positive from S to R. The half-line currents are positive from S to F and R to F. The load, fault and reference currents are positive toward ground. Phase voltages are measured relative to ground, power is positive into the receiving load."
+  },
+  "timing": {
+    "duration_s": 0.35,
+    "fault_on_s": 0.1,
+    "open_sf_s": 0.15,
+    "open_rf_s": 0.2,
+    "fault_off_s": 0.25,
+    "reclose_s": 0.3,
+    "windows_s": {
+      "pre": [
+        0.05,
+        0.1
+      ],
+      "fault": [
+        0.1,
+        0.15
+      ],
+      "source_end_open": [
+        0.15,
+        0.2
+      ],
+      "both_ends_open": [
+        0.2,
+        0.25
+      ],
+      "cleared": [
+        0.25,
+        0.3
+      ],
+      "restored": [
+        0.3,
+        0.35
+      ]
+    },
+    "row_semantics": "Stamp all three copies of each new resistance on its integer edge row. Observe all original rows including zero and the final row. The half-open windows each contain three 60 Hz cycles."
+  },
+  "grids": {
+    "50us": {
+      "step_s": 5e-05,
+      "rows_including_zero": 7001
+    },
+    "25us": {
+      "step_s": 2.5e-05,
+      "rows_including_zero": 14001
+    }
+  },
+  "physical_limits": {
+    "clock_abs_s": 2e-12,
+    "source_abs_v": 5e-06,
+    "kcl_abs_a": 2e-06,
+    "ohm_abs_v": 5e-06,
+    "power_abs_w": 0.0002,
+    "analytic_voltage_abs_v": 5e-06,
+    "analytic_current_abs_a": 2e-06
+  },
+  "window_limits": {
+    "pre": {
+      "recv_rms_v": [
+        112,
+        113
+      ],
+      "fault_rms_v": [
+        115.5,
+        117
+      ],
+      "healthy_signed_rms_a": [
+        3.5,
+        4
+      ],
+      "sf_signed_rms_a": [
+        1.7,
+        2.1
+      ],
+      "rf_signed_rms_a": [
+        -2.1,
+        -1.7
+      ],
+      "fault_rms_a": [
+        0,
+        2e-07
+      ],
+      "load_mean_w": [
+        1880,
+        1915
+      ]
+    },
+    "fault": {
+      "recv_rms_v": [
+        64,
+        65
+      ],
+      "fault_rms_v": [
+        15,
+        16
+      ],
+      "healthy_signed_rms_a": [
+        27,
+        29
+      ],
+      "sf_signed_rms_a": [
+        52,
+        53
+      ],
+      "rf_signed_rms_a": [
+        24,
+        25
+      ],
+      "fault_rms_a": [
+        76,
+        78
+      ],
+      "load_mean_w": [
+        610,
+        640
+      ]
+    },
+    "source_end_open": {
+      "recv_rms_v": [
+        59,
+        61
+      ],
+      "fault_rms_v": [
+        5,
+        6
+      ],
+      "healthy_signed_rms_a": [
+        29,
+        31
+      ],
+      "sf_signed_rms_a": [
+        -2e-07,
+        2e-07
+      ],
+      "rf_signed_rms_a": [
+        26.5,
+        28
+      ],
+      "fault_rms_a": [
+        26.5,
+        28
+      ],
+      "load_mean_w": [
+        520,
+        550
+      ]
+    },
+    "both_ends_open": {
+      "recv_rms_v": [
+        108.5,
+        109.6
+      ],
+      "fault_rms_v": [
+        0,
+        1e-06
+      ],
+      "healthy_signed_rms_a": [
+        5.2,
+        5.7
+      ],
+      "sf_signed_rms_a": [
+        -2e-07,
+        2e-07
+      ],
+      "rf_signed_rms_a": [
+        -2e-07,
+        2e-07
+      ],
+      "fault_rms_a": [
+        0,
+        3e-07
+      ],
+      "load_mean_w": [
+        1740,
+        1820
+      ]
+    },
+    "cleared": {
+      "recv_rms_v": [
+        108.5,
+        109.6
+      ],
+      "fault_rms_v": [
+        0.002,
+        0.0026
+      ],
+      "healthy_signed_rms_a": [
+        5.2,
+        5.7
+      ],
+      "sf_signed_rms_a": [
+        -2e-07,
+        2e-07
+      ],
+      "rf_signed_rms_a": [
+        -2e-07,
+        2e-07
+      ],
+      "fault_rms_a": [
+        0,
+        1e-10
+      ],
+      "load_mean_w": [
+        1740,
+        1820
+      ]
+    },
+    "restored": {
+      "recv_rms_v": [
+        112,
+        113
+      ],
+      "fault_rms_v": [
+        115.5,
+        117
+      ],
+      "healthy_signed_rms_a": [
+        3.5,
+        4
+      ],
+      "sf_signed_rms_a": [
+        1.7,
+        2.1
+      ],
+      "rf_signed_rms_a": [
+        -2.1,
+        -1.7
+      ],
+      "fault_rms_a": [
+        0,
+        2e-07
+      ],
+      "load_mean_w": [
+        1880,
+        1915
+      ]
+    }
+  },
+  "restored_abs_limits": {
+    "recv_rms_v": 5e-06,
+    "fault_rms_v": 5e-06,
+    "healthy_signed_rms_a": 2e-06,
+    "sf_signed_rms_a": 2e-06,
+    "rf_signed_rms_a": 2e-06,
+    "fault_rms_a": 2e-06,
+    "load_mean_w": 0.0002
+  },
+  "cross_grid_limits": {
+    "voltage_abs_v": 5e-06,
+    "current_abs_a": 2e-06,
+    "power_abs_w": 0.0002
+  },
+  "implementation": {
+    "entry": "Use CaseDefinition and existing three-phase source, resistive line, grounded loads and explicit time-callable switches.",
+    "switching": "Stamp all three poles on the intended integer sample. Report all three actual switch states before mapping them to resistance words.",
+    "initial_row": "Retain the original zero row, including the nonzero B/C phase voltages of the absolute sinusoidal source.",
+    "scope": "Resistive three-bus surrogate. Teach backfeed after source-end opening, healthy-route supply after both openings, clearance while isolated, and restoration."
+  },
+  "same_grid": {
+    "time_shift_s": 0,
+    "interpolate": false,
+    "all_original_rows": true,
+    "absolute_limits_si": {
+      "display_s": 2e-12,
+      "time_s": 2e-12,
+      "v_src": 5e-06,
+      "v_recv": 5e-06,
+      "v_fault": 5e-06,
+      "i_healthy": 2e-06,
+      "i_sf": 2e-06,
+      "i_rf": 2e-06,
+      "i_fault": 2e-06,
+      "i_load": 2e-06,
+      "i_ref": 2e-06
+    },
+    "instantaneous_load_power_abs_w": 0.0002,
+    "exact_resistance_words": [
+      "R_sf_ohm",
+      "R_rf_ohm",
+      "R_fault_ohm"
+    ],
+    "window_abs_limits": {
+      "recv_rms_v": 5e-06,
+      "fault_rms_v": 5e-06,
+      "healthy_signed_rms_a": 2e-06,
+      "sf_signed_rms_a": 2e-06,
+      "rf_signed_rms_a": 2e-06,
+      "fault_rms_a": 2e-06,
+      "load_mean_w": 0.0002
+    },
+    "observed_probe_maxima_si": {
+      "50us": {
+        "voltage_abs_v": 8.498091119690798e-12,
+        "current_abs_a": 5.030642569181509e-12
+      },
+      "25us": {
+        "voltage_abs_v": 8.682832230988424e-12,
+        "current_abs_a": 5.172751116333529e-12
+      }
+    }
+  },
+  "completion": "Public example on the two original grids, native comparison, independent circuit and event checks, automatic tests, standalone runs, figure, report, teaching document and Git acceptance."
+}

@@ -1,0 +1,232 @@
+{
+  "schema": "pycy_grid_connected_storage_example_acceptance_v1",
+  "date": "2026-11-23",
+  "example": 35,
+  "passed": true,
+  "formal_example_accepted": true,
+  "formal_new_examples_completed": 17,
+  "source_parent": "e4532dda43cb1ab817f8e10a453e303db350a9bc",
+  "scope": "Grid-following charge/discharge reversal into a fixed-OCV one-RC storage port.",
+  "candidate_protocol": {
+    "path": "validation/cases/grid_connected_storage/candidate_protocol.json",
+    "sha256": "78c0c1e8d4b68e55034d2af2439ea383e3e86fd10f5069349ae90e8635b73a7e",
+    "bytes": 8925
+  },
+  "native_reference": {
+    "path": "docs/development_roadmap/experiments/d1_storage_grid_long_native_20261123.json",
+    "sha256": "ebdf670e893b1e35c19acf6ef8a4f8a860447c780320dc782a2268408fcb19fc",
+    "bytes": 20025
+  },
+  "comparison": {
+    "reference_platform": "PSCAD 5.0.0 / EMTDC 5 / gf46 x86",
+    "report": {
+      "path": "local_reference/case35_comparison_portable_20261123/report.json",
+      "sha256": "2bfd079fbcee7ce82e30c083e13b42edc8fbf0ffe3d114c89f33370c974f6ae3",
+      "bytes": 3743
+    },
+    "input_manifest": {
+      "path": "local_reference/case35_comparison_portable_20261123/inputs.json",
+      "sha256": "1c706781d9b3e577e15e2b38b029e12a7c122b278cf742589d2fa0f4a1d3f37c",
+      "bytes": 55304
+    },
+    "native_files_verified": 227,
+    "figure": {
+      "path": "local_reference/case35_comparison_portable_20261123/waveform_overlay.png",
+      "sha256": "47f9546dcde2b04b1ebedfaba13e9c93d6a4189ac2358b69d718dae6bb0b31bb",
+      "bytes": 215629
+    },
+    "grids": {
+      "5us": {
+        "report": {
+          "path": "local_reference/case35_comparison_portable_20261123/5us/report.json",
+          "sha256": "2f27f70307a2c0984847e34698abe9fd49af65428598dd1f682286b122e81d3c",
+          "bytes": 11528
+        },
+        "candidate_rows": 60002,
+        "native_positive_rows": 60001,
+        "maximum_voltage_error_v": 2.5630697564338334e-10,
+        "maximum_current_error_a": 1.6830012427096475e-09,
+        "switch_word_mismatches": 0,
+        "candidate_windows": {
+          "charge": {
+            "pcc_active_mean_w": 248.86648966928334,
+            "pcc_reactive_mean_var": -7.245876146572909,
+            "storage_absorbed_mean_w": 245.04077257413297,
+            "storage_absorbed_mean_a": 0.611699804834077,
+            "bus_mean_v": 400.5889104917343,
+            "polarization_mean_v": 0.3442305698006616
+          },
+          "discharge": {
+            "pcc_active_mean_w": -249.3067366757245,
+            "pcc_reactive_mean_var": -10.05366725993765,
+            "storage_absorbed_mean_w": -250.0117674721356,
+            "storage_absorbed_mean_a": -0.6259698409033017,
+            "bus_mean_v": 399.39992838996693,
+            "polarization_mean_v": -0.3496836736717838
+          }
+        },
+        "waveforms": {
+          "candidate_waveforms.npz": {
+            "path": "local_reference/case35_comparison_portable_20261123/5us/candidate_waveforms.npz",
+            "sha256": "b740e6f9141e730a306f5b2eacd318387a6d82f9c54abd0430b810b06409c438",
+            "bytes": 28211398
+          },
+          "native_waveforms.npz": {
+            "path": "local_reference/case35_comparison_portable_20261123/5us/native_waveforms.npz",
+            "sha256": "3790fae18a6ee5758bdc110aa0577456fbfdc60761f5040190d3fbc78dd86249",
+            "bytes": 17646038
+          }
+        }
+      },
+      "2p5us": {
+        "report": {
+          "path": "local_reference/case35_comparison_portable_20261123/2p5us/report.json",
+          "sha256": "87306ec282c6097ac495cb7c8bbc778948e6609f42d6790a1aee40038bbcd702",
+          "bytes": 11543
+        },
+        "candidate_rows": 120003,
+        "native_positive_rows": 120002,
+        "maximum_voltage_error_v": 5.190941010368988e-10,
+        "maximum_current_error_a": 3.8705817093087624e-09,
+        "switch_word_mismatches": 0,
+        "candidate_windows": {
+          "charge": {
+            "pcc_active_mean_w": 249.33974935474697,
+            "pcc_reactive_mean_var": -8.74738994141281,
+            "storage_absorbed_mean_w": 245.26963879551133,
+            "storage_absorbed_mean_a": 0.6122692393123673,
+            "bus_mean_v": 400.59015337100607,
+            "polarization_mean_v": 0.3452456752810879
+          },
+          "discharge": {
+            "pcc_active_mean_w": -248.38617014790046,
+            "pcc_reactive_mean_var": -9.81609333853004,
+            "storage_absorbed_mean_w": -249.02518045724906,
+            "storage_absorbed_mean_a": -0.6234956729739805,
+            "bus_mean_v": 399.4025099670557,
+            "polarization_mean_v": -0.3480917637546628
+          }
+        },
+        "waveforms": {
+          "candidate_waveforms.npz": {
+            "path": "local_reference/case35_comparison_portable_20261123/2p5us/candidate_waveforms.npz",
+            "sha256": "0f1bb22e628bbd73816d4b4f3b2a3ad6917cee229d5e9b96ca402f468f494287",
+            "bytes": 56411868
+          },
+          "native_waveforms.npz": {
+            "path": "local_reference/case35_comparison_portable_20261123/2p5us/native_waveforms.npz",
+            "sha256": "e2be253682b532295f4519c38e932aa6c6cd0fbbe9cd162d6e15282394adfeb1",
+            "bytes": 35286332
+          }
+        }
+      }
+    }
+  },
+  "tests": {
+    "windows_pytest_including_slow": 1612,
+    "windows_artifacts": [
+      {
+        "path": "local_reference/d1_storage_grid_long_20261123/windows_suite_v1/pytest.log",
+        "sha256": "86a5e6b0e53c53c2417a9f66808f594908694e1785352a8300d9c16a21b49d59",
+        "bytes": 1897
+      },
+      {
+        "path": "local_reference/d1_storage_grid_long_20261123/windows_suite_v1/pytest.xml",
+        "sha256": "76134d21deeea1efd902e0e6036d9bd14c57937f0749f858ee89ea7a325429ae",
+        "bytes": 232506
+      },
+      {
+        "path": "local_reference/d1_storage_grid_long_20261123/windows_suite_v1/terminal.json",
+        "sha256": "ee768170a43ee3ea5e07b6401163ef26613619220cc51cab9e1aa3265a0ca1d1",
+        "bytes": 124
+      },
+      {
+        "path": "local_reference/d1_storage_grid_long_20261123/windows_suite_v1/project_sources.json",
+        "sha256": "85fcd1dcea4bd48a76d3a68e764babc99867273d28e599a3973ca70cd8748a6e",
+        "bytes": 12443
+      },
+      {
+        "path": "local_reference/d1_storage_grid_long_20261123/windows_suite_v1/static_checks.log",
+        "sha256": "7d4f031c6e63dd26907ab086610f82b8cd3ae54d935e81b4abd3e9ab5e014ce0",
+        "bytes": 122
+      },
+      {
+        "path": "local_reference/d1_storage_grid_long_20261123/windows_suite_v1/portable_input_check.log",
+        "sha256": "dfdde73093c0c3958c90799963e064160ab697f45388106d5d2a0137a8cff01a",
+        "bytes": 123
+      },
+      {
+        "path": "local_reference/d1_storage_grid_long_20261123/windows_suite_v1/comparison_recheck.log",
+        "sha256": "cf5b1f73c03a05a1f5bf114abebb76ab79d5adc53d7077b7c50dfa4c573791b7",
+        "bytes": 353
+      }
+    ],
+    "ubuntu_wsl2_focused_tests": 11,
+    "ubuntu_artifacts": [
+      {
+        "path": "local_reference/d1_storage_grid_long_20261123/ubuntu_v1/wsl_base.tar",
+        "sha256": "d796accb4c74db50987311a210504a2158153d51f2c8e5bb9b89ff68350d5447",
+        "bytes": 5253120
+      },
+      {
+        "path": "local_reference/d1_storage_grid_long_20261123/ubuntu_v1/wsl_overlay.tar",
+        "sha256": "353477cd2cc11cc67d2da4de5a1d5abeba4f27eaa0786ac6a57a455efbc8ba5a",
+        "bytes": 33280
+      },
+      {
+        "path": "local_reference/d1_storage_grid_long_20261123/ubuntu_v1/run_wsl.sh",
+        "sha256": "a20c67f4f8ce811cae5291086b73c9cc38edcccaec45d5a5c3b46f4e3c53bca3",
+        "bytes": 2027
+      },
+      {
+        "path": "local_reference/d1_storage_grid_long_20261123/ubuntu_v1/wsl_sources.sha256",
+        "sha256": "5ef43dc006fb7b993a023a3e35718d37641b11e3d43d52e8abd47873afc0856f",
+        "bytes": 49893
+      },
+      {
+        "path": "local_reference/d1_storage_grid_long_20261123/ubuntu_v1/wsl_validation.log",
+        "sha256": "c93a84e223586e85a48d2c5ff7672b0b4f8f94e9587c0777822696dc5075490a",
+        "bytes": 2760
+      }
+    ],
+    "windows_default_standalone": {
+      "path": "local_reference/d1_storage_grid_long_20261123/standalone_windows/run.log",
+      "sha256": "d64c370226b30bb98415991f3fe25f204c20490e22ea5a6a4eab814134e6583b",
+      "bytes": 110
+    },
+    "fine_saved_teaching_figures": [
+      {
+        "path": "local_reference/d1_storage_grid_long_20261123/tutorial_figures/grid_connected_storage/active_power.png",
+        "sha256": "680b936df5d1de1dc605cd7f7ee32ee1245cea79d7594a4a02860e4b5d752ae5",
+        "bytes": 71039
+      },
+      {
+        "path": "local_reference/d1_storage_grid_long_20261123/tutorial_figures/grid_connected_storage/dc_bus_voltage.png",
+        "sha256": "675e3d93d0010cfde79ab5438dd573e48fd2310f48fac9c3d2b48dc3880404a9",
+        "bytes": 46053
+      },
+      {
+        "path": "local_reference/d1_storage_grid_long_20261123/tutorial_figures/grid_connected_storage/polarization_voltage.png",
+        "sha256": "e4896fa272b50ae847e71503496fd5fb936b55c0fc0ca2b7197cff51688bc323",
+        "bytes": 41033
+      }
+    ],
+    "example_34_regression": {
+      "baseline": {
+        "path": "local_reference/d1_case34_parity_20261123/baseline/summary.json",
+        "sha256": "813f3b48370177c174de0751f07bd3079ee35eda332d436c8018a05828281545",
+        "bytes": 6694
+      },
+      "after": {
+        "path": "local_reference/d1_case34_parity_20261123/after_refactor/summary.json",
+        "sha256": "d3143f9566f948cd2a5ae4ac3fb7b688f0447274a825457b56772f629812cd06",
+        "bytes": 6880
+      },
+      "rows": [
+        10002,
+        20003
+      ],
+      "columns": 223
+    }
+  }
+}

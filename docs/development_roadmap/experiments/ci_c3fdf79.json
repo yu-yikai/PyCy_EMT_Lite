@@ -1,0 +1,170 @@
+{
+  "schema_version": 1,
+  "observed_at_utc": "2026-11-16T07:45:20.195200+00:00",
+  "source": "GitHub Actions public REST API, existing system HTTPS proxy for read-only requests only",
+  "target_head_sha": "c3fdf7957d1c52ee5a3ba51c6bf2c55dbea2151a",
+  "target_branch": "codex/emt-examples-longterm",
+  "run_found": true,
+  "request_evidence": [
+    {
+      "url": "https://api.github.com/repos/yu-yikai/PyCy_EMT_Lite/actions/runs?head_sha=c3fdf7957d1c52ee5a3ba51c6bf2c55dbea2151a&per_page=100",
+      "http_status": 200,
+      "snapshot": "local_reference/native_static_reviews/c1_current_head_ci_readonly_20261116T074326044573Z/runs.json",
+      "bytes": 12543,
+      "sha256": "aede1bc554a0187a7066bb572933ee0edebebc64fe341a5011b7cf2bf274cba8"
+    },
+    {
+      "url": "https://api.github.com/repos/yu-yikai/PyCy_EMT_Lite/actions/runs/43825501731/jobs?per_page=100",
+      "http_status": 200,
+      "snapshot": "local_reference/native_static_reviews/c1_current_head_ci_readonly_20261116T074326044573Z/jobs.json",
+      "bytes": 1776,
+      "sha256": "67d04022cb9ff798e65c5f690ecdd2becfb2076408e28b33bfeaad219e8b617b"
+    },
+    {
+      "url": "https://api.github.com/repos/yu-yikai/PyCy_EMT_Lite/check-suites/118641808689/check-runs?per_page=100",
+      "http_status": 200,
+      "snapshot": "local_reference/native_static_reviews/c1_current_head_ci_readonly_20261116T074326044573Z/checks.json",
+      "bytes": 6187,
+      "sha256": "3576869a9cfb3d9fdc62b58a031ad90935839e7081512f1c4138815335304be8"
+    },
+    {
+      "url": "https://api.github.com/repos/yu-yikai/PyCy_EMT_Lite/check-runs/133158266369/annotations?per_page=100",
+      "http_status": 200,
+      "snapshot": "local_reference/native_static_reviews/c1_current_head_ci_readonly_20261116T074326044573Z/annotations_133158266369.json",
+      "bytes": 344,
+      "sha256": "c90bb33234b0f2c0367cccb56f389dfa8001da60a798f57fcd3996752a0f79b2"
+    },
+    {
+      "url": "https://api.github.com/repos/yu-yikai/PyCy_EMT_Lite/check-runs/133158266615/annotations?per_page=100",
+      "http_status": 200,
+      "snapshot": "local_reference/native_static_reviews/c1_current_head_ci_readonly_20261116T074326044573Z/annotations_133158266615.json",
+      "bytes": 769,
+      "sha256": "4830261f4ec29d0d4d8f8ad4ed1e37bca42c85dee3fd1cc66ef501f482aa447d"
+    }
+  ],
+  "authenticated_access_not_attempted": true,
+  "test_count": null,
+  "test_count_note": "Neither exact-HEAD job allocated a runner or executed steps. No remote test count inferred from local tests, other commits or empty job metadata.",
+  "rerun_or_push_requested": false,
+  "billing_accessed_or_changed": false,
+  "prior_failure_evidence_unchanged": true,
+  "observation_policy": "One exact-HEAD listing and bounded GET requests for its terminal jobs/checks/annotations. No old-run requests, polling or reruns.",
+  "scope": "This commit improves figure-window recovery instructions and formats example27 summary from its existing parameters. The workflow runs software checks/examples, not commercial native references.",
+  "live_monitor_process_remaining": false,
+  "workflow_run_id": 43825501731,
+  "run_url": "https://github.com/yu-yikai/PyCy_EMT_Lite/actions/runs/43825501731",
+  "status": "completed",
+  "conclusion": "failure",
+  "run_attempt": 1,
+  "event": "push",
+  "run_started_at": "2026-11-16T07:40:45Z",
+  "created_at": "2026-11-16T07:40:45Z",
+  "updated_at": "2026-11-16T07:40:49Z",
+  "jobs": [
+    {
+      "id": 133158266369,
+      "name": "ci (windows-latest)",
+      "head_sha": "c3fdf7957d1c52ee5a3ba51c6bf2c55dbea2151a",
+      "status": "completed",
+      "conclusion": "failure",
+      "started_at": "2026-11-16T07:40:45Z",
+      "completed_at": "2026-11-16T07:40:48Z",
+      "html_url": "https://github.com/yu-yikai/PyCy_EMT_Lite/actions/runs/43825501731/job/133158266369",
+      "steps": [],
+      "runner_id": 0,
+      "runner_name": "",
+      "check_run_url": "https://api.github.com/repos/yu-yikai/PyCy_EMT_Lite/check-runs/133158266369"
+    },
+    {
+      "id": 133158266615,
+      "name": "ci (ubuntu-latest)",
+      "head_sha": "c3fdf7957d1c52ee5a3ba51c6bf2c55dbea2151a",
+      "status": "completed",
+      "conclusion": "failure",
+      "started_at": "2026-11-16T07:40:45Z",
+      "completed_at": "2026-11-16T07:40:48Z",
+      "html_url": "https://github.com/yu-yikai/PyCy_EMT_Lite/actions/runs/43825501731/job/133158266615",
+      "steps": [],
+      "runner_id": 0,
+      "runner_name": "",
+      "check_run_url": "https://api.github.com/repos/yu-yikai/PyCy_EMT_Lite/check-runs/133158266615"
+    }
+  ],
+  "jobs_total_count": 2,
+  "execution_started": false,
+  "check_diagnosis": [
+    {
+      "job_id": 133158266369,
+      "head_sha": "c3fdf7957d1c52ee5a3ba51c6bf2c55dbea2151a",
+      "output": {
+        "title": null,
+        "summary": null,
+        "text": null,
+        "annotations_count": 1,
+        "annotations_url": "https://api.github.com/repos/yu-yikai/PyCy_EMT_Lite/check-runs/133158266369/annotations"
+      },
+      "annotations": [
+        {
+          "path": ".github",
+          "blob_href": "https://github.com/yu-yikai/PyCy_EMT_Lite/blob/c3fdf7957d1c52ee5a3ba51c6bf2c55dbea2151a/.github",
+          "start_line": 1,
+          "start_column": null,
+          "end_line": 1,
+          "end_column": null,
+          "annotation_level": "failure",
+          "title": "",
+          "message": "The job was not started because your account is locked due to a billing issue.",
+          "raw_details": ""
+        }
+      ]
+    },
+    {
+      "job_id": 133158266615,
+      "head_sha": "c3fdf7957d1c52ee5a3ba51c6bf2c55dbea2151a",
+      "output": {
+        "title": null,
+        "summary": null,
+        "text": null,
+        "annotations_count": 2,
+        "annotations_url": "https://api.github.com/repos/yu-yikai/PyCy_EMT_Lite/check-runs/133158266615/annotations"
+      },
+      "annotations": [
+        {
+          "path": ".github",
+          "blob_href": "https://github.com/yu-yikai/PyCy_EMT_Lite/blob/c3fdf7957d1c52ee5a3ba51c6bf2c55dbea2151a/.github",
+          "start_line": 1,
+          "start_column": null,
+          "end_line": 1,
+          "end_column": null,
+          "annotation_level": "failure",
+          "title": "",
+          "message": "The job was not started because your account is locked due to a billing issue.",
+          "raw_details": ""
+        },
+        {
+          "path": ".github",
+          "blob_href": "https://github.com/yu-yikai/PyCy_EMT_Lite/blob/c3fdf7957d1c52ee5a3ba51c6bf2c55dbea2151a/.github",
+          "start_line": 1,
+          "start_column": null,
+          "end_line": 1,
+          "end_column": null,
+          "annotation_level": "notice",
+          "title": "",
+          "message": "\"The ubuntu-latest label will migrate to Ubuntu 26 beginning October 19, 2026. For more information, see https://github.com/actions/runner-images/issues/14748\"",
+          "raw_details": ""
+        }
+      ]
+    }
+  ],
+  "same_billing_lock_reconfirmed": true,
+  "terminal_now": true,
+  "failure_classification": "external_github_account_billing_lock",
+  "failure_reason": "The job was not started because your account is locked due to a billing issue.",
+  "execution_evidence": "Both exact-HEAD jobs have runner_id=0, empty runner_name and steps=[]; neither job started code/tests. The Ubuntu migration notice is informational only.",
+  "failure_scope": "Fresh current-commit annotations reconfirm the external lock. This establishes no cross-platform software test result and no source-regression conclusion.",
+  "readonly_receipt": {
+    "path": "local_reference/native_static_reviews/c1_current_head_ci_readonly_20261116T074326044573Z/receipt.json",
+    "bytes": 3945,
+    "sha256": "3e19647fa7574f4ce9854d66e2f7adeadc477c4d2528b23d740d70436b07a52e"
+  }
+}

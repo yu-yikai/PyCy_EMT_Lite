@@ -1,0 +1,249 @@
+{
+  "recorded_utc": "2026-11-11T21:35:41.580760+00:00",
+  "checked_head": "4aff99c3bd6b88b700a875132b96c47e7f589397",
+  "status": "BUILD_ONLY_COMPILED_INF_GUARD_STOP_AND_INDEPENDENT_DC_STAGE_REJECTION",
+  "goal_status": "active",
+  "C1_status": "in_progress",
+  "D1_status": "planned",
+  "F1_status": "blocked_external_CI_restoration_pending",
+  "formal_new_examples_completed": 9,
+  "new_formal_example_created": false,
+  "candidate_executed": false,
+  "full_VSC_reference_ready": false,
+  "previous_result_preserved": {
+    "path": "docs/development_roadmap/experiments/c1_ideal_branch_diagnostic_20261112.json",
+    "bytes": 17807,
+    "sha256": "6b8f5d9b9d15c431b5ad22a946be1afabda6916154b7c282dbea7f7c973151a4",
+    "hash_scope": "Preserved Windows workspace bytes; Git LF identity supplied separately.",
+    "git_lf_bytes": 17449,
+    "git_lf_sha256": "40cce79f5493b0a6df11ae19ca8427688c7115b7097eb64a0c9eb860a2051095"
+  },
+  "contract": {
+    "execution_scope": "build_only",
+    "numeric_status": "NOT_OBSERVED",
+    "native_run_permitted": false,
+    "configured_channels": 32,
+    "configured_duration_s": 0.0004,
+    "configured_time_step_s": 5e-06,
+    "geometry": {
+      "components": 163,
+      "wires": 129,
+      "ports": 228,
+      "semantic_nets": 71,
+      "expected_native_branches": 19
+    },
+    "current_identity": "Three phase A branches plus negative own DC sourceBA CBR; current absorption NA-to-NB. SourceCUR is preserved/empty and never used.",
+    "voltage_identity": "Bridge positive/sourceNA ideal-wire merge: B=S rank1; deletedA-drop and oldrank2closure are NOT_APPLICABLE, never PASS.",
+    "source_clone": {
+      "path": "local_reference/c1_openloop_reference_research/20261111T211733025252Z_source_current_build_only_v3/inputs/dc_source_definition.xml",
+      "bytes": 51256,
+      "sha256": "bd2542de66817d6abff899498d114f72ad7679608ae65ea586046072ee729c9f"
+    },
+    "original_source": {
+      "path": "local_reference/c1_openloop_reference_research/20261111T211733025252Z_source_current_build_only_v3/inputs/source_1_original.xml",
+      "bytes": 50808,
+      "sha256": "bdfa9213e3e8197a62cf3045a75e36af42bb6b62f25961e31e7dd80fb7e3661d"
+    },
+    "source_physics_scope": "Frozen clone delta: installed source_1 copied with only localDefinition name, TextFreshAbs and appended Dsout negativeBA output; all originalBranch/Dyn/CUR/parameters/ports unchanged. Actualnative serialization and freshness are assessed separately.",
+    "preserved_budgets": {
+      "original_plant_fields": 17,
+      "source_terminal_V": 1e-08,
+      "source_token_radius_max_V": 1e-10,
+      "all_original_failures_preserved": true
+    },
+    "actual_generated_gate": "Direct negative own sourceBA CBR and three phaseA reads before ownPGB in sameMainOut; no intervening overwrite; complete canonical32 writer inventory/noDyn ownPGB; case/continuation scan limited to frozen generated format. No forcedPGB fallback."
+  },
+  "frozen_before_native": {
+    "package": {
+      "path": "local_reference/c1_openloop_reference_research/20261111T211733025252Z_source_current_build_only_v3/manifest.json",
+      "bytes": 6420,
+      "sha256": "5a4f6d00518e1fb6d30dc5726e9b7d7b9e6b31063d8f1f3894b74cada994bef2"
+    },
+    "preparation": {
+      "path": "local_reference/c1_openloop_reference_research/20261111T211733025252Z_source_current_build_only_v3/preparation_receipt.json",
+      "bytes": 10370,
+      "sha256": "26c78096f01c6a9037a2c63e9ceec5da40dfa1db19feaa60aecb71a1d132d188"
+    },
+    "plan": {
+      "path": "local_reference/c1_openloop_reference_research/20261111T211733025252Z_source_current_build_only_v3/inputs/probe_plan.json",
+      "bytes": 20051,
+      "sha256": "fb9dee78909c5dd7655e42129391d064d500f97202c53a42d3674610056ae437"
+    },
+    "independent_static_reviews": [
+      {
+        "path": "local_reference/native_static_reviews/c1_source_build_v3_final_20261111T212135710322Z/receipt.json",
+        "bytes": 4127,
+        "sha256": "f1440d35e1cef5cf70e283fbec413c9bdceb74520f92b08369f9a5a5c8f0051b"
+      },
+      {
+        "path": "local_reference/native_static_reviews/c1_source_build_v3_independent_prelaunch_20261111T212336686164Z/receipt.json",
+        "bytes": 11759,
+        "sha256": "81c7411f24e6458c589f190cf2cfc710067cb02e4df5777f10356f13ffe5cc47"
+      }
+    ],
+    "unrun_rejected_versions": [
+      {
+        "version": 1,
+        "package": {
+          "path": "local_reference/c1_openloop_reference_research/20261111T204642890303Z_source_current_build_only_v1/manifest.json",
+          "bytes": 6419,
+          "sha256": "978eed8ab417ebc535f5f124e8b2e145d6fdc52fd7e0d16baef1d685999a08bc"
+        },
+        "finding": {
+          "path": "local_reference/native_static_reviews/c1_source_build_v1_overwrite_finding_20261111T211027938779Z/receipt.json",
+          "bytes": 3670,
+          "sha256": "9dbb1e135e2132ceee74766c12cf37dbe7e359242636f0e74e8f930446e792a6"
+        },
+        "reason": "Missing intervening-overwrite admission; preserved, never launched."
+      },
+      {
+        "version": 2,
+        "package": {
+          "path": "local_reference/c1_openloop_reference_research/20261111T211040017713Z_source_current_build_only_v2/manifest.json",
+          "bytes": 6419,
+          "sha256": "11afd4b87c8e39395521e3861e8f0df704a7d3c565b8039d9e46cadf1d9a9720"
+        },
+        "finding": {
+          "path": "local_reference/native_static_reviews/c1_source_build_v2_lexical_addendum_20261111T211739144544Z/receipt.json",
+          "bytes": 1688,
+          "sha256": "bf5c7ac1587012aa1c4d49152661d48ac8537df36d70084d9e1f352b32237730"
+        },
+        "reason": "Case/continuation/canonical-writer boundary strengthened in v3; preserved, never launched.",
+        "casefold_finding": {
+          "path": "local_reference/native_static_reviews/c1_source_build_v2_casefold_finding_20261111T211426765132Z/receipt.json",
+          "bytes": 1883,
+          "sha256": "a62940936b51e509a44dfd0db617008748bc5d8be2a3781e8cefd165d660527c"
+        }
+      }
+    ],
+    "measurement_contract": {
+      "path": "local_reference/native_static_reviews/c1_fresh_source_build_contract_20261111T204535214788Z/receipt.json",
+      "bytes": 14848,
+      "sha256": "27af9a5be7ad34f980f877224b34cf7187b8ba1ec26c58a9f5884f305c5f28c2"
+    },
+    "root_v3_preflight": {
+      "path": "local_reference/native_static_reviews/c1_source_build_root_preflight_v3_20261112/receipt.json",
+      "bytes": 768,
+      "sha256": "eb6d7d1ff88a8a3d0e4c40a4cba9e0ffaff8568a67cc12de9bddaa87fdb7b2ec"
+    }
+  },
+  "native": {
+    "run": "local_reference/c1_openloop_reference_research/20261111T211733025252Z_source_current_build_only_v3/n/20261111T212459071143Z",
+    "session_id": 74817,
+    "exec_closed": true,
+    "exit_code": 1,
+    "elapsed_s": 160.26675229996908,
+    "terminal": {
+      "path": "local_reference/c1_openloop_reference_research/20261111T211733025252Z_source_current_build_only_v3/n/20261111T212459071143Z/terminal.json",
+      "bytes": 13389,
+      "sha256": "f6ca0ec1434155af62c9cb932d6d2832dae66f186e7550729123b0adbd631f94"
+    },
+    "archive": {
+      "path": "local_reference/c1_openloop_reference_research/20261111T211733025252Z_source_current_build_only_v3/n/20261111T212459071143Z/manifest.json",
+      "bytes": 21203,
+      "sha256": "1aa10c4187fac84273110e2b46a62717e7e9964d7254a4b46795433b063dbef0"
+    },
+    "archive_files": 64,
+    "build_errors": 0,
+    "native_run_requested": false,
+    "native_run_returned": false,
+    "native_completion_observed": false,
+    "unexpected_waveform_names": [],
+    "generated_admission_passed": false,
+    "generated_admission": {
+      "path": "local_reference/c1_openloop_reference_research/20261111T211733025252Z_source_current_build_only_v3/n/20261111T212459071143Z/generated_build_admission.json",
+      "bytes": 496,
+      "sha256": "145dce8b3e09df39e64f8c0ca2c7fccbbf6a81816c87db091179a45c1d97e69b"
+    },
+    "worker_returncode": 1,
+    "worker_final_stage": "finished_after_exception",
+    "forced_termination": false,
+    "remaining_owned": [],
+    "profile_source_dependency_parent_environment_unchanged": true,
+    "opened_in_native_software": true,
+    "classification": "Controlled build-only admission exception: missing preRun INF. Not a simulation or numerical failure; frozen runtime gate did not reach freshness.",
+    "quit_returned_stage_observed": true,
+    "worker_completion": "controlled_exception_not_normal",
+    "guarded_driver_completed": false,
+    "native_build_only_completed": false
+  },
+  "actual_reviews": [
+    {
+      "path": "local_reference/native_static_reviews/c1_source_build_root_actual_20261112/receipt.json",
+      "bytes": 6594,
+      "sha256": "a80f8cc7f6245a8f1e7127f6a90ce63eded98ff6cf8d8266e436725a01c7e532"
+    },
+    {
+      "path": "local_reference/native_static_reviews/c1_source_build_independent_actual_20261111T212459071143Z_20261111T212913546877Z/receipt.json",
+      "bytes": 128005,
+      "sha256": "579052d46e9cc75924475803eeee87de6e3171cd4cabddb767ad2bbc60374201"
+    }
+  ],
+  "numerical": {
+    "status": "NOT_OBSERVED",
+    "native_run_requested": false,
+    "native_run_returned": false,
+    "native_completion_observed": false,
+    "observed_waveform_rows": 0,
+    "numeric_acceptance": false,
+    "overall_reference_accepted": false
+  },
+  "source113_unchanged": true,
+  "project_source_dependencies_unchanged": true,
+  "source_baseline": {
+    "path": ".tmp/longterm/c1-pll-entry-final-source-hashes-20261112.json",
+    "bytes": 12850,
+    "sha256": "7c666c145ee97c8cbe8fdd50932ca35d7ff25ca9424d07fd5be4b4324703ef71"
+  },
+  "test_reuse": "Previous1300passed including slow/locked27/Ruff/mypy39 remains the identical-code baseline; no software regression rerun this research-only milestone.",
+  "next_gate": "Freeze Map PGBList32 + DATAStruct actual-ID + native/saved PGB parameter binding, and a separate project-local PGB clone used only for DC: move the original standard Fortran segment to Dsout, preserving its content/form/parameters/graphics/Scale1. Prefreeze the exact negative-CBR template matching actual \"= -( CBR(...))\"; the old \"(-CBR...)\" check was not reached thisrun. Then one new build-only attempt must prove negative own sourceBA CBR before its unique ownPGB in sameMainOut/no overwrite. No INF-only rerun, forced fallback in oldpackage, Run, numeric acceptance or relaxed physical budgets.",
+  "local_only": "Native/library/derivedsource/helper/review files stay ignored inlocal_reference/.tmp. Tracked documentation contains only original compact metadata and roadmap prose.",
+  "build_observations": {
+    "source_clone_three_saved_snapshots_and_full_physics_verified": true,
+    "physical_branches": 19,
+    "voltage_identity_rank": 1,
+    "Map_channels": 32,
+    "driver_guard_stop": {
+      "error": "FileNotFoundError",
+      "missing_file": "c1_three_phase_probe.inf",
+      "freshness_evaluated_by_frozen_driver": false
+    },
+    "independent_DC_output_chain": {
+      "accepted": false,
+      "own_BA": 2,
+      "negative_CBR_MainOut_line": 747,
+      "own_PGB_index": 14,
+      "PGB_MainDyn_line": 220,
+      "PGB_MainOut_present": false
+    },
+    "three_phase_fresh_chains": {
+      "accepted": true,
+      "CBR_MainOut_lines": [
+        756,
+        772,
+        795
+      ],
+      "PGB_MainOut_lines": [
+        839,
+        843,
+        847
+      ]
+    },
+    "Map_identity": "All32 index/name/group/units + DATAStruct actualPGB-ID + complete native/saved parameters bound; metadata does not prove freshness.",
+    "INF_files": 0,
+    "OUT_files": 0,
+    "numeric_status": "NOT_OBSERVED"
+  },
+  "metadata_binding_review": {
+    "path": "local_reference/native_static_reviews/c1_build_only_Map_channels_20261111T213107598937Z/receipt.json",
+    "bytes": 9722,
+    "sha256": "6325d07ca2af426001e77d0ba17cf655f14afdb8fb3e0b37f9eab37f457b5105"
+  },
+  "prospective_next_gate": {
+    "status": "PROPOSED_NOT_IMPLEMENTED_OR_EXECUTED",
+    "metadata": "Use strictly bound Map PGBList/DATAStruct/actual-saved PGB parameters instead of assuming build-stage INF.",
+    "recorder": "Separate localDC-PGB clone: original Fortran segment to Dsout; preserve original content/form/parameters/graphics/Scale1. Standard master and all source/physical/accuracy contracts unchanged.",
+    "admission": "New unique build-only; prefreeze actual observed \"= -( CBR(...))\" template with the derived ownBA index/sign, then require unique ownPGB sameMainOut/no overwrite. Old \"(-CBR...)\" guard was not reached and is not another observed failure. No guarantee the new scheduling proposal compiles or passes."
+  },
+  "remote_verification_scope": "Most recent real remote verification was at this turn entry, HEAD4aff99c3; no new postrun remote query is claimed. ROOT will verify again after commit/push."
+}

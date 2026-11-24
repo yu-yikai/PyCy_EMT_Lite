@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "date": "2026-11-18",
+  "platform": "PSCAD 5.0 / EMTDC, gfortran 4.6 x86",
+  "status": "native_control_only_pass",
+  "scope": "One 600 µs EMTDC run of a native controller component with prescribed dq measurements and carrier. The donor circuit is electrically independent of this component.",
+  "step_s": 0.000005,
+  "native_runs": 1,
+  "rows": 121,
+  "columns": 33,
+  "control_update_rows": [20, 40, 60, 80, 100, 120],
+  "next_gate_application_rows": [21, 41, 61, 81, 101],
+  "saturation_started_at_row": 40,
+  "saturation_released_at_row": 60,
+  "all_gate_bits_exact": true,
+  "raw_native_csv_sha256": "e12773592ffc76ca7f69899f816e018e12749ee54403e9b1a46f055c9d821c96",
+  "closure": {
+    "path": "local_reference/native_static_reviews/c1_pscad_controller_prospective_20261118/n/20261118T142848065707Z/closure.json",
+    "bytes": 3439,
+    "sha256": "18993a1d85f58541a195ab3be371b83183327cb0d84cacb387736e2cb7d3a91d"
+  },
+  "independent_decimal_review": {
+    "path": "local_reference/native_static_reviews/c1_pscad_controller_prospective_20261118/n/20261118T142848065707Z/root_decimal_review.json",
+    "bytes": 1829,
+    "sha256": "6da7548c2badc2f38bcc5c13e623c06862c4e9a9faf70692a658fd7632a9d5e1"
+  },
+  "first_electrical_build": {
+    "status": "saved_canvas_reload_build_failed",
+    "build_calls": 1,
+    "run_calls": 0,
+    "build_errors": 81,
+    "build_warnings": 3423,
+    "finding": "The reloaded saved canvas reported overlaps, signal source contention and floating input ports. The next attempt will construct the existing bridge and attach feedback in the same Automation API session.",
+    "closure": {
+      "path": "local_reference/native_static_reviews/c1_pscad_feedback_short_build_20261118/n/20261118T144325811615Z/failure_closure.json",
+      "bytes": 2459,
+      "sha256": "0cda553bc66f05afc9d5c178f8270d04013ff0465a105c1b75222d09947600fa"
+    }
+  },
+  "first_live_build": {
+    "status": "monitor_file_sharing_failure_before_compile",
+    "build_calls": 0,
+    "run_calls": 0,
+    "closure": {
+      "path": "local_reference/native_static_reviews/c1_pscad_feedback_short_build_live_20261118/n/20261118T145342491434Z/aborted_monitor_closure.json",
+      "bytes": 2328,
+      "sha256": "94489a74b196a2c7204a8afc443dcd39ea6a7ba3949672ca6a406bea410b435a"
+    }
+  },
+  "live_feedback_build": {
+    "status": "structural_causality_admission_pass",
+    "build_calls": 1,
+    "run_calls": 0,
+    "build_errors_or_warnings": 0,
+    "electrical_generated_input_byte_identical_to_open_loop": true,
+    "closure": {
+      "path": "local_reference/native_static_reviews/c1_pscad_feedback_short_build_live_r2_20261118/n/20261118T150157436724Z/closure.json",
+      "bytes": 3179,
+      "sha256": "d5407ff75f5572f487b54064a5a6c122202c7eff5de94c493523934276628057"
+    }
+  },
+  "subsequent_electrical_feedback_record": "c1_known_angle_dq_pscad_feedback_20261118.json",
+  "formal_example_accepted": false
+}

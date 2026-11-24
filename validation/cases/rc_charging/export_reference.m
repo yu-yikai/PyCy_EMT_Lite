@@ -1,0 +1,86 @@
+function export_reference(repositoryRoot)
+%EXPORT_REFERENCE Validate existing example 02 using an official RC network.
+% MATLAB, Simulink, Simscape R2025a or compatible are required.
+%   addpath('validation/cases/rc_charging'); export_reference(pwd)
+% Parameters are overridden in SimulationInput; the source SLX is unchanged.
+if nargin == 0
+    repositoryRoot = fileparts(fileparts(fileparts(fileparts(mfilename('fullpath')))));
+end
+referenceRoot = fullfile(repositoryRoot, 'local_reference', 'rc_charging');
+previousFileGenConfig = Simulink.fileGenControl('getConfig');
+cacheCleanup = onCleanup(@() Simulink.fileGenControl( ...
+    'setConfig', 'config', previousFileGenConfig)); %#ok<NASGU>
+Simulink.fileGenControl('set', 'CacheFolder', fullfile(referenceRoot, 'cache'), ...
+    'CodeGenFolder', fullfile(referenceRoot, 'codegen'), 'createDir', true);
+modelDirectory = fullfile(referenceRoot, 'simulink');
+rawDirectory = fullfile(referenceRoot, 'raw_results');
+normalizedDirectory = fullfile(referenceRoot, 'normalized_results');
+for directory = {modelDirectory, rawDirectory, normalizedDirectory}
+    if ~isfolder(directory{1}), mkdir(directory{1}); end
+end
+modelName = 'RCCircuitInSimulinkAndSimscape';
+modelFile = fullfile(modelDirectory, [modelName '.slx']);
+if ~isfile(modelFile)
+    openExample('simscape/RCCircuitInSimulinkAndSimscapeExample', ...
+        'workDir', modelDirectory);
+end
+addpath(modelDirectory);
+diary(fullfile(referenceRoot, 'export_reference.log'));
+diaryCleanup = onCleanup(@() diary('off')); %#ok<NASGU>
+fprintf('MATLAB: %s\nReference: %s\n', version, modelFile);
+% Load for read-only inspection and resolve the pulse block from its SID.
+% openExample already opens a freshly downloaded example.
+if ~bdIsLoaded(modelName), open_system(modelFile); end
+pulseBlock = Simulink.ID.getFullName([modelName ':3']);
+assert(strcmp(get_param(pulseBlock, 'BlockType'), 'DiscretePulseGenerator'));
+
+in = Simulink.SimulationInput(modelName);
+in = in.setVariable('R', 1000).setVariable('C', 1e-6);
+in = in.setBlockParameter(pulseBlock, 'Amplitude', '1');
+in = in.setBlockParameter(pulseBlock, 'Period', '1');
+in = in.setBlockParameter(pulseBlock, 'PulseWidth', '50');
+in = in.setBlockParameter(pulseBlock, 'PhaseDelay', '0');
+in = in.setModelParameter('StopTime', '0.005', 'Solver', 'ode15s', ...
+    'RelTol', '1e-8', 'AbsTol', '1e-10', 'MaxStep', '1e-6', ...
+    'SignalLogging', 'on', 'SignalLoggingName', 'logsout', ...
+    'SimscapeLogType', 'all', 'SimscapeLogName', 'simlog', ...
+    'SimscapeLogLimitData', 'off');
+simulationTimer = tic;
+out = sim(in);
+elapsedSeconds = toc(simulationTimer);
+disp(who(out));
+save(fullfile(rawDirectory, 'simulink_output.mat'), 'out', '-v7.3');
+assert(isequal(out.simlog.C1.v.series.time, out.simlog.R1.i.series.time));
+physical = table(out.simlog.C1.v.series.time, out.simlog.C1.v.series.values, ...
+    out.simlog.R1.i.series.values, ...
+    'VariableNames', {'time', 'v_out', 'i_r1'});
+writetable(physical, fullfile(rawDirectory, 'simscape_native.csv'));
+[~, lastIndex] = unique(physical.time, 'last');
+physical = physical(lastIndex, :);
+assert(all(diff(physical.time) > 0));
+writetable(physical, fullfile(normalizedDirectory, 'reference.csv'));
+
+metadata = struct('schema_version', 1, 'origin', 'MathWorks official example, parameter adaptation', ...
+    'export_time_utc', char(datetime('now', 'TimeZone', 'UTC', 'Format', 'yyyy-MM-dd HH:mm:ss Z')), ...
+    'simulation_elapsed_seconds', elapsedSeconds, ...
+    'source_url', 'https://www.mathworks.com/help/simscape/ug/rc-circuit-in-simulink-and-simscape.html', ...
+    'example_id', 'simscape/RCCircuitInSimulinkAndSimscapeExample', ...
+    'model_name', modelName, 'matlab_version', version, ...
+    'model_release', 'R2025a Update 1 (downloaded by R2025a openExample)', ...
+    'required_products', {{'MATLAB', 'Simulink', 'Simscape'}}, ...
+    'solver', 'ode15s', 'relative_tolerance', 1e-8, 'absolute_tolerance', 1e-10, ...
+    'maximum_step_s', 1e-6, 'stop_time_s', 0.005, ...
+    'resistance_ohm', 1000, 'capacitance_f', 1e-6, 'capacitor_esr_ohm', 1e-6, ...
+    'pulse_amplitude_v', 1, 'pulse_period_s', 1, ...
+    'pulse_width_percent', 50, 'pulse_delay_s', 0, ...
+    'capacitor_initial_voltage_v', 0, 'samples', height(physical), ...
+    'normalization', 'No time shift; duplicate native times use final post-event sample.', ...
+    'topology_changes', 'none', ...
+    'parameter_changes', 'R:10->1000 ohm; C:100e-6->1e-6 F; pulse amplitude:5->1 V; period:0.01->1 s; delay:0.001->0 s; stop:0.02->0.005 s', ...
+    'redistribution', 'Original model and generated data stay local; no redistribution permission asserted.');
+fid = fopen(fullfile(referenceRoot, 'provenance.json'), 'w', 'n', 'UTF-8');
+assert(fid >= 0);
+fprintf(fid, '%s\n', jsonencode(metadata, PrettyPrint=true));
+fclose(fid);
+fprintf('Exported %d actual Simscape samples to reference.csv\n', height(physical));
+end

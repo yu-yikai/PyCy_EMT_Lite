@@ -1,0 +1,36 @@
+{
+  "case_id": "two_level_pwm_pscad",
+  "reference_id": "pscad-derived-bilateral-spwm-v5",
+  "status": "QUALIFIED_FULL_CONDITIONAL_NATIVE_REFERENCE",
+  "reference_qualified": true,
+  "complete_receipt": {
+    "path": "local_reference/two_level_pwm_pscad/qualification/20261111T031524306929Z/qualification.json",
+    "bytes": 91200,
+    "sha256": "b8511f04434dc091e44afe385cbf022b461f537067f814e053d437a3ab8c5c83"
+  },
+  "provenance": {
+    "path": "local_reference/two_level_pwm_pscad/qualification/20261111T031524306929Z/provenance.json",
+    "bytes": 1322,
+    "sha256": "52ea3ed43b42e7a7404a3c32705a754af80f6e6d02714c02d15c407dde85692c"
+  },
+  "normalized_reference": {
+    "path": "local_reference/two_level_pwm_pscad/qualification/20261111T031524306929Z/normalized_results/reference.csv",
+    "bytes": 4929793,
+    "sha256": "9b3ad5841f4aeb666a14facc3ca5154413d675d21b466febb5690e16b008025c",
+    "rows": 80003,
+    "columns": [
+      "time",
+      "i_a",
+      "i_b",
+      "i_c"
+    ],
+    "units": {
+      "time": "s",
+      "i_a": "A",
+      "i_b": "A",
+      "i_c": "A"
+    },
+    "source_run": "fine",
+    "time_from": "TIME_native_s"
+  }
+}

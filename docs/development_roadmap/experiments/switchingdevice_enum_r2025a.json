@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "observed_on": "2026-11-04",
+  "software": "MATLAB R2025a Update 1 / Simscape Electrical",
+  "method": "Native enumeration() API; full extraction script retained at local path below.",
+  "source_script": "local_reference/two_level_pwm/inspect_enum.m",
+  "source_log": "local_reference/two_level_pwm/enum.log",
+  "source_log_sha256": "f29b6735d21ee613a619c72e459f80550c4baddc431e9bd31e1491846b729535",
+  "native_stdout": "gto = 1\nideal = 2\nigbt = 3\nmosfet = 4\nthyristor = 5\naveraged = 6\ndiode none = 1\ndiode nodynamics = 2\ndiode chargedynamics = 3\nmanual switch sw=1\n",
+  "enum_classes": {
+    "ee.enum.converters.switchingdevice": {
+      "gto": 1,
+      "ideal": 2,
+      "igbt": 3,
+      "mosfet": 4,
+      "thyristor": 5,
+      "averaged": 6
+    },
+    "ee.enum.converters.protectiondiode": {
+      "none": 1,
+      "nodynamics": 2,
+      "chargedynamics": 3
+    }
+  },
+  "selected_variants": {
+    "VSCSinusoidalPWM": {
+      "device_type": 1,
+      "device_name": "GTO",
+      "active_switch_Vf_v": 0.6
+    },
+    "TwoLevelPWMGenerator": {
+      "device_type": 3,
+      "device_name": "IGBT",
+      "active_switch_Vf_v": 0.8
+    }
+  },
+  "interpretation_limit": "Static TypeOptions position and a nested ideal_switch simlog node do not resolve the top-level semiconductor enumeration. Gate sequence and reverse-current diode boundaries remain separate physical compatibility issues."
+}

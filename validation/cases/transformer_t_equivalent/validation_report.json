@@ -1,0 +1,659 @@
+{
+  "case_id": "transformer_t_equivalent",
+  "passed": true,
+  "run_id": "20261106T025650374531Z",
+  "reference_platform": "MATLAB R2025a Update 1 / Simulink / Simscape",
+  "reference_provenance": {
+    "schema_version": 1,
+    "origin": "Unmodified MathWorks five-network model; third pure electrical T group exported",
+    "export_time_utc": "2026-11-04 09:57:11 +0000",
+    "source_url": "https://www.mathworks.com/help/simscape/ug/comparison-of-mutual-inductor-and-ideal-transformer.html",
+    "example_id": "simscape/ComparisonOfMutualInductorAndIdealTransformerExample",
+    "model_name": "CompareCircuits",
+    "model_sha256": "9df7b95e3d0c5b842c1699631e49a5587179088b6afe9281914c52b60964e07b",
+    "source_files": [
+      {
+        "file": "CompareCircuits.slx",
+        "path": "D:\\VibeCoding\\PyCy_EMT_Lite\\local_reference\\transformer_t_equivalent\\simulink\\CompareCircuits.slx",
+        "sha256": "9df7b95e3d0c5b842c1699631e49a5587179088b6afe9281914c52b60964e07b"
+      },
+      {
+        "file": "ComparisonOfMutualInductorAndIdealTransformerExample.mlx",
+        "path": "D:\\VibeCoding\\PyCy_EMT_Lite\\local_reference\\transformer_t_equivalent\\simulink\\ComparisonOfMutualInductorAndIdealTransformerExample.mlx",
+        "sha256": "8a6e3f0f1f55dc015619d8462592be4c4ac1910a022fd7315fc6a6ef8ee877b6"
+      },
+      {
+        "file": "ElectricalEquivalentCircuitMutualInductor.slx",
+        "path": "D:\\VibeCoding\\PyCy_EMT_Lite\\local_reference\\transformer_t_equivalent\\simulink\\ElectricalEquivalentCircuitMutualInductor.slx",
+        "sha256": "eb5ff69d07d15aed0e74183ec6c05c1fea57fad0937a65bbb1c2ab57166146cd"
+      },
+      {
+        "file": "ElectricalEquivalentCircuitSimplifiedMutualInductor.slx",
+        "path": "D:\\VibeCoding\\PyCy_EMT_Lite\\local_reference\\transformer_t_equivalent\\simulink\\ElectricalEquivalentCircuitSimplifiedMutualInductor.slx",
+        "sha256": "0f47e478f52e4adee90f3ee35518e9dff2eda2232c213305cf8a75fcf0689cc3"
+      },
+      {
+        "file": "ElectricalEquivalentCircuitTransformer.slx",
+        "path": "D:\\VibeCoding\\PyCy_EMT_Lite\\local_reference\\transformer_t_equivalent\\simulink\\ElectricalEquivalentCircuitTransformer.slx",
+        "sha256": "e64bffb228e8f11daf0ffb6475615a82f7e4e20668808bcd3d5edcfe921cf672"
+      },
+      {
+        "file": "MagneticEquivalentCircuit.slx",
+        "path": "D:\\VibeCoding\\PyCy_EMT_Lite\\local_reference\\transformer_t_equivalent\\simulink\\MagneticEquivalentCircuit.slx",
+        "sha256": "b6e4b137ee8405d9cf8333cb9d90133c70a15b0f1c1d05454fdcd8f20230706b"
+      },
+      {
+        "file": "MagneticEquivalentCircuitIdealTransformer.slx",
+        "path": "D:\\VibeCoding\\PyCy_EMT_Lite\\local_reference\\transformer_t_equivalent\\simulink\\MagneticEquivalentCircuitIdealTransformer.slx",
+        "sha256": "6cb185d3d40bdf8974ca606018d9f5cf98e1780d8796abf24a671793204cbc55"
+      }
+    ],
+    "export_script_sha256": "b88442743b686a7b9a92a3dc8dfa1b214a1465ce5cea4ecbcadc3fe2c3cfaa23",
+    "matlab_version": "25.1.0.2973910 (R2025a) Update 1",
+    "required_products": [
+      "MATLAB",
+      "Simulink",
+      "Simscape"
+    ],
+    "physical_parameter_source": "Official MLX experiment, not SLX PostLoad fallback. Explicit case-sensitive SimulationInput bindings.",
+    "workspace_variable_bindings": {
+      "R1": 1000000.0,
+      "R2": 1000000.0,
+      "Rc": 100000,
+      "N1": 100,
+      "N2": 500,
+      "ratio": 0.2,
+      "l1": 0.01,
+      "l2": 0.25,
+      "Lm": 0.1,
+      "L1": 0.11000000000000001,
+      "L2": 2.7500000000000004,
+      "M": 0.5,
+      "k": 0.9090909090909091,
+      "r1": 1,
+      "r2": 1,
+      "vStep": 1,
+      "tStep": 2
+    },
+    "freeze_commit": "0ec7239",
+    "solver": "ode15s",
+    "relative_tolerance": 1e-09,
+    "absolute_tolerance": 1e-11,
+    "local_solver": "off",
+    "max_step_s": 0.001,
+    "refined_max_step_s": 0.0005,
+    "stop_time_s": 8,
+    "source": {
+      "before_v": 0,
+      "after_v": 1,
+      "step_s": 2,
+      "series_resistance_ohm": 1
+    },
+    "load_resistance_ohm": 1,
+    "turns_ratio_primary_to_secondary": 0.2,
+    "T_inductance_h": {
+      "primary_leakage": 0.01,
+      "secondary_leakage": 0.25,
+      "magnetizing": 0.1
+    },
+    "initial_inductor_currents_a": [
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0
+      ]
+    ],
+    "winding_resistance_ohm": 0,
+    "inductor_parallel_conductance_s": 0,
+    "magnetizing_branch_location": "Core primary after l1; connected core primary to primary electrical reference.",
+    "signal_mapping": {
+      "v_source": "Controlled_Voltage_Source3.v",
+      "v_primary_core": "Subsystem_Reference2.Ideal_Transformer.v1",
+      "v_secondary_core": "Subsystem_Reference2.Ideal_Transformer.v2",
+      "v_load": "Resistor5.v",
+      "i_source_to_transformer": "-Controlled_Voltage_Source3.i",
+      "i_load": "Resistor5.i",
+      "i_magnetizing": "Subsystem_Reference2.Lm.i_L"
+    },
+    "current_directions": "Source toward l1/core; ideal secondary toward l2/load; Lm core toward ground. Native ideal-transformer secondary input current is -i_load.",
+    "voltage_reference": "Primary and secondary negative winding terminals are explicitly connected to their original electrical references.",
+    "event_guard_s": 0.001,
+    "comparison_windows_s": [
+      [
+        0,
+        1.999
+      ],
+      [
+        2.001,
+        8
+      ]
+    ],
+    "normalization": "Native timestamps and values preserved; last sample at duplicate times. No resampling, fitted time/phase shift or amplitude scaling.",
+    "topology_changes": "none",
+    "physical_parameter_changes": "none relative to the official MLX experiment",
+    "simulation_changes": "ode15s1e-9/1e-11 max1ms and independent0.5ms refinement; explicit original variables; full logging.",
+    "reference_self_convergence": {
+      "method": "Absolute-time linear interpolation on native time union in both frozen windows; no shift or scaling",
+      "baseline_max_step_s": 0.001,
+      "refined_max_step_s": 0.0005,
+      "passed": true,
+      "windows": [
+        {
+          "window_s": [
+            0,
+            1.999
+          ],
+          "passed": true,
+          "signals": {
+            "v_source": {
+              "rmse": 0,
+              "nrmse": 0,
+              "max_abs_difference": 0,
+              "scale": 1,
+              "max_abs_limit": 0.0005,
+              "passed": true
+            },
+            "v_primary_core": {
+              "rmse": 0,
+              "nrmse": 0,
+              "max_abs_difference": 0,
+              "scale": 1,
+              "max_abs_limit": 0.0005,
+              "passed": true
+            },
+            "v_secondary_core": {
+              "rmse": 0,
+              "nrmse": 0,
+              "max_abs_difference": 0,
+              "scale": 5,
+              "max_abs_limit": 0.0025,
+              "passed": true
+            },
+            "v_load": {
+              "rmse": 0,
+              "nrmse": 0,
+              "max_abs_difference": 0,
+              "scale": 0.2,
+              "max_abs_limit": 0.0001,
+              "passed": true
+            },
+            "i_source_to_transformer": {
+              "rmse": 0,
+              "nrmse": 0,
+              "max_abs_difference": 0,
+              "scale": 1,
+              "max_abs_limit": 0.0001,
+              "passed": true
+            },
+            "i_load": {
+              "rmse": 0,
+              "nrmse": 0,
+              "max_abs_difference": 0,
+              "scale": 0.2,
+              "max_abs_limit": 2e-05,
+              "passed": true
+            },
+            "i_magnetizing": {
+              "rmse": 0,
+              "nrmse": 0,
+              "max_abs_difference": 0,
+              "scale": 1,
+              "max_abs_limit": 0.0001,
+              "passed": true
+            }
+          }
+        },
+        {
+          "window_s": [
+            2.001,
+            8
+          ],
+          "passed": true,
+          "signals": {
+            "v_source": {
+              "rmse": 0,
+              "nrmse": 0,
+              "max_abs_difference": 0,
+              "scale": 1,
+              "max_abs_limit": 0.0005,
+              "passed": true
+            },
+            "v_primary_core": {
+              "rmse": 1.3359034198324496e-06,
+              "nrmse": 1.3359034198324496e-06,
+              "max_abs_difference": 3.1191164102273294e-05,
+              "scale": 1,
+              "max_abs_limit": 0.0005,
+              "passed": true
+            },
+            "v_secondary_core": {
+              "rmse": 6.679517099163326e-06,
+              "nrmse": 1.3359034198326652e-06,
+              "max_abs_difference": 0.00015595582051131096,
+              "scale": 5,
+              "max_abs_limit": 0.0025,
+              "passed": true
+            },
+            "v_load": {
+              "rmse": 5.329243578454521e-07,
+              "nrmse": 2.6646217892272607e-06,
+              "max_abs_difference": 1.2444601512062725e-05,
+              "scale": 0.2,
+              "max_abs_limit": 0.0001,
+              "passed": true
+            },
+            "i_source_to_transformer": {
+              "rmse": 2.9119818909465017e-06,
+              "nrmse": 2.9119818909465017e-06,
+              "max_abs_difference": 6.799036491728083e-05,
+              "scale": 1,
+              "max_abs_limit": 0.0001,
+              "passed": true
+            },
+            "i_load": {
+              "rmse": 5.329243578454521e-07,
+              "nrmse": 2.6646217892272607e-06,
+              "max_abs_difference": 1.2444601512062725e-05,
+              "scale": 0.2,
+              "max_abs_limit": 2e-05,
+              "passed": true
+            },
+            "i_magnetizing": {
+              "rmse": 2.474061069190439e-07,
+              "nrmse": 2.474061069190439e-07,
+              "max_abs_difference": 5.767357357022718e-06,
+              "scale": 1,
+              "max_abs_limit": 0.0001,
+              "passed": true
+            }
+          }
+        }
+      ]
+    },
+    "native_physics_audit": {
+      "primary_kcl_max_abs_a": 2.220446049250313e-16,
+      "ideal_ratio_max_abs_v": 5.551115123125783e-17,
+      "load_ohm_max_abs_a": 0,
+      "initial_inductor_current_a": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ]
+    },
+    "samples": 8063,
+    "refined_samples": 16042,
+    "simulation_elapsed_seconds": [
+      6.6394464,
+      1.0733096
+    ],
+    "scope": "Linear zero-state step response of explicit T network. Does not certify physical DC transformer operation, saturation, hysteresis or existing example09 aggregate topology.",
+    "redistribution": "Original MathWorks model/script and generated data remain local; no redistribution permission asserted."
+  },
+  "reference_sha256": "81cc392697bd03b67e5282dd9482996a8bc601ca08610a170c675c92ba0ae61e",
+  "model_sha256": "9df7b95e3d0c5b842c1699631e49a5587179088b6afe9281914c52b60964e07b",
+  "provenance_sha256": "87747db5a63d7dd657a1ded86833ac8c512268b5b4a48334a0d861f10b9088f2",
+  "manifest_sha256": "ec71de7c835ee897e54bc8b61d1180081cfbc46be90707002570f1efb4c7a5b5",
+  "example_sha256": "5400930b99860a69985015fcfe2421678e5e7af994b0f5c246232b5ff106eba1",
+  "export_script_sha256": "b88442743b686a7b9a92a3dc8dfa1b214a1465ce5cea4ecbcadc3fe2c3cfaa23",
+  "parameters_sha256": "ea5bc7994c58ff09c1df2d1670f987492a625ba481155d064e9ade0656b5e94f",
+  "candidate_data_sha256": {
+    "pycy.csv": "cc1656db245d64a66d3e70083194a809419b6df410a5f65d42b11a82e83009e2",
+    "pycy.json": "200c5f72864831cffb6facee5cdc9667f206d0f1b2a56ab1f5de9d0c66cdd9e7",
+    "pycy.npz": "2ea881ffbc98f6f7bd30719cdbb14799d28728acb67737cce3af2d530f10df43"
+  },
+  "raw_reference_sha256": {
+    "local_reference/transformer_t_equivalent/raw_results/simscape_native.csv": "81cc392697bd03b67e5282dd9482996a8bc601ca08610a170c675c92ba0ae61e",
+    "local_reference/transformer_t_equivalent/raw_results/simulink_output.mat": "baa440bfbb51b2d7a58095e1a6e58afc1bf53b9699725000634c72ca4a223ed7"
+  },
+  "git_head_at_run": "0ec723933a64e5d1dfacd214eb850228c0d5b015",
+  "git_status_at_run": [
+    "?? docs/development_roadmap/experiments/transformer_t_validation_plan.md",
+    "?? examples/23_transformer_t_equivalent.py",
+    "?? tests/test_transformer_t_equivalent.py",
+    "?? validation/cases/transformer_t_equivalent/compare.py",
+    "?? validation/cases/transformer_t_equivalent/export_reference.m",
+    "?? validation/cases/transformer_t_equivalent/validation_report.json"
+  ],
+  "package_source_sha256": {
+    "pycy_emt_lite/__init__.py": "81980a448c4506c4a373d308339c490967a02938c2cb0f0f33a1360dec21d46e",
+    "pycy_emt_lite/analysis/__init__.py": "20f635eec36432d84d6bf2ed666ecf45230962c7b4aa875838a2b9a65c5aa8a0",
+    "pycy_emt_lite/analysis/metrics.py": "14407925b79d9c3ea98c1cf3e4f9208f7820a22a862d70e067632f301aa9b143",
+    "pycy_emt_lite/cases.py": "f6c710cbbf2306752bd2345c1f5fc9a8d74b6738f30dd15fcfeb4452a192e986",
+    "pycy_emt_lite/components/__init__.py": "7cdac999206ef73c505ae8f29d9b531355d79bca9dcba02dd6f2c1b332ab4801",
+    "pycy_emt_lite/components/base.py": "d640819f5fddc223f7626059f8a4e309b4502851afcdeb8d5809e2e798fc6c1a",
+    "pycy_emt_lite/components/basic.py": "b2a092b07a15a1145cc582c47b1df6f6124d65c972f46b9450faa8c0acb5cc0b",
+    "pycy_emt_lite/components/lines.py": "dd4a0e5d4ee71ef7a655e31064c002536ea994aa185c0e6a47398d1cbac8c74b",
+    "pycy_emt_lite/components/power_electronics.py": "7b28e0c56436fcbf6ad357ee1336c1a3538fd5668a953e7487de6aedd30a1fab",
+    "pycy_emt_lite/components/switching.py": "6a422186320def189dcf360083c017715c80e34df769dbd14cca2c58e810a9d6",
+    "pycy_emt_lite/components/three_phase.py": "9cddd858ba4d27572218dc3a6790b8aa92ac0b71c703c9b7ddec82ddcd60c025",
+    "pycy_emt_lite/components/transformers.py": "632617a185bb69441535bdff552f0b4473566d64f6a78211622962cbb3d66609",
+    "pycy_emt_lite/controls/__init__.py": "f9685f649e794aba54a8cec566390ee8e9a992b7baf41d7a592a74d12980a069",
+    "pycy_emt_lite/controls/blocks.py": "e862509d8dceb31a1151ff710d4f861267e23e9dccd1843f98f774fb07684a7b",
+    "pycy_emt_lite/controls/pll.py": "7eca0fb9c6f6464bb36f82d7cad1b27be5bd1b6455b046b5ad3279c075a36efa",
+    "pycy_emt_lite/controls/pwm.py": "6a2469d7957c74ce9ff25e13020541e7c169f38820538e8a71467919ce9391d1",
+    "pycy_emt_lite/controls/transforms.py": "c48dbe02a1cd4b1c12a8fd29439038b76ada81d68f71f7b1183eec2bdc98ab99",
+    "pycy_emt_lite/controls/vsc.py": "1d12cc5a728f4085f1e723ac48b055e16e305cf91aafd130bf530f6c790dc635",
+    "pycy_emt_lite/converters/__init__.py": "9f94cc67b26700a8bf1f022c5c806b5e5415ecaf8743d36b2ddceddb6ec70ba6",
+    "pycy_emt_lite/converters/filters.py": "11112e0bc233809fc37c3fcf39cce41dab692a704a711d113bff31aa450a6be2",
+    "pycy_emt_lite/core/__init__.py": "3d0e3034e589c19e37746a909832f2b47780ea9793b011bb2bdf6141dd445ee5",
+    "pycy_emt_lite/core/circuit.py": "ee628295a1477c334d66e366ed594f8b824ca66ce36e8c17980972a7f485b0ac",
+    "pycy_emt_lite/core/context.py": "9886feeb12b4c30e115f4ada5594c504cb196ecdb491699a2b7a89fa16902c4e",
+    "pycy_emt_lite/core/nodes.py": "71167de688ff341bf99f6fb0beedd05946db4d83eeb9301a387a021ca6f0cffd",
+    "pycy_emt_lite/core/simulation.py": "b6fdb849172830cff51bfa31af87028524072adabaeeda580ab02c4e4751087d",
+    "pycy_emt_lite/core/solvers.py": "031f3d2f118d1d88f34d712bdeeb864ecc13a3fa7d89c7288b984b2b2c31571a",
+    "pycy_emt_lite/core/stamping.py": "9f23c65cbaa7d33ea0406bd0d33fe3b5fd007192fd60dbe78399586a35f02f87",
+    "pycy_emt_lite/core/variables.py": "6567e110c6b1aedc7faf713ae05d3297b5f70cca98ebf4bc28fcb2f7d05ea0b8",
+    "pycy_emt_lite/events/__init__.py": "5af09c087d751859ff97c6b4a01670312d5618aed864ea042fccf736d660c032",
+    "pycy_emt_lite/events/base.py": "9cc671d975b5ea60780b29e7a11042f3b39f2bb93454dc2cc72bacfee4bb6663",
+    "pycy_emt_lite/events/standard.py": "638e17b7d7601cd901e96cec99c5238c330780e31711c3d5e92e06d56b32d46d",
+    "pycy_emt_lite/io/__init__.py": "1eaf1526eecf1d41982a3e2b6685b0a653c233e9b57546d437e1dc4ae582f93e",
+    "pycy_emt_lite/io/results.py": "aa02511777508c2f048aae9d459dfd354d0e0d9b539a10af8f0684d66018a915",
+    "pycy_emt_lite/machines/__init__.py": "9f16d3bf2e00d27f4d8d1bacf35d8ef968f2f79dc5d758af581b04bd9f40232e",
+    "pycy_emt_lite/machines/park_generator.py": "e1f5f5c3b26ab2aaab4db9234954c50913c7890135da4f933b0afc9202e43caa",
+    "pycy_emt_lite/machines/synchronous.py": "a6add8058a9788daba21a1dfac986bef6e4a4c698ec4f8e21fdcb07e1426b06f",
+    "pycy_emt_lite/visualization/__init__.py": "23a5988f06bd7d833a9d7a0358a55a3d6a57ed96f5e1812c178c0d8ae29267ea",
+    "pycy_emt_lite/visualization/plotting.py": "6645d31b1c6ae11be45f5652f222a36576dab075c336788d25d15a788c64e346",
+    "pycy_emt_lite/visualization/reporting.py": "5ae8a1642303cef26f6c425c36eb49256b318d9773f9bbeb792ca8bcded264d0"
+  },
+  "python_version": "3.14.5",
+  "numpy_version": "2.5.2",
+  "candidate_method": "trapezoidal",
+  "candidate_step_seconds": 0.001,
+  "candidate_samples": 8001,
+  "reference_samples": 8063,
+  "known_difference": "Same third pure electrical T-equivalent network of the original five-network CompareCircuits model, using the official Live Script parameter set (step at 2s, Rc=1e5 inverse henry). Same ideal ratio and three separate lossless inductors, zero initial currents; magnetizing branch is after primary leakage. Reference solver is independently refined. Linear DC-step experiment does not certify physical DC transformer operation, saturation, hysteresis, or the different aggregate model of existing example 09. No fitted time/phase/amplitude alignment.",
+  "windows": [
+    {
+      "window_seconds": [
+        0.0,
+        1.999
+      ],
+      "alignment": "absolute_time_linear_interpolation",
+      "passed": true,
+      "signals": {
+        "v:src": {
+          "reference": "v_source",
+          "unit": "V",
+          "scale": 1.0,
+          "rmse": 0.0,
+          "nrmse": 0.0,
+          "max_abs_error": 0.0,
+          "candidate_mean": 0.0,
+          "reference_mean": 0.0,
+          "candidate_rms": 0.0,
+          "reference_rms": 0.0,
+          "limits": {
+            "max_nrmse": 0.001,
+            "max_abs_error": 0.005
+          },
+          "passed": true
+        },
+        "v:core_p": {
+          "reference": "v_primary_core",
+          "unit": "V",
+          "scale": 1.0,
+          "rmse": 0.0,
+          "nrmse": 0.0,
+          "max_abs_error": 0.0,
+          "candidate_mean": 0.0,
+          "reference_mean": 0.0,
+          "candidate_rms": 0.0,
+          "reference_rms": 0.0,
+          "limits": {
+            "max_nrmse": 0.001,
+            "max_abs_error": 0.005
+          },
+          "passed": true
+        },
+        "v:sec_p": {
+          "reference": "v_secondary_core",
+          "unit": "V",
+          "scale": 5.0,
+          "rmse": 0.0,
+          "nrmse": 0.0,
+          "max_abs_error": 0.0,
+          "candidate_mean": 0.0,
+          "reference_mean": 0.0,
+          "candidate_rms": 0.0,
+          "reference_rms": 0.0,
+          "limits": {
+            "max_nrmse": 0.001,
+            "max_abs_error": 0.025
+          },
+          "passed": true
+        },
+        "v:load": {
+          "reference": "v_load",
+          "unit": "V",
+          "scale": 0.2,
+          "rmse": 0.0,
+          "nrmse": 0.0,
+          "max_abs_error": 0.0,
+          "candidate_mean": 0.0,
+          "reference_mean": 0.0,
+          "candidate_rms": 0.0,
+          "reference_rms": 0.0,
+          "limits": {
+            "max_nrmse": 0.001,
+            "max_abs_error": 0.001
+          },
+          "passed": true
+        },
+        "i:L1": {
+          "reference": "i_source_to_transformer",
+          "unit": "A",
+          "scale": 1.0,
+          "rmse": 0.0,
+          "nrmse": 0.0,
+          "max_abs_error": 0.0,
+          "candidate_mean": 0.0,
+          "reference_mean": 0.0,
+          "candidate_rms": 0.0,
+          "reference_rms": 0.0,
+          "limits": {
+            "max_nrmse": 0.001,
+            "max_abs_error": 0.001
+          },
+          "passed": true
+        },
+        "i:L2": {
+          "reference": "i_load",
+          "unit": "A",
+          "scale": 0.2,
+          "rmse": 0.0,
+          "nrmse": 0.0,
+          "max_abs_error": 0.0,
+          "candidate_mean": 0.0,
+          "reference_mean": 0.0,
+          "candidate_rms": 0.0,
+          "reference_rms": 0.0,
+          "limits": {
+            "max_nrmse": 0.001,
+            "max_abs_error": 0.0002
+          },
+          "passed": true
+        },
+        "i:Lm": {
+          "reference": "i_magnetizing",
+          "unit": "A",
+          "scale": 1.0,
+          "rmse": 0.0,
+          "nrmse": 0.0,
+          "max_abs_error": 0.0,
+          "candidate_mean": 0.0,
+          "reference_mean": 0.0,
+          "candidate_rms": 0.0,
+          "reference_rms": 0.0,
+          "limits": {
+            "max_nrmse": 0.001,
+            "max_abs_error": 0.001
+          },
+          "passed": true
+        }
+      }
+    },
+    {
+      "window_seconds": [
+        2.001,
+        8.0
+      ],
+      "alignment": "absolute_time_linear_interpolation",
+      "passed": true,
+      "signals": {
+        "v:src": {
+          "reference": "v_source",
+          "unit": "V",
+          "scale": 1.0,
+          "rmse": 0.0,
+          "nrmse": 0.0,
+          "max_abs_error": 0.0,
+          "candidate_mean": 0.9999999999999999,
+          "reference_mean": 0.9999999999999999,
+          "candidate_rms": 0.9999999999999999,
+          "reference_rms": 0.9999999999999999,
+          "limits": {
+            "max_nrmse": 0.001,
+            "max_abs_error": 0.005
+          },
+          "passed": true
+        },
+        "v:core_p": {
+          "reference": "v_primary_core",
+          "unit": "V",
+          "scale": 1.0,
+          "rmse": 3.3453354961573656e-06,
+          "nrmse": 3.3453354961573656e-06,
+          "max_abs_error": 0.00013934333972226431,
+          "candidate_mean": 0.01473965185922237,
+          "reference_mean": 0.014739806745643853,
+          "candidate_rms": 0.024471152498433558,
+          "reference_rms": 0.024470945725224274,
+          "limits": {
+            "max_nrmse": 0.001,
+            "max_abs_error": 0.005
+          },
+          "passed": true
+        },
+        "v:sec_p": {
+          "reference": "v_secondary_core",
+          "unit": "V",
+          "scale": 5.0,
+          "rmse": 1.6726677480997607e-05,
+          "nrmse": 3.3453354961995216e-06,
+          "max_abs_error": 0.0006967166986049378,
+          "candidate_mean": 0.0736982592961101,
+          "reference_mean": 0.07369903372821927,
+          "candidate_rms": 0.12235576249216608,
+          "reference_rms": 0.12235472862612141,
+          "limits": {
+            "max_nrmse": 0.001,
+            "max_abs_error": 0.025
+          },
+          "passed": true
+        },
+        "v:load": {
+          "reference": "v_load",
+          "unit": "V",
+          "scale": 0.2,
+          "rmse": 1.3347660930053141e-06,
+          "nrmse": 6.67383046502657e-06,
+          "max_abs_error": 5.5596254685310806e-05,
+          "candidate_mean": 0.07319115215295408,
+          "reference_mean": 0.07319109092371465,
+          "candidate_rms": 0.0847156399645681,
+          "reference_rms": 0.08471549552407394,
+          "limits": {
+            "max_nrmse": 0.001,
+            "max_abs_error": 0.001
+          },
+          "passed": true
+        },
+        "i:L1": {
+          "reference": "i_source_to_transformer",
+          "unit": "A",
+          "scale": 1.0,
+          "rmse": 7.292157716590293e-06,
+          "nrmse": 7.292157716590293e-06,
+          "max_abs_error": 0.00030374026435277257,
+          "candidate_mean": 0.9836849615262241,
+          "reference_mean": 0.983684624018891,
+          "candidate_rms": 0.9844241405105658,
+          "reference_rms": 0.9844237605109539,
+          "limits": {
+            "max_nrmse": 0.001,
+            "max_abs_error": 0.001
+          },
+          "passed": true
+        },
+        "i:L2": {
+          "reference": "i_load",
+          "unit": "A",
+          "scale": 0.2,
+          "rmse": 1.3347660930053141e-06,
+          "nrmse": 6.67383046502657e-06,
+          "max_abs_error": 5.5596254685310806e-05,
+          "candidate_mean": 0.07319115215295408,
+          "reference_mean": 0.07319109092371465,
+          "candidate_rms": 0.0847156399645681,
+          "reference_rms": 0.08471549552407394,
+          "limits": {
+            "max_nrmse": 0.001,
+            "max_abs_error": 0.0002
+          },
+          "passed": true
+        },
+        "i:Lm": {
+          "reference": "i_magnetizing",
+          "unit": "A",
+          "scale": 1.0,
+          "rmse": 6.183397429183714e-07,
+          "nrmse": 6.183397429183714e-07,
+          "max_abs_error": 2.5758990926365126e-05,
+          "candidate_mean": 0.6177292007614539,
+          "reference_mean": 0.6177291694003177,
+          "candidate_rms": 0.657585581689069,
+          "reference_rms": 0.6575855738835832,
+          "limits": {
+            "max_nrmse": 0.001,
+            "max_abs_error": 0.001
+          },
+          "passed": true
+        }
+      }
+    }
+  ],
+  "artifacts": {
+    "directory": "local_reference/transformer_t_equivalent/comparison_results/20261106T025650374531Z",
+    "plot": "comparison.png",
+    "candidate_data": [
+      "pycy.csv",
+      "pycy.json",
+      "pycy.npz"
+    ]
+  },
+  "comparison_plot_sha256": "daa5fe628749787f30d897a4c8e9b1c31aa646e4c06c93e4666bcd7b6b9fc62f",
+  "input_snapshot_sha256": {
+    "23_transformer_t_equivalent.py": "5400930b99860a69985015fcfe2421678e5e7af994b0f5c246232b5ff106eba1",
+    "compare.py": "adbff0454d09d6892bad0aa5f4121368a025c04b603bf275f714cfa2e52a33fc",
+    "CompareCircuits.slx": "9df7b95e3d0c5b842c1699631e49a5587179088b6afe9281914c52b60964e07b",
+    "comparison.py": "8545b5e8fba8abdc2f20cdc2006342bb428765110c5bf9052103dfb0e349affe",
+    "export_reference.m": "b88442743b686a7b9a92a3dc8dfa1b214a1465ce5cea4ecbcadc3fe2c3cfaa23",
+    "manifest.json": "ec71de7c835ee897e54bc8b61d1180081cfbc46be90707002570f1efb4c7a5b5",
+    "parameters.json": "ea5bc7994c58ff09c1df2d1670f987492a625ba481155d064e9ade0656b5e94f",
+    "provenance.json": "87747db5a63d7dd657a1ded86833ac8c512268b5b4a48334a0d861f10b9088f2",
+    "reference.csv": "81cc392697bd03b67e5282dd9482996a8bc601ca08610a170c675c92ba0ae61e",
+    "runner.py": "c30832285ddb3f8e0706368c1f017b95af0dcca09599e6a084eed3b8669e50b5"
+  }
+}

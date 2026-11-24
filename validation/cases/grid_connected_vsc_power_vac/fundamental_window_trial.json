@@ -1,0 +1,49 @@
+{
+  "task": "C1",
+  "scope": "检验 60 Hz 基波评价窗口与 1 kHz 载波拍的关系。保持两档、两工况、控制递推和开关网络。",
+  "base_protocol": "validation/cases/grid_connected_vsc_power_vac/reference_protocol.json",
+  "base_protocol_sha256": "5724214d6223d074ce2772927afd7af216d41bb49ed025badb48bdc77e53d8f3",
+  "controller_limit_smoke": {
+    "verdict": "local_reference/native_static_reviews/c1_power_vac_design_20261122/limiter_smoke_run/verdict.txt",
+    "sha256": "03defe433ffd1299eaff2f09526802caa64bcb2b9a2be3e134d3dfb1872fa912",
+    "scope": "同一 Fortran 控制代码使用合成输入核零无功容量、圆限幅及恢复。"
+  },
+  "discovery": {
+    "native_5us_regulated": "local_reference/native_static_reviews/c1_power_vac_native_5us_regulated_v2_20261122/n/20261122T145340654973Z",
+    "receipt_sha256": "7335b05a91c5ff280518d4d5615c730031e89a9a91785dc0edbd5031190a7c11",
+    "original_failed_review_sha256": "caf6fa93cea50887c44ac24d9d466f740d87e8470e26b3521560805d90cc4c34",
+    "diagnosis_sha256": "e28e850090defc1e4bd3dda9e32a359159b1237fe3480b64b8a9d08c30d85e8b",
+    "failed_pre_enable_window_s": [0.18666666666666668, 0.20333333333333334],
+    "measured_pcc_sag_v_rms": 0.6826889281657298,
+    "required_pre_enable_sag_v_rms": 0.8,
+    "feeder_inductor_endpoint_peak_v": 0.974397214,
+    "complex_reconstruction_residual_peak_v": 1.51549167e-6,
+    "three_cycle_measured_pre_enable_pcc_v_rms": 118.787115301,
+    "three_cycle_measured_regulated_pcc_v_rms": 120.019278814,
+    "why": "一个 60 Hz 周期只含 16⅔ 个载波周期。在实测电流的基波积分分部式中，馈线电感边界项解释本次单周波幅值偏差。50 ms 同时含三个电网周期和 50 个载波周期。"
+  },
+  "trial_rules": {
+    "native_scope": "在锁定本试验后取得 2.5 µs 两组独立原生波形。5 µs 两组作为已采集波形复读，保留基础协议原结论。全部按冻结初值、时间、限值、信号身份及原始产物归档。",
+    "phase_windows_s": {
+      "mid": [[0.17, 0.22], [0.18, 0.23]],
+      "settled": [[0.55, 0.60], [0.60, 0.65]]
+    },
+    "window_measurement": "按固定绝对时钟在每个完整 50 ms 窗对实测 abc 波形做分段线性积分，直接提取正序 60 Hz V1/I1。从原始数据单独保留边界项诊断，不用公式代替实测 PCC 电压。",
+    "unchanged": "逐行时序、馈线梯形积分、控制状态和门极判据继续使用基础协议门限。旧单周期 P、Q1、径向限幅仍逐项过门并报告，原单周期电压判据结果完整保留。",
+    "each_coherent_window": {
+      "held_sag_min_v_rms": 0.8,
+      "held_q_abs_max_var": 25.0,
+      "active_power_abs_error_w": 25.0,
+      "regulated_v_abs_error_v_rms": 0.35,
+      "regulated_q_max_var": -90.0,
+      "paired_v_improvement_min_v_rms": 0.7,
+      "paired_q_reduction_min_var": 90.0,
+      "feeder_endpoint_term_max_v_peak": 0.08,
+      "complex_reconstruction_error_max_v_peak": 5e-5
+    },
+    "single_cycle_direction": "未使能电压调节的每个旧单周期，实测 PCC 基波幅值应低于 120 V。保留所有单周期偏差用于显示基波提取的窗依赖。",
+    "cross_h_each_coherent_window": {"fundamental_voltage_delta_v_rms": 0.10, "active_power_delta_w": 10.0, "fundamental_reactive_power_delta_var": 10.0},
+    "paired_prefix": "原电气与控制前缀逐点一致要求保留。"
+  },
+  "reference_status": "基础协议本轮首个 5 µs 调节组未通过，试验只新增待实测的频率窗口假设，公开候选未开始。"
+}

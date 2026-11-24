@@ -1,0 +1,295 @@
+{
+  "schema": "d1_dual_vsc_native_active_result_v1",
+  "date": "2026-11-23",
+  "status": "PASS_BOTH_NATIVE_ACTIVE_GRIDS",
+  "protocol": {
+    "path": "docs/development_roadmap/experiments/d1_dual_vsc_active_protocol_20261123.json",
+    "sha256": "b974517e31ef4bd6f019905e7f63bafff635f8b2a15b72bde0ee8030571a5791",
+    "bytes": 9784
+  },
+  "freeze_commit": "9613c380e0ef09f30cc0b658559695f5142e80f7",
+  "native": {
+    "pscad_version": "5.0.0",
+    "emtdc_build": "20210219",
+    "compiler": "gf46",
+    "platform": "x86",
+    "active_window_s": 0.050005,
+    "snapshot_s": 0.402,
+    "physical_branches": 45,
+    "original_pgb_channels": 82,
+    "control_log_columns_per_station": 43,
+    "cold_runs": 2,
+    "independent_restarts": 2,
+    "build_errors_or_warnings": 0
+  },
+  "grids": {
+    "5us": {
+      "step_s": 5e-06,
+      "seed_rows": 90402,
+      "restart_rows": 10001,
+      "seed_and_restart_receipts": {
+        "seed": {
+          "path": "local_reference/native_static_reviews/d1_dual_vsc_active_recovery_20261123/5us/seed/n/20261122T224008731143Z/snapshot_result.json",
+          "sha256": "5f8d899fc72de2720ca746b30f3fd99c966920f73e9c4e784f69abba7259d40b",
+          "bytes": 27613
+        },
+        "restart": {
+          "path": "local_reference/native_static_reviews/d1_dual_vsc_active_recovery_20261123/5us/restart/n/20261122T224655132463Z/snapshot_result.json",
+          "sha256": "61c97fe762528e512d74b54e409eedaecf19209a6291477d3f38d8f663452c99",
+          "bytes": 22727
+        }
+      },
+      "snapshot_sha256": "7f89bfdfaa168b2e145a36429e803749766b19b75d8073573cebe97b1c69380d",
+      "native_audit": {
+        "path": "local_reference/native_static_reviews/d1_dual_vsc_active_recovery_20261123/5us/restart/n/20261122T224655132463Z/active_physics.json",
+        "sha256": "d2640daf68fc9a0d4540507ad317eb766e5e97342db7fb04a04b1d12750d12a8",
+        "bytes": 10706
+      },
+      "analog_overlap_max": {
+        "voltage_v": 2.0100032749326147e-09,
+        "current_a": 4.821100116347843e-10,
+        "reference_pu": 1.3146006505593277e-10
+      },
+      "first_feedback_relative_tick": 20,
+      "first_gate_apply_relative_tick": 21,
+      "same_row_nodal_and_energy_residuals": {
+        "kcl_a": 5.19279952371221e-10,
+        "tr_line_voltage_v": 2.442159668936128e-11,
+        "tr_ac_voltage_v": 3.991544872405939e-10,
+        "tr_cap_charge_c": 9.926283055336927e-14,
+        "tr_energy_j": 6.136967453315711e-11,
+        "abs_cumulative_energy_j": 9.316971279197204e-09
+      },
+      "final_dc_link_currents_a": [
+        0.5425208567304,
+        0.5421829107877699,
+        -0.54252085673464,
+        -0.54218291079259
+      ],
+      "stations": {
+        "a": {
+          "inner_updates": 500,
+          "outer_due": 50,
+          "outer_enabled": 40,
+          "first_enabled_outer_s": 0.011000000000000001,
+          "fine_gate_midpoints": 0,
+          "control_recurrence": 1.6910917111090384e-11,
+          "first_applied_error_pu": 4.9439619065339e-17,
+          "same_grid_seed_log_maximum": 4.634516326262883e-09,
+          "p_mean_w": 269.92883196688894,
+          "q_mean_var": 27.054699034615986,
+          "dc_min_v": 397.9174360055681,
+          "dc_final_v": 398.64806608202747,
+          "first_inner_pending": [
+            8.360753770435065e-05,
+            -0.0038313246725705003,
+            0.0037477171348661493
+          ],
+          "saved_controller": {
+            "real_storage_offset": 0,
+            "integer_storage_offset": 0,
+            "initialization_error": 5.684341886080802e-14,
+            "closed_log_handle_zero": true,
+            "parked_state_pass": true
+          },
+          "checks_passed": 20
+        },
+        "b": {
+          "inner_updates": 500,
+          "outer_due": 50,
+          "outer_enabled": 40,
+          "first_enabled_outer_s": 0.011000000000000001,
+          "fine_gate_midpoints": 0,
+          "control_recurrence": 1.6228796084760688e-11,
+          "first_applied_error_pu": 3.0357660829594124e-17,
+          "same_grid_seed_log_maximum": 2.8599004053830868e-08,
+          "p_mean_w": 235.51480767901583,
+          "q_mean_var": -49.76757533186347,
+          "dc_min_v": 397.5574958709832,
+          "dc_final_v": 398.2806584729416,
+          "first_inner_pending": [
+            8.365318893805898e-05,
+            -0.0038334166454079698,
+            0.0037497634564699106
+          ],
+          "saved_controller": {
+            "real_storage_offset": 25,
+            "integer_storage_offset": 1,
+            "initialization_error": 5.684341886080802e-14,
+            "closed_log_handle_zero": true,
+            "parked_state_pass": true
+          },
+          "checks_passed": 23
+        }
+      }
+    },
+    "2p5us": {
+      "step_s": 2.5e-06,
+      "seed_rows": 180803,
+      "restart_rows": 20002,
+      "seed_and_restart_receipts": {
+        "seed": {
+          "path": "local_reference/native_static_reviews/d1_dual_vsc_active_recovery_20261123/2p5us/seed/n/20261122T224315416246Z/snapshot_result.json",
+          "sha256": "a279cce50bf14e97be8bd5da306a2238af4f766d0dc3058a3d8a308029005c29",
+          "bytes": 27625
+        },
+        "restart": {
+          "path": "local_reference/native_static_reviews/d1_dual_vsc_active_recovery_20261123/2p5us/restart/n/20261122T224835227442Z/snapshot_result.json",
+          "sha256": "ade9b7c2db4c626cb68e8cea0735b81b639804b76f90a1537b781aaceccc84a9",
+          "bytes": 22731
+        }
+      },
+      "snapshot_sha256": "04e405c043af1cae8c497668485d717c7a93f948d1de9d2601db48deb14aee52",
+      "native_audit": {
+        "path": "local_reference/native_static_reviews/d1_dual_vsc_active_recovery_20261123/2p5us/restart/n/20261122T224835227442Z/active_physics.json",
+        "sha256": "44818cd150dd10989ff0c2a84e113702e84fd534e154401283523bb54153adb9",
+        "bytes": 10714
+      },
+      "analog_overlap_max": {
+        "voltage_v": 1.2001510896197942e-10,
+        "current_a": 4.44090023001692e-10,
+        "reference_pu": 7.005507285384738e-14
+      },
+      "first_feedback_relative_tick": 40,
+      "first_gate_apply_relative_tick": 42,
+      "same_row_nodal_and_energy_residuals": {
+        "kcl_a": 9.313401161392676e-10,
+        "tr_line_voltage_v": 3.195982367643069e-11,
+        "tr_ac_voltage_v": 7.947589253376464e-10,
+        "tr_cap_charge_c": 9.97005288996323e-14,
+        "tr_energy_j": 6.14898493450991e-11,
+        "abs_cumulative_energy_j": 7.627874589676225e-09
+      },
+      "final_dc_link_currents_a": [
+        0.52963335406283,
+        0.52949092052252,
+        -0.52963335406285,
+        -0.5294909205213401
+      ],
+      "stations": {
+        "a": {
+          "inner_updates": 500,
+          "outer_due": 50,
+          "outer_enabled": 40,
+          "first_enabled_outer_s": 0.011000000000000001,
+          "fine_gate_midpoints": 10001,
+          "control_recurrence": 5.064748620497994e-11,
+          "first_applied_error_pu": 3.946495907847236e-17,
+          "same_grid_seed_log_maximum": 7.943645741192995e-11,
+          "p_mean_w": 264.03529572898094,
+          "q_mean_var": 32.26019613537965,
+          "dc_min_v": 397.92503857291575,
+          "dc_final_v": 398.63919798940776,
+          "first_inner_pending": [
+            8.360409788845881e-05,
+            -0.0038313217525069395,
+            0.0037477176546184808
+          ],
+          "saved_controller": {
+            "real_storage_offset": 0,
+            "integer_storage_offset": 0,
+            "initialization_error": 5.684341886080802e-14,
+            "closed_log_handle_zero": true,
+            "parked_state_pass": true
+          },
+          "checks_passed": 20
+        },
+        "b": {
+          "inner_updates": 500,
+          "outer_due": 50,
+          "outer_enabled": 40,
+          "first_enabled_outer_s": 0.011000000000000001,
+          "fine_gate_midpoints": 10001,
+          "control_recurrence": 5.0249582272954285e-11,
+          "first_applied_error_pu": 4.683753385137379e-17,
+          "same_grid_seed_log_maximum": 8.609779555968089e-11,
+          "p_mean_w": 238.96701287813994,
+          "q_mean_var": -48.071554311095724,
+          "dc_min_v": 397.56263588484586,
+          "dc_final_v": 398.2832350417134,
+          "first_inner_pending": [
+            8.364969648032499e-05,
+            -0.003833411397409953,
+            0.003749761700929628
+          ],
+          "saved_controller": {
+            "real_storage_offset": 25,
+            "integer_storage_offset": 1,
+            "initialization_error": 5.684341886080802e-14,
+            "closed_log_handle_zero": true,
+            "parked_state_pass": true
+          },
+          "checks_passed": 23
+        }
+      }
+    }
+  },
+  "control_checker": {
+    "path": "local_reference/native_static_reviews/d1_dual_vsc_active_20261123/audit_active.py",
+    "sha256": "67a7661fe7a95750f4beab82039ae629df75ed4b416b1758793230cfff5b0e2c",
+    "bytes": 24316
+  },
+  "plant_checker": {
+    "path": "local_reference/native_static_reviews/d1_dual_vsc_active_20261123/audit_active_plant.py",
+    "sha256": "cce1013aca18ccfb71613b65de3eedfafec6817d5654f45a85ea5642354e9818",
+    "bytes": 5958
+  },
+  "first_save_refusal": {
+    "terminal": {
+      "path": "local_reference/native_static_reviews/d1_dual_vsc_active_20261123/5us/seed/n/20261122T223534654239Z/terminal.json",
+      "sha256": "2a7f890e5fc16cff0c12fa374d6b33891c4f5cba48c416f01d817902b706d5f0",
+      "bytes": 1850
+    },
+    "error": {
+      "path": "local_reference/native_static_reviews/d1_dual_vsc_active_20261123/5us/seed/n/20261122T223534654239Z/worker.stderr.txt",
+      "sha256": "6b4c69d770879c8c9e777195852ad2e472f007fcc122d9e4b2bd1d347b11c7fa",
+      "bytes": 1508
+    },
+    "native_layout_review": {
+      "path": "local_reference/native_static_reviews/d1_dual_vsc_active_recovery_20261123/observed_save_normalization.json",
+      "sha256": "76111d774be48c082213f6285db5e34d5ef5e19ea6d16f22627b5149c980fe59",
+      "bytes": 19018
+    }
+  },
+  "independent_pycy_long_screen": {
+    "analysis_script": {
+      "path": "local_reference/native_static_reviews/d1_dual_vsc_active_20261123/pycy_power_direction_screen.py",
+      "sha256": "9eb4d60edf80a0312959092d3a9edf435fb00672d5d2acafe52fbbeb04dc7781",
+      "bytes": 8900
+    },
+    "actual_pscad_long_run": false,
+    "grids": {
+      "5us": {
+        "report": {
+          "path": "local_reference/native_static_reviews/d1_dual_vsc_active_20261123/pycy_power_direction_5us.json",
+          "sha256": "cdcafc8d4d41c7c9fcdc6bee1bdad1d27eb49b2d64cbc273695e0c62213f05f5",
+          "bytes": 2839
+        },
+        "rows": 110002,
+        "a_baseline_p_mean_w": 249.60487261307952,
+        "a_later_p_mean_w": 650.1230507527495,
+        "b_baseline_p_mean_w": 188.5618400425117,
+        "b_later_p_mean_w": -220.70136528437064,
+        "b_later_vdc_mean_v": 399.6244739505119,
+        "b_max_vdc_v": 403.15046726971326
+      },
+      "2p5us": {
+        "report": {
+          "path": "local_reference/native_static_reviews/d1_dual_vsc_active_20261123/pycy_power_direction_2p5us.json",
+          "sha256": "f328753efee70e419b11b7de9d91dc86453513456bed57991d6eeab68ebfb2ef",
+          "bytes": 2845
+        },
+        "rows": 220003,
+        "a_baseline_p_mean_w": 249.20579412972108,
+        "a_later_p_mean_w": 648.9195847495131,
+        "b_baseline_p_mean_w": 189.95225485728128,
+        "b_later_p_mean_w": -221.66814669979703,
+        "b_later_vdc_mean_v": 399.63956170345887,
+        "b_max_vdc_v": 403.1742572054694
+      }
+    }
+  },
+  "next_stage": "long_window_native_power_reversal_and_dc_recovery",
+  "long_reference_qualified": false,
+  "candidate_accepted": false
+}

@@ -1,0 +1,313 @@
+{
+  "schema": "c1_force_dsout_bounded_numeric_v1",
+  "recorded_utc": "2026-11-16T02:49:09.639523+00:00",
+  "checked_head": "63e51654499c44ac215ab776d8b58f994935d7c1",
+  "status": "SHORT_PROBE_NUMERICALLY_QUALIFIED_NOT_FULL_VSC",
+  "scope": {
+    "duration_s": 0.0004,
+    "step_s": 5e-06,
+    "sample_s": 5e-06,
+    "rows": 81,
+    "segments": 80,
+    "channels": 32,
+    "vectors": [
+      "000",
+      "100",
+      "110",
+      "010",
+      "011",
+      "001",
+      "101",
+      "111"
+    ],
+    "vector_hold_s": 5e-05,
+    "R_ohm": 1,
+    "L_H": 0.001,
+    "DC_V": 400,
+    "AC_rms_V": 120,
+    "AC_Hz": 60,
+    "AC_ramp_s": 0.001,
+    "Ron_ohm": 0.001,
+    "Goff_S": 1e-09,
+    "voltage_identity_rank": 1,
+    "purpose": "Qualify actual measured source-current chain and manual-vector plant before a separate full-SPWM protocol.",
+    "limitation": "All81 points remain inside the1ms grid-source ramp. No full openloop, steady state, closed-loop or candidate qualification."
+  },
+  "preparation": {
+    "resume_checkpoint": {
+      "path": "local_reference/c1_openloop_reference_research/resume_checkpoints/20261116T022604926321Z/resume.json",
+      "bytes": 2656,
+      "sha256": "f5ede11533040fa53aa4be58c0b8a507afff22c8267ccb50bfb2ecfaaef448e3"
+    },
+    "preserved_v1_manifest": {
+      "path": "local_reference/c1_openloop_reference_research/20261112T004216074571Z_force_dsout_bounded_numeric_v1/manifest.json",
+      "bytes": 7365,
+      "sha256": "1d08330d1f266b93103aafdbcbbf0e9bcb65e0d5d4793a221755ffe436778f8f"
+    },
+    "v1_not_executed": true,
+    "v1_rejection": "Worker imported mhi.pscad before copied-contract identity checks, contrary to frozen execution order. V2 only moves that import after all worker identity checks; no contract relaxation.",
+    "v2_manifest": {
+      "path": "local_reference/c1_openloop_reference_research/20261116T023156856496Z_force_dsout_bounded_numeric_v2/manifest.json",
+      "bytes": 7674,
+      "sha256": "6664bc3eedfd33ccb703f048403dbb2f8e5d7897bae776deee5adcf984b113b7"
+    },
+    "exact_package_files": 24,
+    "flat_inputs": 14,
+    "builder_and14_inputs_unchanged": true,
+    "clone_review": {
+      "path": "local_reference/native_static_reviews/c1_bounded_numeric_v2_clone_20261116T023156856496Z/receipt.json",
+      "bytes": 9695,
+      "sha256": "2c018a920e59acdacb0d035bb99cf5041f3c5ac9773abb425e468135ba297a0d"
+    },
+    "final_independent_byte_review": {
+      "path": "local_reference/native_static_reviews/c1_final_numeric_four_helper_seal_20261116T023657332521Z/receipt.json",
+      "bytes": 5272,
+      "sha256": "03eca4a2263bb795118f9423ca4912e53bc2854b7ab350f89ade490ea892456a"
+    },
+    "root_byte_seal": {
+      "path": "local_reference/native_static_reviews/c1_force_dsout_numeric_root_byte_seal_20261116T023734222258Z/seal.json",
+      "bytes": 3692,
+      "sha256": "23cbfc7df1950572d76871bb918c4cbd438c6df60337af6f27a010b748d8eb18"
+    },
+    "contract": {
+      "path": "local_reference/c1_openloop_reference_research/20261116T023156856496Z_force_dsout_bounded_numeric_v2/bounded_run_contract.json",
+      "bytes": 18375,
+      "sha256": "1f2b96b0107f8f2f4c80e6aa40778f4ab4b2e50ec01c700499469c9cb48faace"
+    },
+    "preflight": {
+      "path": "local_reference/native_static_reviews/c1_force_dsout_numeric_root_preflight_20261116T023827380078Z/receipt.json",
+      "bytes": 1989,
+      "sha256": "3f9b064e729b8e35e75929d8ca0bbd821eadd6206950caaed942461a3bb34446"
+    },
+    "initial_sandbox_preflight": {
+      "path": "local_reference/native_static_reviews/c1_force_dsout_numeric_root_exec_20261116T023853622403Z/sandbox_preflight_rejection.json",
+      "bytes": 651,
+      "sha256": "ea190db8a258e199d47f0d0c73aad59c8cafb6d3f63fb994d14d4d5d098ff49d"
+    },
+    "environment_note": "Sandbox LOCALAPPDATA mismatch rejected before launch. The same unchanged preflight passed in actual-user execution context; no environment redirection or weakened guard.",
+    "initial_clone_assertion_failure_preserved": {
+      "path": "local_reference/native_static_reviews/c1_bounded_numeric_v2_clone_20261116T023128613900Z/failed_preparation.json",
+      "bytes": 320,
+      "sha256": "637a82ed6c2eadf0b7dcbc5a460a8e7222d3b1cccdc1009a395993bc4af4e7f7"
+    }
+  },
+  "native": {
+    "run": "local_reference/c1_openloop_reference_research/20261116T023156856496Z_force_dsout_bounded_numeric_v2/n/20261116T023853622403Z",
+    "session_id": 63693,
+    "authoritative_exec_exit": 0,
+    "closed_exec": {
+      "path": "local_reference/native_static_reviews/c1_force_dsout_numeric_root_exec_20261116T023853622403Z/closed_exec.json",
+      "bytes": 1349,
+      "sha256": "6a94277f58c6828e5ff9dc91a647950ef4d2220fabf2fdf419a4b385528537ce"
+    },
+    "terminal": {
+      "path": "local_reference/c1_openloop_reference_research/20261116T023156856496Z_force_dsout_bounded_numeric_v2/n/20261116T023853622403Z/terminal.json",
+      "bytes": 16270,
+      "sha256": "5befeef5a489418215b2be579039b177a32d0c0f2a406c9fb40998f298a2f27d"
+    },
+    "non_OUT_manifest": {
+      "path": "local_reference/c1_openloop_reference_research/20261116T023156856496Z_force_dsout_bounded_numeric_v2/n/20261116T023853622403Z/manifest.json",
+      "bytes": 26411,
+      "sha256": "0095d27bac0d4036f6fc9d189714c74158140771ccf497cb5159feb094435d37"
+    },
+    "non_OUT_files": 78,
+    "elapsed_s": 215.6210001000436,
+    "build_errors": 0,
+    "worker_returncode": 0,
+    "run_calls": 1,
+    "completion_marker_observed": true,
+    "normal_quit": true,
+    "remaining_owned": [],
+    "forced_termination": false,
+    "all_environment_guards_unchanged": true
+  },
+  "actual_mapping": {
+    "receipt": {
+      "path": "local_reference/native_static_reviews/c1_force_dsout_numeric_mapping_independent_20261116T023853622403Z_20261116T024320382886Z/receipt.json",
+      "bytes": 890031,
+      "sha256": "a5fbbfb60ba8898b14e8468353af8b982bb37d1dbe7d34053ff9bbdf66bfc10f"
+    },
+    "structural_gates_passed": 551,
+    "binding_rechecks_passed": 118,
+    "real_INF_columns": 32,
+    "map_channels": 32,
+    "branches": 19,
+    "raw_OUT_consumed": false,
+    "root_view_before_raw": {
+      "path": "local_reference/native_static_reviews/c1_force_dsout_numeric_root_exec_20261116T023853622403Z/mapping_view.json",
+      "bytes": 673,
+      "sha256": "68ae5ae906a886d7e1cde584600ac8acc5a9c1bff05c36c1fa2ba43bfa4177ad"
+    },
+    "scope": "Actual source-negative-ownBA to standard force identity to own-PGB in MainOut; full source/metadata/ports/storage/physics and actual INF/native-order binding rechecked in this Run."
+  },
+  "raw_archive": {
+    "manifest": {
+      "path": "local_reference/native_static_reviews/c1_force_dsout_raw_archive_20261116T023853622403Z_20261116T024410017000Z/raw_OUT_manifest.json",
+      "bytes": 2969,
+      "sha256": "daabb3d042c3b1ecce4960186b2292a11e05c7bb2a9be79749749aee6685dd50"
+    },
+    "files": [
+      {
+        "path": "D:/VibeCoding/PyCy_EMT_Lite/local_reference/c1_openloop_reference_research/20261116T023156856496Z_force_dsout_bounded_numeric_v2/n/20261116T023853622403Z/project/vdiv.gf46/c1_three_phase_probe_01.out",
+        "bytes": 21539,
+        "sha256": "e8ab65fab9ef00e73b5f60ccfed5f41a840bc83171eb1de38557204ea75d1f14"
+      },
+      {
+        "path": "D:/VibeCoding/PyCy_EMT_Lite/local_reference/c1_openloop_reference_research/20261116T023156856496Z_force_dsout_bounded_numeric_v2/n/20261116T023853622403Z/project/vdiv.gf46/c1_three_phase_probe_02.out",
+        "bytes": 21539,
+        "sha256": "248c667027ee5ae784c8d5ad046f6d23c22e40ceb7c4e47a3f6c8f62b50c1ff1"
+      },
+      {
+        "path": "D:/VibeCoding/PyCy_EMT_Lite/local_reference/c1_openloop_reference_research/20261116T023156856496Z_force_dsout_bounded_numeric_v2/n/20261116T023853622403Z/project/vdiv.gf46/c1_three_phase_probe_03.out",
+        "bytes": 21539,
+        "sha256": "bfc1d0e49ff6fa2cf9485fd20d4e8819cbde30cb73d0edf4f321fa81b8a95fc3"
+      },
+      {
+        "path": "D:/VibeCoding/PyCy_EMT_Lite/local_reference/c1_openloop_reference_research/20261116T023156856496Z_force_dsout_bounded_numeric_v2/n/20261116T023853622403Z/project/vdiv.gf46/c1_three_phase_probe_04.out",
+        "bytes": 5987,
+        "sha256": "d7d33b9c848c84bea550e8b17a7c577f053f69c77af032e32e2cac7c428caea8"
+      }
+    ],
+    "raw_hashing_after_actual_mapping": true,
+    "run_manifest_unchanged": true
+  },
+  "numerical": {
+    "primary": {
+      "path": "local_reference/native_static_reviews/c1_force_dsout_numeric_root_actual_20261116T023853622403Z/receipt.json",
+      "bytes": 34832,
+      "sha256": "fbac7f04f56bc9beaed592609f9f6d3511fd408fa560e53812b2e6e303e05dac"
+    },
+    "independent": {
+      "path": "local_reference/native_static_reviews/c1_force_dsout_numeric_independent_actual_20261116T023853622403Z/receipt.json",
+      "bytes": 89545,
+      "sha256": "86663121362513524224b61b85b541b565c83708560b9e42a9fd5be3a3b70c6d"
+    },
+    "pair": {
+      "path": "local_reference/native_static_reviews/c1_force_dsout_numeric_pair_20261116T023853622403Z_20261116T024617314092Z/receipt.json",
+      "bytes": 4326,
+      "sha256": "fd73f0914cdbdfde85421d407fd75b613af2e31b72a2c1901fd19c2f7034b0ef"
+    },
+    "primary_status": "SHORT_PROBE_NUMERICAL_CHECKS_PASS_NOT_FULL_VSC",
+    "independent_status": "OBSERVED_BOUNDED_PROBE_ONLY_PASS",
+    "all17_plus_Vs_pass": true,
+    "all81_rows_and80_segments": true,
+    "phase_convention": "whole_triplet_plus_Ph",
+    "conditional_prediction_prerequisites_observed": true,
+    "full_token_radius_including_zero": true,
+    "no_edge_deletion_or_shift_or_fit": true,
+    "measured_DC_current_not_reconstructed": true,
+    "source_CUR_used": false,
+    "removed_A_drop": "NOT_APPLICABLE_DELETED_NOT_PASS",
+    "removed_rank2": "NOT_APPLICABLE_DELETED_NOT_PASS",
+    "primary_raw_plus_token_maxima": {
+      "time": 0.0,
+      "source": 1.1e-10,
+      "initial_current": 3.5004431547718e-23,
+      "initial_dc_leak": 1.000000000012e-19,
+      "three_phase_KCL": 1.065e-10,
+      "pole_KCL": 2.949342367446e-08,
+      "DCrail_KCL": 5.738368817438e-08,
+      "R": 3e-12,
+      "KVL": 1e-10,
+      "TR": 1.21e-09,
+      "pole_thevenin": 2.9464124102640535e-11,
+      "common_mode": 2.37032493333332e-08,
+      "power": 2.52128111770375e-08,
+      "predicted_current": 1.5460190014536457e-08,
+      "predicted_neutral": 1.446865333333332e-07,
+      "initial_pole": 1.4036777050635e-20,
+      "energy": 2.0275927306570793e-13
+    },
+    "primary_limits": {
+      "time": 2e-12,
+      "source": 1e-08,
+      "initial_current": 1e-08,
+      "initial_dc_leak": 1e-09,
+      "three_phase_KCL": 1e-08,
+      "pole_KCL": 1e-06,
+      "DCrail_KCL": 1e-06,
+      "R": 1e-06,
+      "KVL": 1e-07,
+      "TR": 1e-06,
+      "pole_thevenin": 1e-07,
+      "common_mode": 1e-07,
+      "power": 0.0001,
+      "predicted_current": 1e-07,
+      "predicted_neutral": 1e-06,
+      "initial_pole": 1e-09,
+      "energy": 1e-07
+    },
+    "source_terminal_raw_plus_token_V": "1.000E-11",
+    "source_terminal_limit_V": 1e-08,
+    "unconstrained_TIME_token_Lipschitz_diagnostic_V": 1.7070562749116915e-08,
+    "source_clock_scope": "Configured-grid measured-source gate passes; unconstrained printed-TIME Lipschitz bound is separate diagnostic only. No internal solver/source precision proof.",
+    "post_actual_independent_review": {
+      "path": "local_reference/native_static_reviews/c1_bounded_numeric_post_actual_progress_20261116T024751649345Z/receipt.json",
+      "bytes": 44627,
+      "sha256": "d3c32464c854d7a88ba97907dab988a561e20488488c99e9b44b97987f931f14"
+    }
+  },
+  "plot": {
+    "path": "local_reference/native_static_reviews/c1_force_dsout_numeric_pair_20261116T023853622403Z_20261116T024617314092Z/actual_probe.png",
+    "bytes": 168874,
+    "sha256": "0a2013dc0189884548d3ec0b614b9645ef4a9581a182054f82828061f7ded752",
+    "reviewed_visually": true,
+    "scope": "Measured PSCAD channels only; all81 points, no reconstructed current or Python waveform substitution."
+  },
+  "software": {
+    "source113_byte_identical": true,
+    "dependencies_unchanged": true,
+    "core_or_teaching_changes": false,
+    "previous_full_regression": "1300 passed including slow; not rerun in this research-only stage.",
+    "synthetic_only_checks": {
+      "root_math": 44,
+      "root_parser": 13,
+      "root_IO_guard": 25,
+      "mapper": 91,
+      "independent_and_archive_fixtures": 103,
+      "driver_mock": 15
+    },
+    "synthetic_receipts": [
+      {
+        "path": "local_reference/native_static_reviews/c1_numeric_root_synthetic_20261116T023412307600Z/receipt.json",
+        "bytes": 3575,
+        "sha256": "83b1684957dbd2642c001b5ead3775f862770f52881a7c4a78156167b500dec1"
+      },
+      {
+        "path": "local_reference/native_static_reviews/c1_numeric_mapping_pure_20261116T023250160723Z/receipt.json",
+        "bytes": 9642,
+        "sha256": "42912ec8fd9acfb82adc0015e3b3ef8833c090e4606f597d2d3b682192cf3ba5"
+      },
+      {
+        "path": "local_reference/native_static_reviews/c1_independent_numeric_synthetic_20261116T023437500403Z/receipt.json",
+        "bytes": 13256,
+        "sha256": "66611ba19d917fdda4ff2d8260d4687c9d31acd907c26573118081cb9a1c82b7"
+      }
+    ],
+    "note": "Synthetic checks validate research tools; they do not substitute commercial output."
+  },
+  "acceptance": {
+    "short_probe_numerically_qualified": true,
+    "full_VSC_reference_ready": false,
+    "candidate_executed": false,
+    "new_example_completed": false,
+    "formal_new_examples_completed": 9,
+    "C1": "in_progress",
+    "D1": "planned",
+    "F1": "Last observed billing-lock pre-run failure; no fresh CI/account claim."
+  },
+  "next": {
+    "design_review": {
+      "path": "local_reference/native_static_reviews/c1_full_openloop_reuse_review_20261116T024237332315Z/receipt.json",
+      "bytes": 2650,
+      "sha256": "daa9123dc134dece87adbeec35b6771df66e66de5b203cdd742209ed52172446"
+    },
+    "action": "Freeze a separate complete openloop-SPWM protocol and dual-step reference before any candidate. Fix5us gate/100us reference ticks, initial000/111,20ms source ramp, windows/thresholds/point counts and replace outdated deleted-A/rank2 text in the old draft.",
+    "constraints": "Reuse existing CaseDefinition chain and components/controllers; no public framework or dependency changes. Preserve every prior failure and old frozen package."
+  },
+  "preserved_postprocessing_diagnostic": {
+    "path": "local_reference/native_static_reviews/c1_force_dsout_numeric_root_exec_20261116T023853622403Z/postprocessing_path_label_correction.json",
+    "bytes": 675,
+    "sha256": "2218f512ffbcc599de0aa5d7d8c24054b49ffa687e1d6cae0f74887a3ae8a6af"
+  }
+}

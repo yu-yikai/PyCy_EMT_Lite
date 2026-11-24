@@ -1,0 +1,200 @@
+{
+  "schema_version": 1,
+  "source": "GitHub Actions public REST API",
+  "target_head_sha": "68f2f8a6c73d0b5da891fe2c006394b94232e33c",
+  "workflow_run_id": 41799220935,
+  "run_url": "https://github.com/yu-yikai/PyCy_EMT_Lite/actions/runs/41799220935",
+  "status": "completed",
+  "conclusion": "success",
+  "run_started_at": "2026-11-04T08:24:13Z",
+  "updated_at": "2026-11-04T08:33:05Z",
+  "observed_from_local_snapshot": "jobs-41799220935-20261104-083317.json",
+  "test_count": null,
+  "test_count_note": "Public job/run metadata contains no test counts. Both unauthenticated job-log API requests returned HTTP 403 on 2026-11-04; no count inferred from local tests.",
+  "jobs": [
+    {
+      "id": 126470592799,
+      "name": "ci (ubuntu-latest)",
+      "head_sha": "68f2f8a6c73d0b5da891fe2c006394b94232e33c",
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-11-04T08:24:16Z",
+      "completed_at": "2026-11-04T08:30:50Z",
+      "html_url": "https://github.com/yu-yikai/PyCy_EMT_Lite/actions/runs/41799220935/job/126470592799",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Checkout",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Set up uv and Python",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Sync locked environment",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Check lint and package types",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run all tests with coverage (including slow)",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Upload test and coverage reports",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run README Quick Start",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run all examples",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Build distributions",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Smoke-test installed wheel outside checkout",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Check for generated files",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Set up uv and Python",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Checkout",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "id": 126470593101,
+      "name": "ci (windows-latest)",
+      "head_sha": "68f2f8a6c73d0b5da891fe2c006394b94232e33c",
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-11-04T08:24:16Z",
+      "completed_at": "2026-11-04T08:33:04Z",
+      "html_url": "https://github.com/yu-yikai/PyCy_EMT_Lite/actions/runs/41799220935/job/126470593101",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Checkout",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Set up uv and Python",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Sync locked environment",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Check lint and package types",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run all tests with coverage (including slow)",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Upload test and coverage reports",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run README Quick Start",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run all examples",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Build distributions",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Smoke-test installed wheel outside checkout",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Check for generated files",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Set up uv and Python",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Checkout",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    }
+  ],
+  "job_log_access": {
+    "126470592799": {
+      "http_status": 403,
+      "authenticated_access_not_attempted": true
+    },
+    "126470593101": {
+      "http_status": 403,
+      "authenticated_access_not_attempted": true
+    }
+  }
+}

@@ -1,0 +1,143 @@
+{
+  "schema": "pycy_two_terminal_vsc_hvdc_candidate_protocol_v1",
+  "date": "2026-11-23",
+  "source_parent": "d081afc7d62c3b27156c1046e5dfea7b43229c7b",
+  "example": {
+    "number": 34,
+    "path": "examples/34_two_terminal_vsc_hvdc.py",
+    "default_step_s": 5e-06,
+    "duration_s": 0.550005,
+    "native_snapshot_time_s": 0.402
+  },
+  "sources": {
+    "native_both_grids": {
+      "path": "docs/development_roadmap/experiments/d1_dual_vsc_long_native_20261123.json",
+      "sha256": "f6e4c2efc2f30737619d083920d89c352baea19991bc9c2d09f219d4e30ee300",
+      "bytes": 12014
+    },
+    "native_controls_timing_and_power_windows": {
+      "path": "docs/development_roadmap/experiments/d1_dual_vsc_long_protocol_20261123.json",
+      "sha256": "deaac3a637428a3f1dafc1d7d35deb06bd9f5f26925a9240d82dcf683118405d",
+      "bytes": 13264
+    },
+    "conditioned_state_audit": {
+      "path": "local_reference/native_static_reviews/d1_dual_vsc_long_20261123/verification/candidate_conditioned_state.json",
+      "sha256": "be5058c4a4f99633cea9c63607682725ca7a0f330872b7cf0e42f47ac0fa020f",
+      "bytes": 2313
+    },
+    "prior_pycy_coarse_diagnostic": {
+      "path": "local_reference/native_static_reviews/d1_dual_vsc_long_20261123/verification/coarse_pycy_diagnostic/diagnostic.json",
+      "sha256": "b65090d54ea497504dcbe46c803284bd696d62e04e3a06e9a0a1837a9f59fb1a",
+      "bytes": 63428
+    },
+    "prior_pycy_fine_diagnostic": {
+      "path": "local_reference/native_static_reviews/d1_dual_vsc_long_20261123/verification/fine_pycy_diagnostic/diagnostic.json",
+      "sha256": "bd39383329f571bd437a0aeea857be6ad93052e1a4231a387e0ddd614871b772",
+      "bytes": 63389
+    },
+    "legacy_startup_baseline": {
+      "path": "local_reference/native_static_reviews/d1_dual_vsc_long_20261123/verification/legacy_28_to_32_baseline/baseline.json",
+      "sha256": "14cd3045722b019ba5d9ba19a2c7890f2a01b5b2e96e7a133e39f115873011b8",
+      "bytes": 6181
+    }
+  },
+  "comparison_time": "Compare the candidate initial row with the decoded native snapshot. Pair the remaining original rows at matching integer relative ticks and compare native absolute time after adding 0.402 s.",
+  "grids": {
+    "5us": {
+      "step_s": 5e-06,
+      "candidate_rows_including_initial": 110002,
+      "original_positive_rows": 110001,
+      "initial_capacitor_voltage_v": {
+        "a_p": 199.9998344024368,
+        "a_n": -199.999834402712,
+        "m_p": 199.9507980705613,
+        "m_n": -199.9507980708462,
+        "b_p": 199.9004211247924,
+        "b_n": -199.90042112508598
+      },
+      "initial_link_current_a": {
+        "p_am": 0.0071814386743539,
+        "p_mb": 0.016827239313263548,
+        "n_am": -0.007181438489965014,
+        "n_mb": -0.01682723912981772
+      }
+    },
+    "2p5us": {
+      "step_s": 2.5e-06,
+      "candidate_rows_including_initial": 220003,
+      "original_positive_rows": 220002,
+      "initial_capacitor_voltage_v": {
+        "a_p": 199.99983531081762,
+        "a_n": -199.9998353117388,
+        "m_p": 199.95091790063222,
+        "m_n": -199.9509179015707,
+        "b_p": 199.9005439557315,
+        "b_n": -199.9005439566759
+      },
+      "initial_link_current_a": {
+        "p_am": 0.0071518572612620365,
+        "p_mb": 0.01679838381377688,
+        "n_am": -0.007151856922041299,
+        "n_mb": -0.01679838347677718
+      }
+    }
+  },
+  "initial_state": {
+    "units": "Volts to ground at DC poles and amperes on both rails from A via midpoint to B.",
+    "ac_inductor_current_a": 0.0,
+    "ac_initial_source_v": 0.0,
+    "precharge_supply_pos_v": 200.0,
+    "precharge_supply_neg_v": -200.0,
+    "precharge_branch_resistance_ohm": 1000000000.0,
+    "dc_load_ohm": 400.0,
+    "controller": "Use the declared per-station parked initial state of the native long protocol. Each station owns its voltage, current, PLL and gate history.",
+    "execution": "Start from the listed conditioned states using existing capacitor/inductor initial parameters. The normal example runs standalone with standard PyCy entry points."
+  },
+  "electrical_and_control_requirements": [
+    "Keep the finite two-station AC feeders/filters, floating AC neutrals, bipolar T link and local 400-ohm DC load from the native protocol.",
+    "Use station A PCC P/Q projection and station B signed DC voltage PI plus Q. A ramps from 250 to 650 W over 200–220 ms after the initial source and power ramp.",
+    "Keep 100 µs solved-row current sampling, 1 ms outer sampling, and application at the next 5 µs gate tick. Fine-grid midpoints retain the last gate value.",
+    "Respect the 24 V RMS PCC outer-loop enable threshold, radial current priority, signed PI limits, measured half-bus scaling and voltage saturation rollback from the native long protocol."
+  ],
+  "paired_waveform_scope": {
+    "voltages": [
+      "six DC rail-to-ground voltages",
+      "A and B DC bus differences",
+      "six PCC phase-to-local-neutral voltages"
+    ],
+    "currents": [
+      "four DC series-line currents",
+      "six AC filter phase currents",
+      "six finite AC feeder currents"
+    ],
+    "actuation": [
+      "12 exact switch resistance words",
+      "six applied modulation references"
+    ],
+    "power_windows": "Reuse the three 50 ms windows and all eight measured mean-power/voltage keys in the native long protocol. Also compare the B-side voltage peak from the start of the ramp."
+  },
+  "same_grid_gate": {
+    "clock_abs_s": 2e-12,
+    "initial_voltage_abs_v": 1e-06,
+    "initial_current_abs_a": 1e-07,
+    "voltage_abs_v": 1e-06,
+    "current_abs_a": 1e-07,
+    "modulation_abs_pu": 2e-07,
+    "switch_word_mismatches": 0,
+    "window_mean_power_abs_w_or_var": 0.0001,
+    "window_mean_b_dc_voltage_abs_v": 1e-05,
+    "post_ramp_b_dc_peak_abs_v": 1e-05,
+    "exact_inner_outer_and_gate_ticks": true,
+    "fine_midpoint_holds": 110001
+  },
+  "cross_grid_gate": "Use the original long-window native cross-grid thresholds for average window and peak quantities. Preserve the required signed power directions and both-rail transfer.",
+  "acceptance": [
+    "Execute the new normal example entry in both electrical grids and compare its original full trajectories to the recorded same-grid PSCAD references.",
+    "Check both stations' first sample, later application, fine-grid holds, setpoint ramp and B-side DC feedback. Check physical energy on the same electrical grid.",
+    "Match all 14 legacy 28–32 startup traces by ordered columns and float64 bytes after any shared control change.",
+    "Add focused automated tests, beginner-readable teaching and validation notes, reproducible figures, and the repository example index entries.",
+    "Run the locked checks and full Windows tests including slow tests. Verify standalone example and candidate-specific tests independently in Ubuntu WSL2.",
+    "Record the original data and output identities, update the roadmap, and commit and push the verified candidate on the development branch."
+  ],
+  "formal_candidate_accepted": false
+}

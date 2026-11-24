@@ -1,0 +1,119 @@
+{
+  "schema_version": 1,
+  "recorded_utc": "2026-11-16T03:45:56.991243+00:00",
+  "checked_head": "b6f5775353e99f91c32d7860df47c4eb2db0bd9d",
+  "branch": "codex/emt-examples-longterm",
+  "previous_goal_turn_classification": "progress",
+  "status": "PROSPECTIVE_FULL_OPENLOOP_PROTOCOL_FIXED_NO_FULL_NATIVE_OR_CANDIDATE",
+  "reviewed_draft_files": [
+    {
+      "path": "validation/cases/grid_connected_vsc_open_loop/parameters.json",
+      "bytes": 3566,
+      "sha256": "e10edb90b12dc9ad6deb9e580083e771616e043363c5e22f008e2c1e13c07fa3"
+    },
+    {
+      "path": "validation/cases/grid_connected_vsc_open_loop/reference_protocol.json",
+      "bytes": 41227,
+      "sha256": "5c2931526bddee4526142e881aee9621326a5e97b57bcb512f63b022a8046c24"
+    },
+    {
+      "path": "validation/cases/grid_connected_vsc_open_loop/acceptance_plan.md",
+      "bytes": 8608,
+      "sha256": "7e04430e5c81102d3b216efdd26b6e41ce4ad40ed25644d8bef41db3b34ca21b"
+    }
+  ],
+  "frozen_protocol_files": [
+    {
+      "path": "validation/cases/grid_connected_vsc_open_loop/parameters.json",
+      "bytes": 3603,
+      "sha256": "f5041eee9296c4088e74168cb444a10b016c10ee787d044629cb9492ab523dc1"
+    },
+    {
+      "path": "validation/cases/grid_connected_vsc_open_loop/reference_protocol.json",
+      "bytes": 41406,
+      "sha256": "d87a327ef601200b2ebb360403879206d8817697f78767999143226aecf26630"
+    },
+    {
+      "path": "validation/cases/grid_connected_vsc_open_loop/acceptance_plan.md",
+      "bytes": 8753,
+      "sha256": "5509985c979e02216599c4285932e5c0964a942898befe093bb6f59b866e7440"
+    }
+  ],
+  "independent_protocol_review": {
+    "path": "local_reference/native_static_reviews/c1_full_openloop_protocol_independent_review_20261116T034113129806Z/receipt.json",
+    "bytes": 9182,
+    "sha256": "3b4ffe1f881068e77f0f1b2aea5651b051e91f1ad46f8b90d3cd1f908ffeb622"
+  },
+  "pure_kernel": {
+    "path": ".tmp/longterm/c1_full_openloop_numeric_kernel_20261116.py",
+    "bytes": 27487,
+    "sha256": "5fa8c2910b7fa702a3f6bdf691867b377cdbfef6c2bd0acb3cbe9442bcfa7ba7"
+  },
+  "independent_kernel_review": {
+    "path": "local_reference/native_static_reviews/c1_full_protocol_review_20261116T033501350097Z/kernel_final_independent_review.json",
+    "bytes": 2526,
+    "sha256": "73458f0d528b7545d416ab6045223d61c0c58b7d3c9d9660cd5b14720edc3f2e"
+  },
+  "rules_fixed_before_full_output": true,
+  "formal_new_examples_completed": 9,
+  "C1_status": "in_progress",
+  "fixed_scope": {
+    "formal_stop_s": 0.2,
+    "acquisition_stop_s": 0.200005,
+    "h_s": [
+      5e-06,
+      2.5e-06
+    ],
+    "rows": [
+      40002,
+      80003
+    ],
+    "native_channels": 45,
+    "candidate_mapped_channels": 32,
+    "teaching_electrical_components": 16,
+    "additional_native_ideal_phase_ammeters": 3,
+    "ramp_s": 0.02,
+    "reference_hold_s": 0.0001,
+    "gate_hold_s": 5e-06,
+    "source_DC_V": 400,
+    "grid_phase_Vrms": 120,
+    "R_ohm": 1,
+    "L_H": 0.01,
+    "modulation": 0.85,
+    "angle_shift_deg": -5,
+    "carrier_Hz": 1000
+  },
+  "preoutput_review_corrections": [
+    "Distinguish16 teaching devices from19 native branches including3 ideal phase ammeters; deleted DC ammeter stays absent.",
+    "Canonical control identity uses actual logged held/TIME inputs with full-q propagation. Decimal exact-or12g rendered-literal bound4.11816500003822450e-11 fits5e-11; declared reference fixed allowance1e-10, carrier1e-12. These are prospective allowances, not observed hidden precision.",
+    "Native raw carrier/g may change at fine midpoints; only applied g/R hold5us. First TIME/timestamps exactly0; every row clock within2ps and all six full-place TIME intervals compatible without changing centers.",
+    "Control PGB follows its current producer; physical15V/4I PGB follows fresh MainOut measurement. New100us actual chain remains unobserved.",
+    "Retain all acquisition/tail points; same-h32 original-point gates plus cross-h continuous i/VR/W and shared-point/integral gates. W snapshots precede W-PWL; TR prefix uses endpoint means.",
+    "Measured-source-driven4x4 prediction is conditional, distinct from independent configured-source gates. Invalid actual g/R demotes canonical-input physics to diagnostic."
+  ],
+  "pure_preparation_evidence": {
+    "kernel_self_checks": 48,
+    "independent_directed_kernel_checks": 10,
+    "independent_Schur_transition_checks": 128,
+    "counts_are_separate_scopes_not_summed": true
+  },
+  "full_native_draft_review": {
+    "path": "local_reference/native_static_reviews/c1_full_native_draft_final_20261116T033848389817Z/receipt.json",
+    "bytes": 5977,
+    "sha256": "d1978491f835b2683a40e00669bc4e5a2dbba27fb711ff73ff0634db7bb54506"
+  },
+  "mapping_draft_review": {
+    "path": "local_reference/native_static_reviews/c1_full_openloop_mapping_plan_20261116T033127564220Z/receipt.json",
+    "bytes": 5095,
+    "sha256": "83f9a45cf872da8d07eb7eed8566a8f78ad85f31c49c164f7d1f3beea4647490"
+  },
+  "no_new_full_native_or_actual_OUT": true,
+  "candidate_not_implemented": true,
+  "complete_reference_not_qualified": true,
+  "known_owned_runs_remaining": 0,
+  "source113_unchanged": true,
+  "dependency_files_unchanged": true,
+  "regression": "Existing1300 passed including slow; not rerun for prospective docs/ignored research only.",
+  "next_gate": "Create a new coarse full-model build-only package against the committed protocol HEAD, independent byte seal and actual-user preflight, then build without Run. Admit actual new graph/control/storage before separately sealing complete5us/2.5us numerical reference runs.",
+  "goal_status": "active"
+}

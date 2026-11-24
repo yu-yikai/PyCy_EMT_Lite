@@ -1,0 +1,44 @@
+{
+  "case_id": "rc_charging",
+  "reference_id": "mw-rc-r2025a",
+  "acceptance_defined": "2026-11-04 before adapted official reference run",
+  "example": "examples/02_rc_transient.py",
+  "reference_source": "https://www.mathworks.com/help/simscape/ug/rc-circuit-in-simulink-and-simscape.html",
+  "reference_model": "RCCircuitInSimulinkAndSimscape.slx",
+  "reference_platform": "MATLAB R2025a / Simulink / Simscape",
+  "reference_state": "reference_ready",
+  "windows_seconds": [
+    [
+      0.0,
+      0.005
+    ]
+  ],
+  "time_shift_seconds": 0,
+  "parameters": {
+    "R_ohm": 1000.0,
+    "C_farad": 1e-06,
+    "source_volt": 1.0,
+    "initial_capacitor_volt": 0.0,
+    "pycy_step_second": 1e-05,
+    "stop_second": 0.005
+  },
+  "known_difference": "Official capacitor ESR 1 microohm, negligible relative to 1000 ohm source resistance. Official source overrides: amplitude 1V, period 1s, width 50%, delay 0s (constant 1V over 5ms). All overrides via SimulationInput, original model untouched.",
+  "signals": [
+    {
+      "candidate": "v:out",
+      "reference": "v_out",
+      "unit": "V",
+      "scale": 1.0,
+      "max_nrmse": 0.0001,
+      "max_abs_error": 0.0001
+    },
+    {
+      "candidate": "i:R1",
+      "reference": "i_r1",
+      "unit": "A",
+      "scale": 0.001,
+      "max_nrmse": 0.0001,
+      "max_abs_error": 1e-07
+    }
+  ]
+}

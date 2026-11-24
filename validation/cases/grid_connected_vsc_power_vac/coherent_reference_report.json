@@ -1,0 +1,73 @@
+{
+  "task": "C1",
+  "status": "PASS_NATIVE_PCC_POWER_VAC_COHERENT_REFERENCE",
+  "scope": "有功前馈和 PCC 电压外环的 PSCAD 两工况、双步长参考。公开候选尚待实现及独立对标。",
+  "base_protocol": "validation/cases/grid_connected_vsc_power_vac/reference_protocol.json",
+  "base_protocol_sha256": "5724214d6223d074ce2772927afd7af216d41bb49ed025badb48bdc77e53d8f3",
+  "window_trial": "validation/cases/grid_connected_vsc_power_vac/fundamental_window_trial.json",
+  "window_trial_sha256": "c478914ee2c5af94155aaa162dda38dced696947901cf9355aeb20ad8aa0650f",
+  "original_per_cycle_verdict": "四组均保留基础协议使能前第二个周波的压降 FAIL。细档调节组原检查器错误和修正后的复读分别保留，修正后原单周波 FAIL 仍成立。",
+  "conditions": {
+    "5us_held": {
+      "run": "local_reference/native_static_reviews/c1_power_vac_native_5us_held_20261122/n/20261122T150647993132Z",
+      "native_receipt_sha256": "bafb8d6979684072aa4ffea1896fc20cb9a0d9f683c8d713bc26f540b5798a4e",
+      "original_review_sha256": "6f533c4d6578f96a67f03f78584c860b373ac0fe25436d52494558dc6780815d"
+    },
+    "5us_regulated": {
+      "run": "local_reference/native_static_reviews/c1_power_vac_native_5us_regulated_v2_20261122/n/20261122T145340654973Z",
+      "native_receipt_sha256": "7335b05a91c5ff280518d4d5615c730031e89a9a91785dc0edbd5031190a7c11",
+      "original_review_sha256": "caf6fa93cea50887c44ac24d9d466f740d87e8470e26b3521560805d90cc4c34"
+    },
+    "2p5us_held": {
+      "run": "local_reference/native_static_reviews/c1_power_vac_native_2p5us_held_20261122/n/20261122T153446365396Z",
+      "native_receipt_sha256": "c8daa1a31adc9201e0640e1504b699691bd6074621a4f29021f24279b3129728",
+      "original_review_sha256": "0bfc4df3851d7046eec5e1585d2de0cd005f7adca75c0704ad798ff79904e564"
+    },
+    "2p5us_regulated": {
+      "run": "local_reference/native_static_reviews/c1_power_vac_native_2p5us_regulated_20261122/n/20261122T152127726574Z",
+      "native_receipt_sha256": "4e96285b29e351a417c414b1e56a2cda11813832606d2fbae00761c863115628",
+      "original_review_sha256": "0dcdfc78495b50e7fccfa747ffab29059c3f6cd153deba533255b10e36e45da1",
+      "corrected_review_sha256": "488baa2995a89c1fef8b947aec589b3e91d9e7af8f5dacf58d88283996f8f87d"
+    }
+  },
+  "pair_reports": {
+    "coarse": {"run_key": "5us_regulated", "file": "coherent_pair_diagnostic.json", "sha256": "591c58b8fb45b72c606fe5987ea6aa2d6af7b0487acf05b484550a65ebdbb236"},
+    "fine": {"run_key": "2p5us_regulated", "file": "coherent_pair_diagnostic.json", "sha256": "cbdd83161b75b69acd679265c263cc040ccde5e4aa1ba8f0fe327b5740fe09b8"},
+    "cross_step": {"run_key": "2p5us_regulated", "file": "coherent_cross_step_diagnostic.json", "sha256": "6b2e4e8487da4e3df1cff3d5e41b322675aec2699ed30f59b7a694768ba869bc"}
+  },
+  "observations": {
+    "total_original_native_rows": 780010,
+    "outer_updates_each": 650,
+    "inner_updates_and_next_gate_applications_each": 6500,
+    "actual_fine_midpoints_held_each": 130001,
+    "exact_physical_prefix_rows_coarse_and_fine": [48001, 96002],
+    "exact_control_prefix_rows_coarse_and_fine": [48000, 96000],
+    "coarse_voltage_improvement_v_rms": [1.205980118066563, 1.2212061666867413],
+    "fine_voltage_improvement_v_rms": [1.1904645236641613, 1.1866323461507733],
+    "regulated_steady_coherent_v_rms_error_max": 0.019278814,
+    "native_feeder_tr_upper_bound_max_v": 2.09504e-9,
+    "cross_step_window_count": 8,
+    "cross_step_max": {"pcc_voltage_v_rms": 0.036457272791466266, "pcc_power_w": 1.770452213835938, "pcc_reactive_var": 2.9839389396341858},
+    "bridge_auxiliary_evidence": "四份原生档另以打印中心值复核桥侧 KVL、KCL、R/L 和电感能量前缀。桥侧电抗器最大梯形电压残差 8.00e-10 V。"
+  },
+  "readback_repairs": {
+    "fine_carrier": "原始连续载波与实际门极拍的比较载波分别复算。保持原 1e-12 数值限和所有离散门极、电阻及中点检查。",
+    "fourier": "复用现有精确分段线性正弦和余弦积分。基波复量读回无需相减计算非基波均方，原统计入口和门限保留。两份粗档原波形用抽取后的函数复算，所有相干窗结果逐值相同。",
+    "metrics_path": "validation/cases/grid_connected_vsc_open_loop/metrics.py",
+    "metrics_sha256": "a41e9627564bc95b45c54f15694c7f2703b37197ea9b85054ab0ebf82dee31c4",
+    "metrics_commit": "c69da12bee5b78fcea60fc2c240198c27dfd8944"
+  },
+  "software_checks": {
+    "windows_python": "3.14.5",
+    "uv_sync_locked_offline": "pass",
+    "ruff": "pass",
+    "mypy": "pass",
+    "windows_pytest_including_slow": 1586,
+    "windows_log": ".tmp/longterm/pytest-c1-pcc-metrics-20261122.log",
+    "windows_log_sha256": "e4c4f794e89811480fc26f73d910dca6449ef7042645ec1bde3a74186226b7b2",
+    "wsl2_focused_pytest": 30,
+    "wsl2_log": ".tmp/longterm/pytest-c1-pcc-metrics-wsl-recovered-20261122.log",
+    "wsl2_log_sha256": "e9e81d8390a47986f65d580e94ba7b9830df5bb67758f1def87fe997c46d16d2"
+  },
+  "candidate_reference_use": "公开候选以本报告绑定的四组原生波形对标。基波电压与基波无功的配对比较用已验证的 50 ms 共周期窗，保留基础协议的逐行物理、控制和门极、逐周期有功和无功及限幅考核，以及原同档波形门限。原单周期电压结果作为窗依赖诊断随报告展示。"
+}

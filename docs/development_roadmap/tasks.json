@@ -1,0 +1,2985 @@
+{
+  "schema_version": 1,
+  "updated_date": "2026-11-24",
+  "timezone": "Asia/Shanghai",
+  "branch": "codex/emt-examples-longterm",
+  "checkpoint_head": "53133391291647b4c8294e89b7c76b8d4bcd6ffc",
+  "current_task": null,
+  "formal_new_examples_completed": 21,
+  "status_values": [
+    "planned",
+    "ready",
+    "in_progress",
+    "blocked",
+    "validated",
+    "completed"
+  ],
+  "tasks": [
+    {
+      "id": "R1",
+      "phase": "research",
+      "title": "能力重评和实际基线",
+      "priority": 0,
+      "dependencies": [],
+      "new_capabilities": [],
+      "references": [],
+      "validation": "ruff, mypy, full pytest including slow, 14 existing examples",
+      "acceptance": "实际结果与源码证据形成01并提交",
+      "status": "completed",
+      "files": [
+        "docs/development_roadmap/01_capability_assessment.md"
+      ],
+      "commits": [
+        "8d5d15d"
+      ],
+      "blockers": []
+    },
+    {
+      "id": "R2",
+      "phase": "research",
+      "title": "可获取外部参考目录",
+      "priority": 0,
+      "dependencies": [
+        "R1"
+      ],
+      "new_capabilities": [],
+      "references": [
+        "mw-cascaded-rc-r2025a",
+        "mw-rc-r2025a",
+        "pscad-cookbook-ch3-01",
+        "pscad-cookbook-ch3-02",
+        "pscad-cookbook-ch3-03",
+        "pscad-cookbook-ch3-04"
+      ],
+      "validation": "实际下载、XML/版本/许可核对与运行状态分离 收尾复查后目录共 48 项，其中 25 项具有合格原生参考。28–39 号资格与验收指针已核对。",
+      "acceptance": "02和JSON目录、合法本地模型、已知依赖与来源可追溯并提交",
+      "status": "completed",
+      "files": [
+        "docs/development_roadmap/02_reference_catalog.md",
+        "docs/development_roadmap/reference_catalog.json"
+      ],
+      "commits": [
+        "08096f0"
+      ],
+      "blockers": []
+    },
+    {
+      "id": "R3",
+      "phase": "research",
+      "title": "可行性探针与最终实施路线",
+      "priority": 0,
+      "dependencies": [
+        "R1",
+        "R2"
+      ],
+      "new_capabilities": [],
+      "references": [
+        "mw-cascaded-rc-r2025a"
+      ],
+      "validation": "独立expm、TR/BE细化、KCL、真实参考运行",
+      "acceptance": "03/04、任务状态与恢复机制、预设验收提交推送",
+      "status": "completed",
+      "files": [
+        "docs/development_roadmap/03_verified_feasibility.md",
+        "docs/development_roadmap/04_long_term_roadmap.md"
+      ],
+      "commits": [
+        "f462cde"
+      ],
+      "blockers": []
+    },
+    {
+      "id": "V1",
+      "phase": "validation",
+      "title": "独立对比工具与验证规范",
+      "priority": 0,
+      "dependencies": [
+        "R3"
+      ],
+      "new_capabilities": [
+        "fixed-window time-weighted error reports"
+      ],
+      "references": [],
+      "validation": "独立积分数值与非法数据/功率反向拒绝测试",
+      "acceptance": "common工具与10测试通过、规范、分支双平台CI配置、提交",
+      "status": "completed",
+      "files": [
+        "validation/common/comparison.py",
+        "tests/test_reference_comparison.py",
+        "validation/README.md"
+      ],
+      "commits": [
+        "207dea7",
+        "dbe9b13"
+      ],
+      "blockers": []
+    },
+    {
+      "id": "A1",
+      "phase": "foundation",
+      "title": "新增级联RC负载耦合例",
+      "priority": 0,
+      "dependencies": [
+        "V1"
+      ],
+      "new_capabilities": [],
+      "references": [
+        "mw-cascaded-rc-r2025a"
+      ],
+      "validation": "独立状态方程、显式边沿、KCL、细化、真实Simscape四信号比较",
+      "acceptance": "manifest固定阈值全窗通过、图/数值报告/自动测试/教学文档/独立执行/Git提交",
+      "status": "completed",
+      "files": [
+        "validation/cases/cascaded_rc/manifest.json",
+        "validation/cases/cascaded_rc/parameters.json"
+      ],
+      "commits": [
+        "290a8ea"
+      ],
+      "blockers": []
+    },
+    {
+      "id": "A2",
+      "phase": "foundation",
+      "title": "既有02 RC补真实参考",
+      "priority": 1,
+      "dependencies": [
+        "V1"
+      ],
+      "new_capabilities": [],
+      "references": [
+        "mw-rc-r2025a"
+      ],
+      "validation": "实际Simscape波形，公开参数与初值映射",
+      "acceptance": "固定判据对比、保存图/报告、可复现导出脚本、提交；不计新增数量",
+      "status": "completed",
+      "files": [],
+      "commits": [
+        "68f2f8a"
+      ],
+      "blockers": []
+    },
+    {
+      "id": "A3",
+      "phase": "foundation",
+      "title": "有限R Bergeron行波反射（本阶段27）",
+      "priority": 1,
+      "dependencies": [
+        "A1"
+      ],
+      "new_capabilities": [],
+      "references": [
+        "pscad-line-energizing",
+        "pscad-installed-scalar-bergeron-v5"
+      ],
+      "validation": "PSCAD派生完整SrvcCbl有限R参考真实1/0.5us运行6001/12001点，16项自细化检查在候选前通过。协议44d1436先于候选；27以两个既有无损半线及三R实现R/4+R/2+R/4。八项独立行波/守恒/能量/细化测试、Agg独立6001点通过；真实PSCAD四量双完整窗八项全过，maxV5.91172e-12V/maxI5.15144e-14A/maxNR6.04888e-15。153输入快照、原始12001点换算、比较指标及图经两路独审；完整1244 passed469.79s含slow，零失败/错误/跳过，109个Python文件全程不变，锁定27包/Ruff/mypy39通过。验收提交ae9fe36已正常推送；跨OS CI单列F1。",
+      "acceptance": "27的真实参考/独立物理/独立运行/商业比较/图报告/自动测试/教学/Git提交已全部完成。结论限已冻结常参数集总损耗Bergeron近似，不推广为宽带电缆精度；原生隐藏延迟缓冲未直接导出。CRC仅允许已观察的单次删除转0及save完整恢复源定义，不泛化官方CRC语义；旧失败全部保留。",
+      "status": "completed",
+      "files": [
+        "docs/development_roadmap/experiments/bergeron_reference_followup.md",
+        "docs/development_roadmap/experiments/pscad_toolchain_smoke.json",
+        "docs/development_roadmap/experiments/bergeron_reference_design.md",
+        "docs/development_roadmap/experiments/native_reference_attempts_20261109.md",
+        "examples/27_finite_r_bergeron_line.py",
+        "tests/test_finite_r_bergeron.py",
+        "validation/cases/finite_r_bergeron/manifest.json",
+        "validation/cases/finite_r_bergeron/parameters.json",
+        "validation/cases/finite_r_bergeron/acceptance_plan.md",
+        "validation/cases/finite_r_bergeron/README.md",
+        "validation/cases/finite_r_bergeron/compare.py",
+        "validation/cases/finite_r_bergeron/qualified_reference_report.json",
+        "validation/cases/finite_r_bergeron/validation_report.json"
+      ],
+      "commits": [
+        "4385e2ea6941e693ac784c48a78e7074c803f4ed",
+        "03a913ed52bacd6a07083fe4dbc7ae45c7b78fee",
+        "34c3b6b10638ac07022e32a18194e894e92dd38d",
+        "44d1436df5714060176998ea1ce94c6d6eaf7d48",
+        "ae9fe3629ad9617853979b0ef58d4d8319239592"
+      ],
+      "blockers": []
+    },
+    {
+      "id": "A5",
+      "phase": "foundation",
+      "title": "多源七电阻节点分析教学例",
+      "priority": 0,
+      "dependencies": [
+        "A1",
+        "A2"
+      ],
+      "new_capabilities": [],
+      "references": [
+        "mw-dc-circuit-analysis-2.2.2"
+      ],
+      "validation": "独立Fraction精确KCL/功率与真实Simscape14信号",
+      "acceptance": "候选前固定manifest；实际参考、全部信号双限值、自动物理测试、独立运行、教学和Git提交",
+      "status": "completed",
+      "files": [
+        "validation/cases/nodal_analysis/manifest.json",
+        "validation/cases/nodal_analysis/parameters.json",
+        "docs/development_roadmap/experiments/nodal_analysis_exact.json"
+      ],
+      "commits": [
+        "4c78c38",
+        "d481c57"
+      ],
+      "blockers": []
+    },
+    {
+      "id": "A6",
+      "phase": "foundation",
+      "title": "接地与浮动中性点不平衡负荷",
+      "priority": 0,
+      "dependencies": [
+        "A5"
+      ],
+      "new_capabilities": [],
+      "references": [
+        "mw-earthing-r2025a"
+      ],
+      "validation": "解析加权星点/KCL/功率、真实Simscape13信号、保留官方错标签证据",
+      "acceptance": "f685ee7预设三窗与双限值通过，内部测试/独立运行/教学/Git提交",
+      "status": "completed",
+      "files": [
+        "examples/21_earthing_neutral.py",
+        "validation/cases/earthing/manifest.json"
+      ],
+      "commits": [
+        "f685ee7",
+        "5c595e2"
+      ],
+      "blockers": []
+    },
+    {
+      "id": "A7",
+      "phase": "foundation",
+      "title": "有限50段T形RLCG线路传播",
+      "priority": 0,
+      "dependencies": [
+        "A1",
+        "V1"
+      ],
+      "new_capabilities": [],
+      "references": [
+        "mw-transmission-line-r2025a"
+      ],
+      "validation": "8项独立101物理状态+sin/cos增广expm、ABCD、KCL/能量/TR/BE细化通过339.16s；独立Agg通过；真实六信号全部通过，maxV.0080124V/maxI.000160248A/maxNRMSE.000272268",
+      "acceptance": "3761a21在候选前冻结完整0..50ns、TR10ps、双限值；实际参考/内部检查/独立运行/测试/教学/提交全部通过后完成；非Bergeron验证",
+      "status": "completed",
+      "files": [
+        "examples/22_t_section_transmission_line.py",
+        "tests/test_t_section_transmission_line.py",
+        "validation/cases/transmission_line/manifest.json",
+        "validation/cases/transmission_line/parameters.json",
+        "validation/cases/transmission_line/validation_report.json"
+      ],
+      "commits": [
+        "3761a21",
+        "80ba91c"
+      ],
+      "blockers": []
+    },
+    {
+      "id": "A4",
+      "phase": "foundation",
+      "title": "线性变压器T等效与双三相接线组合（本阶段23/24）",
+      "priority": 2,
+      "dependencies": [
+        "A1"
+      ],
+      "new_capabilities": [],
+      "references": [
+        "mw-mutual-transformer-t-r2025a",
+        "mw-three-phase-delta-reference-r2025a"
+      ],
+      "validation": "23与24分别独立真实验收；仅覆盖外置三L单相T等效和原平衡Y–Δ–Y链，不推广到其他接线/零序/磁非线性。原源—变压器—线路—负荷整链未交付，明确后置D0。",
+      "acceptance": "完成本阶段23/24两个非重复教学交付；不为换Yy/Dd组别复制算例，不将24无线路网络冒充线路组合。",
+      "status": "completed",
+      "files": [
+        "validation/cases/transformer_t_equivalent/README.md",
+        "validation/cases/three_phase_transformer_chain/README.md"
+      ],
+      "commits": [
+        "0ec7239",
+        "91dbad6bb77af24d1a548a6d0943930c4bcce40f",
+        "08a0156",
+        "02044768579ba083d1fb526786922e770cc2e7c6"
+      ],
+      "blockers": []
+    },
+    {
+      "id": "A4a",
+      "phase": "foundation",
+      "title": "外置三电感线性变压器T等效",
+      "priority": 0,
+      "dependencies": [
+        "A1",
+        "V1"
+      ],
+      "new_capabilities": [],
+      "references": [
+        "mw-mutual-transformer-t-r2025a"
+      ],
+      "validation": "8专项物理/事件/谱指数/能量/TR细化通过，独立Agg8001点通过；真实Simscape两窗×七量通过，maxV0.000696717V/maxI0.000303740A/maxNRMSE7.29216e-6",
+      "acceptance": "0ec7239在候选前冻结拓扑/参数/初值/方向/两窗/双限值；真实参考8063/16042点自细化通过，内部/独立执行/真实比较/图报告/测试/教学/Git提交均完成",
+      "status": "completed",
+      "files": [
+        "examples/23_transformer_t_equivalent.py",
+        "tests/test_transformer_t_equivalent.py",
+        "validation/cases/transformer_t_equivalent/manifest.json",
+        "validation/cases/transformer_t_equivalent/validation_report.json"
+      ],
+      "commits": [
+        "0ec7239",
+        "91dbad6bb77af24d1a548a6d0943930c4bcce40f"
+      ],
+      "blockers": []
+    },
+    {
+      "id": "A4b",
+      "phase": "foundation",
+      "title": "双三相线性Y–Δ–Y变压器链",
+      "priority": 1,
+      "dependencies": [
+        "A4a",
+        "V1"
+      ],
+      "new_capabilities": [],
+      "references": [
+        "mw-three-phase-delta-reference-r2025a"
+      ],
+      "validation": "最终0.5us/100001点对真实58899点19量两窗38项全过，最大LV20.17655V/HV205.91860V/源电流119.38782uA/maxNR.000246239；9专项76.926s、独立Agg、全量1179 passed490.61s含slow、锁定/Ruff/mypy均通过；图/独立审计/教学/Git0204476完成。初始1us启动绝对FAIL及所有参考失败保持。",
+      "acceptance": "4edd4a1/c88c2bb原协议；926138d求解器补充、08a0156步长细化均先于各自正式重验，原物理/窗/19量/误差限不变；真实参考、内部/独立运行、图报告、9测试、教学及提交全部完成。跨OS CI仍单独待验证。",
+      "status": "completed",
+      "files": [
+        "docs/development_roadmap/experiments/three_phase_transformer_reference_candidates.md",
+        "validation/cases/three_phase_transformer_chain/manifest.json",
+        "validation/cases/three_phase_transformer_chain/acceptance_plan.md",
+        "validation/cases/three_phase_transformer_chain/reference_solver_addendum.md",
+        "validation/cases/three_phase_transformer_chain/candidate_step_addendum.md",
+        "validation/cases/three_phase_transformer_chain/initial_step_failure.json",
+        "examples/24_three_phase_transformer_chain.py",
+        "tests/test_three_phase_transformer_chain.py",
+        "validation/cases/three_phase_transformer_chain/validation_report.json"
+      ],
+      "commits": [
+        "4edd4a1",
+        "c88c2bb",
+        "926138d",
+        "08a0156",
+        "02044768579ba083d1fb526786922e770cc2e7c6"
+      ],
+      "blockers": []
+    },
+    {
+      "id": "B1",
+      "phase": "power_electronics",
+      "title": "既有12 SPWM参考对齐",
+      "priority": 1,
+      "dependencies": [
+        "A1"
+      ],
+      "new_capabilities": [],
+      "references": [
+        "mw-spwm-r2025a",
+        "mw-two-level-pwm-r2025a",
+        "pscad-derived-bilateral-spwm-v5"
+      ],
+      "validation": "完整协议e25ebed和入口3737e66均先提交推送。真实PSCAD5/2.5us参考40002/80003行×60通道，自细化、300输入资格及独立原始物理/控制核验通过。默认原12以5us运行40001点，在固定[.1,.2]三相最大误差.321998/.318177/.319571A、maxNRMSE.000917642；RMS/基波/相位/正耗散全部满足原限值。独审cd20f993独立积分全项一致，340原件/快照全核；图已查看。原12默认__main__独立Agg一次通过40001点，完整NPZ逐字等正式候选。23入口检查及新含slow全量1267 passed494.62s、锁定27包/Ruff/mypy39通过，111个Python源全程不变，旧109完全不改。精简说明/结果报告/中英导航已完成，40bef297已正式验收提交推送并核真实远端相同。原MathWorks2%波形FAIL和全部旧失败/中断保留；不增加教学编号。",
+      "acceptance": "本次双向开关模型的真实参考、候选固定指标、独立复算/运行、图报告、自动检查及教学已验收，并以40bef297正式提交推送。原MathWorks IGBT模型的失败单列保留；不增加教学编号。",
+      "status": "completed",
+      "files": [
+        "validation/cases/two_level_pwm/manifest.json",
+        "validation/cases/two_level_pwm/parameters.json",
+        "validation/cases/two_level_pwm/validation_report.json",
+        "docs/development_roadmap/experiments/spwm_feasibility.md",
+        "docs/development_roadmap/experiments/spwm_timing_followup.md",
+        "docs/development_roadmap/experiments/spwm_error_isolation.md",
+        "docs/development_roadmap/experiments/spwm_matched_reference_design.md",
+        "docs/development_roadmap/experiments/native_reference_attempts_20261109.md",
+        "validation/cases/two_level_pwm_pscad/acceptance_plan.md",
+        "validation/cases/two_level_pwm_pscad/manifest.json",
+        "validation/cases/two_level_pwm_pscad/parameters.json",
+        "validation/cases/two_level_pwm_pscad/reference_protocol.json",
+        "validation/cases/two_level_pwm_pscad/compare.py",
+        "validation/cases/two_level_pwm_pscad/qualified_reference_report.json",
+        "validation/cases/two_level_pwm_pscad/README.md",
+        "tests/test_two_level_pwm_pscad_comparison.py",
+        "validation/cases/two_level_pwm_pscad/validation_report.json"
+      ],
+      "commits": [
+        "146a279",
+        "8a65b6e",
+        "e25ebed2511312c496a52303222344e4d754d4cd",
+        "3737e663c89646cf76e6cd9f4880d0e579d95731",
+        "40bef297c431a0981f0dc93279cddf5acbbd6ea6"
+      ],
+      "blockers": [],
+      "last_diagnostic": {
+        "status": "qualified_bounded_1ms_only",
+        "record": "local_reference/two_level_pwm/matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/held_bridge_qualification/20261111T014703278697Z/qualification.json",
+        "sha256": "8be490f84a5d75acada52c46e84b0d5f4d6e5bdcd4345360340309f696201475",
+        "formal_B1_completed": false
+      },
+      "full_reference_protocol": {
+        "record": "validation/cases/two_level_pwm_pscad/reference_protocol.json",
+        "sha256": "ed9eec3d015a3e121e41e3855a2ff234ccfa5fb966d3456931485a6bfae03863",
+        "independent_review": "local_reference/native_static_reviews/b1_full_protocol_20261111T021652231587Z/receipt.json",
+        "independent_review_sha256": "a91f38ee38371b1b8931a42f6c3ea3f2df25743dcfbe094724948213af3ac2a0",
+        "full_native_executed": true,
+        "candidate_executed": true,
+        "reference_self_refinement_accepted": true
+      },
+      "full_reference_pair": {
+        "status": "actual_full_native_pair_self_refinement_accepted",
+        "coarse_run": "20261111T023903947818Z",
+        "fine_run": "20261111T024750132919Z",
+        "duration_s": 0.200005,
+        "formal_stop_s": 0.2,
+        "native_steps_s": [
+          5e-06,
+          2.5e-06
+        ],
+        "rows": [
+          40002,
+          80003
+        ],
+        "channels": 60,
+        "native_archive_files": [
+          88,
+          88
+        ],
+        "shared_exact_applied_inputs": 40002,
+        "midpoint_holds": 40001,
+        "author_summary": "local_reference/two_level_pwm/matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/full_reference_analysis/20261111T022954759863Z_author_v1/results/20261111T025307501016Z/summary.json",
+        "author_summary_sha256": "1fd3d6f02996d2fab58f25f83c51a4f25371723604b59bc9928545de8cb92bb6",
+        "independent_pair": "local_reference/native_static_reviews/b1_full_joint_20261111/pair_20261111T024750132919Z/report.json",
+        "independent_pair_sha256": "bdf1e26a5ed4a035541d2470d318f0d869ae7b7ea49cd8092a73a9b28c0e73a2",
+        "full_current_PWL_max_abs_A": 0.33250124895715,
+        "startup_max_nrmse": 0.0009214710649340416,
+        "steady_max_nrmse": 0.0009176418992109418,
+        "max_fundamental_phase_difference_degrees": 0.02699580340120633,
+        "load_mean_power_relative_difference": 4.6118030031541384e-06,
+        "all_native_TIME_t0_stop_tail_retained": true,
+        "candidate_executed": false,
+        "formal_B1_completed": false
+      },
+      "full_reference_qualification": {
+        "status": "QUALIFIED_FULL_CONDITIONAL_NATIVE_REFERENCE",
+        "record": "local_reference/two_level_pwm_pscad/qualification/20261111T031524306929Z/qualification.json",
+        "sha256": "b8511f04434dc091e44afe385cbf022b461f537067f814e053d437a3ab8c5c83",
+        "public_report": "validation/cases/two_level_pwm_pscad/qualified_reference_report.json",
+        "public_report_sha256": "2b26e1855b137a279a39fed134bd66c21d0c081db2543adadf1961b06b31b982",
+        "provenance": "local_reference/two_level_pwm_pscad/qualification/20261111T031524306929Z/provenance.json",
+        "provenance_sha256": "52ea3ed43b42e7a7404a3c32705a754af80f6e6d02714c02d15c407dde85692c",
+        "normalized_reference": "local_reference/two_level_pwm_pscad/qualification/20261111T031524306929Z/normalized_results/reference.csv",
+        "normalized_reference_sha256": "9b3ad5841f4aeb666a14facc3ca5154413d675d21b466febb5690e16b008025c",
+        "normalized_rows": 80003,
+        "time_from": "TIME_native_s",
+        "complete_input_files": 300,
+        "independent_review": "local_reference/native_static_reviews/b1_qualification_actual_20261111/receipt_20261111T031748352820Z.json",
+        "independent_review_sha256": "1d50b49c19a739aeda2a4e3f62526ab84c4080cbb9017fd741b20680b0e43d31",
+        "candidate_executed": false,
+        "formal_B1_completed": false,
+        "scope": "Reference qualification constructed before the later candidate comparison; current candidate state is recorded separately."
+      },
+      "comparison_entry_checks": {
+        "entry": "validation/cases/two_level_pwm_pscad/compare.py",
+        "entry_sha256": "b2042f4ff6c6116cf73f98c97690d4e04db96a2101e3f5f273ac05da307e4844",
+        "tests": "tests/test_two_level_pwm_pscad_comparison.py",
+        "tests_sha256": "e54ef32c1332b78112a2c2fca146118c209d00f333fd8481411b847a22b9288c",
+        "focused_tests_passed": 23,
+        "ruff_passed": true,
+        "independent_review": "local_reference/native_static_reviews/b1_case_loader_final_20261111T031526797922Z/receipt.json",
+        "independent_review_sha256": "72168a8d109820e36b74fcdf68713f1eb20b36e3c4da33116d7a034454aa063d",
+        "full_suite_status": "passed_including_slow",
+        "candidate_executed": false,
+        "full_suite": {
+          "tests": 1267,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "elapsed_s": 494.62,
+          "junit_elapsed_s": 494.618,
+          "xml": ".tmp/longterm/b1-final-20261111T0317.xml",
+          "xml_sha256": "10775c002801b1490d6a8456d0b61c93822ef5aafe15c56f36187e5622374c5e",
+          "log": ".tmp/longterm/b1-final-20261111T0317-pytest.log"
+        },
+        "entry_freeze_commit": "3737e663c89646cf76e6cd9f4880d0e579d95731",
+        "entry_freeze_pushed_before_candidate": true,
+        "scope": "Pre-candidate loader/refusal tests and full regression; current candidate state is recorded separately."
+      },
+      "candidate_comparison": {
+        "status": "actual_candidate_pass_independently_verified",
+        "candidate_executed": true,
+        "record": "local_reference/two_level_pwm_pscad/comparison_results/20261111T032613323109Z/report.json",
+        "sha256": "f52762d559beff7b16608928d12f831fd642b49b31466595010563770d2faa38",
+        "candidate_rows": 40001,
+        "reference_rows": 80003,
+        "window_seconds": [
+          0.1,
+          0.2
+        ],
+        "phase_order": [
+          "a",
+          "b",
+          "c"
+        ],
+        "max_abs_error_A": [
+          0.3219980003405567,
+          0.31817675865325157,
+          0.3195713485704914
+        ],
+        "nrmse": [
+          0.0009176324502834651,
+          0.0009169917588470124,
+          0.0009176418992002043
+        ],
+        "max_fundamental_phase_error_degrees": 0.026995803400751583,
+        "load_mean_power_relative_error": 4.611803011589366e-06,
+        "independent_review": {
+          "path": "local_reference/native_static_reviews/b1_candidate_audit_20261111/actual_20261111T032613323109Z/receipt.json",
+          "bytes": 4555,
+          "sha256": "cd20f9934a2aef3ad8b0655282f806e25587e7b76a9912255c7f39088bb7681d"
+        },
+        "independent_Agg": {
+          "passed": true,
+          "samples": 40001,
+          "exit_code": 0,
+          "scope": "One unchanged original12 __main__ execution through transparent output observation; default parameters and output flags unchanged. No second commercial comparison.",
+          "receipt": {
+            "path": "local_reference/native_static_reviews/b1_original12_standalone_20261111T032943447679Z/receipt.json",
+            "bytes": 30380,
+            "sha256": "7e9278a797aa7890256861dc3849589bc9fca2aa7f4096322a5a9ec9d4666a0e"
+          },
+          "verification": {
+            "path": "local_reference/native_static_reviews/b1_original12_standalone_20261111T032943447679Z/verification.json",
+            "bytes": 3041,
+            "sha256": "2a6163fc76c0a9b9c7b51d3114a1b72f0182907fdc726e03a12bdbac7498afac"
+          },
+          "stdout": {
+            "path": "local_reference/native_static_reviews/b1_original12_standalone_20261111T032943447679Z/stdout_stderr.log",
+            "bytes": 549,
+            "sha256": "a22e0385785f6ce2a2a8cc727acb0eed78ce3271798941f1edf69f358ca81d24"
+          },
+          "figure": {
+            "path": "local_reference/native_static_reviews/b1_original12_standalone_20261111T032943447679Z/original_figure_1.png",
+            "bytes": 165262,
+            "sha256": "0bcc60e81b887349e727579c72c521455ff8fa2904cab1511d4b05bbdfbb42ee"
+          },
+          "complete_result": {
+            "path": "local_reference/native_static_reviews/b1_original12_standalone_20261111T032943447679Z/complete_result.npz",
+            "bytes": 9930712,
+            "sha256": "d2200f7fa1d81eed6e346e8a19c66b134a94c4aaf1049e5f61bdbc72537870dd"
+          },
+          "full_npz_bytes_equal_formal_comparison_candidate": true
+        },
+        "teaching_and_final_Git_delivery": "completed",
+        "formal_B1_completed": true,
+        "input_snapshot_files": 340,
+        "all_input_hashes_unchanged": true,
+        "public_report": {
+          "path": "validation/cases/two_level_pwm_pscad/validation_report.json",
+          "bytes": 12381,
+          "sha256": "1d235718f31e7ec095ec33396b81d14f5975ffb540cdffaa4139f7d5db64dc0e"
+        },
+        "acceptance_commit": "40bef297c431a0981f0dc93279cddf5acbbd6ea6",
+        "acceptance_pushed": true,
+        "remote_head_verified_same": true
+      }
+    },
+    {
+      "id": "B2",
+      "phase": "power_electronics",
+      "title": "本阶段26同步Buck（其余电力电子候选未验）",
+      "priority": 2,
+      "dependencies": [
+        "R2",
+        "V1"
+      ],
+      "new_capabilities": [
+        "only proven small controllers if needed"
+      ],
+      "references": [
+        "mw-synchronous-buck-r2025a"
+      ],
+      "validation": "25/12.5ns真实完整10ms参考406263/809567点，两连续窗及全部500周期自细化PASS，原100/50ns FAIL保留。50ns候选首个商业比较及独立原始数据/输入/周期/两窗复核PASS；Agg200001点/4事件源身份匹配。13项新比较测试、锁定27包/Ruff/mypy、恢复后完整1236 passed478.786s含slow且零fail/error/skip。精简商业报告/图/教学与独立验收齐备，正式交付提交9269350887a867aee2740fed04155ade8f8757be，新增19–26共8项完成。结论限预设同步控制/负荷事件及核定的二极管不活动域。",
+      "acceptance": "本阶段候选筛选后交付26同步Buck；内部/真实参考/图报告/测试/教学/Git全部完成。其他半/全桥、Boost、滤波候选保持未验证，不能由26认证；后续仍须逐项先冻参考/判据，不冒充自动二极管。",
+      "status": "completed",
+      "files": [
+        "docs/development_roadmap/experiments/next_reference_candidates.md",
+        "docs/development_roadmap/experiments/synchronous_buck_reference_probe.md",
+        "docs/development_roadmap/experiments/synchronous_buck_state_followup.md",
+        "validation/cases/synchronous_buck/manifest.json",
+        "validation/cases/synchronous_buck/parameters.json",
+        "validation/cases/synchronous_buck/acceptance_plan.md",
+        "validation/cases/synchronous_buck/export_reference.m",
+        "validation/cases/synchronous_buck/native_logging_api_addendum.md",
+        "validation/cases/synchronous_buck/initial_reference_failure.json",
+        "validation/cases/synchronous_buck/reference_solver_addendum.md",
+        "validation/cases/synchronous_buck/reference_solver_addendum.json",
+        "examples/26_synchronous_buck.py",
+        "tests/test_synchronous_buck.py",
+        "tests/test_synchronous_buck_reference.py",
+        "validation/cases/synchronous_buck/README.md",
+        "validation/cases/synchronous_buck/normalization.py",
+        "validation/cases/synchronous_buck/audit_reference.py",
+        "docs/development_roadmap/experiments/native_reference_attempts_20261109.md",
+        "validation/cases/synchronous_buck/qualified_reference_report.json",
+        "validation/cases/synchronous_buck/candidate_quadrature_addendum.md",
+        "validation/cases/synchronous_buck/validation_report.json",
+        "validation/cases/synchronous_buck/compare.py",
+        "validation/cases/synchronous_buck/quadrature.py",
+        "tests/test_synchronous_buck_comparison.py"
+      ],
+      "commits": [
+        "d79e849",
+        "f36c06362244efb43285e2725bc6b6db975c86ec",
+        "167bb493c1405cd4edd4eaadd1b4cf2e0ad257a0",
+        "dda8deb47f74764ac5a15fd19baff01d73432578",
+        "0297c85c451ee9a9054450058f48f1db6a937810",
+        "41a6685da241b5a759786963b81e236728afbd98",
+        "4e43a09fa24f30b401ee04d3a8e5e6ab2e19d4ea",
+        "9269350887a867aee2740fed04155ade8f8757be"
+      ],
+      "blockers": []
+    },
+    {
+      "id": "C1",
+      "phase": "single_station",
+      "title": "单站VSC教学链",
+      "priority": 2,
+      "dependencies": [
+        "B1"
+      ],
+      "new_capabilities": [
+        "small measured naming/timing fixes only if proven"
+      ],
+      "references": [
+        "simulink-standard-blocks-srf-pll-r2026b",
+        "pscad-official-vsc-background-v463",
+        "pscad-derived-source-startup-v5",
+        "pscad-derived-three-phase-manual-probe-v5",
+        "pscad-derived-dc-measurement-diagnostic-v5",
+        "pscad-derived-ideal-branch-probe-v5",
+        "pscad-derived-source-current-build-v5",
+        "pscad-derived-dc-pgb-build-v5",
+        "pscad-derived-dc-pgb-split-build-v5",
+        "pscad-derived-output-intent-build-v5",
+        "pscad-derived-force-dsout-build-v5",
+        "pscad-derived-force-dsout-bounded-probe-v5",
+        "simscape-derived-grid-vsc-openloop-r2025a"
+      ],
+      "validation": "28 号开环通过真实 Simscape 双步长对标，共用接线后复验波形及判据逐字节一致。29 号已知角度 dq 电流环在两工况双步长下通过真实 PSCAD 同档、跨档及成组比较，Windows 1581 项含 slow 回归及 Windows/WSL2 独立默认入口通过。30 号使用电源精度双档 PSCAD 参考重新独立对标，18 窗、原电气及 PLL 状态门限全部通过。31 号 PCC 有功前馈和调压通过独立双工况、双步长 PSCAD 对标及 Windows 1590 项含 slow 回归，WSL2 默认入口与 4 项专测通过，29/30 号六组波形逐字节一致。32 号直流母线调压通过双步长 PSCAD 的 480005 行对标、Windows 1595 项含 slow 回归及 Ubuntu WSL2 默认入口与 5 项专测。",
+      "acceptance": "局部、可独立运行验证的教学例逐项验收",
+      "status": "completed",
+      "files": [
+        "validation/cases/pll_dynamic_response/manifest.json",
+        "validation/cases/pll_dynamic_response/reference_protocol.json",
+        "validation/cases/pll_dynamic_response/acceptance_plan.md",
+        "validation/cases/pll_dynamic_response/qualified_reference_report.json",
+        "validation/cases/pll_dynamic_response/compare.py",
+        "validation/cases/pll_dynamic_response/README.md",
+        "tests/test_pll_reference_comparison.py",
+        "validation/cases/pll_dynamic_response/validation_report.json",
+        "docs/development_roadmap/experiments/c1_openloop_reference_design.md",
+        "docs/development_roadmap/experiments/c1_openloop_source_research_20261112.json",
+        "docs/development_roadmap/experiments/c1_three_phase_probe_20261112.json",
+        "docs/development_roadmap/experiments/c1_dc_measurement_diagnostic_20261112.json",
+        "docs/development_roadmap/experiments/c1_ideal_branch_diagnostic_20261112.json",
+        "docs/development_roadmap/experiments/c1_source_current_build_only_20261112.json",
+        "docs/development_roadmap/experiments/c1_pgb_dsout_build_only_20261112.json",
+        "docs/development_roadmap/experiments/c1_pgb_split_build_only_20261112.json",
+        "docs/development_roadmap/experiments/c1_output_intent_build_only_20261112.json",
+        "docs/development_roadmap/experiments/c1_force_dsout_build_only_20261112.json",
+        "docs/development_roadmap/experiments/c1_force_dsout_bounded_numeric_20261116.json",
+        "docs/development_roadmap/experiments/c1_full_openloop_preparation_20261116.json",
+        "validation/cases/grid_connected_vsc_open_loop/parameters.json",
+        "validation/cases/grid_connected_vsc_open_loop/reference_protocol.json",
+        "validation/cases/grid_connected_vsc_open_loop/acceptance_plan.md",
+        "docs/development_roadmap/experiments/c1_full_openloop_protocol_20261116.json",
+        "docs/development_roadmap/experiments/c1_full_openloop_build_attempt_20261116.json",
+        "docs/development_roadmap/experiments/c1_full_openloop_dual_h_diagnostic_20261116.json",
+        "docs/development_roadmap/experiments/c1_commonmode_constraint_followup_20261116.json",
+        "docs/development_roadmap/experiments/c1_node_ordering_build_attempt_20261116.json",
+        "docs/development_roadmap/experiments/c1_simscape_library_discovery_20261116.json",
+        "docs/development_roadmap/experiments/c1_simscape_short_build_20261116.json",
+        "docs/development_roadmap/experiments/c1_simscape_short_run_20261116.json",
+        "docs/development_roadmap/experiments/c1_simscape_full_resource_stop_20261116.json",
+        "docs/development_roadmap/experiments/c1_nojvm_short_saved_mat_20261116.json",
+        "docs/development_roadmap/experiments/c1_nojvm_full_reference_20261116.json",
+        "validation/cases/grid_connected_vsc_open_loop/qualified_reference_report.json",
+        "docs/development_roadmap/experiments/c1_candidate_first_pair_failure_20261116.json",
+        "examples/28_grid_connected_vsc_open_loop.py",
+        "tests/test_grid_connected_vsc_open_loop.py",
+        "tests/test_grid_connected_vsc_open_loop_metrics.py",
+        "validation/cases/grid_connected_vsc_open_loop/README.md",
+        "validation/cases/grid_connected_vsc_open_loop/binding.py",
+        "validation/cases/grid_connected_vsc_open_loop/compare.py",
+        "validation/cases/grid_connected_vsc_open_loop/manifest.json",
+        "validation/cases/grid_connected_vsc_open_loop/metrics.py",
+        "validation/cases/grid_connected_vsc_open_loop/physics.py",
+        "validation/cases/grid_connected_vsc_open_loop/validation_report.json",
+        "docs/development_roadmap/experiments/fixed_time_grid_step_repair_20261116.json",
+        "docs/development_roadmap/experiments/c1_observed_forcing_ledger_20261118.json",
+        "docs/development_roadmap/experiments/c1_decimal80_precision_intervention_20261118.json",
+        "docs/development_roadmap/experiments/c1_refinement_residual_screen_20261118.json",
+        "docs/development_roadmap/experiments/c1_lu_refinement_intervention_20261118.json",
+        "docs/specs/algorithms/known-angle-dq-current/known-angle-dq-current-implementation-test.md",
+        "docs/specs/algorithms/known-angle-dq-current/known-angle-dq-current-system-architecture.md",
+        "docs/development_roadmap/experiments/c1_known_angle_dq_design_checks_20261118.json",
+        "docs/development_roadmap/experiments/c1_known_angle_dq_native_startup_20261118.json",
+        "docs/development_roadmap/experiments/c1_known_angle_dq_pscad_control_20261118.json",
+        "docs/development_roadmap/experiments/c1_known_angle_dq_pscad_feedback_20261118.json",
+        "docs/development_roadmap/experiments/c1_known_angle_dq_pscad_feedback_fine_20261119.json",
+        "docs/development_roadmap/experiments/c1_known_angle_dq_pscad_full_20261119.json",
+        "validation/cases/grid_connected_vsc_closed_loop/reference_protocol.json",
+        "validation/cases/grid_connected_vsc_closed_loop/pscad_reference_point_trial.json",
+        "docs/development_roadmap/experiments/c1_pscad_reference_point_trial_20261122.json",
+        "docs/development_roadmap/experiments/c1_pscad_angle_arithmetic_trial_20261122.json",
+        "validation/cases/grid_connected_vsc_closed_loop/pscad_angle_arithmetic_trial.json",
+        "validation/cases/grid_connected_vsc_closed_loop/pscad_closed_loop_remaining_variants.json",
+        "docs/development_roadmap/experiments/c1_pscad_main_both_steps_20261122.json",
+        "validation/cases/grid_connected_vsc_closed_loop/pscad_closed_loop_d_only_variants.json",
+        "validation/cases/grid_connected_vsc_closed_loop/qualified_reference_report.json",
+        "examples/29_grid_connected_vsc_closed_loop.py",
+        "pycy_emt_lite/converters/_grid_vsc.py",
+        "tests/test_grid_connected_vsc_closed_loop.py",
+        "validation/cases/grid_connected_vsc_closed_loop/README.md",
+        "validation/cases/grid_connected_vsc_closed_loop/compare.py",
+        "validation/cases/grid_connected_vsc_closed_loop/validation_report.json",
+        "validation/cases/grid_connected_vsc_pll/reference_protocol.json",
+        "validation/cases/grid_connected_vsc_pll/short_reference_report.json",
+        "validation/cases/grid_connected_vsc_pll/full_reference_report.json",
+        "examples/30_grid_connected_vsc_pll.py",
+        "pycy_emt_lite/converters/_grid_vsc_current_loop.py",
+        "tests/test_grid_connected_vsc_pll.py",
+        "validation/cases/grid_connected_vsc_pll/README.md",
+        "validation/cases/grid_connected_vsc_pll/compare.py",
+        "validation/cases/grid_connected_vsc_pll/source_precision_trial.json",
+        "validation/cases/grid_connected_vsc_pll/validation_report.json",
+        "validation/cases/grid_connected_vsc_pll/source_precision_trial_result.json",
+        "validation/cases/grid_connected_vsc_pll/source_precision_fine_trial.json",
+        "validation/cases/grid_connected_vsc_pll/source_precision_reference_report.json",
+        "validation/cases/grid_connected_vsc_pll/acceptance_report.json",
+        "examples/31_grid_connected_vsc_power_vac.py",
+        "tests/test_grid_connected_vsc_power_vac.py",
+        "validation/cases/grid_connected_vsc_power_vac/README.md",
+        "validation/cases/grid_connected_vsc_power_vac/acceptance_report.json",
+        "docs/development_roadmap/experiments/c1_dc_bus_startup_20261123.json",
+        "docs/development_roadmap/experiments/c1_dc_parked_bridge_20261123.json",
+        "docs/development_roadmap/experiments/c1_dc_live_feedback_short_20261123.json",
+        "docs/development_roadmap/experiments/c1_dc_live_feedback_long_20261123.json",
+        "examples/32_grid_connected_vsc_dc_voltage.py",
+        "tests/test_grid_connected_vsc_dc_voltage.py",
+        "validation/cases/grid_connected_vsc_dc_voltage/compare.py",
+        "validation/cases/grid_connected_vsc_dc_voltage/plots.py",
+        "validation/cases/grid_connected_vsc_dc_voltage/README.md",
+        "validation/cases/grid_connected_vsc_dc_voltage/acceptance_report.json"
+      ],
+      "commits": [
+        "b835e31785fab3fda247c333d23edbe9ce576dfa",
+        "8048ce469472040b2244641e0e6790c166f7630c",
+        "da18a43321901f294786694fbb8b9c70ab79881f",
+        "5314486fcb30929f79c62a5b15faf2e462529573",
+        "5e27e7878ac4260c31e07c2eaf4b33b2164298c4",
+        "a241d1ec1636e5635166f3b434acdd67034a38c4",
+        "e73c0b3b8b0e1b0f1507618d973989ad9553703f",
+        "42c9c7a88acb7d3f8411f373eee366528524512d",
+        "4aff99c3bd6b88b700a875132b96c47e7f589397",
+        "e0d7e63b7756a37b53b628e1dbcdc1aa043c3845",
+        "2e158872b1a55ee32836e34561981fb458d49bb7",
+        "fb9aaa8612a2725d9a93ec248b604d39f2be57fb",
+        "b2462365d5c40efd27400b0999cf6a8c668f3d91",
+        "63e51654499c44ac215ab776d8b58f994935d7c1",
+        "4c5f423dd1d20e23d51b271240b1edaf4a7edf55",
+        "b6f5775353e99f91c32d7860df47c4eb2db0bd9d",
+        "1afde3a916c24edf21dce1c71ae6f825d04d9291",
+        "fbcfb753f09c33c714a1453609bee3c6449fa668",
+        "a49544935e740172ab65ce25486c97396cb055c1",
+        "05dd455251bfff341a20d14d35000c8b972ad657",
+        "c3fdf7957d1c52ee5a3ba51c6bf2c55dbea2151a",
+        "fbfc278cffa37cb50f34553effd2f172373378f4",
+        "1a9a5bdf4b2d89a18e496388bd6558b650a8e8aa",
+        "457ba4eadab46360cc27dfc65e3f2320630028bc",
+        "5ac9d46b96a8c36622620d7e4d72ea9f64e7274c",
+        "b57a2a8c06614cf8c626b0e189402063fa82dffd",
+        "fadb979f1dadd88962ae850478a6b864b95652a7",
+        "3c3c3ca1dcc025b7bee130f3c90f20f58b37b1d1",
+        "bbb1e2d7dd669cade3621f4b0d5853d69ca43300",
+        "8386c4e564314cd507c6c190d33f9c287f4ad762",
+        "368b352d60bcd16a1bdc9a58e999831965e6275b",
+        "6634277c68e856cd81311149b91dc8bf55f61ea2",
+        "a777c00c283498ab2dd9a1542a4454b7cf8c5e4a",
+        "b245712af22d20205a6883b8ce3767e4d21cbb54",
+        "ae4fd239ef1a91b75042b9d291f1548d5a5e132f",
+        "302772282779c5bcd8e7612026deefbb4031ea57",
+        "c635f684fbfe01cbb4ea94f0b10c0aa5a3ecd626",
+        "31f1490fe75acf97afbed8f26fe97e3f912e30e5",
+        "57ad0fdc709c6104ea85b3706de813ebc9def95b",
+        "0c096aaef58148d9fd619b5398108cb8c8c5bd18",
+        "951617ae348507a0ae922531f89abd2ad7170d90",
+        "6997230697350af42d1e68dda71562e072525a7b",
+        "d86c56ff8307e5efa58f67e51fb3d2303cac65ca",
+        "c9f67165aa77cface04cb8727d7a9997c676d428",
+        "0bd7535d6065db964690c80842c81183cfb22e44",
+        "a223722c50f53863571710864cb3df5d66f0966d",
+        "f467c4c9957e028f8a46dfad52dbb73bfe382aa3",
+        "e0bbf254d9030caf3e51fc401693f59c451b7bb4",
+        "530dd74ec1f39027e1b7f33500255e0fd84550c6"
+      ],
+      "blockers": [],
+      "reference_feasibility": {
+        "status": "read_only_feasibility_only",
+        "record": "local_reference/c1_pll_reference_research/20261111T013530229954Z/feasibility.md",
+        "record_sha256": "fc38067eda4c14f44de69838a0392ae3db8e8caac2a3bd3ae78b9cd694eef405",
+        "evidence": "local_reference/c1_pll_reference_research/20261111T013530229954Z/evidence.json",
+        "evidence_sha256": "d92469cdd234477829ca5a5fa75a67648f17235fffadf3d3cbdaa73672375427",
+        "native_executed": false
+      },
+      "current_stage": "dc_voltage_example_32_accepted",
+      "dynamic_dc_example": {
+        "status": "completed",
+        "number": 32,
+        "acceptance_report": {
+          "path": "validation/cases/grid_connected_vsc_dc_voltage/acceptance_report.json",
+          "sha256": "0c653f4d87e8480006b309ecbd84dee20d44a93cf3c6e678aa4b7458c2768dd7",
+          "bytes": 9548
+        },
+        "paired_rows_with_initial": [160002, 320003],
+        "windows_pytest_including_slow": 1595,
+        "ubuntu_focused_tests": 5
+      },
+      "dynamic_dc_live_long": {
+        "status": "pscad_native_long_pass_both_steps_and_cross_step",
+        "report": {
+          "path": "docs/development_roadmap/experiments/c1_dc_live_feedback_long_20261123.json",
+          "sha256": "43c3f53a6750cc1f55a04b3ee204b2f30aa4aa46b8778c71ad8999c59fc7ff68",
+          "bytes": 20453
+        },
+        "positive_native_rows": [160001, 320002],
+        "relative_load_step_s": 0.4,
+        "fine_midpoints_held": 160001,
+        "candidate_accepted": true
+      },
+      "dynamic_dc_live_short": {
+        "status": "pscad_native_feedback_and_physics_pass_both_steps",
+        "report": {
+          "path": "docs/development_roadmap/experiments/c1_dc_live_feedback_short_20261123.json",
+          "sha256": "463ade114432026f96fedb7d5aa681c5eab20855bd6a7dc116900e954fdd5202",
+          "bytes": 17827
+        },
+        "positive_native_rows": [401, 802],
+        "fine_midpoints_held": 401,
+        "long_protocol": {
+          "path": "local_reference/native_static_reviews/c1_dc_long_protocol_20261123/protocol.json",
+          "sha256": "8c91a6cc68587fcd58f49d0f56538cb751c23f5d2cdfc9f3902fef81fe9c7a61",
+          "bytes": 2964
+        },
+        "long_native_qualified": true,
+        "candidate_accepted": false
+      },
+      "dynamic_dc_parked_bridge": {
+        "status": "pscad_native_physical_checks_pass_both_steps",
+        "report": {
+          "path": "docs/development_roadmap/experiments/c1_dc_parked_bridge_20261123.json",
+          "sha256": "e09296c7b89f9bcb216ac1af988fdd6c280b36560311bc0a21ab5ff5f12cd2f9",
+          "bytes": 12229
+        },
+        "positive_native_rows": [401, 802],
+        "strict_absolute_voltage_pair_passed": false,
+        "closed_loop_native_qualified": false,
+        "candidate_accepted": false
+      },
+      "dynamic_dc_startup": {
+        "status": "passive_pscad_snapshot_and_continuation_pass",
+        "report": {
+          "path": "docs/development_roadmap/experiments/c1_dc_bus_startup_20261123.json",
+          "sha256": "b0859320ee3e1bb1e0559cc90d46af34ff37c66f6f62cf98f68e9b0170fb3d7e",
+          "bytes": 9803
+        },
+        "pycy_short_rows": [402, 803],
+        "pscad_restart_intervals": 401,
+        "simscape_batch_status": "stalled_before_script",
+        "bridge_closed_loop_reference_qualified": false,
+        "candidate_accepted": false
+      },
+      "pcc_feeder_probe": {
+        "protocol": "docs/development_roadmap/experiments/c1_pcc_feeder_native_probe_20261122.json",
+        "internal_feasibility_passed": true,
+        "measurement_replay": "docs/development_roadmap/experiments/c1_pcc_measurement_replay_20261122.json",
+        "compiled_layout": "docs/development_roadmap/experiments/c1_pcc_feeder_native_layout_20261122.json",
+        "native_short_probe": "pass_5us_122_rows",
+        "native_result": "docs/development_roadmap/experiments/c1_pcc_feeder_native_result_20261122.json",
+        "power_and_vac_protocol": "validation/cases/grid_connected_vsc_power_vac/reference_protocol.json",
+        "power_and_vac_5us_regulated": "original_pre_enable_voltage_gate_failed",
+        "power_and_vac_window_trial": "validation/cases/grid_connected_vsc_power_vac/fundamental_window_trial.json",
+        "power_and_vac_window_coarse_pair": "validation/cases/grid_connected_vsc_power_vac/coherent_window_coarse_pair.json",
+        "power_and_vac_coherent_reference": "validation/cases/grid_connected_vsc_power_vac/coherent_reference_report.json",
+        "power_and_vac_candidate": "accepted_example_31",
+        "power_and_vac_acceptance": {
+          "path": "validation/cases/grid_connected_vsc_power_vac/acceptance_report.json",
+          "sha256": "811f45be6c9f9350cb1b190c85da816e0b2a1e516cfd4dda33d480182d88bd18",
+          "bytes": 7431,
+          "acceptance_commit_subject": "feat: accept PCC power and voltage control example 31 [skip ci]"
+        }
+      },
+      "open_loop_candidate_preparation": {
+        "record": {
+          "path": "docs/development_roadmap/experiments/c1_openloop_candidate_preparation_20261116.json",
+          "bytes": 2469,
+          "sha256": "c7d442ea3b5434edf6723c94b4d68fdad5d6f3ef378e76b820272db7f71b9340"
+        },
+        "status": "draft_not_executed_or_accepted",
+        "candidate_simulation_executed": false,
+        "candidate_accepted": false,
+        "new_full_regression_executed": false,
+        "formal_new_examples_completed": 9,
+        "historical_snapshot_only": true
+      },
+      "interface_discovery": {
+        "status": "qualified_native_satk_batch_interface",
+        "simulink_model_tools_provided": false,
+        "plugin_searches_without_results": 3,
+        "mode": "installed protected SATK functions in a fresh owned MATLAB batch; current MCP connection unchanged",
+        "matlab_version": "26.2.0.3386108 (R2026b)",
+        "native_executed": true,
+        "pll_reference_or_candidate_simulated": false,
+        "record": "local_reference/c1_pll_reference_research/20261111T135000Z_satk_probe_v2/runs/20261111T1354072589026Z/interface_probe.json",
+        "record_sha256": "43420197566e13959648202d1582f233eae1753227b3d9677a2f28c63353c963",
+        "terminal": "local_reference/c1_pll_reference_research/20261111T135000Z_satk_probe_v2/runs/20261111T1354072589026Z/terminal.json",
+        "terminal_sha256": "01f98bfbf19988a51c0b70f917fe9d1815fd9db3a5064edb47081cd17d8f3f47",
+        "independent_review": "local_reference/native_static_reviews/c1_satk_v2_actual_20261111T135919821288Z/receipt.json",
+        "independent_review_sha256": "8f9bbdfac2f728a621fbea2a1a5ff860d1110b084a2bf9b9374414cd0ee9b9f3",
+        "scope": "现有Simulink许可、真实model_read/edit/check；Constant0→Terminator两块一连接，回读与SLX一致、healthy；无PLL或其他仿真。"
+      },
+      "reference_design_review": {
+        "status": "historical_design_review_startup_now_qualified",
+        "record": "local_reference/native_static_reviews/pll_angle_design_20261111T135817707827Z/review.md",
+        "record_sha256": "acdee17e593a26d636514c1cce879e8ddaf9aacb5762ed5bea5da3780cfd01a5",
+        "native_pll_executed": false,
+        "next_gate": "Review and commit the complete 1s protocol before full reference/candidate output; keep 100us control and explicitly separate solver_step."
+      },
+      "startup_qualification": {
+        "status": "qualified_three_native_startup_rows_only",
+        "source_manifest": {
+          "path": "local_reference/c1_pll_reference_research/20261111T151000Z_pll_startup_v5/source_manifest.json",
+          "sha256": "48dc5e9ac46c3f4cc7147d5730c75de4291cc46752188a2eb107cf92455579d0"
+        },
+        "protocol": {
+          "path": "local_reference/c1_pll_reference_research/20261111T151000Z_pll_startup_v5/protocol.json",
+          "sha256": "866e1c07d4b38dc0138dcd501968cbf44eca5035c2a3277547cce27a55460250"
+        },
+        "run": "local_reference/c1_pll_reference_research/20261111T151000Z_pll_startup_v5/runs/20261111T1513366278040Z",
+        "terminal": {
+          "path": "local_reference/c1_pll_reference_research/20261111T151000Z_pll_startup_v5/runs/20261111T1513366278040Z/terminal.json",
+          "sha256": "52a176795a240107d43e1d101e2d6084b24539012ba78c9c98556cb79a48f9b6"
+        },
+        "worker": {
+          "path": "local_reference/c1_pll_reference_research/20261111T151000Z_pll_startup_v5/runs/20261111T1513366278040Z/worker_result.json",
+          "sha256": "0f3b248a471aeaefff43c42af3e5540eb7ce3958b0a95062cfef67edbb7d9801"
+        },
+        "raw_csv": {
+          "path": "local_reference/c1_pll_reference_research/20261111T151000Z_pll_startup_v5/runs/20261111T1513366278040Z/startup.csv",
+          "sha256": "87bb74466d5927c3defe7681bf71a6a7300a7131de5e56d364f5facb5dd5a531"
+        },
+        "raw_mat": {
+          "path": "local_reference/c1_pll_reference_research/20261111T151000Z_pll_startup_v5/runs/20261111T1513366278040Z/raw_simulation.mat",
+          "sha256": "149c19a318147227cf163394bc3fbe5caf3690f041429ef251ee27e9af788f75"
+        },
+        "saved_model": {
+          "path": "local_reference/c1_pll_reference_research/20261111T151000Z_pll_startup_v5/runs/20261111T1513366278040Z/C1PllStartup20261111.slx",
+          "sha256": "60ae5f014e2e57a74f27992bcea047a50043d43e8f85427507df85c10ea487e7"
+        },
+        "numerical_report": {
+          "path": "local_reference/c1_pll_reference_research/20261111T151000Z_pll_startup_v5/runs/20261111T1513366278040Z/semantic_analysis/20261111T1515333170669Z/report.json",
+          "sha256": "e01083df354c5ff69411544063229d6c06b400224857910490f24b2cd7de9442"
+        },
+        "independent_reviews": [
+          {
+            "path": "local_reference/native_static_reviews/pll_startup_v5_actual_20261111T151730614879Z/receipt.json",
+            "sha256": "908681d0e818fdfa1a7c47804b657fcfa09e94959f88366083b103fa670d45a2"
+          },
+          {
+            "path": "local_reference/native_static_reviews/pll_startup_v5_numerical_20261111T152032874378Z/receipt.json",
+            "sha256": "ab2416987e7b538bba3768a6a9ac0a55ee705a7f9f1f6ff63503759c70e231fe"
+          }
+        ],
+        "checks": 141,
+        "rows": 3,
+        "columns": 23,
+        "full_1s_reference_or_candidate_executed": false,
+        "scope": "Native startup order and observed double signals only; internal CompiledPortDataTypes is a struct summary, not per-port double proof; no full PLL/VSC/C1 acceptance."
+      },
+      "startup_attempts_preserved": [
+        {
+          "version": 1,
+          "classification": "JVM hash unavailable before model construction",
+          "record": {
+            "path": "local_reference/c1_pll_reference_research/20261111T141000Z_pll_startup_v1/failure_review/receipt.json",
+            "sha256": "321372f5d35c7990259fecfd10895b2695242b011df6094c95aa8ad23868a98e"
+          }
+        },
+        {
+          "version": 2,
+          "classification": "healthy native graph; Sum port-spacer string gate before simulation",
+          "record": {
+            "path": "local_reference/c1_pll_reference_research/20261111T143700Z_pll_startup_v2/failure_review/receipt.json",
+            "sha256": "37eea2fe871425c3ff8d91dc8645a407407c5b85d4fbd7f521f5de1099f40c90"
+          }
+        },
+        {
+          "version": 3,
+          "classification": "simulation returned; no logsout because signal logging off",
+          "record": {
+            "path": "local_reference/native_static_reviews/pll_startup_v3_actual_20261111T150418451929Z/receipt.json",
+            "sha256": "85b8cf2bfcb1dd6a7e576699a477ab2c73f95f6cdcd20a873bbfb303518b7ded"
+          }
+        },
+        {
+          "version": 4,
+          "classification": "logging configured; wrong direct readback handle before simulation",
+          "record": {
+            "path": "local_reference/native_static_reviews/pll_startup_v4_actual_20261111T151137255487Z/receipt.json",
+            "sha256": "454acf0b344aa4703c8ad4c6e7762f6f3dfbefae2856275462606c6483983b26"
+          }
+        }
+      ],
+      "full_comparison_protocol_draft": {
+        "status": "draft_not_frozen_no_full_output",
+        "record": {
+          "path": "local_reference/c1_pll_reference_research/20261111T151458821003Z_full_protocol_draft/full_protocol_draft.md",
+          "sha256": "0e98eb18f087dd9661415d32a3002332963fb954f9e3228971ddcce85d5ff9be"
+        },
+        "receipt": {
+          "path": "local_reference/c1_pll_reference_research/20261111T151458821003Z_full_protocol_draft/receipt.json",
+          "sha256": "d6ddc957f9ff3c29ce94b190ce5bf82e0b1f77a4110481fe6dd1f8b943724142"
+        },
+        "next_gate": "Fix secondary scheduling tolerance, endpoint/export and analyzer contracts; commit before full reference or candidate execution."
+      },
+      "full_comparison_protocol": {
+        "status": "fixed_before_full_reference_or_candidate_output",
+        "contracts": [
+          {
+            "path": "validation/cases/pll_dynamic_response/manifest.json",
+            "sha256": "9a55c97285c552b7519012ce0a2bac5f13f3a877a320b8fae6056c58d9df3e9d"
+          },
+          {
+            "path": "validation/cases/pll_dynamic_response/reference_protocol.json",
+            "sha256": "dc6a48e221062d72816f882ae0ec70933ea887c91bf96396df8b0b436691036a"
+          },
+          {
+            "path": "validation/cases/pll_dynamic_response/acceptance_plan.md",
+            "sha256": "cd38929a398c9dc9b0005080c76baa067796d3eb83205177517ecfa8630be0bf"
+          }
+        ],
+        "independent_review": {
+          "path": "local_reference/native_static_reviews/pll_full_public_protocol_review_20261111T153358964109Z/receipt.json",
+          "sha256": "746436c25d5618625ab3b3b8001138c072827806995e9ae4b62b350edec03d10"
+        },
+        "reference_or_candidate_executed": true,
+        "next_gate": "PLL substep accepted; prepare a physically explicit open-loop grid-connected VSC reference before a candidate.",
+        "reference_executed": true,
+        "candidate_executed": true,
+        "freeze_commit": "8048ce469472040b2244641e0e6790c166f7630c"
+      },
+      "full_reference_qualification": {
+        "status": "QUALIFIED_NATIVE_REFERENCE_ONLY",
+        "reference_qualified": true,
+        "candidate_executed": false,
+        "existing_11_formally_accepted": false,
+        "complete_receipt": {
+          "path": "local_reference/pll_dynamic_response/qualification/20261111T155510206872Z/qualification.json",
+          "bytes": 60117,
+          "sha256": "77adfc0cfe84670cce8c2b1435ca9fed852251fa32d2808ce82e19770a7fa11e"
+        },
+        "public_report": {
+          "path": "validation/cases/pll_dynamic_response/qualified_reference_report.json",
+          "bytes": 2341,
+          "sha256": "ebe76a3c41bd0f5bce7680261ae56d858014f34daabffa01df240c74f5661a48"
+        },
+        "complete_input_files": 198,
+        "normalized_rows": 10001,
+        "scope": "Reference-only snapshot preceding the later candidate acceptance; current candidate state is recorded separately."
+      },
+      "comparison_entry_checks": {
+        "status": "checked_before_first_candidate",
+        "entry": {
+          "path": "validation/cases/pll_dynamic_response/compare.py",
+          "bytes": 22534,
+          "sha256": "f4ea246cb9299216dce569595f1b214fd83eb4f936ae34e3de9a1619d0b72a59"
+        },
+        "tests": {
+          "path": "tests/test_pll_reference_comparison.py",
+          "bytes": 22862,
+          "sha256": "ea6f2af97406bf62b5d2393586208c0b779c0fb668d2f7fbeab0a0775501e74f"
+        },
+        "focused_tests_passed": 33,
+        "focused_evidence": {
+          "path": "local_reference/native_static_reviews/pll_comparison_synthetic_tests_20261111T162405980159Z/frozen_receipt.json",
+          "bytes": 2018,
+          "sha256": "88cf7dd3e37d8bf95fb3bd0acf64a3117fe555d91df721b5290073dda060fe6b"
+        },
+        "independent_review": {
+          "path": "local_reference/native_static_reviews/pll_comparison_final_static_review_20261111T163023334292Z/receipt.json",
+          "bytes": 5129,
+          "sha256": "bed36c753b121f0ef2b5ef389917981bcb73b3038403c980e731f46f349ff63d"
+        },
+        "full_suite": {
+          "tests": 1300,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "elapsed_s": 510.44,
+          "junit_elapsed_s": 510.444,
+          "xml": {
+            "path": ".tmp/longterm/c1-pll-full-20261111T162829439Z.xml",
+            "bytes": 186635,
+            "sha256": "6ea47a1f9fba99f3e19eef03f6f1a6df2b78d2e66015ddd1cddf3f52ad3aa818"
+          },
+          "log": {
+            "path": ".tmp/longterm/c1-pll-full-20261111T162829439Z-pytest.log",
+            "bytes": 153849,
+            "sha256": "9cc7ad3baa85ceac372bc10206e7323cfd519305198bc3ccb1ea12a174992d53"
+          },
+          "source_baseline": {
+            "path": ".tmp/longterm/c1-pll-entry-final-source-hashes-20261112.json",
+            "bytes": 12850,
+            "sha256": "7c666c145ee97c8cbe8fdd50932ca35d7ff25ca9424d07fd5be4b4324703ef71"
+          },
+          "source113_before_after_same": true,
+          "old111_unchanged": true,
+          "includes_slow": true,
+          "process_exit_code": 0,
+          "session_id": 50494,
+          "candidate_executed": false
+        },
+        "locked_packages": 27,
+        "ruff_passed": true,
+        "mypy_source_files": 39,
+        "actual_qualified_loader_rows": 10001,
+        "actual_reference_bindings": 203,
+        "candidate_executed": false,
+        "scope": "Pre-candidate checks at entry freeze; current candidate outcome is recorded in candidate_comparison."
+      },
+      "candidate_comparison": {
+        "status": "passed_independently_verified",
+        "candidate_executed": true,
+        "report": {
+          "path": "validation/cases/pll_dynamic_response/validation_report.json",
+          "bytes": 8454,
+          "sha256": "2ba60f5967d7ce2cf8d9e4f96559f055f98b7b89c82a280d6d64e1e269dbe950"
+        },
+        "actual_report": {
+          "path": "local_reference/pll_dynamic_response/comparison_results/20261111T163858643683Z/report.json",
+          "bytes": 58607,
+          "sha256": "4586c354f9e7d84ba2146601f07b9c35afca2420d49dd55b9f4d32ce9160235b"
+        },
+        "entry_freeze_commit": "5314486fcb30929f79c62a5b15faf2e462529573",
+        "independent_audit": {
+          "path": "local_reference/native_static_reviews/pll_candidate_actual_20261111T163858643683Z_f982/receipt.json",
+          "bytes": 3738,
+          "sha256": "8dc2a994039af7bb94b7337bc1a3face18cb3de880dd38bd4bb8ff863b3de318"
+        },
+        "independent_default_run": {
+          "path": "local_reference/pll_dynamic_response/independent_runs/20261111T164014570020Z/independent_verification_receipt.json",
+          "bytes": 4340,
+          "sha256": "71e40d5847daa3a73e4736cb3afcecfbd6b0ab8548f7736c4e1050c626af091b"
+        },
+        "maximum_absolute_errors": {
+          "angle_unwrapped": 5.684341886080802e-14,
+          "frequency": 1.1368683772161603e-13,
+          "q_axis_voltage": 3.126388037344441e-13
+        },
+        "input_snapshot_files": 243,
+        "existing_11_accepted": true,
+        "complete_C1_chain_accepted": false
+      },
+      "open_loop_reference_research": {
+        "status": "observed_single_loop_startup_pass_only_three_phase_reference_pending",
+        "record": {
+          "path": "docs/development_roadmap/experiments/c1_openloop_source_research_20261112.json",
+          "bytes": 8639,
+          "sha256": "e41c8483bf23357d3bc8534cc8e3f04a69fc731acb51ea34aa9b8476825c5fc6"
+        },
+        "new_candidate_executed": false,
+        "full_VSC_reference_ready": false,
+        "active_native_runs": 0
+      },
+      "three_phase_probe": {
+        "status": "manual_three_phase_probe_NUMERICAL_FAIL",
+        "record": {
+          "path": "docs/development_roadmap/experiments/c1_three_phase_probe_20261112.json",
+          "bytes": 11483,
+          "sha256": "8d9c6a45f0b0ec66eee06fa4b99765fe8a319d4e5bda302396f2de5d32f949b8"
+        },
+        "full_VSC_reference_ready": false,
+        "new_candidate_executed": false,
+        "active_native_runs": 0
+      },
+      "dc_measurement_diagnostic": {
+        "status": "measurement_localization_complete_original_and_ammeter_gates_FAIL",
+        "record": {
+          "path": "docs/development_roadmap/experiments/c1_dc_measurement_diagnostic_20261112.json",
+          "bytes": 15789,
+          "sha256": "0610d8dd9038ea802b333350608a288559bcfee135d382cd3bbb573656a5a41f",
+          "hash_scope": "Preserved Windows workspace bytes; Git LF identity is supplied separately.",
+          "git_lf_bytes": 15462,
+          "git_lf_sha256": "37a766d52e8f5627302e5165b4178917c4e37639ab58ff87ee87a62b58685429"
+        },
+        "new_candidate_executed": false,
+        "full_VSC_reference_ready": false,
+        "active_native_runs": 0
+      },
+      "ideal_branch_diagnostic": {
+        "status": "IDEAL_BRANCH_OPTION_CONFIRMED_NO_OBSERVED_OUTPUT_CHANGE_NUMERICAL_FAIL",
+        "record": {
+          "path": "docs/development_roadmap/experiments/c1_ideal_branch_diagnostic_20261112.json",
+          "bytes": 17807,
+          "sha256": "6b8f5d9b9d15c431b5ad22a946be1afabda6916154b7c282dbea7f7c973151a4",
+          "hash_scope": "Preserved Windows workspace bytes; Git LF identity supplied separately.",
+          "git_lf_bytes": 17449,
+          "git_lf_sha256": "40cce79f5493b0a6df11ae19ca8427688c7115b7097eb64a0c9eb860a2051095"
+        },
+        "new_candidate_executed": false,
+        "full_VSC_reference_ready": false,
+        "active_native_runs": 0
+      },
+      "source_current_build_only": {
+        "status": "BUILD_ONLY_COMPILED_INF_GUARD_STOP_AND_INDEPENDENT_DC_STAGE_REJECTION",
+        "record": {
+          "path": "docs/development_roadmap/experiments/c1_source_current_build_only_20261112.json",
+          "bytes": 12785,
+          "sha256": "5ff439846d78a56b937314b133c5be06047b666592d90762ea742707a8ee26d5",
+          "hash_scope": "Exact published workspace bytes; Git LF identity supplied separately.",
+          "git_lf_bytes": 12785,
+          "git_lf_sha256": "5ff439846d78a56b937314b133c5be06047b666592d90762ea742707a8ee26d5"
+        },
+        "numeric_status": "NOT_OBSERVED",
+        "native_run_requested": false,
+        "full_VSC_reference_ready": false,
+        "new_candidate_executed": false,
+        "active_native_runs": 0
+      },
+      "dc_pgb_build_only": {
+        "status": "BUILD_ONLY_PGB_REGISTRATION_COMPILE_FAILURE",
+        "record": {
+          "path": "docs/development_roadmap/experiments/c1_pgb_dsout_build_only_20261112.json",
+          "bytes": 9916,
+          "sha256": "b9b8b546f93a372d744ac7e5f3d7e5ca46c0f8e74135f0e3ae6962e4e64f7fd6",
+          "hash_scope": "Preserved Windows workspace bytes; actual Git LF identity supplied separately.",
+          "git_lf_bytes": 9723,
+          "git_lf_sha256": "b8c644eb8c8da08e0ff5b37b64db534bcf13f8b80900eb6f7d393737d5f54b11"
+        },
+        "numeric_status": "NOT_OBSERVED",
+        "native_run_requested": false,
+        "full_VSC_reference_ready": false,
+        "new_candidate_executed": false,
+        "active_native_runs": 0
+      },
+      "dc_pgb_split_build_only": {
+        "status": "BUILD_ONLY_PGB_SPLIT_COMPILE_FAILURE",
+        "record": {
+          "path": "docs/development_roadmap/experiments/c1_pgb_split_build_only_20261112.json",
+          "bytes": 12318,
+          "sha256": "c98a2addd01e92e90ff72eeae4bd3f7a5b9319ddc16ddeceb45838b354570bdb",
+          "hash_scope": "Exact LF workspace bytes; Git LF blob identity verified separately at staging.",
+          "git_lf_bytes": 12318,
+          "git_lf_sha256": "c98a2addd01e92e90ff72eeae4bd3f7a5b9319ddc16ddeceb45838b354570bdb"
+        },
+        "numeric_status": "NOT_OBSERVED",
+        "native_run_requested": false,
+        "full_VSC_reference_ready": false,
+        "new_candidate_executed": false,
+        "active_native_runs": 0
+      },
+      "output_intent_build_only": {
+        "status": "BUILD_ONLY_COMPILED_DC_STAGE_REJECTION_AND_REVIEWER_PARSE_BOUNDARY",
+        "record": {
+          "path": "docs/development_roadmap/experiments/c1_output_intent_build_only_20261112.json",
+          "bytes": 11201,
+          "sha256": "8d26354d697c3da2501fc81716096d5e495a65d642ed7af9e28e6d812254e521",
+          "hash_scope": "Exact LF workspace bytes; Git LF blob identity verified separately at staging.",
+          "git_lf_bytes": 11201,
+          "git_lf_sha256": "8d26354d697c3da2501fc81716096d5e495a65d642ed7af9e28e6d812254e521"
+        },
+        "numeric_status": "NOT_OBSERVED",
+        "native_run_requested": false,
+        "full_VSC_reference_ready": false,
+        "new_candidate_executed": false,
+        "active_native_runs": 0
+      },
+      "force_dsout_build_only": {
+        "status": "BUILD_STRUCTURAL_ADMISSION_PASS_NOT_NUMERICAL_PASS",
+        "record": {
+          "path": "docs/development_roadmap/experiments/c1_force_dsout_build_only_20261112.json",
+          "bytes": 10536,
+          "sha256": "0264904c12d993353a7f6b457d9267de085f3579221653defcea5f72b0b86cdc",
+          "hash_scope": "Exact LF workspace bytes; Git LF blob identity verified separately at staging.",
+          "git_lf_bytes": 10536,
+          "git_lf_sha256": "0264904c12d993353a7f6b457d9267de085f3579221653defcea5f72b0b86cdc"
+        },
+        "structural_build_qualified": true,
+        "numeric_status": "NOT_OBSERVED",
+        "native_run_requested": false,
+        "full_VSC_reference_ready": false,
+        "new_candidate_executed": false,
+        "active_native_runs": 0
+      },
+      "numeric_preparation_pause": {
+        "record": {
+          "path": "local_reference/c1_openloop_reference_research/pause_checkpoints/20261112T004850063339Z/pause.json",
+          "bytes": 3587,
+          "sha256": "d79fc87db723617ae06b4d507b7ef4905db3e66b3ba2022bb16753c67573026c"
+        },
+        "status": "paused_preparation_not_native_executed",
+        "package_manifest": {
+          "path": "local_reference/c1_openloop_reference_research/20261112T004216074571Z_force_dsout_bounded_numeric_v1/manifest.json",
+          "bytes": 7365,
+          "sha256": "1d08330d1f266b93103aafdbcbbf0e9bcb65e0d5d4793a221755ffe436778f8f"
+        },
+        "numeric_status": "NOT_OBSERVED",
+        "final_analyzers_sealed": false,
+        "native_started": false,
+        "candidate_executed": false,
+        "historical_pause_only": true
+      },
+      "numeric_preparation_resume": {
+        "record": {
+          "path": "local_reference/c1_openloop_reference_research/resume_checkpoints/20261116T022604926321Z/resume.json",
+          "bytes": 2656,
+          "sha256": "f5ede11533040fa53aa4be58c0b8a507afff22c8267ccb50bfb2ecfaaef448e3"
+        },
+        "v1_status": "FROZEN_NOT_EXECUTED_IMPORT_ORDER_REVIEW_FINDING",
+        "native_started": true,
+        "numeric_status": "SHORT_PROBE_NUMERICALLY_QUALIFIED_NOT_FULL_VSC",
+        "candidate_executed": false,
+        "final_analyzers_sealed": true,
+        "run_closed": true
+      },
+      "force_dsout_bounded_numeric": {
+        "status": "SHORT_PROBE_NUMERICALLY_QUALIFIED_NOT_FULL_VSC",
+        "record": {
+          "path": "docs/development_roadmap/experiments/c1_force_dsout_bounded_numeric_20261116.json",
+          "bytes": 14625,
+          "sha256": "f2b665412dfd1ddffe011553b344f608c4a4d18065c133c670a9e2da07997f58",
+          "hash_scope": "Exact LF workspace bytes; staged Git LF blob checked before commit.",
+          "git_lf_bytes": 14625,
+          "git_lf_sha256": "f2b665412dfd1ddffe011553b344f608c4a4d18065c133c670a9e2da07997f58"
+        },
+        "short_probe_numerically_qualified": true,
+        "run": "local_reference/c1_openloop_reference_research/20261116T023156856496Z_force_dsout_bounded_numeric_v2/n/20261116T023853622403Z",
+        "session_id": 63693,
+        "authoritative_exec_closed": true,
+        "active_native_runs": 0,
+        "source113_unchanged": true,
+        "all17_plus_Vs_pass": true,
+        "full_VSC_reference_ready": false,
+        "candidate_executed": false,
+        "formal_new_examples_completed": 9,
+        "next_gate": "Freeze a separate complete openloop-SPWM protocol and dual-step reference before any candidate. Fix5us gate/100us reference ticks, initial000/111,20ms source ramp, windows/thresholds/point counts and replace outdated deleted-A/rank2 text in the old draft."
+      },
+      "full_openloop_preparation": {
+        "status": "FULL_OPENLOOP_RESEARCH_DRAFTS_REVIEWED_NOT_FROZEN",
+        "record": {
+          "path": "docs/development_roadmap/experiments/c1_full_openloop_preparation_20261116.json",
+          "bytes": 7604,
+          "sha256": "1c6a7698bdb989abefae7a28d6f31c10c1b5864cc0b6a205b407ee4f9e185903"
+        },
+        "native_executed": false,
+        "full_reference_qualified": false,
+        "candidate_executed": false,
+        "next_gate": "Resolve and commit the complete prospective protocol; then prepare and qualify real full native pair."
+      },
+      "open_loop_full_protocol": {
+        "status": "PROSPECTIVE_FULL_OPENLOOP_PROTOCOL_FIXED_NO_FULL_NATIVE_OR_CANDIDATE",
+        "record": {
+          "path": "docs/development_roadmap/experiments/c1_full_openloop_protocol_20261116.json",
+          "bytes": 5575,
+          "sha256": "d763148cba6cf9fe6b87771ba73bb43b8feb5e73c8e7a635f98c08dbdc84d81b"
+        },
+        "protocol_files": [
+          {
+            "path": "validation/cases/grid_connected_vsc_open_loop/parameters.json",
+            "bytes": 3603,
+            "sha256": "f5041eee9296c4088e74168cb444a10b016c10ee787d044629cb9492ab523dc1"
+          },
+          {
+            "path": "validation/cases/grid_connected_vsc_open_loop/reference_protocol.json",
+            "bytes": 41406,
+            "sha256": "d87a327ef601200b2ebb360403879206d8817697f78767999143226aecf26630"
+          },
+          {
+            "path": "validation/cases/grid_connected_vsc_open_loop/acceptance_plan.md",
+            "bytes": 8753,
+            "sha256": "5509985c979e02216599c4285932e5c0964a942898befe093bb6f59b866e7440"
+          }
+        ],
+        "rules_fixed_before_full_output": true,
+        "native_executed": false,
+        "full_reference_qualified": false,
+        "candidate_implemented": false,
+        "next_gate": "Create a new coarse full-model build-only package against the committed protocol HEAD, independent byte seal and actual-user preflight, then build without Run. Admit actual new graph/control/storage before separately sealing complete5us/2.5us numerical reference runs."
+      },
+      "open_loop_full_build_attempt": {
+        "status": "COMPILED_WITH_ZERO_ERRORS_POSTBUILD_ADMISSION_FAILED",
+        "record": {
+          "path": "docs/development_roadmap/experiments/c1_full_openloop_build_attempt_20261116.json",
+          "bytes": 9808,
+          "sha256": "2a9dc86ae9202120577269e0a6f0e13b9a27451f2a9134763ba661f4c9106d3e"
+        },
+        "session_id": 69502,
+        "native_executed": true,
+        "native_build_errors": 0,
+        "run_calls": 0,
+        "original_admission_passed": false,
+        "candidate_executed": false,
+        "full_double_step_reference_qualified": false,
+        "new_execution_package_created": false
+      },
+      "open_loop_full_dual_h_numeric": {
+        "status": "REAL_FULL_DUAL_H_NUMERIC_FAIL_COMMONMODE_HARD_GATE",
+        "record": {
+          "path": "docs/development_roadmap/experiments/c1_full_openloop_dual_h_diagnostic_20261116.json",
+          "bytes": 15246,
+          "sha256": "30626ecba27079d7b7238f3805118c7c04fe3036dff8271e1ec3543ac53d48a2"
+        },
+        "native_executed": true,
+        "native_sessions": [
+          98913,
+          25165
+        ],
+        "native_exec_exit_codes": [
+          0,
+          0
+        ],
+        "rows": [
+          40002,
+          80003
+        ],
+        "primary_and_independent_numeric_pass": false,
+        "cross_h_comparisons_pass": true,
+        "hard_commonmode_limit_V": 2e-06,
+        "full_reference_qualified": false,
+        "candidate_implemented": false,
+        "active_native_runs": 0
+      },
+      "commonmode_constraint_followup": {
+        "record": {
+          "path": "docs/development_roadmap/experiments/c1_commonmode_constraint_followup_20261116.json",
+          "bytes": 21491,
+          "sha256": "cdd0cb2028c9e98006d1e3396e0d0b93ff7d9db9c6b9457e3a24498f72bd606f"
+        },
+        "historical_targeted_analysis_closed": true,
+        "analysis_session": 34509,
+        "analysis_exit_code": 0,
+        "prospective_single_delta": "optimize_nodes:true->false; other44 settings/physics/old budgets fixed",
+        "new_execution_package_created": false,
+        "new_native_started": false,
+        "full_reference_qualified": false,
+        "candidate_implemented": false
+      },
+      "node_ordering_diagnostic": {
+        "record": {
+          "path": "docs/development_roadmap/experiments/c1_node_ordering_build_attempt_20261116.json",
+          "bytes": 10003,
+          "sha256": "43fbf1abeaf79344260e0f68113bbf59a1ddbc3605e3a494188c58a0d18d515e"
+        },
+        "status": "REAL_BUILD_PASS_OBSERVABLE_NODE_GATE_NOT_ACTIVATED_RUN0_CLOSED",
+        "session": 8170,
+        "exit_code": 1,
+        "Build_calls": 1,
+        "Run_calls": 0,
+        "graph_activated": false,
+        "OUT_created": false,
+        "new_reference_qualified": false,
+        "candidate_implemented": false,
+        "active_native_sessions": 0
+      },
+      "simscape_library_discovery": {
+        "record": {
+          "path": "docs/development_roadmap/experiments/c1_simscape_library_discovery_20261116.json",
+          "bytes": 9237,
+          "sha256": "90c3c05b094ed853acd4972aba2a7ace3d3a413f0f4554d6fc3a2c0104452626"
+        },
+        "status": "ACTUAL_R2025A_LIBRARY_API_VERIFIED_NO_MODEL_OR_SIMULATION",
+        "session": 76308,
+        "exit_code": 0,
+        "total_MATLAB_launches": 1,
+        "model_created": false,
+        "simulation_called": false,
+        "reference_qualified": false,
+        "active_native_sessions": 0
+      },
+      "simscape_short_probe_build": {
+        "record": {
+          "path": "docs/development_roadmap/experiments/c1_simscape_short_build_20261116.json",
+          "bytes": 6700,
+          "sha256": "d4278dc27bf5f9481dcab800deb9c51f194b92732ba687ebf3237c379724bf06"
+        },
+        "status": "ACTUAL_BUILD_STRUCTURAL_ADMISSION_PASS_NO_SIM",
+        "session": 63496,
+        "exit_code": 0,
+        "compile_calls": 1,
+        "simulation_called": false,
+        "metadata_complete": true,
+        "reference_qualified": false,
+        "active_native_sessions": 0
+      },
+      "simscape_short_probe_numeric": {
+        "record": {
+          "path": "docs/development_roadmap/experiments/c1_simscape_short_run_20261116.json",
+          "bytes": 10506,
+          "sha256": "eb7ffc9bf225008e09a4626fbb4f8268a2759d0f7e0cf83d94250ae05d9b9286"
+        },
+        "status": "REAL_SHORT_DIAGNOSTIC_NUMERIC_PASS_FULL_REFERENCE_PENDING",
+        "session": 45940,
+        "sim_calls": 1,
+        "exit_code": 0,
+        "rows": 81,
+        "numeric_pass": true,
+        "full_reference_qualified": false,
+        "active_native_sessions": 0
+      },
+      "simscape_full_models_and_resource_stop": {
+        "record": {
+          "path": "docs/development_roadmap/experiments/c1_simscape_full_resource_stop_20261116.json",
+          "bytes": 17876,
+          "sha256": "860c6783e90998e2c77d394a53f5e987667365bd9311a3973cb2167f1eb647ff"
+        },
+        "status": "BOTH_FULL_MODELS_COMPILED_COARSE_RUN_RESOURCE_STOP_NO_FULL_NUMERIC",
+        "actual_full_models_compiled": 2,
+        "full_run_attempts": 1,
+        "coarse_session": 43696,
+        "coarse_native_exit_code": -1,
+        "coarse_simulation_calls_observed": null,
+        "fine_launched": false,
+        "full_reference_qualified": false,
+        "candidate_implemented": false,
+        "active_native_sessions": 0
+      },
+      "nojvm_guard_capability": {
+        "record": {
+          "path": "docs/development_roadmap/experiments/c1_offline_full_n_and_nojvm_guard_20261116.json",
+          "bytes": 9749,
+          "sha256": "9a8edb9d74caeb88167677886eaedb63677e1357eeac23d589ce486b974f564b"
+        },
+        "status": "FINITE_GUARD_CAPABILITY_PASS_ONLY",
+        "native_launches": 1,
+        "model_calls": 0,
+        "simulation_calls": 0,
+        "capability_only": true,
+        "independent_receipt": {
+          "path": "local_reference/native_static_reviews/c1_nojvm_actual_closure_independent_20261116T115920555599Z/receipt.json",
+          "bytes": 7558,
+          "sha256": "2f272f08d962ce35a08130db007481d907f1281bf939b15077dba3e26273c380"
+        }
+      },
+      "simscape_short_nojvm_compatibility": {
+        "record": {
+          "path": "docs/development_roadmap/experiments/c1_nojvm_short_saved_mat_20261116.json",
+          "bytes": 8976,
+          "sha256": "db83a4dc4df4cdf247be754ca84831b826ea65eee0daa033ec0601bfabc5c383"
+        },
+        "status": "ORIGINAL_METADATA_FAIL_PRESERVED_MAT_ONLY_RECOVERY_PASS_BOUNDED_SCOPE",
+        "session": 99554,
+        "native_launches": 1,
+        "sim_calls": 1,
+        "simulation_returned": true,
+        "raw_mat_saved": true,
+        "recovery_executed": true,
+        "full_reference_qualified": false,
+        "candidate_implemented": false,
+        "active_native_sessions": 0,
+        "recovery_session": 36396,
+        "original_run_rerun": false,
+        "recovery_record": {
+          "path": "docs/development_roadmap/experiments/c1_nojvm_full_reference_20261116.json",
+          "bytes": 12620,
+          "sha256": "fdc5f34724c4bc9ebc8a549c5136a9e0553437766325a8555510f064647301bd"
+        },
+        "original_pre_save_live_comparison_observed": false
+      },
+      "simscape_full_openloop_reference": {
+        "status": "QUALIFIED_REAL_SIMSCAPE_FULL_OPENLOOP_REFERENCE_ONLY",
+        "record": {
+          "path": "docs/development_roadmap/experiments/c1_nojvm_full_reference_20261116.json",
+          "bytes": 12620,
+          "sha256": "fdc5f34724c4bc9ebc8a549c5136a9e0553437766325a8555510f064647301bd"
+        },
+        "qualified_reference_report": {
+          "path": "validation/cases/grid_connected_vsc_open_loop/qualified_reference_report.json",
+          "bytes": 3269,
+          "sha256": "58718e58e4b32ae930efe7b4244ff4207f8fda048eec65307b80b96b7ece1277"
+        },
+        "full_reference_qualified": true,
+        "native_sessions": [
+          15503,
+          57383
+        ],
+        "offline_analysis_session": 36134,
+        "rows": [
+          40002,
+          80003
+        ],
+        "pair_hard_gates": 132,
+        "candidate_implemented": false,
+        "active_workers": 0,
+        "original_PSCAD_FAIL_preserved": true
+      },
+      "open_loop_candidate_first_pair": {
+        "record": {
+          "path": "docs/development_roadmap/experiments/c1_candidate_first_pair_failure_20261116.json",
+          "bytes": 6768,
+          "sha256": "2101dbf7b368d930d274aa2ce8e6d585cbd419ccb03fc47c960ae420f17f192d"
+        },
+        "status": "CANDIDATE_NUMERIC_FAIL_NOT_ACCEPTED",
+        "candidate_simulation_executed": true,
+        "candidate_accepted": false,
+        "full_regression_old_snapshot_passed": 1554,
+        "current_changes_covered": false,
+        "formal_new_examples_completed": 9
+      },
+      "open_loop_candidate_fixed_h_pair": {
+        "record": {
+          "path": "validation/cases/grid_connected_vsc_open_loop/validation_report.json",
+          "bytes": 5735,
+          "sha256": "503fc4b5fd1b2e2e6bc570f44b8b91c1cf062705e5354780bf725cc7dc2f1c63"
+        },
+        "status": "CANDIDATE_NUMERIC_FAIL_NOT_ACCEPTED",
+        "candidate_executed": true,
+        "candidate_accepted": false,
+        "full_regression_passed": 1566,
+        "default_independent_run_passed": true,
+        "sessions_terminal": [
+          63596,
+          17585
+        ],
+        "active_workers": 0,
+        "formal_new_examples_completed": 9
+      },
+      "next_zero_solve_ledger": {
+        "plan": {
+          "path": "local_reference/native_static_reviews/c1_fixed_h_zero_solve_ledger_plan_20261116T154539272172Z/plan.json",
+          "bytes": 14622,
+          "sha256": "154f0b73e990da283a53f4b9bc80afdf4e3bc2b1d7dfea70895c8b5024f73993"
+        },
+        "execution_authorized": true,
+        "analyzer_written": true,
+        "executed": true,
+        "new_solver_or_trajectory_authorized_by_plan": false,
+        "status": "completed_observed_ledger",
+        "execution_seal": {
+          "path": "local_reference/native_static_reviews/c1_zero_solve_ledger_ROOT_20261118T072813477485Z/execution_seal.json",
+          "bytes": 2256,
+          "sha256": "017754ce56e13b61ca5d9a93e7cc7c9ca7994664d5ed88ad9d7ae92e2dcbebd4"
+        },
+        "record": {
+          "path": "docs/development_roadmap/experiments/c1_observed_forcing_ledger_20261118.json",
+          "bytes": 9852,
+          "sha256": "890e4a09f8a3c6f1e5142305679bb5a3542b6028d1bad0b5db91c16463456649"
+        },
+        "active_workers": 0
+      },
+      "next_single_factor_replay": {
+        "status": "completed_research_intervention",
+        "trajectory_executed": true,
+        "formal_candidate_accepted": false,
+        "intervention": "Decimal80 solve of each replay-step original binary64 A/b, then return float64 to existing history/output path.",
+        "record": {
+          "path": "docs/development_roadmap/experiments/c1_decimal80_precision_intervention_20261118.json",
+          "bytes": 6304,
+          "sha256": "54034cb29ae81895bcbe43927f39c989e1f270917d134a387692b2833e09cd21"
+        },
+        "all19_primary_and_independent_physical_pass": true,
+        "active_workers": 0
+      },
+      "next_compensated_refinement": {
+        "status": "completed_full_dual_validation",
+        "formal_core_changes": true,
+        "full_trajectory_executed": true,
+        "local_probe": {
+          "path": "local_reference/native_static_reviews/c1_iterative_refinement_local_probe_20261118T080140610921Z/receipt.json",
+          "bytes": 4379,
+          "sha256": "e53f872aaa02f7238b33126eb7772e619bdeaf980ef83b3d721d181a640705e0"
+        },
+        "requires_existing_numeric_boundary_semantics": true,
+        "report": {
+          "path": "validation/cases/grid_connected_vsc_open_loop/validation_report.json",
+          "bytes": 6374,
+          "sha256": "230218ff96d7ab45e59bfb8519f725bceb7777514355ea0cb298cf8e50e01829"
+        }
+      },
+      "open_loop_formal_acceptance": {
+        "example": 28,
+        "status": "accepted",
+        "report": {
+          "path": "validation/cases/grid_connected_vsc_open_loop/validation_report.json",
+          "bytes": 6374,
+          "sha256": "230218ff96d7ab45e59bfb8519f725bceb7777514355ea0cb298cf8e50e01829"
+        },
+        "formal_new_examples_completed": 10,
+        "source_snapshot": {
+          "path": "local_reference/c1_openloop_reference_research/20261118T123641205507Z_candidate_refined_lu_pair_v4/source_snapshot.json",
+          "bytes": 21359,
+          "sha256": "cfa632091b425649e15d6edda42dbd682a7395e340923d45fe8b03c8280fb6f6"
+        },
+        "validated_solver_commit": "6634277c68e856cd81311149b91dc8bf55f61ea2",
+        "acceptance_commit_subject": "feat: accept the grid-connected VSC open-loop example [skip ci]",
+        "acceptance_commit": "a777c00c283498ab2dd9a1542a4454b7cf8c5e4a"
+      },
+      "known_angle_current_loop": {
+        "status": "accepted_example29",
+        "record": {
+          "path": "docs/development_roadmap/experiments/c1_known_angle_dq_design_checks_20261118.json",
+          "bytes": 1604,
+          "sha256": "77cf66ed4033a0e7c2716d68ea47d1c142b61bfcd52bf18246ee506ee76d8fd9"
+        },
+        "candidate_implemented": true,
+        "native_reference_executed": true,
+        "native_electrical_feedback_executed": true,
+        "native_electrical_feedback_build_admitted": true,
+        "short_pycy_prototype_executed": true,
+        "native_startup_record": "docs/development_roadmap/experiments/c1_known_angle_dq_native_startup_20261118.json",
+        "native_control_record": "docs/development_roadmap/experiments/c1_known_angle_dq_pscad_control_20261118.json",
+        "short_feedback_record": "docs/development_roadmap/experiments/c1_known_angle_dq_pscad_feedback_20261118.json",
+        "fine_feedback_record": "docs/development_roadmap/experiments/c1_known_angle_dq_pscad_feedback_fine_20261119.json",
+        "full_feedback_record": "docs/development_roadmap/experiments/c1_known_angle_dq_pscad_full_20261119.json",
+        "reference_point_trial": "validation/cases/grid_connected_vsc_closed_loop/pscad_reference_point_trial.json",
+        "reference_point_record": "docs/development_roadmap/experiments/c1_pscad_reference_point_trial_20261122.json",
+        "fine_main_angle_record": "docs/development_roadmap/experiments/c1_pscad_angle_arithmetic_trial_20261122.json",
+        "main_pair_record": "docs/development_roadmap/experiments/c1_pscad_main_both_steps_20261122.json",
+        "qualified_reference_report": "validation/cases/grid_connected_vsc_closed_loop/qualified_reference_report.json",
+        "next": "先定 PLL 接入协议，沿用 29 号电路、100 µs 采样及下一 5 µs 门极生效。用初始角偏差检查锁定，以独立原生 PSCAD 参考验收角度、频率、实际门极及电流跟踪。",
+        "formal_acceptance": {
+          "example": 29,
+          "report": {
+            "path": "validation/cases/grid_connected_vsc_closed_loop/validation_report.json",
+            "sha256": "34c46fec65a8fbdccecf82d89286c16244560dff878f199dcc7069f7e7de3957",
+            "bytes": 6819
+          },
+          "formal_new_examples_completed": 11,
+          "acceptance_commit_subject": "feat: accept the known-angle dq VSC current-loop example [skip ci]"
+        }
+      },
+      "pll_integration_preflight": {
+        "status": "design_review_only_protocol_pending",
+        "record": {
+          "path": "local_reference/native_static_reviews/example29_release_checks_20261122/pll_integration_preflight.json",
+          "sha256": "0f3ffbece37f0f7157e8b02b0cc424fe139632ffd187d1ae21946a7d3c5801db"
+        }
+      },
+      "pll_integrated_reference": {
+        "status": "accepted_example30",
+        "protocol": {
+          "path": "validation/cases/grid_connected_vsc_pll/reference_protocol.json",
+          "sha256": "78ba092cc8099390023d3fcaa449c8479d269dcd5fa7ec315b267d968e1da767",
+          "bytes": 6164
+        },
+        "next": "冻结有可控 PCC 的三相电网电路、P 前馈和 Vac 外环符号、测量面及独立商业参考。",
+        "short_reference_report": {
+          "path": "validation/cases/grid_connected_vsc_pll/short_reference_report.json",
+          "bytes": 4779,
+          "sha256": "27f1708981769b37ec66fb5f5f5f914e594c3661db57fda660993c3dcacfa5c3"
+        },
+        "full_preparation": {
+          "status": "frozen_packages_short_prerequisites_qualified",
+          "5us": {
+            "path": "local_reference/native_static_reviews/c1_pscad_pll_long_5us_20261122/prospective.json",
+            "sha256": "4735ce9e4b2831ef5717e3842153badf78e70abbf01e4319881ffae5c084673f"
+          },
+          "2p5us": {
+            "path": "local_reference/native_static_reviews/c1_pscad_pll_long_2p5us_20261122/prospective.json",
+            "sha256": "8bc8f661216803ca4c0ca84e63c168cd2c6578e5f383b5d852db234bc9e6624d"
+          },
+          "oracle": {
+            "path": "local_reference/native_static_reviews/c1_pll_full_oracle_20261122/verify_pll_full.py",
+            "sha256": "ba77675cd1b697dbbad9f1c870226f1c60027b1d910fdc6e2143d8cbebd65565"
+          },
+          "2p5us_retry": {
+            "path": "local_reference/native_static_reviews/c1_pscad_pll_long_2p5us_v2_20261122/prospective.json",
+            "sha256": "45a46b0967c2e02a2c083e2c0535d3aa5255fc8dfa8f116dabd322a5ad8253db",
+            "run": "local_reference/native_static_reviews/c1_pscad_pll_long_2p5us_v2_20261122/n/20261122T121136814535Z"
+          }
+        },
+        "full_reference_report": {
+          "path": "validation/cases/grid_connected_vsc_pll/full_reference_report.json",
+          "sha256": "255e251c54c3146bc13a26a528c200e8af80e78cf3e1a1a62707afef66a9789d",
+          "bytes": 4790
+        },
+        "candidate_validation": {
+          "path": "validation/cases/grid_connected_vsc_pll/validation_report.json",
+          "sha256": "fffbc156ca6b90933b8505a09b76ff8f6a44b0e7c7b8da06e0468988d4ca3e86",
+          "bytes": 7805
+        },
+        "source_precision_trial": {
+          "path": "validation/cases/grid_connected_vsc_pll/source_precision_trial.json",
+          "sha256": "2e8ea0935a3ac8cf62c42bd1a208e198174cdd27a7c45a1a01fda3c29377acd0",
+          "bytes": 4045
+        },
+        "source_precision_execution": {
+          "native_package": {
+            "path": "local_reference/native_static_reviews/c1_pscad_pll_source_precision_5us_20261122/prospective.json",
+            "sha256": "cb0b1100d21628b39d01156766581bf3a2f6228f69c89678c6ac8c8aed968a94",
+            "bytes": 10986
+          },
+          "run": "local_reference/native_static_reviews/c1_pscad_pll_source_precision_5us_20261122/n/20261122T124522755889Z",
+          "oracle": {
+            "path": "local_reference/native_static_reviews/c1_pll_source_precision_numeric_20261122/verify_source_trial.py",
+            "sha256": "cedec583e0eafc4f51fc76d747965efe2e62444f66cffff749a57f5f93629eb5",
+            "bytes": 10752
+          }
+        },
+        "source_precision_trial_result": {
+          "path": "validation/cases/grid_connected_vsc_pll/source_precision_trial_result.json",
+          "sha256": "211af1843f0ec6fcdd23051c4c7b7d3a24ab470b1e9ca2ff5b06c8200f7b9d57",
+          "bytes": 3493
+        },
+        "source_precision_fine_trial": {
+          "path": "validation/cases/grid_connected_vsc_pll/source_precision_fine_trial.json",
+          "sha256": "58cad98134208020b858b377572bb1e704bace490ce95af728864371eda827ad",
+          "bytes": 3510
+        },
+        "source_precision_reference_report": {
+          "path": "validation/cases/grid_connected_vsc_pll/source_precision_reference_report.json",
+          "sha256": "91ac883c30a0297154ac8b0592fdec540d7bfd0247af1da894403bbfdcae8492",
+          "bytes": 5249
+        },
+        "fine_precision_execution": {
+          "package": {
+            "path": "local_reference/native_static_reviews/c1_pscad_pll_source_precision_2p5us_20261122/prospective.json",
+            "sha256": "5294ae91382aa42905d960c2c34b4b0fbcc3046bbeb6e4b6e98bec985e492d83",
+            "bytes": 12443
+          },
+          "run": "local_reference/native_static_reviews/c1_pscad_pll_source_precision_2p5us_20261122/n/20261122T131217916343Z"
+        },
+        "formal_acceptance": {
+          "example": 30,
+          "report": {
+            "path": "validation/cases/grid_connected_vsc_pll/acceptance_report.json",
+            "sha256": "81a6edaccaeb5b8b2fd8a111ffa0b292fcb8e6ffd75bf784e3ae75122fc9b416",
+            "bytes": 5217
+          },
+          "formal_new_examples_completed": 12,
+          "acceptance_commit_subject": "feat: accept PLL-controlled VSC example 30 [skip ci]"
+        }
+      }
+    },
+    {
+      "id": "D0",
+      "phase": "interfaces_networks",
+      "title": "线性电源、线路、变压器与负荷组合参考先行",
+      "priority": 2,
+      "dependencies": [
+        "A4b",
+        "A7"
+      ],
+      "new_capabilities": [],
+      "references": [
+        "mw-source-line-transformer-r2025a"
+      ],
+      "validation": "65d89bb先固定协议，436c266仅纠正真实SFunction守卫。25保留原完整源→两π线路→T→固定RC/Zs/补偿网络及12非零初值；11项独立物理测试、Agg5001点、全量1190 passed478.96s含slow、Ruff/mypy/锁定同步通过。真实baseline/refined5023/10023点，28self及56独立精度检查通过；20261106T054356596388Z的14量双完整窗28项商业比较全过，maxV0.864127V/maxI0.00623452A/maxNR1.74756e-6，图/报告已核。完整功能提交9e2513d，原失败和缓存源链保留，跨OS CI另记F1。",
+      "acceptance": "只在有独立教学价值且不引入新框架时实施；真实模型/独立物理/商业比较/图报告/测试/教学/提交全部完成。24无实际线路不能替代本项。",
+      "status": "completed",
+      "files": [
+        "docs/development_roadmap/experiments/source_line_transformer_reference_probe.md",
+        "validation/cases/source_line_transformer/manifest.json",
+        "validation/cases/source_line_transformer/parameters.json",
+        "validation/cases/source_line_transformer/acceptance_plan.md",
+        "examples/25_source_line_transformer_network.py",
+        "tests/test_source_line_transformer_network.py",
+        "validation/cases/source_line_transformer/README.md",
+        "validation/cases/source_line_transformer/compare.py",
+        "validation/cases/source_line_transformer/export_reference.m",
+        "validation/cases/source_line_transformer/validation_report.json",
+        "validation/cases/source_line_transformer/native_state_guard_addendum.md"
+      ],
+      "commits": [
+        "54374d5d9caf480d765b18faacea763054304f27",
+        "65d89bb577c07656142f13c062907a5d7d600aba",
+        "436c26642aff420d9e209b19bbf6043ca8e5b55c",
+        "9e2513dd98c12ee4f50d94261318ef56fd475aa4"
+      ],
+      "blockers": []
+    },
+    {
+      "id": "D1",
+      "phase": "interfaces_networks",
+      "title": "等效新能源/HVDC/小网",
+      "priority": 3,
+      "dependencies": [
+        "C1",
+        "A4"
+      ],
+      "new_capabilities": [],
+      "references": [],
+      "validation": "33 号平衡 PJM5 五母线负荷阶跃已验收。34 号双端 VSC-HVDC 按 5 µs、2.5 µs 与 PSCAD 同档逐点对标，共 330003 个原生正时间点，12 路开关状态全同。Windows 1609 项含 slow、Ubuntu WSL2 默认入口与 8 项专测、28–32 号两档 14 组启动轨迹逐位核对通过。D1 继续等效储能和新能源接口。 35 号一阶 RC 单站并网储能已完成充放电反向与双档 PSCAD 对标。 36 号 650 串局部等效光伏已完成照度阶跃、两档 PSCAD 对标和跨系统验证。 37 号单站孤网下垂完成两档 PSCAD 对标与跨系统验证。 38 号并联线路双端隔离与恢复完成两档 PSCAD 对标及跨系统验证。 39 号完成双构网源有功分担、两档 PSCAD 对标及双系统全量验收。本期等效新能源、HVDC 和小网教学交付为 33–39 号。",
+      "acceptance": "不将直流等效称完整PV，不将拓扑称完整标准EMT",
+      "status": "completed",
+      "current_stage": "dual_grid_forming_power_sharing_example_39_accepted",
+      "files": [
+        "examples/39_dual_grid_forming_power_sharing.py",
+        "tests/test_dual_grid_forming_power_sharing.py",
+        "validation/cases/dual_grid_forming_power_sharing/README.md",
+        "validation/cases/dual_grid_forming_power_sharing/reference.py",
+        "validation/cases/dual_grid_forming_power_sharing/checks.py",
+        "validation/cases/dual_grid_forming_power_sharing/compare.py",
+        "validation/cases/dual_grid_forming_power_sharing/acceptance_report.json",
+        "validation/cases/dual_grid_forming_power_sharing/candidate_protocol.json",
+        "docs/development_roadmap/experiments/e_dual_gfm_sharing_native_20261123.json",
+        "docs/development_roadmap/experiments/e_dual_gfm_sharing_protocol_20261123.json",
+        "examples/38_parallel_line_fault_isolation.py",
+        "tests/test_parallel_line_fault_isolation.py",
+        "validation/cases/parallel_line_fault_isolation/README.md",
+        "validation/cases/parallel_line_fault_isolation/candidate_protocol.json",
+        "validation/cases/parallel_line_fault_isolation/reference.py",
+        "validation/cases/parallel_line_fault_isolation/checks.py",
+        "validation/cases/parallel_line_fault_isolation/compare.py",
+        "validation/cases/parallel_line_fault_isolation/acceptance_report.json",
+        "examples/37_islanded_frequency_droop.py",
+        "tests/test_islanded_frequency_droop.py",
+        "validation/cases/islanded_frequency_droop/README.md",
+        "validation/cases/islanded_frequency_droop/candidate_protocol.json",
+        "validation/cases/islanded_frequency_droop/reference.py",
+        "validation/cases/islanded_frequency_droop/checks.py",
+        "validation/cases/islanded_frequency_droop/compare.py",
+        "validation/cases/islanded_frequency_droop/acceptance_report.json",
+        "examples/36_grid_connected_pv.py",
+        "tests/test_grid_connected_pv.py",
+        "validation/cases/grid_connected_pv/README.md",
+        "validation/cases/grid_connected_pv/candidate_protocol.json",
+        "validation/cases/grid_connected_pv/reference.py",
+        "validation/cases/grid_connected_pv/checks.py",
+        "validation/cases/grid_connected_pv/compare.py",
+        "validation/cases/grid_connected_pv/acceptance_report.json",
+        "validation/cases/grid_connected_storage/acceptance_report.json",
+        "validation/cases/grid_connected_storage/candidate_protocol.json",
+        "validation/cases/grid_connected_storage/README.md",
+        "validation/cases/grid_connected_storage/compare.py",
+        "validation/cases/grid_connected_storage/checks.py",
+        "examples/35_grid_connected_storage.py",
+        "tests/test_grid_connected_storage.py",
+        "examples/34_two_terminal_vsc_hvdc.py",
+        "tests/test_two_terminal_vsc_hvdc.py",
+        "validation/cases/two_terminal_vsc_hvdc/README.md",
+        "validation/cases/two_terminal_vsc_hvdc/compare.py",
+        "validation/cases/two_terminal_vsc_hvdc/checks.py",
+        "validation/cases/two_terminal_vsc_hvdc/plots.py",
+        "validation/cases/two_terminal_vsc_hvdc/acceptance_report.json",
+        "validation/cases/two_terminal_vsc_hvdc/candidate_protocol.json",
+        "docs/development_roadmap/experiments/d1_dual_vsc_long_protocol_20261123.json",
+        "docs/development_roadmap/experiments/d1_dual_vsc_long_native_20261123.json",
+        "docs/development_roadmap/experiments/d1_dual_vsc_active_protocol_20261123.json",
+        "docs/development_roadmap/experiments/d1_dual_vsc_active_native_20261123.json",
+        "docs/development_roadmap/experiments/d1_dual_vsc_snapshot_protocol_20261123.json",
+        "docs/development_roadmap/experiments/d1_dual_vsc_snapshot_native_20261123.json",
+        "docs/development_roadmap/experiments/d1_dual_vsc_parked_protocol_20261123.json",
+        "docs/development_roadmap/experiments/d1_dual_vsc_parked_native_20261123.json",
+        "docs/development_roadmap/experiments/d1_pjm5_emt_protocol_20261123.json",
+        "docs/development_roadmap/experiments/d1_pjm5_pscad_reference_20261123.json",
+        "examples/33_pjm5_load_step.py",
+        "tests/test_pjm5_load_step.py",
+        "validation/cases/pjm5_load_step/README.md",
+        "validation/cases/pjm5_load_step/candidate_protocol.json",
+        "validation/cases/pjm5_load_step/compare.py",
+        "validation/cases/pjm5_load_step/checks.py",
+        "validation/cases/pjm5_load_step/plots.py",
+        "validation/cases/pjm5_load_step/acceptance_report.json"
+      ],
+      "commits": [
+        "3e0afbf45ea34675fead6caede1fa64dd1d718e8",
+        "2560127f0faf63290ff76e710abbc483bba96f8a",
+        "81eb9e7cba2cd76362dd04da37a61eb4df819d34",
+        "2cc19b8ae4be7221d7ee6177bc836264434d8b52",
+        "dca32e7b34ec954844bf2015b89fd96cd4a640e6",
+        "d70bd64c7fd394cd48451b9cae0b93dd4e8c72a9",
+        "e2d74da0c4b574963547c98fbc012e6ee69efe32",
+        "02512f5faa5ec93708648856aa23bd2f9dc278b4",
+        "67671dfd42894a2214793635c1e8cf6341eb2303",
+        "9613c380e0ef09f30cc0b658559695f5142e80f7",
+        "660cd09516647089f5f57371939a02bc312bd628",
+        "42503b9f36c7ff611f25b066c972f70d9651ff2f",
+        "d081afc7d62c3b27156c1046e5dfea7b43229c7b",
+        "aa0564fb9602445a620689cdd248eba3946fcc59",
+        "09dc2f73ba2fa20b922f6c48060bfaa5330eb16d",
+        "302eae79b34ac268d8461a64ba009e97ad09f054",
+        "81a0d453eab3f3da3983ceb22b1d3052c3236d73",
+        "95cab5f464e61725218e0898bc3c43d2a10f4391",
+        "3a1e1673ae49fd7059fa9a9e709a874d4c310cee",
+        "e4532dda43cb1ab817f8e10a453e303db350a9bc",
+        "47c408b51a0c8206dc1d1f127b20a0eb593c0a4f",
+        "547af3929b65b94bceba903e70da83d11eab7863",
+        "6b0bd4021e37ef577b02976f90798cb72a336276",
+        "fec922613ae7b971370280b5598c286a53d4b1a4",
+        "92167c97963a27e132bdd70568e8f05fd58b50ad",
+        "7eba16ae149345797570b512b8f379d39767b768",
+        "c0635715f9533960e5ddecfe57b2c2fda7824b4e",
+        "11d931b682480eb9571b150d61616cafe0973cd6",
+        "42b59b8047c6dbe8fbb6d4d493eec09d215b626c",
+        "9baa085d4e31e2144e6369bf9ea3343c3a6c4893",
+        "abc98e164f57f97a2b19d97571c441891f3853d5",
+        "ad29cbe68a069d252c49970c4221a7dea57bb9d1",
+        "dd8e445fc75450ad087e00f1d86b6109ed0fef7f",
+        "f2409194212a8f58522327c689767e48f27df7df",
+        "680474de0fb5537132b489a5eb2cf82c679f64dd",
+        "15525485e370b0cd08768b86835697b744ba7016",
+        "3cb741c9cadc576efe00025924a9df4efae961e1",
+        "11bcbc27c362ced90d3788152da43a6726d94b43",
+        "b832c7eb80736c9fac0893fd86ad413f632151ec",
+        "3a25d42e80736d15c0c632dd35f538566d0cc979",
+        "f4ac423d3751e26c1dbcbf56b560b33bd3512b45",
+        "9ec48d51021704660ac4471e8877c7ff28c096d1",
+        "ec104089ffe0a34a3fc00a1cc5c1e86cc83e2a3a",
+        "3224835c2c6b63dce49d0efcdab83d7840629057",
+        "dbbfa925d5eca6551ba6a07a6c635eb873b0a631",
+        "299483e8db8759ee52b23ac7a29d2727d828a8e1"
+      ],
+      "blockers": [],
+      "pjm5_load_step_example": {
+        "status": "completed",
+        "number": 33,
+        "acceptance_report": {
+          "path": "validation/cases/pjm5_load_step/acceptance_report.json",
+          "sha256": "0f6bba0d4d239d3c34670d04a2d37796a62593cfc255387486ac941aee290b15",
+          "bytes": 10085
+        },
+        "paired_rows_with_initial": [120001, 240001],
+        "windows_pytest_including_slow": 1601,
+        "ubuntu_focused_tests": 6
+      },
+      "two_terminal_vsc_source_screen": {
+        "status": "installed_source_reviewed_derived_parked_probe_pass",
+        "report": {
+          "path": "local_reference/native_static_reviews/d1_two_terminal_vsc_source_screen_20261123/report.json",
+          "sha256": "f53e0229a81754b1c5a93ce3e41088058913b61f753ac9a5304f231af4f61e8a",
+          "bytes": 13141
+        },
+        "native_reference_qualified": false,
+        "candidate_accepted": false
+      },
+      "two_terminal_vsc_parked_preflight": {
+        "status": "pscad_5us_cold_parked_physics_pass",
+        "report": {
+          "path": "docs/development_roadmap/experiments/d1_dual_vsc_parked_native_20261123.json",
+          "sha256": "d88f45fdf513c08050021e9368ddc407261b00aa808f709c7ce268a4c4cefa61",
+          "bytes": 7781
+        },
+        "native_rows_including_zero": 80601,
+        "native_measurement_channels": 52,
+        "warm_snapshot_validated": false,
+        "closed_loop_reference_qualified": false,
+        "candidate_accepted": false
+      },
+      "two_terminal_vsc_native_snapshot": {
+        "status": "pscad_native_two_grid_snapshot_pass",
+        "report": {
+          "path": "docs/development_roadmap/experiments/d1_dual_vsc_snapshot_native_20261123.json",
+          "sha256": "6247febd9d79ff7c9700a9eb0cd1a5b5d27319dc4fd95c9b889de6a315f0bd69",
+          "bytes": 10283
+        },
+        "seed_rows": [
+          80601,
+          161201
+        ],
+        "resume_rows": [
+          200,
+          400
+        ],
+        "native_channels": 64,
+        "closed_loop_reference_qualified": false,
+        "candidate_accepted": false
+      },
+      "two_terminal_vsc_native_active_short": {
+        "status": "pscad_both_active_short_grids_pass",
+        "report": {
+          "path": "docs/development_roadmap/experiments/d1_dual_vsc_active_native_20261123.json",
+          "sha256": "4fceeb47b5a2337cff8c140fff5c32e697285927a3eeb435f8fd29f4b004d579",
+          "bytes": 11607
+        },
+        "native_resume_rows": [
+          10001,
+          20002
+        ],
+        "native_channels": 82,
+        "long_reference_qualified": false,
+        "candidate_accepted": false
+      },
+      "two_terminal_vsc_native_long": {
+        "status": "pscad_both_long_grids_and_cross_grid_pass",
+        "report": {
+          "path": "docs/development_roadmap/experiments/d1_dual_vsc_long_native_20261123.json",
+          "sha256": "f6e4c2efc2f30737619d083920d89c352baea19991bc9c2d09f219d4e30ee300",
+          "bytes": 12014
+        },
+        "paired_positive_rows": 330003,
+        "native_channels": 82,
+        "candidate_accepted": false
+      },
+      "two_terminal_vsc_candidate_protocol": {
+        "status": "frozen_before_public_implementation",
+        "number": 34,
+        "report": {
+          "path": "validation/cases/two_terminal_vsc_hvdc/candidate_protocol.json",
+          "sha256": "208813716603912293cd0d4bc68a12aed9c6562e8feaed74904c1e1e089a1014",
+          "bytes": 6983
+        },
+        "diagnostic_rows": [
+          110001,
+          220002
+        ],
+        "diagnostic_switch_mismatches": 0,
+        "formal_candidate_accepted": false
+      },
+      "small_network_native_reference": {
+        "status": "pscad_short_and_independent_full_grids_pass",
+        "report": {
+          "path": "docs/development_roadmap/experiments/d1_pjm5_pscad_reference_20261123.json",
+          "sha256": "88c7505d43b40f649a9b41ba1396be63dc73b5c007d75115f9d4e4bd5629a7c2",
+          "bytes": 18518
+        },
+        "native_rows_including_zero": [401, 120001, 240001],
+        "native_measurement_channels": 95,
+        "candidate_accepted": true
+      },
+      "small_network_emt_protocol": {
+        "status": "frozen_after_independent_tr_screen_before_native",
+        "report": {
+          "path": "docs/development_roadmap/experiments/d1_pjm5_emt_protocol_20261123.json",
+          "sha256": "f2d51e205f7b1a1a0b14118f7dc20b9a6e94bca0c4522292f001cc67a9ccd5c2",
+          "bytes": 7352
+        },
+        "native_reference_qualified": true,
+        "candidate_accepted": true
+      },
+      "small_network_source_screen": {
+        "status": "pjm5_derived_teaching_example_accepted",
+        "source": "https://github.com/power-grid-lib/pglib-opf/blob/dc6be4b2f85ca0e776952ec22cbd4c22396ea5a3/pglib_opf_case5_pjm.m",
+        "scope": "IEEE PES PGLib-OPF v23.07。采用五母线、六条线路的平衡网状拓扑，复用三相π线路、给定电源和固定阻抗负荷。数据按 CC BY 4.0 署名并注明改动。",
+        "receipt": {
+          "path": "local_reference/native_static_reviews/d1_pglib_case5_screen_20261122/report.json",
+          "bytes": 4711,
+          "sha256": "47ad26b98130264f25f8c0ecddcf973e9557c705112764f768064ad6c000f8d5"
+        }
+      },
+      "small_network_phasor_probe": {
+        "status": "dataset_and_steady_state_kcl_verified",
+        "dataset_sha256": "cadf7501a15c2d508820493cef6acc85757274197e74c40bcec4fc4ecf619e6f",
+        "receipt": {
+          "path": "local_reference/native_static_reviews/d1_pglib_case5_kcl_20261123/report.json",
+          "bytes": 11353,
+          "sha256": "7fcc68d6584a5be8ad6cc72046ffbe7efbe992c1f3bcbd7218857398380811c1"
+        },
+        "native_reference_qualified": false,
+        "candidate_accepted": false
+      },
+      "small_readability_followups": [
+        {
+          "files": [
+            "README.md",
+            "README.zh-CN.md"
+          ],
+          "status": "completed",
+          "change": "说明在同一PowerShell终端移除MPLBACKEND后恢复图窗；不重复增加流程。",
+          "evidence": {
+            "path": "local_reference/native_static_reviews/d1_small_readability_ROOT_20261116T073540574524Z/receipt.json",
+            "bytes": 1699,
+            "sha256": "b15d12bc69b8a9b263e174256acb95c99a98fde4b8190c2c8c4fe15dd57ed1a1"
+          }
+        },
+        {
+          "files": [
+            "examples/27_finite_r_bergeron_line.py"
+          ],
+          "status": "completed",
+          "change": "摘要的线路R/4-R/2-R/4及传播时间从现有常量格式化，避免改参数后文字仍写死。",
+          "evidence": {
+            "path": "local_reference/native_static_reviews/d1_small_readability_ROOT_20261116T073540574524Z/receipt.json",
+            "bytes": 1699,
+            "sha256": "b15d12bc69b8a9b263e174256acb95c99a98fde4b8190c2c8c4fe15dd57ed1a1"
+          }
+        }
+      ],
+      "two_terminal_vsc_example": {
+        "number": 34,
+        "status": "completed",
+        "report": {
+          "path": "validation/cases/two_terminal_vsc_hvdc/acceptance_report.json",
+          "sha256": "09b7eec0777ab15dd648247131109bc97dc9a39c98722701bf20c351933efc7d",
+          "bytes": 14471
+        },
+        "positive_native_rows": [
+          110001,
+          220002
+        ],
+        "legacy_startup_traces_bitwise_equal": 14
+      },
+      "dual_grid_forming_power_sharing_example": {
+        "number": 39,
+        "status": "completed",
+        "report": {
+          "path": "validation/cases/dual_grid_forming_power_sharing/acceptance_report.json",
+          "sha256": "162bda43934bdce2a2e957555721ab247a73a1289277ff465a78bab51f8cf9c8",
+          "bytes": 13391
+        },
+        "formal_example_accepted": true
+      },
+      "dual_gfm_sharing_candidate_protocol": {
+        "status": "frozen",
+        "protocol": {
+          "path": "validation/cases/dual_grid_forming_power_sharing/candidate_protocol.json",
+          "sha256": "47c2789c151bb4209256dba5ccb8492d1c9bfcceb33110269292d8b3c3903150",
+          "bytes": 9057
+        },
+        "formal_example_accepted": true
+      },
+      "dual_gfm_sharing_native_reference": {
+        "status": "qualified",
+        "report": {
+          "path": "docs/development_roadmap/experiments/e_dual_gfm_sharing_native_20261123.json",
+          "bytes": 12390,
+          "sha256": "7cd32410700ea548122daed9cda9297e14cb06ebbceb47badde92bdf4b5e6c68"
+        },
+        "formal_example_accepted": true
+      },
+      "dual_gfm_sharing_native_protocol": {
+        "status": "frozen",
+        "protocol": {
+          "path": "docs/development_roadmap/experiments/e_dual_gfm_sharing_protocol_20261123.json",
+          "sha256": "e5762510d79b51d50c52e08101ab17f74f3151f1817fbb0284dcdb812a266044",
+          "bytes": 9117
+        },
+        "native_reference_qualified": true,
+        "formal_example_accepted": false
+      },
+      "dual_gfm_sharing_precheck": {
+        "status": "analytical_screen_only",
+        "phasor": {
+          "path": "local_reference/e_dual_gfm_phasor_20261123/phasor_screen.json",
+          "sha256": "08408c723e7915eb8f3583c960ea68f8fab89413fb8b07fc9e76e06dd888a94b",
+          "bytes": 4019
+        },
+        "ode": {
+          "path": "local_reference/e_dual_gfm_phasor_20261123/ode_screen.json",
+          "sha256": "18023bd2b1b3630c20135638f5bb3f51d21ec3523cb4463fd41b1eb0d81dd91c",
+          "bytes": 4730
+        },
+        "native_reference_status": "qualified"
+      },
+      "parallel_line_fault_isolation_example": {
+        "number": 38,
+        "status": "completed",
+        "report": {
+          "path": "validation/cases/parallel_line_fault_isolation/acceptance_report.json",
+          "sha256": "1fdbfa639faf72be232de987c8bbb42e41a67b3709541ed738e5a1f72e1bbf3c",
+          "bytes": 18990
+        },
+        "formal_example_accepted": true
+      },
+      "parallel_fault_candidate_protocol": {
+        "status": "frozen",
+        "protocol": {
+          "path": "validation/cases/parallel_line_fault_isolation/candidate_protocol.json",
+          "sha256": "e1644873c2b23c367af0cbd109c4e62b6dbb6c3114358851016987b0facf20fb",
+          "bytes": 8545
+        },
+        "formal_example_accepted": true
+      },
+      "parallel_fault_surrogate_native": {
+        "status": "qualified",
+        "report": {
+          "path": "docs/development_roadmap/experiments/e_parallel_fault_surrogate_native_20261123.json",
+          "sha256": "146a9a1942cab3a60bc320d0a2d6247f19f24bacbc7b842381afded820a9bfab",
+          "bytes": 10385
+        },
+        "formal_example_accepted": true
+      },
+      "parallel_fault_surrogate_protocol": {
+        "status": "frozen",
+        "protocol": {
+          "path": "docs/development_roadmap/experiments/e_parallel_fault_surrogate_protocol_20261123.json",
+          "sha256": "7f2d511e8242ce3b47db4c0f413563779ff550bdb3876d58c99a9034f2c0986f",
+          "bytes": 8632
+        },
+        "pycy_feasibility": {
+          "path": "local_reference/e_parallel_fault_pscad_20261123/pycy_probe/20261123T065855687870Z/report.json",
+          "sha256": "c335b15b39f3d22721b8e785bcb6907850f9221e200eb4eeb16acc68ed788013",
+          "bytes": 68534
+        },
+        "original_native_executed": true
+      },
+      "parallel_fault_vendor_original": {
+        "status": "measured",
+        "report": {
+          "path": "docs/development_roadmap/experiments/e_case4_pi_original_timing_20261123.json",
+          "sha256": "662e4818505b58e477141736b9e7f82458bb27e75673c4ef5d8bd0d041f10a3d",
+          "bytes": 3671
+        },
+        "formal_example_accepted": false
+      },
+      "islanded_frequency_droop_example": {
+        "status": "completed",
+        "report": {
+          "path": "validation/cases/islanded_frequency_droop/acceptance_report.json",
+          "sha256": "a3e30ddcebacc1ff8f9c92742729901cdeed05c3774232c9b0e08f8f0179d7ba",
+          "bytes": 8356
+        },
+        "formal_example_accepted": true
+      },
+      "gfm_island_candidate_protocol": {
+        "status": "frozen",
+        "protocol": {
+          "path": "validation/cases/islanded_frequency_droop/candidate_protocol.json",
+          "sha256": "e98afbabbeb2e3dd3dfd3841d607563a1a8d31371bf49ea71b5f13b9b32ab1f4",
+          "bytes": 7303
+        },
+        "formal_example_accepted": true
+      },
+      "gfm_island_native_reference": {
+        "status": "qualified",
+        "report": {
+          "path": "docs/development_roadmap/experiments/d1_gfm_island_native_20261123.json",
+          "sha256": "a00b768f51e07364492820659e8abde345828d3f1c2a7f8864e7cbcc4e275479",
+          "bytes": 8289
+        },
+        "formal_example_accepted": false
+      },
+      "gfm_island_native_protocol": {
+        "status": "frozen",
+        "protocol": {
+          "path": "docs/development_roadmap/experiments/d1_gfm_island_protocol_20261123.json",
+          "sha256": "ac192b835fc76103e19c3060cf3a90e873819932d3b7c791a040a5c1ad460c13",
+          "bytes": 6420
+        },
+        "analytical_preflight": {
+          "path": "local_reference/d1_gfm_single_station_20261123/analytical_screen_v2.json",
+          "sha256": "2308665e028823b17e828823bee547371ca404e405a80bb2fe1903e1fd58556a",
+          "bytes": 5794
+        },
+        "original_native_executed": true
+      },
+      "grid_connected_pv_example": {
+        "status": "completed",
+        "report": {
+          "path": "validation/cases/grid_connected_pv/acceptance_report.json",
+          "sha256": "6ea0266e5799ca8f6675e0d27c403a057738483d7dd1f77392b95384ef792e8c",
+          "bytes": 6824
+        },
+        "formal_example_accepted": true
+      },
+      "pv_grid_candidate_protocol": {
+        "status": "frozen",
+        "protocol": {
+          "path": "validation/cases/grid_connected_pv/candidate_protocol.json",
+          "sha256": "edbcb130ad8d2310bf65cf068fc987ddfa83e0641b29f3d1d76035374e1685c5",
+          "bytes": 9350
+        },
+        "formal_example_accepted": true
+      },
+      "pv_grid_long_native": {
+        "status": "qualified",
+        "report": {
+          "path": "docs/development_roadmap/experiments/d1_pv_grid_irradiance_native_20261123.json",
+          "sha256": "c3179aaa6ab29b803319ed068660174a440c0ad14b71a3083d6d9d1877dc52e2",
+          "bytes": 6564
+        },
+        "formal_example_accepted": false
+      },
+      "pv_grid_short_native": {
+        "status": "qualified",
+        "report": {
+          "path": "docs/development_roadmap/experiments/d1_pv_grid_activation_native_20261123.json",
+          "sha256": "b5328f44f7046737d3857b1678ec36823787673474c1dfcc22ca12fbfa78ac38",
+          "bytes": 7245
+        },
+        "formal_example_accepted": false
+      },
+      "pv_grid_protocol": {
+        "status": "frozen",
+        "protocol": {
+          "path": "docs/development_roadmap/experiments/d1_pv_grid_protocol_20261123.json",
+          "sha256": "fcfd132b525c7fe343d31716b0889f0aad2c090a0db4405f79be616729cf6565",
+          "bytes": 11292
+        },
+        "formal_example_accepted": false
+      },
+      "pv_string_native": {
+        "status": "qualified",
+        "report": {
+          "path": "docs/development_roadmap/experiments/d1_pv_string_native_20261123.json",
+          "sha256": "14591ee912bd20fc8ce0fa4b400353e4c009d8c184581aa618a28a44dedf1af4",
+          "bytes": 13848
+        },
+        "voltage_scale": 650,
+        "formal_example_accepted": false,
+        "rows_including_zero": {
+          "5us": 20002,
+          "2p5us": 40003
+        }
+      },
+      "pv_string_protocol": {
+        "status": "frozen",
+        "protocol": {
+          "path": "docs/development_roadmap/experiments/d1_pv_string_protocol_20261123.json",
+          "sha256": "02364c67f40ecb387e7cca1faa0cd31ca7a039bca64018aeb2c80e7eb35b1e31",
+          "bytes": 6356
+        },
+        "formal_example_accepted": false
+      },
+      "pv_rc_transient_native": {
+        "status": "qualified",
+        "report": {
+          "path": "docs/development_roadmap/experiments/d1_pv_rc_transient_native_20261123.json",
+          "sha256": "884ef75f03e656d183e8b90b2f43ce416721ecd4f34b43f6703646c01b277943",
+          "bytes": 14341
+        },
+        "raw_rows_including_zero": {
+          "5us": 20002,
+          "2p5us": 40003
+        },
+        "requires_cold_startup_supplement": true,
+        "formal_example_accepted": false
+      },
+      "pv_rc_transient_startup_protocol": {
+        "status": "frozen",
+        "protocol": {
+          "path": "docs/development_roadmap/experiments/d1_pv_rc_startup_protocol_20261123.json",
+          "sha256": "2b46ecb5ed88aa8993d6e5f650fccd5aee53565e3e24637562874487c88aad0c",
+          "bytes": 2613
+        },
+        "formal_example_accepted": false
+      },
+      "pv_rc_transient_protocol": {
+        "status": "frozen",
+        "protocol": {
+          "path": "docs/development_roadmap/experiments/d1_pv_rc_transient_protocol_20261123.json",
+          "sha256": "4a4e07c33380be4bd027d1c3bbd165400a26f2fba4f095f6a0e146fb899b4d68",
+          "bytes": 5827
+        },
+        "formal_example_accepted": false
+      },
+      "pv_static_native": {
+        "status": "qualified",
+        "report": {
+          "path": "docs/development_roadmap/experiments/d1_pv_static_native_20261123.json",
+          "sha256": "d049adc99538dcadbb1566fa9e2c70545d49d6098562ed60b2361ae88ecad7ec",
+          "bytes": 11769
+        },
+        "raw_rows_including_zero": {
+          "5us": 2002,
+          "2p5us": 4003
+        },
+        "formal_example_accepted": false
+      },
+      "pv_static_protocol": {
+        "status": "frozen",
+        "protocol": {
+          "path": "docs/development_roadmap/experiments/d1_pv_static_protocol_20261123.json",
+          "sha256": "9c4a2d35e66a8835cad636d47813feac399401525c31d128209a7b194cf919f5",
+          "bytes": 5349
+        },
+        "formal_example_accepted": false
+      },
+      "grid_connected_storage_example": {
+        "status": "completed",
+        "number": 35,
+        "acceptance_report": {
+          "path": "validation/cases/grid_connected_storage/acceptance_report.json",
+          "sha256": "155983f54ba51bb1dc9dfa9d5d5e2f8c744d455ce202a1154c191a9db2edcd80",
+          "bytes": 9649
+        },
+        "paired_rows_with_initial": [
+          60002,
+          120003
+        ],
+        "native_positive_rows": 180003,
+        "windows_pytest_including_slow": 1612
+      },
+      "storage_grid_candidate_protocol": {
+        "status": "frozen",
+        "protocol": {
+          "path": "validation/cases/grid_connected_storage/candidate_protocol.json",
+          "sha256": "78c0c1e8d4b68e55034d2af2439ea383e3e86fd10f5069349ae90e8635b73a7e",
+          "bytes": 8925
+        },
+        "formal_candidate_accepted": false
+      },
+      "storage_grid_long_native": {
+        "status": "qualified",
+        "report": {
+          "path": "docs/development_roadmap/experiments/d1_storage_grid_long_native_20261123.json",
+          "sha256": "ebdf670e893b1e35c19acf6ef8a4f8a860447c780320dc782a2268408fcb19fc",
+          "bytes": 20025
+        },
+        "native_positive_continuation_rows": {
+          "5us": 60001,
+          "2p5us": 120002
+        },
+        "candidate_protocol_ready": true,
+        "formal_candidate_accepted": false
+      },
+      "storage_grid_long_protocol": {
+        "status": "frozen_before_native_long_run",
+        "protocol": {
+          "path": "docs/development_roadmap/experiments/d1_storage_grid_long_protocol_20261123.json",
+          "sha256": "3469abcea84653cc50e2b361e6f70bec8a2e8905f8351b84fbabbc7bd5c5426d",
+          "bytes": 12675
+        },
+        "native_long_reference_ready": false
+      },
+      "storage_grid_short_native": {
+        "status": "qualified",
+        "report": {
+          "path": "docs/development_roadmap/experiments/d1_storage_grid_short_native_20261123.json",
+          "sha256": "2d96883ba1001ecc887db9129c97d0cebdb30317547a5963c0ec59e9082134e6",
+          "bytes": 24127
+        },
+        "native_seed_rows": {
+          "5us": 170002,
+          "2p5us": 340003
+        },
+        "native_restart_rows": {
+          "5us": 10001,
+          "2p5us": 20002
+        },
+        "first_charge_scope": "40–50 ms",
+        "power_reversal_reference_ready": false
+      },
+      "storage_grid_short_protocol": {
+        "status": "frozen_before_grid_native_build",
+        "protocol": {
+          "path": "docs/development_roadmap/experiments/d1_storage_grid_short_protocol_20261123.json",
+          "sha256": "61f456ea334a89961720d6eff37123c64aa74ad15a5fa73b80ef142aa3a86023",
+          "bytes": 13031
+        },
+        "switched_trials": {
+          "5us": 60002,
+          "2p5us": 120003
+        },
+        "switched_feasibility_reports": {
+          "5us": {
+            "path": "local_reference/d1_storage_rc_short_20261123/grid_port_screen/actual_5us_long/report.json",
+            "sha256": "5537c5a8ecb01a6e8e9a90a88ca82793fac06b79adf21a91d99c023c956d4e21",
+            "bytes": 4217
+          },
+          "2p5us": {
+            "path": "local_reference/d1_storage_rc_short_20261123/grid_port_screen/actual_2p5us_long/report.json",
+            "sha256": "63933bd1315ca6f5a0a4e7d4a25cfafbe0c57c63a5182d9b31d1dcbf05fe7057",
+            "bytes": 4230
+          }
+        },
+        "native_grid_reference_ready": false
+      },
+      "storage_port_short_native": {
+        "status": "qualified_native_dc_port",
+        "report": {
+          "path": "docs/development_roadmap/experiments/d1_storage_rc_short_native_20261123.json",
+          "sha256": "1cda422df8e31d634dbba2cd6bab2b6438683eeb4b43e7ad4cdf1047e78eacde",
+          "bytes": 12388
+        },
+        "native_rows": {
+          "5us": 402,
+          "2p5us": 803
+        },
+        "active_grid_interface_validation": "pending",
+        "independent_grid_interface_screen": {
+          "path": "local_reference/d1_storage_rc_short_20261123/grid_port_screen/screen_result.json",
+          "sha256": "d04e3c79de5ca4e238e2f6ef39073e84bec0e0500b8362e5095a568c42096afb",
+          "bytes": 7735
+        }
+      },
+      "storage_port_short_protocol": {
+        "status": "frozen_before_native_run",
+        "report": {
+          "path": "docs/development_roadmap/experiments/d1_storage_rc_short_protocol_20261123.json",
+          "sha256": "9a6ad5218400ee0fd0c060585b8a22c294ad34afb8e52666a3f13cef1d46f29c",
+          "bytes": 4482
+        },
+        "native_run_completed": false
+      },
+      "storage_port_source_screen": {
+        "status": "inspected",
+        "source": "https://www.pscad.com/knowledge-base/article/248",
+        "vendor_project_archive": {
+          "path": "local_reference/d1_storage_source_screen_20261123/Battery-Charger.zip",
+          "sha256": "bab03f014be4bea09b718378c3d93d95498f2f717d7826fd6a9f21cffb14ff64",
+          "bytes": 58414
+        },
+        "short_probe_draft": {
+          "path": "local_reference/d1_storage_source_screen_20261123/one_rc_port_short_draft.md",
+          "sha256": "20c8c22868918990b8df3e25e4d87d6bcf310692627d4786289c26cf80de2d83",
+          "bytes": 6841
+        },
+        "native_run_completed": false
+      }
+    },
+    {
+      "id": "F1",
+      "phase": "engineering",
+      "title": "阶段回归与跨操作系统验收",
+      "priority": 1,
+      "dependencies": [
+        "A1",
+        "A2"
+      ],
+      "new_capabilities": [],
+      "references": [],
+      "validation": "早期本机跨系统回归和账单锁记录保留在下列证据中。托管运行 45186695613 的 Windows 在原算例限时处超时。运行 45307903340 的 Windows 全部通过，Ubuntu 随后触及同一算例限时。2026-11-24，托管运行 45312698477 在同一提交完成两套作业。Windows 通过 1666 项，Ubuntu 通过 1664 项并按预期跳过 2 项 Windows 专用用例。两套作业均跑通 35 个公开算例、构建发行包、完成库外 wheel 安装和清洁检查。",
+      "hosted_ci": {
+        "source_commit": "42374ee79e8758e281cc1d63280deee4f34d6ccd",
+        "run_id": 45312698477,
+        "record": "docs/development_roadmap/experiments/ci_42374ee.json"
+      },
+      "local_cli_and_package": "cbdc9b1的Windows和WSL2 Ubuntu各24个教学入口、sdist/wheel及库外wheel安装通过。Ubuntu临时CLI目录回收前未观察到末次源文件检查，运行日志和发行包已核对。",
+      "case_39_serial_ci_timing": {
+        "source_commit": "dab065d5d039c4e412b3425f3d17898998a9934e",
+        "status": "local_pass",
+        "report": {
+          "path": "docs/development_roadmap/experiments/f1_case39_ci_examples_timing_20261123.json",
+          "sha256": "0da40bf89857c92ea6abd6b4858e4f04fa6075fcc218d26ddfc45525d4f50277",
+          "bytes": 4369
+        },
+        "examples": 35,
+        "elapsed_s": 705.811,
+        "example_step_timeout_min": 15,
+        "job_timeout_min": 45
+      },
+      "case_38_local_cross_platform": {
+        "source_commit": "9ec48d51021704660ac4471e8877c7ff28c096d1",
+        "report": {
+          "path": "docs/development_roadmap/experiments/f1_case38_local_cross_platform_20261123.json",
+          "sha256": "4306dc3e47de04900e8f0d67645320212c60dc2fd020c243d06818f6b877412d",
+          "bytes": 9244
+        },
+        "status": "passed",
+        "windows_tests_including_slow": 1625,
+        "ubuntu_tests_including_slow": 1625
+      },
+      "local_ubuntu_full_20261123": {
+        "source_commit": "a223722c50f53863571710864cb3df5d66f0966d",
+        "passed_including_slow": 1590,
+        "record": "docs/development_roadmap/experiments/f1_ubuntu_a223722_20261123.json"
+      },
+      "acceptance": "本批测试与真实CI记录、教学导航、里程碑推送和恢复指令",
+      "status": "completed",
+      "files": [
+        ".github/workflows/ci.yml",
+        "docs/development_roadmap/experiments/ci_90b2fcd.json",
+        "docs/development_roadmap/experiments/ci_e51c1f1.json",
+        "docs/development_roadmap/experiments/ci_1423c7d.json",
+        "docs/development_roadmap/experiments/ci_9e2513d.json",
+        "docs/development_roadmap/experiments/ci_41a6685.json",
+        "docs/development_roadmap/experiments/ci_9269350.json",
+        "docs/development_roadmap/experiments/ci_ae9fe36.json",
+        "docs/development_roadmap/experiments/ci_5314486.json",
+        "docs/development_roadmap/experiments/ci_c3fdf79.json",
+        "docs/development_roadmap/experiments/vsc_input_validation_20261116.json",
+        "docs/development_roadmap/experiments/ci_57fbc81.json",
+        "docs/development_roadmap/experiments/f1_ubuntu_a777c00_20261118.json",
+        "docs/development_roadmap/experiments/f1_cli_wheel_cbdc9b1_20261118.json",
+        "docs/development_roadmap/experiments/f1_ubuntu_a223722_20261123.json",
+        "docs/development_roadmap/experiments/f1_case38_local_cross_platform_20261123.json",
+        "docs/development_roadmap/experiments/f1_case39_ci_examples_timing_20261123.json",
+        "docs/development_roadmap/experiments/ci_42374ee.json"
+      ],
+      "commits": [
+        "90b2fcd",
+        "91dbad6bb77af24d1a548a6d0943930c4bcce40f",
+        "e51c1f1",
+        "d79e849",
+        "1423c7d6dfbca10547cf856dc20faa5dadf935dc",
+        "41a6685da241b5a759786963b81e236728afbd98",
+        "9269350887a867aee2740fed04155ade8f8757be",
+        "ae9fe3629ad9617853979b0ef58d4d8319239592",
+        "5314486fcb30929f79c62a5b15faf2e462529573",
+        "c3fdf7957d1c52ee5a3ba51c6bf2c55dbea2151a",
+        "57fbc81106a75e6f70e09413e4fd94cf45853b96",
+        "2479b6d2422a3d7e13a321dece00899bd0669f83",
+        "287aa5ee00b8b6bc6c9638a66cf4136dc0029a70",
+        "9ec48d51021704660ac4471e8877c7ff28c096d1",
+        "dab065d5d039c4e412b3425f3d17898998a9934e",
+        "225249b4529b7ca919ce17a957bbb328091833da",
+        "46c76c74ae56b3f44c1a689512c8a4640264d89e",
+        "a9aa6795a4992be8d72137fd62fbbd24c3ff8140",
+        "42374ee79e8758e281cc1d63280deee4f34d6ccd"
+      ],
+      "blockers": []
+    },
+    {
+      "id": "G1",
+      "phase": "future_research_only",
+      "title": "自动换流、非线性及独立稀疏研究储备",
+      "priority": 9,
+      "dependencies": [],
+      "new_capabilities": [],
+      "references": [],
+      "validation": "远期计划覆盖自动换流、非线性MNA、复杂机电磁暂态、一致初始化、独立稀疏研究、大网及MMC/新能源，明确首个物理试验和后续进入条件。",
+      "acceptance": "仅规划，不在近期实施大型框架",
+      "status": "completed",
+      "files": [
+        "docs/development_roadmap/04_long_term_roadmap.md"
+      ],
+      "commits": [
+        "f9f2a9e67ff9412b6e8825858cc18d3ebd3a8763"
+      ],
+      "blockers": []
+    }
+  ],
+  "execution_status": "completed",
+  "pause_checkpoint": {
+    "record": {
+      "path": "docs/development_roadmap/experiments/c1_known_angle_dq_pscad_full_20261119.json",
+      "bytes": 6880,
+      "sha256": "f8ad8f5dc8062e4be06fe724655b898045aeb6a53d9e4a6e81fa142466e8685c"
+    },
+    "head": "587cb544e0c401a0112b13bd81f5fab162bfcbc3",
+    "status": "paused_after_both_native_main_runs_failed_original_physics",
+    "explicit_user_request": true
+  },
+  "goal_status": "completed",
+  "resume_checkpoint": {
+    "record": {
+      "path": "local_reference/native_static_reviews/c1_resume_evidence_20261122T090927225592Z/report.json",
+      "bytes": 9810,
+      "sha256": "3c01b81b034d1d9f230f6cb5447160286e93dc42913e03f8fc970f769c429c90"
+    },
+    "explicit_user_resume": true
+  },
+  "pause_checkpoint_history": [
+    {
+      "reason": "explicit_user_pause",
+      "last_pushed_milestone": "2f3846c3d62c6883ef9d9aa1706d3513bf2b21dd",
+      "record": "local_reference/two_level_pwm/matched_reference_research/20261109T080850088678Z_pscad_static_d5d66d/paused_runs/20261110T033233257295Z/pause.json",
+      "record_sha256": "7a0565c5ae8d157d32ce4ab36c4543c252802fb3c496284882c9c329661f66ff",
+      "interrupted_run": "20261110T033233257295Z",
+      "stage": "builder_after_save_ports_off_c_l",
+      "owned_processes_remaining": 0,
+      "resume_requires_explicit_user_instruction": true
+    },
+    {
+      "reason": "explicit_user_goal_paused",
+      "paused_utc": "2026-11-11T03:34:46.257751+00:00",
+      "last_pushed_milestone": "3737e663c89646cf76e6cd9f4880d0e579d95731",
+      "task": "B1",
+      "task_status": "validated_final_Git_pending",
+      "native_and_candidate_and_pytest_terminal": true,
+      "known_owned_runs_remaining": 0,
+      "resume_requires_explicit_user_instruction": true,
+      "record": "local_reference/two_level_pwm_pscad/pause_checkpoints/20261111T033446257751Z/pause.json",
+      "formal_new_examples_completed": 9,
+      "full_test_result": "1267 passed,494.62s,including slow;0 failures/errors/skipped",
+      "candidate_report": "local_reference/two_level_pwm_pscad/comparison_results/20261111T032613323109Z/report.json",
+      "candidate_report_sha256": "f52762d559beff7b16608928d12f831fd642b49b31466595010563770d2faa38",
+      "public_report": "validation/cases/two_level_pwm_pscad/validation_report.json",
+      "public_report_sha256": "1d235718f31e7ec095ec33396b81d14f5975ffb540cdffaa4139f7d5db64dc0e",
+      "note": "已按用户指令暂停；不启动新的开发、仿真或测试。B1数值/独审/独立运行/1267全量及教学已完成，状态validated，最终验收文档与报告保留未提交；入口3737e66已推送。无已知自有运行待清理。须用户明确恢复后先核Git和证据，再完成最终文档一致性审查、验收提交推送；本次不进入C1。",
+      "historical_pause_only": true
+    },
+    {
+      "path": "local_reference/c1_openloop_reference_research/pause_checkpoints/20261112T004850063339Z/pause.json",
+      "bytes": 3587,
+      "sha256": "d79fc87db723617ae06b4d507b7ef4905db3e66b3ba2022bb16753c67573026c",
+      "reason": "explicit_user_goal_paused",
+      "paused_utc": "2026-11-12T00:48:50.063339+00:00",
+      "last_pushed_milestone": "63e51654499c44ac215ab776d8b58f994935d7c1",
+      "task": "C1",
+      "task_status": "in_progress",
+      "native_started_this_turn": false,
+      "known_owned_runs_remaining": 0,
+      "resume_requires_explicit_user_instruction": true,
+      "formal_new_examples_completed": 9,
+      "historical_pause_only": true
+    },
+    {
+      "path": "local_reference/c1_openloop_reference_research/pause_checkpoints/20261112T004850063339Z/pause.json",
+      "bytes": 3587,
+      "sha256": "d79fc87db723617ae06b4d507b7ef4905db3e66b3ba2022bb16753c67573026c",
+      "reason": "explicit_user_goal_paused",
+      "paused_utc": "2026-11-12T00:48:50.063339+00:00",
+      "last_pushed_milestone": "63e51654499c44ac215ab776d8b58f994935d7c1",
+      "task": "C1",
+      "task_status": "in_progress",
+      "native_started_this_turn": false,
+      "known_owned_runs_remaining": 0,
+      "resume_requires_explicit_user_instruction": false,
+      "formal_new_examples_completed": 9,
+      "historical_pause_only": true,
+      "resumed_by": {
+        "path": "local_reference/c1_openloop_reference_research/resume_checkpoints/20261116T022604926321Z/resume.json",
+        "bytes": 2656,
+        "sha256": "f5ede11533040fa53aa4be58c0b8a507afff22c8267ccb50bfb2ecfaaef448e3"
+      }
+    }
+  ],
+  "current_stage": "delivery_completed",
+  "resume_checkpoint_history": [
+    {
+      "resumed_utc": "2026-11-11T13:24:16.085490+00:00",
+      "authorization": "explicit_user_goal_active_and_continue",
+      "checked_head": "3737e663c89646cf76e6cd9f4880d0e579d95731",
+      "remote_head_verified_same": true,
+      "pause_record": "local_reference/two_level_pwm_pscad/pause_checkpoints/20261111T033446257751Z/pause.json",
+      "pause_record_sha256": "186cdb10ce163070e05af1aa90bbdbcfc5fe75c3a90106c3e1d340cb83b435c8",
+      "uncommitted12_unchanged_at_resume": true,
+      "python111_unchanged_at_resume": true,
+      "previous_goal_turn_classification": "progress",
+      "previous_progress": "Completed full1267 tests, actual candidate comparison and independent audit/default12 run; preserved pending acceptance documents at explicit pause.",
+      "no_successful_simulation_or_tests_restarted": true,
+      "evidence_review": {
+        "path": "local_reference/native_static_reviews/b1_resume_evidence_20261111/receipt_20261111T132350441453Z.json",
+        "sha256": "73c22f1cbf7bfafaa1cc563e475bfb3293fa5e02d52386b4064e42b2a3eb32e8"
+      },
+      "latest_checked_head": "63e51654499c44ac215ab776d8b58f994935d7c1",
+      "latest_remote_head_verified_same": true,
+      "latest_goal_turn_classification": "progress_before_explicit_pause"
+    },
+    {
+      "resumed_utc": "2026-11-16T02:26:04.926321+00:00",
+      "authorization": "active_goal_continuation_user_instruction",
+      "checked_head": "63e51654499c44ac215ab776d8b58f994935d7c1",
+      "remote_head_verified_same": true,
+      "previous_goal_turn_classification": "no_progress_status_only",
+      "record": {
+        "path": "local_reference/c1_openloop_reference_research/resume_checkpoints/20261116T022604926321Z/resume.json",
+        "bytes": 2656,
+        "sha256": "f5ede11533040fa53aa4be58c0b8a507afff22c8267ccb50bfb2ecfaaef448e3"
+      },
+      "source113_unchanged_at_resume": true,
+      "no_previous_native_or_tests_restarted": true,
+      "latest_checked_head": "fadb979f1dadd88962ae850478a6b864b95652a7",
+      "latest_goal_turn_classification": "progress",
+      "latest_progress": "MAT-only short recovery and both actual no-JVM full Simscape variants passed; complete pointwise/pair math and independent raw-time/finite-point audit qualified the frozen open-loop reference. Candidate pending.",
+      "latest_remote_head_verified_same": true
+    }
+  ],
+  "current_source_snapshot": {
+    "path": "local_reference/f1_windows_qa/serial_ci_examples/20261123T091307360254Z/source_before.json",
+    "bytes": 59324,
+    "sha256": "b212eadfacd0744ffea28df8e19bf17b0b5db177c08b1fdbc1372301f78e464e"
+  },
+  "latest_maintenance": {
+    "kind": "merge_review_repairs",
+    "status": "verified",
+    "windows_full_pytest_passed": 1670,
+    "hosted_ci_run_id": 45341968249,
+    "record": {
+      "path": "docs/development_roadmap/experiments/merge_review_repairs_20261124.json"
+    },
+    "changed_sources": [
+      "pycy_emt_lite/cases.py",
+      "pycy_emt_lite/visualization/plotting.py"
+    ],
+    "commit": "53133391291647b4c8294e89b7c76b8d4bcd6ffc"
+  },
+  "offline_analysis_preparation": {
+    "status": "ACTUAL_FULL_NATIVE_PAIR_NUMERIC_PASS_REFERENCE_QUALIFIED",
+    "stopped_synthetic_attempt": {
+      "path": "local_reference/c1_openloop_reference_research/20261116T110656455639Z_synthetic_math_fullN_v1/ROOT_redirector_failure.json",
+      "bytes": 1285,
+      "sha256": "fb66bd9a202900ef13425e89f25dfa4853011713c1371244a9863c10c386454a"
+    },
+    "normal_direct_base_fixture": {
+      "path": "local_reference/native_static_reviews/c1_math_base_interpreter_monitor_v2_20261116T111515394792Z/receipt.json",
+      "bytes": 4076,
+      "sha256": "bbb7897c678bc0a9762701550af16236818f3ad71a7dcb29e3ab7060e12de8e8"
+    },
+    "full_N_completed": true,
+    "commercial_reference_qualified": true,
+    "limits": "Actual native57 Time/Clock scan, full original pointwise/pair gates and final independent finite raw audit passed. Original synthetic results remain internal; teaching candidate/closed-loop/cross-OS pending.",
+    "record": {
+      "path": "docs/development_roadmap/experiments/c1_offline_full_n_and_nojvm_guard_20261116.json",
+      "bytes": 9749,
+      "sha256": "9a8edb9d74caeb88167677886eaedb63677e1357eeac23d589ce486b974f564b"
+    },
+    "monitor_v3_finite_receipt": {
+      "path": "local_reference/native_static_reviews/c1_math_monitor_v3_finite_20261116T112957760849Z/receipt.json",
+      "bytes": 8357,
+      "sha256": "1301700cbc7e5c8353a626e013da27f767b46b01b3034cc483dcf7c166e2a1a7"
+    },
+    "monitor_v3_independent_receipt": {
+      "path": "local_reference/native_static_reviews/c1_math_monitor_v3_independent_20261116T113438976698Z/receipt.json",
+      "bytes": 14889,
+      "sha256": "f8ab0e8b9c6ff90dfb1196d3ec5f984068a08a3e0f1c234e04b66f30bb067ff0"
+    },
+    "synthetic_numeric_gates_pass": true,
+    "full_N_independent_receipt": {
+      "path": "local_reference/native_static_reviews/c1_synthetic_fullN_independent_20261116T114839971116Z/receipt.json",
+      "bytes": 19163,
+      "sha256": "8a28d68550e5d4f977ccc0b5e73adb687a96938e19f4c6a58267c2f48941aee2"
+    },
+    "actual_pair_record": {
+      "path": "docs/development_roadmap/experiments/c1_nojvm_full_reference_20261116.json",
+      "bytes": 12620,
+      "sha256": "fdc5f34724c4bc9ebc8a549c5136a9e0553437766325a8555510f064647301bd"
+    }
+  },
+  "maintenance_history": [
+    {
+      "kind": "vsc_input_validation",
+      "status": "completed",
+      "record": {
+        "path": "docs/development_roadmap/experiments/vsc_input_validation_20261116.json",
+        "bytes": 4317,
+        "sha256": "47a74bdd234a87be113294d60b5979d6e6f7fc06b6d6e96e6e25b956a62292a2"
+      },
+      "changed_sources": [
+        "pycy_emt_lite/controls/vsc.py",
+        "tests/test_controls.py"
+      ],
+      "other_source_files_unchanged": 111,
+      "dependency_files_unchanged": true,
+      "full_pytest_passed": 1518,
+      "actual_commit_recorded_in_closeout": true,
+      "commit": "57fbc81106a75e6f70e09413e4fd94cf45853b96",
+      "remote_head_verified_same": true
+    },
+    {
+      "kind": "fixed_time_grid_step_semantics",
+      "status": "verified_and_committed",
+      "record": {
+        "path": "docs/development_roadmap/experiments/fixed_time_grid_step_repair_20261116.json",
+        "bytes": 3924,
+        "sha256": "c0d6287ab94d07876d2f03f5d8666eeeb4ab8cf173297f055ed6fa21e46318a0"
+      },
+      "commit": "bbb1e2d7dd669cade3621f4b0d5853d69ca43300",
+      "changed_sources": [
+        "pycy_emt_lite/core/simulation.py",
+        "tests/test_solvers.py",
+        "tests/test_time_grid.py"
+      ],
+      "other_python_files_unchanged_from_first_pair": 117,
+      "dependency_files_unchanged": true,
+      "full_pytest_passed": 1566,
+      "candidate_accepted": false,
+      "remote_head_reverified": true,
+      "remote_last_pushed_head": "8386c4e564314cd507c6c190d33f9c287f4ad762",
+      "remote_verification_method": "Successful ordinary push of HEAD to refs/heads/codex/emt-examples-longterm; contains the fixed-h commit."
+    },
+    {
+      "kind": "dense_lu_one_residual_refinement",
+      "status": "verified",
+      "full_pytest_passed": 1573,
+      "record": {
+        "path": "validation/cases/grid_connected_vsc_open_loop/validation_report.json",
+        "bytes": 6374,
+        "sha256": "230218ff96d7ab45e59bfb8519f725bceb7777514355ea0cb298cf8e50e01829"
+      },
+      "changed_sources": [
+        "pycy_emt_lite/core/solvers.py",
+        "tests/test_solvers.py"
+      ],
+      "commit": "6634277c68e856cd81311149b91dc8bf55f61ea2"
+    },
+    {
+      "kind": "post_delivery_review_repairs",
+      "status": "verified_and_committed",
+      "record": {
+        "path": "docs/development_roadmap/experiments/post_audit_repairs_20261123.json"
+      },
+      "commit": "77e997abc702d515043730e15729d3660bc3328f",
+      "windows_full_pytest_passed": 1664,
+      "ubuntu_wsl2_full_pytest_passed": 1664,
+      "new_formal_examples": 0
+    }
+  ]
+}

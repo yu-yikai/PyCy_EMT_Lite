@@ -1,0 +1,180 @@
+{
+  "recorded_utc": "2026-11-11T17:53:52.201938+00:00",
+  "checked_head": "5e27e7878ac4260c31e07c2eaf4b33b2164298c4",
+  "status": "observed_single_loop_startup_pass_only_three_phase_reference_pending",
+  "candidate_executed": false,
+  "new_formal_example_created": false,
+  "formal_new_examples_completed": 9,
+  "project_source_dependencies_unchanged": true,
+  "source_baseline": {
+    "path": ".tmp/longterm/c1-pll-entry-final-source-hashes-20261112.json",
+    "bytes": 12850,
+    "sha256": "7c666c145ee97c8cbe8fdd50932ca35d7ff25ca9424d07fd5be4b4324703ef71"
+  },
+  "source_files_unchanged": 113,
+  "test_reuse": "1300 including slow passed at the unchanged PLL code baseline; not rerun for this research-only change",
+  "official_originals": {
+    "files_verified": 7,
+    "model_xml_versions": [
+      "4.6.3",
+      "4.6.3"
+    ],
+    "native_opened": false,
+    "native_simulated": false
+  },
+  "design": {
+    "components": "4 existing voltage sources + 6 bilateral switches + 3 R + 3 L",
+    "grounding": "grounded AC star neutral; both DC rails floating; no extra earth return",
+    "current_and_P_direction": "AC to converter",
+    "full_VSC_native_run": false
+  },
+  "archives": [
+    {
+      "version": "v1",
+      "run": "local_reference/c1_openloop_reference_research/20261111T170855240377Z_source_loop_v1/n/20261111T172442747460Z",
+      "package_manifest": {
+        "path": "local_reference/c1_openloop_reference_research/20261111T170855240377Z_source_loop_v1/manifest.json",
+        "bytes": 3023,
+        "sha256": "bd073679908601163278999d65faec49a7955a78541f3d29da53139d4e9973ed"
+      },
+      "manifest": {
+        "path": "local_reference/c1_openloop_reference_research/20261111T170855240377Z_source_loop_v1/n/20261111T172442747460Z/manifest.json",
+        "bytes": 14665,
+        "sha256": "7c9a3a87006c48b7a380c9c77928e60acde4c9798f0a2947b7772a7740aad66e"
+      },
+      "terminal": {
+        "path": "local_reference/c1_openloop_reference_research/20261111T170855240377Z_source_loop_v1/n/20261111T172442747460Z/terminal.json",
+        "bytes": 20741,
+        "sha256": "e7fcf4023c691440fc53b750175a8d8ed60e11ca390821007b048983efbb1bcc"
+      },
+      "verified_files": 47,
+      "normal_terminal": true
+    },
+    {
+      "version": "v2",
+      "run": "local_reference/c1_openloop_reference_research/20261111T173650266158Z_source_loop_v2/n/20261111T174505207756Z",
+      "package_manifest": {
+        "path": "local_reference/c1_openloop_reference_research/20261111T173650266158Z_source_loop_v2/manifest.json",
+        "bytes": 3438,
+        "sha256": "3cfb23ea647211b84a6d649b05db59d1df6c63253e9d1245579c0ede6c8e4e26"
+      },
+      "manifest": {
+        "path": "local_reference/c1_openloop_reference_research/20261111T173650266158Z_source_loop_v2/n/20261111T174505207756Z/manifest.json",
+        "bytes": 14668,
+        "sha256": "73043e6dfcef6e14edcfcd0d65e3b7de4581436856a66d82307c02da06f125b1"
+      },
+      "terminal": {
+        "path": "local_reference/c1_openloop_reference_research/20261111T173650266158Z_source_loop_v2/n/20261111T174505207756Z/terminal.json",
+        "bytes": 14088,
+        "sha256": "b4c679cbde8f6fe4dd1bdaea1787260e11ab138f733c4b5dcfeecd5899fc8b3d"
+      },
+      "verified_files": 47,
+      "normal_terminal": true
+    }
+  ],
+  "evidence": {
+    "official_download": {
+      "path": "local_reference/c1_openloop_reference_research/20261111T170212Z_official_sources/download_receipt.json",
+      "bytes": 3566,
+      "sha256": "e09736fe60fe5a1fef701be3cf3b0a37085ed335e34bd5bd0e498dc960c10780"
+    },
+    "official_xml": {
+      "path": "local_reference/c1_openloop_reference_research/20261111T170212Z_official_sources/xml_inspection.json",
+      "bytes": 589428,
+      "sha256": "5fbef528c40073153ca8121d3150bb7511d4c9ba1697171836efdfbfec1677a4"
+    },
+    "official_independent": {
+      "path": "local_reference/native_static_reviews/c1_openloop_official_xml_verification_20261111T171424256006Z/receipt.json",
+      "bytes": 5686,
+      "sha256": "891eeddb5eb39e3706552d3007f295a58458ef4d23385d2464e2d69f08591219"
+    },
+    "physical_design": {
+      "path": "local_reference/native_static_reviews/c1_openloop_physics_20261111T170903011904Z/receipt.json",
+      "bytes": 6153,
+      "sha256": "2454b6f4f1c2606102afb241d253cb160c9420afaaf37450183b676475753dc2"
+    },
+    "v1_failure": {
+      "path": "local_reference/native_static_reviews/c1_source_loop_first_failure_20261111T172442747460Z/receipt.json",
+      "bytes": 3492,
+      "sha256": "3306d39f83cafa98f956f6d64f4132ecaa17c8c54852e97bfcd046d4db0659d8"
+    },
+    "v1_independent": {
+      "path": "local_reference/native_static_reviews/c1_source_loop_v1_failure_independent_20261111T173749783533Z/receipt.json",
+      "bytes": 3134,
+      "sha256": "dc1317f2cf3e4c7d3b5b911c4548da53d2d821b7fd982b714e3d5bf64b4d4428"
+    },
+    "v1_interpretation": {
+      "path": "local_reference/native_static_reviews/c1_source_loop_v1_interpretation_20261111T1738/receipt.json",
+      "bytes": 1454,
+      "sha256": "b49efcd53b7de04ef83df6decedc9fe20384048b7c4ba5cc98c9dcdc04888bcb"
+    },
+    "v2_preflight": {
+      "path": "local_reference/native_static_reviews/c1_source_startup_v2_root_preflight_20261112/receipt.json",
+      "bytes": 1224,
+      "sha256": "e38890430caab3d1b8a074846761dd704cac8584e464de59c1ce8eaae8fb9925"
+    },
+    "v2_protocol_static": {
+      "path": "local_reference/native_static_reviews/c1_source_startup_v2_final_static_20261111T174419542048Z/receipt.json",
+      "bytes": 5876,
+      "sha256": "06b8a5cbc9dbff1afdd295472adefaf8645cba6f537dd2b3c29e4b231b7f011f"
+    },
+    "v2_physical_static": {
+      "path": "local_reference/native_static_reviews/c1_source_loop_v2_static_20261111T174428060548Z/receipt.json",
+      "bytes": 5641,
+      "sha256": "c6d7942fa6d1ae611022adf952b783f736fb020ddac1440fc8684a9c80f01812"
+    },
+    "v2_observed_audit": {
+      "path": "local_reference/native_static_reviews/c1_source_startup_v2_actual_20261111T174505207756Z/receipt.json",
+      "bytes": 4189,
+      "sha256": "e7abc1ade1f4dc32bf1642ba73a4ec8057d7b49d9709e279b2be8116e4178b2d"
+    },
+    "v2_independent": {
+      "path": "local_reference/native_static_reviews/c1_source_startup_v2_independent_actual_20261111T174505207756Z_7d02a1/receipt.json",
+      "bytes": 6007,
+      "sha256": "8be952bd987e7ebf039a0c0544634c428b0b6c0064b3140fe4ad8ecf7e3a5b71"
+    },
+    "v2_token_and_generated_order": {
+      "path": "local_reference/native_static_reviews/c1_source_loop_v2_independent_actual_20261111T174505207756Z_c373cf9a/receipt.json",
+      "bytes": 492361,
+      "sha256": "f98c0e1b096a5674c5611ec8538921e7b2e802c66da3d99501f6a33740e0946a"
+    },
+    "v2_scope_closure": {
+      "path": "local_reference/native_static_reviews/c1_source_loop_v2_closure_20261111T175038989976Z/receipt.json",
+      "bytes": 1675,
+      "sha256": "c384cf7f5a39a4f16fd2be232a8b0c917317477e96783b5febf6eb60bbc48b55"
+    }
+  },
+  "v1": {
+    "observed_rows": 21,
+    "zero_initial_current_gate": "FAIL_PRESERVED",
+    "initial_current_A": -0.99750623441397,
+    "interpretation": "effective zero Norton history is consistent with outputs; EMTDC internal initialization source unavailable"
+  },
+  "v2": {
+    "observed_rows": 401,
+    "duration_s": 0.002,
+    "configured_and_observed_step_s": 5e-06,
+    "joint_source_ramp": "linear_clip min(t/0.001,1), uniquely identified from three predeclared families",
+    "initial_printed_current_A": 0,
+    "raw_observed_initial_gate_passed": true,
+    "max_abs_current_A": 240.93913770876,
+    "TR_unaveraged_decimal_residual_V": 3.693e-09,
+    "TR_unaveraged_frozen_budget_V": 1e-06,
+    "TR_fixed_h_token_radius_V": 4.010014e-08,
+    "TR_fixed_h_residual_plus_radius_upper_V": 4.010016e-08,
+    "TR_unconstrained_printed_time_upper_V": 7.997e-08,
+    "initial_current_printed_grid_A": 1e-10,
+    "observed_initial_gate_A": 1e-12,
+    "source_CUR_previous_solve_pairs": 400,
+    "independent_contemporaneous_KCL_accepted": false,
+    "internals_not_proven": [
+      "internal initial state below 1e-12 A",
+      "solver internal DELT variable",
+      "internal source precision below raw observed limits"
+    ],
+    "qualified_full_reference": false,
+    "VSC_accepted": false
+  },
+  "next_gate": "Freeze a separate fixed-DC/zero-AC/zero-vector three-phase probe; verify wiring, contemporaneous current KCL, common mode and startup before full open-loop reference or candidate",
+  "active_native_runs": 0
+}

@@ -1,0 +1,30 @@
+{
+  "retained_networks": ["grounded_load_neutral", "floating_load_neutral"],
+  "omitted_network": "Official third network with individually open load returns; it is not the floating-star network.",
+  "source_type": "Two independent, identical ideal balanced positive-sequence three-phase sources, each source neutral grounded",
+  "source_phase_peak_volt": 100.0,
+  "source_phase_rms_volt": 70.71067811865476,
+  "source_line_rms_volt": 122.4744871391589,
+  "frequency_hz": 60.0,
+  "source_waveform": "100*sin(2*pi*60*t+phase_offset)",
+  "phase_offsets_degree": [0.0, -120.0, 120.0],
+  "source_impedance": "ideal (official impedance_option=0)",
+  "resistance_initial_ohm": [1.0, 1.0, 1.0],
+  "resistance_changes": [
+    {"time_second": 0.05, "phase": "a", "before_ohm": 1.0, "after_ohm": 3.0, "networks": ["grounded", "floating"]},
+    {"time_second": 0.07, "phase": "c", "before_ohm": 1.0, "after_ohm": 1.5, "networks": ["grounded", "floating"]}
+  ],
+  "grounded_load_returns": "Three ideal returns connected to ground; load phase voltages equal source phase-to-ground voltages",
+  "floating_load_returns": "Three returns joined at floating:n; no earth path or artificial leakage",
+  "current_positive_direction": "Each source phase node to its corresponding load resistor and then load neutral; i:Vg:* and i:Vf:* are opposite source-branch currents",
+  "floating_neutral_equation": "vn = sum(v_phase/R_phase)/sum(1/R_phase)",
+  "reference_neutral_reconstruction": "v_neutral = v_grounded_1 - v_floating_1; both retained sources have identical waveforms",
+  "initialization": "Pure resistive algebraic network; no capacitor, inductor or controller states",
+  "pycy_step_second": 0.0001,
+  "pycy_method": "trapezoidal (no storage; algebraic solution independent of integration method)",
+  "stop_second": 0.1,
+  "reference_outer_solver": "VariableStepAuto, RelTol=0.001, AbsTol=0.001",
+  "reference_local_solver": "Backward Euler, sample time=0.0001 s, residual tolerance=1e-9",
+  "reference_current_mapping": {"grounded": "Sensing_vi.Current_Sensor.I_output", "floating": "Sensing_vi2.Current_Sensor.I_output"},
+  "reference_voltage_mapping": {"grounded": "Sensing_vi1.Phase_Voltage_Sensor.V_output", "floating": "Sensing_vi3.Phase_Voltage_Sensor.V_output"}
+}

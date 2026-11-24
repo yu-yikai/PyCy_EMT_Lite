@@ -1,0 +1,78 @@
+{
+  "schema": "grid_connected_vsc_open_loop_qualified_reference_v1",
+  "status": "QUALIFIED_ACTUAL_SIMSCAPE_REFERENCE_ONLY",
+  "full_reference_qualified": true,
+  "source_kind": "Locally constructed Simscape Foundation model from frozen equations and installed R2025a blocks; not an official MathWorks example.",
+  "execution_head": "fadb979f1dadd88962ae850478a6b864b95652a7",
+  "qualification": {
+    "path": "local_reference/c1_openloop_reference_research/20261116T135440675083Z_full_nojvm_actual_pair_math_v1/ROOT_reference_qualification.json",
+    "bytes": 5371,
+    "sha256": "53ff22f4c8f88f5cbf11fbefee36686ecfd1069ea9fc6818c23cc883c5a1beae"
+  },
+  "evidence_record": {
+    "path": "docs/development_roadmap/experiments/c1_nojvm_full_reference_20261116.json",
+    "bytes": 12620,
+    "sha256": "fdc5f34724c4bc9ebc8a549c5136a9e0553437766325a8555510f064647301bd"
+  },
+  "parameters": {
+    "path": "validation/cases/grid_connected_vsc_open_loop/parameters.json",
+    "bytes": 3603,
+    "sha256": "f5041eee9296c4088e74168cb444a10b016c10ee787d044629cb9492ab523dc1"
+  },
+  "reference_protocol": {
+    "path": "validation/cases/grid_connected_vsc_open_loop/reference_protocol.json",
+    "bytes": 41406,
+    "sha256": "d87a327ef601200b2ebb360403879206d8817697f78767999143226aecf26630"
+  },
+  "variants": [
+    {
+      "h_s": 5e-06,
+      "rows": 40002,
+      "stop_s": 0.200005,
+      "native_MAT": {
+        "path": "local_reference/c1_openloop_reference_research/20261116T132703273800Z_simscape_full_nojvm_run_coarse_v1/n/20261116T1333579652748Z/run/native_output.mat",
+        "bytes": 33435251,
+        "sha256": "46192f9e4f7b85193c484d6d202fc9b4c1341e961f6d1095731fd68b15d68c15"
+      },
+      "ROOT_raw_closed": {
+        "path": "local_reference/c1_openloop_reference_research/20261116T132703273800Z_simscape_full_nojvm_run_coarse_v1/ROOT_raw_closed.json",
+        "bytes": 6805,
+        "sha256": "149f941a5812a7e099e4621d450f9af1bc251cc5d18d1988d2a1408fdef55861"
+      }
+    },
+    {
+      "h_s": 2.5e-06,
+      "rows": 80003,
+      "stop_s": 0.200005,
+      "native_MAT": {
+        "path": "local_reference/c1_openloop_reference_research/20261116T132704998471Z_simscape_full_nojvm_run_fine_v1/n/20261116T1346085917064Z/run/native_output.mat",
+        "bytes": 63073470,
+        "sha256": "5784a4d549356ce3519909d2b622d20525d8d7a295e7ed7097f859a6f137a798"
+      },
+      "ROOT_raw_closed": {
+        "path": "local_reference/c1_openloop_reference_research/20261116T132704998471Z_simscape_full_nojvm_run_fine_v1/ROOT_raw_closed.json",
+        "bytes": 6800,
+        "sha256": "709e26b248b8d3e104f6365e0cd93637ff7c180ae593bdd9c36a5f580755714e"
+      }
+    }
+  ],
+  "acceptance": {
+    "both_pointwise_methods_pass": true,
+    "original_budgets": 19,
+    "auxiliary_gates_pass": true,
+    "original57_Time_and_Clock_bits_pass": true,
+    "pair_hard_gates": 132,
+    "full_windows": [
+      "all",
+      "startup",
+      "transition",
+      "steady"
+    ],
+    "steady_grid_cycles": 6,
+    "original_tail_retained": true,
+    "original_PSCAD_FAIL_preserved": true
+  },
+  "scope": "Frozen open-loop circuit at the two declared steps only. No teaching candidate, closed-loop VSC or cross-OS qualification.",
+  "candidate_implemented": false,
+  "C1_complete": false
+}

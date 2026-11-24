@@ -1,0 +1,327 @@
+{
+  "recorded_utc": "2026-11-11T19:59:24.488754+00:00",
+  "checked_head": "e73c0b3b8b0e1b0f1507618d973989ad9553703f",
+  "status": "measurement_localization_complete_original_and_ammeter_gates_FAIL",
+  "goal_status": "active",
+  "C1_status": "in_progress",
+  "D1_status": "planned",
+  "F1_status": "blocked_external_CI_restoration_pending",
+  "formal_new_examples_completed": 9,
+  "new_formal_example_created": false,
+  "candidate_executed": false,
+  "full_VSC_reference_ready": false,
+  "source_files_unchanged": 113,
+  "project_source_dependencies_unchanged": true,
+  "source_baseline": {
+    "path": ".tmp/longterm/c1-pll-entry-final-source-hashes-20261112.json",
+    "bytes": 12850,
+    "sha256": "7c666c145ee97c8cbe8fdd50932ca35d7ff25ca9424d07fd5be4b4324703ef71"
+  },
+  "test_reuse": "1300 passed including slow / locked27 / Ruff / mypy39 are previous results on identical production code; not rerun this research-only turn.",
+  "previous_result_preserved": {
+    "path": "docs/development_roadmap/experiments/c1_three_phase_probe_20261112.json",
+    "bytes": 11483,
+    "sha256": "8d9c6a45f0b0ec66eee06fa4b99765fe8a319d4e5bda302396f2de5d32f949b8"
+  },
+  "contract": {
+    "scope": "Same400us/5us manual eight-vector network,81rows/80segments; original31channels plus two fresh differential voltages. No SPWM/full VSC or refinement qualification.",
+    "same_physics_and_old_gates": true,
+    "source_voltage_direction": "source.NA - source.NB",
+    "ammeter_voltage_direction": "DC ammeter.N1 - N2; bridge-positive - source.NA",
+    "closure": "(Vp-Vn) - Vsource - Vammeter",
+    "new_limits_V": {
+      "source_terminal": "1e-8",
+      "ammeter_drop": "1e-8",
+      "closure": "1e-9"
+    },
+    "new_channel_max_whole_last_place_radius_V": "1e-10",
+    "rounding": "Raw absolute residual plus full last-place SI token radius, including zero tokens; kV/kA converted once.",
+    "rank": "Closure is a rank2 dependent measurement identity, not a third independent physical equation or internal-EMF/cause proof.",
+    "mapping_before_raw_required": true,
+    "phase": "Fixed sin(omega*t+Ph), positive abc; cosine-Park theta=omega*t-pi/2."
+  },
+  "frozen_before_native": {
+    "contract_review": {
+      "path": "local_reference/native_static_reviews/c1_two_vm_contract_proposal_20261111T191015Z/receipt.json",
+      "bytes": 16706,
+      "sha256": "63a40c51bfda3c0eb53f848d8835efec7910611e9fd9a09e4dd1aa257ca63d16"
+    },
+    "package_v1": {
+      "path": "local_reference/c1_openloop_reference_research/20261111T191147529546Z_dc_measurement_diagnostic_v1/manifest.json",
+      "bytes": 5457,
+      "sha256": "9be4b364209cb4c65ef6a966fa784fd969fcaa4ed18a2bc7d6aeba965ea93473"
+    },
+    "package_v2": {
+      "path": "local_reference/c1_openloop_reference_research/20261111T193625022842Z_dc_measurement_diagnostic_v2/manifest.json",
+      "bytes": 5744,
+      "sha256": "c54a9a1718b2a5682d26369505cef307658abd41aceb03b428676c2c53f4d117"
+    },
+    "v2_plan": {
+      "path": "local_reference/c1_openloop_reference_research/20261111T193625022842Z_dc_measurement_diagnostic_v2/inputs/probe_plan.json",
+      "bytes": 14173,
+      "sha256": "c550fa42a734d9a73cc2c4cd6bde69ad21374655868ec1db2dbc153b6676360a"
+    },
+    "v2_static_review": {
+      "path": "local_reference/native_static_reviews/c1_two_vm_endpoint_v2_static_20261111T194401783192Z/receipt.json",
+      "bytes": 3129,
+      "sha256": "92a1e37323318d53ed4fe5abf883c42e188c8a2af24a1d07d9ad9d19849d317b"
+    },
+    "v2_root_preflight": {
+      "path": "local_reference/native_static_reviews/c1_two_vm_endpoint_root_preflight_20261112/receipt.json",
+      "bytes": 1393,
+      "sha256": "46193f227fec25c7e8312d904615d268b55e1593f82c5abe96107600dbc225b4"
+    },
+    "root_auditor_preparation": {
+      "path": "local_reference/native_static_reviews/c1_endpoint_auditor_preparation_20261112/receipt.json",
+      "bytes": 1301,
+      "sha256": "ff8d32ea986516c4382c7687347a532c240f6a287b1fc4a96e546faa281ea385"
+    },
+    "root_logic_44_synthetic_checks": {
+      "path": "local_reference/native_static_reviews/c1_dc_measurement_auditor_v2_preparation_20261112/receipt.json",
+      "bytes": 1116,
+      "sha256": "058591f67a25d4ff12e03ec33d04f64245a6a62671e50dfd8ae0919751ab61b9"
+    },
+    "root_logic_review": {
+      "path": "local_reference/native_static_reviews/c1_dc_measurement_static_v2_20261111T1924Z/receipt.json",
+      "bytes": 4576,
+      "sha256": "a3f4435c46a52bc66d13d40a18898a85b8f874ef9206d5490ac19d67b8c9e05c"
+    },
+    "independent_auditor_preparation": {
+      "path": "local_reference/native_static_reviews/c1_dc_measurement_independent_preparation_20261111T1942Z/receipt.json",
+      "bytes": 3230,
+      "sha256": "e5d438cefa205cced7a8e7866bdbdb64dd3a2b71b48114d7a4b40d6976d0a9aa"
+    },
+    "audit_history": "Initial33channel auditor was rejected by static review for phase-failure short-circuiting before native raw. New frozen logic reports complete numerical failures; all old equations/budgets preserved."
+  },
+  "native_attempts": [
+    {
+      "version": 1,
+      "run": "local_reference/c1_openloop_reference_research/20261111T191147529546Z_dc_measurement_diagnostic_v1/n/20261111T192402327467Z",
+      "session_id": 38710,
+      "exec_closed": true,
+      "exit_code": 1,
+      "elapsed_s": "178.28656479995698",
+      "terminal": {
+        "path": "local_reference/c1_openloop_reference_research/20261111T191147529546Z_dc_measurement_diagnostic_v1/n/20261111T192402327467Z/terminal.json",
+        "bytes": 3511,
+        "sha256": "6535a24be1eb76bf2fc135efb7853b67c4d0bb624fa5409153b782cc332911ae"
+      },
+      "archive": {
+        "path": "local_reference/c1_openloop_reference_research/20261111T191147529546Z_dc_measurement_diagnostic_v1/n/20261111T192402327467Z/manifest.json",
+        "bytes": 14867,
+        "sha256": "11b8113e98d0b8cc2aa6753e941f20d078c23741c6c305380b67bcefecf4287a"
+      },
+      "archive_files": 45,
+      "build_errors": 2,
+      "run_returned": false,
+      "completion_observed": false,
+      "raw_waveforms_obtained": false,
+      "normal_quit": true,
+      "remaining_owned": [],
+      "failure": "Old Vpole_b/c observation nodes were dimension-undefined/floating at compile. No numerical auditor or actual mapping gate executed.",
+      "failure_review": {
+        "path": "local_reference/native_static_reviews/c1_two_vm_compile_failure_20261111T192958767380Z/receipt.json",
+        "bytes": 3891,
+        "sha256": "d0ec9c97e02a5bbb443b12c2f87e11a109a4c0decf4882a345560eb59e4cee90"
+      },
+      "geometry_review": {
+        "path": "local_reference/native_static_reviews/c1_two_vm_dimension_failure_20261111T193319820322Z/receipt.json",
+        "bytes": 8112,
+        "sha256": "bb1749686b89f25908717d8d904d0249470eb3e57d0b9aa1c1edae52f1fe675c"
+      },
+      "preserved": true
+    },
+    {
+      "version": 2,
+      "run": "local_reference/c1_openloop_reference_research/20261111T193625022842Z_dc_measurement_diagnostic_v2/n/20261111T194623690905Z",
+      "session_id": 7819,
+      "exec_closed": true,
+      "exit_code": 0,
+      "elapsed_s": "162.67172089999076",
+      "terminal": {
+        "path": "local_reference/c1_openloop_reference_research/20261111T193625022842Z_dc_measurement_diagnostic_v2/n/20261111T194623690905Z/terminal.json",
+        "bytes": 11225,
+        "sha256": "06d9a0536536ef184b0d8b8c66263dd7b19e7fdd34bdc4d0e5b20fe0eaca9dba"
+      },
+      "archive": {
+        "path": "local_reference/c1_openloop_reference_research/20261111T193625022842Z_dc_measurement_diagnostic_v2/n/20261111T194623690905Z/manifest.json",
+        "bytes": 21539,
+        "sha256": "300fc1b1e05aa41eaf18a37c8b9eab9f76a77018ce10ec032886d9a66cbbd518"
+      },
+      "archive_files": 65,
+      "build_errors": 0,
+      "run_returned": true,
+      "completion_observed": true,
+      "raw_waveforms_obtained": true,
+      "normal_quit": true,
+      "remaining_owned": [],
+      "components": 167,
+      "wires": 133,
+      "ports": 234,
+      "nets": 73,
+      "minimal_fix": "Only observer wires7/21/35 now start at the actual upper-switch B / physical-wire common endpoint; other130wire vertices and all components/parameters/channels unchanged. Added case-specific prewire endpoint assertions, not a graph repair framework.",
+      "native_endpoint_witness": {
+        "path": "local_reference/c1_openloop_reference_research/20261111T193625022842Z_dc_measurement_diagnostic_v2/n/20261111T194623690905Z/observer_endpoint_witness.json",
+        "bytes": 851,
+        "sha256": "c933d56b02df2736840b1f166fe4012010c966adaca9c5dc0485cc8a714c3c3c"
+      },
+      "guard_scope": "3GiB preflight/2GiB live and bounded stage/total time; worker explicitly -B, exact19-file frozen package with no generated cache. Profile/master/donor/dependencies/source/parent environment unchanged; no forced termination.",
+      "numerical_acceptance": false
+    }
+  ],
+  "actual_mapping_admission": {
+    "receipt": {
+      "path": "local_reference/native_static_reviews/c1_two_vm_actual_mapping_20261111T194623690905Z_195548794636/receipt.json",
+      "bytes": 8124,
+      "sha256": "3bddc6f1fe9cd8460956a68543d3c85993a3eb7eb2786f37213b420ee05d0655"
+    },
+    "raw_output_consumed_by_mapper": false,
+    "all_six_required_checks_passed": true,
+    "actual_nodes": {
+      "bridge_positive": "NT4",
+      "bridge_negative": "NT6",
+      "source_positive": "NT15",
+      "ground": "0"
+    },
+    "fresh_VVDC_before_same_MainOut_PGB": true,
+    "fresh_CBR_and_g_R_order_verified": true
+  },
+  "observed": {
+    "rows": 81,
+    "channels": 33,
+    "segments": 80,
+    "all_endpoints_and_switch_events_kept": true,
+    "legacy_bridge_gate": {
+      "pass": false,
+      "failed_rows_zero_based": [
+        10,
+        11,
+        15,
+        18,
+        19
+      ],
+      "failed_times_us": [
+        50,
+        55,
+        75,
+        90,
+        95
+      ],
+      "max_raw_V": "1.349e-8",
+      "max_raw_plus_token_V": "1.351e-8",
+      "limit_V": "1e-8"
+    },
+    "measurement": {
+      "measurement_gates_pass": false,
+      "failures": [
+        {
+          "gate": "ammeter_drop",
+          "row": 10,
+          "raw": "-1.0355716284494000E-8",
+          "radius": "1.000E-21",
+          "limit": "1E-8"
+        },
+        {
+          "gate": "ammeter_drop",
+          "row": 11,
+          "raw": "-1.3485212946307000E-8",
+          "radius": "1.000E-21",
+          "limit": "1E-8"
+        },
+        {
+          "gate": "ammeter_drop",
+          "row": 15,
+          "raw": "-1.1508738406718000E-8",
+          "radius": "1.000E-21",
+          "limit": "1E-8"
+        },
+        {
+          "gate": "ammeter_drop",
+          "row": 18,
+          "raw": "-1.2219447675932000E-8",
+          "radius": "1.000E-21",
+          "limit": "1E-8"
+        },
+        {
+          "gate": "ammeter_drop",
+          "row": 19,
+          "raw": "-1.0679734874230000E-8",
+          "radius": "1.000E-21",
+          "limit": "1E-8"
+        }
+      ],
+      "max_raw_V": {
+        "source_terminal": "0",
+        "ammeter_drop": "1.3485212946307000E-8",
+        "closure": "7.5526634791000E-12"
+      },
+      "max_raw_plus_token_V": {
+        "source_terminal": "1.000E-11",
+        "ammeter_drop": "1.3485212946308000E-8",
+        "closure": "1.3000E-10"
+      },
+      "limits_V": {
+        "source_terminal": "1E-8",
+        "ammeter_drop": "1E-8",
+        "closure": "1E-9"
+      },
+      "scope": "Terminal/drop observations and dependent rank2 voltage identity; no internal EMF or causal attribution."
+    },
+    "direct_local_checks": "Other original direct KCL/R/KVL/TR/pole/common-mode/power/energy checks remain within their individual frozen budgets.",
+    "conditional_prediction": "Original source/bridge prerequisite failed; reduced current/common-mode predictions remain diagnostic only.",
+    "interpretation": "The fresh source-terminal observation satisfies its frozen400V gate. The five bridge-gate failures coincide with the measured drop from bridge-positive to source.NA across the DC ammeter. This localizes the recorded discrepancy; it does not prove a physical resistance, internal EMF error, floating-system conditioning or solver implementation cause.",
+    "overall_reference_accepted": false
+  },
+  "actual_numerical_reviews": {
+    "root": {
+      "path": "local_reference/native_static_reviews/c1_dc_measurement_root_actual_20261111T194623690905Z/receipt.json",
+      "bytes": 39027,
+      "sha256": "e9421e42cb50553b296a674aecf13924a65ac461893cc089303b61ab97ff4f43"
+    },
+    "root_exit_code": 1,
+    "root_log": {
+      "path": ".tmp/longterm/c1-dc-vm-endpoint-root-20261112T1957.log",
+      "bytes": 494,
+      "sha256": "bd2fc4f9b58a5eecc6fc9284d1e949e17ae3c1d3fd9e03b7854a9637c7893330"
+    },
+    "independent": {
+      "path": "local_reference/native_static_reviews/c1_dc_measurement_independent_actual_20261111T194623690905Z/receipt.json",
+      "bytes": 74383,
+      "sha256": "7d2cc8ad1d9cd9b6e2045015e1ec117b43c7362f99e642cf54458d3cf36cf187"
+    },
+    "independent_exit_code": 1,
+    "independent_log": {
+      "path": ".tmp/longterm/c1-dc-measurement-independent-194623690905Z-once-20261112.log",
+      "bytes": 374,
+      "sha256": "d0e5b5bff37118388f69556419e34f7e479453aca1031fc2c9476333b952168f"
+    },
+    "independent_all_bound_files_rechecked": 90,
+    "root_pivoted_Decimal50_and_independent_Decimal70_Schur_math_agree": true,
+    "old_and_new_failure_counts_each": 5,
+    "no_native_rerun_for_analysis": true
+  },
+  "full_openloop_draft": {
+    "receipt": {
+      "path": "local_reference/native_static_reviews/c1_full_openloop_draft_20261111T1929Z/receipt.json",
+      "bytes": 2028,
+      "sha256": "8e67eba2f0c848c1643794da0cd086954f14f5efbf1378ef908df4f75b41d7fe"
+    },
+    "status": "unfrozen_not_executed_no_candidate",
+    "scope": "Prospective grid-to-bridge power exchange, startup and steady windows, complete PWM and electrical refinement; full parameter/budget freeze still required. Does not replace dq/PLL/PQ/Vdc/Vac/disturbance roadmap."
+  },
+  "next_gate": "Freeze the single-option ideal-branch diagnostic described in prospective_next_gate, then execute in a new isolated run. Preserve both failed gates and all historical attempts. Full open-loop protocol/reference refinement and candidate remain pending.",
+  "local_only": "All donors/native files/raw waveforms/helper scripts/review receipts stay ignored under local_reference/.tmp; only original compact metadata and roadmap text are committed.",
+  "prospective_next_gate": {
+    "review": {
+      "path": "local_reference/native_static_reviews/c1_ideal_branch_prospective_review_20261111T200336852496Z/receipt.json",
+      "bytes": 12994,
+      "sha256": "8b69f92349705841b31d725836872716b89b10ad0102130b281f0b2c9de72665"
+    },
+    "status": "read_only_proposal_no_execution_package_or_native_run",
+    "single_option_change": "use_ideal_branch: false -> true",
+    "unchanged_branch_threshold_ohm": "0.0005",
+    "all_physics_channels_clocks_and_budgets_unchanged": true,
+    "scope": "Global zero/subthreshold branch algorithm selection; not a change isolated to the DC ammeter and not a cause proof or guaranteed improvement. Installed definition/actual A branch checked. v5.02 primary documentation is newer than installed5.0.",
+    "required_before_raw": "Freeze/review new package; verify actual saved flag/threshold and generated SHORT_CIRCUIT, graph, directions and fresh measurement order before all81row hard numerical gates."
+  }
+}

@@ -103,6 +103,77 @@ def _validate_rhs(rhs: np.ndarray, matrix_size: int, *, allow_multiple: bool = F
     return rhs_array
 
 
+def _residual_norms(matrix: np.ndarray, rhs: np.ndarray, solution: np.ndarray) -> tuple[float, float]:
+    # 先缩放再乘/求和，避免有限输入在诊断中变为 Inf/Inf。
+    a_scale = float(np.max(np.abs(matrix))) or 1.0
+    x_scale = float(np.max(np.abs(solution))) or 1.0
+    a = matrix / a_scale
+    x = solution / x_scale
+    with np.errstate(over="ignore", invalid="ignore", divide="ignore"):
+        b = rhs / a_scale / x_scale
+        for original, scaled in ((matrix, a), (solution, x), (rhs, b)):
+            if np.any((original != 0) & (scaled == 0)):
+                raise LinearSolveError("残差诊断缩放下溢，非零量无法保留；请检查方程和数值尺度。")
+        residual = a @ x - b
+        residual_scale = float(np.linalg.norm(residual, ord=np.inf))
+        denominator = float(np.linalg.norm(a, ord=np.inf) * np.linalg.norm(x, ord=np.inf) + np.linalg.norm(b, ord=np.inf))
+    if not math.isfinite(residual_scale) or not math.isfinite(denominator):
+        raise LinearSolveError("残差诊断缩放仍溢出；请检查方程和数值尺度。")
+    relative_residual = residual_scale / denominator if denominator > 0 else 0.0
+    try:
+        mantissas, exponents = zip(*(math.frexp(v) for v in (residual_scale, a_scale, x_scale)), strict=True)
+        absolute_residual = math.ldexp(math.prod(mantissas), sum(exponents))
+    except OverflowError as exc:
+        raise LinearSolveError("绝对残差超出有限数范围，拒绝溢出的求解诊断。") from exc
+    if not math.isfinite(absolute_residual) or not math.isfinite(relative_residual):
+        raise LinearSolveError("残差诊断包含 NaN 或 Inf。")
+    return absolute_residual, relative_residual
+
+
+def _safe_sumprod_range(values: np.ndarray) -> bool:
+    # 非零乘积处于 2**±800，给低位补偿和行内累加留出指数空间。
+    magnitude = np.abs(values)
+    return not bool(np.any(((magnitude != 0) & (magnitude < 2.0**-400)) | (magnitude > 2.0**400)))
+
+
+def _refine_once(
+    factorization: _DenseLUFactorization, rhs: np.ndarray, solution: np.ndarray,
+) -> tuple[np.ndarray, np.ndarray | None]:
+    """返回原解和可选的一次修正解。"""
+    if not all(_safe_sumprod_range(values) for values in (factorization.matrix, rhs, solution)):
+        return solution, None
+    negative_rows = (-factorization.matrix).tolist()
+
+    def accurate_residual(values: np.ndarray) -> np.ndarray:
+        result = np.empty_like(rhs)
+        for x, b, residual in zip(np.atleast_2d(values.T), np.atleast_2d(rhs.T),
+                                  np.atleast_2d(result.T), strict=True):
+            operands = [1.0, *x.tolist()]
+            # b 与 -A*x 一次累加，保留相减前会被舍入抹去的低位。
+            residual[:] = [math.sumprod([float(value), *row], operands)
+                           for value, row in zip(b, negative_rows, strict=True)]
+        return result
+
+    residual = accurate_residual(solution)
+    if not np.any(residual):
+        return solution, None
+    # 后端可能复用首解的缓冲区。第二次求解前先保留首解。
+    original = solution.copy()
+    try:
+        correction = factorization._solve_raw(residual)
+    except (ValueError, RuntimeError) as exc:
+        raise LinearSolveError(f"{factorization.backend_name} 残差修正求解失败。") from exc
+    if correction.shape != rhs.shape:
+        raise LinearSolveError(f"{factorization.backend_name} 返回的残差修正量维度错误。")
+    if not np.all(np.isfinite(correction)):
+        return original, None
+    with np.errstate(over="ignore"):
+        refined = original + correction
+    if np.all(np.isfinite(refined)):
+        return original, refined
+    return original, None
+
+
 def _solve_factorization(
     factorization: Factorization,
     rhs: np.ndarray,
@@ -126,29 +197,22 @@ def _solve_factorization(
     if solution.shape != rhs_array.shape:
         raise LinearSolveError(f"{factorization.backend_name} 返回解的维度错误。")
 
-    # 先缩放再乘/求和，避免有限输入在诊断中变为 Inf/Inf。
-    a_scale = float(np.max(np.abs(factorization.matrix))) or 1.0
-    x_scale = float(np.max(np.abs(solution))) or 1.0
-    a = factorization.matrix / a_scale
-    x = solution / x_scale
-    with np.errstate(over="ignore", invalid="ignore", divide="ignore"):
-        b = rhs_array / a_scale / x_scale
-        for original, scaled in ((factorization.matrix, a), (solution, x), (rhs_array, b)):
-            if np.any((original != 0) & (scaled == 0)):
-                raise LinearSolveError("残差诊断缩放下溢，非零量无法保留；请检查方程和数值尺度。")
-        residual = a @ x - b
-        residual_scale = float(np.linalg.norm(residual, ord=np.inf))
-        denominator = float(np.linalg.norm(a, ord=np.inf) * np.linalg.norm(x, ord=np.inf) + np.linalg.norm(b, ord=np.inf))
-    if not math.isfinite(residual_scale) or not math.isfinite(denominator):
-        raise LinearSolveError("残差诊断缩放仍溢出；请检查方程和数值尺度。")
-    relative_residual = residual_scale / denominator if denominator > 0 else 0.0
-    try:
-        mantissas, exponents = zip(*(math.frexp(v) for v in (residual_scale, a_scale, x_scale)), strict=True)
-        absolute_residual = math.ldexp(math.prod(mantissas), sum(exponents))
-    except OverflowError as exc:
-        raise LinearSolveError("绝对残差超出有限数范围，拒绝溢出的求解诊断。") from exc
-    if not math.isfinite(absolute_residual) or not math.isfinite(relative_residual):
-        raise LinearSolveError("残差诊断包含 NaN 或 Inf。")
+    absolute_residual, relative_residual = _residual_norms(factorization.matrix, rhs_array, solution)
+    if absolute_residual > residual_atol and relative_residual > residual_rtol:
+        raise LinearSolveError(
+            f"{factorization.backend_name} 残差超限："
+            f"absolute={absolute_residual:.3e}，relative={relative_residual:.3e}。"
+        )
+    if isinstance(factorization, _DenseLUFactorization):
+        solution, refined = _refine_once(factorization, rhs_array, solution)
+        if refined is not None:
+            try:
+                absolute, relative = _residual_norms(factorization.matrix, rhs_array, refined)
+            except LinearSolveError:
+                pass  # 首解已通过原检查，舍弃无法用同一检查验证的修正解。
+            else:
+                if absolute <= residual_atol or relative <= residual_rtol:
+                    solution, absolute_residual, relative_residual = refined, absolute, relative
     diagnostics = LinearSolveDiagnostics(
         backend=factorization.backend_name,
         absolute_residual=absolute_residual,
@@ -159,11 +223,6 @@ def _solve_factorization(
         factorization_count=factorization_count,
         solve_count=solve_count,
     )
-    if absolute_residual > residual_atol and relative_residual > residual_rtol:
-        raise LinearSolveError(
-            f"{factorization.backend_name} 残差超限："
-            f"absolute={absolute_residual:.3e}，relative={relative_residual:.3e}。"
-        )
     return solution, diagnostics
 
 
@@ -171,7 +230,8 @@ class DenseLinearSolver:
     """基于 SciPy 稠密 LU 分解的线性求解器。
 
     solve() 逐次 LU 分解；factorize() 返回可复用分解，两种入口都检查残差、
-    奇异矩阵和非有限数。这些检查衡量后向误差，不能保证病态系统的前向误差或
+    奇异矩阵和非有限数。常见数值尺度内可复用原 LU，对残差作一次修正。
+    这些检查衡量后向误差，不能保证病态系统的前向误差或
     由相近电压相减得到的电流精度；物理量还需要独立验收。
     """
 

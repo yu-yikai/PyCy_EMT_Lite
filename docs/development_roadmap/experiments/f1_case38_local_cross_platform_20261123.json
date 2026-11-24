@@ -1,0 +1,227 @@
+{
+  "schema": "pycy_f1_local_cross_platform_verification_v1",
+  "date": "2026-11-23",
+  "status": "local_pass",
+  "branch": "codex/emt-examples-longterm",
+  "source_commit": "9ec48d51021704660ac4471e8877c7ff28c096d1",
+  "python": "3.14.5",
+  "public_example_numbers": [
+    1,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38
+  ],
+  "quick_start_and_wheel_expected": {
+    "voltage_v": 10.0,
+    "load_current_a": 2.0,
+    "source_current_a": -2.0
+  },
+  "windows_clean_room": {
+    "commands_passed": 15,
+    "source_files_unchanged": 458,
+    "offline_package_cache": true,
+    "evidence": {
+      "receipt.json": {
+        "path": "local_reference/f1_windows_qa/20261123T074446343070Z/receipt.json",
+        "sha256": "3bd00bbef747ac5d2e5ecf7eb09f5c354acd90a0441bd4dd07ab267b60a13957",
+        "bytes": 10958
+      },
+      "journal.jsonl": {
+        "path": "local_reference/f1_windows_qa/20261123T074446343070Z/journal.jsonl",
+        "sha256": "e9809cc1929c0e0c209aa1f4ea709a80280002fe96e3cfde5088faa0c53d9d60",
+        "bytes": 7472
+      },
+      "source.zip": {
+        "path": "local_reference/f1_windows_qa/20261123T074446343070Z/source.zip",
+        "sha256": "6ae1bdfa95285aac9abe65ee7cbbfcbe5a2264e78c18fa071ea5c5f2ddaff1d4",
+        "bytes": 1980512
+      },
+      "source_before.json": {
+        "path": "local_reference/f1_windows_qa/20261123T074446343070Z/source_before.json",
+        "sha256": "6decd7197041f6a55a224004647f59bc37916ef00667b866296740b4eef1d7e4",
+        "bytes": 57805
+      },
+      "source_after.json": {
+        "path": "local_reference/f1_windows_qa/20261123T074446343070Z/source_after.json",
+        "sha256": "6decd7197041f6a55a224004647f59bc37916ef00667b866296740b4eef1d7e4",
+        "bytes": 57805
+      },
+      "wheel_numerical_smoke.log": {
+        "path": "local_reference/f1_windows_qa/20261123T074446343070Z/wheel_numerical_smoke.log",
+        "sha256": "8e45ad44787e49661ea7a3e754f1655e29cacb6b2a00225488b017717486706b",
+        "bytes": 225
+      }
+    },
+    "distributions": [
+      {
+        "path": "local_reference/f1_windows_qa/20261123T074446343070Z/dist/pycy_emt_lite-0.1.1-py3-none-any.whl",
+        "sha256": "5f1de9646f7f68310386a3fca0f47bd6b06158482e2f4720a01ef4f941327431",
+        "bytes": 112616
+      },
+      {
+        "path": "local_reference/f1_windows_qa/20261123T074446343070Z/dist/pycy_emt_lite-0.1.1.tar.gz",
+        "sha256": "01d2c33ce704c54f53199858bdfea77593f84f52c52f1914af470a2644859859",
+        "bytes": 1665463
+      }
+    ]
+  },
+  "windows_full_regression": {
+    "passed": 1625,
+    "includes_slow": true,
+    "junit": {
+      "path": "local_reference/parallel_line_fault_isolation_validation/windows-regression-20261123T0730Z/pytest.xml",
+      "sha256": "603292e21c6e1207c0598012b545668da2b4e163c3adab406f0568c9a4c776f5",
+      "bytes": 234219
+    },
+    "terminal": {
+      "path": "local_reference/parallel_line_fault_isolation_validation/windows-regression-20261123T0730Z/terminal.json",
+      "sha256": "7a5d277ab01a471b723b7babb7b1d1d8691703a674aa0ababcb90ae428d63454",
+      "bytes": 125
+    },
+    "locked_sync": {
+      "path": "local_reference/parallel_line_fault_isolation_validation/static-20261123T0728Z/uv-sync.log",
+      "sha256": "6b56c09a0c576a35f09fad4bba83f0ee8e1183d3a00a648bde2f8cfd38d80188",
+      "bytes": 57
+    },
+    "ruff": {
+      "path": "local_reference/parallel_line_fault_isolation_validation/windows-regression-20261123T0730Z/ruff.log",
+      "sha256": "a4443afdcfb6d7363adb285762515ccf7cf50473b1a05c20c1a50f6bed4d26b0",
+      "bytes": 20
+    },
+    "mypy": {
+      "path": "local_reference/parallel_line_fault_isolation_validation/static-20261123T0728Z/mypy.log",
+      "sha256": "a2767b4f5fbc495fbc163c1c3983210351cf45f12ec5302828989d1065383f9b",
+      "bytes": 45
+    }
+  },
+  "ubuntu_wsl2_clean_room": {
+    "commands_passed": 15,
+    "source_files_unchanged": 458,
+    "evidence": {
+      "environment.txt": {
+        "path": "local_reference/f1_milestone_ubuntu_20261123/20261123T075022286889546Z-9ec48d51/environment.txt",
+        "sha256": "b14d90abf8111f851e1b4f41f913ba3c26f72d99acafef126d42145d90b60766",
+        "bytes": 492
+      },
+      "steps.tsv": {
+        "path": "local_reference/f1_milestone_ubuntu_20261123/20261123T075022286889546Z-9ec48d51/steps.tsv",
+        "sha256": "930da1ec997f5a695e941d7fca6410f604c81845adea37dee9a351f96e915d6e",
+        "bytes": 256
+      },
+      "result.txt": {
+        "path": "local_reference/f1_milestone_ubuntu_20261123/20261123T075022286889546Z-9ec48d51/result.txt",
+        "sha256": "897447e4c372a0fb23d430b3d0e252e5a3fb5b23824620f587b665932a9dc4f4",
+        "bytes": 33
+      },
+      "source.tar": {
+        "path": "local_reference/f1_milestone_ubuntu_20261123/20261123T075022286889546Z-9ec48d51/source.tar",
+        "sha256": "52e24c145ae9d5f93fbe7f8cce261cf00d5b4a5682a96da97541a0888b3deedb",
+        "bytes": 5632000
+      },
+      "evidence.sha256": {
+        "path": "local_reference/f1_milestone_ubuntu_20261123/20261123T075022286889546Z-9ec48d51/evidence.sha256",
+        "sha256": "3a382591000c3577a48ef58782a9b7922557b9d8a995914b9a0f1b1d81dd1a86",
+        "bytes": 2202
+      },
+      "wheel_smoke.log": {
+        "path": "local_reference/f1_milestone_ubuntu_20261123/20261123T075022286889546Z-9ec48d51/wheel_smoke.log",
+        "sha256": "877b20eec749d4f034c0f99aed240d3a24cc3c547c59d3f017a0a2a26c7cd346",
+        "bytes": 1470
+      }
+    },
+    "distributions": [
+      {
+        "path": "local_reference/f1_milestone_ubuntu_20261123/20261123T075022286889546Z-9ec48d51/dist/pycy_emt_lite-0.1.1-py3-none-any.whl",
+        "sha256": "71611ed9e39612783062281eb68d2044b5d962e3296cb5c993b3c38eb2d22323",
+        "bytes": 111123
+      },
+      {
+        "path": "local_reference/f1_milestone_ubuntu_20261123/20261123T075022286889546Z-9ec48d51/dist/pycy_emt_lite-0.1.1.tar.gz",
+        "sha256": "a6d4bb8453fb6c07ca9c8cba4aac73aa6a7dacbc29b9e6287c8ee20982261eee",
+        "bytes": 1665974
+      }
+    ]
+  },
+  "ubuntu_wsl2_full_regression": {
+    "tests_passed": 1625,
+    "includes_slow": true,
+    "evidence": {
+      "terminal.json": {
+        "path": "local_reference/f1_milestone_ubuntu_20261123/full-9ec48d51-20261123T0746Z/terminal.json",
+        "sha256": "42622517e8d6f1ecdb7a08072d05e760b54814d775f8b073d6fda2f010baa21c",
+        "bytes": 174
+      },
+      "archive.sha256": {
+        "path": "local_reference/f1_milestone_ubuntu_20261123/full-9ec48d51-20261123T0746Z/archive.sha256",
+        "sha256": "0ec37f6872506a1436cc45b20f6eb7032a1c1d491db50ddf50965e1c2bc98511",
+        "bytes": 77
+      },
+      "source_before.sha256": {
+        "path": "local_reference/f1_milestone_ubuntu_20261123/full-9ec48d51-20261123T0746Z/source_before.sha256",
+        "sha256": "23383d6acaf87c9216090c0e2f02e0944b57b304639e5b3e447258434bf351eb",
+        "bytes": 55512
+      },
+      "source_after.sha256": {
+        "path": "local_reference/f1_milestone_ubuntu_20261123/full-9ec48d51-20261123T0746Z/source_after.sha256",
+        "sha256": "23383d6acaf87c9216090c0e2f02e0944b57b304639e5b3e447258434bf351eb",
+        "bytes": 55512
+      },
+      "uv-sync.log": {
+        "path": "local_reference/f1_milestone_ubuntu_20261123/full-9ec48d51-20261123T0746Z/uv-sync.log",
+        "sha256": "e299f0231804336397ae87aa02b771976db23a9bae3fec177fe32b72f555e003",
+        "bytes": 880
+      },
+      "ruff.log": {
+        "path": "local_reference/f1_milestone_ubuntu_20261123/full-9ec48d51-20261123T0746Z/ruff.log",
+        "sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+        "bytes": 19
+      },
+      "mypy.log": {
+        "path": "local_reference/f1_milestone_ubuntu_20261123/full-9ec48d51-20261123T0746Z/mypy.log",
+        "sha256": "02a88e044e14b966c27f6c162bdcba751601b93ba0a212fa2151bd889d9688ef",
+        "bytes": 44
+      },
+      "pytest.xml": {
+        "path": "local_reference/f1_milestone_ubuntu_20261123/full-9ec48d51-20261123T0746Z/pytest.xml",
+        "sha256": "60e5074435ac695eb99ad321da0595a8712811658c644a7f52455e85b9424f2f",
+        "bytes": 234217
+      }
+    }
+  },
+  "learning_guide_checks": {
+    "example_links_per_language": 34,
+    "case_guide_links_per_language": 23,
+    "documented_01_parameter_exercise": {
+      "voltage_v": 10.0,
+      "load_current_a": 1.0,
+      "source_current_a": -1.0
+    },
+    "case_38_saved_formats": [
+      "result.csv",
+      "result.json",
+      "result.npz",
+      "receiving_power.png",
+      "fault_path_currents.png"
+    ],
+    "evidence": {
+      "verification.log": {
+        "path": "local_reference/f1_milestone_ubuntu_20261123/readme_outputs_20261123T0748Z/verification.log",
+        "sha256": "bf139517a5afcb92fc5b6316a4aa3fcb886343c2f299f56a8dd1c1887e9bd225",
+        "bytes": 1717
+      },
+      "first_resistor_exercise.log": {
+        "path": "local_reference/f1_milestone_ubuntu_20261123/readme_outputs_20261123T0748Z/first_resistor_exercise.log",
+        "sha256": "fee68d961c4b0a1576129fc7a61931972f0c9b30f9ddb3f9d2e2e342f2ef88b2",
+        "bytes": 282
+      }
+    }
+  },
+  "last_recorded_hosted_ci": {
+    "record": "docs/development_roadmap/experiments/ci_57fbc81.json",
+    "run_id": 43856421332,
+    "status": "billing_lock_prevented_runner_start"
+  }
+}

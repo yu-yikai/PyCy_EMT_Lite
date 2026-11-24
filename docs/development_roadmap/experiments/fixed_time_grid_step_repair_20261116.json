@@ -1,0 +1,100 @@
+{
+  "schema": "fixed_time_grid_step_repair_v1",
+  "date": "2026-11-16",
+  "status": "VERIFIED_FIXED_STEP_SEMANTICS_REPAIR",
+  "summary": "固定网格的相邻时间作浮点减法后，原函数按ulp(h)判断，常把舍入差当成不同h。现在仅连续基础网格代表点使用配置h；保留声明终点，真实事件插点使用right-left。主循环与预分解共用同一私有函数，公共API、网格与时间容差不变。",
+  "changed_sources": [
+    {
+      "path": "pycy_emt_lite/core/simulation.py",
+      "bytes": 34952,
+      "sha256": "f6039c0ccef6a0370c7e5f52dc825f8ef521784e5daca753e65ec5d2422a8c35"
+    },
+    {
+      "path": "tests/test_solvers.py",
+      "bytes": 36356,
+      "sha256": "7e93118ab8a169c470d89bd5f37b9d801834863c7eb3f1765b2cf859e4e60bb4"
+    },
+    {
+      "path": "tests/test_time_grid.py",
+      "bytes": 16499,
+      "sha256": "ca9f03c94d54588ca94495ae2232d329567f29984a59e95991acc9a6d3348dfd"
+    }
+  ],
+  "before": {
+    "new_rc_cases": 12,
+    "failed": 8,
+    "passed": 4,
+    "observed_reuse_factorizations": 9,
+    "observed_precompute_factorizations": [
+      3,
+      4
+    ],
+    "expected_factorizations": 2,
+    "source_sha256": "b6fdb849172830cff51bfa31af87028524072adabaeeda580ab02c4e4751087d"
+  },
+  "after": {
+    "new_rc_cases_passed": 12,
+    "checks": "TR/BE × reuse/precompute；常规及8ULP声明终点的独立RC离散闭式、两份LU；真实9ULP事件末区间的动态闭式。"
+  },
+  "project_checks": {
+    "locked_sync_packages": 27,
+    "ruff": "PASS",
+    "mypy": {
+      "status": "PASS",
+      "source_files": 39
+    },
+    "pytest": {
+      "passed": 1566,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "includes_slow": true,
+      "seconds": "518.071",
+      "session_id": 17585,
+      "exit_code": 0
+    },
+    "source_scope": "Exact 120 Python files and two dependency files in source_snapshot; all 363 frozen bindings rechecked after both terminal runs."
+  },
+  "references": {
+    "source_snapshot": {
+      "path": "local_reference/c1_openloop_reference_research/20261116T153547253025Z_candidate_fixed_h_pair_v2/source_snapshot.json",
+      "bytes": 22164,
+      "sha256": "3950a1cd10021020f3523f7e302e9e319f0d5e5210d2caef3c4984b47d88b709"
+    },
+    "before_fix_rc": {
+      "path": "local_reference/native_static_reviews/time_grid_rc_before_fix_scaled_20261116T153223199492Z/receipt.json",
+      "bytes": 1761,
+      "sha256": "5bbb0ae992fb4fc7e35fc601c2ee011522327a949b9cf2b3edaa47112dcfaaf4"
+    },
+    "fixed_h_static_review": {
+      "path": "local_reference/native_static_reviews/fixed_h_independent_static_20261116T153513387641Z/receipt.json",
+      "bytes": 4610,
+      "sha256": "50d5c5d62269cefb25695e0e29224bd550adcb990972256c8aed532b38537613"
+    },
+    "full_pytest_xml": {
+      "path": ".tmp/longterm/c1-final-20261116-v2.xml",
+      "bytes": 225976,
+      "sha256": "06fe3a75799f92c9bb5ef4498e98fadc8536ef7c8e6bdba1a99a542dd212805b"
+    },
+    "full_pytest_log": {
+      "path": ".tmp/longterm/c1-final-20261116-v2.log",
+      "bytes": 1816,
+      "sha256": "40df83ec6ddd707509ebcb61816f659c70b225fc07c6a0b91065db8190925025"
+    }
+  },
+  "candidate_cross_check": {
+    "status": "STILL_FAIL_ORIGINAL_COMMONMODE_GATE",
+    "coarse_maximum_full_q_V": "0.000002533674891383200133321816799866678183200133321816799866678183200000000",
+    "limit_V": "0.000002",
+    "candidate_accepted": false,
+    "interpretation": "修复固定h语义和矩阵复用，但未解决VSC共模超限，不能当作候选验收完成。",
+    "root_closure": {
+      "path": "local_reference/c1_openloop_reference_research/20261116T153547253025Z_candidate_fixed_h_pair_v2/ROOT_numeric_closure.json",
+      "bytes": 10401,
+      "sha256": "b6f409150c1d3be55e6bfc55242c456be379ae47244386cae3c42ead9286e6c1"
+    }
+  },
+  "dependencies_added": 0,
+  "public_frameworks_added": 0,
+  "commit_recorded_in_closeout": true
+}

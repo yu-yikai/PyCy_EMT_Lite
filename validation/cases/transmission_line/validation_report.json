@@ -1,0 +1,388 @@
+{
+  "case_id": "transmission_line",
+  "passed": true,
+  "run_id": "20261104T093204620394Z",
+  "reference_platform": "MATLAB R2025a Update 1 / Simulink / Simscape",
+  "reference_provenance": {
+    "schema_version": 1,
+    "origin": "MathWorks official model with tighter solver overrides; unmodified 50-T circuit",
+    "export_time_utc": "2026-11-04 09:27:10 +0000",
+    "source_url": "https://www.mathworks.com/help/simscape/ug/transmission-line.html",
+    "example_id": "simscape/TransmissionLineExample",
+    "model_name": "TransmissionLine",
+    "matlab_version": "25.1.0.2973910 (R2025a) Update 1",
+    "required_products": [
+      "MATLAB",
+      "Simulink",
+      "Simscape"
+    ],
+    "model_sha256": "844a8501b9e25a4fe881ecfc7ea14d7d1b0e9bdba38986572ba1a910551d86fe",
+    "section_source_sha256": "e6bae69228f1b4c2d568097ca973ff2b13e8ab2cccdb07cfbaeae7b22492ae73",
+    "section_library_sha256": "c9de97cb0b86024c03fe16ec4f1ba979be896b4a0ccda8fac066fdb84c899444",
+    "section_source_file": "C:\\Program Files\\MATLAB\\R2025a\\toolbox\\physmod\\simscape\\supporting_files\\example_libraries\\+TransmissionLine\\t_section.ssc",
+    "section_library_file": "C:\\Program Files\\MATLAB\\R2025a\\toolbox\\physmod\\simscape\\supporting_files\\example_libraries\\TransmissionLine_lib.slx",
+    "original_workspace_variable_bindings": {
+      "length": 5,
+      "nSegments": 50,
+      "segmentLength": 0.1,
+      "R": 0.0067,
+      "C": 1e-10,
+      "Z": 50,
+      "G": 5e-06
+    },
+    "solver": "ode15s",
+    "relative_tolerance": 1e-08,
+    "absolute_tolerance": 1e-10,
+    "local_solver": "off",
+    "max_step_s": 1e-11,
+    "refined_max_step_s": 5e-12,
+    "stop_time_s": 5e-08,
+    "source": {
+      "waveform": "10*sin(2*pi*200e6*t)",
+      "amplitude_v": 10,
+      "frequency_hz": 200000000.0,
+      "phase_rad": 0,
+      "series_resistance_ohm": 0
+    },
+    "load_resistance_ohm": 50,
+    "segments": 50,
+    "total_length_m": 5,
+    "segment_length_m": 0.1,
+    "per_m": {
+      "R_ohm": 0.0067,
+      "L_h": 2.5e-07,
+      "G_s": 5e-06,
+      "C_f": 1e-10
+    },
+    "each_T": {
+      "half_arm_R_ohm": 0.000335,
+      "half_arm_L_h": 1.25e-08,
+      "shunt_R_ohm": 2000000.0,
+      "shunt_C_f": 1e-11,
+      "capacitor_ESR_ohm": 0
+    },
+    "initial_state": {
+      "inductors": 100,
+      "capacitors": 50,
+      "current_max_abs_a": 0,
+      "voltage_max_abs_v": 0,
+      "DoDC": "off"
+    },
+    "signal_mapping": {
+      "v_source": "AC_Voltage.v",
+      "v_boundary_15": "S2.T_5.p2.v",
+      "v_boundary_25": "S3.T_5.p2.v",
+      "v_load": "Load.v",
+      "i_source_to_line": "-AC_Voltage.i",
+      "i_load": "Load.i"
+    },
+    "voltage_reference": "All voltages relative to the common electrical reference n=0.",
+    "current_direction": "Source to first line section; output line to 50-ohm load.",
+    "plot_label_issue": "Official S2.T_5.p2.v is labelled Segment25 but is boundary15; true boundary25 is S3.T_5.p2.v. Original script and mislabelled trace preserved.",
+    "plot_source_sha256": "c366e2c89abab08722e5ba3513e91219130f8cf417d590f7a89954a0e341d126",
+    "normalization": "Native timestamps/values retained, last at duplicate times; no fitted shifts, scaling or resampling.",
+    "topology_changes": "none",
+    "electrical_parameter_changes": "none",
+    "solver_changes": "ode15s, RelTol1e-8/AbsTol1e-10, MaxStep10ps and independent5ps refinement",
+    "reference_self_convergence": {
+      "method": "Absolute-time linear interpolation on union of native timestamps, no shift or amplitude fitting",
+      "window_s": [
+        0,
+        5e-08
+      ],
+      "baseline_max_step_s": 1e-11,
+      "refined_max_step_s": 5e-12,
+      "passed": true,
+      "signals": {
+        "v_source": {
+          "rmse": 9.255984226315207e-05,
+          "nrmse": 9.255984226315207e-06,
+          "max_abs_difference": 0.00019505415577469876,
+          "scale": 10,
+          "max_nrmse": 3e-05,
+          "max_abs_limit": 0.0005,
+          "passed": true
+        },
+        "v_boundary_15": {
+          "rmse": 8.636047665619824e-05,
+          "nrmse": 8.636047665619824e-06,
+          "max_abs_difference": 0.00022720134210452159,
+          "scale": 10,
+          "max_nrmse": 3e-05,
+          "max_abs_limit": 0.0005,
+          "passed": true
+        },
+        "v_boundary_25": {
+          "rmse": 8.120253121072351e-05,
+          "nrmse": 8.12025312107235e-06,
+          "max_abs_difference": 0.0002148385688549581,
+          "scale": 10,
+          "max_nrmse": 3e-05,
+          "max_abs_limit": 0.0005,
+          "passed": true
+        },
+        "v_load": {
+          "rmse": 6.730982816406012e-05,
+          "nrmse": 6.730982816406012e-06,
+          "max_abs_difference": 0.0002069258425461129,
+          "scale": 10,
+          "max_nrmse": 3e-05,
+          "max_abs_limit": 0.0005,
+          "passed": true
+        },
+        "i_source_to_line": {
+          "rmse": 2.1477949865029506e-06,
+          "nrmse": 1.0738974932514752e-05,
+          "max_abs_difference": 9.981355327657107e-06,
+          "scale": 0.2,
+          "max_nrmse": 3e-05,
+          "max_abs_limit": 1e-05,
+          "passed": true
+        },
+        "i_load": {
+          "rmse": 1.3461965632810458e-06,
+          "nrmse": 6.730982816405229e-06,
+          "max_abs_difference": 4.138516850910046e-06,
+          "scale": 0.2,
+          "max_nrmse": 3e-05,
+          "max_abs_limit": 1e-05,
+          "passed": true
+        }
+      }
+    },
+    "samples": 5066,
+    "refined_samples": 10041,
+    "simulation_elapsed_seconds": [
+      5.1905727,
+      2.6719612
+    ],
+    "scope": "Finite lumped 50-T RLCG ladder, not Bergeron or distributed-delay validation.",
+    "redistribution": "Original MathWorks model, source and data remain local; no redistribution permission asserted."
+  },
+  "reference_sha256": "2fc60e7440aaa4b51d351d7e536c21bf884a22a3fd4a9993c35ac3f433bba89f",
+  "model_sha256": "844a8501b9e25a4fe881ecfc7ea14d7d1b0e9bdba38986572ba1a910551d86fe",
+  "provenance_sha256": "7489098eae669c74a124df5bd3a44cfba8241983b538460e836f57508ff6c327",
+  "manifest_sha256": "c2d74d55aeee1f228293d16f96882a9d9a3c412f9337e337dee38544836aa5ca",
+  "example_sha256": "a63a3847386f0668baeadbd71964d112801273cb03c7bb173fafde4421db3f34",
+  "export_script_sha256": "acd788c278e135af040ad402b9fe47d9aaa05daf39595c5d623f788d35448f71",
+  "parameters_sha256": "80745cefe77069ff595fa0fd71729942672fc543c7d8ef66ecccb13069c9a079",
+  "candidate_data_sha256": {
+    "pycy.csv": "0f8a2497a800243dea5677a743b03b153c86e665906151867102cd20adbfee08",
+    "pycy.json": "f7073c92eb4408143668e01c910d55b39497ed1838a1ca047a4a9abedbea298f",
+    "pycy.npz": "c2f047e34f9e396e16018bb08bb1a91c1d2f010e72c2dd268eb98f87ade04c03"
+  },
+  "raw_reference_sha256": {
+    "local_reference/transmission_line/raw_results/default_native.csv": "7802c416bf299ad10c37afc67b433d7e1d9848584892eda049fb0ba3283636ea",
+    "local_reference/transmission_line/raw_results/default_native_physics_check.json": "6156560a1ad7d1b5bd46d7c52941e8921fc1a871eb9577ace6ee0ea3dd9a876b",
+    "local_reference/transmission_line/raw_results/default_simulink_output.mat": "b7a73dea6ee418e56c22324b398138ec4745035dc070180e583f7fb52ddc2412",
+    "local_reference/transmission_line/raw_results/official_plot_label_evidence.csv": "feefe17c840b5edfbd6860b43c72f978497bedeaa214fcba9739c9d47c8dd311",
+    "local_reference/transmission_line/raw_results/simscape_native.csv": "2fc60e7440aaa4b51d351d7e536c21bf884a22a3fd4a9993c35ac3f433bba89f",
+    "local_reference/transmission_line/raw_results/simulink_output.mat": "ee1c095bd9cf7073db84ade1d24962b24c01593325eb03d1ba29ed39ba9b3c3d",
+    "local_reference/transmission_line/raw_results/TransmissionLinePlotV_original.m": "c366e2c89abab08722e5ba3513e91219130f8cf417d590f7a89954a0e341d126"
+  },
+  "git_head_at_run": "4217cdb7e26f0cd4d5631c0d80f50af1ea815c7d",
+  "git_status_at_run": [
+    " M .github/workflows/ci.yml",
+    " M README.md",
+    " M README.zh-CN.md",
+    " M docs/development_roadmap/02_reference_catalog.md",
+    " M docs/development_roadmap/04_long_term_roadmap.md",
+    " M docs/development_roadmap/next_actions.md",
+    " M docs/development_roadmap/progress.md",
+    " M docs/development_roadmap/reference_catalog.json",
+    " M docs/development_roadmap/tasks.json",
+    " M docs/development_roadmap/validation_status.md",
+    " M validation/cases/transmission_line/manifest.json",
+    "?? docs/development_roadmap/experiments/ci_8a65b6e.json",
+    "?? docs/development_roadmap/experiments/transmission_line_validation_plan.md",
+    "?? examples/22_t_section_transmission_line.py",
+    "?? tests/test_t_section_transmission_line.py",
+    "?? validation/cases/transmission_line/README.md",
+    "?? validation/cases/transmission_line/compare.py",
+    "?? validation/cases/transmission_line/export_reference.m"
+  ],
+  "package_source_sha256": {
+    "pycy_emt_lite/__init__.py": "81980a448c4506c4a373d308339c490967a02938c2cb0f0f33a1360dec21d46e",
+    "pycy_emt_lite/analysis/__init__.py": "20f635eec36432d84d6bf2ed666ecf45230962c7b4aa875838a2b9a65c5aa8a0",
+    "pycy_emt_lite/analysis/metrics.py": "14407925b79d9c3ea98c1cf3e4f9208f7820a22a862d70e067632f301aa9b143",
+    "pycy_emt_lite/cases.py": "f6c710cbbf2306752bd2345c1f5fc9a8d74b6738f30dd15fcfeb4452a192e986",
+    "pycy_emt_lite/components/__init__.py": "7cdac999206ef73c505ae8f29d9b531355d79bca9dcba02dd6f2c1b332ab4801",
+    "pycy_emt_lite/components/base.py": "d640819f5fddc223f7626059f8a4e309b4502851afcdeb8d5809e2e798fc6c1a",
+    "pycy_emt_lite/components/basic.py": "b2a092b07a15a1145cc582c47b1df6f6124d65c972f46b9450faa8c0acb5cc0b",
+    "pycy_emt_lite/components/lines.py": "dd4a0e5d4ee71ef7a655e31064c002536ea994aa185c0e6a47398d1cbac8c74b",
+    "pycy_emt_lite/components/power_electronics.py": "7b28e0c56436fcbf6ad357ee1336c1a3538fd5668a953e7487de6aedd30a1fab",
+    "pycy_emt_lite/components/switching.py": "6a422186320def189dcf360083c017715c80e34df769dbd14cca2c58e810a9d6",
+    "pycy_emt_lite/components/three_phase.py": "9cddd858ba4d27572218dc3a6790b8aa92ac0b71c703c9b7ddec82ddcd60c025",
+    "pycy_emt_lite/components/transformers.py": "632617a185bb69441535bdff552f0b4473566d64f6a78211622962cbb3d66609",
+    "pycy_emt_lite/controls/__init__.py": "f9685f649e794aba54a8cec566390ee8e9a992b7baf41d7a592a74d12980a069",
+    "pycy_emt_lite/controls/blocks.py": "e862509d8dceb31a1151ff710d4f861267e23e9dccd1843f98f774fb07684a7b",
+    "pycy_emt_lite/controls/pll.py": "7eca0fb9c6f6464bb36f82d7cad1b27be5bd1b6455b046b5ad3279c075a36efa",
+    "pycy_emt_lite/controls/pwm.py": "6a2469d7957c74ce9ff25e13020541e7c169f38820538e8a71467919ce9391d1",
+    "pycy_emt_lite/controls/transforms.py": "c48dbe02a1cd4b1c12a8fd29439038b76ada81d68f71f7b1183eec2bdc98ab99",
+    "pycy_emt_lite/controls/vsc.py": "1d12cc5a728f4085f1e723ac48b055e16e305cf91aafd130bf530f6c790dc635",
+    "pycy_emt_lite/converters/__init__.py": "9f94cc67b26700a8bf1f022c5c806b5e5415ecaf8743d36b2ddceddb6ec70ba6",
+    "pycy_emt_lite/converters/filters.py": "11112e0bc233809fc37c3fcf39cce41dab692a704a711d113bff31aa450a6be2",
+    "pycy_emt_lite/core/__init__.py": "3d0e3034e589c19e37746a909832f2b47780ea9793b011bb2bdf6141dd445ee5",
+    "pycy_emt_lite/core/circuit.py": "ee628295a1477c334d66e366ed594f8b824ca66ce36e8c17980972a7f485b0ac",
+    "pycy_emt_lite/core/context.py": "9886feeb12b4c30e115f4ada5594c504cb196ecdb491699a2b7a89fa16902c4e",
+    "pycy_emt_lite/core/nodes.py": "71167de688ff341bf99f6fb0beedd05946db4d83eeb9301a387a021ca6f0cffd",
+    "pycy_emt_lite/core/simulation.py": "b6fdb849172830cff51bfa31af87028524072adabaeeda580ab02c4e4751087d",
+    "pycy_emt_lite/core/solvers.py": "031f3d2f118d1d88f34d712bdeeb864ecc13a3fa7d89c7288b984b2b2c31571a",
+    "pycy_emt_lite/core/stamping.py": "9f23c65cbaa7d33ea0406bd0d33fe3b5fd007192fd60dbe78399586a35f02f87",
+    "pycy_emt_lite/core/variables.py": "6567e110c6b1aedc7faf713ae05d3297b5f70cca98ebf4bc28fcb2f7d05ea0b8",
+    "pycy_emt_lite/events/__init__.py": "5af09c087d751859ff97c6b4a01670312d5618aed864ea042fccf736d660c032",
+    "pycy_emt_lite/events/base.py": "9cc671d975b5ea60780b29e7a11042f3b39f2bb93454dc2cc72bacfee4bb6663",
+    "pycy_emt_lite/events/standard.py": "638e17b7d7601cd901e96cec99c5238c330780e31711c3d5e92e06d56b32d46d",
+    "pycy_emt_lite/io/__init__.py": "1eaf1526eecf1d41982a3e2b6685b0a653c233e9b57546d437e1dc4ae582f93e",
+    "pycy_emt_lite/io/results.py": "aa02511777508c2f048aae9d459dfd354d0e0d9b539a10af8f0684d66018a915",
+    "pycy_emt_lite/machines/__init__.py": "9f16d3bf2e00d27f4d8d1bacf35d8ef968f2f79dc5d758af581b04bd9f40232e",
+    "pycy_emt_lite/machines/park_generator.py": "e1f5f5c3b26ab2aaab4db9234954c50913c7890135da4f933b0afc9202e43caa",
+    "pycy_emt_lite/machines/synchronous.py": "a6add8058a9788daba21a1dfac986bef6e4a4c698ec4f8e21fdcb07e1426b06f",
+    "pycy_emt_lite/visualization/__init__.py": "23a5988f06bd7d833a9d7a0358a55a3d6a57ed96f5e1812c178c0d8ae29267ea",
+    "pycy_emt_lite/visualization/plotting.py": "6645d31b1c6ae11be45f5652f222a36576dab075c336788d25d15a788c64e346",
+    "pycy_emt_lite/visualization/reporting.py": "5ae8a1642303cef26f6c425c36eb49256b318d9773f9bbeb792ca8bcded264d0"
+  },
+  "python_version": "3.14.5",
+  "numpy_version": "2.5.2",
+  "candidate_method": "trapezoidal",
+  "candidate_step_seconds": 1e-11,
+  "candidate_samples": 5001,
+  "reference_samples": 5066,
+  "known_difference": "Same finite 50-cell symmetric RLCG T ladder and zero storage initial state. Reference solver is independently refined before candidate comparison; PyCy uses trapezoidal integration at 10 ps. This is a lumped T-ladder validation, not Bergeron, a pi ladder, or an exact distributed cable. The official plot's S2.T_5.p2.v is boundary 15, not 25; true boundary 25 is S3.T_5.p2.v. No time, phase, amplitude or propagation-delay fitting.",
+  "windows": [
+    {
+      "window_seconds": [
+        0.0,
+        5e-08
+      ],
+      "alignment": "absolute_time_linear_interpolation",
+      "passed": true,
+      "signals": {
+        "v:n0": {
+          "reference": "v_source",
+          "unit": "V",
+          "scale": 10.0,
+          "rmse": 3.469041785379599e-05,
+          "nrmse": 3.469041785379599e-06,
+          "max_abs_error": 0.00019717621406556418,
+          "candidate_mean": 5.551115123125783e-17,
+          "reference_mean": 1.8976255894420646e-07,
+          "candidate_rms": 7.07097476095507,
+          "reference_rms": 7.070975197778597,
+          "limits": {
+            "max_nrmse": 0.003,
+            "max_abs_error": 0.05
+          },
+          "passed": true
+        },
+        "v:n15": {
+          "reference": "v_boundary_15",
+          "unit": "V",
+          "scale": 10.0,
+          "rmse": 0.0011179284212007503,
+          "nrmse": 0.00011179284212007502,
+          "max_abs_error": 0.0029294738059366665,
+          "candidate_mean": 0.31921573389161434,
+          "reference_mean": 0.3192295260598628,
+          "candidate_rms": 6.508196140853023,
+          "reference_rms": 6.508235214885916,
+          "limits": {
+            "max_nrmse": 0.003,
+            "max_abs_error": 0.05
+          },
+          "passed": true
+        },
+        "v:n25": {
+          "reference": "v_boundary_25",
+          "unit": "V",
+          "scale": 10.0,
+          "rmse": 0.001695557279130551,
+          "nrmse": 0.0001695557279130551,
+          "max_abs_error": 0.004130422341901863,
+          "candidate_mean": 0.31538824722429076,
+          "reference_mean": 0.31540135358705845,
+          "candidate_rms": 6.119645167241087,
+          "reference_rms": 6.11969292660687,
+          "limits": {
+            "max_nrmse": 0.003,
+            "max_abs_error": 0.05
+          },
+          "passed": true
+        },
+        "v:n50": {
+          "reference": "v_load",
+          "unit": "V",
+          "scale": 10.0,
+          "rmse": 0.002722677633199967,
+          "nrmse": 0.0002722677633199967,
+          "max_abs_error": 0.008012402218880998,
+          "candidate_mean": 0.02036429901732339,
+          "reference_mean": 0.020326944958714944,
+          "candidate_rms": 5.02001001944761,
+          "reference_rms": 5.0200923045973065,
+          "limits": {
+            "max_nrmse": 0.003,
+            "max_abs_error": 0.05
+          },
+          "passed": true
+        },
+        "i:L1_left": {
+          "reference": "i_source_to_line",
+          "unit": "A",
+          "scale": 0.2,
+          "rmse": 5.230047696492194e-05,
+          "nrmse": 0.00026150238482460967,
+          "max_abs_error": 0.00010535706569805847,
+          "candidate_mean": -0.00012819793971782963,
+          "reference_mean": -0.00012801790668215754,
+          "candidate_rms": 0.14908303120282698,
+          "reference_rms": 0.14908250974567008,
+          "limits": {
+            "max_nrmse": 0.003,
+            "max_abs_error": 0.001
+          },
+          "passed": true
+        },
+        "i:Rload": {
+          "reference": "i_load",
+          "unit": "A",
+          "scale": 0.2,
+          "rmse": 5.445355266400369e-05,
+          "nrmse": 0.00027226776332001844,
+          "max_abs_error": 0.00016024804437764044,
+          "candidate_mean": 0.00040728598034646705,
+          "reference_mean": 0.00040653889917430003,
+          "candidate_rms": 0.10040020038895221,
+          "reference_rms": 0.10040184609194612,
+          "limits": {
+            "max_nrmse": 0.003,
+            "max_abs_error": 0.001
+          },
+          "passed": true
+        }
+      }
+    }
+  ],
+  "artifacts": {
+    "directory": "local_reference/transmission_line/comparison_results/20261104T093204620394Z",
+    "plot": "comparison.png",
+    "candidate_data": [
+      "pycy.csv",
+      "pycy.json",
+      "pycy.npz"
+    ]
+  },
+  "comparison_plot_sha256": "478575f472fc894a0d65b0093e79a9eb5760bd220a8368f7fceb60f73df4c14b",
+  "input_snapshot_sha256": {
+    "22_t_section_transmission_line.py": "a63a3847386f0668baeadbd71964d112801273cb03c7bb173fafde4421db3f34",
+    "compare.py": "1d03c113bd9be5a800522a9f0e0cbe3b442da228131ef6f180b5bc0d971e04d8",
+    "comparison.py": "8545b5e8fba8abdc2f20cdc2006342bb428765110c5bf9052103dfb0e349affe",
+    "export_reference.m": "acd788c278e135af040ad402b9fe47d9aaa05daf39595c5d623f788d35448f71",
+    "manifest.json": "c2d74d55aeee1f228293d16f96882a9d9a3c412f9337e337dee38544836aa5ca",
+    "parameters.json": "80745cefe77069ff595fa0fd71729942672fc543c7d8ef66ecccb13069c9a079",
+    "provenance.json": "7489098eae669c74a124df5bd3a44cfba8241983b538460e836f57508ff6c327",
+    "reference.csv": "2fc60e7440aaa4b51d351d7e536c21bf884a22a3fd4a9993c35ac3f433bba89f",
+    "runner.py": "c30832285ddb3f8e0706368c1f017b95af0dcca09599e6a084eed3b8669e50b5",
+    "TransmissionLine.slx": "844a8501b9e25a4fe881ecfc7ea14d7d1b0e9bdba38986572ba1a910551d86fe"
+  }
+}

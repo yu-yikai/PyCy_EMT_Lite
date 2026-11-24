@@ -1,0 +1,199 @@
+{
+  "reference_id": "mw-source-line-transformer-r2025a",
+  "reference_model_sha256": "a46b7c34658c65ce58c6e51a6d167244c06f4e839063c00bd1ff75c78bdc5a08",
+  "physical_parameters": {
+    "source": {
+      "frequency_hz": 60.0,
+      "peak_voltage_v": 600124.9869818786,
+      "phase_degrees": 0.0,
+      "series_resistance_ohm": 2.0
+    },
+    "line": {
+      "phases": 1,
+      "length_km": 150.0,
+      "pi_sections": 2,
+      "nominal_frequency_hz": 60.0,
+      "r_ohm_per_km": 0.011,
+      "l_h_per_km": 0.0008674,
+      "c_f_per_km": 1.341e-08,
+      "specified_conductance_s_per_km": 0.0,
+      "actual_section_r_ohm": 0.8224445766062685,
+      "actual_section_l_h": 0.06495433715369778,
+      "actual_section_total_c_f": 1.0065300911250024e-06,
+      "actual_section_total_g_s": 9.902004195214437e-09,
+      "corrected_shunt_resistances_ohm": [
+        201979312.5281228,
+        100989656.2640614,
+        201979312.5281228
+      ],
+      "formula": "z=r+j*w*l; y=j*w*c; gamma=sqrt(z*y); Zc=sqrt(z/y); d=75km; Z=Zc*sinh(gamma*d); Y=2/Zc*tanh(gamma*d/2); R=ReZ,L=ImZ/w,G=ReY,C=ImY/w; endpoints Y/2 and middle Y"
+    },
+    "transformer": {
+      "rating_va": 250000000.0,
+      "frequency_hz": 60.0,
+      "primary_rated_rms_v": 424352.44785437494,
+      "secondary_rated_rms_v": 181865.33479473213,
+      "turns_ratio_primary_to_secondary": 2.3333333333333335,
+      "winding_resistance_pu": 0.001,
+      "primary_leakage_pu": 0.15,
+      "secondary_leakage_pu": 0.0,
+      "magnetizing_resistance_pu": 500.0,
+      "magnetizing_inductance_pu": 500.0,
+      "primary_r_ohm": 0.7203,
+      "primary_l_h": 0.28659826377273057,
+      "secondary_r_ohm": 0.13230000000000003,
+      "secondary_l_h": 0.0,
+      "magnetizing_r_ohm": 360150,
+      "magnetizing_l_h": 955.3275459091019,
+      "magnetizing_location": "after primary R1/L1, before ideal ratio",
+      "saturation": false
+    },
+    "each_compensation": {
+      "nominal_rms_v": 424352.44785437494,
+      "nominal_active_power_w": 366666.6666666667,
+      "nominal_inductive_var": 110000000.0,
+      "series_r_ohm": 5.456757551178724,
+      "series_l_h": 4.342349687620599
+    },
+    "z1": {
+      "series_r_ohm": 0.734,
+      "series_l_h": 0.02085,
+      "orientation": "transformer secondary toward load_bus"
+    },
+    "zs": {
+      "series_r_ohm": 11.0,
+      "series_l_h": 0.2925,
+      "orientation": "load_bus toward ground; opposite native Il_Zs"
+    },
+    "load": {
+      "nominal_rms_v": 181865.33479473213,
+      "nominal_active_power_w": 200000000.0,
+      "nominal_capacitive_var": 50000000.0,
+      "parallel_r_ohm": 165.37500000000003,
+      "parallel_c_f": 4.0099506951850675e-06,
+      "type": "constant impedance; not constant P/Q"
+    }
+  },
+  "topology": "src--Rs--send--Rline1--Lline1--mid--Rline2--Lline2--recv--Rp--Lp--core; core has Rm||Lm||idealT(n); secondary--(R2+Rz1)--Lz1--load_bus--0Vammeter--load; load R||C to ground; send/mid/recv have corrected C||G; send/recv have series Rcomp/Lcomp to ground; load_bus has series Rzs/Lzs to ground",
+  "exact_reduction": "R2 and Rz1 combined only because in the same unbranched series path; retain both parameters and separate loss accounting. The eliminated transformer external secondary terminal voltage is not the ideal secondary voltage.",
+  "initialization": {
+    "method": "All 12 physical L/C states initialized by independent sinusoidal phasors q: x(0)=Im(q), convention Im(q*exp(j*2*pi*60*t)). Compute from physical impedances, not hardcoded commercial states or native A/B.",
+    "native_state_order_for_audit": [
+      "Il_Z1",
+      "Il_Zs",
+      "Il_110 Mvar",
+      "Il_110 Mvar2",
+      "Il_section 1: 150 km Line",
+      "Il_section 2: 150 km Line",
+      "Il_Lm: Linear Transformer",
+      "Il_winding_1: Linear Transformer",
+      "Uc_Load",
+      "Uc_input: 150 km Line",
+      "Uc_section_2: 150 km Line",
+      "Uc_output: 150 km Line"
+    ],
+    "native_x0_audit_only_not_candidate_input": [
+      -1676.1385611824408,
+      1748.8906115987725,
+      366.0314893585058,
+      -340.36210306471156,
+      -734.1107675775241,
+      -954.5229785120378,
+      -1.3300575800916816,
+      -719.8623044210544,
+      -35768.863694024374,
+      1972.9099533064864,
+      -8492.973607929822,
+      -18698.524975024862
+    ],
+    "candidate_current_signs": "Compensation sending and Zs are bus-to-ground, negative of the corresponding native states. All other normalized states keep native signs.",
+    "meter": "Existing 0V VoltageSource Iload from load_bus to load reproduces original ideal CurrentMeasurement; only Rload/Cload downstream, Zs upstream; power zero."
+  },
+  "time_step_second": 1e-05,
+  "stop_second": 0.05,
+  "integration_method": "trapezoidal",
+  "linear_solver_mode": "reuse",
+  "reference_solver": {
+    "solver": "ode15s",
+    "initial_step_s": 1e-09,
+    "automatic_absolute_tolerance_scaling": false,
+    "baseline": {
+      "relative_tolerance": 1e-09,
+      "absolute_tolerance": 1e-09,
+      "maximum_step_s": 1e-05
+    },
+    "refined": {
+      "relative_tolerance": 1e-10,
+      "absolute_tolerance": 1e-10,
+      "maximum_step_s": 5e-06
+    },
+    "generated_state_space_absolute_tolerance": "auto; explicitly verify and record, fail rather than silently overriding physical block properties"
+  },
+  "preimplementation_evidence_sha256": {
+    "native_parameter_audit.json": "8d41e66f320b48bb1c0d492fe7a679ad3c50384a499173fd5520a9ce2e5abf58",
+    "power_gui_independent_feasibility.json": "4ec7e01336eb321c4dd2e6d71c2959e08adea0df6f43acd37071ea5696808234",
+    "evidence_inventory_final.json": "9297e7ef3f59aed86f9791c9e4ee7c98f15f0a09dc467481947d6e2e2a8c6e4f"
+  },
+  "independent_reference_accuracy_oracle": {
+    "purpose": "Reference accuracy audit only; not candidate initialization input. Derived before candidate from original physical impedances, with no native A/B or waveform fitting. Exact sine is Im(q*exp(j*omega*t)). Candidate tests separately solve physical nodal equations.",
+    "source_report_sha256": "4ec7e01336eb321c4dd2e6d71c2959e08adea0df6f43acd37071ea5696808234",
+    "peak_phasors": {
+      "v_sending": {
+        "real": 599216.7622413585,
+        "imag": 1972.9099533063195
+      },
+      "v_middle": {
+        "real": 580868.6460193035,
+        "imag": -8492.973607931035
+      },
+      "v_receiving": {
+        "real": 557125.9053050365,
+        "imag": -18698.524975027114
+      },
+      "v_load": {
+        "real": 191200.93612649295,
+        "imag": -35768.86369400455
+      },
+      "i_z1": {
+        "real": 1060.3236706411087,
+        "imag": -1676.1385611822445
+      },
+      "i_zs": {
+        "real": -149.91458816460005,
+        "imag": -1748.8906115986842
+      },
+      "i_comp_sending": {
+        "real": 2.425283396837576,
+        "imag": -366.0314893585074
+      },
+      "i_comp_receiving": {
+        "real": -10.287703727008944,
+        "imag": -340.362103064713
+      },
+      "i_line1": {
+        "real": 452.058433346113,
+        "imag": -734.1107675774429
+      },
+      "i_line2": {
+        "real": 448.82999807653056,
+        "imag": -954.5229785119484
+      },
+      "i_magnetizing": {
+        "real": -0.18714919134541505,
+        "imag": -1.330057580091166
+      },
+      "i_primary": {
+        "real": 455.56733866350646,
+        "imag": -719.8623044209698
+      },
+      "i_source": {
+        "real": 454.11237026005983,
+        "imag": -986.4549766531597
+      },
+      "i_load": {
+        "real": 1210.2382588057087,
+        "imag": 72.75205041643954
+      }
+    }
+  }
+}

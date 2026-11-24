@@ -439,6 +439,8 @@ $$i_r(t)=v_r(t)/Z_0+H_r(t),\quad H_r=-v_s(t-\tau)/Z_0-i_s(t-\tau).$$
 
 This explains both minus signs in `BergeronLine.stamp()`. See the [PSCAD Bergeron description](https://www.pscad.com/webhelp-v5-ol/EMTDC/Transmission_Lines/The_Bergeron_Model.htm) for background; this project implements only the teaching approximation declared here.
 
+<a id="bergeron-wavefront"></a>
+
 ### 8.2 Current-step stamps and delay-history updates
 
 At each port, independently write `Y+=aaᵀ/Z0` and `bv−=aH`, without registering a branch-current unknown.
@@ -448,7 +450,9 @@ Both ends still participate in one global solve. This does not mean the program 
 After solving, compute port current with `i=v/Z0+H`, then store both terminal voltages and currents at this time for retrieval τ later.
 The implementation requires τ=d·h, where d is an integer of at least 1; the read index is `round(t/h)−d`.
 Negative-time history is fixed at zero, so the remote history source is zero before wave arrival. There is no fractional-delay interpolation; events must also lie on the fixed grid.
-An explicit event update at the same time replaces the last history row with the right-side value instead of inserting an extra sample.
+An outgoing wave jump from initialization or an explicit event keeps both sides and reaches the opposite end after τ. At arrival, the integrator uses the left-side history source. The right-side source enters a consistency solve that holds storage states such as capacitor voltage and inductor current fixed. Reflected or transmitted jumps follow the same rule.
+`history` exposes one right-side row per time step. Retained result samples use the right side as well. A jump inside a custom source function follows ordinary sampling. Use an explicit event to mark a known discontinuity.
+See the [metrics conventions](numerical_conventions.en.md#metrics) for sampling and selecting windows around propagated or reflected wavefronts.
 
 `attenuation=η` multiplies both H terms by η, with 0<η≤1; η=1 recovers the lossless relations above.
 η<1 approximates propagation-amplitude attenuation. It is neither fitted from specified frequency-dependent R′/L′/C′/G′ nor another representation of a Pi-line resistor.
@@ -527,16 +531,22 @@ For example, a zero-leakage delta/Y transformer with 100 V primary line voltage 
 A delta secondary with zero leakage impedance leaves winding circulating current non-unique and is explicitly rejected at construction; a pseudoinverse must not silently choose that current.
 Grounding a Y connection depends on the neutral node and external wiring; there are no magnetic-coupling equations for a shared three-limb core.
 
+<a id="saturation-curve"></a>
+
 ### 9.5 What the saturation option actually does
 
-The source selects the current-step inductance from the preceding flux linkage:
+The magnetization curve is symmetric about the origin. Inside the knee, the magnetizing current is $f(\lambda)=\lambda/L_m$. Beyond the knee it continues from the knee current:
 
-$$L_{eff}=\begin{cases}L_m,&|\lambda_{m,0}|<\lambda_{knee},\\L_{sat},&|\lambda_{m,0}|\ge\lambda_{knee}.\end{cases}$$
+$$f(\lambda)=\operatorname{sgn}(\lambda)\left(\frac{\lambda_{knee}}{L_m}+\frac{|\lambda|-\lambda_{knee}}{L_{sat}}\right),\qquad |\lambda|>\lambda_{knee}.$$
 
-It then substitutes Leff into an ordinary inductor companion and updates flux linkage from up after solving.
-There is no current-step Newton iteration for nonlinear `i=f(λ)` and no full magnetization-curve reprojection of flux/current across the switch.
-Consequently, the linear energy formula above is not a strict saturation-energy identity across an inductance change.
-This is an explicitly lagged two-region inductance approximation. Independent saturation-energy, hysteresis and inrush validation remains incomplete.
+Each step evaluates the base current $f(\lambda_0)$ at the known flux linkage $\lambda_0$ and uses the inductance $L_{eff}$ of that segment in the companion model.
+If the step starts exactly at the knee, it uses the linear magnetizing inductance.
+MNA solves for the magnetizing current as $f(\lambda_0)+(\lambda-\lambda_0)/L_{eff}$, with the flux increment given by integrating the primary voltage.
+A step that stays in a single segment gives the exact curve current for the discrete flux. A step crossing a knee uses the starting slope throughout, so the current error is bounded by $|\Delta\lambda|\,|1/L_{sat}-1/L_m|$.
+The next step takes its base current from the curve again, so knee-crossing errors do not accumulate as a history bias. A zero-step event preserves the actual left-side current and flux linkage.
+
+With a periodic primary voltage source, compare the flux linkage and current at each cycle boundary. Reduce the time step to check the knee-crossing error.
+The model describes a piecewise curve without hysteresis. Strict energy accounting across a knee must account for the integrated curve and step approximation. Independent saturation-energy and inrush validation remains incomplete.
 
 ## 10. Synchronous machines: mechanical states affect the next electrical stamp
 
@@ -893,8 +903,8 @@ flowchart TD
     D --> E[Select next time and compute actual h]
     E --> F[Assemble companions for interval topology and solve]
     F --> G[Update electrical states to current left-side values]
-    G --> H{Explicit events at this time?}
-    H -- Yes --> I[Apply all simultaneous events in declaration order]
+    G --> H{Explicit events due or Bergeron wavefront arriving?}
+    H -- Yes --> I[Apply any explicit events by requested time]
     I --> J[Fix left-side storage states and solve right-side algebraic values]
     J --> K[Save right-side history with h=0]
     H -- No --> L[Build one result row and execute on_step once]
@@ -905,10 +915,11 @@ flowchart TD
     N -- Yes --> O[Return SimulationResult]
 ```
 
-On an ordinary step, L/C history comes from the preceding accepted time. On an event step, integration first reaches t⁻ using pre-event switch states.
-After all simultaneous events are applied in declaration order, solve the right side while holding `vC(t⁺)=vC(t⁻)` and `iL(t⁺)=iL(t⁻)`.
+On an ordinary step, L/C history comes from the preceding accepted time. At an explicit event or Bergeron wavefront, integrate first to t⁻ using pre-event switch states and left-side wave history.
+Several events can be quantized to the same grid point. Apply them in requested-time order, retaining insertion order when the requested times match.
+Then hold `vC(t⁺)=vC(t⁻)` and `iL(t⁺)=iL(t⁻)` while solving right-side algebraic values using the updated topology and right-side wave history.
 iC and uL can jump, and their new right-side values must enter the next TR history sources.
-The event itself consumes no integration interval. Each time has only one result row; an event row represents t⁺.
+The right-side consistency solve uses a zero time step. Each retained time has one row, with t⁺ values at switching and arrival points.
 If the new topology forces an instantaneous storage-state change, the consistency solve fails instead of suddenly emptying a capacitor or forcing inductor current to zero.
 
 `insert` adds explicit event times to the grid, with companions using actual adjacent-point h;
@@ -977,9 +988,8 @@ With voltage-source current recorded in the absorption direction, outward suppli
 
 ### 15.3 Events and output decimation affect energy accounting
 
-These stepwise identities use the endpoints of one integration interval with unchanged topology.
-Event output retains only t⁺, omitting capacitor current or inductor voltage at the preceding interval's endpoint t⁻. Applying endpoint formulas across an event can therefore produce a spurious energy error.
-Check continuous-topology intervals separately or obtain the needed left/right values in the validation calculation.
+These stepwise identities use the right-side values at the start of the integration interval and the left-side values at its end. Results at explicit events and Bergeron arrivals retain only t⁺.
+If capacitor current or inductor voltage jumps, using t⁺ as the endpoint of the preceding interval gives a spurious energy error. Check uninterrupted intervals separately or obtain the required left/right values in the validation calculation.
 
 Two decimated rows may span many internal steps. Their output interval and differences cannot replace the single-step BE dissipation terms.
 For stepwise energy checks, use `record_every=1` or accumulate required quantities in each step callback; checks needing event-left values must also retain the corresponding validation data.
@@ -993,7 +1003,7 @@ See the [integrated example guide](three_terminal_vsc_hvdc.en.md) for Example 18
 |---|---|---|---|
 | Sections 1–5: indexing, RLC and basic sources | [01 R](../examples/01_r_circuit.py), [02 RC](../examples/02_rc_transient.py), [03 RL](../examples/03_rl_transient.py), [04 RLC](../examples/04_rlc_transient.py), [17 AC](../examples/17_single_phase_ac_rlc.py) | [basic.py](../pycy_emt_lite/components/basic.py), [stamping.py](../pycy_emt_lite/core/stamping.py) | [test_basic_components.py](../tests/test_basic_components.py) |
 | Section 6: three-phase sources and loads | [05 balanced three-phase circuit](../examples/05_three_phase_steady_state.py) | [three_phase.py](../pycy_emt_lite/components/three_phase.py) | [test_three_phase.py](../tests/test_three_phase.py) |
-| Sections 7–8: Pi, segmented and traveling-wave lines | [08 Pi line](../examples/08_pi_line_transient.py); continue with tests for segmented and traveling-wave models | [lines.py](../pycy_emt_lite/components/lines.py) | [test_line_models.py](../tests/test_line_models.py) |
+| Sections 7–8: Pi, segmented and traveling-wave lines | [08 Pi line](../examples/08_pi_line_transient.py), [22 finite T-ladder](../examples/22_t_section_transmission_line.py), [27 Bergeron line](../examples/27_finite_r_bergeron_line.py) | [lines.py](../pycy_emt_lite/components/lines.py) | [test_line_models.py](../tests/test_line_models.py) |
 | Section 9: transformers | [09 single-phase transformer](../examples/09_single_phase_transformer.py) | [transformers.py](../pycy_emt_lite/components/transformers.py) | [test_transformers.py](../tests/test_transformers.py) |
 | Section 10: both machines | [10 Park generator](../examples/10_park_generator_avr_governor.py); see tests for the classical machine | [synchronous.py](../pycy_emt_lite/machines/synchronous.py), [park_generator.py](../pycy_emt_lite/machines/park_generator.py) | [Classical machine tests](../tests/test_synchronous_machine.py), [Park machine tests](../tests/test_park_synchronous_generator.py) |
 | Sections 11–12: filters, control and switches | [11 PLL](../examples/11_pll_dynamic_response.py), [12 PWM](../examples/12_two_level_pwm_generator.py); see tests for LC/LCL | [filters.py](../pycy_emt_lite/converters/filters.py), [controls](../pycy_emt_lite/controls), [power_electronics.py](../pycy_emt_lite/components/power_electronics.py) | [Control tests](../tests/test_controls.py), [Power-electronics tests](../tests/test_power_electronics.py) |

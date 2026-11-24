@@ -1,0 +1,510 @@
+{
+  "schema": "d1_pjm5_pscad_reference_evidence_v1",
+  "date": "2026-11-23",
+  "protocol_commit": "2560127f0faf63290ff76e710abbc483bba96f8a",
+  "status": "BOTH_PJM5_NATIVE_FULL_GRIDS_PASS",
+  "native_reference_qualified": true,
+  "candidate_accepted": false,
+  "formal_new_examples_completed": 14,
+  "prospective_protocol": {
+    "path": "docs/development_roadmap/experiments/d1_pjm5_emt_protocol_20261123.json",
+    "bytes": 7352,
+    "sha256": "f2d51e205f7b1a1a0b14118f7dc20b9a6e94bca0c4522292f001cc67a9ccd5c2"
+  },
+  "model": {
+    "path": "local_reference/native_static_reviews/d1_pjm5_emt_20261123/model.json",
+    "bytes": 5077,
+    "sha256": "387cd7b33ac3fc95a51019459ad9989381caec582eed96480ee31587c1f19edd"
+  },
+  "first_compiled_refusal": {
+    "path": "local_reference/native_static_reviews/d1_pjm5_pscad_20261123/short_5us/n/20261122T194852359247Z/first_admission_diagnostics.json",
+    "bytes": 5243,
+    "sha256": "ef3c15f56d7d9ef14a3415e24432b6e9930fbe8f575c3dd886657e8687c1383e"
+  },
+  "reload_display_refusal": {
+    "path": "local_reference/native_static_reviews/d1_pjm5_pscad_short_recovery_20261123/short_5us/n/20261122T200826815684Z/actual_resave_diagnostics.json",
+    "bytes": 5809,
+    "sha256": "c8af0886a6c865b1ce90bc43d74de468e53bc40f6c531d401f3c691b438f0166"
+  },
+  "short": {
+    "grid": "5us",
+    "scope": "short",
+    "step_s": 5e-06,
+    "stop_s": 0.002,
+    "native_rows_including_zero": 401,
+    "physical_phase_nodes": 15,
+    "physical_branches": 78,
+    "ideal_measurement_branches": 6,
+    "native_channels": 95,
+    "native_runtime": {
+      "pscad_version": "5.0.0",
+      "emtdc_build": "20210219",
+      "compiler": "gf46",
+      "platform": "x86",
+      "integration": "unreported_in_native_stdout",
+      "emtdc_pid_observed": true
+    },
+    "integration_validation": "Independent all-row trapezoidal companion and interval-energy checks passed.",
+    "maximum_physical_residuals": {
+      "source_peak_error_v": 5.1386450650170445e-11,
+      "clock_max_error_s": 4.336808689942018e-19,
+      "max_kcl_a": 5.808686864838819e-13,
+      "max_resistive_ohm_v": 1.3690623745787889e-08,
+      "max_capacitor_tr_a": 1.6312506900817425e-12,
+      "max_inductor_tr_v": 6.430309440474957e-08,
+      "max_interval_energy_j": 2.2259971643734389e-13,
+      "cumulative_energy_j": -2.1833525469489934e-12,
+      "stored_energy_at_zero_j": 0.0,
+      "source_current_at_zero_a": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "r_step_exact": true,
+      "abs_cumulative_energy_j": 2.1833525469489934e-12,
+      "abs_source_current_at_zero_a": 0.0
+    },
+    "independent_same_step_peak_errors": {
+      "voltage_v": 4.197318048682064e-10,
+      "series_a": 1.0871303857129533e-11,
+      "from_a": 1.0858869359253731e-11,
+      "to_a": 1.1114664744127367e-11,
+      "source_a": 1.7347900893582846e-11,
+      "load_resistor_a": 7.669420654110581e-12,
+      "load_inductor_a": 3.8546943414985435e-13,
+      "step_a": 4.197048253645058e-19
+    },
+    "settled_windows": [],
+    "evidence": {
+      "physics": {
+        "path": "local_reference/native_static_reviews/d1_pjm5_pscad_short_recovery_v2_20261123/verification/accepted_short/physics_root.json",
+        "bytes": 2495,
+        "sha256": "3bcf7b55fbcdf8a9a0e9494ca1c64aef728cdd3d64a3d21b0d69346a6bd47d54"
+      },
+      "execution": {
+        "path": "local_reference/native_static_reviews/d1_pjm5_pscad_short_recovery_v2_20261123/verification/accepted_short/native_execution_receipt.json",
+        "bytes": 21190,
+        "sha256": "195f80b365409951b30fe6934048e602d23f8712056789eb62981239f5de128a"
+      },
+      "terminal": {
+        "path": "local_reference/native_static_reviews/d1_pjm5_pscad_short_recovery_v2_20261123/short_5us/n/20261122T201450447179Z/terminal.json",
+        "bytes": 7691,
+        "sha256": "813206d2e30503f7ae3e417b51801738b35765fdf94e9d7c2d631bb2b82bc479"
+      },
+      "generated_admission": {
+        "path": "local_reference/native_static_reviews/d1_pjm5_pscad_short_recovery_v2_20261123/short_5us/n/20261122T201450447179Z/pre_run_admission.json",
+        "bytes": 25538,
+        "sha256": "b17bc7390e2a418aafbdfc71f72eda107ced56bfea791f69ee44054e5dd0eead"
+      },
+      "sealed_inputs": {
+        "path": "local_reference/native_static_reviews/d1_pjm5_pscad_short_recovery_v2_20261123/short_5us/n/20261122T201450447179Z/sealed_inputs.json",
+        "bytes": 3935,
+        "sha256": "7e2427ac0beeb9485fe0b3f5a7e1e1ca011c57f55453df26243832f9f357f6b8"
+      },
+      "native_console": {
+        "path": "local_reference/native_static_reviews/d1_pjm5_pscad_short_recovery_v2_20261123/short_5us/n/20261122T201450447179Z/run_output.txt",
+        "bytes": 1870,
+        "sha256": "98d6be05d7c95b849ee90238616dbfa3dd1f3ec04b3f06f624fc377f3d05d1b4"
+      },
+      "original_close_refusal": {
+        "path": "local_reference/native_static_reviews/d1_pjm5_pscad_short_recovery_v2_20261123/short_5us/n/20261122T201450447179Z/native_execution_refused.json",
+        "bytes": 123,
+        "sha256": "8e59e3e88e52ca97c246bd9d4d2bf09f8fe7d1773f300b420ba5835430bf183c"
+      }
+    }
+  },
+  "full": {
+    "5us": {
+      "grid": "5us",
+      "scope": "full",
+      "step_s": 5e-06,
+      "stop_s": 0.6,
+      "native_rows_including_zero": 120001,
+      "physical_phase_nodes": 15,
+      "physical_branches": 78,
+      "ideal_measurement_branches": 6,
+      "native_channels": 95,
+      "native_runtime": {
+        "pscad_version": "5.0.0",
+        "emtdc_build": "20210219",
+        "compiler": "gf46",
+        "platform": "x86",
+        "integration": "unreported_in_native_stdout",
+        "emtdc_pid_observed": true
+      },
+      "integration_validation": "Independent all-row trapezoidal companion and interval-energy checks passed.",
+      "maximum_physical_residuals": {
+        "source_peak_error_v": 1.3533281162381172e-08,
+        "clock_max_error_s": 1.1102230246251565e-16,
+        "max_kcl_a": 1.5404566511278972e-11,
+        "max_resistive_ohm_v": 3.6729034036397934e-07,
+        "max_capacitor_tr_a": 1.5841328249166509e-10,
+        "max_inductor_tr_v": 5.961861461400986e-06,
+        "max_interval_energy_j": 2.0102527906185053e-09,
+        "cumulative_energy_j": -4.157624780712083e-07,
+        "stored_energy_at_zero_j": 0.0,
+        "source_current_at_zero_a": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "r_step_exact": true,
+        "abs_cumulative_energy_j": 4.157624780712083e-07,
+        "abs_source_current_at_zero_a": 0.0
+      },
+      "independent_same_step_peak_errors": {
+        "voltage_v": 1.391163095831871e-08,
+        "series_a": 2.8614977054530755e-10,
+        "from_a": 1.1743654937390602e-09,
+        "to_a": 1.3292407174958498e-09,
+        "source_a": 3.6298501981946174e-09,
+        "load_resistor_a": 2.0655477328546112e-10,
+        "load_inductor_a": 3.596056785681867e-11,
+        "step_a": 1.1386447340555605e-12
+      },
+      "settled_windows": [
+        {
+          "stage": "pre",
+          "window_s": [
+            0.18,
+            0.23
+          ],
+          "bus2_v_rms": 132259.14677526115,
+          "path_import_w": {
+            "12": 24557133.417184334,
+            "23": 5203286.413599943
+          },
+          "added_load_w": 52.47744571716022
+        },
+        {
+          "stage": "pre",
+          "window_s": [
+            0.24,
+            0.29
+          ],
+          "bus2_v_rms": 132259.14678423625,
+          "path_import_w": {
+            "12": 24557131.90464286,
+            "23": 5203286.046394713
+          },
+          "added_load_w": 52.47744572428245
+        },
+        {
+          "stage": "post",
+          "window_s": [
+            0.45,
+            0.5
+          ],
+          "bus2_v_rms": 132243.76503798974,
+          "path_import_w": {
+            "12": 26912963.32654392,
+            "23": 7799388.087421727
+          },
+          "added_load_w": 4958907.388872317
+        },
+        {
+          "stage": "post",
+          "window_s": [
+            0.55,
+            0.6
+          ],
+          "bus2_v_rms": 132243.76503797076,
+          "path_import_w": {
+            "12": 26912963.329758056,
+            "23": 7799388.088210492
+          },
+          "added_load_w": 4958907.388870894
+        }
+      ],
+      "evidence": {
+        "physics": {
+          "path": "local_reference/native_static_reviews/d1_pjm5_pscad_reload_20261123/5us/n/20261122T202001743558Z/physics.json",
+          "bytes": 5226,
+          "sha256": "b53383dc12757a8434e51823e3c3220272781b159463ee74dc33611b2325677a"
+        },
+        "execution": {
+          "path": "local_reference/native_static_reviews/d1_pjm5_pscad_reload_20261123/5us/n/20261122T202001743558Z/native_execution_receipt.json",
+          "bytes": 21085,
+          "sha256": "32abaecccc57d23482d7ef5283726a48bdddc1d93bdeadeda652636a6ea203ea"
+        },
+        "terminal": {
+          "path": "local_reference/native_static_reviews/d1_pjm5_pscad_reload_20261123/5us/n/20261122T202001743558Z/terminal.json",
+          "bytes": 8638,
+          "sha256": "c0dcd7f9dfc2ce2a5abfc920fc31823a05f80c828436267fdaafc428b614b9e5"
+        },
+        "generated_admission": {
+          "path": "local_reference/native_static_reviews/d1_pjm5_pscad_reload_20261123/5us/n/20261122T202001743558Z/pre_run_admission.json",
+          "bytes": 25634,
+          "sha256": "c4f7b6da450063827ec1991fa223d96c53b8ed6f87c950d66dd18b00ea8f8b70"
+        },
+        "sealed_inputs": {
+          "path": "local_reference/native_static_reviews/d1_pjm5_pscad_reload_20261123/5us/n/20261122T202001743558Z/sealed_inputs.json",
+          "bytes": 2660,
+          "sha256": "34c5c2634c5b5eb8abe13224a1babe135705a9773081c80681c98080b1a0eb80"
+        },
+        "native_console": {
+          "path": "local_reference/native_static_reviews/d1_pjm5_pscad_reload_20261123/5us/n/20261122T202001743558Z/run_output.txt",
+          "bytes": 1838,
+          "sha256": "9829424d1dadd8ed5a1d7c9f698888eb8286a4b16991cab21543c8eb94c02435"
+        },
+        "source_initialization": {
+          "path": "local_reference/native_static_reviews/d1_pjm5_pscad_reload_20261123/5us/n/20261122T202001743558Z/initial_capacitor_current.json",
+          "bytes": 2770,
+          "sha256": "f217e87c68e35a49de9dd3b64fcd381d52ebe99cba1f069d87b5080d019532ec"
+        }
+      }
+    },
+    "2p5us": {
+      "grid": "2p5us",
+      "scope": "full",
+      "step_s": 2.5e-06,
+      "stop_s": 0.6,
+      "native_rows_including_zero": 240001,
+      "physical_phase_nodes": 15,
+      "physical_branches": 78,
+      "ideal_measurement_branches": 6,
+      "native_channels": 95,
+      "native_runtime": {
+        "pscad_version": "5.0.0",
+        "emtdc_build": "20210219",
+        "compiler": "gf46",
+        "platform": "x86",
+        "integration": "unreported_in_native_stdout",
+        "emtdc_pid_observed": true
+      },
+      "integration_validation": "Independent all-row trapezoidal companion and interval-energy checks passed.",
+      "maximum_physical_residuals": {
+        "source_peak_error_v": 1.3809767551720142e-08,
+        "clock_max_error_s": 1.1102230246251565e-16,
+        "max_kcl_a": 1.6257217794191092e-11,
+        "max_resistive_ohm_v": 3.674067556858063e-07,
+        "max_capacitor_tr_a": 3.147642424483621e-10,
+        "max_inductor_tr_v": 1.1666794307529926e-05,
+        "max_interval_energy_j": 2.2796867414631716e-09,
+        "cumulative_energy_j": -2.128309810364277e-07,
+        "stored_energy_at_zero_j": 0.0,
+        "source_current_at_zero_a": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "r_step_exact": true,
+        "abs_cumulative_energy_j": 2.128309810364277e-07,
+        "abs_source_current_at_zero_a": 0.0
+      },
+      "independent_same_step_peak_errors": {
+        "voltage_v": 1.4581019058823586e-08,
+        "series_a": 2.773674623313127e-10,
+        "from_a": 6.71411548580636e-09,
+        "to_a": 6.764295790162578e-09,
+        "source_a": 2.0021740709808e-08,
+        "load_resistor_a": 2.07108996619354e-10,
+        "load_inductor_a": 3.841904572254862e-11,
+        "step_a": 1.0906830993917538e-12
+      },
+      "settled_windows": [
+        {
+          "stage": "pre",
+          "window_s": [
+            0.18,
+            0.23
+          ],
+          "bus2_v_rms": 132259.1467336886,
+          "path_import_w": {
+            "12": 24557133.399946604,
+            "23": 5203286.41212859
+          },
+          "added_load_w": 52.47744568417012
+        },
+        {
+          "stage": "pre",
+          "window_s": [
+            0.24,
+            0.29
+          ],
+          "bus2_v_rms": 132259.14674266372,
+          "path_import_w": {
+            "12": 24557131.887405124,
+            "23": 5203286.044923355
+          },
+          "added_load_w": 52.47744569129237
+        },
+        {
+          "stage": "post",
+          "window_s": [
+            0.45,
+            0.5
+          ],
+          "bus2_v_rms": 132243.76499706658,
+          "path_import_w": {
+            "12": 26912963.307914153,
+            "23": 7799388.084567568
+          },
+          "added_load_w": 4958907.3858032245
+        },
+        {
+          "stage": "post",
+          "window_s": [
+            0.55,
+            0.6
+          ],
+          "bus2_v_rms": 132243.76499704763,
+          "path_import_w": {
+            "12": 26912963.3111283,
+            "23": 7799388.085356318
+          },
+          "added_load_w": 4958907.385801803
+        }
+      ],
+      "evidence": {
+        "physics": {
+          "path": "local_reference/native_static_reviews/d1_pjm5_pscad_reload_20261123/2p5us/n/20261122T202234493445Z/physics.json",
+          "bytes": 5230,
+          "sha256": "7fe42079c2e7b954cf6a8349764a8bc290bd4720cfcba0f534c49eff2cb3f30d"
+        },
+        "execution": {
+          "path": "local_reference/native_static_reviews/d1_pjm5_pscad_reload_20261123/2p5us/n/20261122T202234493445Z/native_execution_receipt.json",
+          "bytes": 21094,
+          "sha256": "9035004b45ad91f55fd16c0329793613d9280d6625af858eded30e7576a40708"
+        },
+        "terminal": {
+          "path": "local_reference/native_static_reviews/d1_pjm5_pscad_reload_20261123/2p5us/n/20261122T202234493445Z/terminal.json",
+          "bytes": 7342,
+          "sha256": "b2a2f3fc7c76d302b33fba20a6e402aea27f749fbb59de9ebed84c2cfe95c786"
+        },
+        "generated_admission": {
+          "path": "local_reference/native_static_reviews/d1_pjm5_pscad_reload_20261123/2p5us/n/20261122T202234493445Z/pre_run_admission.json",
+          "bytes": 25636,
+          "sha256": "c1f7ad4905abf068098d218e402a77ed79d41ac7c0980dbc262b16d5aa064a9d"
+        },
+        "sealed_inputs": {
+          "path": "local_reference/native_static_reviews/d1_pjm5_pscad_reload_20261123/2p5us/n/20261122T202234493445Z/sealed_inputs.json",
+          "bytes": 2660,
+          "sha256": "26626ff17ecd8c8b6909e2613effd6998ce814a17da340f866679514bbe4cdfe"
+        },
+        "native_console": {
+          "path": "local_reference/native_static_reviews/d1_pjm5_pscad_reload_20261123/2p5us/n/20261122T202234493445Z/run_output.txt",
+          "bytes": 2668,
+          "sha256": "c4219c7d856e949ffadbad60789222cd67d54e99824eae9ee5a9eeb44522ae6d"
+        },
+        "source_initialization": {
+          "path": "local_reference/native_static_reviews/d1_pjm5_pscad_reload_20261123/2p5us/n/20261122T202234493445Z/initial_capacitor_current.json",
+          "bytes": 2766,
+          "sha256": "4e01760ad03706a8ae170871a98f71ad47caa67a8cf871716e41be1218fb246f"
+        }
+      }
+    }
+  },
+  "cross_grid": {
+    "status": "PASS_NATIVE_PJM5_CROSS_GRID",
+    "protocol_sha256": "f2d51e205f7b1a1a0b14118f7dc20b9a6e94bca0c4522292f001cc67a9ccd5c2",
+    "reports_sha256": {
+      "5us": "b53383dc12757a8434e51823e3c3220272781b159463ee74dc33611b2325677a",
+      "2p5us": "7fe42079c2e7b954cf6a8349764a8bc290bd4720cfcba0f534c49eff2cb3f30d"
+    },
+    "clock_max_error_s": 0.0,
+    "peak_errors": {
+      "voltage_v": {
+        "max_difference": 283.9620535899885,
+        "away_from_load_max": 0.35010221996344626
+      },
+      "series_a": {
+        "max_difference": 0.3795900507020029,
+        "away_from_load_max": 0.0009997379819992602
+      },
+      "from_a": {
+        "max_difference": 0.13587696909500124,
+        "away_from_load_max": 0.11026086592626994
+      },
+      "to_a": {
+        "max_difference": 0.16381656512400156,
+        "away_from_load_max": 0.11033894434710012
+      },
+      "source_a": {
+        "max_difference": 0.32817097031459985,
+        "away_from_load_max": 0.32817097031459985
+      }
+    },
+    "grid_checks": {
+      "voltage_v": {
+        "max_difference": true,
+        "away_from_load_max": true
+      },
+      "series_a": {
+        "max_difference": true,
+        "away_from_load_max": true
+      }
+    },
+    "windows": [
+      {
+        "window_s": [
+          0.18,
+          0.23
+        ],
+        "absolute_error": {
+          "bus2_v_rms": 4.157255170866847e-05,
+          "path_import_w": 0.01723773032426834,
+          "added_load_w": 3.2990101317409426e-08
+        },
+        "checks": {
+          "bus2_v_rms": true,
+          "path_import_w": true,
+          "added_load_w": true
+        }
+      },
+      {
+        "window_s": [
+          0.24,
+          0.29
+        ],
+        "absolute_error": {
+          "bus2_v_rms": 4.1572522604838014e-05,
+          "path_import_w": 0.017237737774848938,
+          "added_load_w": 3.299008000112735e-08
+        },
+        "checks": {
+          "bus2_v_rms": true,
+          "path_import_w": true,
+          "added_load_w": true
+        }
+      },
+      {
+        "window_s": [
+          0.45,
+          0.5
+        ],
+        "absolute_error": {
+          "bus2_v_rms": 4.092315793968737e-05,
+          "path_import_w": 0.0186297670006752,
+          "added_load_w": 0.003069092519581318
+        },
+        "checks": {
+          "bus2_v_rms": true,
+          "path_import_w": true,
+          "added_load_w": true
+        }
+      },
+      {
+        "window_s": [
+          0.55,
+          0.6
+        ],
+        "absolute_error": {
+          "bus2_v_rms": 4.0923128835856915e-05,
+          "path_import_w": 0.018629755824804306,
+          "added_load_w": 0.0030690906569361687
+        },
+        "checks": {
+          "bus2_v_rms": true,
+          "path_import_w": true,
+          "added_load_w": true
+        }
+      }
+    ]
+  },
+  "cross_grid_receipt": {
+    "path": "local_reference/native_static_reviews/d1_pjm5_pscad_reload_20261123/cross_grid.json",
+    "bytes": 2596,
+    "sha256": "f27d87c1ade79e9b3264ff52f8f0328d26515db8449f77b5010b8591d56d853b"
+  }
+}

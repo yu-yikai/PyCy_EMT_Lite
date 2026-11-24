@@ -1,0 +1,327 @@
+{
+  "schema": "c1_full_openloop_dual_h_diagnostic_v1",
+  "date": "2026-11-16",
+  "status": "REAL_FULL_DUAL_H_NUMERIC_FAIL_COMMONMODE_HARD_GATE",
+  "branch": "codex/emt-examples-longterm",
+  "execution_head": "fbcfb753f09c33c714a1453609bee3c6449fa668",
+  "scope": "真实完整开环PSCAD参考的双步长诊断；尚未取得正式参考资格，未实施教学候选。",
+  "formal_new_examples_completed": 9,
+  "C1_status": "in_progress",
+  "frozen_protocol": [
+    {
+      "path": "validation/cases/grid_connected_vsc_open_loop/parameters.json",
+      "bytes": 3603,
+      "sha256": "f5041eee9296c4088e74168cb444a10b016c10ee787d044629cb9492ab523dc1"
+    },
+    {
+      "path": "validation/cases/grid_connected_vsc_open_loop/reference_protocol.json",
+      "bytes": 41406,
+      "sha256": "d87a327ef601200b2ebb360403879206d8817697f78767999143226aecf26630"
+    },
+    {
+      "path": "validation/cases/grid_connected_vsc_open_loop/acceptance_plan.md",
+      "bytes": 8753,
+      "sha256": "5509985c979e02216599c4285932e5c0964a942898befe093bb6f59b866e7440"
+    }
+  ],
+  "model": {
+    "teaching_electrical_components": 16,
+    "native_components": 311,
+    "native_electrical_branches": 19,
+    "native_channels": 45,
+    "full_acquisition_tail_retained": true
+  },
+  "gate_summary_semantics": "门限摘要的raw、radius、upper分别在全窗独立取最大值；upper先逐点计算abs(残差)+词元误差半径，再取最大值，worst_row对应此upper。三个最大值可能来自不同行，不能直接把摘要raw与radius相加。电压门限及残差单位均为V。",
+  "runs": [
+    {
+      "variant": "5us",
+      "h_s": "0.000005",
+      "rows": 40002,
+      "session": 98913,
+      "native_exec_exit_code": 0,
+      "elapsed_s": 458.2192276000278,
+      "native_build_errors": 0,
+      "Run_calls": 1,
+      "normal_quit": true,
+      "remaining_owned": [],
+      "profile_source_dependencies_unchanged": true,
+      "native_version": "5.0.0",
+      "compiler": "gf46",
+      "platform": "x86",
+      "execution_manifest": {
+        "path": "local_reference/c1_openloop_reference_research/20261116T044024784659Z_full_openloop_runs_v1/5us/manifest.json",
+        "bytes": 7349,
+        "sha256": "b361f247f18790ed50ccf6ceff60224f9101b041717aa2ac1888901430ac62c0"
+      },
+      "run_manifest": {
+        "path": "local_reference/c1_openloop_reference_research/20261116T044024784659Z_full_openloop_runs_v1/5us/n/20261116T045740236527Z/manifest.json",
+        "bytes": 28977,
+        "sha256": "05b1bff73f07f7a461813cbdd49adeb4cdfd9ec19c20ba97d8f4c1db4b337dec"
+      },
+      "closed_exec": {
+        "path": "local_reference/native_static_reviews/c1_full_ROOT_external_seal_20261116T045700822662Z/5us_closed_exec.json",
+        "bytes": 2283,
+        "sha256": "057d0d0258d15a44f0702bf3e2c9affcf3046217634b02138941aabb18816a25"
+      },
+      "terminal": {
+        "path": "local_reference/c1_openloop_reference_research/20261116T044024784659Z_full_openloop_runs_v1/5us/n/20261116T045740236527Z/terminal.json",
+        "bytes": 16270,
+        "sha256": "483ec151190d8f142b3b0d7520014cf217166ffd499323d155cd569e569108d0"
+      },
+      "mapping_admission": {
+        "path": "local_reference/native_static_reviews/c1_full_admit_20261116T051808721564Z/receipt.json",
+        "bytes": 72836,
+        "sha256": "bab2d469a14a2e2098bde3a70284d51bfa1ac1c439b2456d36dc127186fdc067"
+      },
+      "raw_archive": {
+        "path": "local_reference/native_static_reviews/c1_full_raw_20261116T051848454333Z/receipt.json",
+        "bytes": 4178,
+        "sha256": "4c7d9b208c5125c67231fc36bb195192479df287bda55d2872a54aa9bc1c63c6"
+      },
+      "commonmode_hard": {
+        "raw": "0.0000108379979866333329333133666670666866333329333133666670666866333",
+        "radius": "1.000000000000100000000000010009999999999990000000000009999999999990000E-10",
+        "upper": "0.00001083801508673333293331326666706668673333293331326666706668673330000000",
+        "limit": "0.000002",
+        "worst_row": 18484,
+        "count": 40002,
+        "failures": 30921
+      },
+      "conditional_rail_diagnostic": {
+        "raw": "0.0000108379779999999996000000000003999999999996000000000004000006797",
+        "radius": "0.00000220001000",
+        "upper": "0.0000130379879999999996000000000003999999999996000000000004000006797",
+        "limit": "0.000005",
+        "worst_row": 18484,
+        "count": 40002,
+        "failures": 26943
+      },
+      "conditional_prediction_prerequisites_pass": false,
+      "other_pointwise_gates_pass": true
+    },
+    {
+      "variant": "2p5us",
+      "h_s": "0.0000025",
+      "rows": 80003,
+      "session": 25165,
+      "native_exec_exit_code": 0,
+      "elapsed_s": 496.1711761999177,
+      "native_build_errors": 0,
+      "Run_calls": 1,
+      "normal_quit": true,
+      "remaining_owned": [],
+      "profile_source_dependencies_unchanged": true,
+      "native_version": "5.0.0",
+      "compiler": "gf46",
+      "platform": "x86",
+      "execution_manifest": {
+        "path": "local_reference/c1_openloop_reference_research/20261116T044024784659Z_full_openloop_runs_v1/2p5us/manifest.json",
+        "bytes": 7399,
+        "sha256": "b95e9960ad6626b8239d270e6767276bdeb7207b5b502ebc88ea4a02a21c6402"
+      },
+      "run_manifest": {
+        "path": "local_reference/c1_openloop_reference_research/20261116T044024784659Z_full_openloop_runs_v1/2p5us/n/20261116T052142646122Z/manifest.json",
+        "bytes": 29150,
+        "sha256": "28054dc26b581846d4da33ec77fc776f32105979bbef038e23aeabb3f3f48cc7"
+      },
+      "closed_exec": {
+        "path": "local_reference/native_static_reviews/c1_full_ROOT_external_v2_seal_20261116T051756476468Z/2p5us_closed_exec.json",
+        "bytes": 2301,
+        "sha256": "3168b55b45d6f3422d00f9691e3c1c202ac6607f1f0c1921114636001fa4de2c"
+      },
+      "terminal": {
+        "path": "local_reference/c1_openloop_reference_research/20261116T044024784659Z_full_openloop_runs_v1/2p5us/n/20261116T052142646122Z/terminal.json",
+        "bytes": 16289,
+        "sha256": "4e63c971adc26d457e00466f31a82cf7d5727dec6e48e70b9331ab2f6cdd4ea3"
+      },
+      "mapping_admission": {
+        "path": "local_reference/native_static_reviews/c1_full_admit_20261116T053109953484Z/receipt.json",
+        "bytes": 73373,
+        "sha256": "e3005a10cb6ac3237908edfaf50755127f31ce90fab3e77fb0d7b950a312bd72"
+      },
+      "raw_archive": {
+        "path": "local_reference/native_static_reviews/c1_full_raw_20261116T053146248092Z/receipt.json",
+        "bytes": 4204,
+        "sha256": "6eca15ecb019887a191239d596d555fc2c6d3a87a25654b7fa4d9f5ca7204fca"
+      },
+      "commonmode_hard": {
+        "raw": "0.0000374975263286699998666746633334666586699998666746633334666586700",
+        "radius": "1.000000000000100000000000010009999999999990000000000009999999999990000E-10",
+        "upper": "0.00003749754039873999986667459333346665873999986667459333346665874000000000",
+        "limit": "0.000002",
+        "worst_row": 69542,
+        "count": 80003,
+        "failures": 76460
+      },
+      "conditional_rail_diagnostic": {
+        "raw": "0.00003749753433333333320000000000013333333333320000000000013333494",
+        "radius": "0.00000220001000",
+        "upper": "0.00003969754433333333320000000000013333333333320000000000013333494",
+        "limit": "0.000005",
+        "worst_row": 69542,
+        "count": 80003,
+        "failures": 75551
+      },
+      "conditional_prediction_prerequisites_pass": false,
+      "other_pointwise_gates_pass": true
+    }
+  ],
+  "metadata_policy": {
+    "policy": {
+      "path": "local_reference/native_static_reviews/c1_full_ROOT_runtime_comment_policy_20261116T051050680779Z/policy.json",
+      "bytes": 7362,
+      "sha256": "00cb4b9f275484f652345a23e35fcad73502ef7a4bbcf1dc2c8ac40f4ccf4357"
+    },
+    "original_failed_admission": {
+      "path": "local_reference/native_static_reviews/c1_full_admit_failed_20261116T050559768627Z/receipt.json",
+      "bytes": 457,
+      "sha256": "8afb4ef29013d1bf107a393334fbddcd588794b8e564657265a121f135b11a07"
+    },
+    "independent_actual_32plus1": {
+      "path": "local_reference/native_static_reviews/c1_map_runtime_32plus1_independent_20261116T051114056290Z/receipt.json",
+      "bytes": 3866,
+      "sha256": "cddcbd14515710d9ab8f0c4c0c51a460a3a14a5c436e6263fe2be57f0948b7aa"
+    },
+    "original_v1_execution_contract_pass_claim": false,
+    "old_v1_admission_pass_claim": false,
+    "explanation": "在首次OUT读取前另封规则并独审。PSCAD改写唯一RunTime注释；32个其余绑定完全不变，有限阶段时刻枚举重构完整旧map并精确命中pre33/control6的SHA。重构明示非捕获快照；原v1 FAIL不改记PASS。模型/映射正文、参数及全部数值阈值不变。"
+  },
+  "primary_numeric": {
+    "path": "local_reference/native_static_reviews/c1_full_primary_numeric_20261116T053922297770Z/receipt.json",
+    "bytes": 124389,
+    "sha256": "9dadbcafede74903ffa4bc2793071be1632b893d404c78fb7ff5faa7079e754b"
+  },
+  "independent_numeric": {
+    "path": "local_reference/native_static_reviews/c1_full_dual_independent_actual_20261116T053305655310Z/receipt.json",
+    "bytes": 110884,
+    "sha256": "c9ab50f48c3f80194f2437722037f7bbdd9579e29b0067cf8940deae0e2f056a"
+  },
+  "agreement_review": {
+    "path": "local_reference/native_static_reviews/c1_dual_report_agreement_20261116T054355629796Z/receipt.json",
+    "bytes": 3005,
+    "sha256": "47fe503dbc2b7391e0d2c3989f58b2eb4be2a87601a2a27180313474e42c3b38"
+  },
+  "cross_h": {
+    "status": "ALL_FROZEN_PAIR_GATES_PASS_DIAGNOSTIC_ONLY",
+    "primary_hard_results": 132,
+    "max_current_difference_A": 0.037309136231399975,
+    "max_current_PWL_RMSE_A": 0.019484592734043304,
+    "max_energy_difference_J": 0.0036761851132558476,
+    "windows": 4,
+    "shared_acquisition_points": 40002,
+    "steady_snapshot_means": {
+      "Pg": {
+        "coarse_mean": 1134.0348343864582,
+        "fine_mean": 1139.200949523833,
+        "absolute_difference": 5.166115137374845,
+        "engineering_scale": 3600,
+        "normalized_difference": 0.0014350319826041237,
+        "absolute_limit": 10,
+        "normalized_limit": 0.002777777777777778,
+        "passed": true
+      },
+      "Qg": {
+        "coarse_mean": -257.1035193222006,
+        "fine_mean": -257.90619416660417,
+        "absolute_difference": 0.8026748444035547,
+        "engineering_scale": 3600,
+        "normalized_difference": 0.000222965234556543,
+        "absolute_limit": 10,
+        "normalized_limit": 0.002777777777777778,
+        "passed": true
+      },
+      "Pdc": {
+        "coarse_mean": 1099.9359736424105,
+        "fine_mean": 1104.8198963925715,
+        "absolute_difference": 4.883922750160991,
+        "engineering_scale": 3600,
+        "normalized_difference": 0.0013566452083780532,
+        "absolute_limit": 10,
+        "normalized_limit": 0.002777777777777778,
+        "passed": true
+      },
+      "PR": {
+        "coarse_mean": 34.06417774214918,
+        "fine_mean": 34.34608812835952,
+        "absolute_difference": 0.2819103862103418,
+        "engineering_scale": 300,
+        "normalized_difference": 0.000939701287367806,
+        "absolute_limit": 0.6,
+        "normalized_limit": 0.002,
+        "passed": true
+      },
+      "Psw": {
+        "coarse_mean": 0.03454417774197591,
+        "fine_mean": 0.03482608812851744,
+        "absolute_difference": 0.0002819103865415312,
+        "engineering_scale": 0.3,
+        "normalized_difference": 0.0009397012884717708,
+        "absolute_limit": 0.0006,
+        "normalized_limit": 0.002,
+        "passed": true
+      }
+    },
+    "qualification": "逐点共模硬门未过，跨步长比较通过也不授完整参考资格。"
+  },
+  "diagnosis": {
+    "coarse_observed": {
+      "path": "local_reference/native_static_reviews/c1_full_coarse_independent_diagnostic_20261116T052311664908Z/receipt.json",
+      "bytes": 45278,
+      "sha256": "6f558a0d8dce70fde8fb48b0babea1ca67ab0c1c5fd919552b8708e49bf8aeb0"
+    },
+    "local_primary_docs": {
+      "path": "local_reference/native_static_reviews/c1_commonmode_local_primary_docs_20261116T052749901261Z/receipt.json",
+      "bytes": 10576,
+      "sha256": "44e59417ba77d1460418db01556c07c59999ba9d73b45463746344f10611bd71"
+    },
+    "observation": "粗网格相邻反号39871/40001，ΣVL≈−3cm；与TR约束中的交替数值分量一致。细网格峰值更大，减小步长未消除问题。",
+    "limit": "本机手册是V4.6，不能据此断言V5内部根因。当前未发现fresh测量错路或延迟的静态证据。",
+    "frozen_chatter_settings": "DETECT_CHATTER/REMOVE_CHATTER/INTERPOLATE均NO；本轮不改。"
+  },
+  "figures": [
+    {
+      "path": "local_reference/native_static_reviews/c1_full_coarse_independent_diagnostic_20261116T052311664908Z/commonmode_diagnostic.png",
+      "bytes": 211718,
+      "sha256": "7fadef0e53ec0bbf8c24d1e203583afea9ec5d830213dc2e83c04cffe9764ad6"
+    },
+    {
+      "path": "local_reference/native_static_reviews/c1_full_dual_independent_actual_20261116T053305655310Z/dual_step_diagnostic.png",
+      "bytes": 114987,
+      "sha256": "ff6233542a53b7c7ed8f73519c67056991ec4eef540ffe73fb9e84f016d19a23"
+    }
+  ],
+  "preserved_failures": [
+    {
+      "path": "docs/development_roadmap/experiments/c1_full_openloop_build_attempt_20261116.json",
+      "bytes": 9808,
+      "sha256": "2a9dc86ae9202120577269e0a6f0e13b9a27451f2a9134763ba661f4c9106d3e"
+    },
+    {
+      "path": "local_reference/native_static_reviews/c1_full_admit_failed_20261116T050559768627Z/receipt.json",
+      "bytes": 457,
+      "sha256": "8afb4ef29013d1bf107a393334fbddcd588794b8e564657265a121f135b11a07"
+    },
+    {
+      "path": "local_reference/native_static_reviews/c1_full_primary_numeric_20261116T051930047139Z/receipt.json",
+      "bytes": 21555,
+      "sha256": "c5da71d85a5c62850670b6653019262537f82806c972421ef0bdf28b2ff36a7f"
+    },
+    {
+      "path": "local_reference/native_static_reviews/c1_full_primary_serialization_fix_20261116T053601681660Z/receipt.json",
+      "bytes": 1164,
+      "sha256": "b96607e8c3cf4f838149568c0dac7299ff457b2ba9b90499e979b27810386d8b"
+    }
+  ],
+  "reporting_fixes": "v3保留普通残差失败后的跨h诊断；原v3 exec32882因np.bool_序列化退出且无数值receipt。v4仅修正有限JSON标量输出，公式/阈值/判定不变；原工具失败留证。",
+  "source_files_unchanged": 113,
+  "dependencies_unchanged": true,
+  "public_Python_changes": false,
+  "regression": "既有1300含slow及Ruff/mypy/locked同步证据保持；本轮无正式Python/依赖变更，未重跑全量，不把研究纯检查计入1300。",
+  "teaching": "后续仅复用现有CaseDefinition链及VoltageSource/R/L/IdealSwitch；原生13项研究观察不进入公共API。",
+  "next": "先核TR求和约束、初值与共模测量/舍入证据；如研究half-step或其他数值设置，须另定事前协议/逐步方程并freshRun，不能放宽原2µV门或把旧FAIL改为PASS。参考合格后才实施最小候选。",
+  "candidate_implemented": false,
+  "full_reference_qualified": false,
+  "active_native_sessions": 0,
+  "goal_status": "active",
+  "other_tasks": "D1待办；F1保留外部CI账单锁的既有受阻记录，不重复轮询旧终态。"
+}

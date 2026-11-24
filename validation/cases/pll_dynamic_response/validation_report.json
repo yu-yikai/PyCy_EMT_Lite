@@ -1,0 +1,269 @@
+{
+  "case_id": "pll_dynamic_response",
+  "reference_id": "simulink-standard-blocks-srf-pll-r2026b",
+  "status": "PASS_EXISTING11_DISCRETE_PLL",
+  "passed": true,
+  "candidate_executed": true,
+  "scope": "Unchanged standalone example11 defaults and the independently realized discrete Simulink equations. No complete VSC/C1 claim; no new teaching number.",
+  "protocol_freeze_commit": "8048ce469472040b2244641e0e6790c166f7630c",
+  "reference_qualification_commit": "da18a43321901f294786694fbb8b9c70ab79881f",
+  "entry_freeze_commit": "5314486fcb30929f79c62a5b15faf2e462529573",
+  "entry_pushed_before_candidate": true,
+  "complete_report": {
+    "path": "local_reference/pll_dynamic_response/comparison_results/20261111T163858643683Z/report.json",
+    "bytes": 58607,
+    "sha256": "4586c354f9e7d84ba2146601f07b9c35afca2420d49dd55b9f4d32ce9160235b"
+  },
+  "qualified_reference": {
+    "path": "validation/cases/pll_dynamic_response/qualified_reference_report.json",
+    "bytes": 2341,
+    "sha256": "ebe76a3c41bd0f5bce7680261ae56d858014f34daabffa01df240c74f5661a48"
+  },
+  "independent_candidate_audit": {
+    "path": "local_reference/native_static_reviews/pll_candidate_actual_20261111T163858643683Z_f982/receipt.json",
+    "bytes": 3738,
+    "sha256": "8dc2a994039af7bb94b7337bc1a3face18cb3de880dd38bd4bb8ff863b3de318"
+  },
+  "independent_default_run": {
+    "path": "local_reference/pll_dynamic_response/independent_runs/20261111T164014570020Z/independent_verification_receipt.json",
+    "bytes": 4340,
+    "sha256": "71e40d5847daa3a73e4736cb3afcecfbd6b0ab8548f7736c4e1050c626af091b"
+  },
+  "candidate_samples": 10001,
+  "reference_samples": 10001,
+  "input_snapshot_files": 243,
+  "time_shift_seconds": 0,
+  "phase_or_turn_fitting": false,
+  "comparisons": [
+    {
+      "window_seconds": [
+        0.0,
+        1.0
+      ],
+      "signal": "angle_unwrapped",
+      "reference": "theta_unwrapped",
+      "unit": "rad",
+      "rmse": 7.281985458785423e-16,
+      "nrmse": 7.281985458785423e-16,
+      "max_abs_error": 5.684341886080802e-14,
+      "limits": {
+        "max_nrmse": 0.0008726646259971648,
+        "max_abs_error": 0.003490658503988659
+      },
+      "passed": true,
+      "scale": 1.0
+    },
+    {
+      "window_seconds": [
+        0.0,
+        1.0
+      ],
+      "signal": "frequency",
+      "reference": "omega_rad_s",
+      "unit": "rad/s",
+      "rmse": 1.7735693247485288e-14,
+      "nrmse": 1.7735693247485288e-14,
+      "max_abs_error": 1.1368683772161603e-13,
+      "limits": {
+        "max_nrmse": 0.12566370614359174,
+        "max_abs_error": 0.6283185307179586
+      },
+      "passed": true,
+      "scale": 1.0
+    },
+    {
+      "window_seconds": [
+        0.0,
+        1.0
+      ],
+      "signal": "q_axis_voltage",
+      "reference": "q_v",
+      "unit": "V",
+      "rmse": 3.9987822304708256e-14,
+      "nrmse": 1.229376535501821e-16,
+      "max_abs_error": 3.126388037344441e-13,
+      "limits": {
+        "max_nrmse": 0.001,
+        "max_abs_error": 1.0
+      },
+      "passed": true,
+      "scale": 325.2691193458119
+    },
+    {
+      "window_seconds": [
+        0.0,
+        0.02
+      ],
+      "signal": "angle_unwrapped",
+      "reference": "theta_unwrapped",
+      "unit": "rad",
+      "rmse": 5.050803030478824e-16,
+      "nrmse": 5.050803030478824e-16,
+      "max_abs_error": 8.881784197001252e-16,
+      "limits": {
+        "max_nrmse": 0.0008726646259971648,
+        "max_abs_error": 0.003490658503988659
+      },
+      "passed": true,
+      "scale": 1.0
+    },
+    {
+      "window_seconds": [
+        0.0,
+        0.02
+      ],
+      "signal": "frequency",
+      "reference": "omega_rad_s",
+      "unit": "rad/s",
+      "rmse": 5.891366303877231e-14,
+      "nrmse": 5.891366303877231e-14,
+      "max_abs_error": 1.1368683772161603e-13,
+      "limits": {
+        "max_nrmse": 0.12566370614359174,
+        "max_abs_error": 0.6283185307179586
+      },
+      "passed": true,
+      "scale": 1.0
+    },
+    {
+      "window_seconds": [
+        0.0,
+        0.02
+      ],
+      "signal": "q_axis_voltage",
+      "reference": "q_v",
+      "unit": "V",
+      "rmse": 1.621739534600722e-13,
+      "nrmse": 4.985839227106462e-16,
+      "max_abs_error": 3.126388037344441e-13,
+      "limits": {
+        "max_nrmse": 0.001,
+        "max_abs_error": 1.0
+      },
+      "passed": true,
+      "scale": 325.2691193458119
+    },
+    {
+      "window_seconds": [
+        0.02,
+        1.0
+      ],
+      "signal": "angle_unwrapped",
+      "reference": "theta_unwrapped",
+      "unit": "rad",
+      "rmse": 7.32044244208407e-16,
+      "nrmse": 7.32044244208407e-16,
+      "max_abs_error": 5.684341886080802e-14,
+      "limits": {
+        "max_nrmse": 0.0008726646259971648,
+        "max_abs_error": 0.003490658503988659
+      },
+      "passed": true,
+      "scale": 1.0
+    },
+    {
+      "window_seconds": [
+        0.02,
+        1.0
+      ],
+      "signal": "frequency",
+      "reference": "omega_rad_s",
+      "unit": "rad/s",
+      "rmse": 1.581585426199639e-14,
+      "nrmse": 1.581585426199639e-14,
+      "max_abs_error": 1.1368683772161603e-13,
+      "limits": {
+        "max_nrmse": 0.12566370614359174,
+        "max_abs_error": 0.6283185307179586
+      },
+      "passed": true,
+      "scale": 1.0
+    },
+    {
+      "window_seconds": [
+        0.02,
+        1.0
+      ],
+      "signal": "q_axis_voltage",
+      "reference": "q_v",
+      "unit": "V",
+      "rmse": 3.3089521571212924e-14,
+      "nrmse": 1.0172967430097043e-16,
+      "max_abs_error": 3.126388037344441e-13,
+      "limits": {
+        "max_nrmse": 0.001,
+        "max_abs_error": 1.0
+      },
+      "passed": true,
+      "scale": 325.2691193458119
+    }
+  ],
+  "maximum_absolute_errors": {
+    "angle_unwrapped": 5.684341886080802e-14,
+    "frequency": 1.1368683772161603e-13,
+    "q_axis_voltage": 3.126388037344441e-13
+  },
+  "comparison_figure": {
+    "path": "local_reference/pll_dynamic_response/comparison_results/20261111T163858643683Z/comparison.png",
+    "bytes": 104070,
+    "sha256": "a637d47899b6b538e8a4230f3fdee881ff224a9e9bac15b59f48de22fbb0e99e"
+  },
+  "comparison_figure_visually_reviewed": true,
+  "candidate_npz": {
+    "path": "local_reference/pll_dynamic_response/comparison_results/20261111T163858643683Z/pycy.npz",
+    "bytes": 322276,
+    "sha256": "1ff39f554c6f51da78aedf1f91a8b0811c489d123dbd9e964c4e24dd92d73ecb"
+  },
+  "default_npz": {
+    "path": "local_reference/pll_dynamic_response/independent_runs/20261111T164014570020Z/original_result.npz",
+    "bytes": 322276,
+    "sha256": "1ff39f554c6f51da78aedf1f91a8b0811c489d123dbd9e964c4e24dd92d73ecb"
+  },
+  "default_npz_csv_json_bytes_equal_candidate": true,
+  "focused_tests_passed": 33,
+  "full_suite": {
+    "tests": 1300,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "elapsed_s": 510.45,
+    "junit_elapsed_s": 510.444,
+    "xml": {
+      "path": ".tmp/longterm/c1-pll-full-20261111T162829439Z.xml",
+      "bytes": 186635,
+      "sha256": "6ea47a1f9fba99f3e19eef03f6f1a6df2b78d2e66015ddd1cddf3f52ad3aa818"
+    },
+    "log": {
+      "path": ".tmp/longterm/c1-pll-full-20261111T162829439Z-pytest.log",
+      "bytes": 153849,
+      "sha256": "9cc7ad3baa85ceac372bc10206e7323cfd519305198bc3ccb1ea12a174992d53"
+    },
+    "source_baseline": {
+      "path": ".tmp/longterm/c1-pll-entry-final-source-hashes-20261112.json",
+      "bytes": 12850,
+      "sha256": "7c666c145ee97c8cbe8fdd50932ca35d7ff25ca9424d07fd5be4b4324703ef71"
+    },
+    "source113_before_after_same": true,
+    "old111_unchanged": true,
+    "includes_slow": true,
+    "process_exit_code": 0,
+    "session_id": 50494,
+    "candidate_executed": false,
+    "elapsed_source": "pytest terminal summary; junit_elapsed_s records the separate XML duration"
+  },
+  "locked_packages": 27,
+  "ruff_passed": true,
+  "mypy_source_files": 39,
+  "old111_python_files_unchanged": true,
+  "total_python_files": 113,
+  "cross_os_ci": {
+    "record": {
+      "path": "docs/development_roadmap/experiments/ci_5314486.json",
+      "bytes": 11739,
+      "sha256": "cd9e85d41c70d75fc4e76568fe3451ccdc10b40690bac219f13bb97fe32b7217"
+    },
+    "status": "not_executed_external_billing_lock",
+    "workflow_run_id": 43060348386,
+    "test_count": null
+  }
+}

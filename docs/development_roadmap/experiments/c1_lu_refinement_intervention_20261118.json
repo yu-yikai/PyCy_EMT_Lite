@@ -1,0 +1,63 @@
+{
+  "schema": "c1_lu_refinement_intervention_experiment_v1",
+  "date": "2026-11-18",
+  "status": "COMPLETE_COARSE_ONE_REFINEMENT_PHYSICAL_PASS",
+  "summary": "完整粗档研究对照中，用原LU得首解，在一次扩展精度点积中算b−Ax，再用原LU解残差并更新首解。两路原19项物理门通过，共模上界约0.310070µV。",
+  "rows": 40002,
+  "native_calls": 0,
+  "trajectory_runs": 1,
+  "first_and_correction_solves": {
+    "original": 40002,
+    "correction": 40002
+  },
+  "original_TIME_and_6g_bits_preserved": true,
+  "primary_all19_physical_pass": true,
+  "independent_all19_physical_pass": true,
+  "commonmode_maximum_full_q_V": "3.100700895909998666680756667999985909998666680756667999985910000000000E-7",
+  "unchanged_limit_V": "0.000002",
+  "formal_candidate_accepted": false,
+  "formal_new_examples_completed_at_execution": 9,
+  "scope": "研究脚本在普通电磁暂态数值尺度内逐点执行一次修正。正式实现还包含数值范围、首解检查、残差验收和数组所有权保护。",
+  "references": {
+    "closure": {
+      "path": "local_reference/native_static_reviews/c1_lu_refinement_replay_20261118T121545013686Z/closure.json",
+      "bytes": 4542,
+      "sha256": "fbbf280b9152e96f839aebbb11bcea65aacb73e0816d28e2a8ddd546bf61aecf"
+    },
+    "contract": {
+      "path": "local_reference/native_static_reviews/c1_lu_refinement_replay_20261118T121545013686Z/contract.json",
+      "bytes": 3989,
+      "sha256": "e4961313289b89511943594374c624b8feb58cb811d5bc7b7790405b58cc9d9f"
+    },
+    "manifest": {
+      "path": "local_reference/native_static_reviews/c1_lu_refinement_replay_20261118T121545013686Z/manifest.json",
+      "bytes": 99688,
+      "sha256": "cdc0e74fd508ec2925f04a9e1041c83ae9036b3b53c6e895cc9cb2ebd6335090"
+    },
+    "terminal": {
+      "path": "local_reference/native_static_reviews/c1_lu_refinement_replay_20261118T121545013686Z/monitor_output/terminal.json",
+      "bytes": 1909,
+      "sha256": "08e3e1a531cc88beb178078d64632d4b7f5049cd064b8593a54cd17acd85f0c6"
+    },
+    "receipt": {
+      "path": "local_reference/native_static_reviews/c1_lu_refinement_replay_20261118T121545013686Z/monitor_output/analysis/receipt.json",
+      "bytes": 4352,
+      "sha256": "3c9d41343f97e338a010c2eb72db095051ed0becc369fafb2d962db93d7edbf7"
+    },
+    "primary": {
+      "path": "local_reference/native_static_reviews/c1_lu_refinement_replay_20261118T121545013686Z/monitor_output/analysis/coarse_primary_physical.json",
+      "bytes": 4325,
+      "sha256": "15cecbc8962946b51a97567730ea8afd353729124dc1ee91521b6abf9aae4d40"
+    },
+    "independent": {
+      "path": "local_reference/native_static_reviews/c1_lu_refinement_replay_20261118T121545013686Z/monitor_output/analysis/coarse_independent_physical.json",
+      "bytes": 13174,
+      "sha256": "6393c8c27712f543c01a3e60d49be54170952e212182fa9d0180ad125f0378ee"
+    },
+    "solve_diagnostics": {
+      "path": "local_reference/native_static_reviews/c1_lu_refinement_replay_20261118T121545013686Z/monitor_output/analysis/solve_diagnostics.json",
+      "bytes": 1560,
+      "sha256": "e466783dc4a89aa7df1d73dae2c6dd70d0c0553c8a0456c73e46bdbcae752156"
+    }
+  }
+}

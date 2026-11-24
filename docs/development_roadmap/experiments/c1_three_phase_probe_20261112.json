@@ -1,0 +1,271 @@
+{
+  "recorded_utc": "2026-11-11T18:56:22.490966+00:00",
+  "checked_head": "a241d1ec1636e5635166f3b434acdd67034a38c4",
+  "status": "manual_three_phase_probe_NUMERICAL_FAIL",
+  "candidate_executed": false,
+  "full_VSC_reference_ready": false,
+  "new_formal_example_created": false,
+  "formal_new_examples_completed": 9,
+  "source_files_unchanged": 113,
+  "project_source_dependencies_unchanged": true,
+  "source_baseline": {
+    "path": ".tmp/longterm/c1-pll-entry-final-source-hashes-20261112.json",
+    "bytes": 12850,
+    "sha256": "7c666c145ee97c8cbe8fdd50932ca35d7ff25ca9424d07fd5be4b4324703ef71"
+  },
+  "test_reuse": "1300 including slow / locked27 / Ruff / mypy39 passed at unchanged PLL code; not rerun for research documents.",
+  "contract": {
+    "plant_components": "4 existing V sources + 6 bilateral variable R switches + 3 R + 3 L",
+    "grounding": "grounded AC star; both DC rails floating",
+    "AC_rms_V": 120,
+    "frequency_Hz": 60,
+    "AC_ramp_s": 0.001,
+    "DC_V": 400,
+    "DC_ramp_s": 0,
+    "phase_degrees_abc": [
+      0,
+      -120,
+      120
+    ],
+    "R_ohm": 1,
+    "L_H": 0.001,
+    "Ron_ohm": 0.001,
+    "Roff_ohm": 1000000000.0,
+    "current_direction": "AC toward bridge; DC toward source absorption",
+    "initial_upper_gates": "000",
+    "manual_upper_sequence": [
+      "000",
+      "100",
+      "110",
+      "010",
+      "011",
+      "001",
+      "101",
+      "111"
+    ],
+    "step_s": 5e-06,
+    "stop_s": 0.0004,
+    "rows": 81,
+    "channels": 31,
+    "segments_retained": 80,
+    "state_duration_s": 5e-05,
+    "native_thresholds_s": [
+      4.75e-05,
+      9.750000000000001e-05,
+      0.0001475,
+      0.00019750000000000003,
+      0.0002475,
+      0.0002975,
+      0.00034750000000000004
+    ],
+    "source_CUR_used": false,
+    "same_time_fresh_ammeters": 4,
+    "scope": "Manual eight-vector wiring/startup probe; no SPWM, full-cycle/refinement or control qualification."
+  },
+  "frozen_before_native": {
+    "design_manifest": {
+      "path": "local_reference/c1_openloop_reference_research/20261111T181454410104Z_three_phase_probe_design_v1/manifest.json",
+      "bytes": 3561,
+      "sha256": "b9a08ec45aec6a85cde40abe7c508287c60cafc642b30880c33e72c11a65856d"
+    },
+    "execution_manifest": {
+      "path": "local_reference/c1_openloop_reference_research/20261111T182845626945Z_three_phase_execution_v1/manifest.json",
+      "bytes": 5347,
+      "sha256": "082c5a72ec55326d3de6b0dff7b47e925293f2b8018ef762a3eeb82ce579b1a9"
+    },
+    "plan": {
+      "path": "local_reference/c1_openloop_reference_research/20261111T182845626945Z_three_phase_execution_v1/inputs/probe_plan.json",
+      "bytes": 8695,
+      "sha256": "be98e5082ded4d77f66823ebc5f9639e87b202b0c5e75652e6e43535d50e669c"
+    },
+    "root_auditor": {
+      "path": ".tmp/longterm/audit_c1_three_phase_probe_20261112.py",
+      "bytes": 22085,
+      "sha256": "f93054183d1ec09c356ce991485cb5f550e9478e27c2cbdd0821b0dc12d955de"
+    },
+    "root_preflight": {
+      "path": "local_reference/native_static_reviews/c1_three_phase_root_preflight_20261112/receipt.json",
+      "bytes": 1048,
+      "sha256": "f49460a41f39653bbc6f0813771e81dad35061e529031fcddb5130916745aee6"
+    },
+    "execution_reviews": [
+      {
+        "path": "local_reference/native_static_reviews/c1_three_phase_execution_final_20261111T1837Z/receipt.json",
+        "bytes": 7737,
+        "sha256": "6f9c7d4eba50ed3b0849532cd992f5b72272ca2b694bdc91d4844bffd4ed2271"
+      },
+      {
+        "path": "local_reference/native_static_reviews/c1_three_phase_execution_review_20261111T184155Z/receipt.json",
+        "bytes": 1976,
+        "sha256": "c855db70c80693380453a345e84f6374efdbef79ad3d7b01bb9455010886bbc5"
+      }
+    ],
+    "synthetic_checks": 66,
+    "synthetic_checks_are_native_evidence": false
+  },
+  "native": {
+    "run": "local_reference/c1_openloop_reference_research/20261111T182845626945Z_three_phase_execution_v1/n/20261111T183913212661Z",
+    "manifest": {
+      "path": "local_reference/c1_openloop_reference_research/20261111T182845626945Z_three_phase_execution_v1/n/20261111T183913212661Z/manifest.json",
+      "bytes": 20952,
+      "sha256": "3277f7db9c9447dade2587289331e7e3b912b1c1fc3c1d8e777a924eed1b6609"
+    },
+    "terminal": {
+      "path": "local_reference/c1_openloop_reference_research/20261111T182845626945Z_three_phase_execution_v1/n/20261111T183913212661Z/terminal.json",
+      "bytes": 10994,
+      "sha256": "6aff075fdadc382d0101dbca36ef1b65fc2b786c1d28410633c796ef3fd75445"
+    },
+    "session_id": 29348,
+    "session_closed": true,
+    "exit_code": 0,
+    "elapsed_s": 168.6223126000259,
+    "compile_errors": 0,
+    "run_returned_and_completion_observed": true,
+    "quit_returned": true,
+    "owned_processes_remaining": 0,
+    "originals_profile_dependencies_parent_environment_unchanged": true,
+    "verified_archive_files": 64,
+    "verified_frozen_inputs": 18,
+    "graph": {
+      "components": 161,
+      "ports": 226,
+      "wires": 127,
+      "nets": 71
+    },
+    "source_ID_phase_port_channel_mapping_verified": true,
+    "generated_gate_R_and_fresh_current_order_verified": true
+  },
+  "observed": {
+    "whole_triplet_phase_convention": "sin(omega*t + Ph), unique positive abc sequence",
+    "future_cosine_Park_angle": "omega*t - pi/2",
+    "initial_phase_current_abs_A": "2.4913404672135e-23",
+    "initial_DC_absorption_A": "-1.1999999999988e-6",
+    "overall_accepted": false,
+    "failure_gate": "bridge DC port difference: abs(Vp - Vn - 400) + full-token radius <= 1e-8 V",
+    "failures": [
+      {
+        "row": 10,
+        "time_s": "0.000050000000000000",
+        "raw_error_V": "1.036000E-8",
+        "full_last_place_radius_V": "2.000E-11",
+        "error_plus_radius_V": "1.038000E-8"
+      },
+      {
+        "row": 11,
+        "time_s": "0.000055000000000000",
+        "raw_error_V": "1.349000E-8",
+        "full_last_place_radius_V": "2.000E-11",
+        "error_plus_radius_V": "1.351000E-8"
+      },
+      {
+        "row": 15,
+        "time_s": "0.000075000000000000",
+        "raw_error_V": "1.151000E-8",
+        "full_last_place_radius_V": "2.000E-11",
+        "error_plus_radius_V": "1.153000E-8"
+      },
+      {
+        "row": 18,
+        "time_s": "0.000090000000000000",
+        "raw_error_V": "1.222000E-8",
+        "full_last_place_radius_V": "2.000E-11",
+        "error_plus_radius_V": "1.224000E-8"
+      },
+      {
+        "row": 19,
+        "time_s": "0.000095000000000000",
+        "raw_error_V": "1.068000E-8",
+        "full_last_place_radius_V": "2.000E-11",
+        "error_plus_radius_V": "1.070000E-8"
+      }
+    ],
+    "other_direct_raw_plus_token_maxima": {
+      "three_phase_KCL": "5.81000E-11",
+      "pole_KCL": "2.933208476027000E-8",
+      "DCrail_KCL": "5.671579102894000E-8",
+      "R": "2.000E-12",
+      "KVL": "1.00000000000000000000000266000E-10",
+      "TR": "1.190000E-9",
+      "power": "3.12370327875200092738830000000E-8",
+      "energy": "2.018821978430185865120075164270259586558132605977333098724863225000000E-13"
+    },
+    "conditional_prediction_scope": "Current/neutral predictions are diagnostics only: their original DC/source <=1e-8 V premise failed.",
+    "cause_not_established": "DC bridge positive rail is separated from source NA by an ideal fresh ammeter; existing channels do not isolate source-terminal voltage from ammeter drop.",
+    "precision_scope": "Raw residual already exceeds limit; output quantum alone cannot explain it. No claim about internal initialization or solver precision."
+  },
+  "analysis_admission": {
+    "first_failure_before_raw_preserved": {
+      "path": ".tmp/longterm/c1-three-phase-first-audit-20261112.log",
+      "bytes": 983,
+      "sha256": "266b442181f9bbdc3a035ae4dda853fde8e0aa8b86eaf80f91e4d15e8765d612"
+    },
+    "sole_generated_cache": {
+      "path": "local_reference/c1_openloop_reference_research/20261111T182845626945Z_three_phase_execution_v1/__pycache__/builder_three_phase.cpython-313.pyc",
+      "bytes": 30084,
+      "sha256": "a8447fc0ecbdb001a64e842c5ea2f4b523fe148b8c3471f72768b4afde39649b"
+    },
+    "cache_static_code_equivalence": {
+      "path": "local_reference/native_static_reviews/c1_three_phase_generated_cache_20261112/receipt.json",
+      "bytes": 1310,
+      "sha256": "d28675848903c1f45d918da2f569d393aff40494a233515ff2a4541e0e7bab55"
+    },
+    "precise_cache_admission": {
+      "path": "local_reference/native_static_reviews/c1_three_phase_cache_admission_20261112/receipt.json",
+      "bytes": 1480,
+      "sha256": "1beebac7e2581cf7bd1dcb4b0606e6ba8dcd463d7be356f0f771f1eb318dbd8d"
+    },
+    "independent_admission_review": {
+      "path": "local_reference/native_static_reviews/c1_cache_admission_independent_20261111T185232Z/receipt.json",
+      "bytes": 3332,
+      "sha256": "1e6b4eca266f6ef20bbb3c9b961541dc61d072a5bce92e70f7de395f5351e300"
+    },
+    "new_auditor": {
+      "path": ".tmp/longterm/audit_c1_three_phase_probe_cache_20261112.py",
+      "bytes": 23410,
+      "sha256": "ec5d69d208094c50c6340ba99f4d59f37a6348c7e14213734046701727cb0d6b"
+    },
+    "same_terminal_run_numerical_failure": {
+      "path": ".tmp/longterm/c1-three-phase-cache-audit-20261112.log",
+      "bytes": 1310,
+      "sha256": "64956010c02f5571fa66b4c310e85798103491b02729c18b8074f9cc988c1aa3"
+    },
+    "original18_and_all_other_extras_checks_retained": true,
+    "numerical_protocol_unchanged": true,
+    "native_rerun": false
+  },
+  "actual_reviews": [
+    {
+      "path": "local_reference/native_static_reviews/c1_three_phase_root_failure_20261112/receipt.json",
+      "bytes": 2604,
+      "sha256": "00e6203ecfbf93949dcbeaa91d1c002a890e4fba81002f0032686b72bc7d3f2d"
+    },
+    {
+      "path": "local_reference/native_static_reviews/c1_three_phase_actual_independent_20261111T1849Z/receipt.json",
+      "bytes": 34851,
+      "sha256": "4695c5a9c99ca8a368e00e5b01c8556ac641e5a8bca06444add79ec98d29e7ae"
+    },
+    {
+      "path": "local_reference/native_static_reviews/c1_three_phase_native_actual_20261111T183913212661Z_185031139025/receipt.json",
+      "bytes": 3827,
+      "sha256": "3d7711587e83c7b9c3a29ec1ee364da34874f53643de1f09670e9bc691bfeb3d"
+    }
+  ],
+  "next_gate": "Preserve FAIL. Freeze an isolated measurement diagnostic before any new native run: same plant/settings plus source-NA-to-NB voltage and DC-ammeter voltage; distinguish measurement path and terminal constraints before condition-number analysis. No candidate until reference gates are qualified.",
+  "local_only": "Originals, native files, raw waveforms and detailed scripts stay ignored in local_reference/.tmp.",
+  "goal_status": "active",
+  "C1_status": "in_progress",
+  "D1_status": "planned",
+  "F1_status": "billing_blocked",
+  "actual_review_scope_supplements": [
+    {
+      "path": "local_reference/native_static_reviews/c1_three_phase_actual_independent_20261111T1849Z/scope_supplement.json",
+      "bytes": 5855,
+      "sha256": "13ab45f0f544eb4c5181634cb139ff84aedf7a0126fbb976996db77b4bba6945"
+    },
+    {
+      "path": "local_reference/native_static_reviews/c1_three_phase_actual_closure_20261111T185420496243Z/receipt.json",
+      "bytes": 5187,
+      "sha256": "5dd6534aee69b9e74c9c885c0a9cc49df12999d6d8525d19f3bb4895c5b5a935"
+    }
+  ]
+}

@@ -1,0 +1,196 @@
+{
+  "schema": "pycy_grid_connected_pv_acceptance_v1",
+  "status": "accepted",
+  "date": "2026-11-23",
+  "example": 36,
+  "scope": "Locally affine 650-cell PV string, 25 °C, step from 1000 to 900 W/m², one grid-following station.",
+  "protocol": {
+    "path": "validation/cases/grid_connected_pv/candidate_protocol.json",
+    "sha256": "edbcb130ad8d2310bf65cf068fc987ddfa83e0641b29f3d1d76035374e1685c5",
+    "bytes": 9350
+  },
+  "implementation": {
+    "path": "examples/36_grid_connected_pv.py",
+    "sha256": "5d094cdd5894b134cb870f1fd564318d507522e3dbe10dc229ce2c3554ddc81a",
+    "bytes": 5416
+  },
+  "reference_platform": "PSCAD 5.0.0 / EMTDC 20210219 (gf46)",
+  "original_native": {
+    "path": "docs/development_roadmap/experiments/d1_pv_grid_irradiance_native_20261123.json",
+    "sha256": "c3179aaa6ab29b803319ed068660174a440c0ad14b71a3083d6d9d1877dc52e2",
+    "bytes": 6564
+  },
+  "official_comparison": {
+    "path": "local_reference/grid_connected_pv_validation/official-20261123T051756073Z/report.json",
+    "sha256": "266ff567b38ba219088ca2da3865e5f43ab702dcc53a199b1591f32abd7a697f",
+    "bytes": 50864
+  },
+  "figure": {
+    "path": "local_reference/grid_connected_pv_validation/official-20261123T051756073Z/waveform_overlay.png",
+    "sha256": "a7aa6f6ab416a02362826817ac4be37dc6c398aeb575737ea90db5f3d170022e",
+    "bytes": 162638
+  },
+  "grid_results": {
+    "5us": {
+      "candidate_rows": 200002,
+      "native_positive_rows": 200001,
+      "clock_abs_s": 1.1102230246251565e-16,
+      "pointwise_bus_and_pv": {
+        "bus_v": 0.13478276913440368,
+        "pv_a": 0.03460929640647237,
+        "pv_power_w": 13.85039356251366
+      },
+      "windows": {
+        "activation": {
+          "time_s": [
+            0.04,
+            0.05
+          ],
+          "pycy_export_w": 535.3824165694263,
+          "pscad_export_w": 549.4452454372803,
+          "pycy_bus_v": 395.0121754340993,
+          "pscad_bus_v": 395.1276562093303
+        },
+        "before": {
+          "time_s": [
+            0.44,
+            0.49
+          ],
+          "pycy_export_w": 554.8940343219061,
+          "pscad_export_w": 570.7710755467913,
+          "pycy_bus_v": 390.10999696023447,
+          "pscad_bus_v": 390.09162038739817
+        },
+        "after": {
+          "time_s": [
+            0.94,
+            0.99
+          ],
+          "pycy_export_w": 466.3603500124963,
+          "pscad_export_w": 473.97253048502347,
+          "pycy_bus_v": 389.9862837440085,
+          "pscad_bus_v": 389.9803011623113
+        }
+      },
+      "export_drop_w": {
+        "candidate": 88.53368430940981,
+        "native": 96.79854506176781
+      }
+    },
+    "2p5us": {
+      "candidate_rows": 400003,
+      "native_positive_rows": 400002,
+      "clock_abs_s": 2.220446049250313e-16,
+      "pointwise_bus_and_pv": {
+        "bus_v": 0.10690144636316745,
+        "pv_a": 0.03461946740688582,
+        "pv_power_w": 13.788592900554363
+      },
+      "windows": {
+        "activation": {
+          "time_s": [
+            0.04,
+            0.05
+          ],
+          "pycy_export_w": 536.8679409858468,
+          "pscad_export_w": 545.4034856552809,
+          "pycy_bus_v": 395.0355380287686,
+          "pscad_bus_v": 395.12414257085425
+        },
+        "before": {
+          "time_s": [
+            0.44,
+            0.49
+          ],
+          "pycy_export_w": 554.186752570326,
+          "pscad_export_w": 568.8500477795646,
+          "pycy_bus_v": 390.12756537967977,
+          "pscad_bus_v": 390.097414356286
+        },
+        "after": {
+          "time_s": [
+            0.94,
+            0.99
+          ],
+          "pycy_export_w": 466.62399987831645,
+          "pscad_export_w": 475.9366113512125,
+          "pycy_bus_v": 389.9868177102228,
+          "pscad_bus_v": 389.98367581086336
+        }
+      },
+      "export_drop_w": {
+        "candidate": 87.56275269200955,
+        "native": 92.91343642835216
+      }
+    }
+  },
+  "cross_grid": {
+    "before": {
+      "export_mean_abs_w": 0.7072817515801262,
+      "reactive_mean_abs_var": 0.36827767449620197,
+      "pv_power_mean_abs_w": 0.03709431255572326,
+      "bus_mean_abs_v": 0.017568419445296968
+    },
+    "after": {
+      "export_mean_abs_w": 0.2636498658201276,
+      "reactive_mean_abs_var": 1.39093926836102,
+      "pv_power_mean_abs_w": 0.0010024627573557154,
+      "bus_mean_abs_v": 0.0005339662142773705
+    }
+  },
+  "windows_checks": {
+    "full_suite_count": 1616,
+    "includes_slow": true,
+    "test_result": {
+      "path": "local_reference/grid_connected_pv_validation/windows-regression-20261123T051605363Z/pytest.xml",
+      "sha256": "611c2c3846a2856fbd4a27794c9bd04810259592ff70363d71d5acec7ad33db2",
+      "bytes": 232992
+    },
+    "static": {
+      "path": "local_reference/grid_connected_pv_validation/windows-regression-20261123T051605363Z/static.log",
+      "sha256": "748cbc30f60ea014ae9c807c550fe520a346f8e349da6550bd2b4c5380b57097",
+      "bytes": 122
+    },
+    "standalone": {
+      "path": "local_reference/grid_connected_pv_validation/standalone-20261123T051255431Z/terminal.json",
+      "sha256": "fd33bd91e680337ffabf35b80d669280a9a2115ab569dd29760a5f2073efe7a2",
+      "bytes": 498
+    }
+  },
+  "ubuntu_wsl2_checks": {
+    "standalone_and_four_focused_tests": {
+      "path": "local_reference/grid_connected_pv_validation/ubuntu-20261123T051930Z/validation.log",
+      "sha256": "e10f5c5aa5996fc23160125c0028edd2cbc1a34033f7dbebbf6abf6ca9990538",
+      "bytes": 2535
+    },
+    "terminal": {
+      "path": "local_reference/grid_connected_pv_validation/ubuntu-20261123T051930Z/terminal.json",
+      "sha256": "1caa678530443034b1b04eb0faa54fba09f807a7fcf7d56a3684d1ffc942006c",
+      "bytes": 123
+    },
+    "source_hashes": {
+      "path": "local_reference/grid_connected_pv_validation/ubuntu-20261123T051930Z/sources.sha256",
+      "sha256": "2eb398ea1592d5e34d4f6bc5ed639fb2719fdd1cb9f5e0a03721ccc31baecb35",
+      "bytes": 52595
+    }
+  },
+  "portable_protocol_archive": {
+    "path": "local_reference/grid_connected_pv_validation/portable-protocol.tar",
+    "sha256": "a85044b2db98ecd40c6179bc8770af330942493cf4b699370404a8b86c43f685",
+    "bytes": 20480
+  },
+  "formal_examples_completed": 18,
+  "publication_formatting": {
+    "change": "Trimmed one trailing empty line. Python syntax trees are identical.",
+    "files": {
+      "validation/cases/grid_connected_pv/compare.py": {
+        "tested_sha256": "66554d0606ff10300df17aaebe3c1499b106fe677ca6184f44907d3020215b87",
+        "published_sha256": "84bbf3a0cba2d97b01f2a2cfd947aa3f91fb1d5aed2464f904ecad4c0cc0ea37"
+      },
+      "tests/test_grid_connected_pv.py": {
+        "tested_sha256": "d390cf570c6a994075e702c95184ba6ea751eb35395d8311799150b91a034de1",
+        "published_sha256": "cc21bd2dd57d44d49e6e7b35c86e93af51424c3eab8a8631a71831c390711f66"
+      }
+    }
+  }
+}

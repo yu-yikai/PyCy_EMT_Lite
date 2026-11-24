@@ -1,0 +1,180 @@
+{
+  "schema": "c1_nojvm_short_saved_mat_checkpoint_v1",
+  "date": "2026-11-16",
+  "execution_head": "b57a2a8c06614cf8c626b0e189402063fa82dffd",
+  "status": "ACTUAL_NOJVM_SHORT_SIM_RETURNED_MAT_SAVED_METADATA_FAIL_RECOVERY_PENDING",
+  "summary": "同物理400µs短仿真已返回并保存完整MAT，日志单位类型检查随后失败；恢复仅有静态证据，未重载、导出或数值验收。",
+  "source_snapshot": {
+    "path": "local_reference/native_static_reviews/vsc_input_fix_ROOT_20261116T111042668097Z/source113.json",
+    "bytes": 12980,
+    "sha256": "f533bcd69b6b1bdcf4282932864a7a9e6573ad88b72f37ba358f38b7429cc492"
+  },
+  "preflight_attempt": {
+    "session": "31c398",
+    "native_launches": 0,
+    "exit_code": 1,
+    "failure": "CIM preflight timeout; exact failed query NOT_RECORDED",
+    "source_failure": {
+      "path": "local_reference/c1_openloop_reference_research/20261116T122908854696Z_simscape_short_nojvm_v1/ROOT_preflight_failure_review.json",
+      "bytes": 1747,
+      "sha256": "f7043d0a463d0b5d83246483a2db773b51f0438e0497b308e798d95b680a32fb"
+    },
+    "independent_review": {
+      "path": "local_reference/native_static_reviews/c1_short_nojvm_preflight_failure_independent_20261116T123546025163Z/receipt.json",
+      "bytes": 4531,
+      "sha256": "9bc9fe601ab4e355c8d15203a9f62c37fd7848cce3e487cf8a8a8320b86284b2"
+    },
+    "readonly_query_revalidation": {
+      "path": "local_reference/native_static_reviews/c1_short_nojvm_CIM_revalidation_20261116T1235144044907Z/observation.json",
+      "bytes": 448,
+      "sha256": "6810108e5cd8527487c519a8a9d2e582a2ce7d2366d415043b4daba2fcc7deb2"
+    },
+    "consumed_package_reused": false
+  },
+  "actual_short_attempt": {
+    "session": 99554,
+    "native_launches": 1,
+    "sim_calls": 1,
+    "simulation_returned": true,
+    "raw_output_saved": true,
+    "native_simlog_savable": true,
+    "jvm": false,
+    "exit_code": 1,
+    "elapsed_terminal_s": 35.4103909,
+    "elapsed_console_s": 35.4206637,
+    "available_commit_pre_bytes": 8059023360,
+    "sampled_peak_owned_private_bytes": 2443915264,
+    "sampled_minimum_available_commit_bytes": 5483712512,
+    "stage": "snapshot_live_logs",
+    "native_output_reloaded": false,
+    "full_reload_verified": false,
+    "direct_export_observed": false,
+    "numerical_comparison_executed": false,
+    "source_input_bindings_before_after_exact": true,
+    "remaining_owned": [],
+    "cleanup_actions": [],
+    "cleanup_errors": [],
+    "existing_process_intervention": false,
+    "h_s": 5e-06,
+    "stop_s": 0.0004,
+    "source_failure": {
+      "path": "local_reference/c1_openloop_reference_research/20261116T123551857336Z_simscape_short_nojvm_v1/ROOT_actual_failure_review.json",
+      "bytes": 3708,
+      "sha256": "747abdfda8ef576d59c70dbc249c9fd5bc06f3119fe2b21d2a1dc9a8be4993b3"
+    },
+    "failure": "New loggingSnapshot asserted both DataInfo.Units and TimeInfo.Units were char; line166 rejected. Actual unit classes are not observed by that failure.",
+    "raw_evidence": [
+      {
+        "path": "local_reference/c1_openloop_reference_research/20261116T123551857336Z_simscape_short_nojvm_v1/n/20261116T1237597593667Z/preflight.json",
+        "bytes": 18492,
+        "sha256": "493a276371f6a27fb20021949023029d4348632f9b3a80e9b869b94000ebc67e"
+      },
+      {
+        "path": "local_reference/c1_openloop_reference_research/20261116T123551857336Z_simscape_short_nojvm_v1/n/20261116T1237597593667Z/start.json",
+        "bytes": 1684,
+        "sha256": "9d6c28f2f94da3beb37116d1cc875f72e69c97af14c34291784264e69e089bbe"
+      },
+      {
+        "path": "local_reference/c1_openloop_reference_research/20261116T123551857336Z_simscape_short_nojvm_v1/n/20261116T1237597593667Z/terminal.json",
+        "bytes": 18360,
+        "sha256": "c23055a48e61bfa110d56ccde730527cd8fe8468be4a17b7c47851f583af9d50"
+      },
+      {
+        "path": "local_reference/c1_openloop_reference_research/20261116T123551857336Z_simscape_short_nojvm_v1/n/20261116T1237597593667Z/resource.json",
+        "bytes": 5319,
+        "sha256": "6f54e0b0ce3663bd2d01de566f19ed3427cddb336877ac52b7604daba20e41ca"
+      },
+      {
+        "path": "local_reference/c1_openloop_reference_research/20261116T123551857336Z_simscape_short_nojvm_v1/n/20261116T1237597593667Z/run/run_report.json",
+        "bytes": 5337,
+        "sha256": "9f44589a52a4d6181b2f945ac3171400619f8aa74bf2ffc0b375df8d47fafa8c"
+      },
+      {
+        "path": "local_reference/c1_openloop_reference_research/20261116T123551857336Z_simscape_short_nojvm_v1/n/20261116T1237597593667Z/native_batch.log",
+        "bytes": 412,
+        "sha256": "a12be7e56caed8db267743a46104e6a852121160bf3bbc82d604734377d545ab"
+      },
+      {
+        "path": "local_reference/c1_openloop_reference_research/20261116T123551857336Z_simscape_short_nojvm_v1/n/20261116T1237597593667Z/run/native_output.mat",
+        "bytes": 1243729,
+        "sha256": "2f6c72097922a11d5ad5b945641b989abe09de457d396eb47f411f71c54cb183"
+      }
+    ],
+    "independent_review": {
+      "path": "local_reference/native_static_reviews/c1_short_nojvm_actual_failure_independent_20261116T124312978189Z/receipt.json",
+      "bytes": 5577,
+      "sha256": "2d007efe4cf26e75e1712468c0eed80dce75df75cf810b9e1cbe2faf448ade99"
+    }
+  },
+  "recovery_preparation": {
+    "status": "DRIVER_STATIC_REVIEWED_PREPARER_MONITOR_DRAFT_NOT_ROOT_REVIEWED_NOT_EXECUTED",
+    "driver": {
+      "path": ".tmp/longterm/run_c1_simscape_short_nojvm_mat_recovery_v1_20261116.m",
+      "bytes": 18757,
+      "sha256": "137e85f32e0702a79190a7937766e0c7377d1ae63d9d94218636255935952dbb"
+    },
+    "exporter": {
+      "path": ".tmp/longterm/export_c1_simscape_short_nojvm_v1_20261116.m",
+      "bytes": 7194,
+      "sha256": "0208b103c630d3a87653d1ee338734dbafe18714ec7b25835df3ced38f50ee1a"
+    },
+    "preparer_draft": {
+      "path": ".tmp/longterm/prepare_c1_simscape_short_nojvm_mat_recovery_v1_20261116.py",
+      "bytes": 9899,
+      "sha256": "72699f1a6e216b8b8f224ff4c1750827fecc95b7eb1add867f825380ce790f9e"
+    },
+    "monitor_draft": {
+      "path": ".tmp/longterm/monitor_c1_simscape_short_nojvm_mat_recovery_v1_20261116.ps1",
+      "bytes": 23986,
+      "sha256": "2d04932bc0eeeff50b3575131f339f97ccd1fbb3bb8964fbf292aecb42df2942"
+    },
+    "static_receipts": [
+      {
+        "path": "local_reference/native_static_reviews/c1_short_nojvm_mat_recovery_author_static_20261116T124940114018Z/receipt.json",
+        "bytes": 4630,
+        "sha256": "264388c806ab706cc47113080c3e61a660738d0f88802d01ebb90f6d1c19041d"
+      },
+      {
+        "path": "local_reference/native_static_reviews/c1_short_nojvm_mat_recovery_independent_20261116T124917729586Z/receipt.json",
+        "bytes": 3306,
+        "sha256": "66029d2b400634f0d68e5b838760b351fae8e09a572b7d3a08036c707e0a8e9e"
+      },
+      {
+        "path": "local_reference/native_static_reviews/c1_short_nojvm_mat_recovery_preparation_draft_20261116T124849780185Z/receipt.json",
+        "bytes": 4784,
+        "sha256": "37215787fe687fb6c732d4710f5299a9e19a08030fddc79c65b931f5312c8696"
+      },
+      {
+        "path": "local_reference/native_static_reviews/c1_timeseries_unit_object_static_20261116T124539208407Z/receipt.json",
+        "bytes": 4273,
+        "sha256": "45e680163c50b5bb15eb5505b8644bbf38f23be4431c9c1b2894f4da58c515c7"
+      }
+    ],
+    "native_launched": false,
+    "actual_MAT_loads": 0,
+    "canonical_recovery_package_created": false,
+    "planned_native_launches_max": 1,
+    "planned_model_load_calls_max": 0,
+    "planned_simulation_calls_max": 0,
+    "limits": "Actual unit classes are not yet observed. Fresh-session two-disk-load comparisons cannot establish original live/pre-save versus reload equality. Rebind drafts to actual next execution HEAD and review before any preparation/native call."
+  },
+  "project_scope": {
+    "formal_new_examples_completed": 9,
+    "C1": "in_progress",
+    "D1": "planned",
+    "F1": "blocked_by_external_CI_billing_lock",
+    "formal_python_sources": 113,
+    "sources_and_dependencies_unchanged_this_checkpoint": true,
+    "latest_full_pytest": {
+      "passed": 1518,
+      "including_slow": true,
+      "rerun_this_checkpoint": false
+    },
+    "full_commercial_reference_qualified": false,
+    "new_teaching_candidate_implemented": false,
+    "prior_PSCAD_FAIL_preserved": true,
+    "prior_normal_Simscape_short_PASS_preserved": true
+  },
+  "readability": "复用现有CaseDefinition链、元件和控制器；局部修正、直接命名，不增加公共框架、接口或依赖。研究脚本和原件留忽略目录。",
+  "next_action": "审查并重绑新HEAD的MAT-only恢复包及分析入口，独审后在新进程只加载原MAT，核两次磁盘加载结构、57量导出与原81点门；合格后再准备完整0.2s双步长参考。"
+}

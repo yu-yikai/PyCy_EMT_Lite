@@ -1,0 +1,116 @@
+{
+  "schema": "grid_connected_vsc_pll_source_precision_reference_v1",
+  "date": "2026-11-22",
+  "status": "both_source_precision_native_grids_qualified",
+  "reference_protocol": {
+    "path": "validation/cases/grid_connected_vsc_pll/reference_protocol.json",
+    "sha256": "78ba092cc8099390023d3fcaa449c8479d269dcd5fa7ec315b267d968e1da767",
+    "bytes": 6164
+  },
+  "original_native_reference": {
+    "path": "validation/cases/grid_connected_vsc_pll/full_reference_report.json",
+    "sha256": "255e251c54c3146bc13a26a528c200e8af80e78cf3e1a1a62707afef66a9789d",
+    "bytes": 4790
+  },
+  "original_candidate_validation": {
+    "path": "validation/cases/grid_connected_vsc_pll/validation_report.json",
+    "sha256": "fffbc156ca6b90933b8505a09b76ff8f6a44b0e7c7b8da06e0468988d4ca3e86",
+    "bytes": 7805
+  },
+  "coarse_trial_result": {
+    "path": "validation/cases/grid_connected_vsc_pll/source_precision_trial_result.json",
+    "sha256": "211af1843f0ec6fcdd23051c4c7b7d3a24ab470b1e9ca2ff5b06c8200f7b9d57",
+    "bytes": 3493
+  },
+  "engine": "PSCAD 5.0 / GFortran 4.6 x86",
+  "grids": {
+    "5us": {
+      "rows": 40002,
+      "trial": {
+        "path": "validation/cases/grid_connected_vsc_pll/source_precision_trial.json",
+        "sha256": "2e8ea0935a3ac8cf62c42bd1a208e198174cdd27a7c45a1a01fda3c29377acd0",
+        "bytes": 4045
+      },
+      "execution_receipt": {
+        "path": "local_reference/native_static_reviews/c1_pscad_pll_source_precision_5us_v2_20261122/n/20261122T125549132970Z/native_execution_receipt.json",
+        "sha256": "816d5a99238487e791cf50587b453d9badf23ab61e3fd00ff21fbb6af945e9e5",
+        "bytes": 46491
+      },
+      "numerical_report": {
+        "path": "local_reference/native_static_reviews/c1_pll_source_precision_5us_numerical_20261122T125549132970Z/report.json",
+        "sha256": "479ce6e8abf5dd004f74933b4664515838ed6c9b2742956dc60ca0617a7a5d1d",
+        "bytes": 158036
+      },
+      "inputs": {
+        "path": "local_reference/native_static_reviews/c1_pll_source_precision_5us_numerical_20261122T125549132970Z/inputs.json",
+        "sha256": "56a676d91cc8d329262e6e8bda953b757004e6e0a848a4b74aa1af215f0055c1",
+        "bytes": 15797
+      },
+      "native_waveforms": {
+        "path": "local_reference/native_static_reviews/c1_pll_source_precision_5us_numerical_20261122T125549132970Z/plant32_si_with_pll.npz",
+        "sha256": "9d06c9f039b580b77ea14684ff25922f3713970909d99281b9f5df0ae4d33c59",
+        "bytes": 12170254
+      },
+      "physical_budgets_passed": 19,
+      "same_grid_windows_passed": 9,
+      "strict_pll_state_maxima": {
+        "theta": 2.6645352591003757e-15,
+        "omega": 1.6484591469634324e-12,
+        "xi": 5.5011550870176507e-14,
+        "normalized_error": 1.567496132892643e-14
+      },
+      "fine_half_steps_held": 0
+    },
+    "2p5us": {
+      "rows": 80003,
+      "trial": {
+        "path": "validation/cases/grid_connected_vsc_pll/source_precision_fine_trial.json",
+        "sha256": "58cad98134208020b858b377572bb1e704bace490ce95af728864371eda827ad",
+        "bytes": 3510
+      },
+      "execution_receipt": {
+        "path": "local_reference/native_static_reviews/c1_pscad_pll_source_precision_2p5us_20261122/n/20261122T131217916343Z/native_execution_receipt.json",
+        "sha256": "2761a6fa670f03006fc6612a51c0c25c1d77da0bc8e0c575a1f3b724d95c314c",
+        "bytes": 68794
+      },
+      "numerical_report": {
+        "path": "local_reference/native_static_reviews/c1_pll_source_precision_2p5us_numerical_20261122T131217916343Z/report.json",
+        "sha256": "bccdc0272a982ae522de35c3e7240a4fa0f56a86ad947efa1308b65fb928f22e",
+        "bytes": 158350
+      },
+      "inputs": {
+        "path": "local_reference/native_static_reviews/c1_pll_source_precision_2p5us_numerical_20261122T131217916343Z/inputs.json",
+        "sha256": "b1910d67e77df48fcd820177dfbb281265000e8285cd0e1205dee4eadee0db49",
+        "bytes": 16251
+      },
+      "native_waveforms": {
+        "path": "local_reference/native_static_reviews/c1_pll_source_precision_2p5us_numerical_20261122T131217916343Z/plant32_si_with_pll.npz",
+        "sha256": "009694ee5396f1f414f8db58af5bcd4eaf01ceeefceefe53060922ae6857cd1c",
+        "bytes": 24330558
+      },
+      "physical_budgets_passed": 19,
+      "same_grid_windows_passed": 9,
+      "strict_pll_state_maxima": {
+        "theta": 1.7763568394002505e-15,
+        "omega": 1.5916157281026244e-12,
+        "xi": 4.468647674116255e-14,
+        "normalized_error": 1.567496132892643e-14
+      },
+      "fine_half_steps_held": 40001
+    }
+  },
+  "native_cross_grid": {
+    "path": "local_reference/native_static_reviews/c1_pll_source_precision_cross_grid_20261122T131217916343Z/report.json",
+    "sha256": "2a316e0da055a53b12269a32020a84a0915e5365feba0e778f6d11d2091e5eca",
+    "bytes": 45340
+  },
+  "native_cross_grid_inputs": {
+    "path": "local_reference/native_static_reviews/c1_pll_source_precision_cross_grid_20261122T131217916343Z/inputs.json",
+    "sha256": "da459e8f2be6d8912b14ffe7ae9be20808c7c260fa0eef488d3cbd53d9839a28",
+    "bytes": 22137
+  },
+  "cross_grid_max_cycle_mean_A": 0.048450263771161683,
+  "cross_grid_max_window_rms_A": 0.07194473550946677,
+  "whole_native_reference_qualified": true,
+  "formal_example_accepted": false
+}

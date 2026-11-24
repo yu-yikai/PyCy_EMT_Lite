@@ -1,0 +1,226 @@
+{
+  "schema": "c1_dc_bus_startup_evidence_v1",
+  "date": "2026-11-23",
+  "source_commit": "83a9fe1c8489ba24b50eb77cdc4679691db909a4",
+  "scope": "Precharged DC link and finite switched resistor feasibility. Snapshot and control qualification remain distinct.",
+  "short_protocol": {
+    "path": "local_reference/native_static_reviews/c1_dc_short_20261123/inputs/protocol.json",
+    "sha256": "b11eb764d07f41ac774877a12ac52ffb852f61cb67693c18d8b6d32ae9b7fc4a",
+    "bytes": 1161
+  },
+  "plant": {
+    "initial_voltage_v": 400,
+    "capacitance_f": 0.005,
+    "permanent_load_ohm": 320,
+    "step_load_ohm": 320,
+    "load_step_s": 0.001,
+    "ac_bridge": "Upper gates zero and lower gates one throughout the probe."
+  },
+  "pycy": {
+    "rows": [
+      402,
+      803
+    ],
+    "final_voltage_v": [
+      399.24758377898377,
+      399.2478956890365
+    ],
+    "closed_branch_first_current_a": [
+      1.2492131374075193,
+      1.2492141133487558
+    ],
+    "continuous_rc_peak_error_v": [
+      0.0006246053829386256,
+      0.00031230321127395655
+    ],
+    "coarse_over_fine_rc_error": 1.999996671154026,
+    "max_charge_residual_c": 2.8421682325349695e-16,
+    "max_energy_residual_j": 2.061953038867692e-13,
+    "result": "PASS with the new branch state at the right endpoint of the switching interval",
+    "reports": [
+      {
+        "path": "local_reference/native_static_reviews/c1_dc_short_20261123/pycy_independent/pycy_check.json",
+        "sha256": "29a2afb838a959da4d251a18a826ada7db4c667e92ec247f5779ae47ac921c45",
+        "bytes": 4718
+      },
+      {
+        "path": "local_reference/native_static_reviews/c1_dc_short_20261123/pycy_fine/pycy_check.json",
+        "sha256": "b8f106326add6c8e461689bdcc28821120262af058f9fee87f4b25bcf9323b46",
+        "bytes": 4740
+      },
+      {
+        "path": "local_reference/native_static_reviews/c1_dc_short_20261123/pycy_half_step.json",
+        "sha256": "8048c46b7eab5328b80506dfb55d1d00d1389edbcdf9e8f77d5e3af280db38e7",
+        "bytes": 1181
+      }
+    ]
+  },
+  "long_window_average_screen": {
+    "path": "local_reference/native_static_reviews/c1_dc_short_20261123/averaged_screen.json",
+    "sha256": "b3c3ca5d213a671fe9ef6e4d337c7e75d9baa7bf5357c1088c1caa1110d7e835",
+    "bytes": 2202
+  },
+  "workspace_checks": {
+    "focused_tests_passed": 115,
+    "pytest": {
+      "path": "local_reference/native_static_reviews/c1_dc_short_20261123/focused_pytest.log",
+      "sha256": "504b91e1f170b8df58f8ea708f02ed2630d939abda59f13b096e83c597befdcf",
+      "bytes": 183
+    },
+    "locked_uv_ruff_mypy": {
+      "path": "local_reference/native_static_reviews/c1_dc_short_20261123/static_checks.log",
+      "sha256": "748cbc30f60ea014ae9c807c550fe520a346f8e349da6550bd2b4c5380b57097",
+      "bytes": 122
+    }
+  },
+  "matlab_startup_attempts": [
+    {
+      "release": "R2025a",
+      "stage": "before_observable_batch_start",
+      "elapsed_s": 343.31,
+      "model_simulations_observed": 0,
+      "proof": {
+        "path": "local_reference/native_static_reviews/c1_dc_short_20261123/attempt1_startup_stall.json",
+        "sha256": "300021f6dfc4fe940a694687ff3feee8b7cd2eb56b7ab962090ef11e75bb64a5",
+        "bytes": 474
+      },
+      "log": {
+        "path": "local_reference/native_static_reviews/c1_dc_short_20261123/attempt1_matlab.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      }
+    },
+    {
+      "release": "R2025a",
+      "stage": "before_observable_batch_start",
+      "elapsed_s": 357.97,
+      "model_simulations_observed": 0,
+      "proof": {
+        "path": "local_reference/native_static_reviews/c1_dc_short_20261123/launch2/startup_stall.json",
+        "sha256": "6cf794c4d014a758c18d97de7060416060370d01cf483ba023026f4ca641982b",
+        "bytes": 476
+      },
+      "log": {
+        "path": "local_reference/native_static_reviews/c1_dc_short_20261123/launch2/matlab.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      }
+    },
+    {
+      "release": "R2026b",
+      "stage": "before_observable_batch_start",
+      "elapsed_s": 336.79,
+      "model_simulations_observed": 0,
+      "proof": {
+        "path": "local_reference/native_static_reviews/c1_dc_short_20261123/r2026b_startup_check/startup_stall.json",
+        "sha256": "d736e12b33d7d1a9456a6fc08f361c182232b998de4aae95624d189382f9f182",
+        "bytes": 493
+      },
+      "log": {
+        "path": "local_reference/native_static_reviews/c1_dc_short_20261123/r2026b_startup_check/matlab.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      }
+    }
+  ],
+  "pscad_snapshot": {
+    "scope": "Passive PSCAD 5.0.0 circuit. The stored state and 401 independently resumed intervals pass charge, energy and hardware-event checks.",
+    "frozen_protocol": {
+      "path": "local_reference/native_static_reviews/c1_dc_pscad_snapshot_restart_v3_20261123/protocol.json",
+      "sha256": "b1117456cbcdd7861ac6f819f950de2a855b5112f9bc41802c45ac3598a4a03b",
+      "bytes": 1429
+    },
+    "initial_native_attempt_refused": {
+      "path": "local_reference/native_static_reviews/c1_dc_pscad_snapshot_20261123/seed/n/20261122T170010559494Z/raw_diagnosis.json",
+      "sha256": "c3c39e8750cf8509f844069316c3c97cb46411b18c783c74bd6a10337c5617a4",
+      "bytes": 2294
+    },
+    "seed_passed": {
+      "path": "local_reference/native_static_reviews/c1_dc_pscad_snapshot_v2_20261123/seed/n/20261122T170519421432Z/snapshot_result.json",
+      "sha256": "88ad8e468bcdef0887ab440dcfa26f1b364ce39a608a23249d1b372e0083a91d",
+      "bytes": 1611
+    },
+    "seed_stored_state_independent": {
+      "path": "local_reference/native_static_reviews/c1_dc_pscad_snapshot_v2_independent_20261123/seed_and_prebuild_refusal.json",
+      "sha256": "075a78af05d2fbb15bf402c0e877ac359d6e712b2ac2a270d1b69947b6863441",
+      "bytes": 1763
+    },
+    "native_continuation_independent": {
+      "path": "local_reference/native_static_reviews/c1_dc_pscad_snapshot_v2_independent_20261123/native_restart_continuation.json",
+      "sha256": "6ac59949d6d3c2ac16838a33b0e39d603997c8fdfa38a879b7b76ec55cbfa409",
+      "bytes": 3511
+    },
+    "source_rebuild_metadata_refusal": {
+      "path": "local_reference/native_static_reviews/c1_dc_pscad_snapshot_v2_20261123/restart/n/20261122T170637732774Z/worker.stderr.txt",
+      "sha256": "7cc5793fcded606ff72cf2757f0b2af4ea8259f3b067bea6554019a33f3f8a4c",
+      "bytes": 1046
+    },
+    "raw_restart_original_row_expectation_refused": {
+      "path": "local_reference/native_static_reviews/c1_dc_pscad_snapshot_restart_v3_20261123/restart/n/20261122T171202480108Z/native_execution_refused.json",
+      "sha256": "a56eb41e325fe029305e7ac846e10fbba80e04afc009fc11134a00f1f39e8a8d",
+      "bytes": 52
+    },
+    "restart_verdict": "STORED_STATE_AND_NATIVE_CONTINUATION_PASS",
+    "stored_time_s": 0.16001,
+    "stored_voltage_v": 399.99999999953,
+    "stored_capacitor_current_a": -1.2500003988135,
+    "exact_generated_electrical_and_control_sources": true,
+    "native_restart_rows": 401,
+    "intervals_checked": 401,
+    "first_observed_time_s": 0.160015,
+    "first_observed_voltage_v": 399.99875000109,
+    "load_edge_absolute_s": 0.16101,
+    "load_edge_relative_s": 0.001,
+    "load_first_current_a": 1.2492131381565,
+    "last_voltage_v": 399.24758425946,
+    "overlap": {
+      "rows": 5,
+      "voltage_max_abs_v": 0.0,
+      "current_max_abs_a": 8.830003395132735e-11
+    },
+    "max_kcl_residual_a": 2.165458594622013e-10,
+    "quiet_charge_peak_c": 4.9456026940560265e-14,
+    "quiet_energy_peak_j": 1.9760840967025795e-11,
+    "load_edge_residual": {
+      "right_endpoint_charge_c": -1.4146327745280171e-14,
+      "right_endpoint_energy_j": -5.6324398270413134e-12,
+      "continuous_event_charge_c": -3.12303186009339e-06,
+      "continuous_event_energy_j": -0.001248433205083348
+    },
+    "analytic_rc_peak_error_v": 0.0006246053723657496,
+    "restart_terminal": {
+      "path": "local_reference/native_static_reviews/c1_dc_pscad_snapshot_restart_v3_20261123/restart/n/20261122T171202480108Z/terminal.json",
+      "sha256": "ef1b7fdf4d0fa372ea36d42e1a81fdca70186989fe0f62f6c4557f7263569fe9",
+      "bytes": 7016
+    },
+    "restart_inputs": {
+      "path": "local_reference/native_static_reviews/c1_dc_pscad_snapshot_restart_v3_20261123/restart/n/20261122T171202480108Z/pre_run_admission.json",
+      "sha256": "d2636d4e3d7bda5adb6ff562c7b9647a66b4366c7ca7fae5df2b10ce22102585",
+      "bytes": 329
+    },
+    "raw_artifacts": [
+      {
+        "path": "local_reference/native_static_reviews/c1_dc_pscad_snapshot_v2_20261123/seed/n/20261122T170519421432Z/project/vdiv.gf46/dc_seed.inf",
+        "sha256": "97bf1985c6c94ee545bab02399c259d7c1d2411428e9981da95f1c1b70775cd5",
+        "bytes": 992
+      },
+      {
+        "path": "local_reference/native_static_reviews/c1_dc_pscad_snapshot_v2_20261123/seed/n/20261122T170519421432Z/project/vdiv.gf46/dc_seed_01.out",
+        "sha256": "097fd167d721372f86a778aa81fe5eaaff12e6ca8b9321a8b5f238e1fae36e95",
+        "bytes": 7714002
+      },
+      {
+        "path": "local_reference/native_static_reviews/c1_dc_pscad_snapshot_restart_v3_20261123/restart/n/20261122T171202480108Z/project/vdiv.gf46/dc_restart.inf",
+        "sha256": "97bf1985c6c94ee545bab02399c259d7c1d2411428e9981da95f1c1b70775cd5",
+        "bytes": 992
+      },
+      {
+        "path": "local_reference/native_static_reviews/c1_dc_pscad_snapshot_restart_v3_20261123/restart/n/20261122T171202480108Z/project/vdiv.gf46/dc_restart_01.out",
+        "sha256": "699a1b6a629307f6e639dd86df1cb55cde461ffe875de2d5ede6b85e87e09a80",
+        "bytes": 96715
+      }
+    ]
+  },
+  "dynamic_dc_example_accepted": false,
+  "formal_new_examples_completed": 13
+}

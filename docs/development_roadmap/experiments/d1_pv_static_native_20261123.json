@@ -1,0 +1,284 @@
+{
+  "schema": "d1_pv_static_native_reference_v1",
+  "date": "2026-11-23",
+  "status": "PASS_NATIVE_D1_PV_STATIC_PAIR",
+  "protocol_commit": "547af3929b65b94bceba903e70da83d11eab7863",
+  "protocol": {
+    "path": "docs/development_roadmap/experiments/d1_pv_static_protocol_20261123.json",
+    "sha256": "9c4a2d35e66a8835cad636d47813feac399401525c31d128209a7b194cf919f5",
+    "bytes": 5349
+  },
+  "formal_new_examples_completed": 17,
+  "paired_audit": {
+    "path": "local_reference/d1_pv_static_20261123/verification/paired.json",
+    "sha256": "882089619030ecf939886bce3298ee938e7c66cbcb7556e167e92e9adfbda28c",
+    "bytes": 1537
+  },
+  "figure": {
+    "path": "local_reference/d1_pv_static_20261123/verification/pv_static_operating_points.png",
+    "sha256": "d25ddeace16a6ed9ec2499ff665f1ac91b4e0480ec1caa2e4e698e545462f5cf",
+    "bytes": 84279
+  },
+  "grids": {
+    "5us": {
+      "report": {
+        "path": "local_reference/d1_pv_static_20261123/verification/5us_audit.json",
+        "sha256": "19542e32acf8c10aa655bd0a564dd225810b0b84dc32fa16e7a413486c906956",
+        "bytes": 29242
+      },
+      "receipt": {
+        "path": "local_reference/d1_pv_static_20261123/5us_saved/n/20261123T024008465273Z/result.json",
+        "sha256": "1a71ca72d42e9bc2f28f7514422163ca9ba193f982d2e53ca749207239e6554e",
+        "bytes": 7936
+      },
+      "terminal": {
+        "path": "local_reference/d1_pv_static_20261123/5us_saved/n/20261123T024008465273Z/terminal.json",
+        "sha256": "bb8042af0ed9a010ec39568776aab7c1aef93d92dd9d21a689c975a93aa0ec1a",
+        "bytes": 7300
+      },
+      "compiled_admission": {
+        "path": "local_reference/d1_pv_static_20261123/5us_saved/n/20261123T024008465273Z/pre_run_admission.json",
+        "sha256": "374db366ce92036ce00c59ac777fa64caa50a2ef0fe280b69e025a8aa3fe0002",
+        "bytes": 11397
+      },
+      "native_runtime": {
+        "pscad_version": "5.0.0",
+        "emtdc_build": "20210219",
+        "compiler": "gf46",
+        "platform": "x86",
+        "integration": "unreported_in_native_stdout",
+        "integration_evidence": "independent_all_row_tr_review_pending",
+        "batch_path": "project/vdiv.gf46/vdiv_30000.bat",
+        "batch_sha256": "c079b43ad60e6fb4d9d533e8194798aa671e33b7f4cf02b55411a229a83fd818",
+        "emtdc_pid_observed": true
+      },
+      "measurement_exports_phase": "Dsout",
+      "rows_including_zero": 2002,
+      "plateau_rows": 400,
+      "plateau_means_si": {
+        "g1000_r220": {
+          "pv_voltage_v": 0.54866222834025,
+          "pv_current_a": 2.493919219728401,
+          "load_voltage_v": 0.54866222834025,
+          "load_current_a": 2.493919219728401,
+          "pv_power_w": 1.3683192763967613
+        },
+        "g1000_r250": {
+          "pv_voltage_v": 0.6169030173490198,
+          "pv_current_a": 2.4676120693961003,
+          "load_voltage_v": 0.6169030173490198,
+          "load_current_a": 2.4676120693961003,
+          "pv_power_w": 1.5222773312573137
+        },
+        "g1000_r280": {
+          "pv_voltage_v": 0.6678851819517198,
+          "pv_current_a": 2.3853042212561997,
+          "load_voltage_v": 0.6678851819517198,
+          "load_current_a": 2.3853042212561997,
+          "pv_power_w": 1.5931093438239032
+        },
+        "g900_r220": {
+          "pv_voltage_v": 0.49461971299493,
+          "pv_current_a": 2.2482714227042,
+          "load_voltage_v": 0.49461971299493,
+          "load_current_a": 2.2482714227042,
+          "pv_power_w": 1.1120393658326542
+        },
+        "g900_r250": {
+          "pv_voltage_v": 0.56070447079808,
+          "pv_current_a": 2.2428178831922994,
+          "load_voltage_v": 0.56070447079808,
+          "load_current_a": 2.2428178831922994,
+          "pv_power_w": 1.2575580142918081
+        },
+        "g900_r280": {
+          "pv_voltage_v": 0.62110956496042,
+          "pv_current_a": 2.218248446287199,
+          "load_voltage_v": 0.62110956496042,
+          "load_current_a": 2.218248446287199,
+          "pv_power_w": 1.3777753274475697
+        }
+      },
+      "raw_files": {
+        "pv_static.inf": {
+          "path": "local_reference/d1_pv_static_20261123/5us_saved/n/20261123T024008465273Z/project/vdiv.gf46/pv_static.inf",
+          "sha256": "31b054474d43d3752319d3934bef6dbab2db056b56129087d1690a1b78cbc13d",
+          "bytes": 3262
+        },
+        "pv_static_01.out": {
+          "path": "local_reference/d1_pv_static_20261123/5us_saved/n/20261123T024008465273Z/project/vdiv.gf46/pv_static_01.out",
+          "sha256": "c63b6a46073dcaaee8ce48968ae4136c918c9d1422c1cecbd4823e730b497b19",
+          "bytes": 530604
+        },
+        "pv_static_02.out": {
+          "path": "local_reference/d1_pv_static_20261123/5us_saved/n/20261123T024008465273Z/project/vdiv.gf46/pv_static_02.out",
+          "sha256": "7a1fb6a75ed79d45d506620aefaf59bcb4b6c24714e1e7a8a1c6867cf62143ed",
+          "bytes": 530604
+        },
+        "pv_static_03.out": {
+          "path": "local_reference/d1_pv_static_20261123/5us_saved/n/20261123T024008465273Z/project/vdiv.gf46/pv_static_03.out",
+          "sha256": "f7447a82573be31bd340c5b23e5d6d06db2258a3caf29c73a1f889ba285b77a0",
+          "bytes": 434508
+        }
+      }
+    },
+    "2p5us": {
+      "report": {
+        "path": "local_reference/d1_pv_static_20261123/verification/2p5us_audit.json",
+        "sha256": "b632db6d7e1a2033095abe41a8599460cbd003ead8ad64354d4dc8a9d7de48c5",
+        "bytes": 29278
+      },
+      "receipt": {
+        "path": "local_reference/d1_pv_static_20261123/2p5us_saved/n/20261123T024212516801Z/result.json",
+        "sha256": "4dd7bc20c37139047e43940251ea4401cf09315b70e23b569c671832c150e5f4",
+        "bytes": 7943
+      },
+      "terminal": {
+        "path": "local_reference/d1_pv_static_20261123/2p5us_saved/n/20261123T024212516801Z/terminal.json",
+        "sha256": "fabf641d5e3adcfc5a83a85018c98ae58c0c24a7c431eb31584e45356a1ad193",
+        "bytes": 7440
+      },
+      "compiled_admission": {
+        "path": "local_reference/d1_pv_static_20261123/2p5us_saved/n/20261123T024212516801Z/pre_run_admission.json",
+        "sha256": "1f063e16c486f77abf4da1bb4bef3209d1a275199fef29161aad2f6f1cce1242",
+        "bytes": 11403
+      },
+      "native_runtime": {
+        "pscad_version": "5.0.0",
+        "emtdc_build": "20210219",
+        "compiler": "gf46",
+        "platform": "x86",
+        "integration": "unreported_in_native_stdout",
+        "integration_evidence": "independent_all_row_tr_review_pending",
+        "batch_path": "project/vdiv.gf46/vdiv_30000.bat",
+        "batch_sha256": "0ae280ed224c997f4d5fb1e78d43eef68744c7fb332e6991845555494a064b82",
+        "emtdc_pid_observed": true
+      },
+      "measurement_exports_phase": "Dsout",
+      "rows_including_zero": 4003,
+      "plateau_rows": 800,
+      "plateau_means_si": {
+        "g1000_r220": {
+          "pv_voltage_v": 0.54866222834025,
+          "pv_current_a": 2.493919219728401,
+          "load_voltage_v": 0.54866222834025,
+          "load_current_a": 2.493919219728401,
+          "pv_power_w": 1.3683192763967613
+        },
+        "g1000_r250": {
+          "pv_voltage_v": 0.6169030173490198,
+          "pv_current_a": 2.4676120693961003,
+          "load_voltage_v": 0.6169030173490198,
+          "load_current_a": 2.4676120693961003,
+          "pv_power_w": 1.5222773312573137
+        },
+        "g1000_r280": {
+          "pv_voltage_v": 0.6678851819517198,
+          "pv_current_a": 2.3853042212561997,
+          "load_voltage_v": 0.6678851819517198,
+          "load_current_a": 2.3853042212561997,
+          "pv_power_w": 1.5931093438239032
+        },
+        "g900_r220": {
+          "pv_voltage_v": 0.49461971299493,
+          "pv_current_a": 2.2482714227042,
+          "load_voltage_v": 0.49461971299493,
+          "load_current_a": 2.2482714227042,
+          "pv_power_w": 1.1120393658326542
+        },
+        "g900_r250": {
+          "pv_voltage_v": 0.56070447079808,
+          "pv_current_a": 2.2428178831922994,
+          "load_voltage_v": 0.56070447079808,
+          "load_current_a": 2.2428178831922994,
+          "pv_power_w": 1.2575580142918081
+        },
+        "g900_r280": {
+          "pv_voltage_v": 0.62110956496042,
+          "pv_current_a": 2.218248446287199,
+          "load_voltage_v": 0.62110956496042,
+          "load_current_a": 2.218248446287199,
+          "pv_power_w": 1.3777753274475697
+        }
+      },
+      "raw_files": {
+        "pv_static.inf": {
+          "path": "local_reference/d1_pv_static_20261123/2p5us_saved/n/20261123T024212516801Z/project/vdiv.gf46/pv_static.inf",
+          "sha256": "31b054474d43d3752319d3934bef6dbab2db056b56129087d1690a1b78cbc13d",
+          "bytes": 3262
+        },
+        "pv_static_01.out": {
+          "path": "local_reference/d1_pv_static_20261123/2p5us_saved/n/20261123T024212516801Z/project/vdiv.gf46/pv_static_01.out",
+          "sha256": "32b46e65df8b80057e5a9d1511e076d9f593548a01f2906c2035949430649509",
+          "bytes": 1060869
+        },
+        "pv_static_02.out": {
+          "path": "local_reference/d1_pv_static_20261123/2p5us_saved/n/20261123T024212516801Z/project/vdiv.gf46/pv_static_02.out",
+          "sha256": "65e3413f74d43099eb1c1a535f6f5c71030e36da10d7e71e9a5e160be9789124",
+          "bytes": 1060869
+        },
+        "pv_static_03.out": {
+          "path": "local_reference/d1_pv_static_20261123/2p5us_saved/n/20261123T024212516801Z/project/vdiv.gf46/pv_static_03.out",
+          "sha256": "5285b8a39478c0ae0c5d9352d08a26ee1605bd07bb03d48f093dd45d6cbe6bac",
+          "bytes": 868725
+        }
+      }
+    }
+  },
+  "first_layout_timeout": {
+    "terminal.json": {
+      "path": "local_reference/d1_pv_static_20261123/5us/n/20261123T022700211492Z/terminal.json",
+      "sha256": "f239c2f48b2cc21cfcf112d114a4e12b4d521c4d4c7ea79b46c2ffb2d8c6f5fb",
+      "bytes": 3398
+    },
+    "worker.stderr.txt": {
+      "path": "local_reference/d1_pv_static_20261123/5us/n/20261123T022700211492Z/worker.stderr.txt",
+      "sha256": "44db003e9f059d4d9d236b309b1ba43fb6230c23701b2f8e4d5b80b31c325d6d",
+      "bytes": 4449
+    }
+  },
+  "initial_compiled_phase_refusal": {
+    "terminal.json": {
+      "path": "local_reference/d1_pv_static_20261123/5us_retry/n/20261123T023226000672Z/terminal.json",
+      "sha256": "74478e8831b8bb2c4282ad79e8b4163d1aca360df37eecb80bf2693f99148887",
+      "bytes": 4745
+    },
+    "worker.stderr.txt": {
+      "path": "local_reference/d1_pv_static_20261123/5us_retry/n/20261123T023226000672Z/worker.stderr.txt",
+      "sha256": "a5d595787c0ea2d9b57862f4785b5f686fe08198bc8818dc824d522daf3157c3",
+      "bytes": 1569
+    },
+    "project/vdiv.gf46/Main.f": {
+      "path": "local_reference/d1_pv_static_20261123/5us_retry/n/20261123T023226000672Z/project/vdiv.gf46/Main.f",
+      "sha256": "129abbf77959a6869ac6c2188ece9bff8678285cb18de9d09e23b8ffd0d6ae2f",
+      "bytes": 32389
+    }
+  },
+  "scope": "Six independent resistive load points on a stock PSCAD photovoltaic cell at 25 °C and two irradiances.",
+  "affine_diagnostic": {
+    "record": {
+      "path": "local_reference/d1_pv_static_20261123/verification/affine_static_diagnostic.json",
+      "sha256": "4d3af26aa3d5daa97450d910ec4edea1c8460d25b48cd667cad92f8fa64c39c2",
+      "bytes": 10986
+    },
+    "training_loads_ohm": [
+      0.22,
+      0.28
+    ],
+    "independent_check_load_ohm": 0.25,
+    "pooled_conductance_s": 0.5542833196093568,
+    "held_out_load_voltage_error_v": {
+      "1000": -0.007198373578663153,
+      "900": -0.002444296791382139
+    },
+    "held_out_load_current_error_a": {
+      "1000": -0.02879349431467393,
+      "900": -0.009777187165508128
+    },
+    "shared_native_voltage_interval_v": [
+      0.54866222834025,
+      0.62110956496042
+    ],
+    "scope": "Static interpolation diagnostic for selecting a later transient experiment."
+  }
+}

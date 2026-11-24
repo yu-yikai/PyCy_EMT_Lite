@@ -75,11 +75,88 @@ def test_saturation_matches_piecewise_flux_current_and_refines(method, linear_so
         time = result.series("time")
         reference = np.minimum(time, 0.105) + np.maximum(time - 0.105, 0.0) / 0.1
         np.testing.assert_allclose(result.series("flux:T:magnetizing"), time, atol=1e-14)
-        error = np.max(np.abs(result.series("i:T:magnetizing") - reference))
-        assert error <= 9 * step + 1e-12
-        assert result.series("i:T:magnetizing")[-1] > 0.9  # 线性对照仅 0.2 A。
-        errors.append(error)
+        error = np.abs(result.series("i:T:magnetizing") - reference)
+        crossing = (time > 0.105) & (time - step < 0.105)
+        assert np.count_nonzero(crossing) == 1
+        np.testing.assert_allclose(error[~crossing], 0.0, atol=1e-12)
+        np.testing.assert_allclose(error[crossing], 9 * (time[crossing] - 0.105), atol=1e-12)
+        errors.append(np.max(error))
     assert errors[1] < errors[0] * 0.5
+
+
+@pytest.mark.parametrize("method", ["trapezoidal", "backward_euler"])
+@pytest.mark.parametrize("three_phase", [False, True])
+def test_saturation_reversal_follows_curve_without_cycle_drift(method, three_phase) -> None:
+    parameters = {"magnetizing_inductance": 1.0, "saturation_knee_flux": 0.105, "saturated_magnetizing_inductance": 0.1}
+    if three_phase:
+        transformer = ThreePhaseTransformer("T", "p", "s", 1.0, **parameters)
+        phases = [":a", ":b", ":c"]
+    else:
+        transformer = SinglePhaseTransformer("T", "p", "0", "s", "0", 1.0, **parameters)
+        phases = [""]
+    step = 0.025
+    result = Simulator(Circuit.from_components("saturation_reversal", [transformer,
+        *[VoltageSource(f"V{phase}", f"p{phase}", "0", lambda t: math.cos(math.tau * t)) for phase in phases],
+        *[Resistor(f"R{phase}", f"s{phase}", "0", 10.0) for phase in phases],
+    ]), SimulationConfig(step, 5.0, method=method)).run()
+    for phase in phases:
+        flux = result.series(f"flux:T:magnetizing{phase}")
+        magnetizing_current = result.series(f"i:T:magnetizing{phase}")
+        reference = np.clip(flux, -0.105, 0.105) + 10 * (flux - np.clip(flux, -0.105, 0.105))
+        region = (flux > 0.105).astype(int) - (flux < -0.105).astype(int)
+        crossing = np.r_[False, np.diff(region) != 0]
+        assert min(region) == -1 and max(region) == 1
+        np.testing.assert_allclose(magnetizing_current[~crossing], reference[~crossing], atol=1e-12, rtol=0)
+        assert np.all(np.abs(magnetizing_current[crossing] - reference[crossing])
+                      <= 9 * np.abs(np.diff(flux)[crossing[1:]]) + 1e-12)
+        np.testing.assert_allclose(flux[::round(1 / step)], 0.0, atol=1e-12)
+        np.testing.assert_allclose(magnetizing_current[::round(1 / step)], 0.0, atol=1e-12)
+        np.testing.assert_allclose(result.series(f"i:V{phase}") + result.series(f"i:T:primary{phase}")
+                                   + magnetizing_current, 0.0, atol=1e-12)
+
+
+@pytest.mark.parametrize("method", ["trapezoidal", "backward_euler"])
+def test_saturation_event_at_knee_crossing_preserves_left_current(method) -> None:
+    transformer = SinglePhaseTransformer("T", "p", "0", "s", "0", 1.0,
+        magnetizing_inductance=1.0, saturation_knee_flux=0.105, saturated_magnetizing_inductance=0.1)
+    result = Simulator(Circuit.from_components("saturation_event", [
+        VoltageSource("V", "p", "0", 1.0), transformer, Resistor("R", "s", "0", 10.0), Fault("F", "s", 5.0),
+    ]), SimulationConfig(0.02, 0.14, method=method), events=[FaultApplyEvent(0.12, "F")]).run()
+    event_row = result.rows[-2]
+    assert event_row["time"] == pytest.approx(0.12)
+    assert event_row["i:F"] == pytest.approx(0.2)
+    assert event_row["flux:T:magnetizing"] == pytest.approx(0.12)
+    assert event_row["i:T:magnetizing"] == pytest.approx(0.12)
+    assert result.rows[-1]["i:T:magnetizing"] == pytest.approx(0.455)
+
+
+def test_equal_saturation_slopes_keep_linear_companion() -> None:
+    def simulate(saturation):
+        transformer = SinglePhaseTransformer("T", "p", "0", "s", "0", 1.0, magnetizing_inductance=1.0,
+            saturation_knee_flux=0.01 if saturation else None, saturated_magnetizing_inductance=1.0 if saturation else None)
+        transformer.state.magnetizing_previous_current = 0.3
+        return Simulator(Circuit.from_components("equal_slopes", [
+            VoltageSource("V", "p", "0", 1.0), transformer, Resistor("R", "s", "0", 10.0),
+        ]), SimulationConfig(0.02, 0.1)).run()
+
+    assert simulate(True).rows == simulate(False).rows
+
+
+@pytest.mark.parametrize("three_phase", [False, True])
+def test_transformer_accepts_equivalent_float16_magnetizing_inductance(three_phase) -> None:
+    def simulate(inductance):
+        if three_phase:
+            transformer = ThreePhaseTransformer("T", "p", "s", 1.0, magnetizing_inductance=inductance)
+            phases = [":a", ":b", ":c"]
+        else:
+            transformer = SinglePhaseTransformer("T", "p", "0", "s", "0", 1.0, magnetizing_inductance=inductance)
+            phases = [""]
+        return Simulator(Circuit.from_components("normalized_inductance", [transformer,
+            *[VoltageSource(f"V{phase}", f"p{phase}", "0", 1.0) for phase in phases],
+            *[Resistor(f"R{phase}", f"s{phase}", "0", 10.0) for phase in phases],
+        ]), SimulationConfig(1e-5, 2e-5)).run()
+
+    assert simulate(np.float16(1.0)).rows == simulate(1.0).rows
 
 
 def test_single_phase_transformer_voltage_ratio() -> None:

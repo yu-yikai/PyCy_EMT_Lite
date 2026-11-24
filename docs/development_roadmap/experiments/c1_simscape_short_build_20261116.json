@@ -1,0 +1,144 @@
+{
+  "schema": "c1_simscape_short_build_v1",
+  "date": "2026-11-16",
+  "execution_head": "fbfc278cffa37cb50f34553effd2f172373378f4",
+  "status": "ACTUAL_BUILD_STRUCTURAL_ADMISSION_PASS_NO_SIM",
+  "summary": "同物理Simscape短探针已真实建立并编译；80模块完整回读、19支路及控制图通过闭场核验，尚未仿真。",
+  "previous_goal_turn_classification": "progress",
+  "current_goal_turn_classification": "progress",
+  "execution": {
+    "preflight_attempts": 4,
+    "total_MATLAB_launches": 3,
+    "total_compile_calls": 2,
+    "total_simulation_calls": 0,
+    "accepted_session": 63496,
+    "terminal_tool_chunk": "2c65b4",
+    "accepted_exit_code": 0,
+    "accepted_elapsed_terminal_s": 38.6107074,
+    "active_native_sessions": 0,
+    "remaining_observed_owned": [],
+    "cleanup_actions": [],
+    "cleanup_errors": []
+  },
+  "preserved_attempts": [
+    {
+      "package": "20261116T082539838084Z_simscape_short_build_v3",
+      "status": "PREFLIGHT_QUERY_TIMEOUT",
+      "native_launches": 0,
+      "compile_calls": 0,
+      "simulation_calls": 0
+    },
+    {
+      "package": "20261116T082904133619Z_simscape_short_build_v3_recovery",
+      "status": "MODEL_CONFIGURATION_FAIL",
+      "native_launches": 1,
+      "exit_code": 1,
+      "compile_calls": 0,
+      "simulation_calls": 0,
+      "details": "新建空模型后，脚本误用ObjectParameters检查配置集Solver参数；另有冗余nested清理回调警告。"
+    },
+    {
+      "package": "20261116T083400045679Z_simscape_short_build_v4",
+      "status": "COMPILE_PASS_METADATA_INCOMPLETE",
+      "native_launches": 1,
+      "exit_code": 0,
+      "compile_calls": 1,
+      "simulation_calls": 0,
+      "details": "已保存80块模型，19支路/14非地节点及控制图通过独审；清单78槽仅50条结构记录，完整准入未通过。"
+    },
+    {
+      "package": "20261116T084351252346Z_simscape_short_build_v5",
+      "status": "BUILD_STRUCTURAL_ADMISSION_PASS_NO_SIM",
+      "native_launches": 1,
+      "exit_code": 0,
+      "compile_calls": 1,
+      "simulation_calls": 0
+    }
+  ],
+  "actual_structure": {
+    "teaching_electrical_components": 16,
+    "native_electrical_branches": 19,
+    "nonground_nodes": 14,
+    "saved_blocks": 80,
+    "complete_metadata_blocks_before_and_after": 80,
+    "unique_SIDs": 80,
+    "logged_Simulink_outputs": 29,
+    "reference_ZOH_s": 0.0001,
+    "other_seven_ZOH_s": 5e-06,
+    "ZOH_offsets_s": 0,
+    "floating_DC_and_grounded_AC_star": true,
+    "no_added_DC_earth_shunt_or_capacitor": true,
+    "direct_DC_source_and_variable_R_logging_leaves": "NOT_OBSERVED_UNTIL_RUN"
+  },
+  "corrections_scope": "研究脚本仅修正模型配置读写、日志属性所属端口、编译时读取采样率、清理回调及元数据循环变量；构图/控制/物理及数值阈值保持。",
+  "scope_limits": {
+    "simulation_called": false,
+    "actual_81_rows_observed": false,
+    "same_row_control_timing_verified": false,
+    "numerical_reference_qualified": false,
+    "full_dual_h_reference_qualified": false,
+    "candidate_created": false,
+    "original_full_TR_budget_V": 5e-06,
+    "original_commonmode_budget_V": 2e-06,
+    "original_PSCAD_commonmode_FAIL_preserved": true,
+    "formal_new_examples_completed": 9
+  },
+  "bindings": {
+    "ROOT_seal": {
+      "path": "local_reference/c1_openloop_reference_research/20261116T084351252346Z_simscape_short_build_v5/ROOT_seal.json",
+      "bytes": 12911,
+      "sha256": "56f916a2a5dd781c4674978b16b56ffe28375fdcc0df54ade5ec43e3ee0279b8"
+    },
+    "ROOT_admission": {
+      "path": "local_reference/c1_openloop_reference_research/20261116T084351252346Z_simscape_short_build_v5/ROOT_admission.json",
+      "bytes": 986,
+      "sha256": "ada406cfeec891b62585b8548ae520fd4c663ba4b0b6adad8dcd35fb425a5dbb"
+    },
+    "frozen_protocol": {
+      "path": "local_reference/c1_openloop_reference_research/20261116T084351252346Z_simscape_short_build_v5/inputs/frozen_protocol.json",
+      "bytes": 19513,
+      "sha256": "99a1e48f9058e2ec0edd673f4270183a8748dea5d6659fdeeb90f301139ef0bd"
+    },
+    "source113_snapshot": {
+      "path": "local_reference/native_static_reviews/d1_small_readability_ROOT_20261116T073540574524Z/source113.json",
+      "bytes": 13109,
+      "sha256": "fa156e8842c8c9b0e93bb241be8e377cd6c45126f852135ed34731f7ee1e472f"
+    },
+    "ROOT_closed": {
+      "path": "local_reference/native_static_reviews/c1_simscape_build_v5_ROOT_closed_20261116T085036503870Z/receipt.json",
+      "bytes": 6482,
+      "sha256": "464fb1c69df0f48b0bf1aee6c1cd557d5ae160934dd989ded50f0b221bcb1378"
+    },
+    "independent_closed": {
+      "path": "local_reference/native_static_reviews/c1_simscape_build_v5_closed_independent_20261116T084940171248Z/receipt.json",
+      "bytes": 6445,
+      "sha256": "b762442b0ccc43f296c699cdc2d473257ec3cf519652f74aba7aaa93fbf1af6b"
+    },
+    "independent_actual_structure": {
+      "path": "local_reference/native_static_reviews/c1_simscape_build_v5_actual_slx_independent_20261116T084738372048Z/receipt.json",
+      "bytes": 11887,
+      "sha256": "0d00be0be7a91023c839c7977a1ead6e2ff4387c7522df1f8454dad66e7c6cc9"
+    },
+    "final_model": {
+      "path": "local_reference/c1_openloop_reference_research/20261116T084351252346Z_simscape_short_build_v5/n/20261116T0844455727933Z/build/c1_simscape_probe.slx",
+      "bytes": 296266,
+      "sha256": "5d740679a7d411aff5859fa085cb0daa12032016ee89c3117acef21fc4a904ca"
+    },
+    "metadata": {
+      "path": "local_reference/c1_openloop_reference_research/20261116T084351252346Z_simscape_short_build_v5/n/20261116T0844455727933Z/build/build_metadata.json",
+      "bytes": 189747,
+      "sha256": "bd77cc5af04d418298eea2b7b9a1f77a70cf0c25dd0aaaee54a5b408e42aa043"
+    }
+  },
+  "software_checks": {
+    "formal_Python_files": 113,
+    "source_snapshot_exact": true,
+    "public_source_changed_this_execution": false,
+    "core_or_dependencies_changed": false,
+    "full_pytest_rerun": false,
+    "full_pytest_previous_actual_passed": 1300,
+    "current_CI": "No fresh observation. Existing exact-c3fdf79 billing-lock failure remains; no runner or tests started."
+  },
+  "next_step": "另封单Run协议：精确81原始点/各自时间轴、实际DC源和六可变电阻R/i/v叶子、完整精度/物理/TR/共模门；先原始输出准入再数值判断。短探针不能替代原完整双步长参考。",
+  "third_party_scope": "模型、安装源码、偏好缓存、原始日志及研究脚本均在忽略目录。公共教学继续复用既有CaseDefinition流程。"
+}

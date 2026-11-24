@@ -1,0 +1,165 @@
+{
+  "case_id": "source_line_transformer",
+  "reference_id": "mw-source-line-transformer-r2025a",
+  "example": "examples/25_source_line_transformer_network.py",
+  "acceptance_defined": "2026-11-06 before candidate creation, execution or numerical commercial comparison; based on original complete network and independent physical/TR+interpolation analysis",
+  "reference_source": "https://www.mathworks.com/help/releases/R2025a/sps/powersys/ug/analyzing-a-simple-circuit.html",
+  "reference_model": "power_gui.slx",
+  "reference_platform": "MATLAB R2025a Update 1 / Simulink / Simscape Electrical Specialized Power Systems; saved model metadata R2025a Prerelease Update 2",
+  "reference_state": "runnable",
+  "windows_seconds": [
+    [
+      0,
+      0.001
+    ],
+    [
+      0.001,
+      0.05
+    ]
+  ],
+  "event_guard_seconds": 0,
+  "time_shift_seconds": 0,
+  "known_difference": "Same complete single-phase source-line-transformer-fixed-impedance-load network, same nonzero sinusoidal steady-state initialization and all compensation/equivalent branches. Two finite pi sections retain native 60Hz hyperbolic R/L/C/G correction. Exact R2+Rz1 series folding only. Existing zero-volt source represents original ideal load CurrentMeasurement. Reference signals are original commercial native states plus native-grid Cx+Du measurement projection, not direct Scope logs; no Python ODE substituted for native simulation. Normalized sending compensation and Zs currents are bus-to-ground, opposite native signs. Physical steady state from t0; first window checks numerical initialization, not a cold-start transient or broadband distributed-line propagation. No fitted shift, phase, amplitude, initial state or parameter.",
+  "signals": [
+    {
+      "candidate": "v:send",
+      "reference": "v_sending",
+      "unit": "V",
+      "scale": 600000,
+      "max_nrmse": 5e-05,
+      "max_abs_error": 60.0
+    },
+    {
+      "candidate": "v:mid",
+      "reference": "v_middle",
+      "unit": "V",
+      "scale": 600000,
+      "max_nrmse": 5e-05,
+      "max_abs_error": 60.0
+    },
+    {
+      "candidate": "v:recv",
+      "reference": "v_receiving",
+      "unit": "V",
+      "scale": 600000,
+      "max_nrmse": 5e-05,
+      "max_abs_error": 60.0
+    },
+    {
+      "candidate": "v:load",
+      "reference": "v_load",
+      "unit": "V",
+      "scale": 200000,
+      "max_nrmse": 5e-05,
+      "max_abs_error": 20.0
+    },
+    {
+      "candidate": "i:Lz1",
+      "reference": "i_z1",
+      "unit": "A",
+      "scale": 2000,
+      "max_nrmse": 5e-05,
+      "max_abs_error": 0.2
+    },
+    {
+      "candidate": "i:Lzs",
+      "reference": "i_zs",
+      "unit": "A",
+      "scale": 2000,
+      "max_nrmse": 5e-05,
+      "max_abs_error": 0.2
+    },
+    {
+      "candidate": "i:Lcomp_s",
+      "reference": "i_comp_sending",
+      "unit": "A",
+      "scale": 400,
+      "max_nrmse": 5e-05,
+      "max_abs_error": 0.04
+    },
+    {
+      "candidate": "i:Lcomp_r",
+      "reference": "i_comp_receiving",
+      "unit": "A",
+      "scale": 400,
+      "max_nrmse": 5e-05,
+      "max_abs_error": 0.04
+    },
+    {
+      "candidate": "i:Lline1",
+      "reference": "i_line1",
+      "unit": "A",
+      "scale": 1000,
+      "max_nrmse": 5e-05,
+      "max_abs_error": 0.1
+    },
+    {
+      "candidate": "i:Lline2",
+      "reference": "i_line2",
+      "unit": "A",
+      "scale": 1200,
+      "max_nrmse": 5e-05,
+      "max_abs_error": 0.12000000000000001
+    },
+    {
+      "candidate": "i:Lm",
+      "reference": "i_magnetizing",
+      "unit": "A",
+      "scale": 2,
+      "max_nrmse": 5e-05,
+      "max_abs_error": 0.0002
+    },
+    {
+      "candidate": "i:Lp",
+      "reference": "i_primary",
+      "unit": "A",
+      "scale": 1000,
+      "max_nrmse": 5e-05,
+      "max_abs_error": 0.1
+    },
+    {
+      "candidate": "i:Rs",
+      "reference": "i_source",
+      "unit": "A",
+      "scale": 1200,
+      "max_nrmse": 5e-05,
+      "max_abs_error": 0.12000000000000001
+    },
+    {
+      "candidate": "i:Iload",
+      "reference": "i_load",
+      "unit": "A",
+      "scale": 1500,
+      "max_nrmse": 5e-05,
+      "max_abs_error": 0.15
+    }
+  ],
+  "internal_acceptance": {
+    "independent_solution": "Physical complex nodal/impedance equations with original source phase, independent of candidate initialization recursion and runtime MNA; exact sinusoidal whole-window solution for all 12 states and two port currents.",
+    "sample_and_piecewise_linear_abs_budget_fraction": 0.5,
+    "trapezoidal_step_refinement_seconds": [
+      2e-05,
+      1e-05,
+      5e-06
+    ],
+    "minimum_refinement_error_ratio": 3,
+    "kcl_abs_tolerance_ampere": 1e-07,
+    "ideal_transformer_relative_tolerance": 1e-09,
+    "continuous_energy_balance_relative_tolerance": 0.0001,
+    "trapezoidal_average_endpoint_energy_relative_tolerance": 1e-08,
+    "power_rms_phase_relative_tolerance": 0.0001,
+    "phase_abs_tolerance_degrees": 0.01,
+    "reference_self_refinement": "Both complete windows, every signal <=0.1 of BOTH formal max-abs and NRMSE limits; also compare native samples and their PWL curves against independent exact physical phasors to the same reference budgets.",
+    "required_checks": [
+      "all actual R/L/C/G and fixed impedance conversions including every small shunt and Rm",
+      "all 12 nonzero initial states and original source phase from independent physical equations",
+      "all state and port current PWL curves over complete windows; no discarded first interval",
+      "all relevant KCL and transformer ratio/current including magnetizing/core-loss input total",
+      "all positive winding, line, shunt, compensation, equivalent and load losses; zero ideal-T/meter power",
+      "source work = all resistor losses + 12-state stored-energy change, continuous and TR-average discrete identities separately",
+      "source/load RMS, phase and P/Q derived from independent single-phase phasors; nominal power fields are impedance ratings",
+      "TR second-order refinement against independent exact solution; do not use commercial data to tune h"
+    ],
+    "energy_normalization": "max(initial stored energy, integral(abs(source_power)), integral(all resistor losses), 1 joule); never nearly-zero net energy change"
+  }
+}

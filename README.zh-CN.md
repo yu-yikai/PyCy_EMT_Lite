@@ -13,7 +13,7 @@ PyCy_EMT_Lite 是小规模电磁暂态（EMT）仿真的纯 Python 教学项目�
 
 ### 第一次运行（Windows）
 
-1. 从[项目主页](https://github.com/yu-yikai/PyCy_EMT_Lite)选择 **Code → Download ZIP**，解压后打开同时包含 `pyproject.toml`、`README.md` 和 `examples` 的文件夹。这就是“项目根目录”；已有本地代码时直接打开该目录。
+1. 在[项目主页](https://github.com/yu-yikai/PyCy_EMT_Lite)先切换到本指南所在的分支，再选择 **Code → Download ZIP**。解压后打开同时包含 `pyproject.toml`、`README.md` 和 `examples` 的文件夹。这就是“项目根目录”。已有本地代码时直接打开该目录。
 2. 在资源管理器地址栏输入 `powershell` 并按 Enter，打开位于该目录的终端。后面的命令都在这里运行，每条命令完成后再执行下一条。
 3. 如未安装 [uv](https://docs.astral.sh/uv/getting-started/installation/)，在 PowerShell 中执行官方安装命令：
 
@@ -64,9 +64,9 @@ uv run --locked pytest -o addopts= -q -p no:cacheprovider --basetemp=.tmp/pytest
 先显式创建 `.tmp`，避免干净下载的项目缺少 `--basetemp` 的父目录。运行前确认没有其他测试使用同一个 `--basetemp`；pytest 会清理该目录。本命令用于区分目录权限问题与代码失败。CI 已配置 Linux 和 Windows；本地检查见第 6 节。
 
 示例默认显示图形，不保存数据或图片。
-网络算例需要保存时，把脚本顶部 `SAVE_RESULT_DATA` 或 `SAVE_RESULT_FIGURE` 改为 `1`；输出位于 `outputs/<算例名>/`。
+脚本若提供 `SAVE_RESULT_DATA` 或 `SAVE_RESULT_FIGURE`，将相应开关改为 `1` 即可保存到 `outputs/<算例名>/`。其他定义了 `define_case()` 的脚本可参考[保存现有算例的图](#save-existing-case)。
 开启相应保存选项后，相同输出根目录下再次运行同名算例，会替换前次同名的数据文件（`result.csv`、`result.json`、`result.npz`）或图片。需要对照时，先复制旧结果或更换算例名，再运行。
-独立 PLL 示例 11 只显示图形，没有保存开关。
+独立 PLL 示例 11 只显示图形，没有保存开关。[PLL验证指南](validation/cases/pll_dynamic_response/README.md)说明角度、单位和已完成的真实Simulink离散对比。
 非交互后端（如 `MPLBACKEND=Agg`）跳过窗口显示，仍可计算与保存。
 
 遇到问题时先检查下面几项：
@@ -77,39 +77,16 @@ uv run --locked pytest -o addopts= -q -p no:cacheprovider --basetemp=.tmp/pytest
 | 找不到 `pyproject.toml` 或示例文件 | 回到同时包含 `pyproject.toml` 和 `examples` 的目录；不要在 ZIP 内或 `examples` 子目录运行。 |
 | `ModuleNotFoundError: pycy_emt_lite` | 在项目根目录执行 `uv sync --locked`，再使用 `uv run python ...`。 |
 | 已打印摘要但终端还不能输入 | 检查是否有图窗等待关闭；多幅图会依次显示。 |
-| 没有图窗 | 若设置了 `MPLBACKEND=Agg`，会按设计跳过显示。需要图片时将对应示例的 `SAVE_RESULT_FIGURE` 改为 `1`。 |
+| 没有图窗 | 若设置了 `MPLBACKEND=Agg`，会按设计跳过显示。在同一 PowerShell 终端运行 `Remove-Item Env:MPLBACKEND -ErrorAction SilentlyContinue`，再运行示例，即可恢复默认交互后端。 |
 
 ## 2. 学习顺序
 
-13 个基础脚本和 1 个综合示例组成九个学习单元。编号 13–16 的平均新能源/变流器及 HVDC/MMC 综合候选已移除，现有命令沿用原编号。
+基础脚本和综合示例组成以下学习单元。编号 13–16 的平均新能源/变流器及 HVDC/MMC 综合候选已移除，现有命令沿用原编号。
 先完成 01，再学习 02、03 的储能过程，然后进入 04、17。能解释这些波形后，可阅读[元件推导](docs/component_derivations.md)第 1–5 节，核对一个完整 RLC 矩阵。电机、控制和 HVDC 可留到后面按需学习。
 
-| 单元 | 脚本 | 学完后可以检查的事情 |
-|---|---|---|
-| R 与 MNA | [01](examples/01_r_circuit.py) | 沿对象式流程运行电路，用欧姆定律预测电流，解释电源电流方向；之后再读矩阵组装。 |
-| 动态 RLC | [02 RC](examples/02_rc_transient.py)、[03 RL](examples/03_rl_transient.py)、[04 RLC](examples/04_rlc_transient.py)、[17 交流 RLC](examples/17_single_phase_ac_rlc.py) | 核对储能初值和时间常数，区分暂态与稳态相量，比较减小步长后的整段波形误差。 |
-| 三相与故障 | [05](examples/05_three_phase_steady_state.py)、[06](examples/06_three_phase_short_circuit.py)、[07](examples/07_single_phase_ground_fault.py) | 观察平衡 RL、三相短路和单相接地；用固定时间窗比较故障相与健全相。 |
-| 线路 | [08](examples/08_pi_line_transient.py) | 区分 π 型线路的串联电流和端部电容电流；再选读分段与 Bergeron 模型。 |
-| 变压器 | [09](examples/09_single_phase_transformer.py) | 核对变比，观察漏阻抗和励磁的影响；三相接法见模型说明。 |
-| 同步机 | [10](examples/10_park_generator_avr_governor.py) | 从平衡初值出发，观察负荷阶跃后电压和转速的变化，区分 AVR 与调速器的作用。 |
-| 离散控制 | [11](examples/11_pll_dynamic_response.py) | 观察独立 SRF-PLL 控制循环的 q 轴电压和角频率，说明何时接近锁定。 |
-| PWM | [12](examples/12_two_level_pwm_generator.py) | 对照理想开关的 SPWM 门极与 RL 电流，区分开关纹波和基波。 |
-| VSC-HVDC 综合仿真 | [18](examples/18_three_terminal_vsc_hvdc.py) | 沿三个两电平桥、独立 PLL/dq 闭环和双极 DC 网络，跟踪交流故障后的电压、功率变化。 |
+### 先练习 01–04
 
-从 12 进入 18 前，可沿[现有 HVDC 测试模块](tests/test_three_terminal_vsc_hvdc.py)逐步阅读：
-`test_single_bridge_open_loop_power_identity` 核对单桥开环功率账；
-`test_single_station_pll_and_dq_tracking_with_step_refinement` 加入单站 PLL/dq 闭环；
-`test_two_station_intermediate_dc_exchange` 连接双站 DC 网络；
-最后看 `test_three_terminal_vsc_hvdc_fast_run` 的完整 FAST 网络。后三项标记为 `slow`。
-先用专用临时目录运行较小的单桥开环测试：
-
-```powershell
-New-Item -ItemType Directory -Force -Path .tmp | Out-Null
-$env:MPLBACKEND = "Agg"
-uv run --locked pytest tests/test_three_terminal_vsc_hvdc.py::test_single_bridge_open_loop_power_identity --basetemp=.tmp/pytest-vsc-bridge
-```
-
-前四个示例可先做以下练习。每次只改一项、保存并重新运行，观察后恢复原值。脚本开头也有电路连接、预期现象和源码位置。
+每次只改一项，保存并重新运行，观察后恢复原值。脚本开头也有电路连接、预期现象和源码位置。
 
 | 示例 | 默认结果的检查点 | 修改与预期 |
 |---|---|---|
@@ -120,7 +97,7 @@ uv run --locked pytest tests/test_three_terminal_vsc_hvdc.py::test_single_bridge
 
 这里的“长期极限”不等于脚本停止时已经达到的数值。改变参数后，原有仿真时长可能只覆盖部分暂态。
 
-读代码时先认清这些写法：
+### 读懂示例代码
 
 | 写法 | 在本项目中的含义 |
 |---|---|
@@ -132,6 +109,46 @@ uv run --locked pytest tests/test_three_terminal_vsc_hvdc.py::test_single_bridge
 | `CaseDefinition` / `run_case(case)` | 前者保存元件和设置；后者创建电路、运行仿真并处理输出。第一次阅读时可先关注元件参数与仿真设置。 |
 | `result.series("i:R1")[-1]` | 读取 R1 的全部电流采样，再取最后一个值；`result.series("time")` 给出对应时刻。 |
 | MNA / `stamp()` | MNA 是改进节点分析法；`stamp()` 把每个元件的方程写入共同的矩阵，详见元件推导。 |
+
+### 浏览全部算例
+
+| 单元 | 脚本 | 学完后可以检查的事情 |
+|---|---|---|
+| R 与 MNA | [01](examples/01_r_circuit.py) | 沿对象式流程运行电路，用欧姆定律预测电流，解释电源电流方向；之后再读矩阵组装。 |
+| 多源多节点 | [20](examples/20_multi_source_nodal_network.py) | 在01之后检查七电阻网络的KCL、负节点电压和电压源吸收功率；附[真实Simscape对标](validation/cases/nodal_analysis/README.md)。 |
+| 动态 RLC | [02 RC](examples/02_rc_transient.py)、[03 RL](examples/03_rl_transient.py)、[04 RLC](examples/04_rlc_transient.py)、[17 交流 RLC](examples/17_single_phase_ac_rlc.py) | 核对储能初值和时间常数，区分暂态与稳态相量，比较减小步长后的整段波形误差。 |
+| 耦合 RC | [19](examples/19_cascaded_rc.py) | 在02之后学习后级负载如何影响前级，以及源下降后后级为何还能短时充电。 |
+| 三相与故障 | [05](examples/05_three_phase_steady_state.py)、[06](examples/06_three_phase_short_circuit.py)、[07](examples/07_single_phase_ground_fault.py) | 观察平衡 RL、三相短路和单相接地；用固定时间窗比较故障相与健全相。 |
+| 中性点与不平衡 | [21](examples/21_earthing_neutral.py) | 在05之后比较接地/浮动星点、负荷相电压和回线电流；附[真实Simscape对标](validation/cases/earthing/README.md)。 |
+| 线路 | [08](examples/08_pi_line_transient.py) | 区分 π 型线路的串联电流和端部电容电流；再选读分段与 Bergeron 模型。 |
+| 有限梯级传播 | [22](examples/22_t_section_transmission_line.py) | 在08与17之后学习50T梯级的启动与色散；结合[真实参考和独立状态验证](validation/cases/transmission_line/README.md)区分有限梯级与纯延时。 |
+| Bergeron行波与有限电阻 | [27](examples/27_finite_r_bergeron_line.py) | 在08与22之后组合两条现有延时线和三只电阻，解释到波、反射及线路损耗；附[接线、能量平衡与真实PSCAD对标](validation/cases/finite_r_bergeron/README.md)。 |
+| 变压器 | [09](examples/09_single_phase_transformer.py) | 核对变比，观察漏阻抗和励磁的影响；三相接法见模型说明。 |
+| 变压器T等效 | [23](examples/23_transformer_t_equivalent.py) | 在03和09之后学习漏感后的励磁支路、电流连续、双时间常数与能量；附[真实参考及复现说明](validation/cases/transformer_t_equivalent/README.md)。 |
+| 三相变压器链 | [24](examples/24_three_phase_transformer_chain.py) | 在09和21之后区分线量/绕组量、浮动星点与Δ参考点，观察中间相移及快速启动；附[真实对标与原步长失败记录](validation/cases/three_phase_transformer_chain/README.md)。 |
+| 电源、线路、变压器与负荷 | [25](examples/25_source_line_transformer_network.py) | 在08、17和23之后学习完整网络的正弦稳态初始化、充电和补偿导致的电流差，并核实际负荷功率及损耗；附[接线、初值与验证说明](validation/cases/source_line_transformer/README.md)。 |
+| 五母线网状网络负荷阶跃 | [33](examples/33_pjm5_load_step.py) | 在 08 和 25 之后，观察平衡五母线网络的两条进线如何分担新增负荷。附[接线、功率方向和 PSCAD 对标说明](validation/cases/pjm5_load_step/README.md)。 |
+| 同步机 | [10](examples/10_park_generator_avr_governor.py) | 从平衡初值出发，观察负荷阶跃后电压和转速的变化，区分 AVR 与调速器的作用。 |
+| 离散控制 | [11](examples/11_pll_dynamic_response.py) | 观察独立 SRF-PLL 控制循环的 q 轴电压和角频率，说明何时接近锁定。 |
+| PWM | [12](examples/12_two_level_pwm_generator.py) | 对照 SPWM 门极与 RL 电流，区分纹波和基波；[PSCAD 双向开关对标](validation/cases/two_level_pwm_pscad/README.md)已通过，[MathWorks IGBT 研究](validation/cases/two_level_pwm/README.md)保留原波形差异。 |
+| 同步Buck电压闭环 | [26](examples/26_synchronous_buck.py) | 在02和12之后连接已有低通、PI与限幅积木，观察启动过冲和脉冲负荷恢复；附[电路、有效域与真实Simulink对标](validation/cases/synchronous_buck/README.md)。 |
+| 并网VSC开环 | [28](examples/28_grid_connected_vsc_open_loop.py) | 在05和12之后把三相电网接到六开关桥，观察相电流、浮置直流轨和两种控制采样周期。附[电路及真实Simscape对标](validation/cases/grid_connected_vsc_open_loop/README.md)。 |
+| 并网 VSC 已知角度电流闭环 | [29](examples/29_grid_connected_vsc_closed_loop.py) | 在 28 之后观察 d、q 电流阶跃，理解何时采样、何时施加门极，以及限幅时如何处理积分。附[运行和 PSCAD 对标说明](validation/cases/grid_connected_vsc_closed_loop/README.md)。 |
+| 并网 VSC 锁相环电流闭环 | [30](examples/30_grid_connected_vsc_pll.py) | 在 11 和 29 之后，观察锁相环怎样从实测网压估计相角，并把它用于电流控制。附[运行说明及验收状态](validation/cases/grid_connected_vsc_pll/README.md)。 |
+| 并网 VSC 有功前馈与 PCC 调压 | [31](examples/31_grid_connected_vsc_power_vac.py) | 在 30 之后加入馈线，比较相同有功目标下固定无功电流的压降和调压结果。附[运行和 PSCAD 对标说明](validation/cases/grid_connected_vsc_power_vac/README.md)。 |
+| 并网 VSC 直流母线调压 | [32](examples/32_grid_connected_vsc_dc_voltage.py) | 在 30 之后将直流定压源换成电容，观察负荷投入后，并网电流怎样恢复母线电压。附[运行和 PSCAD 对标说明](validation/cases/grid_connected_vsc_dc_voltage/README.md)。 |
+| 双端 VSC-HVDC | [34](examples/34_two_terminal_vsc_hvdc.py) | 在 31 和 32 之后，提高 A 站有功给定，观察 B 站如何从电网吸收有功改为向电网送出有功，同时调节直流母线电压。附[运行和 PSCAD 对标说明](validation/cases/two_terminal_vsc_hvdc/README.md)。 |
+| 并网储能 | [35](examples/35_grid_connected_storage.py) | 在 02 和 31 之后，改变有功给定方向，观察一阶 RC 储能如何由充电转为放电。附[运行和 PSCAD 对标说明](validation/cases/grid_connected_storage/README.md)。 |
+| 并网光伏 | [36](examples/36_grid_connected_pv.py) | 在 35 之后降低照度，观察并网有功下降及直流母线恢复。附[运行和 PSCAD 对标说明](validation/cases/grid_connected_pv/README.md)。 |
+| 孤网频率下垂 | [37](examples/37_islanded_frequency_droop.py) | 并联接入第二组负荷，观察有功增加后孤网频率怎样下降。附[运行和 PSCAD 对标说明](validation/cases/islanded_frequency_droop/README.md)。 |
+| 双构网源有功分担 | [39](examples/39_dual_grid_forming_power_sharing.py) | 在 37 之后接入第二台源，观察斜率不同的两台源怎样分担新增负荷并趋于同频。附[运行和 PSCAD 对标说明](validation/cases/dual_grid_forming_power_sharing/README.md)。 |
+| 并联线路故障隔离 | [38](examples/38_parallel_line_fault_isolation.py) | 依次断开故障线路的两端，观察受端反送及健康线路如何继续供电。附[运行和 PSCAD 对标说明](validation/cases/parallel_line_fault_isolation/README.md)。 |
+| VSC-HVDC 综合仿真 | [18](examples/18_three_terminal_vsc_hvdc.py) | 沿三个两电平桥、独立 PLL/dq 闭环和双极 DC 网络，跟踪交流故障后的电压、功率变化。 |
+
+[19级联RC真实Simscape对标](validation/cases/cascaded_rc/README.md)给出参数、固定验收、结果和复现命令。教学程序只绘制自身波形，独立验证程序读取真实参考。
+[既有02 RC充电算例](validation/cases/rc_charging/README.md)也已补充可复现的Simscape对比。
+
+准备学习 18 号时，可按 [HVDC 专题的测试顺序](docs/three_terminal_vsc_hvdc.md#13-tests)从单个桥开始。
 
 运行 `uv run python examples/18_three_terminal_vsc_hvdc.py`，默认 FAST 为 20 μs、0.8 s。
 修改脚本顶部 `MODE` 可选择 `FULL`（5 μs）或 `BENCHMARK`（2 μs），两者均运行 2.5 s。
@@ -159,7 +176,7 @@ def define_case() -> CaseDefinition:
         VoltageSource("V1", "n1", "0", 10.0),
         Resistor("R1", "n1", "0", 5.0),
     )
-    config = SimulationConfig(time_step=1e-4, stop_time=1e-3, linear_solver_mode="rebuild")
+    config = SimulationConfig(time_step=1e-4, stop_time=1e-3)
     plots = (
         PlotSpec(("v:n1",), figure_name="voltage.png", title="Voltage / V"),
         PlotSpec(("i:R1",), figure_name="current.png", title="Current / A"),
@@ -173,61 +190,70 @@ if __name__ == "__main__":
     result = run_case(case)
 ```
 
-长算例可把摘要放入 `CaseDefinition.summary`，事件放入 `events`，三相图用 `PlotSpec(kind="three_phase")` 并提供三个字段。
-保存图像时，每个 `PlotSpec` 必须有 `figure_name`。只有真正变长或需要复用的逻辑才拆成函数；示例之间不互相导入。
-先形成 `case`、`circuit`、`simulator` 等中间对象，再运行下一步，方便阅读和调试。
+电压图应为 10 V，电流图应为 2 A。无图形界面时，可把 `SAVE_RESULT_FIGURE` 设为 `1`，在 `outputs/my_r_circuit/` 中查看两张图。跑通第一个自建算例后，可直接进入[读取、绘图与保存结果](#4-读取绘图与保存结果)。
 
-第一次调试可在 `define_case()` 创建 `CaseDefinition` 处停下，核对元件与步长。
-在 [Simulator](pycy_emt_lite/core/simulation.py) 的 `_assemble` 结束处观察 `matrix`（A）与 `rhs`（b），再在 `_solve_step` 返回前将 `solution`（x）与电路的节点/支路映射对应起来。
-在 [Capacitor/Inductor.update_state](pycy_emt_lite/components/basic.py) 写回前后比较 `previous_voltage` 与 `previous_current`，这些历史量会进入下一步的 companion 方程。
-`on_step(row)` 在状态更新后读取刚求解的测量，事件点读取右侧值。VSC 控制器在 t=0 只初始化，随后产生下一步使用的保持调制量；其 `m*` 字段表示刚用过的参考，`m*_next` 表示新命令，见 [VSCController.sample](pycy_emt_lite/controls/vsc.py)。
+### 进阶阅读
 
-每次运行重新创建元件、`Circuit` 和 `Simulator`；重新调用 `define_case()` 可得到新元件。
-同一 `CaseDefinition` 内的元件也不能重复运行。只支持 `start_time=0`；`stop_time` 必须是基础步长的非负整数倍。
-例如 100 μs 步长不能终止于 250 μs，可改为 200/300 μs 或使用 50 μs 步长。
-初值、源导数和事件规则见[数值约定](docs/numerical_conventions.md)。
+扩展算例时，可用 `CaseDefinition.summary` 添加摘要，用 `events` 添加事件，用带三个字段的 `PlotSpec(kind="three_phase")` 绘制三相图。保存图像时需指定 `figure_name`。每次运行都重新调用 `define_case()`，让储能元件和控制器从新状态开始。调整步长或仿真终点时，先核对[时间网格和回调规则](docs/numerical_conventions.md#time-grid)。
 
-仿真前用 `linear_solver_mode` 选择网络求解策略：默认 `"rebuild"` 每次重新 LU 分解；
-把上面配置改成 `"reuse"`，只在实际系数矩阵改变时重新分解，其余求解复用上一份 LU。
-每步仍装配矩阵/右端项、执行状态更新和数值保护；步长、参数或电机状态变化也可能使 LU 失效。
-第三种 `"precompute"` 仅用于开关少、完整状态集合小且满足预算的网络，在时间循环前预分解有限状态和全部实际步长的矩阵，循环中只查表求解。
-含大量开关器件的网络不采用预计算，选择 `"rebuild"` 或 `"reuse"`。
-目前支持固定参数的 Resistor/Capacitor/Inductor、CurrentSource/VoltageSource、Fault/Breaker/IdealSwitch，
-以及 ThreePhaseSource、ThreePhaseLine 和不含饱和的 ThreePhaseTransformer；其他组合模型和电机尚未接入。
-默认自动枚举二值状态，最多 1024 种；也可用 `precompute_states` 声明完整有效集合。
-未声明状态、系数矩阵改变、奇异或超限会报错，详见[预计算规则与示例](docs/numerical_conventions.md#network-precompute)。
-网络策略独立于 BE/梯形积分 `method`；预计算增加启动成本和内存，不保证所有算例都会加速。
-HVDC 示例含 18 个桥臂开关，仅允许 rebuild/reuse；选择 precompute 会在创建控制器和网络前报错，所有 MODE 及无故障运行均适用，见[HVDC策略范围](docs/three_terminal_vsc_hvdc.md#network-solver-scope)。
-N4 本机三次交错测量中，reuse 虽减少 FAST 的 LU 次数约31.45%，但默认及保存完整流程均未核定稳定加速；小网络预计算也需计入准备成本。
-默认仍为 rebuild；时间、峰值工作集及测量范围见[成本验收记录](docs/audit_20261005/项目问题与改进计划.md#network-solver-n4)。
+想跟踪矩阵装配和状态更新，可按[源码阅读路线](docs/numerical_conventions.md#source-route)阅读。这个电阻算例使用默认的 `"rebuild"`。需要为复杂算例选择求解策略时，见[预计算规则](docs/numerical_conventions.md#network-precompute)及[三端 HVDC 的求解策略限制](docs/three_terminal_vsc_hvdc.md#network-solver-scope)。
 
 ## 4. 读取、绘图与保存结果
 
 `result.columns` 列出字段；`result.series("v:n1")` 返回 NumPy 数组。节点电压为 `v:<节点>`，
 普通支路电流为 `i:<元件>`，三相与组合件字段见模型说明。节点电压相对参考地；电源供出电流与其支路电流方向相反。
 
-将下面代码追加到同一个 `my_r_circuit.py` 文件末尾，再运行脚本。它使用上面生成的 `result`，显式保存 JSON 并读回对照：
+把下面代码接在 `my_r_circuit.py` 的 `result = run_case(case)` 下一行。保留行首的四个空格，使新增代码仍在 `if __name__ == "__main__":` 块内。再次运行脚本即可保存和读回结果。导入文件时可直接使用 `define_case()`，仿真和报告只在运行脚本时执行。
 
 ```python
-from pycy_emt_lite import SimulationResult
-from pycy_emt_lite.analysis import rms
-from pycy_emt_lite.visualization import plot_result_comparison, plot_zoom_window, write_markdown_report
+    from pathlib import Path
 
-voltage_rms = rms(result, "v:n1", start_time=0.0, end_time=1e-3)
-result.to_json("outputs/my_r_circuit/result.json")
-loaded = SimulationResult.from_json("outputs/my_r_circuit/result.json")
-plot_result_comparison([result, loaded], "v:n1", labels=["original", "loaded"], show=False)
-plot_zoom_window(result, ["v:n1"], 0.0, 5e-4,
-                 output_path="outputs/my_r_circuit/zoom.png", show=False)
-write_markdown_report(result, "outputs/my_r_circuit/report.md",
-                      summary={"Voltage RMS / V": voltage_rms}, figure_paths=["outputs/my_r_circuit/zoom.png"])
+    from pycy_emt_lite import SimulationResult
+    from pycy_emt_lite.analysis import rms
+    from pycy_emt_lite.visualization import plot_result_comparison, plot_zoom_window, write_markdown_report
+
+    output_dir = Path("outputs/my_r_circuit")
+    result_path = output_dir / "result.json"
+    comparison_path = output_dir / "comparison.png"
+    zoom_path = output_dir / "zoom.png"
+
+    voltage_rms = rms(result, "v:n1", start_time=0.0, end_time=1e-3)
+    result.to_json(result_path)
+    loaded = SimulationResult.from_json(result_path)
+    plot_result_comparison([result, loaded], "v:n1", labels=["original", "loaded"],
+                           output_path=comparison_path, show=False)
+    plot_zoom_window(result, ["v:n1"], 0.0, 5e-4, output_path=zoom_path, show=False)
+    write_markdown_report(result, output_dir / "report.md",
+                          summary={"Voltage RMS / V": voltage_rms}, figure_paths=[comparison_path, zoom_path])
 ```
+
+在 `outputs/my_r_circuit/` 打开 `comparison.png`，原始曲线和读回曲线应在 10 V 处重合。两张图也可从 `report.md` 查看。
 
 同样支持 `to_csv/from_csv`、`to_npz/from_npz`。JSON/NPZ 保留元数据与 `event_log`；CSV 只保存表格，
 读回时需补充算例名/方法，推断的首区间长度不一定等于原基础步长。读取文件不会恢复可续算的仿真状态。
 绘图还包括 `plot_series`、`plot_three_phase`；`output_path` 可使用 PNG/SVG/PDF 等后缀。
 报告只整理现有结果和用户提供的摘要，不自动证明模型正确。
 RMS、均值、三相功率、采样峰值和跌落统计的窗口/方向规则见[数值约定](docs/numerical_conventions.md)。
+
+<a id="save-existing-case"></a>
+
+### 保存现有算例的图
+
+把以下代码保存为项目根目录下的 `save_case_figures.py`，运行 `uv run --locked python save_case_figures.py`。
+脚本会从 38 号创建一份新算例，并把图保存到 `outputs/parallel_line_fault_isolation/`。
+要处理其他定义了 `define_case()` 的算例，只需替换 `run_path()` 中的脚本路径。若要同时保存数据，在输出设置中加上 `save_data=True`。
+
+```python
+from dataclasses import replace
+from runpy import run_path
+
+from pycy_emt_lite.cases import run_case
+
+define_case = run_path("examples/38_parallel_line_fault_isolation.py")["define_case"]
+case = define_case()
+output = replace(case.output, save_figure=True, show_figure=False)
+run_case(replace(case, output=output))
+```
 
 ## 5. 文档与源码
 
@@ -237,6 +263,7 @@ RMS、均值、三相功率、采样峰值和跌落统计的窗口/方向规则�
 | [数值约定](docs/numerical_conventions.md) | MNA/stamp、单位、初值、时间、事件、指标和错误诊断 |
 | [元件推导](docs/component_derivations.md) | 各元件物理方程、TR/BE 离散式、局部 MNA 矩阵、历史更新与完整 EMT 循环 |
 | [模型与验证](docs/models_and_validation.md) | 保留模型方程、算例参数、验证证据及未验证范围 |
+| [长期开发路线](docs/development_roadmap/04_long_term_roadmap.md) | 实测优先级、参考目录、任务状态和恢复指令 |
 | [三端 VSC-HVDC](docs/three_terminal_vsc_hvdc.md) | 参考映射、开关网络、闭环控制、模式、故障与验证 |
 
 顶层保留 `CaseDefinition`、`Circuit`、`Simulator`、`SimulationResult`，基础 RLC/独立源、开关/故障/事件、
@@ -245,10 +272,11 @@ RMS、均值、三相功率、采样峰值和跌落统计的窗口/方向规则�
 分段/Bergeron/三相 π 线路及三相变压器从相应 `components` 模块导入。
 控制、分析、绘图使用各自子包；子包可导入不等于已完成全部物理验证。
 
-`pycy_emt_lite/` 放实现，`examples/` 放案例，`tests/` 放回归，`docs/` 放上述四项专题的完整双语版本。
+`pycy_emt_lite/` 放实现，`examples/` 放算例，`tests/` 放回归测试，`docs/` 放模型说明和开发记录。
 新增元件需说明物理方程、离散式、单位/方向、初值/事件行为，并增加解析、守恒或独立参考检查。
 新增案例更新学习表即可；避免仅为组织形式增加包装层、依赖或入口。
-文档中的仓库文件链接使用相对路径，运行与输出路径以项目根目录为基准；外部参考资料提供公开来源链接和文件名，不写个人绝对路径或临时验证目录。
+仓库内的文件使用相对链接。引用历史源码行时，使用固定到原提交的 GitHub 链接。
+运行命令与输出路径以项目根目录为基准。外部参考资料提供公开来源链接和文件名，不写个人绝对路径或临时验证目录。
 
 PyCy_EMT_Lite 源自 PyCy_EMT v0.6 的对象式工作流，保留适合小规模教学的内容。[MIT 许可证](LICENSE)。
 
@@ -260,7 +288,7 @@ PyCy_EMT_Lite 源自 PyCy_EMT v0.6 的对象式工作流，保留适合小规模
 New-Item -ItemType Directory -Force -Path .tmp | Out-Null
 $env:MPLBACKEND = "Agg"
 $env:OPENBLAS_NUM_THREADS = "1"
-uv run --locked ruff check pycy_emt_lite examples tests
+uv run --locked ruff check pycy_emt_lite examples tests validation
 uv run --locked mypy
 uv run --locked pytest -m "not slow" --basetemp=.tmp/pytest-fast
 uv run --locked pytest -m slow --basetemp=.tmp/pytest-slow
@@ -269,10 +297,10 @@ uv run --locked pytest -p pytest_cov --basetemp=.tmp/pytest-coverage --cov --cov
 
 第一条 pytest 命令用于快速反馈；`slow` 包含耗时的 PWM 步长比较、HVDC 控制仿真及所有共用完整 FAST 仿真的测试。普通 pytest 和 CI 仍执行全量测试。标记严格检查，拼写错误会报错。
 
-Ruff 检查错误、导入顺序、现代化写法和选定缺陷规则，不强制格式化或行宽。mypy 依据已有标注检查 39 个包源码模块，不要求所有函数都有标注，也不完整检查未标注函数体。数组协议使用 NumPy 类型，允许第三方缺失类型存根。`py.typed` 使安装后的包继续携带这些标注。
+Ruff 检查错误、导入顺序、现代化写法和选定缺陷规则，不强制格式化或行宽。mypy 依据已有标注检查 `pycy_emt_lite` 包源码，不要求所有函数都有标注，也不完整检查未标注函数体。数组协议使用 NumPy 类型，允许第三方缺失类型存根。`py.typed` 使安装后的包继续携带这些标注。
 
 覆盖率包含分支。打开 `.tmp/htmlcov/index.html` 查看未执行的代码行和分支；当前不设覆盖率百分比阈值。覆盖率和测试通过只说明被验证的行为，物理精度仍需[模型与验证](docs/models_and_validation.md)中的检查。
 
-[CI 配置](.github/workflows/ci.yml)定义 Linux 和 Windows 两项任务：任务超时 30 分钟，测试步骤 15 分钟，示例步骤 10 分钟。两项任务均锁定环境，执行上述检查、全部示例、构建发行包，并在源码目录外验证安装 wheel 的版本及 `py.typed`。JUnit、覆盖率 XML 和 HTML 以 `test-coverage-Linux`、`test-coverage-Windows` 上传，保留 14 天。本地通过不代表远端 Actions 已运行成功。
+[CI 配置](.github/workflows/ci.yml)为 Linux 作业设置 60 分钟限时，其中测试 25 分钟。Windows 作业限时 65 分钟，其中测试 30 分钟。两项作业的示例步骤均限时 25 分钟，并在锁定环境中执行检查、运行全部示例、构建发行包及在源码目录外验证 wheel 版本和 `py.typed`。JUnit、覆盖率 XML 和 HTML 以 `test-coverage-Linux`、`test-coverage-Windows` 上传，保留 14 天。托管结果以 GitHub Actions 的实际运行为准。
 
 `pyproject.toml`、`uv.lock` 与 `pycy_emt_lite.__version__` 的版本必须一致。版本变更记入[CHANGELOG](CHANGELOG.md)；修改版本不会自动发布。

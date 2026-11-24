@@ -5,7 +5,7 @@
 主要内容：
 1. 单相变压器：理想变比、漏阻抗、励磁支路
 2. 三相 Y/Y、Y/Δ、Δ/Y、Δ/Δ 变压器
-3. 显式滞后的饱和励磁简化模型
+3. 按磁链更新的分段线性饱和励磁模型
 """
 
 from __future__ import annotations
@@ -43,49 +43,37 @@ class _TransformerPhaseState:
     last_secondary_voltage: float = 0.0
 
 
-def _validate_transformer_parameters(
-    name: str,
-    turns_ratio: float,
-    leakage_resistance: float,
-    leakage_inductance: float,
-    magnetizing_inductance: float | None,
-    core_loss_resistance: float | None,
-    saturation_knee_flux: float | None,
-    saturated_magnetizing_inductance: float | None,
-) -> None:
-    """检查变压器参数。"""
+def _validate_transformer_parameters(transformer: SinglePhaseTransformer | ThreePhaseTransformer) -> None:
+    """检查并统一两种变压器的数值参数。"""
 
-    for parameter, value in (("turns_ratio", turns_ratio), ("leakage_resistance", leakage_resistance),
-                             ("leakage_inductance", leakage_inductance), ("magnetizing_inductance", magnetizing_inductance),
-                             ("core_loss_resistance", core_loss_resistance), ("saturation_knee_flux", saturation_knee_flux),
-                             ("saturated_magnetizing_inductance", saturated_magnetizing_inductance)):
-        if value is not None or parameter in {"turns_ratio", "leakage_resistance", "leakage_inductance"}:
-            _finite_real(value, f"变压器 {name} 的 {parameter}")
+    name = transformer.name
+    for parameter in ("turns_ratio", "leakage_resistance", "leakage_inductance"):
+        setattr(transformer, parameter, _finite_real(getattr(transformer, parameter), f"变压器 {name} 的 {parameter}"))
+    for parameter in ("magnetizing_inductance", "core_loss_resistance", "saturation_knee_flux", "saturated_magnetizing_inductance"):
+        value = getattr(transformer, parameter)
+        if value is not None:
+            setattr(transformer, parameter, _finite_real(value, f"变压器 {name} 的 {parameter}"))
 
-    if not math.isfinite(turns_ratio) or turns_ratio <= 0:
+    if transformer.turns_ratio <= 0:
         raise ValueError(f"变压器 {name} 的变比必须为有限正数。")
-    if not math.isfinite(leakage_resistance) or leakage_resistance < 0:
+    if transformer.leakage_resistance < 0:
         raise ValueError(f"变压器 {name} 的漏电阻必须为有限非负数。")
-    if not math.isfinite(leakage_inductance) or leakage_inductance < 0:
+    if transformer.leakage_inductance < 0:
         raise ValueError(f"变压器 {name} 的漏感必须为有限非负数。")
-    if magnetizing_inductance is not None and (
-        not math.isfinite(magnetizing_inductance) or magnetizing_inductance <= 0
-    ):
+    magnetizing_inductance = transformer.magnetizing_inductance
+    core_loss_resistance = transformer.core_loss_resistance
+    saturation_knee_flux = transformer.saturation_knee_flux
+    saturated_magnetizing_inductance = transformer.saturated_magnetizing_inductance
+    if magnetizing_inductance is not None and magnetizing_inductance <= 0:
         raise ValueError(f"变压器 {name} 的励磁电感必须为有限正数。")
-    if core_loss_resistance is not None and (
-        not math.isfinite(core_loss_resistance) or core_loss_resistance <= 0
-    ):
+    if core_loss_resistance is not None and core_loss_resistance <= 0:
         raise ValueError(f"变压器 {name} 的铁耗电阻必须为有限正数。")
     has_saturation = saturation_knee_flux is not None or saturated_magnetizing_inductance is not None
     if has_saturation and (saturation_knee_flux is None or saturated_magnetizing_inductance is None):
         raise ValueError(f"变压器 {name} 的饱和参数必须同时给出 knee_flux 和 saturated_magnetizing_inductance。")
-    if saturation_knee_flux is not None and (
-        not math.isfinite(saturation_knee_flux) or saturation_knee_flux <= 0
-    ):
+    if saturation_knee_flux is not None and saturation_knee_flux <= 0:
         raise ValueError(f"变压器 {name} 的饱和拐点磁链必须为有限正数。")
-    if saturated_magnetizing_inductance is not None and (
-        not math.isfinite(saturated_magnetizing_inductance) or saturated_magnetizing_inductance <= 0
-    ):
+    if saturated_magnetizing_inductance is not None and saturated_magnetizing_inductance <= 0:
         raise ValueError(f"变压器 {name} 的饱和励磁电感必须为有限正数。")
     if has_saturation and magnetizing_inductance is None:
         raise ValueError(f"变压器 {name} 启用饱和励磁时必须给出线性励磁电感。")
@@ -135,21 +123,25 @@ def _stamp_voltage_coefficient(matrix: np.ndarray, row: int, positive: int | Non
         matrix[row, negative] -= coefficient
 
 
-def _effective_magnetizing_inductance(
-    magnetizing_inductance: float | None,
+def _magnetizing_companion_parameters(
+    magnetizing_inductance: float,
     saturated_magnetizing_inductance: float | None,
     saturation_knee_flux: float | None,
     state: _TransformerPhaseState,
-) -> float | None:
-    """根据上一时刻磁链返回本步使用的励磁电感。"""
+) -> tuple[float, float]:
+    """返回本步励磁电感和伴随模型的电流基准。"""
 
-    if magnetizing_inductance is None:
-        return None
-    if saturation_knee_flux is None or saturated_magnetizing_inductance is None:
-        return magnetizing_inductance
-    if abs(state.magnetizing_flux) >= saturation_knee_flux:
-        return saturated_magnetizing_inductance
-    return magnetizing_inductance
+    if (saturation_knee_flux is None or saturated_magnetizing_inductance is None
+            or saturated_magnetizing_inductance == magnetizing_inductance):
+        return magnetizing_inductance, state.magnetizing_previous_current
+    flux = state.magnetizing_flux
+    magnitude = abs(flux)
+    # 每步从连续磁化曲线重新取基准，避免把跨越拐点时的电流误差累加下去。
+    if magnitude <= saturation_knee_flux:
+        return magnetizing_inductance, flux / magnetizing_inductance
+    current = saturation_knee_flux / magnetizing_inductance
+    current += (magnitude - saturation_knee_flux) / saturated_magnetizing_inductance
+    return saturated_magnetizing_inductance, math.copysign(current, flux)
 
 
 def _stamp_transformer_phase(
@@ -207,26 +199,24 @@ def _stamp_transformer_phase(
     if core_loss_resistance is not None:
         add_conductance(matrix, primary_positive_index, primary_negative_index, 1.0 / core_loss_resistance)
 
-    effective_magnetizing_inductance = _effective_magnetizing_inductance(
-        magnetizing_inductance,
-        saturated_magnetizing_inductance,
-        saturation_knee_flux,
-        state,
-    )
-    if effective_magnetizing_inductance is not None:
+    if magnetizing_inductance is not None:
         if magnetizing_branch_index is None:
             raise RuntimeError("励磁支路尚未注册支路电流变量。")
         magnetizing_branch = context.branch_offset + magnetizing_branch_index
+        effective_inductance, base_current = _magnetizing_companion_parameters(
+            magnetizing_inductance, saturated_magnetizing_inductance, saturation_knee_flux, state
+        )
         if context._initial is not None:
+            # 零步长一致求解保持实际左侧电流，继续使用该时刻的磁链。
             context._initial.inductors.append((
-                magnetizing_branch, effective_magnetizing_inductance, state.magnetizing_previous_current
+                magnetizing_branch, effective_inductance, state.magnetizing_previous_current
             ))
         _stamp_branch_current(matrix, primary_positive_index, primary_negative_index, magnetizing_branch)
         equivalent_resistance, history_voltage = _inductor_companion(
             context.method,
             context.time_step,
-            effective_magnetizing_inductance,
-            state.magnetizing_previous_current,
+            effective_inductance,
+            base_current,
             state.magnetizing_previous_voltage,
         )
         _stamp_voltage_coefficient(matrix, magnetizing_branch, primary_positive_index, primary_negative_index, 1.0)
@@ -298,16 +288,7 @@ class SinglePhaseTransformer(Component):
     state: _TransformerPhaseState = field(default_factory=_TransformerPhaseState, init=False)
 
     def __post_init__(self) -> None:
-        _validate_transformer_parameters(
-            self.name,
-            self.turns_ratio,
-            self.leakage_resistance,
-            self.leakage_inductance,
-            self.magnetizing_inductance,
-            self.core_loss_resistance,
-            self.saturation_knee_flux,
-            self.saturated_magnetizing_inductance,
-        )
+        _validate_transformer_parameters(self)
 
     def nodes(self) -> Iterable[str]:
         return (self.primary_positive, self.primary_negative, self.secondary_positive, self.secondary_negative)
@@ -417,16 +398,7 @@ class ThreePhaseTransformer(Component):
     states: dict[PhaseName, _TransformerPhaseState] = field(default_factory=lambda: {phase: _TransformerPhaseState() for phase in PHASES}, init=False)
 
     def __post_init__(self) -> None:
-        _validate_transformer_parameters(
-            self.name,
-            self.turns_ratio,
-            self.leakage_resistance,
-            self.leakage_inductance,
-            self.magnetizing_inductance,
-            self.core_loss_resistance,
-            self.saturation_knee_flux,
-            self.saturated_magnetizing_inductance,
-        )
+        _validate_transformer_parameters(self)
         if self.primary_connection not in {"Y", "D"}:
             raise ValueError(f"变压器 {self.name} 的一次接法必须为 'Y' 或 'D'。")
         if self.secondary_connection not in {"Y", "D"}:
